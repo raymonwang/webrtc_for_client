@@ -30,7 +30,7 @@
 #include <algorithm>
 
 #if !defined(DISABLE_YUV)
-#include "../../../third_party/libyuv/include/libyuv/scale_argb.h"
+#include "libyuv/scale_argb.h"
 #endif
 #include "talk/base/common.h"
 #include "talk/base/logging.h"

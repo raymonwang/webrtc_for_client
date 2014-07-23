@@ -30,10 +30,9 @@
 #include <string.h>
 
 #if !defined(DISABLE_YUV)
-#include "../../../third_party/libyuv/include/libyuv/compare.h"
-#include "../../../third_party/libyuv/include/libyuv/compare.h"
-#include "../../../third_party/libyuv/include/libyuv/planar_functions.h"
-#include "../../../third_party/libyuv/include/libyuv/scale.h"
+#include "libyuv/compare.h"
+#include "libyuv/planar_functions.h"
+#include "libyuv/scale.h"
 #endif
 
 #include "talk/base/logging.h"

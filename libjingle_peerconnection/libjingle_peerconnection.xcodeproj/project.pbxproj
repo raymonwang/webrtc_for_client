@@ -1,0 +1,463 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		430B22A8197F59BA0076767F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B22A7197F59BA0076767F /* Foundation.framework */; };
+		430B22F8197F5A0F0076767F /* peerconnection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22D6197F5A0F0076767F /* peerconnection.cc */; };
+		430B22F9197F5A0F0076767F /* peerconnectionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22D8197F5A0F0076767F /* peerconnectionfactory.cc */; };
+		430B22FA197F5A0F0076767F /* portallocatorfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22DC197F5A0F0076767F /* portallocatorfactory.cc */; };
+		430B22FB197F5A0F0076767F /* remoteaudiosource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22DF197F5A0F0076767F /* remoteaudiosource.cc */; };
+		430B22FC197F5A0F0076767F /* remotevideocapturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22E1197F5A0F0076767F /* remotevideocapturer.cc */; };
+		430B22FD197F5A0F0076767F /* sctputils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22E3197F5A0F0076767F /* sctputils.cc */; };
+		430B22FE197F5A0F0076767F /* statscollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22E5197F5A0F0076767F /* statscollector.cc */; };
+		430B22FF197F5A0F0076767F /* videosource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22EA197F5A0F0076767F /* videosource.cc */; };
+		430B2300197F5A0F0076767F /* videotrack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22EE197F5A0F0076767F /* videotrack.cc */; };
+		430B2301197F5A0F0076767F /* videotrackrenderers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22F0197F5A0F0076767F /* videotrackrenderers.cc */; };
+		430B2302197F5A0F0076767F /* webrtcsdp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22F2197F5A0F0076767F /* webrtcsdp.cc */; };
+		430B2303197F5A0F0076767F /* webrtcsession.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22F4197F5A0F0076767F /* webrtcsession.cc */; };
+		430B2304197F5A0F0076767F /* webrtcsessiondescriptionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B22F6197F5A0F0076767F /* webrtcsessiondescriptionfactory.cc */; };
+		430B2325197F5A230076767F /* audiotrack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2305197F5A220076767F /* audiotrack.cc */; };
+		430B2326197F5A230076767F /* audiotrackrenderer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2307197F5A220076767F /* audiotrackrenderer.cc */; };
+		430B2327197F5A230076767F /* datachannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2309197F5A220076767F /* datachannel.cc */; };
+		430B2328197F5A230076767F /* dtmfsender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B230C197F5A220076767F /* dtmfsender.cc */; };
+		430B2329197F5A230076767F /* jsepicecandidate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2311197F5A220076767F /* jsepicecandidate.cc */; };
+		430B232A197F5A230076767F /* jsepsessiondescription.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2313197F5A230076767F /* jsepsessiondescription.cc */; };
+		430B232B197F5A230076767F /* localaudiosource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2315197F5A230076767F /* localaudiosource.cc */; };
+		430B232C197F5A230076767F /* mediaconstraintsinterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2317197F5A230076767F /* mediaconstraintsinterface.cc */; };
+		430B232D197F5A230076767F /* mediastream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2319197F5A230076767F /* mediastream.cc */; };
+		430B232E197F5A230076767F /* mediastreamhandler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B231B197F5A230076767F /* mediastreamhandler.cc */; };
+		430B232F197F5A230076767F /* mediastreamsignaling.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2320197F5A230076767F /* mediastreamsignaling.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		430B22A2197F59BA0076767F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		430B22A4197F59BA0076767F /* liblibjingle_peerconnection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibjingle_peerconnection.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		430B22A7197F59BA0076767F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		430B22AB197F59BA0076767F /* libjingle_peerconnection-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "libjingle_peerconnection-Prefix.pch"; sourceTree = "<group>"; };
+		430B22B5197F59BA0076767F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		430B22B8197F59BA0076767F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		430B22D6197F5A0F0076767F /* peerconnection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = peerconnection.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/peerconnection.cc; sourceTree = "<group>"; };
+		430B22D7197F5A0F0076767F /* peerconnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnection.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/peerconnection.h; sourceTree = "<group>"; };
+		430B22D8197F5A0F0076767F /* peerconnectionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = peerconnectionfactory.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/peerconnectionfactory.cc; sourceTree = "<group>"; };
+		430B22D9197F5A0F0076767F /* peerconnectionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectionfactory.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/peerconnectionfactory.h; sourceTree = "<group>"; };
+		430B22DA197F5A0F0076767F /* peerconnectioninterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectioninterface.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/peerconnectioninterface.h; sourceTree = "<group>"; };
+		430B22DB197F5A0F0076767F /* peerconnectionproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectionproxy.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/peerconnectionproxy.h; sourceTree = "<group>"; };
+		430B22DC197F5A0F0076767F /* portallocatorfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = portallocatorfactory.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/portallocatorfactory.cc; sourceTree = "<group>"; };
+		430B22DD197F5A0F0076767F /* portallocatorfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = portallocatorfactory.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/portallocatorfactory.h; sourceTree = "<group>"; };
+		430B22DE197F5A0F0076767F /* proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = proxy.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/proxy.h; sourceTree = "<group>"; };
+		430B22DF197F5A0F0076767F /* remoteaudiosource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remoteaudiosource.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/remoteaudiosource.cc; sourceTree = "<group>"; };
+		430B22E0197F5A0F0076767F /* remoteaudiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remoteaudiosource.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/remoteaudiosource.h; sourceTree = "<group>"; };
+		430B22E1197F5A0F0076767F /* remotevideocapturer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remotevideocapturer.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/remotevideocapturer.cc; sourceTree = "<group>"; };
+		430B22E2197F5A0F0076767F /* remotevideocapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remotevideocapturer.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/remotevideocapturer.h; sourceTree = "<group>"; };
+		430B22E3197F5A0F0076767F /* sctputils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sctputils.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/sctputils.cc; sourceTree = "<group>"; };
+		430B22E4197F5A0F0076767F /* sctputils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sctputils.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/sctputils.h; sourceTree = "<group>"; };
+		430B22E5197F5A0F0076767F /* statscollector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = statscollector.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/statscollector.cc; sourceTree = "<group>"; };
+		430B22E6197F5A0F0076767F /* statscollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = statscollector.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/statscollector.h; sourceTree = "<group>"; };
+		430B22E7197F5A0F0076767F /* statstypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = statstypes.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/statstypes.h; sourceTree = "<group>"; };
+		430B22E8197F5A0F0076767F /* streamcollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = streamcollection.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/streamcollection.h; sourceTree = "<group>"; };
+		430B22E9197F5A0F0076767F /* umametrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = umametrics.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/umametrics.h; sourceTree = "<group>"; };
+		430B22EA197F5A0F0076767F /* videosource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = videosource.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/videosource.cc; sourceTree = "<group>"; };
+		430B22EB197F5A0F0076767F /* videosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videosource.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/videosource.h; sourceTree = "<group>"; };
+		430B22EC197F5A0F0076767F /* videosourceinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videosourceinterface.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/videosourceinterface.h; sourceTree = "<group>"; };
+		430B22ED197F5A0F0076767F /* videosourceproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videosourceproxy.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/videosourceproxy.h; sourceTree = "<group>"; };
+		430B22EE197F5A0F0076767F /* videotrack.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = videotrack.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/videotrack.cc; sourceTree = "<group>"; };
+		430B22EF197F5A0F0076767F /* videotrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videotrack.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/videotrack.h; sourceTree = "<group>"; };
+		430B22F0197F5A0F0076767F /* videotrackrenderers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = videotrackrenderers.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/videotrackrenderers.cc; sourceTree = "<group>"; };
+		430B22F1197F5A0F0076767F /* videotrackrenderers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videotrackrenderers.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/videotrackrenderers.h; sourceTree = "<group>"; };
+		430B22F2197F5A0F0076767F /* webrtcsdp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtcsdp.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/webrtcsdp.cc; sourceTree = "<group>"; };
+		430B22F3197F5A0F0076767F /* webrtcsdp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtcsdp.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/webrtcsdp.h; sourceTree = "<group>"; };
+		430B22F4197F5A0F0076767F /* webrtcsession.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtcsession.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/webrtcsession.cc; sourceTree = "<group>"; };
+		430B22F5197F5A0F0076767F /* webrtcsession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtcsession.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/webrtcsession.h; sourceTree = "<group>"; };
+		430B22F6197F5A0F0076767F /* webrtcsessiondescriptionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtcsessiondescriptionfactory.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/webrtcsessiondescriptionfactory.cc; sourceTree = "<group>"; };
+		430B22F7197F5A0F0076767F /* webrtcsessiondescriptionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtcsessiondescriptionfactory.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/webrtcsessiondescriptionfactory.h; sourceTree = "<group>"; };
+		430B2305197F5A220076767F /* audiotrack.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audiotrack.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/audiotrack.cc; sourceTree = "<group>"; };
+		430B2306197F5A220076767F /* audiotrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audiotrack.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/audiotrack.h; sourceTree = "<group>"; };
+		430B2307197F5A220076767F /* audiotrackrenderer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audiotrackrenderer.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/audiotrackrenderer.cc; sourceTree = "<group>"; };
+		430B2308197F5A220076767F /* audiotrackrenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audiotrackrenderer.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/audiotrackrenderer.h; sourceTree = "<group>"; };
+		430B2309197F5A220076767F /* datachannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = datachannel.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/datachannel.cc; sourceTree = "<group>"; };
+		430B230A197F5A220076767F /* datachannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datachannel.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/datachannel.h; sourceTree = "<group>"; };
+		430B230B197F5A220076767F /* datachannelinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datachannelinterface.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/datachannelinterface.h; sourceTree = "<group>"; };
+		430B230C197F5A220076767F /* dtmfsender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dtmfsender.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/dtmfsender.cc; sourceTree = "<group>"; };
+		430B230D197F5A220076767F /* dtmfsender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtmfsender.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/dtmfsender.h; sourceTree = "<group>"; };
+		430B230E197F5A220076767F /* dtmfsenderinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtmfsenderinterface.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/dtmfsenderinterface.h; sourceTree = "<group>"; };
+		430B230F197F5A220076767F /* fakeportallocatorfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fakeportallocatorfactory.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/fakeportallocatorfactory.h; sourceTree = "<group>"; };
+		430B2310197F5A220076767F /* jsep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsep.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/jsep.h; sourceTree = "<group>"; };
+		430B2311197F5A220076767F /* jsepicecandidate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsepicecandidate.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/jsepicecandidate.cc; sourceTree = "<group>"; };
+		430B2312197F5A230076767F /* jsepicecandidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsepicecandidate.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/jsepicecandidate.h; sourceTree = "<group>"; };
+		430B2313197F5A230076767F /* jsepsessiondescription.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsepsessiondescription.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/jsepsessiondescription.cc; sourceTree = "<group>"; };
+		430B2314197F5A230076767F /* jsepsessiondescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsepsessiondescription.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/jsepsessiondescription.h; sourceTree = "<group>"; };
+		430B2315197F5A230076767F /* localaudiosource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = localaudiosource.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/localaudiosource.cc; sourceTree = "<group>"; };
+		430B2316197F5A230076767F /* localaudiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localaudiosource.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/localaudiosource.h; sourceTree = "<group>"; };
+		430B2317197F5A230076767F /* mediaconstraintsinterface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediaconstraintsinterface.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediaconstraintsinterface.cc; sourceTree = "<group>"; };
+		430B2318197F5A230076767F /* mediaconstraintsinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediaconstraintsinterface.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediaconstraintsinterface.h; sourceTree = "<group>"; };
+		430B2319197F5A230076767F /* mediastream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediastream.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastream.cc; sourceTree = "<group>"; };
+		430B231A197F5A230076767F /* mediastream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastream.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastream.h; sourceTree = "<group>"; };
+		430B231B197F5A230076767F /* mediastreamhandler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediastreamhandler.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamhandler.cc; sourceTree = "<group>"; };
+		430B231C197F5A230076767F /* mediastreamhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamhandler.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamhandler.h; sourceTree = "<group>"; };
+		430B231D197F5A230076767F /* mediastreaminterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreaminterface.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreaminterface.h; sourceTree = "<group>"; };
+		430B231E197F5A230076767F /* mediastreamprovider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamprovider.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamprovider.h; sourceTree = "<group>"; };
+		430B231F197F5A230076767F /* mediastreamproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamproxy.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamproxy.h; sourceTree = "<group>"; };
+		430B2320197F5A230076767F /* mediastreamsignaling.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediastreamsignaling.cc; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamsignaling.cc; sourceTree = "<group>"; };
+		430B2321197F5A230076767F /* mediastreamsignaling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamsignaling.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamsignaling.h; sourceTree = "<group>"; };
+		430B2322197F5A230076767F /* mediastreamtrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamtrack.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamtrack.h; sourceTree = "<group>"; };
+		430B2323197F5A230076767F /* mediastreamtrackproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamtrackproxy.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/mediastreamtrackproxy.h; sourceTree = "<group>"; };
+		430B2324197F5A230076767F /* notifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notifier.h; path = ../../webRTCAPP/Classes/talk/app/webrtc/notifier.h; sourceTree = "<group>"; };
+		430B2BC9197F7EC60076767F /* liblibjingle_p2p.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibjingle_p2p.a; path = "../DerivedData/webRTCAPP/Build/Products/Debug-iphoneos/liblibjingle_p2p.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		430B22A1197F59BA0076767F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430B22A8197F59BA0076767F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		430B229B197F59BA0076767F = {
+			isa = PBXGroup;
+			children = (
+				430B22A9197F59BA0076767F /* libjingle_peerconnection */,
+				430B22A6197F59BA0076767F /* Frameworks */,
+				430B22A5197F59BA0076767F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		430B22A5197F59BA0076767F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430B22A4197F59BA0076767F /* liblibjingle_peerconnection.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		430B22A6197F59BA0076767F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				430B2BC9197F7EC60076767F /* liblibjingle_p2p.a */,
+				430B22A7197F59BA0076767F /* Foundation.framework */,
+				430B22B5197F59BA0076767F /* XCTest.framework */,
+				430B22B8197F59BA0076767F /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		430B22A9197F59BA0076767F /* libjingle_peerconnection */ = {
+			isa = PBXGroup;
+			children = (
+				430B2305197F5A220076767F /* audiotrack.cc */,
+				430B2306197F5A220076767F /* audiotrack.h */,
+				430B2307197F5A220076767F /* audiotrackrenderer.cc */,
+				430B2308197F5A220076767F /* audiotrackrenderer.h */,
+				430B2309197F5A220076767F /* datachannel.cc */,
+				430B230A197F5A220076767F /* datachannel.h */,
+				430B230B197F5A220076767F /* datachannelinterface.h */,
+				430B230C197F5A220076767F /* dtmfsender.cc */,
+				430B230D197F5A220076767F /* dtmfsender.h */,
+				430B230E197F5A220076767F /* dtmfsenderinterface.h */,
+				430B230F197F5A220076767F /* fakeportallocatorfactory.h */,
+				430B2310197F5A220076767F /* jsep.h */,
+				430B2311197F5A220076767F /* jsepicecandidate.cc */,
+				430B2312197F5A230076767F /* jsepicecandidate.h */,
+				430B2313197F5A230076767F /* jsepsessiondescription.cc */,
+				430B2314197F5A230076767F /* jsepsessiondescription.h */,
+				430B2315197F5A230076767F /* localaudiosource.cc */,
+				430B2316197F5A230076767F /* localaudiosource.h */,
+				430B2317197F5A230076767F /* mediaconstraintsinterface.cc */,
+				430B2318197F5A230076767F /* mediaconstraintsinterface.h */,
+				430B2319197F5A230076767F /* mediastream.cc */,
+				430B231A197F5A230076767F /* mediastream.h */,
+				430B231B197F5A230076767F /* mediastreamhandler.cc */,
+				430B231C197F5A230076767F /* mediastreamhandler.h */,
+				430B231D197F5A230076767F /* mediastreaminterface.h */,
+				430B231E197F5A230076767F /* mediastreamprovider.h */,
+				430B231F197F5A230076767F /* mediastreamproxy.h */,
+				430B2320197F5A230076767F /* mediastreamsignaling.cc */,
+				430B2321197F5A230076767F /* mediastreamsignaling.h */,
+				430B2322197F5A230076767F /* mediastreamtrack.h */,
+				430B2323197F5A230076767F /* mediastreamtrackproxy.h */,
+				430B2324197F5A230076767F /* notifier.h */,
+				430B22D6197F5A0F0076767F /* peerconnection.cc */,
+				430B22D7197F5A0F0076767F /* peerconnection.h */,
+				430B22D8197F5A0F0076767F /* peerconnectionfactory.cc */,
+				430B22D9197F5A0F0076767F /* peerconnectionfactory.h */,
+				430B22DA197F5A0F0076767F /* peerconnectioninterface.h */,
+				430B22DB197F5A0F0076767F /* peerconnectionproxy.h */,
+				430B22DC197F5A0F0076767F /* portallocatorfactory.cc */,
+				430B22DD197F5A0F0076767F /* portallocatorfactory.h */,
+				430B22DE197F5A0F0076767F /* proxy.h */,
+				430B22DF197F5A0F0076767F /* remoteaudiosource.cc */,
+				430B22E0197F5A0F0076767F /* remoteaudiosource.h */,
+				430B22E1197F5A0F0076767F /* remotevideocapturer.cc */,
+				430B22E2197F5A0F0076767F /* remotevideocapturer.h */,
+				430B22E3197F5A0F0076767F /* sctputils.cc */,
+				430B22E4197F5A0F0076767F /* sctputils.h */,
+				430B22E5197F5A0F0076767F /* statscollector.cc */,
+				430B22E6197F5A0F0076767F /* statscollector.h */,
+				430B22E7197F5A0F0076767F /* statstypes.h */,
+				430B22E8197F5A0F0076767F /* streamcollection.h */,
+				430B22E9197F5A0F0076767F /* umametrics.h */,
+				430B22EA197F5A0F0076767F /* videosource.cc */,
+				430B22EB197F5A0F0076767F /* videosource.h */,
+				430B22EC197F5A0F0076767F /* videosourceinterface.h */,
+				430B22ED197F5A0F0076767F /* videosourceproxy.h */,
+				430B22EE197F5A0F0076767F /* videotrack.cc */,
+				430B22EF197F5A0F0076767F /* videotrack.h */,
+				430B22F0197F5A0F0076767F /* videotrackrenderers.cc */,
+				430B22F1197F5A0F0076767F /* videotrackrenderers.h */,
+				430B22F2197F5A0F0076767F /* webrtcsdp.cc */,
+				430B22F3197F5A0F0076767F /* webrtcsdp.h */,
+				430B22F4197F5A0F0076767F /* webrtcsession.cc */,
+				430B22F5197F5A0F0076767F /* webrtcsession.h */,
+				430B22F6197F5A0F0076767F /* webrtcsessiondescriptionfactory.cc */,
+				430B22F7197F5A0F0076767F /* webrtcsessiondescriptionfactory.h */,
+				430B22AA197F59BA0076767F /* Supporting Files */,
+			);
+			path = libjingle_peerconnection;
+			sourceTree = "<group>";
+		};
+		430B22AA197F59BA0076767F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				430B22AB197F59BA0076767F /* libjingle_peerconnection-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		430B22A3197F59BA0076767F /* libjingle_peerconnection */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 430B22C7197F59BA0076767F /* Build configuration list for PBXNativeTarget "libjingle_peerconnection" */;
+			buildPhases = (
+				430B22A0197F59BA0076767F /* Sources */,
+				430B22A1197F59BA0076767F /* Frameworks */,
+				430B22A2197F59BA0076767F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libjingle_peerconnection;
+			productName = libjingle_peerconnection;
+			productReference = 430B22A4197F59BA0076767F /* liblibjingle_peerconnection.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		430B229C197F59BA0076767F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 430B229F197F59BA0076767F /* Build configuration list for PBXProject "libjingle_peerconnection" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 430B229B197F59BA0076767F;
+			productRefGroup = 430B22A5197F59BA0076767F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				430B22A3197F59BA0076767F /* libjingle_peerconnection */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		430B22A0197F59BA0076767F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430B2301197F5A0F0076767F /* videotrackrenderers.cc in Sources */,
+				430B22FC197F5A0F0076767F /* remotevideocapturer.cc in Sources */,
+				430B2302197F5A0F0076767F /* webrtcsdp.cc in Sources */,
+				430B2329197F5A230076767F /* jsepicecandidate.cc in Sources */,
+				430B232C197F5A230076767F /* mediaconstraintsinterface.cc in Sources */,
+				430B2304197F5A0F0076767F /* webrtcsessiondescriptionfactory.cc in Sources */,
+				430B232E197F5A230076767F /* mediastreamhandler.cc in Sources */,
+				430B2328197F5A230076767F /* dtmfsender.cc in Sources */,
+				430B232A197F5A230076767F /* jsepsessiondescription.cc in Sources */,
+				430B2325197F5A230076767F /* audiotrack.cc in Sources */,
+				430B2327197F5A230076767F /* datachannel.cc in Sources */,
+				430B22FE197F5A0F0076767F /* statscollector.cc in Sources */,
+				430B22FF197F5A0F0076767F /* videosource.cc in Sources */,
+				430B232D197F5A230076767F /* mediastream.cc in Sources */,
+				430B22FD197F5A0F0076767F /* sctputils.cc in Sources */,
+				430B2300197F5A0F0076767F /* videotrack.cc in Sources */,
+				430B232B197F5A230076767F /* localaudiosource.cc in Sources */,
+				430B22F9197F5A0F0076767F /* peerconnectionfactory.cc in Sources */,
+				430B22FA197F5A0F0076767F /* portallocatorfactory.cc in Sources */,
+				430B232F197F5A230076767F /* mediastreamsignaling.cc in Sources */,
+				430B22F8197F5A0F0076767F /* peerconnection.cc in Sources */,
+				430B2326197F5A230076767F /* audiotrackrenderer.cc in Sources */,
+				430B22FB197F5A0F0076767F /* remoteaudiosource.cc in Sources */,
+				430B2303197F5A0F0076767F /* webrtcsession.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		430B22C5197F59BA0076767F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		430B22C6197F59BA0076767F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		430B22C8197F59BA0076767F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/libjingle_peerconnection.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "libjingle_peerconnection/libjingle_peerconnection-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					POSIX,
+					SSL_USE_NSS_RNG,
+					HAVE_NSS_SSL_H,
+					SSL_USE_NSS,
+					HAVE_WEBRTC_VIDEO,
+					HAVE_WEBRTC_VOICE,
+					CHROMIUM_BUILD,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/raymon_wang/Documents/Develop/webRTC_xCode/DerivedData/webRTCAPP/Build/Products/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Debug;
+		};
+		430B22C9197F59BA0076767F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/libjingle_peerconnection.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "libjingle_peerconnection/libjingle_peerconnection-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/raymon_wang/Documents/Develop/webRTC_xCode/DerivedData/webRTCAPP/Build/Products/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		430B229F197F59BA0076767F /* Build configuration list for PBXProject "libjingle_peerconnection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430B22C5197F59BA0076767F /* Debug */,
+				430B22C6197F59BA0076767F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		430B22C7197F59BA0076767F /* Build configuration list for PBXNativeTarget "libjingle_peerconnection" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430B22C8197F59BA0076767F /* Debug */,
+				430B22C9197F59BA0076767F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 430B229C197F59BA0076767F /* Project object */;
+}
