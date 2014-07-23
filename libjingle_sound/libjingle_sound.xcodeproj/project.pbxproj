@@ -287,6 +287,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 					POSIX,
+					IOS,
+					FEATURE_ENABLE_SSL,
+					HAVE_WEBRTC_VIDEO,
+					HAVE_WEBRTC_VOICE,
+					CHROMIUM_BUILD,
+					USE_WEBRTC_DEV_BRANCH,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -327,6 +333,7 @@
 				430B29BD197F690E0076767F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

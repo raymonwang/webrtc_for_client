@@ -501,6 +501,13 @@
 					"DEBUG=1",
 					"$(inherited)",
 					POSIX,
+					IOS,
+					FEATURE_ENABLE_SSL,
+					HAVE_WEBRTC_VIDEO,
+					HAVE_WEBRTC_VOICE,
+					CHROMIUM_BUILD,
+					USE_WEBRTC_DEV_BRANCH,
+					"LIBPEERCONNECTION_LIB=1",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -541,6 +548,7 @@
 				430B2A16197F69EE0076767F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

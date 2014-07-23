@@ -402,12 +402,15 @@
 					"DEBUG=1",
 					"$(inherited)",
 					POSIX,
+					IOS,
 					SSL_USE_NSS_RNG,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS,
 					HAVE_WEBRTC_VIDEO,
 					HAVE_WEBRTC_VOICE,
+					FEATURE_ENABLE_SSL,
 					CHROMIUM_BUILD,
+					USE_WEBRTC_DEV_BRANCH,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -456,6 +459,7 @@
 				430B22C9197F59BA0076767F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
