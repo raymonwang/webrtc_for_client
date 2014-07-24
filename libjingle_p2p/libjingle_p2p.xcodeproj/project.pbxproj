@@ -63,10 +63,75 @@
 		430B2BA7197F6D290076767F /* connectivitychecker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B7D197F6D290076767F /* connectivitychecker.cc */; };
 		430B2BA8197F6D290076767F /* httpportallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B80197F6D290076767F /* httpportallocator.cc */; };
 		430B2BA9197F6D290076767F /* socketmonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B84197F6D290076767F /* socketmonitor.cc */; };
+		4328849519809FF40000F16A /* mediasessionclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B05197F6D180076767F /* mediasessionclient.cc */; };
+		4328849619809FF40000F16A /* constants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B34197F6D290076767F /* constants.cc */; };
+		4328849719809FF40000F16A /* p2ptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B3A197F6D290076767F /* p2ptransport.cc */; };
+		4328849819809FF40000F16A /* mediarecorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B01197F6D180076767F /* mediarecorder.cc */; };
+		4328849919809FF40000F16A /* stunport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B60197F6D290076767F /* stunport.cc */; };
+		4328849A19809FF40000F16A /* call.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AF3197F6D180076767F /* call.cc */; };
+		4328849B19809FF40000F16A /* stun.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B5E197F6D290076767F /* stun.cc */; };
+		4328849C19809FF40000F16A /* stunserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B64197F6D290076767F /* stunserver.cc */; };
+		4328849D19809FF40000F16A /* mediasession.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B03197F6D180076767F /* mediasession.cc */; };
+		4328849E19809FF40000F16A /* parsing.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B3F197F6D290076767F /* parsing.cc */; };
+		4328849F19809FF40000F16A /* turnserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B76197F6D290076767F /* turnserver.cc */; };
+		432884A019809FF40000F16A /* relayserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B52197F6D290076767F /* relayserver.cc */; };
+		432884A119809FF40000F16A /* audiomonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AEF197F6D180076767F /* audiomonitor.cc */; };
+		432884A219809FF40000F16A /* socketmonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B84197F6D290076767F /* socketmonitor.cc */; };
+		432884A319809FF40000F16A /* transportdescriptionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B71197F6D290076767F /* transportdescriptionfactory.cc */; };
+		432884A419809FF40000F16A /* transportdescription.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B6F197F6D290076767F /* transportdescription.cc */; };
+		432884A519809FF40000F16A /* pseudotcp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B4A197F6D290076767F /* pseudotcp.cc */; };
+		432884A619809FF40000F16A /* session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B54197F6D290076767F /* session.cc */; };
+		432884A719809FF40000F16A /* sessionmessages.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B5C197F6D290076767F /* sessionmessages.cc */; };
+		432884A819809FF40000F16A /* pseudotcpchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B13197F6D180076767F /* pseudotcpchannel.cc */; };
+		432884A919809FF40000F16A /* portallocatorsessionproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B45197F6D290076767F /* portallocatorsessionproxy.cc */; };
+		432884AA19809FF40000F16A /* currentspeakermonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AF9197F6D180076767F /* currentspeakermonitor.cc */; };
+		432884AB19809FF40000F16A /* rawtransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B4E197F6D290076767F /* rawtransportchannel.cc */; };
+		432884AC19809FF40000F16A /* srtpfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B0C197F6D180076767F /* srtpfilter.cc */; };
+		432884AD19809FF40000F16A /* securetunnelsessionclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B15197F6D180076767F /* securetunnelsessionclient.cc */; };
+		432884AE19809FF40000F16A /* transportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B6A197F6D290076767F /* transportchannel.cc */; };
+		432884AF19809FF40000F16A /* dtlstransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B37197F6D290076767F /* dtlstransportchannel.cc */; };
+		432884B019809FF40000F16A /* tcpport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B66197F6D290076767F /* tcpport.cc */; };
+		432884B119809FF40000F16A /* typingmonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B0F197F6D180076767F /* typingmonitor.cc */; };
+		432884B219809FF40000F16A /* portallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B43197F6D290076767F /* portallocator.cc */; };
+		432884B319809FF40000F16A /* basicportallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B7B197F6D290076767F /* basicportallocator.cc */; };
+		432884B419809FF40000F16A /* basicpacketsocketfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B30197F6D290076767F /* basicpacketsocketfactory.cc */; };
+		432884B519809FF40000F16A /* portproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B48197F6D290076767F /* portproxy.cc */; };
+		432884B619809FF40000F16A /* transportchannelproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B6D197F6D290076767F /* transportchannelproxy.cc */; };
+		432884B719809FF40000F16A /* externalhmac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AFB197F6D180076767F /* externalhmac.cc */; };
+		432884B819809FF40000F16A /* mediamessages.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AFD197F6D180076767F /* mediamessages.cc */; };
+		432884B919809FF40000F16A /* rtcpmuxfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B08197F6D180076767F /* rtcpmuxfilter.cc */; };
+		432884BA19809FF40000F16A /* port.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B41197F6D290076767F /* port.cc */; };
+		432884BB19809FF40000F16A /* soundclip.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B0A197F6D180076767F /* soundclip.cc */; };
+		432884BC19809FF40000F16A /* tunnelsessionclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B17197F6D180076767F /* tunnelsessionclient.cc */; };
+		432884BD19809FF40000F16A /* turnport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B74197F6D290076767F /* turnport.cc */; };
+		432884BE19809FF40000F16A /* stunrequest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B62197F6D290076767F /* stunrequest.cc */; };
+		432884BF19809FF40000F16A /* bundlefilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AF1197F6D180076767F /* bundlefilter.cc */; };
+		432884C019809FF40000F16A /* rawtransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B4C197F6D290076767F /* rawtransport.cc */; };
+		432884C119809FF40000F16A /* mediamonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AFF197F6D180076767F /* mediamonitor.cc */; };
+		432884C219809FF40000F16A /* asyncstuntcpsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B2E197F6D290076767F /* asyncstuntcpsocket.cc */; };
+		432884C319809FF40000F16A /* sessiondescription.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B57197F6D290076767F /* sessiondescription.cc */; };
+		432884C419809FF40000F16A /* relayport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B50197F6D290076767F /* relayport.cc */; };
+		432884C519809FF40000F16A /* p2ptransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B3C197F6D290076767F /* p2ptransportchannel.cc */; };
+		432884C619809FF40000F16A /* httpportallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B80197F6D290076767F /* httpportallocator.cc */; };
+		432884C719809FF40000F16A /* channelmanager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AF7197F6D180076767F /* channelmanager.cc */; };
+		432884C819809FF40000F16A /* sessionmanager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B5A197F6D290076767F /* sessionmanager.cc */; };
+		432884C919809FF40000F16A /* transport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B68197F6D290076767F /* transport.cc */; };
+		432884CA19809FF40000F16A /* channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2AF5197F6D180076767F /* channel.cc */; };
+		432884CB19809FF40000F16A /* connectivitychecker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2B7D197F6D290076767F /* connectivitychecker.cc */; };
+		432884CD19809FF40000F16A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2ABE197F6CF10076767F /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		430B2AB9197F6CF10076767F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		432884CE19809FF40000F16A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -209,6 +274,7 @@
 		430B2B83197F6D290076767F /* sessionsendtask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sessionsendtask.h; sourceTree = "<group>"; };
 		430B2B84197F6D290076767F /* socketmonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = socketmonitor.cc; sourceTree = "<group>"; };
 		430B2B85197F6D290076767F /* socketmonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socketmonitor.h; sourceTree = "<group>"; };
+		432884D219809FF40000F16A /* liblibjingle_p2p_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibjingle_p2p_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +283,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				430B2ABF197F6CF10076767F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		432884CC19809FF40000F16A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				432884CD19809FF40000F16A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				430B2ABB197F6CF10076767F /* liblibjingle_p2p.a */,
+				432884D219809FF40000F16A /* liblibjingle_p2p_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -462,6 +537,23 @@
 			productReference = 430B2ABB197F6CF10076767F /* liblibjingle_p2p.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		4328849319809FF40000F16A /* libjingle_p2p_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 432884CF19809FF40000F16A /* Build configuration list for PBXNativeTarget "libjingle_p2p_osx" */;
+			buildPhases = (
+				4328849419809FF40000F16A /* Sources */,
+				432884CC19809FF40000F16A /* Frameworks */,
+				432884CE19809FF40000F16A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libjingle_p2p_osx;
+			productName = libjingle_p2p;
+			productReference = 432884D219809FF40000F16A /* liblibjingle_p2p_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -484,6 +576,7 @@
 			projectRoot = "";
 			targets = (
 				430B2ABA197F6CF10076767F /* libjingle_p2p */,
+				4328849319809FF40000F16A /* libjingle_p2p_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -548,6 +641,68 @@
 				430B2B9F197F6D290076767F /* transport.cc in Sources */,
 				430B2B1C197F6D180076767F /* channel.cc in Sources */,
 				430B2BA7197F6D290076767F /* connectivitychecker.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4328849419809FF40000F16A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4328849519809FF40000F16A /* mediasessionclient.cc in Sources */,
+				4328849619809FF40000F16A /* constants.cc in Sources */,
+				4328849719809FF40000F16A /* p2ptransport.cc in Sources */,
+				4328849819809FF40000F16A /* mediarecorder.cc in Sources */,
+				4328849919809FF40000F16A /* stunport.cc in Sources */,
+				4328849A19809FF40000F16A /* call.cc in Sources */,
+				4328849B19809FF40000F16A /* stun.cc in Sources */,
+				4328849C19809FF40000F16A /* stunserver.cc in Sources */,
+				4328849D19809FF40000F16A /* mediasession.cc in Sources */,
+				4328849E19809FF40000F16A /* parsing.cc in Sources */,
+				4328849F19809FF40000F16A /* turnserver.cc in Sources */,
+				432884A019809FF40000F16A /* relayserver.cc in Sources */,
+				432884A119809FF40000F16A /* audiomonitor.cc in Sources */,
+				432884A219809FF40000F16A /* socketmonitor.cc in Sources */,
+				432884A319809FF40000F16A /* transportdescriptionfactory.cc in Sources */,
+				432884A419809FF40000F16A /* transportdescription.cc in Sources */,
+				432884A519809FF40000F16A /* pseudotcp.cc in Sources */,
+				432884A619809FF40000F16A /* session.cc in Sources */,
+				432884A719809FF40000F16A /* sessionmessages.cc in Sources */,
+				432884A819809FF40000F16A /* pseudotcpchannel.cc in Sources */,
+				432884A919809FF40000F16A /* portallocatorsessionproxy.cc in Sources */,
+				432884AA19809FF40000F16A /* currentspeakermonitor.cc in Sources */,
+				432884AB19809FF40000F16A /* rawtransportchannel.cc in Sources */,
+				432884AC19809FF40000F16A /* srtpfilter.cc in Sources */,
+				432884AD19809FF40000F16A /* securetunnelsessionclient.cc in Sources */,
+				432884AE19809FF40000F16A /* transportchannel.cc in Sources */,
+				432884AF19809FF40000F16A /* dtlstransportchannel.cc in Sources */,
+				432884B019809FF40000F16A /* tcpport.cc in Sources */,
+				432884B119809FF40000F16A /* typingmonitor.cc in Sources */,
+				432884B219809FF40000F16A /* portallocator.cc in Sources */,
+				432884B319809FF40000F16A /* basicportallocator.cc in Sources */,
+				432884B419809FF40000F16A /* basicpacketsocketfactory.cc in Sources */,
+				432884B519809FF40000F16A /* portproxy.cc in Sources */,
+				432884B619809FF40000F16A /* transportchannelproxy.cc in Sources */,
+				432884B719809FF40000F16A /* externalhmac.cc in Sources */,
+				432884B819809FF40000F16A /* mediamessages.cc in Sources */,
+				432884B919809FF40000F16A /* rtcpmuxfilter.cc in Sources */,
+				432884BA19809FF40000F16A /* port.cc in Sources */,
+				432884BB19809FF40000F16A /* soundclip.cc in Sources */,
+				432884BC19809FF40000F16A /* tunnelsessionclient.cc in Sources */,
+				432884BD19809FF40000F16A /* turnport.cc in Sources */,
+				432884BE19809FF40000F16A /* stunrequest.cc in Sources */,
+				432884BF19809FF40000F16A /* bundlefilter.cc in Sources */,
+				432884C019809FF40000F16A /* rawtransport.cc in Sources */,
+				432884C119809FF40000F16A /* mediamonitor.cc in Sources */,
+				432884C219809FF40000F16A /* asyncstuntcpsocket.cc in Sources */,
+				432884C319809FF40000F16A /* sessiondescription.cc in Sources */,
+				432884C419809FF40000F16A /* relayport.cc in Sources */,
+				432884C519809FF40000F16A /* p2ptransportchannel.cc in Sources */,
+				432884C619809FF40000F16A /* httpportallocator.cc in Sources */,
+				432884C719809FF40000F16A /* channelmanager.cc in Sources */,
+				432884C819809FF40000F16A /* sessionmanager.cc in Sources */,
+				432884C919809FF40000F16A /* transport.cc in Sources */,
+				432884CA19809FF40000F16A /* channel.cc in Sources */,
+				432884CB19809FF40000F16A /* connectivitychecker.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +788,7 @@
 					"$(inherited)",
 					POSIX,
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -650,6 +806,46 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+		432884D019809FF40000F16A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/libjingle_p2p.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "libjingle_p2p/libjingle_p2p-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					POSIX,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = libjingle_p2p_osx;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		432884D119809FF40000F16A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				DSTROOT = /tmp/libjingle_p2p.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "libjingle_p2p/libjingle_p2p-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = libjingle_p2p_osx;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -672,6 +868,16 @@
 				430B2AE0197F6CF10076767F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		432884CF19809FF40000F16A /* Build configuration list for PBXNativeTarget "libjingle_p2p_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				432884D019809FF40000F16A /* Debug */,
+				432884D119809FF40000F16A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

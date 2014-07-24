@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>libjingle_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -18,6 +23,16 @@
 			<true/>
 		</dict>
 		<key>430B2349197F5BA60076767F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>432884E31980A8160000F16A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>432885761980AAE60000F16A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

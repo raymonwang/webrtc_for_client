@@ -143,10 +143,155 @@
 		430B27DC197F5CE10076767F /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2775197F5CE10076767F /* virtualsocketserver.cc */; };
 		430B27DD197F5CE10076767F /* win32socketinit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2778197F5CE10076767F /* win32socketinit.cc */; };
 		430B27DE197F5CE10076767F /* worker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B277E197F5CE10076767F /* worker.cc */; };
+		432884E51980A8160000F16A /* httpclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26D2197F5CE10076767F /* httpclient.cc */; };
+		432884E61980A8160000F16A /* sslstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2753197F5CE10076767F /* sslstreamadapter.cc */; };
+		432884E71980A8160000F16A /* xmpplogintask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2662197F5CC60076767F /* xmpplogintask.cc */; };
+		432884E81980A8160000F16A /* opensslstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2712197F5CE10076767F /* opensslstreamadapter.cc */; };
+		432884E91980A8160000F16A /* messagequeue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26F7197F5CE10076767F /* messagequeue.cc */; };
+		432884EA1980A8160000F16A /* timing.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B276B197F5CE10076767F /* timing.cc */; };
+		432884EB1980A8160000F16A /* jid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B262E197F5CC60076767F /* jid.cc */; };
+		432884EC1980A8160000F16A /* hangoutpubsubclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B262A197F5CC60076767F /* hangoutpubsubclient.cc */; };
+		432884ED1980A8160000F16A /* socketadapters.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B273D197F5CE10076767F /* socketadapters.cc */; };
+		432884EE1980A8160000F16A /* openssldigest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B270E197F5CE10076767F /* openssldigest.cc */; };
+		432884EF1980A8160000F16A /* socketstream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2747197F5CE10076767F /* socketstream.cc */; };
+		432884F01980A8160000F16A /* transformadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B276D197F5CE10076767F /* transformadapter.cc */; };
+		432884F11980A8160000F16A /* asyncudpsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B269D197F5CE10076767F /* asyncudpsocket.cc */; };
+		432884F21980A8160000F16A /* signalthread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2738197F5CE10076767F /* signalthread.cc */; };
+		432884F31980A8160000F16A /* xmppauth.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2659197F5CC60076767F /* xmppauth.cc */; };
+		432884F41980A8160000F16A /* moduleimpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2633197F5CC60076767F /* moduleimpl.cc */; };
+		432884F51980A8160000F16A /* mucroomconfigtask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2635197F5CC60076767F /* mucroomconfigtask.cc */; };
+		432884F61980A8160000F16A /* xmpppump.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2664197F5CC60076767F /* xmpppump.cc */; };
+		432884F71980A8160000F16A /* xmppclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B265B197F5CC60076767F /* xmppclient.cc */; };
+		432884F81980A8160000F16A /* pingtask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B263D197F5CC60076767F /* pingtask.cc */; };
+		432884F91980A8160000F16A /* iosfilesystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B26DD197F5CE10076767F /* iosfilesystem.mm */; };
+		432884FA1980A8160000F16A /* pubsub_task.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2647197F5CC60076767F /* pubsub_task.cc */; };
+		432884FB1980A8160000F16A /* ipaddress.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26DE197F5CE10076767F /* ipaddress.cc */; };
+		432884FC1980A8160000F16A /* proxydetect.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B271E197F5CE10076767F /* proxydetect.cc */; };
+		432884FD1980A8160000F16A /* flags.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26CC197F5CE10076767F /* flags.cc */; };
+		432884FE1980A8160000F16A /* profiler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B271C197F5CE10076767F /* profiler.cc */; };
+		432884FF1980A8160000F16A /* presenceouttask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2640197F5CC60076767F /* presenceouttask.cc */; };
+		432885001980A8160000F16A /* helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26CE197F5CE10076767F /* helpers.cc */; };
+		432885011980A8160000F16A /* taskparent.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2762197F5CE10076767F /* taskparent.cc */; };
+		432885021980A8160000F16A /* xmlparser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2616197F5CBA0076767F /* xmlparser.cc */; };
+		432885031980A8160000F16A /* iqtask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B262C197F5CC60076767F /* iqtask.cc */; };
+		432885041980A8160000F16A /* worker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B277E197F5CE10076767F /* worker.cc */; };
+		432885051980A8160000F16A /* xmlnsstack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2614197F5CBA0076767F /* xmlnsstack.cc */; };
+		432885061980A8160000F16A /* autodetectproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26A0197F5CE10076767F /* autodetectproxy.cc */; };
+		432885071980A8160000F16A /* httpcommon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26D5197F5CE10076767F /* httpcommon.cc */; };
+		432885081980A8160000F16A /* asynchttprequest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2692197F5CE10076767F /* asynchttprequest.cc */; };
+		432885091980A8160000F16A /* systeminfo.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B275E197F5CE10076767F /* systeminfo.cc */; };
+		4328850A1980A8160000F16A /* constants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2625197F5CC60076767F /* constants.cc */; };
+		4328850B1980A8160000F16A /* messagehandler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26F5197F5CE10076767F /* messagehandler.cc */; };
+		4328850C1980A8160000F16A /* common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26B0197F5CE10076767F /* common.cc */; };
+		4328850D1980A8160000F16A /* opensslidentity.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2710197F5CE10076767F /* opensslidentity.cc */; };
+		4328850E1980A8160000F16A /* proxyserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2722197F5CE10076767F /* proxyserver.cc */; };
+		4328850F1980A8160000F16A /* sslidentity.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B274E197F5CE10076767F /* sslidentity.cc */; };
+		432885101980A8160000F16A /* mucroomuniquehangoutidtask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B263B197F5CC60076767F /* mucroomuniquehangoutidtask.cc */; };
+		432885111980A8160000F16A /* messagedigest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26F3197F5CE10076767F /* messagedigest.cc */; };
+		432885121980A8160000F16A /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26BF197F5CE10076767F /* event.cc */; };
+		432885131980A8160000F16A /* presencereceivetask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2642197F5CC60076767F /* presencereceivetask.cc */; };
+		432885141980A8160000F16A /* discoitemsquerytask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2627197F5CC60076767F /* discoitemsquerytask.cc */; };
+		432885151980A8160000F16A /* xmlelement.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2612197F5CBA0076767F /* xmlelement.cc */; };
+		432885161980A8160000F16A /* fileutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26C7197F5CE10076767F /* fileutils.cc */; };
+		432885171980A8160000F16A /* ratelimiter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2724197F5CE10076767F /* ratelimiter.cc */; };
+		432885181980A8160000F16A /* openssladapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B270C197F5CE10076767F /* openssladapter.cc */; };
+		432885191980A8160000F16A /* firewallsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26CA197F5CE10076767F /* firewallsocketserver.cc */; };
+		4328851A1980A8160000F16A /* crc32.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26B6197F5CE10076767F /* crc32.cc */; };
+		4328851B1980A8160000F16A /* optionsfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2714197F5CE10076767F /* optionsfile.cc */; };
+		4328851C1980A8160000F16A /* urlencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2771197F5CE10076767F /* urlencode.cc */; };
+		4328851D1980A8160000F16A /* qname.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B260C197F5CBA0076767F /* qname.cc */; };
+		4328851E1980A8160000F16A /* receivetask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B264F197F5CC60076767F /* receivetask.cc */; };
+		4328851F1980A8160000F16A /* ratetracker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2726197F5CE10076767F /* ratetracker.cc */; };
+		432885201980A8160000F16A /* win32socketinit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2778197F5CE10076767F /* win32socketinit.cc */; };
+		432885211980A8160000F16A /* libdbusglibsymboltable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26E4197F5CE10076767F /* libdbusglibsymboltable.cc */; };
+		432885221980A8160000F16A /* xmpptask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B266A197F5CC60076767F /* xmpptask.cc */; };
+		432885231980A8160000F16A /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2775197F5CE10076767F /* virtualsocketserver.cc */; };
+		432885241980A8160000F16A /* xmppthread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B266C197F5CC60076767F /* xmppthread.cc */; };
+		432885251980A8160000F16A /* httpbase.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26D0197F5CE10076767F /* httpbase.cc */; };
+		432885261980A8160000F16A /* xmlbuilder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B260E197F5CBA0076767F /* xmlbuilder.cc */; };
+		432885271980A8160000F16A /* socketaddresspair.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2741197F5CE10076767F /* socketaddresspair.cc */; };
+		432885281980A8160000F16A /* proxyinfo.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2720197F5CE10076767F /* proxyinfo.cc */; };
+		432885291980A8160000F16A /* httprequest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26D7197F5CE10076767F /* httprequest.cc */; };
+		4328852A1980A8160000F16A /* xmppsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2666197F5CC60076767F /* xmppsocket.cc */; };
+		4328852B1980A8160000F16A /* saslmechanism.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2656197F5CC60076767F /* saslmechanism.cc */; };
+		4328852C1980A8160000F16A /* sslfingerprint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B274C197F5CE10076767F /* sslfingerprint.cc */; };
+		4328852D1980A8160000F16A /* httpserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26D9197F5CE10076767F /* httpserver.cc */; };
+		4328852E1980A8160000F16A /* pubsubtasks.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B264D197F5CC60076767F /* pubsubtasks.cc */; };
+		4328852F1980A8160000F16A /* nssidentity.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2706197F5CE10076767F /* nssidentity.cc */; };
+		432885301980A8160000F16A /* json.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26E0197F5CE10076767F /* json.cc */; };
+		432885311980A8160000F16A /* checks.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26AE197F5CE10076767F /* checks.cc */; };
+		432885321980A8160000F16A /* natserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26FC197F5CE10076767F /* natserver.cc */; };
+		432885331980A8160000F16A /* versionparsing.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2773197F5CE10076767F /* versionparsing.cc */; };
+		432885341980A8160000F16A /* natsocketfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26FE197F5CE10076767F /* natsocketfactory.cc */; };
+		432885351980A8160000F16A /* filelock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26C5197F5CE10076767F /* filelock.cc */; };
+		432885361980A8160000F16A /* taskrunner.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2764197F5CE10076767F /* taskrunner.cc */; };
+		432885371980A8160000F16A /* mucroomdiscoverytask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2637197F5CC60076767F /* mucroomdiscoverytask.cc */; };
+		432885381980A8160000F16A /* mucroomlookuptask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2639197F5CC60076767F /* mucroomlookuptask.cc */; };
+		432885391980A8160000F16A /* nssstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2708197F5CE10076767F /* nssstreamadapter.cc */; };
+		4328853A1980A8160000F16A /* xmppengineimpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B265F197F5CC60076767F /* xmppengineimpl.cc */; };
+		4328853B1980A8160000F16A /* asyncfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2690197F5CE10076767F /* asyncfile.cc */; };
+		4328853C1980A8160000F16A /* unixfilesystem.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B276F197F5CE10076767F /* unixfilesystem.cc */; };
+		4328853D1980A8160000F16A /* md5.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26F0197F5CE10076767F /* md5.cc */; };
+		4328853E1980A8160000F16A /* rostermoduleimpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2652197F5CC60076767F /* rostermoduleimpl.cc */; };
+		4328853F1980A8160000F16A /* ifaddrs-android.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26DB197F5CE10076767F /* ifaddrs-android.cc */; };
+		432885401980A8160000F16A /* cpumonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26B4197F5CE10076767F /* cpumonitor.cc */; };
+		432885411980A8160000F16A /* diskcache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26BC197F5CE10076767F /* diskcache.cc */; };
+		432885421980A8160000F16A /* socketaddress.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B273F197F5CE10076767F /* socketaddress.cc */; };
+		432885431980A8160000F16A /* base64.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26A4197F5CE10076767F /* base64.cc */; };
+		432885441980A8160000F16A /* asynctcpsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B269B197F5CE10076767F /* asynctcpsocket.cc */; };
+		432885451980A8160000F16A /* xmppengineimpl_iq.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2661197F5CC60076767F /* xmppengineimpl_iq.cc */; };
+		432885461980A8160000F16A /* physicalsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2718197F5CE10076767F /* physicalsocketserver.cc */; };
+		432885471980A8160000F16A /* linuxfdwalk.c in Sources */ = {isa = PBXBuildFile; fileRef = 430B26E9197F5CE10076767F /* linuxfdwalk.c */; };
+		432885481980A8160000F16A /* stringencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B275A197F5CE10076767F /* stringencode.cc */; };
+		432885491980A8160000F16A /* xmlprinter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2618197F5CBA0076767F /* xmlprinter.cc */; };
+		4328854A1980A8160000F16A /* jingleinfotask.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2630197F5CC60076767F /* jingleinfotask.cc */; };
+		4328854B1980A8160000F16A /* nattypes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2700197F5CE10076767F /* nattypes.cc */; };
+		4328854C1980A8160000F16A /* stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2757197F5CE10076767F /* stream.cc */; };
+		4328854D1980A8160000F16A /* latebindingsymboltable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26E2197F5CE10076767F /* latebindingsymboltable.cc */; };
+		4328854E1980A8160000F16A /* network.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2704197F5CE10076767F /* network.cc */; };
+		4328854F1980A8160000F16A /* xmppstanzaparser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2668197F5CC60076767F /* xmppstanzaparser.cc */; };
+		432885501980A8160000F16A /* socketpool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2744197F5CE10076767F /* socketpool.cc */; };
+		432885511980A8160000F16A /* sslsocketfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2751197F5CE10076767F /* sslsocketfactory.cc */; };
+		432885521980A8160000F16A /* nethelpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2702197F5CE10076767F /* nethelpers.cc */; };
+		432885531980A8160000F16A /* stringutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B275C197F5CE10076767F /* stringutils.cc */; };
+		432885541980A8160000F16A /* asyncsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2699197F5CE10076767F /* asyncsocket.cc */; };
+		432885551980A8160000F16A /* linux.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26E7197F5CE10076767F /* linux.cc */; };
+		432885561980A8160000F16A /* multipart.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26FA197F5CE10076767F /* multipart.cc */; };
+		432885571980A8160000F16A /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B272E197F5CE10076767F /* scoped_autorelease_pool.mm */; };
+		432885581980A8160000F16A /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2767197F5CE10076767F /* thread.cc */; };
+		432885591980A8160000F16A /* pathutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2716197F5CE10076767F /* pathutils.cc */; };
+		4328855A1980A8160000F16A /* chatroommoduleimpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2624197F5CC60076767F /* chatroommoduleimpl.cc */; };
+		4328855B1980A8160000F16A /* posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B271A197F5CE10076767F /* posix.cc */; };
+		4328855C1980A8160000F16A /* maccocoathreadhelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B26EE197F5CE10076767F /* maccocoathreadhelper.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4328855D1980A8160000F16A /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2695197F5CE10076767F /* asyncinvoker.cc */; };
+		4328855E1980A8160000F16A /* sharedexclusivelock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2736197F5CE10076767F /* sharedexclusivelock.cc */; };
+		4328855F1980A8160000F16A /* task.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2760197F5CE10076767F /* task.cc */; };
+		432885601980A8160000F16A /* ssladapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2749197F5CE10076767F /* ssladapter.cc */; };
+		432885611980A8160000F16A /* presencestatus.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2644197F5CC60076767F /* presencestatus.cc */; };
+		432885621980A8160000F16A /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26EB197F5CE10076767F /* logging.cc */; };
+		432885631980A8160000F16A /* sslstreamadapterhelper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2755197F5CE10076767F /* sslstreamadapterhelper.cc */; };
+		432885641980A8160000F16A /* xmlconstants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2610197F5CBA0076767F /* xmlconstants.cc */; };
+		432885651980A8160000F16A /* pubsubclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2649197F5CC60076767F /* pubsubclient.cc */; };
+		432885661980A8160000F16A /* dbus.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26BA197F5CE10076767F /* dbus.cc */; };
+		432885671980A8160000F16A /* bytebuffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26AA197F5CE10076767F /* bytebuffer.cc */; };
+		432885681980A8160000F16A /* sha1.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2733197F5CE10076767F /* sha1.cc */; };
+		432885691980A8160000F16A /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2769197F5CE10076767F /* timeutils.cc */; };
+		4328856A1980A8160000F16A /* bandwidthsmoother.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26A2197F5CE10076767F /* bandwidthsmoother.cc */; };
+		4328856B1980A8160000F16A /* pubsubstateclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B264B197F5CC60076767F /* pubsubstateclient.cc */; };
+		4328856D1980A8160000F16A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B233D197F5BA60076767F /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		430B2338197F5BA60076767F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4328856E1980A8160000F16A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -488,6 +633,7 @@
 		430B277D197F5CE10076767F /* winping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winping.h; sourceTree = "<group>"; };
 		430B277E197F5CE10076767F /* worker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = worker.cc; sourceTree = "<group>"; };
 		430B277F197F5CE10076767F /* worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = worker.h; sourceTree = "<group>"; };
+		432885721980A8160000F16A /* liblibjingle_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibjingle_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -496,6 +642,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				430B233E197F5BA60076767F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4328856C1980A8160000F16A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4328856D1980A8160000F16A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +669,7 @@
 			isa = PBXGroup;
 			children = (
 				430B233A197F5BA60076767F /* liblibjingle.a */,
+				432885721980A8160000F16A /* liblibjingle_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -917,6 +1072,23 @@
 			productReference = 430B233A197F5BA60076767F /* liblibjingle.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		432884E31980A8160000F16A /* libjingle_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4328856F1980A8160000F16A /* Build configuration list for PBXNativeTarget "libjingle_osx" */;
+			buildPhases = (
+				432884E41980A8160000F16A /* Sources */,
+				4328856C1980A8160000F16A /* Frameworks */,
+				4328856E1980A8160000F16A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libjingle_osx;
+			productName = libjingle;
+			productReference = 432885721980A8160000F16A /* liblibjingle_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -939,6 +1111,7 @@
 			projectRoot = "";
 			targets = (
 				430B2339197F5BA60076767F /* libjingle */,
+				432884E31980A8160000F16A /* libjingle_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -1086,6 +1259,148 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		432884E41980A8160000F16A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				432884E51980A8160000F16A /* httpclient.cc in Sources */,
+				432884E61980A8160000F16A /* sslstreamadapter.cc in Sources */,
+				432884E71980A8160000F16A /* xmpplogintask.cc in Sources */,
+				432884E81980A8160000F16A /* opensslstreamadapter.cc in Sources */,
+				432884E91980A8160000F16A /* messagequeue.cc in Sources */,
+				432884EA1980A8160000F16A /* timing.cc in Sources */,
+				432884EB1980A8160000F16A /* jid.cc in Sources */,
+				432884EC1980A8160000F16A /* hangoutpubsubclient.cc in Sources */,
+				432884ED1980A8160000F16A /* socketadapters.cc in Sources */,
+				432884EE1980A8160000F16A /* openssldigest.cc in Sources */,
+				432884EF1980A8160000F16A /* socketstream.cc in Sources */,
+				432884F01980A8160000F16A /* transformadapter.cc in Sources */,
+				432884F11980A8160000F16A /* asyncudpsocket.cc in Sources */,
+				432884F21980A8160000F16A /* signalthread.cc in Sources */,
+				432884F31980A8160000F16A /* xmppauth.cc in Sources */,
+				432884F41980A8160000F16A /* moduleimpl.cc in Sources */,
+				432884F51980A8160000F16A /* mucroomconfigtask.cc in Sources */,
+				432884F61980A8160000F16A /* xmpppump.cc in Sources */,
+				432884F71980A8160000F16A /* xmppclient.cc in Sources */,
+				432884F81980A8160000F16A /* pingtask.cc in Sources */,
+				432884F91980A8160000F16A /* iosfilesystem.mm in Sources */,
+				432884FA1980A8160000F16A /* pubsub_task.cc in Sources */,
+				432884FB1980A8160000F16A /* ipaddress.cc in Sources */,
+				432884FC1980A8160000F16A /* proxydetect.cc in Sources */,
+				432884FD1980A8160000F16A /* flags.cc in Sources */,
+				432884FE1980A8160000F16A /* profiler.cc in Sources */,
+				432884FF1980A8160000F16A /* presenceouttask.cc in Sources */,
+				432885001980A8160000F16A /* helpers.cc in Sources */,
+				432885011980A8160000F16A /* taskparent.cc in Sources */,
+				432885021980A8160000F16A /* xmlparser.cc in Sources */,
+				432885031980A8160000F16A /* iqtask.cc in Sources */,
+				432885041980A8160000F16A /* worker.cc in Sources */,
+				432885051980A8160000F16A /* xmlnsstack.cc in Sources */,
+				432885061980A8160000F16A /* autodetectproxy.cc in Sources */,
+				432885071980A8160000F16A /* httpcommon.cc in Sources */,
+				432885081980A8160000F16A /* asynchttprequest.cc in Sources */,
+				432885091980A8160000F16A /* systeminfo.cc in Sources */,
+				4328850A1980A8160000F16A /* constants.cc in Sources */,
+				4328850B1980A8160000F16A /* messagehandler.cc in Sources */,
+				4328850C1980A8160000F16A /* common.cc in Sources */,
+				4328850D1980A8160000F16A /* opensslidentity.cc in Sources */,
+				4328850E1980A8160000F16A /* proxyserver.cc in Sources */,
+				4328850F1980A8160000F16A /* sslidentity.cc in Sources */,
+				432885101980A8160000F16A /* mucroomuniquehangoutidtask.cc in Sources */,
+				432885111980A8160000F16A /* messagedigest.cc in Sources */,
+				432885121980A8160000F16A /* event.cc in Sources */,
+				432885131980A8160000F16A /* presencereceivetask.cc in Sources */,
+				432885141980A8160000F16A /* discoitemsquerytask.cc in Sources */,
+				432885151980A8160000F16A /* xmlelement.cc in Sources */,
+				432885161980A8160000F16A /* fileutils.cc in Sources */,
+				432885171980A8160000F16A /* ratelimiter.cc in Sources */,
+				432885181980A8160000F16A /* openssladapter.cc in Sources */,
+				432885191980A8160000F16A /* firewallsocketserver.cc in Sources */,
+				4328851A1980A8160000F16A /* crc32.cc in Sources */,
+				4328851B1980A8160000F16A /* optionsfile.cc in Sources */,
+				4328851C1980A8160000F16A /* urlencode.cc in Sources */,
+				4328851D1980A8160000F16A /* qname.cc in Sources */,
+				4328851E1980A8160000F16A /* receivetask.cc in Sources */,
+				4328851F1980A8160000F16A /* ratetracker.cc in Sources */,
+				432885201980A8160000F16A /* win32socketinit.cc in Sources */,
+				432885211980A8160000F16A /* libdbusglibsymboltable.cc in Sources */,
+				432885221980A8160000F16A /* xmpptask.cc in Sources */,
+				432885231980A8160000F16A /* virtualsocketserver.cc in Sources */,
+				432885241980A8160000F16A /* xmppthread.cc in Sources */,
+				432885251980A8160000F16A /* httpbase.cc in Sources */,
+				432885261980A8160000F16A /* xmlbuilder.cc in Sources */,
+				432885271980A8160000F16A /* socketaddresspair.cc in Sources */,
+				432885281980A8160000F16A /* proxyinfo.cc in Sources */,
+				432885291980A8160000F16A /* httprequest.cc in Sources */,
+				4328852A1980A8160000F16A /* xmppsocket.cc in Sources */,
+				4328852B1980A8160000F16A /* saslmechanism.cc in Sources */,
+				4328852C1980A8160000F16A /* sslfingerprint.cc in Sources */,
+				4328852D1980A8160000F16A /* httpserver.cc in Sources */,
+				4328852E1980A8160000F16A /* pubsubtasks.cc in Sources */,
+				4328852F1980A8160000F16A /* nssidentity.cc in Sources */,
+				432885301980A8160000F16A /* json.cc in Sources */,
+				432885311980A8160000F16A /* checks.cc in Sources */,
+				432885321980A8160000F16A /* natserver.cc in Sources */,
+				432885331980A8160000F16A /* versionparsing.cc in Sources */,
+				432885341980A8160000F16A /* natsocketfactory.cc in Sources */,
+				432885351980A8160000F16A /* filelock.cc in Sources */,
+				432885361980A8160000F16A /* taskrunner.cc in Sources */,
+				432885371980A8160000F16A /* mucroomdiscoverytask.cc in Sources */,
+				432885381980A8160000F16A /* mucroomlookuptask.cc in Sources */,
+				432885391980A8160000F16A /* nssstreamadapter.cc in Sources */,
+				4328853A1980A8160000F16A /* xmppengineimpl.cc in Sources */,
+				4328853B1980A8160000F16A /* asyncfile.cc in Sources */,
+				4328853C1980A8160000F16A /* unixfilesystem.cc in Sources */,
+				4328853D1980A8160000F16A /* md5.cc in Sources */,
+				4328853E1980A8160000F16A /* rostermoduleimpl.cc in Sources */,
+				4328853F1980A8160000F16A /* ifaddrs-android.cc in Sources */,
+				432885401980A8160000F16A /* cpumonitor.cc in Sources */,
+				432885411980A8160000F16A /* diskcache.cc in Sources */,
+				432885421980A8160000F16A /* socketaddress.cc in Sources */,
+				432885431980A8160000F16A /* base64.cc in Sources */,
+				432885441980A8160000F16A /* asynctcpsocket.cc in Sources */,
+				432885451980A8160000F16A /* xmppengineimpl_iq.cc in Sources */,
+				432885461980A8160000F16A /* physicalsocketserver.cc in Sources */,
+				432885471980A8160000F16A /* linuxfdwalk.c in Sources */,
+				432885481980A8160000F16A /* stringencode.cc in Sources */,
+				432885491980A8160000F16A /* xmlprinter.cc in Sources */,
+				4328854A1980A8160000F16A /* jingleinfotask.cc in Sources */,
+				4328854B1980A8160000F16A /* nattypes.cc in Sources */,
+				4328854C1980A8160000F16A /* stream.cc in Sources */,
+				4328854D1980A8160000F16A /* latebindingsymboltable.cc in Sources */,
+				4328854E1980A8160000F16A /* network.cc in Sources */,
+				4328854F1980A8160000F16A /* xmppstanzaparser.cc in Sources */,
+				432885501980A8160000F16A /* socketpool.cc in Sources */,
+				432885511980A8160000F16A /* sslsocketfactory.cc in Sources */,
+				432885521980A8160000F16A /* nethelpers.cc in Sources */,
+				432885531980A8160000F16A /* stringutils.cc in Sources */,
+				432885541980A8160000F16A /* asyncsocket.cc in Sources */,
+				432885551980A8160000F16A /* linux.cc in Sources */,
+				432885561980A8160000F16A /* multipart.cc in Sources */,
+				432885571980A8160000F16A /* scoped_autorelease_pool.mm in Sources */,
+				432885581980A8160000F16A /* thread.cc in Sources */,
+				432885591980A8160000F16A /* pathutils.cc in Sources */,
+				4328855A1980A8160000F16A /* chatroommoduleimpl.cc in Sources */,
+				4328855B1980A8160000F16A /* posix.cc in Sources */,
+				4328855C1980A8160000F16A /* maccocoathreadhelper.mm in Sources */,
+				4328855D1980A8160000F16A /* asyncinvoker.cc in Sources */,
+				4328855E1980A8160000F16A /* sharedexclusivelock.cc in Sources */,
+				4328855F1980A8160000F16A /* task.cc in Sources */,
+				432885601980A8160000F16A /* ssladapter.cc in Sources */,
+				432885611980A8160000F16A /* presencestatus.cc in Sources */,
+				432885621980A8160000F16A /* logging.cc in Sources */,
+				432885631980A8160000F16A /* sslstreamadapterhelper.cc in Sources */,
+				432885641980A8160000F16A /* xmlconstants.cc in Sources */,
+				432885651980A8160000F16A /* pubsubclient.cc in Sources */,
+				432885661980A8160000F16A /* dbus.cc in Sources */,
+				432885671980A8160000F16A /* bytebuffer.cc in Sources */,
+				432885681980A8160000F16A /* sha1.cc in Sources */,
+				432885691980A8160000F16A /* timeutils.cc in Sources */,
+				4328856A1980A8160000F16A /* bandwidthsmoother.cc in Sources */,
+				4328856B1980A8160000F16A /* pubsubstateclient.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -1122,7 +1437,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -1152,7 +1466,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1205,6 +1518,56 @@
 			};
 			name = Release;
 		};
+		432885701980A8160000F16A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DSTROOT = /tmp/libjingle.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					POSIX,
+					IOS,
+					SSL_USE_NSS,
+					HAVE_NSS_SSL_H,
+					SSL_USE_NSS_RNG,
+					FEATURE_ENABLE_SSL,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = libjingle_osx;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include/json";
+			};
+			name = Debug;
+		};
+		432885711980A8160000F16A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DSTROOT = /tmp/libjingle.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = libjingle_osx;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include/json";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1224,6 +1587,16 @@
 				430B235F197F5BA70076767F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4328856F1980A8160000F16A /* Build configuration list for PBXNativeTarget "libjingle_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				432885701980A8160000F16A /* Debug */,
+				432885711980A8160000F16A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

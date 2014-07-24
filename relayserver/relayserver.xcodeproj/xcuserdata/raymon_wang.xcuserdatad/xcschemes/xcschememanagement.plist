@@ -4,30 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>libjingle_p2p.xcscheme</key>
+		<key>relayserver.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-		<key>libjingle_p2p_osx.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>7</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>430B2ABA197F6CF10076767F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>430B2ACA197F6CF10076767F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4328849319809FF40000F16A</key>
+		<key>4328847619809D1C0000F16A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

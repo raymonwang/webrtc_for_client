@@ -20,6 +20,8 @@
 		430B2AB0197F6C820076767F /* liblibjingle_media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2A20197F69EF0076767F /* liblibjingle_media.a */; };
 		430B2AB1197F6C820076767F /* liblibjingle_sound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B29C7197F690F0076767F /* liblibjingle_sound.a */; };
 		430B2BAA197F6DC70076767F /* liblibjingle_p2p.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2AEA197F6CF20076767F /* liblibjingle_p2p.a */; };
+		430B2BE7197F9C2C0076767F /* peer_connection_client.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2BDF197F9C2C0076767F /* peer_connection_client.cc */; };
+		430B2BF1197F9E790076767F /* rtpeerconnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 430B2BEE197F9E470076767F /* rtpeerconnection.cpp */; };
 		4318D0C4197E344E00D5CADB /* _darwin.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4318D0C3197E344E00D5CADB /* _darwin.cfg */; };
 		4318D0E5197E3B4900D5CADB /* libjsoncpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0DF197E3B4900D5CADB /* libjsoncpp.a */; };
 		4318D0E6197E3B4900D5CADB /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0E0197E3B4900D5CADB /* libnss_static.a */; };
@@ -719,6 +721,13 @@
 			remoteGlobalIDString = 430B2ABB197F6CF10076767F;
 			remoteInfo = libjingle_p2p;
 		};
+		4328848D19809D1C0000F16A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4328848319809D1C0000F16A /* relayserver.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4328847719809D1C0000F16A;
+			remoteInfo = relayserver;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -746,6 +755,10 @@
 		430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_sound.xcodeproj; path = libjingle_sound/libjingle_sound.xcodeproj; sourceTree = "<group>"; };
 		430B2A1A197F69EE0076767F /* libjingle_media.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_media.xcodeproj; path = libjingle_media/libjingle_media.xcodeproj; sourceTree = "<group>"; };
 		430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_p2p.xcodeproj; path = libjingle_p2p/libjingle_p2p.xcodeproj; sourceTree = "<group>"; };
+		430B2BDF197F9C2C0076767F /* peer_connection_client.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peer_connection_client.cc; sourceTree = "<group>"; };
+		430B2BE0197F9C2C0076767F /* peer_connection_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peer_connection_client.h; sourceTree = "<group>"; };
+		430B2BEE197F9E470076767F /* rtpeerconnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtpeerconnection.cpp; sourceTree = "<group>"; };
+		430B2BEF197F9E470076767F /* rtpeerconnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtpeerconnection.h; sourceTree = "<group>"; };
 		4318CEF9197E11A200D5CADB /* plarena.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plarena.h; sourceTree = "<group>"; };
 		4318CEFA197E11A200D5CADB /* plarenas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plarenas.h; sourceTree = "<group>"; };
 		4318CEFB197E11A200D5CADB /* plbase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plbase64.h; sourceTree = "<group>"; };
@@ -1161,6 +1174,7 @@
 		4318D568197E65EA00D5CADB /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = webRTCAPP/libs/libvpx.a; sourceTree = "<group>"; };
 		4318D56B197E668F00D5CADB /* libyuv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libyuv.a; path = webRTCAPP/libs/libyuv.a; sourceTree = "<group>"; };
 		4318D575197E725500D5CADB /* APPRTCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = APPRTCViewController.xib; sourceTree = "<group>"; };
+		4328848319809D1C0000F16A /* relayserver.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = relayserver.xcodeproj; path = relayserver/relayserver.xcodeproj; sourceTree = "<group>"; };
 		43EC01E1197CD1E500E9267B /* channel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cc; sourceTree = "<group>"; };
 		43EC01E2197CD1E500E9267B /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		43EC01E3197CD1E500E9267B /* channel_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_manager.cc; sourceTree = "<group>"; };
@@ -2706,6 +2720,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		430B2BD1197F9C2C0076767F /* peerconnection */ = {
+			isa = PBXGroup;
+			children = (
+				430B2BD2197F9C2C0076767F /* client */,
+				430B2BEE197F9E470076767F /* rtpeerconnection.cpp */,
+				430B2BEF197F9E470076767F /* rtpeerconnection.h */,
+			);
+			path = peerconnection;
+			sourceTree = "<group>";
+		};
+		430B2BD2197F9C2C0076767F /* client */ = {
+			isa = PBXGroup;
+			children = (
+				430B2BDF197F9C2C0076767F /* peer_connection_client.cc */,
+				430B2BE0197F9C2C0076767F /* peer_connection_client.h */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
 		4318CEF6197E11A200D5CADB /* nss */ = {
 			isa = PBXGroup;
 			children = (
@@ -3292,6 +3325,14 @@
 				4318D18F197E4EA000D5CADB /* sqliteicu.h */,
 			);
 			path = icu;
+			sourceTree = "<group>";
+		};
+		4328848419809D1C0000F16A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4328848E19809D1C0000F16A /* relayserver */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		43EC01DE197CD1E500E9267B /* voice_engine */ = {
@@ -4654,6 +4695,7 @@
 		43ECEE86197CA80B00E9267B = {
 			isa = PBXGroup;
 			children = (
+				4328848319809D1C0000F16A /* relayserver.xcodeproj */,
 				430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */,
 				430B2A1A197F69EE0076767F /* libjingle_media.xcodeproj */,
 				430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */,
@@ -4728,6 +4770,7 @@
 		43ECEEC7197CA85000E9267B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				430B2BD1197F9C2C0076767F /* peerconnection */,
 				4318D0F1197E452100D5CADB /* net */,
 				43EC0AAA197CEF1400E9267B /* AppRTCDemo */,
 				43ECFB03197CB59900E9267B /* third_party */,
@@ -5901,6 +5944,10 @@
 					ProductGroup = 430B29C2197F690E0076767F /* Products */;
 					ProjectRef = 430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */;
 				},
+				{
+					ProductGroup = 4328848419809D1C0000F16A /* Products */;
+					ProjectRef = 4328848319809D1C0000F16A /* relayserver.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -5950,6 +5997,13 @@
 			fileType = archive.ar;
 			path = liblibjingle_p2p.a;
 			remoteRef = 430B2AE9197F6CF20076767F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4328848E19809D1C0000F16A /* relayserver */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = relayserver;
+			remoteRef = 4328848D19809D1C0000F16A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -6187,6 +6241,7 @@
 				43ECF9C2197CB37000E9267B /* video_capture_impl.cc in Sources */,
 				43EC0D13197D227500E9267B /* g722_decode.c in Sources */,
 				43EC0D42197D227500E9267B /* lpc_encode.c in Sources */,
+				430B2BE7197F9C2C0076767F /* peer_connection_client.cc in Sources */,
 				43EC0D27197D227500E9267B /* create_augmented_vec.c in Sources */,
 				43EC0D97197D227500E9267B /* background_noise.cc in Sources */,
 				4318D190197E4EA000D5CADB /* icu.c in Sources */,
@@ -6531,6 +6586,7 @@
 				43EC1003197D25A700E9267B /* encoder_settings.cc in Sources */,
 				43EC0D5B197D227500E9267B /* unpack_bits.c in Sources */,
 				43EC0298197CD1E500E9267B /* channel_manager.cc in Sources */,
+				430B2BF1197F9E790076767F /* rtpeerconnection.cpp in Sources */,
 				43EC0D84197D227500E9267B /* acm_pcmu.cc in Sources */,
 				43EC0E59197D231900E9267B /* downsample_fast.c in Sources */,
 				4318D17F197E452100D5CADB /* unix_err.c in Sources */,
