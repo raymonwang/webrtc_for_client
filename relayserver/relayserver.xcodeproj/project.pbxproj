@@ -10,6 +10,7 @@
 		4328847B19809D1C0000F16A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4328847A19809D1C0000F16A /* main.cpp */; };
 		4328847D19809D1C0000F16A /* relayserver.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4328847C19809D1C0000F16A /* relayserver.1 */; };
 		432884E21980A7220000F16A /* liblibjingle_p2p_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432884E11980A7220000F16A /* liblibjingle_p2p_osx.a */; };
+		432885951980B2470000F16A /* liblibjingle_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885941980B2470000F16A /* liblibjingle_osx.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,7 @@
 		4328847A19809D1C0000F16A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4328847C19809D1C0000F16A /* relayserver.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = relayserver.1; sourceTree = "<group>"; };
 		432884E11980A7220000F16A /* liblibjingle_p2p_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibjingle_p2p_osx.a; path = "../DerivedData/webRTCAPP/Build/Products/Debug-iphoneos/liblibjingle_p2p_osx.a"; sourceTree = "<group>"; };
+		432885941980B2470000F16A /* liblibjingle_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibjingle_osx.a; path = ../DerivedData/webRTCAPP/Build/Products/Debug/liblibjingle_osx.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432885951980B2470000F16A /* liblibjingle_osx.a in Frameworks */,
 				432884E21980A7220000F16A /* liblibjingle_p2p_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +50,7 @@
 		4328846E19809D1C0000F16A = {
 			isa = PBXGroup;
 			children = (
+				432885941980B2470000F16A /* liblibjingle_osx.a */,
 				432884E11980A7220000F16A /* liblibjingle_p2p_osx.a */,
 				4328847919809D1C0000F16A /* relayserver */,
 				4328847819809D1C0000F16A /* Products */,
@@ -201,6 +205,7 @@
 		4328848119809D1C0000F16A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -210,7 +215,10 @@
 					"$(inherited)",
 					"/Users/raymon_wang/Documents/Develop/webRTC_xCode/DerivedData/webRTCAPP/Build/Products/Debug-iphoneos",
 					"/Users/raymon_wang/Documents/Develop/webRTC_xCode/libjingle_p2p/build/Debug-iphoneos",
+					/Users/raymon_wang/Documents/Develop/webRTC_xCode/DerivedData/webRTCAPP/Build/Products/Debug,
 				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 			};
@@ -219,11 +227,15 @@
 		4328848219809D1C0000F16A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/raymon_wang/Documents/Develop/webRTC_xCode/DerivedData/webRTCAPP/Build/Products/Debug-iphoneos",
 					"/Users/raymon_wang/Documents/Develop/webRTC_xCode/libjingle_p2p/build/Debug-iphoneos",
+					/Users/raymon_wang/Documents/Develop/webRTC_xCode/DerivedData/webRTCAPP/Build/Products/Debug,
 				);
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 			};
