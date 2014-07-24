@@ -13,11 +13,14 @@
 
 int main(int argc, const char * argv[])
 {
-    if (argc != 3) {
-        std::cerr << "usage: relayserver internal-address external-address"
-        << std::endl;
-        return 1;
-    }
+//    if (argc != 3) {
+//        std::cerr << "usage: relayserver internal-address external-address"
+//        << std::endl;
+//        return 1;
+//    }
+    
+    argv[1] = "192.168.82.191:8080";
+    argv[2] = "192.168.82.191:8080";
     
     talk_base::SocketAddress int_addr;
     if (!int_addr.FromString(argv[1])) {

@@ -721,12 +721,19 @@
 			remoteGlobalIDString = 430B2ABB197F6CF10076767F;
 			remoteInfo = libjingle_p2p;
 		};
-		4328848D19809D1C0000F16A /* PBXContainerItemProxy */ = {
+		432885A11980B8620000F16A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4328848319809D1C0000F16A /* relayserver.xcodeproj */;
+			containerPortal = 430B2363197F5BA70076767F /* libjingle.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 4328847719809D1C0000F16A;
-			remoteInfo = relayserver;
+			remoteGlobalIDString = 432885721980A8160000F16A;
+			remoteInfo = libjingle_osx;
+		};
+		432885A61980B8620000F16A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 432884D219809FF40000F16A;
+			remoteInfo = libjingle_p2p_osx;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -2628,6 +2635,7 @@
 			isa = PBXGroup;
 			children = (
 				430B2369197F5BA70076767F /* liblibjingle.a */,
+				432885A21980B8620000F16A /* liblibjingle_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2716,6 +2724,7 @@
 			isa = PBXGroup;
 			children = (
 				430B2AEA197F6CF20076767F /* liblibjingle_p2p.a */,
+				432885A71980B8620000F16A /* liblibjingle_p2p_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3325,14 +3334,6 @@
 				4318D18F197E4EA000D5CADB /* sqliteicu.h */,
 			);
 			path = icu;
-			sourceTree = "<group>";
-		};
-		4328848419809D1C0000F16A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4328848E19809D1C0000F16A /* relayserver */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		43EC01DE197CD1E500E9267B /* voice_engine */ = {
@@ -5944,10 +5945,6 @@
 					ProductGroup = 430B29C2197F690E0076767F /* Products */;
 					ProjectRef = 430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */;
 				},
-				{
-					ProductGroup = 4328848419809D1C0000F16A /* Products */;
-					ProjectRef = 4328848319809D1C0000F16A /* relayserver.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -5999,11 +5996,18 @@
 			remoteRef = 430B2AE9197F6CF20076767F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4328848E19809D1C0000F16A /* relayserver */ = {
+		432885A21980B8620000F16A /* liblibjingle_osx.a */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = relayserver;
-			remoteRef = 4328848D19809D1C0000F16A /* PBXContainerItemProxy */;
+			fileType = archive.ar;
+			path = liblibjingle_osx.a;
+			remoteRef = 432885A11980B8620000F16A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		432885A71980B8620000F16A /* liblibjingle_p2p_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblibjingle_p2p_osx.a;
+			remoteRef = 432885A61980B8620000F16A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

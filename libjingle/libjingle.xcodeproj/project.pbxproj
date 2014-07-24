@@ -133,7 +133,6 @@
 		430B27D2197F5CE10076767F /* task.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2760197F5CE10076767F /* task.cc */; };
 		430B27D3197F5CE10076767F /* taskparent.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2762197F5CE10076767F /* taskparent.cc */; };
 		430B27D4197F5CE10076767F /* taskrunner.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2764197F5CE10076767F /* taskrunner.cc */; };
-		430B27D5197F5CE10076767F /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2767197F5CE10076767F /* thread.cc */; };
 		430B27D6197F5CE10076767F /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2769197F5CE10076767F /* timeutils.cc */; };
 		430B27D7197F5CE10076767F /* timing.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B276B197F5CE10076767F /* timing.cc */; };
 		430B27D8197F5CE10076767F /* transformadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B276D197F5CE10076767F /* transformadapter.cc */; };
@@ -257,12 +256,10 @@
 		432885541980A8160000F16A /* asyncsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2699197F5CE10076767F /* asyncsocket.cc */; };
 		432885551980A8160000F16A /* linux.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26E7197F5CE10076767F /* linux.cc */; };
 		432885561980A8160000F16A /* multipart.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26FA197F5CE10076767F /* multipart.cc */; };
-		432885571980A8160000F16A /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B272E197F5CE10076767F /* scoped_autorelease_pool.mm */; };
 		432885581980A8160000F16A /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2767197F5CE10076767F /* thread.cc */; };
 		432885591980A8160000F16A /* pathutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2716197F5CE10076767F /* pathutils.cc */; };
 		4328855A1980A8160000F16A /* chatroommoduleimpl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2624197F5CC60076767F /* chatroommoduleimpl.cc */; };
 		4328855B1980A8160000F16A /* posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B271A197F5CE10076767F /* posix.cc */; };
-		4328855C1980A8160000F16A /* maccocoathreadhelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B26EE197F5CE10076767F /* maccocoathreadhelper.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4328855D1980A8160000F16A /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2695197F5CE10076767F /* asyncinvoker.cc */; };
 		4328855E1980A8160000F16A /* sharedexclusivelock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2736197F5CE10076767F /* sharedexclusivelock.cc */; };
 		4328855F1980A8160000F16A /* task.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2760197F5CE10076767F /* task.cc */; };
@@ -278,11 +275,10 @@
 		432885691980A8160000F16A /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2769197F5CE10076767F /* timeutils.cc */; };
 		4328856A1980A8160000F16A /* bandwidthsmoother.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B26A2197F5CE10076767F /* bandwidthsmoother.cc */; };
 		4328856B1980A8160000F16A /* pubsubstateclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B264B197F5CC60076767F /* pubsubstateclient.cc */; };
-		4328856D1980A8160000F16A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B233D197F5BA60076767F /* Foundation.framework */; };
-		4328859A1980B7620000F16A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885991980B7620000F16A /* Security.framework */; };
-		4328859C1980B76A0000F16A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328859B1980B76A0000F16A /* SystemConfiguration.framework */; };
 		4328859D1980B7840000F16A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328859B1980B76A0000F16A /* SystemConfiguration.framework */; };
 		4328859E1980B7880000F16A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885991980B7620000F16A /* Security.framework */; };
+		432885C51980BD520000F16A /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B272E197F5CE10076767F /* scoped_autorelease_pool.mm */; };
+		432885C61980C0020000F16A /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2767197F5CE10076767F /* thread.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -641,6 +637,20 @@
 		432885961980B43B0000F16A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		432885991980B7620000F16A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4328859B1980B76A0000F16A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		432885AD1980BC3E0000F16A /* macasyncsocket.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macasyncsocket.cc; sourceTree = "<group>"; };
+		432885AE1980BC3E0000F16A /* macasyncsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macasyncsocket.h; sourceTree = "<group>"; };
+		432885B01980BC3E0000F16A /* maccocoasocketserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maccocoasocketserver.h; sourceTree = "<group>"; };
+		432885B11980BC3E0000F16A /* maccocoasocketserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = maccocoasocketserver.mm; sourceTree = "<group>"; };
+		432885B21980BC3E0000F16A /* macconversion.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macconversion.cc; sourceTree = "<group>"; };
+		432885B31980BC3E0000F16A /* macconversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macconversion.h; sourceTree = "<group>"; };
+		432885B51980BC3E0000F16A /* macsocketserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macsocketserver.cc; sourceTree = "<group>"; };
+		432885B61980BC3E0000F16A /* macsocketserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macsocketserver.h; sourceTree = "<group>"; };
+		432885B71980BC3E0000F16A /* macutils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macutils.cc; sourceTree = "<group>"; };
+		432885B81980BC3E0000F16A /* macutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macutils.h; sourceTree = "<group>"; };
+		432885BA1980BC3E0000F16A /* macwindowpicker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = macwindowpicker.cc; sourceTree = "<group>"; };
+		432885BB1980BC3E0000F16A /* macwindowpicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macwindowpicker.h; sourceTree = "<group>"; };
+		432886091980D7F20000F16A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		4328860B1980D8460000F16A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -658,9 +668,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4328859C1980B76A0000F16A /* SystemConfiguration.framework in Frameworks */,
-				4328859A1980B7620000F16A /* Security.framework in Frameworks */,
-				4328856D1980A8160000F16A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +695,8 @@
 		430B233C197F5BA60076767F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4328860B1980D8460000F16A /* Carbon.framework */,
+				432886091980D7F20000F16A /* IOKit.framework */,
 				4328859B1980B76A0000F16A /* SystemConfiguration.framework */,
 				432885991980B7620000F16A /* Security.framework */,
 				432885961980B43B0000F16A /* Cocoa.framework */,
@@ -825,6 +834,18 @@
 		430B268F197F5CE10076767F /* base */ = {
 			isa = PBXGroup;
 			children = (
+				432885AD1980BC3E0000F16A /* macasyncsocket.cc */,
+				432885AE1980BC3E0000F16A /* macasyncsocket.h */,
+				432885B01980BC3E0000F16A /* maccocoasocketserver.h */,
+				432885B11980BC3E0000F16A /* maccocoasocketserver.mm */,
+				432885B21980BC3E0000F16A /* macconversion.cc */,
+				432885B31980BC3E0000F16A /* macconversion.h */,
+				432885B51980BC3E0000F16A /* macsocketserver.cc */,
+				432885B61980BC3E0000F16A /* macsocketserver.h */,
+				432885B71980BC3E0000F16A /* macutils.cc */,
+				432885B81980BC3E0000F16A /* macutils.h */,
+				432885BA1980BC3E0000F16A /* macwindowpicker.cc */,
+				432885BB1980BC3E0000F16A /* macwindowpicker.h */,
 				430B2690197F5CE10076767F /* asyncfile.cc */,
 				430B2691197F5CE10076767F /* asyncfile.h */,
 				430B2692197F5CE10076767F /* asynchttprequest.cc */,
@@ -1143,6 +1164,7 @@
 				430B27D7197F5CE10076767F /* timing.cc in Sources */,
 				430B2673197F5CC60076767F /* jid.cc in Sources */,
 				430B2671197F5CC60076767F /* hangoutpubsubclient.cc in Sources */,
+				432885C61980C0020000F16A /* thread.cc in Sources */,
 				430B27C3197F5CE10076767F /* socketadapters.cc in Sources */,
 				430B27B2197F5CE10076767F /* openssldigest.cc in Sources */,
 				430B27C7197F5CE10076767F /* socketstream.cc in Sources */,
@@ -1250,7 +1272,6 @@
 				430B27A1197F5CE10076767F /* linux.cc in Sources */,
 				430B27A9197F5CE10076767F /* multipart.cc in Sources */,
 				430B27BF197F5CE10076767F /* scoped_autorelease_pool.mm in Sources */,
-				430B27D5197F5CE10076767F /* thread.cc in Sources */,
 				430B27B6197F5CE10076767F /* pathutils.cc in Sources */,
 				430B266E197F5CC60076767F /* chatroommoduleimpl.cc in Sources */,
 				430B27B8197F5CE10076767F /* posix.cc in Sources */,
@@ -1277,6 +1298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432885C51980BD520000F16A /* scoped_autorelease_pool.mm in Sources */,
 				432884E51980A8160000F16A /* httpclient.cc in Sources */,
 				432884E61980A8160000F16A /* sslstreamadapter.cc in Sources */,
 				432884E71980A8160000F16A /* xmpplogintask.cc in Sources */,
@@ -1391,12 +1413,10 @@
 				432885541980A8160000F16A /* asyncsocket.cc in Sources */,
 				432885551980A8160000F16A /* linux.cc in Sources */,
 				432885561980A8160000F16A /* multipart.cc in Sources */,
-				432885571980A8160000F16A /* scoped_autorelease_pool.mm in Sources */,
 				432885581980A8160000F16A /* thread.cc in Sources */,
 				432885591980A8160000F16A /* pathutils.cc in Sources */,
 				4328855A1980A8160000F16A /* chatroommoduleimpl.cc in Sources */,
 				4328855B1980A8160000F16A /* posix.cc in Sources */,
-				4328855C1980A8160000F16A /* maccocoathreadhelper.mm in Sources */,
 				4328855D1980A8160000F16A /* asyncinvoker.cc in Sources */,
 				4328855E1980A8160000F16A /* sharedexclusivelock.cc in Sources */,
 				4328855F1980A8160000F16A /* task.cc in Sources */,
@@ -1489,6 +1509,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/libjingle.dst;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1518,6 +1539,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/libjingle.dst;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1535,15 +1557,17 @@
 		432885701980A8160000F16A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/libjingle.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
 					POSIX,
-					IOS,
+					OSX,
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
@@ -1565,8 +1589,11 @@
 		432885711980A8160000F16A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/libjingle.dst;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
