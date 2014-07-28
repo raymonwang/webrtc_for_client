@@ -1,0 +1,550 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43998AC219863072003C5793 /* fec_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7619863071003C5793 /* fec_receiver.h */; };
+		43998AC319863072003C5793 /* receive_statistics.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7719863071003C5793 /* receive_statistics.h */; };
+		43998AC419863072003C5793 /* remote_ntp_time_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7819863071003C5793 /* remote_ntp_time_estimator.h */; };
+		43998AC519863072003C5793 /* rtp_header_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7919863071003C5793 /* rtp_header_parser.h */; };
+		43998AC619863072003C5793 /* rtp_payload_registry.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7A19863071003C5793 /* rtp_payload_registry.h */; };
+		43998AC719863072003C5793 /* rtp_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7B19863071003C5793 /* rtp_receiver.h */; };
+		43998AC819863072003C5793 /* rtp_rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7C19863071003C5793 /* rtp_rtcp.h */; };
+		43998AC919863072003C5793 /* rtp_rtcp_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A7D19863071003C5793 /* rtp_rtcp_defines.h */; };
+		43998ACA19863072003C5793 /* bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A8019863071003C5793 /* bitrate.cc */; };
+		43998ACB19863072003C5793 /* bitrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8119863071003C5793 /* bitrate.h */; };
+		43998ACC19863072003C5793 /* byte_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8219863071003C5793 /* byte_io.h */; };
+		43998ACD19863072003C5793 /* dtmf_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A8319863071003C5793 /* dtmf_queue.cc */; };
+		43998ACE19863072003C5793 /* dtmf_queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8419863071003C5793 /* dtmf_queue.h */; };
+		43998ACF19863072003C5793 /* fec_private_tables_bursty.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8519863071003C5793 /* fec_private_tables_bursty.h */; };
+		43998AD019863072003C5793 /* fec_private_tables_random.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8619863071003C5793 /* fec_private_tables_random.h */; };
+		43998AD119863072003C5793 /* fec_receiver_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A8719863071003C5793 /* fec_receiver_impl.cc */; };
+		43998AD219863072003C5793 /* fec_receiver_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8819863071003C5793 /* fec_receiver_impl.h */; };
+		43998AD319863072003C5793 /* forward_error_correction.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A8919863071003C5793 /* forward_error_correction.cc */; };
+		43998AD419863072003C5793 /* forward_error_correction.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8A19863071003C5793 /* forward_error_correction.h */; };
+		43998AD519863072003C5793 /* forward_error_correction_internal.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A8B19863071003C5793 /* forward_error_correction_internal.cc */; };
+		43998AD619863072003C5793 /* forward_error_correction_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8C19863071003C5793 /* forward_error_correction_internal.h */; };
+		43998AD719863072003C5793 /* mock_rtp_payload_strategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8E19863071003C5793 /* mock_rtp_payload_strategy.h */; };
+		43998AD819863072003C5793 /* producer_fec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A8F19863071003C5793 /* producer_fec.cc */; };
+		43998AD919863072003C5793 /* producer_fec.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9019863071003C5793 /* producer_fec.h */; };
+		43998ADA19863072003C5793 /* receive_statistics_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9119863071003C5793 /* receive_statistics_impl.cc */; };
+		43998ADB19863072003C5793 /* receive_statistics_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9219863071003C5793 /* receive_statistics_impl.h */; };
+		43998ADC19863072003C5793 /* remote_ntp_time_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9319863071003C5793 /* remote_ntp_time_estimator.cc */; };
+		43998ADD19863072003C5793 /* rtcp_packet.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9419863071003C5793 /* rtcp_packet.cc */; };
+		43998ADE19863072003C5793 /* rtcp_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9519863071003C5793 /* rtcp_packet.h */; };
+		43998ADF19863072003C5793 /* rtcp_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9619863071003C5793 /* rtcp_receiver.cc */; };
+		43998AE019863072003C5793 /* rtcp_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9719863071003C5793 /* rtcp_receiver.h */; };
+		43998AE119863072003C5793 /* rtcp_receiver_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9819863071003C5793 /* rtcp_receiver_help.cc */; };
+		43998AE219863072003C5793 /* rtcp_receiver_help.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9919863071003C5793 /* rtcp_receiver_help.h */; };
+		43998AE319863072003C5793 /* rtcp_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9A19863071003C5793 /* rtcp_sender.cc */; };
+		43998AE419863072003C5793 /* rtcp_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9B19863071003C5793 /* rtcp_sender.h */; };
+		43998AE519863072003C5793 /* rtcp_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9C19863071003C5793 /* rtcp_utility.cc */; };
+		43998AE619863072003C5793 /* rtcp_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9D19863071003C5793 /* rtcp_utility.h */; };
+		43998AE719863072003C5793 /* rtp_format_video_generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A9E19863071003C5793 /* rtp_format_video_generic.h */; };
+		43998AE819863072003C5793 /* rtp_format_vp8.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998A9F19863071003C5793 /* rtp_format_vp8.cc */; };
+		43998AE919863072003C5793 /* rtp_format_vp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AA019863071003C5793 /* rtp_format_vp8.h */; };
+		43998AEA19863072003C5793 /* rtp_header_extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AA119863071003C5793 /* rtp_header_extension.cc */; };
+		43998AEB19863072003C5793 /* rtp_header_extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AA219863071003C5793 /* rtp_header_extension.h */; };
+		43998AEC19863072003C5793 /* rtp_header_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AA319863071003C5793 /* rtp_header_parser.cc */; };
+		43998AED19863072003C5793 /* rtp_packet_history.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AA419863072003C5793 /* rtp_packet_history.cc */; };
+		43998AEE19863072003C5793 /* rtp_packet_history.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AA519863072003C5793 /* rtp_packet_history.h */; };
+		43998AEF19863072003C5793 /* rtp_payload_registry.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AA619863072003C5793 /* rtp_payload_registry.cc */; };
+		43998AF019863072003C5793 /* rtp_receiver_audio.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AA719863072003C5793 /* rtp_receiver_audio.cc */; };
+		43998AF119863072003C5793 /* rtp_receiver_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AA819863072003C5793 /* rtp_receiver_audio.h */; };
+		43998AF219863072003C5793 /* rtp_receiver_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AA919863072003C5793 /* rtp_receiver_impl.cc */; };
+		43998AF319863072003C5793 /* rtp_receiver_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AAA19863072003C5793 /* rtp_receiver_impl.h */; };
+		43998AF419863072003C5793 /* rtp_receiver_strategy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AAB19863072003C5793 /* rtp_receiver_strategy.cc */; };
+		43998AF519863072003C5793 /* rtp_receiver_strategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AAC19863072003C5793 /* rtp_receiver_strategy.h */; };
+		43998AF619863072003C5793 /* rtp_receiver_video.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AAD19863072003C5793 /* rtp_receiver_video.cc */; };
+		43998AF719863072003C5793 /* rtp_receiver_video.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AAE19863072003C5793 /* rtp_receiver_video.h */; };
+		43998AF819863072003C5793 /* rtp_rtcp_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AB019863072003C5793 /* rtp_rtcp_config.h */; };
+		43998AF919863072003C5793 /* rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AB119863072003C5793 /* rtp_rtcp_impl.cc */; };
+		43998AFA19863072003C5793 /* rtp_rtcp_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AB219863072003C5793 /* rtp_rtcp_impl.h */; };
+		43998AFB19863072003C5793 /* rtp_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AB319863072003C5793 /* rtp_sender.cc */; };
+		43998AFC19863072003C5793 /* rtp_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AB419863072003C5793 /* rtp_sender.h */; };
+		43998AFD19863072003C5793 /* rtp_sender_audio.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AB519863072003C5793 /* rtp_sender_audio.cc */; };
+		43998AFE19863072003C5793 /* rtp_sender_audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AB619863072003C5793 /* rtp_sender_audio.h */; };
+		43998AFF19863072003C5793 /* rtp_sender_video.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AB719863072003C5793 /* rtp_sender_video.cc */; };
+		43998B0019863072003C5793 /* rtp_sender_video.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AB819863072003C5793 /* rtp_sender_video.h */; };
+		43998B0119863072003C5793 /* rtp_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AB919863072003C5793 /* rtp_utility.cc */; };
+		43998B0219863072003C5793 /* rtp_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998ABA19863072003C5793 /* rtp_utility.h */; };
+		43998B0319863072003C5793 /* ssrc_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998ABB19863072003C5793 /* ssrc_database.cc */; };
+		43998B0419863072003C5793 /* ssrc_database.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998ABC19863072003C5793 /* ssrc_database.h */; };
+		43998B0519863072003C5793 /* tmmbr_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998ABD19863072003C5793 /* tmmbr_help.cc */; };
+		43998B0619863072003C5793 /* tmmbr_help.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998ABE19863072003C5793 /* tmmbr_help.h */; };
+		43998B0719863072003C5793 /* video_codec_information.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998ABF19863072003C5793 /* video_codec_information.h */; };
+		43998B0819863072003C5793 /* vp8_partition_aggregator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998AC019863072003C5793 /* vp8_partition_aggregator.cc */; };
+		43998B0919863072003C5793 /* vp8_partition_aggregator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AC119863072003C5793 /* vp8_partition_aggregator.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43998A6719862D95003C5793 /* librtp_rtcp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtp_rtcp.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43998A7619863071003C5793 /* fec_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fec_receiver.h; sourceTree = "<group>"; };
+		43998A7719863071003C5793 /* receive_statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = receive_statistics.h; sourceTree = "<group>"; };
+		43998A7819863071003C5793 /* remote_ntp_time_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remote_ntp_time_estimator.h; sourceTree = "<group>"; };
+		43998A7919863071003C5793 /* rtp_header_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_header_parser.h; sourceTree = "<group>"; };
+		43998A7A19863071003C5793 /* rtp_payload_registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_payload_registry.h; sourceTree = "<group>"; };
+		43998A7B19863071003C5793 /* rtp_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_receiver.h; sourceTree = "<group>"; };
+		43998A7C19863071003C5793 /* rtp_rtcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_rtcp.h; sourceTree = "<group>"; };
+		43998A7D19863071003C5793 /* rtp_rtcp_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_rtcp_defines.h; sourceTree = "<group>"; };
+		43998A7F19863071003C5793 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		43998A8019863071003C5793 /* bitrate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitrate.cc; sourceTree = "<group>"; };
+		43998A8119863071003C5793 /* bitrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate.h; sourceTree = "<group>"; };
+		43998A8219863071003C5793 /* byte_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = byte_io.h; sourceTree = "<group>"; };
+		43998A8319863071003C5793 /* dtmf_queue.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_queue.cc; sourceTree = "<group>"; };
+		43998A8419863071003C5793 /* dtmf_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_queue.h; sourceTree = "<group>"; };
+		43998A8519863071003C5793 /* fec_private_tables_bursty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fec_private_tables_bursty.h; sourceTree = "<group>"; };
+		43998A8619863071003C5793 /* fec_private_tables_random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fec_private_tables_random.h; sourceTree = "<group>"; };
+		43998A8719863071003C5793 /* fec_receiver_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fec_receiver_impl.cc; sourceTree = "<group>"; };
+		43998A8819863071003C5793 /* fec_receiver_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fec_receiver_impl.h; sourceTree = "<group>"; };
+		43998A8919863071003C5793 /* forward_error_correction.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = forward_error_correction.cc; sourceTree = "<group>"; };
+		43998A8A19863071003C5793 /* forward_error_correction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forward_error_correction.h; sourceTree = "<group>"; };
+		43998A8B19863071003C5793 /* forward_error_correction_internal.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = forward_error_correction_internal.cc; sourceTree = "<group>"; };
+		43998A8C19863071003C5793 /* forward_error_correction_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forward_error_correction_internal.h; sourceTree = "<group>"; };
+		43998A8E19863071003C5793 /* mock_rtp_payload_strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_rtp_payload_strategy.h; sourceTree = "<group>"; };
+		43998A8F19863071003C5793 /* producer_fec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = producer_fec.cc; sourceTree = "<group>"; };
+		43998A9019863071003C5793 /* producer_fec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = producer_fec.h; sourceTree = "<group>"; };
+		43998A9119863071003C5793 /* receive_statistics_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = receive_statistics_impl.cc; sourceTree = "<group>"; };
+		43998A9219863071003C5793 /* receive_statistics_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = receive_statistics_impl.h; sourceTree = "<group>"; };
+		43998A9319863071003C5793 /* remote_ntp_time_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remote_ntp_time_estimator.cc; sourceTree = "<group>"; };
+		43998A9419863071003C5793 /* rtcp_packet.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcp_packet.cc; sourceTree = "<group>"; };
+		43998A9519863071003C5793 /* rtcp_packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcp_packet.h; sourceTree = "<group>"; };
+		43998A9619863071003C5793 /* rtcp_receiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcp_receiver.cc; sourceTree = "<group>"; };
+		43998A9719863071003C5793 /* rtcp_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcp_receiver.h; sourceTree = "<group>"; };
+		43998A9819863071003C5793 /* rtcp_receiver_help.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcp_receiver_help.cc; sourceTree = "<group>"; };
+		43998A9919863071003C5793 /* rtcp_receiver_help.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcp_receiver_help.h; sourceTree = "<group>"; };
+		43998A9A19863071003C5793 /* rtcp_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcp_sender.cc; sourceTree = "<group>"; };
+		43998A9B19863071003C5793 /* rtcp_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcp_sender.h; sourceTree = "<group>"; };
+		43998A9C19863071003C5793 /* rtcp_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcp_utility.cc; sourceTree = "<group>"; };
+		43998A9D19863071003C5793 /* rtcp_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcp_utility.h; sourceTree = "<group>"; };
+		43998A9E19863071003C5793 /* rtp_format_video_generic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_format_video_generic.h; sourceTree = "<group>"; };
+		43998A9F19863071003C5793 /* rtp_format_vp8.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_format_vp8.cc; sourceTree = "<group>"; };
+		43998AA019863071003C5793 /* rtp_format_vp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_format_vp8.h; sourceTree = "<group>"; };
+		43998AA119863071003C5793 /* rtp_header_extension.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_header_extension.cc; sourceTree = "<group>"; };
+		43998AA219863071003C5793 /* rtp_header_extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_header_extension.h; sourceTree = "<group>"; };
+		43998AA319863071003C5793 /* rtp_header_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_header_parser.cc; sourceTree = "<group>"; };
+		43998AA419863072003C5793 /* rtp_packet_history.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_packet_history.cc; sourceTree = "<group>"; };
+		43998AA519863072003C5793 /* rtp_packet_history.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_packet_history.h; sourceTree = "<group>"; };
+		43998AA619863072003C5793 /* rtp_payload_registry.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_payload_registry.cc; sourceTree = "<group>"; };
+		43998AA719863072003C5793 /* rtp_receiver_audio.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_receiver_audio.cc; sourceTree = "<group>"; };
+		43998AA819863072003C5793 /* rtp_receiver_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_receiver_audio.h; sourceTree = "<group>"; };
+		43998AA919863072003C5793 /* rtp_receiver_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_receiver_impl.cc; sourceTree = "<group>"; };
+		43998AAA19863072003C5793 /* rtp_receiver_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_receiver_impl.h; sourceTree = "<group>"; };
+		43998AAB19863072003C5793 /* rtp_receiver_strategy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_receiver_strategy.cc; sourceTree = "<group>"; };
+		43998AAC19863072003C5793 /* rtp_receiver_strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_receiver_strategy.h; sourceTree = "<group>"; };
+		43998AAD19863072003C5793 /* rtp_receiver_video.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_receiver_video.cc; sourceTree = "<group>"; };
+		43998AAE19863072003C5793 /* rtp_receiver_video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_receiver_video.h; sourceTree = "<group>"; };
+		43998AAF19863072003C5793 /* rtp_rtcp.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rtp_rtcp.gypi; sourceTree = "<group>"; };
+		43998AB019863072003C5793 /* rtp_rtcp_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_rtcp_config.h; sourceTree = "<group>"; };
+		43998AB119863072003C5793 /* rtp_rtcp_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_rtcp_impl.cc; sourceTree = "<group>"; };
+		43998AB219863072003C5793 /* rtp_rtcp_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_rtcp_impl.h; sourceTree = "<group>"; };
+		43998AB319863072003C5793 /* rtp_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_sender.cc; sourceTree = "<group>"; };
+		43998AB419863072003C5793 /* rtp_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_sender.h; sourceTree = "<group>"; };
+		43998AB519863072003C5793 /* rtp_sender_audio.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_sender_audio.cc; sourceTree = "<group>"; };
+		43998AB619863072003C5793 /* rtp_sender_audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_sender_audio.h; sourceTree = "<group>"; };
+		43998AB719863072003C5793 /* rtp_sender_video.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_sender_video.cc; sourceTree = "<group>"; };
+		43998AB819863072003C5793 /* rtp_sender_video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_sender_video.h; sourceTree = "<group>"; };
+		43998AB919863072003C5793 /* rtp_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_utility.cc; sourceTree = "<group>"; };
+		43998ABA19863072003C5793 /* rtp_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_utility.h; sourceTree = "<group>"; };
+		43998ABB19863072003C5793 /* ssrc_database.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ssrc_database.cc; sourceTree = "<group>"; };
+		43998ABC19863072003C5793 /* ssrc_database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssrc_database.h; sourceTree = "<group>"; };
+		43998ABD19863072003C5793 /* tmmbr_help.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tmmbr_help.cc; sourceTree = "<group>"; };
+		43998ABE19863072003C5793 /* tmmbr_help.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmmbr_help.h; sourceTree = "<group>"; };
+		43998ABF19863072003C5793 /* video_codec_information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_codec_information.h; sourceTree = "<group>"; };
+		43998AC019863072003C5793 /* vp8_partition_aggregator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_partition_aggregator.cc; sourceTree = "<group>"; };
+		43998AC119863072003C5793 /* vp8_partition_aggregator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_partition_aggregator.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43998A6419862D95003C5793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43998A5E19862D95003C5793 = {
+			isa = PBXGroup;
+			children = (
+				43998A7419863071003C5793 /* rtp_rtcp */,
+				43998A6819862D95003C5793 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43998A6819862D95003C5793 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43998A6719862D95003C5793 /* librtp_rtcp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43998A7419863071003C5793 /* rtp_rtcp */ = {
+			isa = PBXGroup;
+			children = (
+				43998A7519863071003C5793 /* interface */,
+				43998A7E19863071003C5793 /* source */,
+			);
+			name = rtp_rtcp;
+			path = ../webRTCAPP/Classes/webrtc/modules/rtp_rtcp;
+			sourceTree = "<group>";
+		};
+		43998A7519863071003C5793 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				43998A7619863071003C5793 /* fec_receiver.h */,
+				43998A7719863071003C5793 /* receive_statistics.h */,
+				43998A7819863071003C5793 /* remote_ntp_time_estimator.h */,
+				43998A7919863071003C5793 /* rtp_header_parser.h */,
+				43998A7A19863071003C5793 /* rtp_payload_registry.h */,
+				43998A7B19863071003C5793 /* rtp_receiver.h */,
+				43998A7C19863071003C5793 /* rtp_rtcp.h */,
+				43998A7D19863071003C5793 /* rtp_rtcp_defines.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+		43998A7E19863071003C5793 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				43998A7F19863071003C5793 /* Android.mk */,
+				43998A8019863071003C5793 /* bitrate.cc */,
+				43998A8119863071003C5793 /* bitrate.h */,
+				43998A8219863071003C5793 /* byte_io.h */,
+				43998A8319863071003C5793 /* dtmf_queue.cc */,
+				43998A8419863071003C5793 /* dtmf_queue.h */,
+				43998A8519863071003C5793 /* fec_private_tables_bursty.h */,
+				43998A8619863071003C5793 /* fec_private_tables_random.h */,
+				43998A8719863071003C5793 /* fec_receiver_impl.cc */,
+				43998A8819863071003C5793 /* fec_receiver_impl.h */,
+				43998A8919863071003C5793 /* forward_error_correction.cc */,
+				43998A8A19863071003C5793 /* forward_error_correction.h */,
+				43998A8B19863071003C5793 /* forward_error_correction_internal.cc */,
+				43998A8C19863071003C5793 /* forward_error_correction_internal.h */,
+				43998A8D19863071003C5793 /* mock */,
+				43998A8F19863071003C5793 /* producer_fec.cc */,
+				43998A9019863071003C5793 /* producer_fec.h */,
+				43998A9119863071003C5793 /* receive_statistics_impl.cc */,
+				43998A9219863071003C5793 /* receive_statistics_impl.h */,
+				43998A9319863071003C5793 /* remote_ntp_time_estimator.cc */,
+				43998A9419863071003C5793 /* rtcp_packet.cc */,
+				43998A9519863071003C5793 /* rtcp_packet.h */,
+				43998A9619863071003C5793 /* rtcp_receiver.cc */,
+				43998A9719863071003C5793 /* rtcp_receiver.h */,
+				43998A9819863071003C5793 /* rtcp_receiver_help.cc */,
+				43998A9919863071003C5793 /* rtcp_receiver_help.h */,
+				43998A9A19863071003C5793 /* rtcp_sender.cc */,
+				43998A9B19863071003C5793 /* rtcp_sender.h */,
+				43998A9C19863071003C5793 /* rtcp_utility.cc */,
+				43998A9D19863071003C5793 /* rtcp_utility.h */,
+				43998A9E19863071003C5793 /* rtp_format_video_generic.h */,
+				43998A9F19863071003C5793 /* rtp_format_vp8.cc */,
+				43998AA019863071003C5793 /* rtp_format_vp8.h */,
+				43998AA119863071003C5793 /* rtp_header_extension.cc */,
+				43998AA219863071003C5793 /* rtp_header_extension.h */,
+				43998AA319863071003C5793 /* rtp_header_parser.cc */,
+				43998AA419863072003C5793 /* rtp_packet_history.cc */,
+				43998AA519863072003C5793 /* rtp_packet_history.h */,
+				43998AA619863072003C5793 /* rtp_payload_registry.cc */,
+				43998AA719863072003C5793 /* rtp_receiver_audio.cc */,
+				43998AA819863072003C5793 /* rtp_receiver_audio.h */,
+				43998AA919863072003C5793 /* rtp_receiver_impl.cc */,
+				43998AAA19863072003C5793 /* rtp_receiver_impl.h */,
+				43998AAB19863072003C5793 /* rtp_receiver_strategy.cc */,
+				43998AAC19863072003C5793 /* rtp_receiver_strategy.h */,
+				43998AAD19863072003C5793 /* rtp_receiver_video.cc */,
+				43998AAE19863072003C5793 /* rtp_receiver_video.h */,
+				43998AAF19863072003C5793 /* rtp_rtcp.gypi */,
+				43998AB019863072003C5793 /* rtp_rtcp_config.h */,
+				43998AB119863072003C5793 /* rtp_rtcp_impl.cc */,
+				43998AB219863072003C5793 /* rtp_rtcp_impl.h */,
+				43998AB319863072003C5793 /* rtp_sender.cc */,
+				43998AB419863072003C5793 /* rtp_sender.h */,
+				43998AB519863072003C5793 /* rtp_sender_audio.cc */,
+				43998AB619863072003C5793 /* rtp_sender_audio.h */,
+				43998AB719863072003C5793 /* rtp_sender_video.cc */,
+				43998AB819863072003C5793 /* rtp_sender_video.h */,
+				43998AB919863072003C5793 /* rtp_utility.cc */,
+				43998ABA19863072003C5793 /* rtp_utility.h */,
+				43998ABB19863072003C5793 /* ssrc_database.cc */,
+				43998ABC19863072003C5793 /* ssrc_database.h */,
+				43998ABD19863072003C5793 /* tmmbr_help.cc */,
+				43998ABE19863072003C5793 /* tmmbr_help.h */,
+				43998ABF19863072003C5793 /* video_codec_information.h */,
+				43998AC019863072003C5793 /* vp8_partition_aggregator.cc */,
+				43998AC119863072003C5793 /* vp8_partition_aggregator.h */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		43998A8D19863071003C5793 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				43998A8E19863071003C5793 /* mock_rtp_payload_strategy.h */,
+			);
+			path = mock;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43998A6519862D95003C5793 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998AEE19863072003C5793 /* rtp_packet_history.h in Headers */,
+				43998AD219863072003C5793 /* fec_receiver_impl.h in Headers */,
+				43998AE219863072003C5793 /* rtcp_receiver_help.h in Headers */,
+				43998AC219863072003C5793 /* fec_receiver.h in Headers */,
+				43998B0219863072003C5793 /* rtp_utility.h in Headers */,
+				43998AE719863072003C5793 /* rtp_format_video_generic.h in Headers */,
+				43998AC319863072003C5793 /* receive_statistics.h in Headers */,
+				43998AD419863072003C5793 /* forward_error_correction.h in Headers */,
+				43998ACE19863072003C5793 /* dtmf_queue.h in Headers */,
+				43998AD919863072003C5793 /* producer_fec.h in Headers */,
+				43998AF119863072003C5793 /* rtp_receiver_audio.h in Headers */,
+				43998AF719863072003C5793 /* rtp_receiver_video.h in Headers */,
+				43998B0419863072003C5793 /* ssrc_database.h in Headers */,
+				43998ACB19863072003C5793 /* bitrate.h in Headers */,
+				43998AE619863072003C5793 /* rtcp_utility.h in Headers */,
+				43998AC819863072003C5793 /* rtp_rtcp.h in Headers */,
+				43998AFC19863072003C5793 /* rtp_sender.h in Headers */,
+				43998AD719863072003C5793 /* mock_rtp_payload_strategy.h in Headers */,
+				43998AC919863072003C5793 /* rtp_rtcp_defines.h in Headers */,
+				43998AC719863072003C5793 /* rtp_receiver.h in Headers */,
+				43998B0619863072003C5793 /* tmmbr_help.h in Headers */,
+				43998ADE19863072003C5793 /* rtcp_packet.h in Headers */,
+				43998AFE19863072003C5793 /* rtp_sender_audio.h in Headers */,
+				43998ADB19863072003C5793 /* receive_statistics_impl.h in Headers */,
+				43998AF319863072003C5793 /* rtp_receiver_impl.h in Headers */,
+				43998ACC19863072003C5793 /* byte_io.h in Headers */,
+				43998AE919863072003C5793 /* rtp_format_vp8.h in Headers */,
+				43998AF519863072003C5793 /* rtp_receiver_strategy.h in Headers */,
+				43998AF819863072003C5793 /* rtp_rtcp_config.h in Headers */,
+				43998AFA19863072003C5793 /* rtp_rtcp_impl.h in Headers */,
+				43998B0019863072003C5793 /* rtp_sender_video.h in Headers */,
+				43998AD619863072003C5793 /* forward_error_correction_internal.h in Headers */,
+				43998AEB19863072003C5793 /* rtp_header_extension.h in Headers */,
+				43998AC419863072003C5793 /* remote_ntp_time_estimator.h in Headers */,
+				43998AE419863072003C5793 /* rtcp_sender.h in Headers */,
+				43998AC519863072003C5793 /* rtp_header_parser.h in Headers */,
+				43998AC619863072003C5793 /* rtp_payload_registry.h in Headers */,
+				43998AE019863072003C5793 /* rtcp_receiver.h in Headers */,
+				43998B0719863072003C5793 /* video_codec_information.h in Headers */,
+				43998B0919863072003C5793 /* vp8_partition_aggregator.h in Headers */,
+				43998ACF19863072003C5793 /* fec_private_tables_bursty.h in Headers */,
+				43998AD019863072003C5793 /* fec_private_tables_random.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43998A6619862D95003C5793 /* rtp_rtcp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43998A6B19862D95003C5793 /* Build configuration list for PBXNativeTarget "rtp_rtcp" */;
+			buildPhases = (
+				43998A6319862D95003C5793 /* Sources */,
+				43998A6419862D95003C5793 /* Frameworks */,
+				43998A6519862D95003C5793 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rtp_rtcp;
+			productName = rtp_rtcp;
+			productReference = 43998A6719862D95003C5793 /* librtp_rtcp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43998A5F19862D95003C5793 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43998A6219862D95003C5793 /* Build configuration list for PBXProject "rtp_rtcp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43998A5E19862D95003C5793;
+			productRefGroup = 43998A6819862D95003C5793 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43998A6619862D95003C5793 /* rtp_rtcp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43998A6319862D95003C5793 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998AD819863072003C5793 /* producer_fec.cc in Sources */,
+				43998AE519863072003C5793 /* rtcp_utility.cc in Sources */,
+				43998AEC19863072003C5793 /* rtp_header_parser.cc in Sources */,
+				43998AF619863072003C5793 /* rtp_receiver_video.cc in Sources */,
+				43998AF919863072003C5793 /* rtp_rtcp_impl.cc in Sources */,
+				43998AFF19863072003C5793 /* rtp_sender_video.cc in Sources */,
+				43998AE819863072003C5793 /* rtp_format_vp8.cc in Sources */,
+				43998ADD19863072003C5793 /* rtcp_packet.cc in Sources */,
+				43998AFB19863072003C5793 /* rtp_sender.cc in Sources */,
+				43998AD319863072003C5793 /* forward_error_correction.cc in Sources */,
+				43998ADF19863072003C5793 /* rtcp_receiver.cc in Sources */,
+				43998AF219863072003C5793 /* rtp_receiver_impl.cc in Sources */,
+				43998B0519863072003C5793 /* tmmbr_help.cc in Sources */,
+				43998ADC19863072003C5793 /* remote_ntp_time_estimator.cc in Sources */,
+				43998B0119863072003C5793 /* rtp_utility.cc in Sources */,
+				43998AED19863072003C5793 /* rtp_packet_history.cc in Sources */,
+				43998ADA19863072003C5793 /* receive_statistics_impl.cc in Sources */,
+				43998AEA19863072003C5793 /* rtp_header_extension.cc in Sources */,
+				43998ACD19863072003C5793 /* dtmf_queue.cc in Sources */,
+				43998AEF19863072003C5793 /* rtp_payload_registry.cc in Sources */,
+				43998AE319863072003C5793 /* rtcp_sender.cc in Sources */,
+				43998AF019863072003C5793 /* rtp_receiver_audio.cc in Sources */,
+				43998AD119863072003C5793 /* fec_receiver_impl.cc in Sources */,
+				43998ACA19863072003C5793 /* bitrate.cc in Sources */,
+				43998AF419863072003C5793 /* rtp_receiver_strategy.cc in Sources */,
+				43998AE119863072003C5793 /* rtcp_receiver_help.cc in Sources */,
+				43998AFD19863072003C5793 /* rtp_sender_audio.cc in Sources */,
+				43998AD519863072003C5793 /* forward_error_correction_internal.cc in Sources */,
+				43998B0819863072003C5793 /* vp8_partition_aggregator.cc in Sources */,
+				43998B0319863072003C5793 /* ssrc_database.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43998A6919862D95003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43998A6A19862D95003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43998A6C19862D95003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Debug;
+		};
+		43998A6D19862D95003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43998A6219862D95003C5793 /* Build configuration list for PBXProject "rtp_rtcp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998A6919862D95003C5793 /* Debug */,
+				43998A6A19862D95003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43998A6B19862D95003C5793 /* Build configuration list for PBXNativeTarget "rtp_rtcp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998A6C19862D95003C5793 /* Debug */,
+				43998A6D19862D95003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43998A5F19862D95003C5793 /* Project object */;
+}

@@ -1,0 +1,281 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43998B531986328F003C5793 /* media_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B481986328F003C5793 /* media_file.h */; };
+		43998B541986328F003C5793 /* media_file_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B491986328F003C5793 /* media_file_defines.h */; };
+		43998B551986328F003C5793 /* avi_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B4C1986328F003C5793 /* avi_file.cc */; };
+		43998B561986328F003C5793 /* avi_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B4D1986328F003C5793 /* avi_file.h */; };
+		43998B571986328F003C5793 /* media_file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B4F1986328F003C5793 /* media_file_impl.cc */; };
+		43998B581986328F003C5793 /* media_file_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B501986328F003C5793 /* media_file_impl.h */; };
+		43998B591986328F003C5793 /* media_file_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B511986328F003C5793 /* media_file_utility.cc */; };
+		43998B5A1986328F003C5793 /* media_file_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B521986328F003C5793 /* media_file_utility.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43998B391986327B003C5793 /* libmedia_file.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmedia_file.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43998B481986328F003C5793 /* media_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file.h; sourceTree = "<group>"; };
+		43998B491986328F003C5793 /* media_file_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_defines.h; sourceTree = "<group>"; };
+		43998B4B1986328F003C5793 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		43998B4C1986328F003C5793 /* avi_file.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = avi_file.cc; sourceTree = "<group>"; };
+		43998B4D1986328F003C5793 /* avi_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avi_file.h; sourceTree = "<group>"; };
+		43998B4E1986328F003C5793 /* media_file.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = media_file.gypi; sourceTree = "<group>"; };
+		43998B4F1986328F003C5793 /* media_file_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media_file_impl.cc; sourceTree = "<group>"; };
+		43998B501986328F003C5793 /* media_file_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_impl.h; sourceTree = "<group>"; };
+		43998B511986328F003C5793 /* media_file_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media_file_utility.cc; sourceTree = "<group>"; };
+		43998B521986328F003C5793 /* media_file_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_utility.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43998B361986327B003C5793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43998B301986327B003C5793 = {
+			isa = PBXGroup;
+			children = (
+				43998B461986328F003C5793 /* media_file */,
+				43998B3A1986327B003C5793 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43998B3A1986327B003C5793 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43998B391986327B003C5793 /* libmedia_file.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43998B461986328F003C5793 /* media_file */ = {
+			isa = PBXGroup;
+			children = (
+				43998B471986328F003C5793 /* interface */,
+				43998B4A1986328F003C5793 /* source */,
+			);
+			name = media_file;
+			path = ../webRTCAPP/Classes/webrtc/modules/media_file;
+			sourceTree = "<group>";
+		};
+		43998B471986328F003C5793 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				43998B481986328F003C5793 /* media_file.h */,
+				43998B491986328F003C5793 /* media_file_defines.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+		43998B4A1986328F003C5793 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				43998B4B1986328F003C5793 /* Android.mk */,
+				43998B4C1986328F003C5793 /* avi_file.cc */,
+				43998B4D1986328F003C5793 /* avi_file.h */,
+				43998B4E1986328F003C5793 /* media_file.gypi */,
+				43998B4F1986328F003C5793 /* media_file_impl.cc */,
+				43998B501986328F003C5793 /* media_file_impl.h */,
+				43998B511986328F003C5793 /* media_file_utility.cc */,
+				43998B521986328F003C5793 /* media_file_utility.h */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43998B371986327B003C5793 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998B5A1986328F003C5793 /* media_file_utility.h in Headers */,
+				43998B541986328F003C5793 /* media_file_defines.h in Headers */,
+				43998B561986328F003C5793 /* avi_file.h in Headers */,
+				43998B531986328F003C5793 /* media_file.h in Headers */,
+				43998B581986328F003C5793 /* media_file_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43998B381986327B003C5793 /* media_file */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43998B3D1986327B003C5793 /* Build configuration list for PBXNativeTarget "media_file" */;
+			buildPhases = (
+				43998B351986327B003C5793 /* Sources */,
+				43998B361986327B003C5793 /* Frameworks */,
+				43998B371986327B003C5793 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = media_file;
+			productName = media_file;
+			productReference = 43998B391986327B003C5793 /* libmedia_file.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43998B311986327B003C5793 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43998B341986327B003C5793 /* Build configuration list for PBXProject "media_file" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43998B301986327B003C5793;
+			productRefGroup = 43998B3A1986327B003C5793 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43998B381986327B003C5793 /* media_file */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43998B351986327B003C5793 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998B591986328F003C5793 /* media_file_utility.cc in Sources */,
+				43998B571986328F003C5793 /* media_file_impl.cc in Sources */,
+				43998B551986328F003C5793 /* avi_file.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43998B3B1986327B003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43998B3C1986327B003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43998B3E1986327B003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Debug;
+		};
+		43998B3F1986327B003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43998B341986327B003C5793 /* Build configuration list for PBXProject "media_file" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998B3B1986327B003C5793 /* Debug */,
+				43998B3C1986327B003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43998B3D1986327B003C5793 /* Build configuration list for PBXNativeTarget "media_file" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998B3E1986327B003C5793 /* Debug */,
+				43998B3F1986327B003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43998B311986327B003C5793 /* Project object */;
+}

@@ -1,0 +1,259 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43998B29198631F8003C5793 /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B23198631F8003C5793 /* bitrate_controller_impl.cc */; };
+		43998B2A198631F8003C5793 /* bitrate_controller_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B24198631F8003C5793 /* bitrate_controller_impl.h */; };
+		43998B2B198631F8003C5793 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B26198631F8003C5793 /* bitrate_controller.h */; };
+		43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */; };
+		43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43998B14198631D9003C5793 /* libbitrate_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43998B22198631F8003C5793 /* bitrate_controller.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitrate_controller.gypi; sourceTree = "<group>"; };
+		43998B23198631F8003C5793 /* bitrate_controller_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitrate_controller_impl.cc; sourceTree = "<group>"; };
+		43998B24198631F8003C5793 /* bitrate_controller_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller_impl.h; sourceTree = "<group>"; };
+		43998B26198631F8003C5793 /* bitrate_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller.h; sourceTree = "<group>"; };
+		43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_side_bandwidth_estimation.cc; sourceTree = "<group>"; };
+		43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_side_bandwidth_estimation.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43998B11198631D9003C5793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43998B0B198631D9003C5793 = {
+			isa = PBXGroup;
+			children = (
+				43998B21198631F8003C5793 /* bitrate_controller */,
+				43998B15198631D9003C5793 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43998B15198631D9003C5793 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43998B14198631D9003C5793 /* libbitrate_controller.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43998B21198631F8003C5793 /* bitrate_controller */ = {
+			isa = PBXGroup;
+			children = (
+				43998B22198631F8003C5793 /* bitrate_controller.gypi */,
+				43998B23198631F8003C5793 /* bitrate_controller_impl.cc */,
+				43998B24198631F8003C5793 /* bitrate_controller_impl.h */,
+				43998B25198631F8003C5793 /* include */,
+				43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */,
+				43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */,
+			);
+			name = bitrate_controller;
+			path = ../webRTCAPP/Classes/webrtc/modules/bitrate_controller;
+			sourceTree = "<group>";
+		};
+		43998B25198631F8003C5793 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43998B26198631F8003C5793 /* bitrate_controller.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43998B12198631D9003C5793 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */,
+				43998B2B198631F8003C5793 /* bitrate_controller.h in Headers */,
+				43998B2A198631F8003C5793 /* bitrate_controller_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43998B13198631D9003C5793 /* bitrate_controller */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43998B18198631D9003C5793 /* Build configuration list for PBXNativeTarget "bitrate_controller" */;
+			buildPhases = (
+				43998B10198631D9003C5793 /* Sources */,
+				43998B11198631D9003C5793 /* Frameworks */,
+				43998B12198631D9003C5793 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bitrate_controller;
+			productName = bitrate_controller;
+			productReference = 43998B14198631D9003C5793 /* libbitrate_controller.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43998B0C198631D9003C5793 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43998B0F198631D9003C5793 /* Build configuration list for PBXProject "bitrate_controller" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43998B0B198631D9003C5793;
+			productRefGroup = 43998B15198631D9003C5793 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43998B13198631D9003C5793 /* bitrate_controller */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43998B10198631D9003C5793 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998B29198631F8003C5793 /* bitrate_controller_impl.cc in Sources */,
+				43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43998B16198631D9003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43998B17198631D9003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43998B19198631D9003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Debug;
+		};
+		43998B1A198631D9003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43998B0F198631D9003C5793 /* Build configuration list for PBXProject "bitrate_controller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998B16198631D9003C5793 /* Debug */,
+				43998B17198631D9003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43998B18198631D9003C5793 /* Build configuration list for PBXNativeTarget "bitrate_controller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998B19198631D9003C5793 /* Debug */,
+				43998B1A198631D9003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43998B0C198631D9003C5793 /* Project object */;
+}

@@ -1,0 +1,354 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43998B8F19863340003C5793 /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7419863340003C5793 /* audio_frame_operations.h */; };
+		43998B9019863340003C5793 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7519863340003C5793 /* file_player.h */; };
+		43998B9119863340003C5793 /* file_recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7619863340003C5793 /* file_recorder.h */; };
+		43998B9219863340003C5793 /* mock_process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7819863340003C5793 /* mock_process_thread.h */; };
+		43998B9319863340003C5793 /* process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7919863340003C5793 /* process_thread.h */; };
+		43998B9419863340003C5793 /* rtp_dump.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7A19863340003C5793 /* rtp_dump.h */; };
+		43998B9519863340003C5793 /* audio_frame_operations.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B7D19863340003C5793 /* audio_frame_operations.cc */; };
+		43998B9619863340003C5793 /* coder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B7E19863340003C5793 /* coder.cc */; };
+		43998B9719863340003C5793 /* coder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7F19863340003C5793 /* coder.h */; };
+		43998B9819863340003C5793 /* file_player_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8019863340003C5793 /* file_player_impl.cc */; };
+		43998B9919863340003C5793 /* file_player_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8119863340003C5793 /* file_player_impl.h */; };
+		43998B9A19863340003C5793 /* file_recorder_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8219863340003C5793 /* file_recorder_impl.cc */; };
+		43998B9B19863340003C5793 /* file_recorder_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8319863340003C5793 /* file_recorder_impl.h */; };
+		43998B9C19863340003C5793 /* frame_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8419863340003C5793 /* frame_scaler.cc */; };
+		43998B9D19863340003C5793 /* frame_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8519863340003C5793 /* frame_scaler.h */; };
+		43998B9E19863340003C5793 /* process_thread_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8619863340003C5793 /* process_thread_impl.cc */; };
+		43998B9F19863340003C5793 /* process_thread_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8719863340003C5793 /* process_thread_impl.h */; };
+		43998BA019863340003C5793 /* rtp_dump_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8819863340003C5793 /* rtp_dump_impl.cc */; };
+		43998BA119863340003C5793 /* rtp_dump_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8919863340003C5793 /* rtp_dump_impl.h */; };
+		43998BA219863340003C5793 /* video_coder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8B19863340003C5793 /* video_coder.cc */; };
+		43998BA319863340003C5793 /* video_coder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8C19863340003C5793 /* video_coder.h */; };
+		43998BA419863340003C5793 /* video_frames_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8D19863340003C5793 /* video_frames_queue.cc */; };
+		43998BA519863340003C5793 /* video_frames_queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8E19863340003C5793 /* video_frames_queue.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43998B651986332A003C5793 /* libwebrtc_utility.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_utility.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43998B7419863340003C5793 /* audio_frame_operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_operations.h; sourceTree = "<group>"; };
+		43998B7519863340003C5793 /* file_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_player.h; sourceTree = "<group>"; };
+		43998B7619863340003C5793 /* file_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_recorder.h; sourceTree = "<group>"; };
+		43998B7819863340003C5793 /* mock_process_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_process_thread.h; sourceTree = "<group>"; };
+		43998B7919863340003C5793 /* process_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_thread.h; sourceTree = "<group>"; };
+		43998B7A19863340003C5793 /* rtp_dump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_dump.h; sourceTree = "<group>"; };
+		43998B7C19863340003C5793 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		43998B7D19863340003C5793 /* audio_frame_operations.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_frame_operations.cc; sourceTree = "<group>"; };
+		43998B7E19863340003C5793 /* coder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coder.cc; sourceTree = "<group>"; };
+		43998B7F19863340003C5793 /* coder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coder.h; sourceTree = "<group>"; };
+		43998B8019863340003C5793 /* file_player_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_player_impl.cc; sourceTree = "<group>"; };
+		43998B8119863340003C5793 /* file_player_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_player_impl.h; sourceTree = "<group>"; };
+		43998B8219863340003C5793 /* file_recorder_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_recorder_impl.cc; sourceTree = "<group>"; };
+		43998B8319863340003C5793 /* file_recorder_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_recorder_impl.h; sourceTree = "<group>"; };
+		43998B8419863340003C5793 /* frame_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frame_scaler.cc; sourceTree = "<group>"; };
+		43998B8519863340003C5793 /* frame_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_scaler.h; sourceTree = "<group>"; };
+		43998B8619863340003C5793 /* process_thread_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = process_thread_impl.cc; sourceTree = "<group>"; };
+		43998B8719863340003C5793 /* process_thread_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_thread_impl.h; sourceTree = "<group>"; };
+		43998B8819863340003C5793 /* rtp_dump_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_dump_impl.cc; sourceTree = "<group>"; };
+		43998B8919863340003C5793 /* rtp_dump_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_dump_impl.h; sourceTree = "<group>"; };
+		43998B8A19863340003C5793 /* utility.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = utility.gypi; sourceTree = "<group>"; };
+		43998B8B19863340003C5793 /* video_coder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_coder.cc; sourceTree = "<group>"; };
+		43998B8C19863340003C5793 /* video_coder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_coder.h; sourceTree = "<group>"; };
+		43998B8D19863340003C5793 /* video_frames_queue.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_frames_queue.cc; sourceTree = "<group>"; };
+		43998B8E19863340003C5793 /* video_frames_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_frames_queue.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43998B621986332A003C5793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43998B5C1986332A003C5793 = {
+			isa = PBXGroup;
+			children = (
+				43998B7219863340003C5793 /* utility */,
+				43998B661986332A003C5793 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43998B661986332A003C5793 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43998B651986332A003C5793 /* libwebrtc_utility.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43998B7219863340003C5793 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				43998B7319863340003C5793 /* interface */,
+				43998B7B19863340003C5793 /* source */,
+			);
+			name = utility;
+			path = ../webRTCAPP/Classes/webrtc/modules/utility;
+			sourceTree = "<group>";
+		};
+		43998B7319863340003C5793 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				43998B7419863340003C5793 /* audio_frame_operations.h */,
+				43998B7519863340003C5793 /* file_player.h */,
+				43998B7619863340003C5793 /* file_recorder.h */,
+				43998B7719863340003C5793 /* mock */,
+				43998B7919863340003C5793 /* process_thread.h */,
+				43998B7A19863340003C5793 /* rtp_dump.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+		43998B7719863340003C5793 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				43998B7819863340003C5793 /* mock_process_thread.h */,
+			);
+			path = mock;
+			sourceTree = "<group>";
+		};
+		43998B7B19863340003C5793 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				43998B7C19863340003C5793 /* Android.mk */,
+				43998B7D19863340003C5793 /* audio_frame_operations.cc */,
+				43998B7E19863340003C5793 /* coder.cc */,
+				43998B7F19863340003C5793 /* coder.h */,
+				43998B8019863340003C5793 /* file_player_impl.cc */,
+				43998B8119863340003C5793 /* file_player_impl.h */,
+				43998B8219863340003C5793 /* file_recorder_impl.cc */,
+				43998B8319863340003C5793 /* file_recorder_impl.h */,
+				43998B8419863340003C5793 /* frame_scaler.cc */,
+				43998B8519863340003C5793 /* frame_scaler.h */,
+				43998B8619863340003C5793 /* process_thread_impl.cc */,
+				43998B8719863340003C5793 /* process_thread_impl.h */,
+				43998B8819863340003C5793 /* rtp_dump_impl.cc */,
+				43998B8919863340003C5793 /* rtp_dump_impl.h */,
+				43998B8A19863340003C5793 /* utility.gypi */,
+				43998B8B19863340003C5793 /* video_coder.cc */,
+				43998B8C19863340003C5793 /* video_coder.h */,
+				43998B8D19863340003C5793 /* video_frames_queue.cc */,
+				43998B8E19863340003C5793 /* video_frames_queue.h */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43998B631986332A003C5793 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998B8F19863340003C5793 /* audio_frame_operations.h in Headers */,
+				43998B9719863340003C5793 /* coder.h in Headers */,
+				43998B9119863340003C5793 /* file_recorder.h in Headers */,
+				43998B9F19863340003C5793 /* process_thread_impl.h in Headers */,
+				43998B9B19863340003C5793 /* file_recorder_impl.h in Headers */,
+				43998BA119863340003C5793 /* rtp_dump_impl.h in Headers */,
+				43998B9319863340003C5793 /* process_thread.h in Headers */,
+				43998B9419863340003C5793 /* rtp_dump.h in Headers */,
+				43998BA519863340003C5793 /* video_frames_queue.h in Headers */,
+				43998B9D19863340003C5793 /* frame_scaler.h in Headers */,
+				43998B9919863340003C5793 /* file_player_impl.h in Headers */,
+				43998B9219863340003C5793 /* mock_process_thread.h in Headers */,
+				43998BA319863340003C5793 /* video_coder.h in Headers */,
+				43998B9019863340003C5793 /* file_player.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43998B641986332A003C5793 /* webrtc_utility */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43998B691986332A003C5793 /* Build configuration list for PBXNativeTarget "webrtc_utility" */;
+			buildPhases = (
+				43998B611986332A003C5793 /* Sources */,
+				43998B621986332A003C5793 /* Frameworks */,
+				43998B631986332A003C5793 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = webrtc_utility;
+			productName = webrtc_utility;
+			productReference = 43998B651986332A003C5793 /* libwebrtc_utility.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43998B5D1986332A003C5793 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43998B601986332A003C5793 /* Build configuration list for PBXProject "webrtc_utility" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43998B5C1986332A003C5793;
+			productRefGroup = 43998B661986332A003C5793 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43998B641986332A003C5793 /* webrtc_utility */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43998B611986332A003C5793 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43998B9C19863340003C5793 /* frame_scaler.cc in Sources */,
+				43998B9819863340003C5793 /* file_player_impl.cc in Sources */,
+				43998B9519863340003C5793 /* audio_frame_operations.cc in Sources */,
+				43998BA019863340003C5793 /* rtp_dump_impl.cc in Sources */,
+				43998BA419863340003C5793 /* video_frames_queue.cc in Sources */,
+				43998B9E19863340003C5793 /* process_thread_impl.cc in Sources */,
+				43998BA219863340003C5793 /* video_coder.cc in Sources */,
+				43998B9619863340003C5793 /* coder.cc in Sources */,
+				43998B9A19863340003C5793 /* file_recorder_impl.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43998B671986332A003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43998B681986332A003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43998B6A1986332A003C5793 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_MAC,
+					WEBRTC_IOS,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Debug;
+		};
+		43998B6B1986332A003C5793 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43998B601986332A003C5793 /* Build configuration list for PBXProject "webrtc_utility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998B671986332A003C5793 /* Debug */,
+				43998B681986332A003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43998B691986332A003C5793 /* Build configuration list for PBXNativeTarget "webrtc_utility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43998B6A1986332A003C5793 /* Debug */,
+				43998B6B1986332A003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43998B5D1986332A003C5793 /* Project object */;
+}
