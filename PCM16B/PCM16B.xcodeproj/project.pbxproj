@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		430D8F0A198623C6009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8F09198623C6009E763A /* Foundation.framework */; };
+		430D8F3F198623E3009E763A /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F3D198623E3009E763A /* pcm16b.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		430D8F04198623C6009E763A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		430D8F06198623C6009E763A /* libPCM16B.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM16B.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		430D8F09198623C6009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		430D8F0D198623C6009E763A /* PCM16B-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PCM16B-Prefix.pch"; sourceTree = "<group>"; };
+		430D8F17198623C6009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		430D8F1A198623C6009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		430D8F39198623E3009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		430D8F3B198623E3009E763A /* pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcm16b.h; sourceTree = "<group>"; };
+		430D8F3C198623E3009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		430D8F3D198623E3009E763A /* pcm16b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcm16b.c; sourceTree = "<group>"; };
+		430D8F3E198623E3009E763A /* pcm16b.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pcm16b.gypi; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		430D8F03198623C6009E763A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D8F0A198623C6009E763A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		430D8EFD198623C6009E763A = {
+			isa = PBXGroup;
+			children = (
+				430D8F0B198623C6009E763A /* PCM16B */,
+				430D8F08198623C6009E763A /* Frameworks */,
+				430D8F07198623C6009E763A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		430D8F07198623C6009E763A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F06198623C6009E763A /* libPCM16B.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		430D8F08198623C6009E763A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F09198623C6009E763A /* Foundation.framework */,
+				430D8F17198623C6009E763A /* XCTest.framework */,
+				430D8F1A198623C6009E763A /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		430D8F0B198623C6009E763A /* PCM16B */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F38198623E3009E763A /* pcm16b */,
+				430D8F0C198623C6009E763A /* Supporting Files */,
+			);
+			path = PCM16B;
+			sourceTree = "<group>";
+		};
+		430D8F0C198623C6009E763A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F0D198623C6009E763A /* PCM16B-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		430D8F38198623E3009E763A /* pcm16b */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F39198623E3009E763A /* Android.mk */,
+				430D8F3A198623E3009E763A /* include */,
+				430D8F3C198623E3009E763A /* OWNERS */,
+				430D8F3D198623E3009E763A /* pcm16b.c */,
+				430D8F3E198623E3009E763A /* pcm16b.gypi */,
+			);
+			name = pcm16b;
+			path = ../../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b;
+			sourceTree = "<group>";
+		};
+		430D8F3A198623E3009E763A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F3B198623E3009E763A /* pcm16b.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		430D8F05198623C6009E763A /* PCM16B */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 430D8F29198623C6009E763A /* Build configuration list for PBXNativeTarget "PCM16B" */;
+			buildPhases = (
+				430D8F02198623C6009E763A /* Sources */,
+				430D8F03198623C6009E763A /* Frameworks */,
+				430D8F04198623C6009E763A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PCM16B;
+			productName = PCM16B;
+			productReference = 430D8F06198623C6009E763A /* libPCM16B.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		430D8EFE198623C6009E763A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 430D8F01198623C6009E763A /* Build configuration list for PBXProject "PCM16B" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 430D8EFD198623C6009E763A;
+			productRefGroup = 430D8F07198623C6009E763A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				430D8F05198623C6009E763A /* PCM16B */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		430D8F02198623C6009E763A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D8F3F198623E3009E763A /* pcm16b.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		430D8F27198623C6009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		430D8F28198623C6009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		430D8F2A198623C6009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/PCM16B.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PCM16B/PCM16B-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include $(SRCROOT)/../webRTCAPP/Classes/third_party/opus";
+			};
+			name = Debug;
+		};
+		430D8F2B198623C6009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/PCM16B.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PCM16B/PCM16B-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include $(SRCROOT)/../webRTCAPP/Classes/third_party/opus";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		430D8F01198623C6009E763A /* Build configuration list for PBXProject "PCM16B" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D8F27198623C6009E763A /* Debug */,
+				430D8F28198623C6009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		430D8F29198623C6009E763A /* Build configuration list for PBXNativeTarget "PCM16B" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D8F2A198623C6009E763A /* Debug */,
+				430D8F2B198623C6009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 430D8EFE198623C6009E763A /* Project object */;
+}

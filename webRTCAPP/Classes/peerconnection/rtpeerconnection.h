@@ -91,6 +91,7 @@ protected:
     rtc::AsyncResolver*                     _resolver;
     rtc::scoped_ptr<rtc::AsyncSocket>       _control_socket;
     rtc::scoped_ptr<rtc::AsyncSocket>       _data_socket;
+    rtc::scoped_ptr<rtc::AsyncUDPSocket>       _data_udpsocket;
     
     std::string     _onconnect_data;
     std::string     _control_data;

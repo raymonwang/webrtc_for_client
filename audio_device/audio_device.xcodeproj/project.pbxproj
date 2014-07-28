@@ -1,0 +1,361 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		430D9067198628A0009E763A /* audio_device_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D904C198628A0009E763A /* audio_device_buffer.cc */; };
+		430D9068198628A0009E763A /* audio_device_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D904D198628A0009E763A /* audio_device_buffer.h */; };
+		430D9069198628A0009E763A /* audio_device_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D904E198628A0009E763A /* audio_device_config.h */; };
+		430D906A198628A0009E763A /* audio_device_generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D904F198628A0009E763A /* audio_device_generic.cc */; };
+		430D906B198628A0009E763A /* audio_device_generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9050198628A0009E763A /* audio_device_generic.h */; };
+		430D906C198628A0009E763A /* audio_device_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9051198628A0009E763A /* audio_device_impl.cc */; };
+		430D906D198628A0009E763A /* audio_device_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9052198628A0009E763A /* audio_device_impl.h */; };
+		430D906E198628A0009E763A /* audio_device_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9053198628A0009E763A /* audio_device_utility.cc */; };
+		430D906F198628A0009E763A /* audio_device_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9054198628A0009E763A /* audio_device_utility.h */; };
+		430D9070198628A0009E763A /* audio_device_dummy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9056198628A0009E763A /* audio_device_dummy.cc */; };
+		430D9071198628A0009E763A /* audio_device_dummy.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9057198628A0009E763A /* audio_device_dummy.h */; };
+		430D9072198628A0009E763A /* audio_device_utility_dummy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9058198628A0009E763A /* audio_device_utility_dummy.cc */; };
+		430D9073198628A0009E763A /* audio_device_utility_dummy.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9059198628A0009E763A /* audio_device_utility_dummy.h */; };
+		430D9074198628A0009E763A /* file_audio_device.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D905A198628A0009E763A /* file_audio_device.cc */; };
+		430D9075198628A0009E763A /* file_audio_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D905B198628A0009E763A /* file_audio_device.h */; };
+		430D9076198628A0009E763A /* file_audio_device_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D905C198628A0009E763A /* file_audio_device_factory.cc */; };
+		430D9077198628A0009E763A /* file_audio_device_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D905D198628A0009E763A /* file_audio_device_factory.h */; };
+		430D9078198628A0009E763A /* audio_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D905F198628A0009E763A /* audio_device.h */; };
+		430D9079198628A0009E763A /* audio_device_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9060198628A0009E763A /* audio_device_defines.h */; };
+		430D907A198628A0009E763A /* fake_audio_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9061198628A0009E763A /* fake_audio_device.h */; };
+		430D907B198628A0009E763A /* audio_device_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9063198628A0009E763A /* audio_device_ios.h */; };
+		430D907C198628A0009E763A /* audio_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430D9064198628A0009E763A /* audio_device_ios.mm */; };
+		430D907D198628A0009E763A /* audio_device_utility_ios.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9065198628A0009E763A /* audio_device_utility_ios.cc */; };
+		430D907E198628A0009E763A /* audio_device_utility_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9066198628A0009E763A /* audio_device_utility_ios.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		430D903C19862876009E763A /* libaudio_device.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_device.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		430D904A198628A0009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		430D904B198628A0009E763A /* audio_device.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = audio_device.gypi; sourceTree = "<group>"; };
+		430D904C198628A0009E763A /* audio_device_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_buffer.cc; sourceTree = "<group>"; };
+		430D904D198628A0009E763A /* audio_device_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_buffer.h; sourceTree = "<group>"; };
+		430D904E198628A0009E763A /* audio_device_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_config.h; sourceTree = "<group>"; };
+		430D904F198628A0009E763A /* audio_device_generic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_generic.cc; sourceTree = "<group>"; };
+		430D9050198628A0009E763A /* audio_device_generic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_generic.h; sourceTree = "<group>"; };
+		430D9051198628A0009E763A /* audio_device_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_impl.cc; sourceTree = "<group>"; };
+		430D9052198628A0009E763A /* audio_device_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_impl.h; sourceTree = "<group>"; };
+		430D9053198628A0009E763A /* audio_device_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_utility.cc; sourceTree = "<group>"; };
+		430D9054198628A0009E763A /* audio_device_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_utility.h; sourceTree = "<group>"; };
+		430D9056198628A0009E763A /* audio_device_dummy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_dummy.cc; sourceTree = "<group>"; };
+		430D9057198628A0009E763A /* audio_device_dummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_dummy.h; sourceTree = "<group>"; };
+		430D9058198628A0009E763A /* audio_device_utility_dummy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_utility_dummy.cc; sourceTree = "<group>"; };
+		430D9059198628A0009E763A /* audio_device_utility_dummy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_utility_dummy.h; sourceTree = "<group>"; };
+		430D905A198628A0009E763A /* file_audio_device.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_audio_device.cc; sourceTree = "<group>"; };
+		430D905B198628A0009E763A /* file_audio_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_audio_device.h; sourceTree = "<group>"; };
+		430D905C198628A0009E763A /* file_audio_device_factory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_audio_device_factory.cc; sourceTree = "<group>"; };
+		430D905D198628A0009E763A /* file_audio_device_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_audio_device_factory.h; sourceTree = "<group>"; };
+		430D905F198628A0009E763A /* audio_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device.h; sourceTree = "<group>"; };
+		430D9060198628A0009E763A /* audio_device_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_defines.h; sourceTree = "<group>"; };
+		430D9061198628A0009E763A /* fake_audio_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fake_audio_device.h; sourceTree = "<group>"; };
+		430D9063198628A0009E763A /* audio_device_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_ios.h; sourceTree = "<group>"; };
+		430D9064198628A0009E763A /* audio_device_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = audio_device_ios.mm; sourceTree = "<group>"; };
+		430D9065198628A0009E763A /* audio_device_utility_ios.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_utility_ios.cc; sourceTree = "<group>"; };
+		430D9066198628A0009E763A /* audio_device_utility_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_utility_ios.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		430D903919862876009E763A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		430D903319862876009E763A = {
+			isa = PBXGroup;
+			children = (
+				430D9049198628A0009E763A /* audio_device */,
+				430D903D19862876009E763A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		430D903D19862876009E763A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430D903C19862876009E763A /* libaudio_device.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		430D9049198628A0009E763A /* audio_device */ = {
+			isa = PBXGroup;
+			children = (
+				430D904A198628A0009E763A /* Android.mk */,
+				430D904B198628A0009E763A /* audio_device.gypi */,
+				430D904C198628A0009E763A /* audio_device_buffer.cc */,
+				430D904D198628A0009E763A /* audio_device_buffer.h */,
+				430D904E198628A0009E763A /* audio_device_config.h */,
+				430D904F198628A0009E763A /* audio_device_generic.cc */,
+				430D9050198628A0009E763A /* audio_device_generic.h */,
+				430D9051198628A0009E763A /* audio_device_impl.cc */,
+				430D9052198628A0009E763A /* audio_device_impl.h */,
+				430D9053198628A0009E763A /* audio_device_utility.cc */,
+				430D9054198628A0009E763A /* audio_device_utility.h */,
+				430D9055198628A0009E763A /* dummy */,
+				430D905E198628A0009E763A /* include */,
+				430D9062198628A0009E763A /* ios */,
+			);
+			name = audio_device;
+			path = ../webRTCAPP/Classes/webrtc/modules/audio_device;
+			sourceTree = "<group>";
+		};
+		430D9055198628A0009E763A /* dummy */ = {
+			isa = PBXGroup;
+			children = (
+				430D9056198628A0009E763A /* audio_device_dummy.cc */,
+				430D9057198628A0009E763A /* audio_device_dummy.h */,
+				430D9058198628A0009E763A /* audio_device_utility_dummy.cc */,
+				430D9059198628A0009E763A /* audio_device_utility_dummy.h */,
+				430D905A198628A0009E763A /* file_audio_device.cc */,
+				430D905B198628A0009E763A /* file_audio_device.h */,
+				430D905C198628A0009E763A /* file_audio_device_factory.cc */,
+				430D905D198628A0009E763A /* file_audio_device_factory.h */,
+			);
+			path = dummy;
+			sourceTree = "<group>";
+		};
+		430D905E198628A0009E763A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				430D905F198628A0009E763A /* audio_device.h */,
+				430D9060198628A0009E763A /* audio_device_defines.h */,
+				430D9061198628A0009E763A /* fake_audio_device.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		430D9062198628A0009E763A /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				430D9063198628A0009E763A /* audio_device_ios.h */,
+				430D9064198628A0009E763A /* audio_device_ios.mm */,
+				430D9065198628A0009E763A /* audio_device_utility_ios.cc */,
+				430D9066198628A0009E763A /* audio_device_utility_ios.h */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		430D903A19862876009E763A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D906F198628A0009E763A /* audio_device_utility.h in Headers */,
+				430D9075198628A0009E763A /* file_audio_device.h in Headers */,
+				430D9079198628A0009E763A /* audio_device_defines.h in Headers */,
+				430D9068198628A0009E763A /* audio_device_buffer.h in Headers */,
+				430D907B198628A0009E763A /* audio_device_ios.h in Headers */,
+				430D907A198628A0009E763A /* fake_audio_device.h in Headers */,
+				430D906B198628A0009E763A /* audio_device_generic.h in Headers */,
+				430D9077198628A0009E763A /* file_audio_device_factory.h in Headers */,
+				430D907E198628A0009E763A /* audio_device_utility_ios.h in Headers */,
+				430D9069198628A0009E763A /* audio_device_config.h in Headers */,
+				430D9071198628A0009E763A /* audio_device_dummy.h in Headers */,
+				430D9078198628A0009E763A /* audio_device.h in Headers */,
+				430D9073198628A0009E763A /* audio_device_utility_dummy.h in Headers */,
+				430D906D198628A0009E763A /* audio_device_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		430D903B19862876009E763A /* audio_device */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 430D904019862876009E763A /* Build configuration list for PBXNativeTarget "audio_device" */;
+			buildPhases = (
+				430D903819862876009E763A /* Sources */,
+				430D903919862876009E763A /* Frameworks */,
+				430D903A19862876009E763A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = audio_device;
+			productName = audio_device;
+			productReference = 430D903C19862876009E763A /* libaudio_device.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		430D903419862876009E763A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 430D903719862876009E763A /* Build configuration list for PBXProject "audio_device" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 430D903319862876009E763A;
+			productRefGroup = 430D903D19862876009E763A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				430D903B19862876009E763A /* audio_device */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		430D903819862876009E763A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D906A198628A0009E763A /* audio_device_generic.cc in Sources */,
+				430D907D198628A0009E763A /* audio_device_utility_ios.cc in Sources */,
+				430D9067198628A0009E763A /* audio_device_buffer.cc in Sources */,
+				430D9072198628A0009E763A /* audio_device_utility_dummy.cc in Sources */,
+				430D9070198628A0009E763A /* audio_device_dummy.cc in Sources */,
+				430D9074198628A0009E763A /* file_audio_device.cc in Sources */,
+				430D906C198628A0009E763A /* audio_device_impl.cc in Sources */,
+				430D906E198628A0009E763A /* audio_device_utility.cc in Sources */,
+				430D907C198628A0009E763A /* audio_device_ios.mm in Sources */,
+				430D9076198628A0009E763A /* file_audio_device_factory.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		430D903E19862876009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		430D903F19862876009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		430D904119862876009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_MAC,
+					WEBRTC_IOS,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Debug;
+		};
+		430D904219862876009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		430D903719862876009E763A /* Build configuration list for PBXProject "audio_device" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D903E19862876009E763A /* Debug */,
+				430D903F19862876009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		430D904019862876009E763A /* Build configuration list for PBXNativeTarget "audio_device" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D904119862876009E763A /* Debug */,
+				430D904219862876009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 430D903419862876009E763A /* Project object */;
+}

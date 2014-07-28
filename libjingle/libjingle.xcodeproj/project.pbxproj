@@ -1514,12 +1514,12 @@
 				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
 					POSIX,
 					IOS,
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
+					JSONCPP_RELATIVE_PATH,
 					FEATURE_ENABLE_SSL,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -1529,8 +1529,9 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include/json";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include";
 			};
 			name = Debug;
 		};
@@ -1549,8 +1550,9 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include/json";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include";
 			};
 			name = Release;
 		};

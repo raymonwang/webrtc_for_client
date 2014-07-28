@@ -14,6 +14,8 @@
 
 #define kDefaultServerPort  8080;
 
+using namespace rtc;
+
 AsyncSocket* CreateClientSocket(int family) {
     Thread* thread = Thread::Current();
     ASSERT(thread != NULL);

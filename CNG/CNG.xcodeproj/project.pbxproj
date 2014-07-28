@@ -1,0 +1,297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		430D8DEF198620D8009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8DEE198620D8009E763A /* Foundation.framework */; };
+		430D8E26198620F7009E763A /* cng_helpfuns.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E20198620F7009E763A /* cng_helpfuns.c */; };
+		430D8E27198620F7009E763A /* webrtc_cng.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E25198620F7009E763A /* webrtc_cng.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		430D8DE9198620D8009E763A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		430D8DEB198620D8009E763A /* libCNG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCNG.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		430D8DEE198620D8009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		430D8DF2198620D8009E763A /* CNG-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CNG-Prefix.pch"; sourceTree = "<group>"; };
+		430D8DFC198620D8009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		430D8DFF198620D8009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		430D8E1E198620F7009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		430D8E1F198620F7009E763A /* cng.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cng.gypi; sourceTree = "<group>"; };
+		430D8E20198620F7009E763A /* cng_helpfuns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cng_helpfuns.c; sourceTree = "<group>"; };
+		430D8E21198620F7009E763A /* cng_helpfuns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cng_helpfuns.h; sourceTree = "<group>"; };
+		430D8E23198620F7009E763A /* webrtc_cng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtc_cng.h; sourceTree = "<group>"; };
+		430D8E24198620F7009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		430D8E25198620F7009E763A /* webrtc_cng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = webrtc_cng.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		430D8DE8198620D8009E763A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D8DEF198620D8009E763A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		430D8DE2198620D8009E763A = {
+			isa = PBXGroup;
+			children = (
+				430D8DF0198620D8009E763A /* CNG */,
+				430D8DED198620D8009E763A /* Frameworks */,
+				430D8DEC198620D8009E763A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		430D8DEC198620D8009E763A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430D8DEB198620D8009E763A /* libCNG.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		430D8DED198620D8009E763A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				430D8DEE198620D8009E763A /* Foundation.framework */,
+				430D8DFC198620D8009E763A /* XCTest.framework */,
+				430D8DFF198620D8009E763A /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		430D8DF0198620D8009E763A /* CNG */ = {
+			isa = PBXGroup;
+			children = (
+				430D8E1D198620F7009E763A /* cng */,
+				430D8DF1198620D8009E763A /* Supporting Files */,
+			);
+			path = CNG;
+			sourceTree = "<group>";
+		};
+		430D8DF1198620D8009E763A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				430D8DF2198620D8009E763A /* CNG-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		430D8E1D198620F7009E763A /* cng */ = {
+			isa = PBXGroup;
+			children = (
+				430D8E1E198620F7009E763A /* Android.mk */,
+				430D8E1F198620F7009E763A /* cng.gypi */,
+				430D8E20198620F7009E763A /* cng_helpfuns.c */,
+				430D8E21198620F7009E763A /* cng_helpfuns.h */,
+				430D8E22198620F7009E763A /* include */,
+				430D8E24198620F7009E763A /* OWNERS */,
+				430D8E25198620F7009E763A /* webrtc_cng.c */,
+			);
+			name = cng;
+			path = ../../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng;
+			sourceTree = "<group>";
+		};
+		430D8E22198620F7009E763A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				430D8E23198620F7009E763A /* webrtc_cng.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		430D8DEA198620D8009E763A /* CNG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 430D8E0E198620D8009E763A /* Build configuration list for PBXNativeTarget "CNG" */;
+			buildPhases = (
+				430D8DE7198620D8009E763A /* Sources */,
+				430D8DE8198620D8009E763A /* Frameworks */,
+				430D8DE9198620D8009E763A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CNG;
+			productName = CNG;
+			productReference = 430D8DEB198620D8009E763A /* libCNG.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		430D8DE3198620D8009E763A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 430D8DE6198620D8009E763A /* Build configuration list for PBXProject "CNG" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 430D8DE2198620D8009E763A;
+			productRefGroup = 430D8DEC198620D8009E763A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				430D8DEA198620D8009E763A /* CNG */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		430D8DE7198620D8009E763A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D8E26198620F7009E763A /* cng_helpfuns.c in Sources */,
+				430D8E27198620F7009E763A /* webrtc_cng.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		430D8E0C198620D8009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include";
+			};
+			name = Debug;
+		};
+		430D8E0D198620D8009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		430D8E0F198620D8009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/CNG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CNG/CNG-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		430D8E10198620D8009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/CNG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CNG/CNG-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		430D8DE6198620D8009E763A /* Build configuration list for PBXProject "CNG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D8E0C198620D8009E763A /* Debug */,
+				430D8E0D198620D8009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		430D8E0E198620D8009E763A /* Build configuration list for PBXNativeTarget "CNG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D8E0F198620D8009E763A /* Debug */,
+				430D8E10198620D8009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 430D8DE3198620D8009E763A /* Project object */;
+}

@@ -1,0 +1,567 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		430D8FAC198624BE009E763A /* accelerate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F59198624BD009E763A /* accelerate.cc */; };
+		430D8FAD198624BE009E763A /* accelerate.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F5A198624BD009E763A /* accelerate.h */; };
+		430D8FAE198624BE009E763A /* audio_classifier.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F5B198624BD009E763A /* audio_classifier.cc */; };
+		430D8FAF198624BE009E763A /* audio_classifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F5C198624BD009E763A /* audio_classifier.h */; };
+		430D8FB0198624BE009E763A /* audio_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F5D198624BD009E763A /* audio_decoder.cc */; };
+		430D8FB1198624BE009E763A /* audio_decoder_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F5E198624BD009E763A /* audio_decoder_impl.cc */; };
+		430D8FB2198624BE009E763A /* audio_decoder_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F5F198624BD009E763A /* audio_decoder_impl.h */; };
+		430D8FB3198624BE009E763A /* audio_multi_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F60198624BD009E763A /* audio_multi_vector.cc */; };
+		430D8FB4198624BE009E763A /* audio_multi_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F61198624BD009E763A /* audio_multi_vector.h */; };
+		430D8FB5198624BE009E763A /* audio_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F62198624BD009E763A /* audio_vector.cc */; };
+		430D8FB6198624BE009E763A /* audio_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F63198624BD009E763A /* audio_vector.h */; };
+		430D8FB7198624BE009E763A /* background_noise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F64198624BD009E763A /* background_noise.cc */; };
+		430D8FB8198624BE009E763A /* background_noise.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F65198624BD009E763A /* background_noise.h */; };
+		430D8FB9198624BE009E763A /* buffer_level_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F66198624BD009E763A /* buffer_level_filter.cc */; };
+		430D8FBA198624BE009E763A /* buffer_level_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F67198624BD009E763A /* buffer_level_filter.h */; };
+		430D8FBB198624BE009E763A /* comfort_noise.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F68198624BD009E763A /* comfort_noise.cc */; };
+		430D8FBC198624BE009E763A /* comfort_noise.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F69198624BD009E763A /* comfort_noise.h */; };
+		430D8FBD198624BE009E763A /* decision_logic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F6A198624BD009E763A /* decision_logic.cc */; };
+		430D8FBE198624BE009E763A /* decision_logic.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F6B198624BD009E763A /* decision_logic.h */; };
+		430D8FBF198624BE009E763A /* decision_logic_fax.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F6C198624BD009E763A /* decision_logic_fax.cc */; };
+		430D8FC0198624BE009E763A /* decision_logic_fax.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F6D198624BD009E763A /* decision_logic_fax.h */; };
+		430D8FC1198624BE009E763A /* decision_logic_normal.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F6E198624BD009E763A /* decision_logic_normal.cc */; };
+		430D8FC2198624BE009E763A /* decision_logic_normal.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F6F198624BD009E763A /* decision_logic_normal.h */; };
+		430D8FC3198624BE009E763A /* decoder_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F70198624BD009E763A /* decoder_database.cc */; };
+		430D8FC4198624BE009E763A /* decoder_database.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F71198624BD009E763A /* decoder_database.h */; };
+		430D8FC5198624BE009E763A /* defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F72198624BD009E763A /* defines.h */; };
+		430D8FC6198624BE009E763A /* delay_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F73198624BD009E763A /* delay_manager.cc */; };
+		430D8FC7198624BE009E763A /* delay_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F74198624BD009E763A /* delay_manager.h */; };
+		430D8FC8198624BE009E763A /* delay_peak_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F75198624BD009E763A /* delay_peak_detector.cc */; };
+		430D8FC9198624BE009E763A /* delay_peak_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F76198624BD009E763A /* delay_peak_detector.h */; };
+		430D8FCA198624BE009E763A /* dsp_helper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F77198624BD009E763A /* dsp_helper.cc */; };
+		430D8FCB198624BE009E763A /* dsp_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F78198624BD009E763A /* dsp_helper.h */; };
+		430D8FCC198624BE009E763A /* dtmf_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F79198624BD009E763A /* dtmf_buffer.cc */; };
+		430D8FCD198624BE009E763A /* dtmf_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F7A198624BD009E763A /* dtmf_buffer.h */; };
+		430D8FCE198624BE009E763A /* dtmf_tone_generator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F7B198624BD009E763A /* dtmf_tone_generator.cc */; };
+		430D8FCF198624BE009E763A /* dtmf_tone_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F7C198624BD009E763A /* dtmf_tone_generator.h */; };
+		430D8FD0198624BE009E763A /* expand.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F7D198624BD009E763A /* expand.cc */; };
+		430D8FD1198624BE009E763A /* expand.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F7E198624BD009E763A /* expand.h */; };
+		430D8FD2198624BE009E763A /* audio_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F80198624BD009E763A /* audio_decoder.h */; };
+		430D8FD3198624BE009E763A /* neteq.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F81198624BD009E763A /* neteq.h */; };
+		430D8FD4198624BE009E763A /* merge.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F82198624BD009E763A /* merge.cc */; };
+		430D8FD5198624BE009E763A /* merge.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F83198624BD009E763A /* merge.h */; };
+		430D8FD6198624BE009E763A /* mock_audio_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F85198624BD009E763A /* mock_audio_decoder.h */; };
+		430D8FD7198624BE009E763A /* mock_audio_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F86198624BD009E763A /* mock_audio_vector.h */; };
+		430D8FD8198624BE009E763A /* mock_buffer_level_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F87198624BD009E763A /* mock_buffer_level_filter.h */; };
+		430D8FD9198624BE009E763A /* mock_decoder_database.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F88198624BD009E763A /* mock_decoder_database.h */; };
+		430D8FDA198624BE009E763A /* mock_delay_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F89198624BD009E763A /* mock_delay_manager.h */; };
+		430D8FDB198624BE009E763A /* mock_delay_peak_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F8A198624BD009E763A /* mock_delay_peak_detector.h */; };
+		430D8FDC198624BE009E763A /* mock_dtmf_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F8B198624BD009E763A /* mock_dtmf_buffer.h */; };
+		430D8FDD198624BE009E763A /* mock_dtmf_tone_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F8C198624BD009E763A /* mock_dtmf_tone_generator.h */; };
+		430D8FDE198624BE009E763A /* mock_external_decoder_pcm16b.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F8D198624BD009E763A /* mock_external_decoder_pcm16b.h */; };
+		430D8FDF198624BE009E763A /* mock_packet_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F8E198624BD009E763A /* mock_packet_buffer.h */; };
+		430D8FE0198624BE009E763A /* mock_payload_splitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F8F198624BD009E763A /* mock_payload_splitter.h */; };
+		430D8FE1198624BE009E763A /* neteq.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F90198624BD009E763A /* neteq.cc */; };
+		430D8FE2198624BE009E763A /* neteq_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F92198624BE009E763A /* neteq_impl.cc */; };
+		430D8FE3198624BE009E763A /* neteq_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F93198624BE009E763A /* neteq_impl.h */; };
+		430D8FE4198624BE009E763A /* normal.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F95198624BE009E763A /* normal.cc */; };
+		430D8FE5198624BE009E763A /* normal.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F96198624BE009E763A /* normal.h */; };
+		430D8FE6198624BE009E763A /* packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F97198624BE009E763A /* packet.h */; };
+		430D8FE7198624BE009E763A /* packet_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F98198624BE009E763A /* packet_buffer.cc */; };
+		430D8FE8198624BE009E763A /* packet_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F99198624BE009E763A /* packet_buffer.h */; };
+		430D8FE9198624BE009E763A /* payload_splitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F9A198624BE009E763A /* payload_splitter.cc */; };
+		430D8FEA198624BE009E763A /* payload_splitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F9B198624BE009E763A /* payload_splitter.h */; };
+		430D8FEB198624BE009E763A /* post_decode_vad.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F9C198624BE009E763A /* post_decode_vad.cc */; };
+		430D8FEC198624BE009E763A /* post_decode_vad.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F9D198624BE009E763A /* post_decode_vad.h */; };
+		430D8FED198624BE009E763A /* preemptive_expand.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F9E198624BE009E763A /* preemptive_expand.cc */; };
+		430D8FEE198624BE009E763A /* preemptive_expand.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F9F198624BE009E763A /* preemptive_expand.h */; };
+		430D8FEF198624BE009E763A /* random_vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FA0198624BE009E763A /* random_vector.cc */; };
+		430D8FF0198624BE009E763A /* random_vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FA1198624BE009E763A /* random_vector.h */; };
+		430D8FF1198624BE009E763A /* rtcp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FA2198624BE009E763A /* rtcp.cc */; };
+		430D8FF2198624BE009E763A /* rtcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FA3198624BE009E763A /* rtcp.h */; };
+		430D8FF3198624BE009E763A /* statistics_calculator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FA4198624BE009E763A /* statistics_calculator.cc */; };
+		430D8FF4198624BE009E763A /* statistics_calculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FA5198624BE009E763A /* statistics_calculator.h */; };
+		430D8FF5198624BE009E763A /* sync_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FA6198624BE009E763A /* sync_buffer.cc */; };
+		430D8FF6198624BE009E763A /* sync_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FA7198624BE009E763A /* sync_buffer.h */; };
+		430D8FF7198624BE009E763A /* time_stretch.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FA8198624BE009E763A /* time_stretch.cc */; };
+		430D8FF8198624BE009E763A /* time_stretch.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FA9198624BE009E763A /* time_stretch.h */; };
+		430D8FF9198624BE009E763A /* timestamp_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FAA198624BE009E763A /* timestamp_scaler.cc */; };
+		430D8FFA198624BE009E763A /* timestamp_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FAB198624BE009E763A /* timestamp_scaler.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		430D8F4B19862490009E763A /* libneteq.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libneteq.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		430D8F59198624BD009E763A /* accelerate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = accelerate.cc; sourceTree = "<group>"; };
+		430D8F5A198624BD009E763A /* accelerate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accelerate.h; sourceTree = "<group>"; };
+		430D8F5B198624BD009E763A /* audio_classifier.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_classifier.cc; sourceTree = "<group>"; };
+		430D8F5C198624BD009E763A /* audio_classifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_classifier.h; sourceTree = "<group>"; };
+		430D8F5D198624BD009E763A /* audio_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder.cc; sourceTree = "<group>"; };
+		430D8F5E198624BD009E763A /* audio_decoder_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder_impl.cc; sourceTree = "<group>"; };
+		430D8F5F198624BD009E763A /* audio_decoder_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder_impl.h; sourceTree = "<group>"; };
+		430D8F60198624BD009E763A /* audio_multi_vector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_multi_vector.cc; sourceTree = "<group>"; };
+		430D8F61198624BD009E763A /* audio_multi_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_multi_vector.h; sourceTree = "<group>"; };
+		430D8F62198624BD009E763A /* audio_vector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_vector.cc; sourceTree = "<group>"; };
+		430D8F63198624BD009E763A /* audio_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_vector.h; sourceTree = "<group>"; };
+		430D8F64198624BD009E763A /* background_noise.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = background_noise.cc; sourceTree = "<group>"; };
+		430D8F65198624BD009E763A /* background_noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = background_noise.h; sourceTree = "<group>"; };
+		430D8F66198624BD009E763A /* buffer_level_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer_level_filter.cc; sourceTree = "<group>"; };
+		430D8F67198624BD009E763A /* buffer_level_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer_level_filter.h; sourceTree = "<group>"; };
+		430D8F68198624BD009E763A /* comfort_noise.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = comfort_noise.cc; sourceTree = "<group>"; };
+		430D8F69198624BD009E763A /* comfort_noise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = comfort_noise.h; sourceTree = "<group>"; };
+		430D8F6A198624BD009E763A /* decision_logic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decision_logic.cc; sourceTree = "<group>"; };
+		430D8F6B198624BD009E763A /* decision_logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decision_logic.h; sourceTree = "<group>"; };
+		430D8F6C198624BD009E763A /* decision_logic_fax.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decision_logic_fax.cc; sourceTree = "<group>"; };
+		430D8F6D198624BD009E763A /* decision_logic_fax.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decision_logic_fax.h; sourceTree = "<group>"; };
+		430D8F6E198624BD009E763A /* decision_logic_normal.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decision_logic_normal.cc; sourceTree = "<group>"; };
+		430D8F6F198624BD009E763A /* decision_logic_normal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decision_logic_normal.h; sourceTree = "<group>"; };
+		430D8F70198624BD009E763A /* decoder_database.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decoder_database.cc; sourceTree = "<group>"; };
+		430D8F71198624BD009E763A /* decoder_database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decoder_database.h; sourceTree = "<group>"; };
+		430D8F72198624BD009E763A /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		430D8F73198624BD009E763A /* delay_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay_manager.cc; sourceTree = "<group>"; };
+		430D8F74198624BD009E763A /* delay_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay_manager.h; sourceTree = "<group>"; };
+		430D8F75198624BD009E763A /* delay_peak_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay_peak_detector.cc; sourceTree = "<group>"; };
+		430D8F76198624BD009E763A /* delay_peak_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay_peak_detector.h; sourceTree = "<group>"; };
+		430D8F77198624BD009E763A /* dsp_helper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsp_helper.cc; sourceTree = "<group>"; };
+		430D8F78198624BD009E763A /* dsp_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsp_helper.h; sourceTree = "<group>"; };
+		430D8F79198624BD009E763A /* dtmf_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_buffer.cc; sourceTree = "<group>"; };
+		430D8F7A198624BD009E763A /* dtmf_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_buffer.h; sourceTree = "<group>"; };
+		430D8F7B198624BD009E763A /* dtmf_tone_generator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_tone_generator.cc; sourceTree = "<group>"; };
+		430D8F7C198624BD009E763A /* dtmf_tone_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_tone_generator.h; sourceTree = "<group>"; };
+		430D8F7D198624BD009E763A /* expand.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = expand.cc; sourceTree = "<group>"; };
+		430D8F7E198624BD009E763A /* expand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expand.h; sourceTree = "<group>"; };
+		430D8F80198624BD009E763A /* audio_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder.h; sourceTree = "<group>"; };
+		430D8F81198624BD009E763A /* neteq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neteq.h; sourceTree = "<group>"; };
+		430D8F82198624BD009E763A /* merge.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = merge.cc; sourceTree = "<group>"; };
+		430D8F83198624BD009E763A /* merge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = merge.h; sourceTree = "<group>"; };
+		430D8F85198624BD009E763A /* mock_audio_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_audio_decoder.h; sourceTree = "<group>"; };
+		430D8F86198624BD009E763A /* mock_audio_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_audio_vector.h; sourceTree = "<group>"; };
+		430D8F87198624BD009E763A /* mock_buffer_level_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_buffer_level_filter.h; sourceTree = "<group>"; };
+		430D8F88198624BD009E763A /* mock_decoder_database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_decoder_database.h; sourceTree = "<group>"; };
+		430D8F89198624BD009E763A /* mock_delay_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_delay_manager.h; sourceTree = "<group>"; };
+		430D8F8A198624BD009E763A /* mock_delay_peak_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_delay_peak_detector.h; sourceTree = "<group>"; };
+		430D8F8B198624BD009E763A /* mock_dtmf_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_dtmf_buffer.h; sourceTree = "<group>"; };
+		430D8F8C198624BD009E763A /* mock_dtmf_tone_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_dtmf_tone_generator.h; sourceTree = "<group>"; };
+		430D8F8D198624BD009E763A /* mock_external_decoder_pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_external_decoder_pcm16b.h; sourceTree = "<group>"; };
+		430D8F8E198624BD009E763A /* mock_packet_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_packet_buffer.h; sourceTree = "<group>"; };
+		430D8F8F198624BD009E763A /* mock_payload_splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_payload_splitter.h; sourceTree = "<group>"; };
+		430D8F90198624BD009E763A /* neteq.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neteq.cc; sourceTree = "<group>"; };
+		430D8F91198624BE009E763A /* neteq.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = neteq.gypi; sourceTree = "<group>"; };
+		430D8F92198624BE009E763A /* neteq_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neteq_impl.cc; sourceTree = "<group>"; };
+		430D8F93198624BE009E763A /* neteq_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neteq_impl.h; sourceTree = "<group>"; };
+		430D8F94198624BE009E763A /* neteq_tests.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = neteq_tests.gypi; sourceTree = "<group>"; };
+		430D8F95198624BE009E763A /* normal.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = normal.cc; sourceTree = "<group>"; };
+		430D8F96198624BE009E763A /* normal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = normal.h; sourceTree = "<group>"; };
+		430D8F97198624BE009E763A /* packet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packet.h; sourceTree = "<group>"; };
+		430D8F98198624BE009E763A /* packet_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = packet_buffer.cc; sourceTree = "<group>"; };
+		430D8F99198624BE009E763A /* packet_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packet_buffer.h; sourceTree = "<group>"; };
+		430D8F9A198624BE009E763A /* payload_splitter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = payload_splitter.cc; sourceTree = "<group>"; };
+		430D8F9B198624BE009E763A /* payload_splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payload_splitter.h; sourceTree = "<group>"; };
+		430D8F9C198624BE009E763A /* post_decode_vad.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = post_decode_vad.cc; sourceTree = "<group>"; };
+		430D8F9D198624BE009E763A /* post_decode_vad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = post_decode_vad.h; sourceTree = "<group>"; };
+		430D8F9E198624BE009E763A /* preemptive_expand.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = preemptive_expand.cc; sourceTree = "<group>"; };
+		430D8F9F198624BE009E763A /* preemptive_expand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = preemptive_expand.h; sourceTree = "<group>"; };
+		430D8FA0198624BE009E763A /* random_vector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random_vector.cc; sourceTree = "<group>"; };
+		430D8FA1198624BE009E763A /* random_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = random_vector.h; sourceTree = "<group>"; };
+		430D8FA2198624BE009E763A /* rtcp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcp.cc; sourceTree = "<group>"; };
+		430D8FA3198624BE009E763A /* rtcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcp.h; sourceTree = "<group>"; };
+		430D8FA4198624BE009E763A /* statistics_calculator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statistics_calculator.cc; sourceTree = "<group>"; };
+		430D8FA5198624BE009E763A /* statistics_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = statistics_calculator.h; sourceTree = "<group>"; };
+		430D8FA6198624BE009E763A /* sync_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sync_buffer.cc; sourceTree = "<group>"; };
+		430D8FA7198624BE009E763A /* sync_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sync_buffer.h; sourceTree = "<group>"; };
+		430D8FA8198624BE009E763A /* time_stretch.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = time_stretch.cc; sourceTree = "<group>"; };
+		430D8FA9198624BE009E763A /* time_stretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_stretch.h; sourceTree = "<group>"; };
+		430D8FAA198624BE009E763A /* timestamp_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timestamp_scaler.cc; sourceTree = "<group>"; };
+		430D8FAB198624BE009E763A /* timestamp_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timestamp_scaler.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		430D8F4819862490009E763A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		430D8F4219862490009E763A = {
+			isa = PBXGroup;
+			children = (
+				430D8F58198624BD009E763A /* neteq */,
+				430D8F4C19862490009E763A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		430D8F4C19862490009E763A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F4B19862490009E763A /* libneteq.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		430D8F58198624BD009E763A /* neteq */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F59198624BD009E763A /* accelerate.cc */,
+				430D8F5A198624BD009E763A /* accelerate.h */,
+				430D8F5B198624BD009E763A /* audio_classifier.cc */,
+				430D8F5C198624BD009E763A /* audio_classifier.h */,
+				430D8F5D198624BD009E763A /* audio_decoder.cc */,
+				430D8F5E198624BD009E763A /* audio_decoder_impl.cc */,
+				430D8F5F198624BD009E763A /* audio_decoder_impl.h */,
+				430D8F60198624BD009E763A /* audio_multi_vector.cc */,
+				430D8F61198624BD009E763A /* audio_multi_vector.h */,
+				430D8F62198624BD009E763A /* audio_vector.cc */,
+				430D8F63198624BD009E763A /* audio_vector.h */,
+				430D8F64198624BD009E763A /* background_noise.cc */,
+				430D8F65198624BD009E763A /* background_noise.h */,
+				430D8F66198624BD009E763A /* buffer_level_filter.cc */,
+				430D8F67198624BD009E763A /* buffer_level_filter.h */,
+				430D8F68198624BD009E763A /* comfort_noise.cc */,
+				430D8F69198624BD009E763A /* comfort_noise.h */,
+				430D8F6A198624BD009E763A /* decision_logic.cc */,
+				430D8F6B198624BD009E763A /* decision_logic.h */,
+				430D8F6C198624BD009E763A /* decision_logic_fax.cc */,
+				430D8F6D198624BD009E763A /* decision_logic_fax.h */,
+				430D8F6E198624BD009E763A /* decision_logic_normal.cc */,
+				430D8F6F198624BD009E763A /* decision_logic_normal.h */,
+				430D8F70198624BD009E763A /* decoder_database.cc */,
+				430D8F71198624BD009E763A /* decoder_database.h */,
+				430D8F72198624BD009E763A /* defines.h */,
+				430D8F73198624BD009E763A /* delay_manager.cc */,
+				430D8F74198624BD009E763A /* delay_manager.h */,
+				430D8F75198624BD009E763A /* delay_peak_detector.cc */,
+				430D8F76198624BD009E763A /* delay_peak_detector.h */,
+				430D8F77198624BD009E763A /* dsp_helper.cc */,
+				430D8F78198624BD009E763A /* dsp_helper.h */,
+				430D8F79198624BD009E763A /* dtmf_buffer.cc */,
+				430D8F7A198624BD009E763A /* dtmf_buffer.h */,
+				430D8F7B198624BD009E763A /* dtmf_tone_generator.cc */,
+				430D8F7C198624BD009E763A /* dtmf_tone_generator.h */,
+				430D8F7D198624BD009E763A /* expand.cc */,
+				430D8F7E198624BD009E763A /* expand.h */,
+				430D8F7F198624BD009E763A /* interface */,
+				430D8F82198624BD009E763A /* merge.cc */,
+				430D8F83198624BD009E763A /* merge.h */,
+				430D8F84198624BD009E763A /* mock */,
+				430D8F90198624BD009E763A /* neteq.cc */,
+				430D8F91198624BE009E763A /* neteq.gypi */,
+				430D8F92198624BE009E763A /* neteq_impl.cc */,
+				430D8F93198624BE009E763A /* neteq_impl.h */,
+				430D8F94198624BE009E763A /* neteq_tests.gypi */,
+				430D8F95198624BE009E763A /* normal.cc */,
+				430D8F96198624BE009E763A /* normal.h */,
+				430D8F97198624BE009E763A /* packet.h */,
+				430D8F98198624BE009E763A /* packet_buffer.cc */,
+				430D8F99198624BE009E763A /* packet_buffer.h */,
+				430D8F9A198624BE009E763A /* payload_splitter.cc */,
+				430D8F9B198624BE009E763A /* payload_splitter.h */,
+				430D8F9C198624BE009E763A /* post_decode_vad.cc */,
+				430D8F9D198624BE009E763A /* post_decode_vad.h */,
+				430D8F9E198624BE009E763A /* preemptive_expand.cc */,
+				430D8F9F198624BE009E763A /* preemptive_expand.h */,
+				430D8FA0198624BE009E763A /* random_vector.cc */,
+				430D8FA1198624BE009E763A /* random_vector.h */,
+				430D8FA2198624BE009E763A /* rtcp.cc */,
+				430D8FA3198624BE009E763A /* rtcp.h */,
+				430D8FA4198624BE009E763A /* statistics_calculator.cc */,
+				430D8FA5198624BE009E763A /* statistics_calculator.h */,
+				430D8FA6198624BE009E763A /* sync_buffer.cc */,
+				430D8FA7198624BE009E763A /* sync_buffer.h */,
+				430D8FA8198624BE009E763A /* time_stretch.cc */,
+				430D8FA9198624BE009E763A /* time_stretch.h */,
+				430D8FAA198624BE009E763A /* timestamp_scaler.cc */,
+				430D8FAB198624BE009E763A /* timestamp_scaler.h */,
+			);
+			name = neteq;
+			path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/neteq;
+			sourceTree = "<group>";
+		};
+		430D8F7F198624BD009E763A /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F80198624BD009E763A /* audio_decoder.h */,
+				430D8F81198624BD009E763A /* neteq.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+		430D8F84198624BD009E763A /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				430D8F85198624BD009E763A /* mock_audio_decoder.h */,
+				430D8F86198624BD009E763A /* mock_audio_vector.h */,
+				430D8F87198624BD009E763A /* mock_buffer_level_filter.h */,
+				430D8F88198624BD009E763A /* mock_decoder_database.h */,
+				430D8F89198624BD009E763A /* mock_delay_manager.h */,
+				430D8F8A198624BD009E763A /* mock_delay_peak_detector.h */,
+				430D8F8B198624BD009E763A /* mock_dtmf_buffer.h */,
+				430D8F8C198624BD009E763A /* mock_dtmf_tone_generator.h */,
+				430D8F8D198624BD009E763A /* mock_external_decoder_pcm16b.h */,
+				430D8F8E198624BD009E763A /* mock_packet_buffer.h */,
+				430D8F8F198624BD009E763A /* mock_payload_splitter.h */,
+			);
+			path = mock;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		430D8F4919862490009E763A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D8FE0198624BE009E763A /* mock_payload_splitter.h in Headers */,
+				430D8FD9198624BE009E763A /* mock_decoder_database.h in Headers */,
+				430D8FD3198624BE009E763A /* neteq.h in Headers */,
+				430D8FD2198624BE009E763A /* audio_decoder.h in Headers */,
+				430D8FB4198624BE009E763A /* audio_multi_vector.h in Headers */,
+				430D8FDF198624BE009E763A /* mock_packet_buffer.h in Headers */,
+				430D8FC0198624BE009E763A /* decision_logic_fax.h in Headers */,
+				430D8FE8198624BE009E763A /* packet_buffer.h in Headers */,
+				430D8FEA198624BE009E763A /* payload_splitter.h in Headers */,
+				430D8FF6198624BE009E763A /* sync_buffer.h in Headers */,
+				430D8FEE198624BE009E763A /* preemptive_expand.h in Headers */,
+				430D8FAF198624BE009E763A /* audio_classifier.h in Headers */,
+				430D8FDA198624BE009E763A /* mock_delay_manager.h in Headers */,
+				430D8FB2198624BE009E763A /* audio_decoder_impl.h in Headers */,
+				430D8FF4198624BE009E763A /* statistics_calculator.h in Headers */,
+				430D8FAD198624BE009E763A /* accelerate.h in Headers */,
+				430D8FBC198624BE009E763A /* comfort_noise.h in Headers */,
+				430D8FC9198624BE009E763A /* delay_peak_detector.h in Headers */,
+				430D8FC4198624BE009E763A /* decoder_database.h in Headers */,
+				430D8FF2198624BE009E763A /* rtcp.h in Headers */,
+				430D8FEC198624BE009E763A /* post_decode_vad.h in Headers */,
+				430D8FCB198624BE009E763A /* dsp_helper.h in Headers */,
+				430D8FBE198624BE009E763A /* decision_logic.h in Headers */,
+				430D8FDC198624BE009E763A /* mock_dtmf_buffer.h in Headers */,
+				430D8FF0198624BE009E763A /* random_vector.h in Headers */,
+				430D8FDD198624BE009E763A /* mock_dtmf_tone_generator.h in Headers */,
+				430D8FE6198624BE009E763A /* packet.h in Headers */,
+				430D8FB6198624BE009E763A /* audio_vector.h in Headers */,
+				430D8FDE198624BE009E763A /* mock_external_decoder_pcm16b.h in Headers */,
+				430D8FCD198624BE009E763A /* dtmf_buffer.h in Headers */,
+				430D8FE5198624BE009E763A /* normal.h in Headers */,
+				430D8FC2198624BE009E763A /* decision_logic_normal.h in Headers */,
+				430D8FD5198624BE009E763A /* merge.h in Headers */,
+				430D8FBA198624BE009E763A /* buffer_level_filter.h in Headers */,
+				430D8FD8198624BE009E763A /* mock_buffer_level_filter.h in Headers */,
+				430D8FC5198624BE009E763A /* defines.h in Headers */,
+				430D8FF8198624BE009E763A /* time_stretch.h in Headers */,
+				430D8FFA198624BE009E763A /* timestamp_scaler.h in Headers */,
+				430D8FE3198624BE009E763A /* neteq_impl.h in Headers */,
+				430D8FDB198624BE009E763A /* mock_delay_peak_detector.h in Headers */,
+				430D8FD6198624BE009E763A /* mock_audio_decoder.h in Headers */,
+				430D8FC7198624BE009E763A /* delay_manager.h in Headers */,
+				430D8FB8198624BE009E763A /* background_noise.h in Headers */,
+				430D8FCF198624BE009E763A /* dtmf_tone_generator.h in Headers */,
+				430D8FD7198624BE009E763A /* mock_audio_vector.h in Headers */,
+				430D8FD1198624BE009E763A /* expand.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		430D8F4A19862490009E763A /* neteq */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 430D8F4F19862490009E763A /* Build configuration list for PBXNativeTarget "neteq" */;
+			buildPhases = (
+				430D8F4719862490009E763A /* Sources */,
+				430D8F4819862490009E763A /* Frameworks */,
+				430D8F4919862490009E763A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = neteq;
+			productName = neteq;
+			productReference = 430D8F4B19862490009E763A /* libneteq.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		430D8F4319862490009E763A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 430D8F4619862490009E763A /* Build configuration list for PBXProject "neteq" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 430D8F4219862490009E763A;
+			productRefGroup = 430D8F4C19862490009E763A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				430D8F4A19862490009E763A /* neteq */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		430D8F4719862490009E763A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				430D8FCC198624BE009E763A /* dtmf_buffer.cc in Sources */,
+				430D8FB9198624BE009E763A /* buffer_level_filter.cc in Sources */,
+				430D8FF3198624BE009E763A /* statistics_calculator.cc in Sources */,
+				430D8FC8198624BE009E763A /* delay_peak_detector.cc in Sources */,
+				430D8FB7198624BE009E763A /* background_noise.cc in Sources */,
+				430D8FF5198624BE009E763A /* sync_buffer.cc in Sources */,
+				430D8FCE198624BE009E763A /* dtmf_tone_generator.cc in Sources */,
+				430D8FC3198624BE009E763A /* decoder_database.cc in Sources */,
+				430D8FD0198624BE009E763A /* expand.cc in Sources */,
+				430D8FC6198624BE009E763A /* delay_manager.cc in Sources */,
+				430D8FAC198624BE009E763A /* accelerate.cc in Sources */,
+				430D8FBF198624BE009E763A /* decision_logic_fax.cc in Sources */,
+				430D8FED198624BE009E763A /* preemptive_expand.cc in Sources */,
+				430D8FCA198624BE009E763A /* dsp_helper.cc in Sources */,
+				430D8FF7198624BE009E763A /* time_stretch.cc in Sources */,
+				430D8FEB198624BE009E763A /* post_decode_vad.cc in Sources */,
+				430D8FB1198624BE009E763A /* audio_decoder_impl.cc in Sources */,
+				430D8FBB198624BE009E763A /* comfort_noise.cc in Sources */,
+				430D8FE2198624BE009E763A /* neteq_impl.cc in Sources */,
+				430D8FB3198624BE009E763A /* audio_multi_vector.cc in Sources */,
+				430D8FC1198624BE009E763A /* decision_logic_normal.cc in Sources */,
+				430D8FBD198624BE009E763A /* decision_logic.cc in Sources */,
+				430D8FEF198624BE009E763A /* random_vector.cc in Sources */,
+				430D8FD4198624BE009E763A /* merge.cc in Sources */,
+				430D8FE1198624BE009E763A /* neteq.cc in Sources */,
+				430D8FF1198624BE009E763A /* rtcp.cc in Sources */,
+				430D8FE9198624BE009E763A /* payload_splitter.cc in Sources */,
+				430D8FB5198624BE009E763A /* audio_vector.cc in Sources */,
+				430D8FAE198624BE009E763A /* audio_classifier.cc in Sources */,
+				430D8FF9198624BE009E763A /* timestamp_scaler.cc in Sources */,
+				430D8FE7198624BE009E763A /* packet_buffer.cc in Sources */,
+				430D8FB0198624BE009E763A /* audio_decoder.cc in Sources */,
+				430D8FE4198624BE009E763A /* normal.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		430D8F4D19862490009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		430D8F4E19862490009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		430D8F5019862490009E763A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/celt $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/src";
+			};
+			name = Debug;
+		};
+		430D8F5119862490009E763A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/celt $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/src";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		430D8F4619862490009E763A /* Build configuration list for PBXProject "neteq" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D8F4D19862490009E763A /* Debug */,
+				430D8F4E19862490009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		430D8F4F19862490009E763A /* Build configuration list for PBXNativeTarget "neteq" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				430D8F5019862490009E763A /* Debug */,
+				430D8F5119862490009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 430D8F4319862490009E763A /* Project object */;
+}
