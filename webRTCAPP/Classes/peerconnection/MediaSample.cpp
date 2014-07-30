@@ -7,11 +7,8 @@
 //
 
 #include "MediaSample.h"
-#include <webrtc/modules/audio_device/audio_device_impl.h>
-#include <webrtc/common.h>
 
 using namespace webrtc;
-using namespace webrtc::voe;
 
 MediaSample::MediaSample() //:
 //_voiceEngine(NULL)
