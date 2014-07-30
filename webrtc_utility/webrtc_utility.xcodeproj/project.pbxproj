@@ -313,6 +313,7 @@
 					"DEBUG=1",
 					WEBRTC_MAC,
 					WEBRTC_IOS,
+					WEBRTC_POSIX,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
@@ -323,6 +324,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
+					WEBRTC_POSIX,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 			};
@@ -347,6 +354,7 @@
 				43998B6B1986332A003C5793 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

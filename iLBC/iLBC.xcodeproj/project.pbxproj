@@ -668,6 +668,7 @@
 				DSTROOT = /tmp/iLBC.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iLBC/iLBC-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -694,6 +695,7 @@
 				430D8CF519861EE4009E763A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

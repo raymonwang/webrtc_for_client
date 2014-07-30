@@ -265,6 +265,7 @@
 				DSTROOT = /tmp/G711.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "G711/G711-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -290,6 +291,7 @@
 				430D8E581986217B009E763A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -258,6 +258,7 @@
 				DSTROOT = /tmp/PCM16B.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PCM16B/PCM16B-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -284,6 +285,7 @@
 				430D8F2B198623C6009E763A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

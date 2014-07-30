@@ -33,7 +33,9 @@ MediaSample::MediaSample() //:
 //    _voiceSendTransport->SetSendDestination("192.168.208.6", 20001);
 //    _voiceSendTransport->SetLocalReceiver(10086);
     
-    _voiceSendTransport->SetSendDestination("180.168.126.249", 10086);
+//    _voiceSendTransport->SetSendDestination("180.168.126.249", 10086);
+//    _voiceSendTransport->SetSendDestination("180.168.126.249", 45001);
+    _voiceSendTransport->SetSendDestination("180.168.126.253", 20002);
     _voiceSendTransport->SetLocalReceiver(20000);
     
 //    _voiceRecvTransport->SetSendDestination("180.168.126.249", 10086);

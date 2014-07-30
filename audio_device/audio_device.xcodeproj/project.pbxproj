@@ -317,6 +317,7 @@
 					"DEBUG=1",
 					WEBRTC_MAC,
 					WEBRTC_IOS,
+					WEBRTC_POSIX,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -328,6 +329,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
+					WEBRTC_POSIX,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
