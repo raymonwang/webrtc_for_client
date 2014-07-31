@@ -7,6 +7,7 @@
 //
 
 #include "MediaSample.h"
+#include "MyThreadTest.h"
 
 using namespace webrtc;
 
@@ -45,6 +46,8 @@ MediaSample::MediaSample() //:
 //    _channelManager = new ChannelManager(0, config);
 //    int cid = _channelManager->CreateChannel().channel()->ChannelId();
 //    _channelManager->GetChannel(cid).channel()->StartSend();
+    
+    _myThreadTest = new MyThreadTest;
     
     init();
 }

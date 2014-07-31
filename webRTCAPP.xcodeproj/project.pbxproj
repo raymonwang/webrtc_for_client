@@ -7,13 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430B229A197F53990076767F /* liblibjingle_peerconnection_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2255197F526D0076767F /* liblibjingle_peerconnection_objc.a */; };
-		430B2330197F5B650076767F /* liblibjingle_peerconnection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B22D3197F59BB0076767F /* liblibjingle_peerconnection.a */; };
-		430B2989197F66150076767F /* liblibjingle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2369197F5BA70076767F /* liblibjingle.a */; };
 		430B298E197F68AA0076767F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B298D197F68AA0076767F /* GLKit.framework */; };
-		430B2AB0197F6C820076767F /* liblibjingle_media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2A20197F69EF0076767F /* liblibjingle_media.a */; };
-		430B2AB1197F6C820076767F /* liblibjingle_sound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B29C7197F690F0076767F /* liblibjingle_sound.a */; };
-		430B2BAA197F6DC70076767F /* liblibjingle_p2p.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B2AEA197F6CF20076767F /* liblibjingle_p2p.a */; };
 		430D85A71985E7A0009E763A /* BUILD.gn in Resources */ = {isa = PBXBuildFile; fileRef = 430D84BD1985E7A0009E763A /* BUILD.gn */; };
 		430D85A81985E7A0009E763A /* jsoncpp.gyp in Resources */ = {isa = PBXBuildFile; fileRef = 430D84BE1985E7A0009E763A /* jsoncpp.gyp */; };
 		430D85A91985E7A0009E763A /* jsoncpp.gypi in Resources */ = {isa = PBXBuildFile; fileRef = 430D84BF1985E7A0009E763A /* jsoncpp.gypi */; };
@@ -40,6 +34,13 @@
 		430D8FFC19862722009E763A /* libaudio_coding_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D88EE19860C40009E763A /* libaudio_coding_module.a */; };
 		430D903219862823009E763A /* libaudio_conference_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D901219862791009E763A /* libaudio_conference_mixer.a */; };
 		430D907F198628DF009E763A /* libaudio_device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D904819862877009E763A /* libaudio_device.a */; };
+		4316FDC51989F01100595538 /* libjingle_media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4316FDBF1989F01100595538 /* libjingle_media.a */; };
+		4316FDC61989F01100595538 /* libjingle_p2p.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4316FDC01989F01100595538 /* libjingle_p2p.a */; };
+		4316FDC71989F01100595538 /* libjingle_peerconnection_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4316FDC11989F01100595538 /* libjingle_peerconnection_objc.a */; };
+		4316FDC81989F01100595538 /* libjingle_peerconnection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4316FDC21989F01100595538 /* libjingle_peerconnection.a */; };
+		4316FDC91989F01100595538 /* libjingle_sound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4316FDC31989F01100595538 /* libjingle_sound.a */; };
+		4316FDCA1989F01100595538 /* libjingle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4316FDC41989F01100595538 /* libjingle.a */; };
+		4316FE32198A0FBB00595538 /* MyThreadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4316FE30198A0FBB00595538 /* MyThreadTest.cpp */; };
 		4318D0C4197E344E00D5CADB /* _darwin.cfg in Resources */ = {isa = PBXBuildFile; fileRef = 4318D0C3197E344E00D5CADB /* _darwin.cfg */; };
 		4318D0E5197E3B4900D5CADB /* libjsoncpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0DF197E3B4900D5CADB /* libjsoncpp.a */; };
 		4318D0E6197E3B4900D5CADB /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0E0197E3B4900D5CADB /* libnss_static.a */; };
@@ -263,48 +264,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		430B2254197F526D0076767F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B224F197F526D0076767F /* libjingle_peerconnection_objc.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B2226197F526C0076767F;
-			remoteInfo = libjingle_peerconnection_objc;
-		};
-		430B22D2197F59BB0076767F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B22CD197F59BA0076767F /* libjingle_peerconnection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B22A4197F59BA0076767F;
-			remoteInfo = libjingle_peerconnection;
-		};
-		430B2368197F5BA70076767F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B2363197F5BA70076767F /* libjingle.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B233A197F5BA60076767F;
-			remoteInfo = libjingle;
-		};
-		430B29C6197F690F0076767F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B2998197F690E0076767F;
-			remoteInfo = libjingle_sound;
-		};
-		430B2A1F197F69EF0076767F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B2A1A197F69EE0076767F /* libjingle_media.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B29F1197F69EE0076767F;
-			remoteInfo = libjingle_media;
-		};
-		430B2AE9197F6CF20076767F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B2ABB197F6CF10076767F;
-			remoteInfo = libjingle_p2p;
-		};
 		430D835C1985E422009E763A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 430D834D1985E422009E763A /* webrtc_base.xcodeproj */;
@@ -424,19 +383,61 @@
 			remoteGlobalIDString = 4328847719809D1C0000F16A;
 			remoteInfo = relayserver;
 		};
-		432885A11980B8620000F16A /* PBXContainerItemProxy */ = {
+		4316FE05198A0F7700595538 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 430B2363197F5BA70076767F /* libjingle.xcodeproj */;
+			containerPortal = 430B2AE4197F6CF10076767F /* jingle_p2p.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 432885721980A8160000F16A;
-			remoteInfo = libjingle_osx;
+			remoteGlobalIDString = 430B2ABB197F6CF10076767F;
+			remoteInfo = jingle_p2p;
 		};
-		432885A61980B8620000F16A /* PBXContainerItemProxy */ = {
+		4316FE07198A0F7700595538 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */;
+			containerPortal = 430B2AE4197F6CF10076767F /* jingle_p2p.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 432884D219809FF40000F16A;
-			remoteInfo = libjingle_p2p_osx;
+			remoteInfo = jingle_p2p_osx;
+		};
+		4316FE17198A0F7700595538 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430B2226197F526C0076767F;
+			remoteInfo = jingle_peerconnection_objc;
+		};
+		4316FE1C198A0F7700595538 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B2A1A197F69EE0076767F /* jingle_media.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430B29F1197F69EE0076767F;
+			remoteInfo = jingle_media;
+		};
+		4316FE22198A0F7800595538 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B2363197F5BA70076767F /* jingle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430B233A197F5BA60076767F;
+			remoteInfo = jingle;
+		};
+		4316FE24198A0F7800595538 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B2363197F5BA70076767F /* jingle.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 432885721980A8160000F16A;
+			remoteInfo = jingle_osx;
+		};
+		4316FE29198A0F7800595538 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430B22A4197F59BA0076767F;
+			remoteInfo = jingle_peerconnection;
+		};
+		4316FE2E198A0F7800595538 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430B29C1197F690E0076767F /* jingle_sound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430B2998197F690E0076767F;
+			remoteInfo = jingle_sound;
 		};
 		432887111980FFFE0000F16A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -476,13 +477,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		430B224F197F526D0076767F /* libjingle_peerconnection_objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_peerconnection_objc.xcodeproj; path = libjingle_peerconnection_objc/libjingle_peerconnection_objc.xcodeproj; sourceTree = "<group>"; };
-		430B22CD197F59BA0076767F /* libjingle_peerconnection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_peerconnection.xcodeproj; path = libjingle_peerconnection/libjingle_peerconnection.xcodeproj; sourceTree = "<group>"; };
-		430B2363197F5BA70076767F /* libjingle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle.xcodeproj; path = libjingle/libjingle.xcodeproj; sourceTree = "<group>"; };
+		430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection_objc.xcodeproj; path = libjingle_peerconnection_objc/jingle_peerconnection_objc.xcodeproj; sourceTree = "<group>"; };
+		430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection.xcodeproj; path = libjingle_peerconnection/jingle_peerconnection.xcodeproj; sourceTree = "<group>"; };
+		430B2363197F5BA70076767F /* jingle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle.xcodeproj; path = libjingle/jingle.xcodeproj; sourceTree = "<group>"; };
 		430B298D197F68AA0076767F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_sound.xcodeproj; path = libjingle_sound/libjingle_sound.xcodeproj; sourceTree = "<group>"; };
-		430B2A1A197F69EE0076767F /* libjingle_media.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_media.xcodeproj; path = libjingle_media/libjingle_media.xcodeproj; sourceTree = "<group>"; };
-		430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjingle_p2p.xcodeproj; path = libjingle_p2p/libjingle_p2p.xcodeproj; sourceTree = "<group>"; };
+		430B29C1197F690E0076767F /* jingle_sound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_sound.xcodeproj; path = libjingle_sound/jingle_sound.xcodeproj; sourceTree = "<group>"; };
+		430B2A1A197F69EE0076767F /* jingle_media.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_media.xcodeproj; path = libjingle_media/jingle_media.xcodeproj; sourceTree = "<group>"; };
+		430B2AE4197F6CF10076767F /* jingle_p2p.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_p2p.xcodeproj; path = libjingle_p2p/jingle_p2p.xcodeproj; sourceTree = "<group>"; };
 		430B2BDF197F9C2C0076767F /* peer_connection_client.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peer_connection_client.cc; sourceTree = "<group>"; };
 		430B2BE0197F9C2C0076767F /* peer_connection_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peer_connection_client.h; sourceTree = "<group>"; };
 		430B2BEE197F9E470076767F /* rtpeerconnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtpeerconnection.cpp; sourceTree = "<group>"; };
@@ -528,6 +529,14 @@
 		430D900D19862790009E763A /* audio_conference_mixer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_conference_mixer.xcodeproj; path = audio_conference_mixer/audio_conference_mixer.xcodeproj; sourceTree = "<group>"; };
 		430D904319862876009E763A /* audio_device.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_device.xcodeproj; path = audio_device/audio_device.xcodeproj; sourceTree = "<group>"; };
 		430D909019862952009E763A /* audio_processing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_processing.xcodeproj; path = audio_processing/audio_processing.xcodeproj; sourceTree = "<group>"; };
+		4316FDBF1989F01100595538 /* libjingle_media.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjingle_media.a; path = "libjingle_media/build/Debug-iphoneos/libjingle_media.a"; sourceTree = "<group>"; };
+		4316FDC01989F01100595538 /* libjingle_p2p.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjingle_p2p.a; path = "libjingle_p2p/build/Debug-iphoneos/libjingle_p2p.a"; sourceTree = "<group>"; };
+		4316FDC11989F01100595538 /* libjingle_peerconnection_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjingle_peerconnection_objc.a; path = "libjingle_peerconnection_objc/build/Debug-iphoneos/libjingle_peerconnection_objc.a"; sourceTree = "<group>"; };
+		4316FDC21989F01100595538 /* libjingle_peerconnection.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjingle_peerconnection.a; path = "libjingle_peerconnection/build/Debug-iphoneos/libjingle_peerconnection.a"; sourceTree = "<group>"; };
+		4316FDC31989F01100595538 /* libjingle_sound.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjingle_sound.a; path = "libjingle_sound/build/Debug-iphoneos/libjingle_sound.a"; sourceTree = "<group>"; };
+		4316FDC41989F01100595538 /* libjingle.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjingle.a; path = "libjingle/build/Debug-iphoneos/libjingle.a"; sourceTree = "<group>"; };
+		4316FE30198A0FBB00595538 /* MyThreadTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyThreadTest.cpp; sourceTree = "<group>"; };
+		4316FE31198A0FBB00595538 /* MyThreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyThreadTest.h; sourceTree = "<group>"; };
 		4318CEF9197E11A200D5CADB /* plarena.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plarena.h; sourceTree = "<group>"; };
 		4318CEFA197E11A200D5CADB /* plarenas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plarenas.h; sourceTree = "<group>"; };
 		4318CEFB197E11A200D5CADB /* plbase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plbase64.h; sourceTree = "<group>"; };
@@ -1352,6 +1361,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4316FDC51989F01100595538 /* libjingle_media.a in Frameworks */,
+				4316FDC61989F01100595538 /* libjingle_p2p.a in Frameworks */,
+				4316FDC71989F01100595538 /* libjingle_peerconnection_objc.a in Frameworks */,
+				4316FDC81989F01100595538 /* libjingle_peerconnection.a in Frameworks */,
+				4316FDC91989F01100595538 /* libjingle_sound.a in Frameworks */,
+				4316FDCA1989F01100595538 /* libjingle.a in Frameworks */,
 				43998BA6198633A0003C5793 /* libwebrtc_utility.a in Frameworks */,
 				43998B5B198632CF003C5793 /* libmedia_file.a in Frameworks */,
 				43998B2E19863242003C5793 /* libbitrate_controller.a in Frameworks */,
@@ -1372,13 +1387,7 @@
 				430D87E91986081C009E763A /* libsystem_wrappers.a in Frameworks */,
 				430D8736198606BF009E763A /* libvoice_engine.a in Frameworks */,
 				430D867D198600F7009E763A /* libwebrtc_base.a in Frameworks */,
-				430B2BAA197F6DC70076767F /* liblibjingle_p2p.a in Frameworks */,
-				430B2AB0197F6C820076767F /* liblibjingle_media.a in Frameworks */,
-				430B2AB1197F6C820076767F /* liblibjingle_sound.a in Frameworks */,
 				430B298E197F68AA0076767F /* GLKit.framework in Frameworks */,
-				430B2989197F66150076767F /* liblibjingle.a in Frameworks */,
-				430B2330197F5B650076767F /* liblibjingle_peerconnection.a in Frameworks */,
-				430B229A197F53990076767F /* liblibjingle_peerconnection_objc.a in Frameworks */,
 				4318D56C197E668F00D5CADB /* libyuv.a in Frameworks */,
 				4318D569197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a in Frameworks */,
 				4318D56A197E65EA00D5CADB /* libvpx.a in Frameworks */,
@@ -1400,56 +1409,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		430B2250197F526D0076767F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430B2255197F526D0076767F /* liblibjingle_peerconnection_objc.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		430B22CE197F59BA0076767F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430B22D3197F59BB0076767F /* liblibjingle_peerconnection.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		430B2364197F5BA70076767F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430B2369197F5BA70076767F /* liblibjingle.a */,
-				432885A21980B8620000F16A /* liblibjingle_osx.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		430B29C2197F690E0076767F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430B29C7197F690F0076767F /* liblibjingle_sound.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		430B2A1B197F69EE0076767F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430B2A20197F69EF0076767F /* liblibjingle_media.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		430B2AE5197F6CF10076767F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430B2AEA197F6CF20076767F /* liblibjingle_p2p.a */,
-				432885A71980B8620000F16A /* liblibjingle_p2p_osx.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		430B2BD1197F9C2C0076767F /* peerconnection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1458,6 +1417,8 @@
 				430B2BD2197F9C2C0076767F /* client */,
 				430B2BEE197F9E470076767F /* rtpeerconnection.cpp */,
 				430B2BEF197F9E470076767F /* rtpeerconnection.h */,
+				4316FE30198A0FBB00595538 /* MyThreadTest.cpp */,
+				4316FE31198A0FBB00595538 /* MyThreadTest.h */,
 			);
 			path = peerconnection;
 			sourceTree = "<group>";
@@ -1729,6 +1690,56 @@
 			isa = PBXGroup;
 			children = (
 				4316979F1981F0040007BF43 /* relayserver */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4316FDF6198A0F7700595538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4316FE06198A0F7700595538 /* libjingle_p2p.a */,
+				4316FE08198A0F7700595538 /* libjingle_p2p_osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4316FE14198A0F7700595538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4316FE18198A0F7700595538 /* libjingle_peerconnection_objc.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4316FE19198A0F7700595538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4316FE1D198A0F7700595538 /* libjingle_media.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4316FE1E198A0F7800595538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4316FE23198A0F7800595538 /* libjingle.a */,
+				4316FE25198A0F7800595538 /* libjingle_osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4316FE26198A0F7800595538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4316FE2A198A0F7800595538 /* libjingle_peerconnection.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4316FE2B198A0F7800595538 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4316FE2F198A0F7800595538 /* libjingle_sound.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2667,12 +2678,12 @@
 				430D834D1985E422009E763A /* webrtc_base.xcodeproj */,
 				4328870C1980FFFD0000F16A /* RtcSameple.xcodeproj */,
 				4328848319809D1C0000F16A /* relayserver.xcodeproj */,
-				430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */,
-				430B2A1A197F69EE0076767F /* libjingle_media.xcodeproj */,
-				430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */,
-				430B2363197F5BA70076767F /* libjingle.xcodeproj */,
-				430B22CD197F59BA0076767F /* libjingle_peerconnection.xcodeproj */,
-				430B224F197F526D0076767F /* libjingle_peerconnection_objc.xcodeproj */,
+				430B2AE4197F6CF10076767F /* jingle_p2p.xcodeproj */,
+				430B2A1A197F69EE0076767F /* jingle_media.xcodeproj */,
+				430B29C1197F690E0076767F /* jingle_sound.xcodeproj */,
+				430B2363197F5BA70076767F /* jingle.xcodeproj */,
+				430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */,
+				430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */,
 				43ECEE98197CA80B00E9267B /* webRTCAPP */,
 				43ECEE91197CA80B00E9267B /* Frameworks */,
 				43ECEE90197CA80B00E9267B /* Products */,
@@ -2690,6 +2701,12 @@
 		43ECEE91197CA80B00E9267B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4316FDBF1989F01100595538 /* libjingle_media.a */,
+				4316FDC01989F01100595538 /* libjingle_p2p.a */,
+				4316FDC11989F01100595538 /* libjingle_peerconnection_objc.a */,
+				4316FDC21989F01100595538 /* libjingle_peerconnection.a */,
+				4316FDC31989F01100595538 /* libjingle_sound.a */,
+				4316FDC41989F01100595538 /* libjingle.a */,
 				430B298D197F68AA0076767F /* GLKit.framework */,
 				4318D56B197E668F00D5CADB /* libyuv.a */,
 				4318D567197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a */,
@@ -3435,28 +3452,28 @@
 					ProjectRef = 430D8BC619861C2E009E763A /* iSAC.xcodeproj */;
 				},
 				{
-					ProductGroup = 430B2364197F5BA70076767F /* Products */;
-					ProjectRef = 430B2363197F5BA70076767F /* libjingle.xcodeproj */;
+					ProductGroup = 4316FE1E198A0F7800595538 /* Products */;
+					ProjectRef = 430B2363197F5BA70076767F /* jingle.xcodeproj */;
 				},
 				{
-					ProductGroup = 430B2A1B197F69EE0076767F /* Products */;
-					ProjectRef = 430B2A1A197F69EE0076767F /* libjingle_media.xcodeproj */;
+					ProductGroup = 4316FE19198A0F7700595538 /* Products */;
+					ProjectRef = 430B2A1A197F69EE0076767F /* jingle_media.xcodeproj */;
 				},
 				{
-					ProductGroup = 430B2AE5197F6CF10076767F /* Products */;
-					ProjectRef = 430B2AE4197F6CF10076767F /* libjingle_p2p.xcodeproj */;
+					ProductGroup = 4316FDF6198A0F7700595538 /* Products */;
+					ProjectRef = 430B2AE4197F6CF10076767F /* jingle_p2p.xcodeproj */;
 				},
 				{
-					ProductGroup = 430B22CE197F59BA0076767F /* Products */;
-					ProjectRef = 430B22CD197F59BA0076767F /* libjingle_peerconnection.xcodeproj */;
+					ProductGroup = 4316FE26198A0F7800595538 /* Products */;
+					ProjectRef = 430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */;
 				},
 				{
-					ProductGroup = 430B2250197F526D0076767F /* Products */;
-					ProjectRef = 430B224F197F526D0076767F /* libjingle_peerconnection_objc.xcodeproj */;
+					ProductGroup = 4316FE14198A0F7700595538 /* Products */;
+					ProjectRef = 430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */;
 				},
 				{
-					ProductGroup = 430B29C2197F690E0076767F /* Products */;
-					ProjectRef = 430B29C1197F690E0076767F /* libjingle_sound.xcodeproj */;
+					ProductGroup = 4316FE2B198A0F7800595538 /* Products */;
+					ProjectRef = 430B29C1197F690E0076767F /* jingle_sound.xcodeproj */;
 				},
 				{
 					ProductGroup = 43998B411986327B003C5793 /* Products */;
@@ -3511,48 +3528,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		430B2255197F526D0076767F /* liblibjingle_peerconnection_objc.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjingle_peerconnection_objc.a;
-			remoteRef = 430B2254197F526D0076767F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		430B22D3197F59BB0076767F /* liblibjingle_peerconnection.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjingle_peerconnection.a;
-			remoteRef = 430B22D2197F59BB0076767F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		430B2369197F5BA70076767F /* liblibjingle.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjingle.a;
-			remoteRef = 430B2368197F5BA70076767F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		430B29C7197F690F0076767F /* liblibjingle_sound.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjingle_sound.a;
-			remoteRef = 430B29C6197F690F0076767F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		430B2A20197F69EF0076767F /* liblibjingle_media.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjingle_media.a;
-			remoteRef = 430B2A1F197F69EF0076767F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		430B2AEA197F6CF20076767F /* liblibjingle_p2p.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblibjingle_p2p.a;
-			remoteRef = 430B2AE9197F6CF20076767F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		430D835D1985E422009E763A /* libwebrtc_base.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3672,18 +3647,60 @@
 			remoteRef = 4316979E1981F0040007BF43 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		432885A21980B8620000F16A /* liblibjingle_osx.a */ = {
+		4316FE06198A0F7700595538 /* libjingle_p2p.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = liblibjingle_osx.a;
-			remoteRef = 432885A11980B8620000F16A /* PBXContainerItemProxy */;
+			path = libjingle_p2p.a;
+			remoteRef = 4316FE05198A0F7700595538 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		432885A71980B8620000F16A /* liblibjingle_p2p_osx.a */ = {
+		4316FE08198A0F7700595538 /* libjingle_p2p_osx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = liblibjingle_p2p_osx.a;
-			remoteRef = 432885A61980B8620000F16A /* PBXContainerItemProxy */;
+			path = libjingle_p2p_osx.a;
+			remoteRef = 4316FE07198A0F7700595538 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4316FE18198A0F7700595538 /* libjingle_peerconnection_objc.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_peerconnection_objc.a;
+			remoteRef = 4316FE17198A0F7700595538 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4316FE1D198A0F7700595538 /* libjingle_media.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_media.a;
+			remoteRef = 4316FE1C198A0F7700595538 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4316FE23198A0F7800595538 /* libjingle.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle.a;
+			remoteRef = 4316FE22198A0F7800595538 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4316FE25198A0F7800595538 /* libjingle_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_osx.a;
+			remoteRef = 4316FE24198A0F7800595538 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4316FE2A198A0F7800595538 /* libjingle_peerconnection.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_peerconnection.a;
+			remoteRef = 4316FE29198A0F7800595538 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4316FE2F198A0F7800595538 /* libjingle_sound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_sound.a;
+			remoteRef = 4316FE2E198A0F7800595538 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		432887121980FFFE0000F16A /* RtcSameple.app */ = {
@@ -3797,6 +3814,7 @@
 				43ECF9B3197CB37000E9267B /* device_info_ios_objc.mm in Sources */,
 				43EC0EEF197D23CC00E9267B /* video_render_ios_view.mm in Sources */,
 				43EC102C197D25A700E9267B /* frame_reader.cc in Sources */,
+				4316FE32198A0FBB00595538 /* MyThreadTest.cpp in Sources */,
 				43ECF6A0197CB11400E9267B /* vie_codec_impl.cc in Sources */,
 				43ECF6B1197CB11400E9267B /* vie_renderer.cc in Sources */,
 				43EC103A197D25A700E9267B /* video_renderer.cc in Sources */,
@@ -4106,6 +4124,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/webRTCAPP/libs",
+					"$(PROJECT_DIR)/libjingle_media/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_p2p/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_peerconnection_objc/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_peerconnection/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_sound/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-Wno-deprecated-declarations";
@@ -4147,6 +4171,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/webRTCAPP/libs",
+					"$(PROJECT_DIR)/libjingle_media/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_p2p/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_peerconnection_objc/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_peerconnection/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle_sound/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/libjingle/build/Debug-iphoneos",
 				);
 				OTHER_CFLAGS = "-Wno-deprecated-declarations";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -23,6 +23,8 @@
 using namespace webrtc;
 using namespace webrtc::test;
 
+class MyThreadTest;
+
 class MediaSample : public webrtc::VoiceEngineObserver {
 public:
     MediaSample();
@@ -43,6 +45,7 @@ protected:
     webrtc::VoEBase*                _voe_base;
     VoiceChannelTransport*          _voiceSendTransport;
     VoiceChannelTransport*          _voiceRecvTransport;
+    MyThreadTest*                   _myThreadTest;
 };
 
 #endif /* defined(__RtcSameple__MediaSample__) */
