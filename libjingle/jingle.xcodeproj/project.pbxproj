@@ -1609,13 +1609,18 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_osx;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -1648,13 +1653,18 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_osx;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

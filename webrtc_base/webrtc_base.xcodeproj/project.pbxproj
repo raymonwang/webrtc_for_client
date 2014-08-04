@@ -967,12 +967,21 @@
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -995,11 +1004,20 @@
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

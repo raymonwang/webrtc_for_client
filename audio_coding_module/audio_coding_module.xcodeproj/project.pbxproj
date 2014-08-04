@@ -403,12 +403,24 @@
 				DSTROOT = /tmp/audio_coding_module.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "audio_coding_module/audio_coding_module-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g711/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/ilbc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/interface",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g711/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/ilbc/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/interface";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -419,11 +431,23 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "audio_coding_module/audio_coding_module-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g711/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/ilbc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/interface",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g711/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/ilbc/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b/include $(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/interface";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

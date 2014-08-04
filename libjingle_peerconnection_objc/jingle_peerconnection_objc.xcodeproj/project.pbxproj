@@ -31,32 +31,32 @@
 		43982FB4198F59B70090EABA /* RTCVideoRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F9A198F59B70090EABA /* RTCVideoRenderer.mm */; };
 		43982FB5198F59B70090EABA /* RTCVideoSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F9C198F59B70090EABA /* RTCVideoSource.mm */; };
 		43982FB6198F59B70090EABA /* RTCVideoTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F9E198F59B70090EABA /* RTCVideoTrack.mm */; };
-		43982FB8198F5C360090EABA /* RTCAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F58198F59B70090EABA /* RTCAudioSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FB9198F5C390090EABA /* RTCAudioTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F59198F59B70090EABA /* RTCAudioTrack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FBA198F5C790090EABA /* RTCDataChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F5A198F59B70090EABA /* RTCDataChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FBB198F5C790090EABA /* RTCEAGLVideoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F5B198F59B70090EABA /* RTCEAGLVideoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FBC198F5C790090EABA /* RTCI420Frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F5C198F59B70090EABA /* RTCI420Frame.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FBD198F5C790090EABA /* RTCICECandidate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F5D198F59B70090EABA /* RTCICECandidate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FBE198F5C790090EABA /* RTCICEServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F5E198F59B70090EABA /* RTCICEServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FBF198F5C790090EABA /* RTCMediaConstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F5F198F59B70090EABA /* RTCMediaConstraints.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC0198F5C790090EABA /* RTCMediaSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F60198F59B70090EABA /* RTCMediaSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC1198F5C790090EABA /* RTCMediaStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F61198F59B70090EABA /* RTCMediaStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC2198F5C790090EABA /* RTCMediaStreamTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F62198F59B70090EABA /* RTCMediaStreamTrack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC3198F5C790090EABA /* RTCNSGLVideoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F63198F59B70090EABA /* RTCNSGLVideoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC4198F5C790090EABA /* RTCOpenGLVideoRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F64198F59B70090EABA /* RTCOpenGLVideoRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC5198F5C790090EABA /* RTCPair.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F65198F59B70090EABA /* RTCPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC6198F5C790090EABA /* RTCPeerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F66198F59B70090EABA /* RTCPeerConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC7198F5C790090EABA /* RTCPeerConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F67198F59B70090EABA /* RTCPeerConnectionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC8198F5C790090EABA /* RTCPeerConnectionFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F68198F59B70090EABA /* RTCPeerConnectionFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FC9198F5C790090EABA /* RTCSessionDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F69198F59B70090EABA /* RTCSessionDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FCA198F5C790090EABA /* RTCSessionDescriptionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F6A198F59B70090EABA /* RTCSessionDescriptionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FCB198F5C790090EABA /* RTCStatsDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F6B198F59B70090EABA /* RTCStatsDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FCC198F5C790090EABA /* RTCStatsReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F6C198F59B70090EABA /* RTCStatsReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FCD198F5C790090EABA /* RTCTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F6D198F59B70090EABA /* RTCTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FCE198F5C790090EABA /* RTCVideoCapturer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F6E198F59B70090EABA /* RTCVideoCapturer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FCF198F5C790090EABA /* RTCVideoRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F6F198F59B70090EABA /* RTCVideoRenderer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FD0198F5C790090EABA /* RTCVideoSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F70198F59B70090EABA /* RTCVideoSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43982FD1198F5C790090EABA /* RTCVideoTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F71198F59B70090EABA /* RTCVideoTrack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		43982FD2198F66B10090EABA /* RTCAudioSource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F58198F59B70090EABA /* RTCAudioSource.h */; };
+		43982FD3198F66B10090EABA /* RTCAudioTrack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F59198F59B70090EABA /* RTCAudioTrack.h */; };
+		43982FD4198F66B10090EABA /* RTCDataChannel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F5A198F59B70090EABA /* RTCDataChannel.h */; };
+		43982FD5198F66B10090EABA /* RTCEAGLVideoView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F5B198F59B70090EABA /* RTCEAGLVideoView.h */; };
+		43982FD6198F66B10090EABA /* RTCI420Frame.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F5C198F59B70090EABA /* RTCI420Frame.h */; };
+		43982FD7198F66B10090EABA /* RTCICECandidate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F5D198F59B70090EABA /* RTCICECandidate.h */; };
+		43982FD8198F66B10090EABA /* RTCICEServer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F5E198F59B70090EABA /* RTCICEServer.h */; };
+		43982FD9198F66B10090EABA /* RTCMediaConstraints.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F5F198F59B70090EABA /* RTCMediaConstraints.h */; };
+		43982FDA198F66B10090EABA /* RTCMediaSource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F60198F59B70090EABA /* RTCMediaSource.h */; };
+		43982FDB198F66B10090EABA /* RTCMediaStream.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F61198F59B70090EABA /* RTCMediaStream.h */; };
+		43982FDC198F66B10090EABA /* RTCMediaStreamTrack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F62198F59B70090EABA /* RTCMediaStreamTrack.h */; };
+		43982FDD198F66B10090EABA /* RTCNSGLVideoView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F63198F59B70090EABA /* RTCNSGLVideoView.h */; };
+		43982FDE198F66B10090EABA /* RTCOpenGLVideoRenderer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F64198F59B70090EABA /* RTCOpenGLVideoRenderer.h */; };
+		43982FDF198F66B10090EABA /* RTCPair.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F65198F59B70090EABA /* RTCPair.h */; };
+		43982FE0198F66B10090EABA /* RTCPeerConnection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F66198F59B70090EABA /* RTCPeerConnection.h */; };
+		43982FE1198F66B10090EABA /* RTCPeerConnectionDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F67198F59B70090EABA /* RTCPeerConnectionDelegate.h */; };
+		43982FE2198F66B10090EABA /* RTCPeerConnectionFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F68198F59B70090EABA /* RTCPeerConnectionFactory.h */; };
+		43982FE3198F66B10090EABA /* RTCSessionDescription.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F69198F59B70090EABA /* RTCSessionDescription.h */; };
+		43982FE4198F66B10090EABA /* RTCSessionDescriptionDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6A198F59B70090EABA /* RTCSessionDescriptionDelegate.h */; };
+		43982FE5198F66B10090EABA /* RTCStatsDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6B198F59B70090EABA /* RTCStatsDelegate.h */; };
+		43982FE6198F66B10090EABA /* RTCStatsReport.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6C198F59B70090EABA /* RTCStatsReport.h */; };
+		43982FE7198F66B10090EABA /* RTCTypes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6D198F59B70090EABA /* RTCTypes.h */; };
+		43982FE8198F66B10090EABA /* RTCVideoCapturer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6E198F59B70090EABA /* RTCVideoCapturer.h */; };
+		43982FE9198F66B10090EABA /* RTCVideoRenderer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6F198F59B70090EABA /* RTCVideoRenderer.h */; };
+		43982FEA198F66B10090EABA /* RTCVideoSource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F70198F59B70090EABA /* RTCVideoSource.h */; };
+		43982FEB198F66B10090EABA /* RTCVideoTrack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F71198F59B70090EABA /* RTCVideoTrack.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,6 +66,32 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				43982FD2198F66B10090EABA /* RTCAudioSource.h in CopyFiles */,
+				43982FD3198F66B10090EABA /* RTCAudioTrack.h in CopyFiles */,
+				43982FD4198F66B10090EABA /* RTCDataChannel.h in CopyFiles */,
+				43982FD5198F66B10090EABA /* RTCEAGLVideoView.h in CopyFiles */,
+				43982FD6198F66B10090EABA /* RTCI420Frame.h in CopyFiles */,
+				43982FD7198F66B10090EABA /* RTCICECandidate.h in CopyFiles */,
+				43982FD8198F66B10090EABA /* RTCICEServer.h in CopyFiles */,
+				43982FD9198F66B10090EABA /* RTCMediaConstraints.h in CopyFiles */,
+				43982FDA198F66B10090EABA /* RTCMediaSource.h in CopyFiles */,
+				43982FDB198F66B10090EABA /* RTCMediaStream.h in CopyFiles */,
+				43982FDC198F66B10090EABA /* RTCMediaStreamTrack.h in CopyFiles */,
+				43982FDD198F66B10090EABA /* RTCNSGLVideoView.h in CopyFiles */,
+				43982FDE198F66B10090EABA /* RTCOpenGLVideoRenderer.h in CopyFiles */,
+				43982FDF198F66B10090EABA /* RTCPair.h in CopyFiles */,
+				43982FE0198F66B10090EABA /* RTCPeerConnection.h in CopyFiles */,
+				43982FE1198F66B10090EABA /* RTCPeerConnectionDelegate.h in CopyFiles */,
+				43982FE2198F66B10090EABA /* RTCPeerConnectionFactory.h in CopyFiles */,
+				43982FE3198F66B10090EABA /* RTCSessionDescription.h in CopyFiles */,
+				43982FE4198F66B10090EABA /* RTCSessionDescriptionDelegate.h in CopyFiles */,
+				43982FE5198F66B10090EABA /* RTCStatsDelegate.h in CopyFiles */,
+				43982FE6198F66B10090EABA /* RTCStatsReport.h in CopyFiles */,
+				43982FE7198F66B10090EABA /* RTCTypes.h in CopyFiles */,
+				43982FE8198F66B10090EABA /* RTCVideoCapturer.h in CopyFiles */,
+				43982FE9198F66B10090EABA /* RTCVideoRenderer.h in CopyFiles */,
+				43982FEA198F66B10090EABA /* RTCVideoSource.h in CopyFiles */,
+				43982FEB198F66B10090EABA /* RTCVideoTrack.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,42 +319,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		43982FB7198F5C2B0090EABA /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				43982FB8198F5C360090EABA /* RTCAudioSource.h in Headers */,
-				43982FB9198F5C390090EABA /* RTCAudioTrack.h in Headers */,
-				43982FBA198F5C790090EABA /* RTCDataChannel.h in Headers */,
-				43982FBB198F5C790090EABA /* RTCEAGLVideoView.h in Headers */,
-				43982FBC198F5C790090EABA /* RTCI420Frame.h in Headers */,
-				43982FBD198F5C790090EABA /* RTCICECandidate.h in Headers */,
-				43982FBE198F5C790090EABA /* RTCICEServer.h in Headers */,
-				43982FBF198F5C790090EABA /* RTCMediaConstraints.h in Headers */,
-				43982FC0198F5C790090EABA /* RTCMediaSource.h in Headers */,
-				43982FC1198F5C790090EABA /* RTCMediaStream.h in Headers */,
-				43982FC2198F5C790090EABA /* RTCMediaStreamTrack.h in Headers */,
-				43982FC3198F5C790090EABA /* RTCNSGLVideoView.h in Headers */,
-				43982FC4198F5C790090EABA /* RTCOpenGLVideoRenderer.h in Headers */,
-				43982FC5198F5C790090EABA /* RTCPair.h in Headers */,
-				43982FC6198F5C790090EABA /* RTCPeerConnection.h in Headers */,
-				43982FC7198F5C790090EABA /* RTCPeerConnectionDelegate.h in Headers */,
-				43982FC8198F5C790090EABA /* RTCPeerConnectionFactory.h in Headers */,
-				43982FC9198F5C790090EABA /* RTCSessionDescription.h in Headers */,
-				43982FCA198F5C790090EABA /* RTCSessionDescriptionDelegate.h in Headers */,
-				43982FCB198F5C790090EABA /* RTCStatsDelegate.h in Headers */,
-				43982FCC198F5C790090EABA /* RTCStatsReport.h in Headers */,
-				43982FCD198F5C790090EABA /* RTCTypes.h in Headers */,
-				43982FCE198F5C790090EABA /* RTCVideoCapturer.h in Headers */,
-				43982FCF198F5C790090EABA /* RTCVideoRenderer.h in Headers */,
-				43982FD0198F5C790090EABA /* RTCVideoSource.h in Headers */,
-				43982FD1198F5C790090EABA /* RTCVideoTrack.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		430B2225197F526C0076767F /* jingle_peerconnection_objc */ = {
 			isa = PBXNativeTarget;
@@ -337,7 +327,6 @@
 				430B2222197F526C0076767F /* Sources */,
 				430B2223197F526C0076767F /* Frameworks */,
 				430B2224197F526C0076767F /* CopyFiles */,
-				43982FB7198F5C2B0090EABA /* Headers */,
 			);
 			buildRules = (
 			);
@@ -494,12 +483,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/talk/app/webrtc/objc/public",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_peerconnection_objc;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/talk/app/webrtc/objc/public";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -513,12 +504,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/talk/app/webrtc/objc/public",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_peerconnection_objc;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/talk/app/webrtc/objc/public";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
