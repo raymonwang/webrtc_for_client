@@ -1,0 +1,269 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43983547198FAD030090EABA /* mock_paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983541198FAD030090EABA /* mock_paced_sender.h */; };
+		43983548198FAD030090EABA /* paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983542198FAD030090EABA /* paced_sender.h */; };
+		43983549198FAD030090EABA /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43983544198FAD030090EABA /* paced_sender.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43983530198FACD30090EABA /* libpaced_sender.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpaced_sender.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43983541198FAD030090EABA /* mock_paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_paced_sender.h; sourceTree = "<group>"; };
+		43983542198FAD030090EABA /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paced_sender.h; sourceTree = "<group>"; };
+		43983544198FAD030090EABA /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = paced_sender.cc; sourceTree = "<group>"; };
+		43983546198FAD030090EABA /* pacing.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pacing.gypi; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4398352D198FACD30090EABA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43983527198FACD30090EABA = {
+			isa = PBXGroup;
+			children = (
+				4398353D198FAD030090EABA /* pacing */,
+				43983531198FACD30090EABA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43983531198FACD30090EABA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43983530198FACD30090EABA /* libpaced_sender.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4398353D198FAD030090EABA /* pacing */ = {
+			isa = PBXGroup;
+			children = (
+				4398353F198FAD030090EABA /* include */,
+				43983544198FAD030090EABA /* paced_sender.cc */,
+				43983546198FAD030090EABA /* pacing.gypi */,
+			);
+			name = pacing;
+			path = ../webRTCAPP/Classes/webrtc/modules/pacing;
+			sourceTree = "<group>";
+		};
+		4398353F198FAD030090EABA /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43983540198FAD030090EABA /* mock */,
+				43983542198FAD030090EABA /* paced_sender.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		43983540198FAD030090EABA /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				43983541198FAD030090EABA /* mock_paced_sender.h */,
+			);
+			path = mock;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4398352E198FACD30090EABA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43983547198FAD030090EABA /* mock_paced_sender.h in Headers */,
+				43983548198FAD030090EABA /* paced_sender.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4398352F198FACD30090EABA /* paced_sender */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43983534198FACD30090EABA /* Build configuration list for PBXNativeTarget "paced_sender" */;
+			buildPhases = (
+				4398352C198FACD30090EABA /* Sources */,
+				4398352D198FACD30090EABA /* Frameworks */,
+				4398352E198FACD30090EABA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = paced_sender;
+			productName = paced_sender;
+			productReference = 43983530198FACD30090EABA /* libpaced_sender.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43983528198FACD30090EABA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 4398352B198FACD30090EABA /* Build configuration list for PBXProject "paced_sender" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43983527198FACD30090EABA;
+			productRefGroup = 43983531198FACD30090EABA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4398352F198FACD30090EABA /* paced_sender */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4398352C198FACD30090EABA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43983549198FAD030090EABA /* paced_sender.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43983532198FACD30090EABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43983533198FACD30090EABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43983535198FACD30090EABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		43983536198FACD30090EABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4398352B198FACD30090EABA /* Build configuration list for PBXProject "paced_sender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43983532198FACD30090EABA /* Debug */,
+				43983533198FACD30090EABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43983534198FACD30090EABA /* Build configuration list for PBXNativeTarget "paced_sender" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43983535198FACD30090EABA /* Debug */,
+				43983536198FACD30090EABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43983528198FACD30090EABA /* Project object */;
+}

@@ -1,0 +1,407 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4398364D198FAE300090EABA /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398356B198FAE2F0090EABA /* value.h */; };
+		4398364E198FAE300090EABA /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4398356E198FAE2F0090EABA /* json_reader.cpp */; };
+		4398364F198FAE300090EABA /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4398356F198FAE2F0090EABA /* json_value.cpp */; };
+		43983650198FAE300090EABA /* assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983586198FAE2F0090EABA /* assertions.h */; };
+		43983651198FAE300090EABA /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983587198FAE2F0090EABA /* autolink.h */; };
+		43983652198FAE300090EABA /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983588198FAE2F0090EABA /* config.h */; };
+		43983653198FAE300090EABA /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983589198FAE2F0090EABA /* features.h */; };
+		43983654198FAE300090EABA /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398358A198FAE2F0090EABA /* forwards.h */; };
+		43983655198FAE300090EABA /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398358B198FAE2F0090EABA /* json.h */; };
+		43983656198FAE300090EABA /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398358C198FAE2F0090EABA /* reader.h */; };
+		43983658198FAE300090EABA /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398358E198FAE2F0090EABA /* writer.h */; };
+		4398365A198FAE300090EABA /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 439835A4198FAE300090EABA /* json_batchallocator.h */; };
+		4398365C198FAE300090EABA /* json_tool.h in Headers */ = {isa = PBXBuildFile; fileRef = 439835A8198FAE300090EABA /* json_tool.h */; };
+		4398365E198FAE300090EABA /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 439835AB198FAE300090EABA /* json_writer.cpp */; };
+		43983666198FB3F70090EABA /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983665198FB3F70090EABA /* value.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43983555198FAE110090EABA /* libjsoncpp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjsoncpp.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43983564198FAE2F0090EABA /* jsoncpp.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jsoncpp.gyp; sourceTree = "<group>"; };
+		43983565198FAE2F0090EABA /* jsoncpp.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jsoncpp.gypi; sourceTree = "<group>"; };
+		4398356B198FAE2F0090EABA /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+		4398356E198FAE2F0090EABA /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		4398356F198FAE2F0090EABA /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		43983586198FAE2F0090EABA /* assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assertions.h; sourceTree = "<group>"; };
+		43983587198FAE2F0090EABA /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		43983588198FAE2F0090EABA /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		43983589198FAE2F0090EABA /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
+		4398358A198FAE2F0090EABA /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
+		4398358B198FAE2F0090EABA /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		4398358C198FAE2F0090EABA /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		4398358E198FAE2F0090EABA /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		439835A4198FAE300090EABA /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
+		439835A7198FAE300090EABA /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		439835A8198FAE300090EABA /* json_tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
+		439835A9198FAE300090EABA /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		439835AB198FAE300090EABA /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
+		43983662198FB2880090EABA /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
+		43983663198FB2880090EABA /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
+		43983664198FB2880090EABA /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
+		43983665198FB3F70090EABA /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43983552198FAE110090EABA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4398354C198FAE110090EABA = {
+			isa = PBXGroup;
+			children = (
+				43983562198FAE2F0090EABA /* jsoncpp */,
+				43983556198FAE110090EABA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43983556198FAE110090EABA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43983555198FAE110090EABA /* libjsoncpp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43983562198FAE2F0090EABA /* jsoncpp */ = {
+			isa = PBXGroup;
+			children = (
+				43983564198FAE2F0090EABA /* jsoncpp.gyp */,
+				43983565198FAE2F0090EABA /* jsoncpp.gypi */,
+				43983568198FAE2F0090EABA /* overrides */,
+				43983572198FAE2F0090EABA /* source */,
+			);
+			name = jsoncpp;
+			path = ../webRTCAPP/Classes/third_party/jsoncpp;
+			sourceTree = "<group>";
+		};
+		43983568198FAE2F0090EABA /* overrides */ = {
+			isa = PBXGroup;
+			children = (
+				43983569198FAE2F0090EABA /* include */,
+				4398356C198FAE2F0090EABA /* src */,
+			);
+			path = overrides;
+			sourceTree = "<group>";
+		};
+		43983569198FAE2F0090EABA /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4398356A198FAE2F0090EABA /* json */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		4398356A198FAE2F0090EABA /* json */ = {
+			isa = PBXGroup;
+			children = (
+				4398356B198FAE2F0090EABA /* value.h */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		4398356C198FAE2F0090EABA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4398356D198FAE2F0090EABA /* lib_json */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		4398356D198FAE2F0090EABA /* lib_json */ = {
+			isa = PBXGroup;
+			children = (
+				4398356E198FAE2F0090EABA /* json_reader.cpp */,
+				4398356F198FAE2F0090EABA /* json_value.cpp */,
+			);
+			path = lib_json;
+			sourceTree = "<group>";
+		};
+		43983572198FAE2F0090EABA /* source */ = {
+			isa = PBXGroup;
+			children = (
+				43983584198FAE2F0090EABA /* include */,
+				4398359F198FAE300090EABA /* src */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		43983584198FAE2F0090EABA /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43983585198FAE2F0090EABA /* json */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		43983585198FAE2F0090EABA /* json */ = {
+			isa = PBXGroup;
+			children = (
+				43983665198FB3F70090EABA /* value.h */,
+				43983586198FAE2F0090EABA /* assertions.h */,
+				43983587198FAE2F0090EABA /* autolink.h */,
+				43983588198FAE2F0090EABA /* config.h */,
+				43983589198FAE2F0090EABA /* features.h */,
+				4398358A198FAE2F0090EABA /* forwards.h */,
+				4398358B198FAE2F0090EABA /* json.h */,
+				4398358C198FAE2F0090EABA /* reader.h */,
+				4398358E198FAE2F0090EABA /* writer.h */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		4398359F198FAE300090EABA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				439835A3198FAE300090EABA /* lib_json */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		439835A3198FAE300090EABA /* lib_json */ = {
+			isa = PBXGroup;
+			children = (
+				43983662198FB2880090EABA /* json_internalarray.inl */,
+				43983663198FB2880090EABA /* json_internalmap.inl */,
+				43983664198FB2880090EABA /* json_valueiterator.inl */,
+				439835A4198FAE300090EABA /* json_batchallocator.h */,
+				439835A7198FAE300090EABA /* json_reader.cpp */,
+				439835A8198FAE300090EABA /* json_tool.h */,
+				439835A9198FAE300090EABA /* json_value.cpp */,
+				439835AB198FAE300090EABA /* json_writer.cpp */,
+			);
+			path = lib_json;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43983553198FAE110090EABA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4398365C198FAE300090EABA /* json_tool.h in Headers */,
+				43983652198FAE300090EABA /* config.h in Headers */,
+				43983656198FAE300090EABA /* reader.h in Headers */,
+				43983658198FAE300090EABA /* writer.h in Headers */,
+				43983651198FAE300090EABA /* autolink.h in Headers */,
+				43983655198FAE300090EABA /* json.h in Headers */,
+				43983666198FB3F70090EABA /* value.h in Headers */,
+				4398364D198FAE300090EABA /* value.h in Headers */,
+				4398365A198FAE300090EABA /* json_batchallocator.h in Headers */,
+				43983653198FAE300090EABA /* features.h in Headers */,
+				43983654198FAE300090EABA /* forwards.h in Headers */,
+				43983650198FAE300090EABA /* assertions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43983554198FAE110090EABA /* jsoncpp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43983559198FAE110090EABA /* Build configuration list for PBXNativeTarget "jsoncpp" */;
+			buildPhases = (
+				43983551198FAE110090EABA /* Sources */,
+				43983552198FAE110090EABA /* Frameworks */,
+				43983553198FAE110090EABA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = jsoncpp;
+			productName = jsoncpp;
+			productReference = 43983555198FAE110090EABA /* libjsoncpp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4398354D198FAE110090EABA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43983550198FAE110090EABA /* Build configuration list for PBXProject "jsoncpp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4398354C198FAE110090EABA;
+			productRefGroup = 43983556198FAE110090EABA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43983554198FAE110090EABA /* jsoncpp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43983551198FAE110090EABA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4398364E198FAE300090EABA /* json_reader.cpp in Sources */,
+				4398364F198FAE300090EABA /* json_value.cpp in Sources */,
+				4398365E198FAE300090EABA /* json_writer.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43983557198FAE110090EABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43983558198FAE110090EABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		4398355A198FAE110090EABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"JSON_USE_EXCEPTION=0",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/src/lib_json",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4398355B198FAE110090EABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"JSON_USE_EXCEPTION=0",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/src/lib_json",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43983550198FAE110090EABA /* Build configuration list for PBXProject "jsoncpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43983557198FAE110090EABA /* Debug */,
+				43983558198FAE110090EABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43983559198FAE110090EABA /* Build configuration list for PBXNativeTarget "jsoncpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4398355A198FAE110090EABA /* Debug */,
+				4398355B198FAE110090EABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4398354D198FAE110090EABA /* Project object */;
+}

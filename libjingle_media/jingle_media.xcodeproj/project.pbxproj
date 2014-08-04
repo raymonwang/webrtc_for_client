@@ -163,7 +163,6 @@
 		43982C8C198F3CC90090EABA /* fakewebrtcvideocapturemodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvideocapturemodule.h; sourceTree = "<group>"; };
 		43982C8D198F3CC90090EABA /* fakewebrtcvideoengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvideoengine.h; sourceTree = "<group>"; };
 		43982C8E198F3CC90090EABA /* fakewebrtcvoiceengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvoiceengine.h; sourceTree = "<group>"; };
-		43982C8F198F3CC90090EABA /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		43982C90198F3CC90090EABA /* webrtccommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtccommon.h; sourceTree = "<group>"; };
 		43982C91198F3CC90090EABA /* webrtcexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcexport.h; sourceTree = "<group>"; };
 		43982C92198F3CC90090EABA /* webrtcmediaengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcmediaengine.cc; sourceTree = "<group>"; };
@@ -390,7 +389,6 @@
 				43982C8C198F3CC90090EABA /* fakewebrtcvideocapturemodule.h */,
 				43982C8D198F3CC90090EABA /* fakewebrtcvideoengine.h */,
 				43982C8E198F3CC90090EABA /* fakewebrtcvoiceengine.h */,
-				43982C8F198F3CC90090EABA /* OWNERS */,
 				43982C90198F3CC90090EABA /* webrtccommon.h */,
 				43982C91198F3CC90090EABA /* webrtcexport.h */,
 				43982C92198F3CC90090EABA /* webrtcmediaengine.cc */,
@@ -600,6 +598,7 @@
 					HAVE_SCTP,
 					HAVE_SRTP,
 					HAVE_WEBRTC_VOICE,
+					HAVE_WEBRTC_VIDEO,
 					CHROMIUM_BUILD,
 					USE_WEBRTC_DEV_BRANCH,
 				);
@@ -611,6 +610,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/usrsctp",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_media;
 				SKIP_INSTALL = YES;
@@ -641,6 +641,7 @@
 					HAVE_SCTP,
 					HAVE_SRTP,
 					HAVE_WEBRTC_VOICE,
+					HAVE_WEBRTC_VIDEO,
 					CHROMIUM_BUILD,
 					USE_WEBRTC_DEV_BRANCH,
 				);
@@ -652,6 +653,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/usrsctp",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_media;
 				SKIP_INSTALL = YES;

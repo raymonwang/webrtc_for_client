@@ -97,6 +97,7 @@ typedef struct sctp_authinformation {
 	uint16_t recv_keyid;	/* last recv keyid (cached) */
 } sctp_authinfo_t;
 
+#include <netinet/sctp_sha1.h>
 
 
 /*

@@ -73,7 +73,8 @@ __FBSDID("$FreeBSD: head/sys/netinet/sctp_os.h 235828 2012-05-23 11:26:28Z tuexe
 #endif
 
 #if defined(__APPLE__)
-#include <netinet/sctp_os_macosx.h>
+#undef __APPLE__
+// #include <netinet/sctp_os_macosx.h>
 #endif
 
 #if defined(__Panda__)
