@@ -526,7 +526,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/webrtc $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/celt $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include $(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/src";

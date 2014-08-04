@@ -13,6 +13,7 @@
 		432885951980B2470000F16A /* liblibjingle_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885941980B2470000F16A /* liblibjingle_osx.a */; };
 		4328860E1980D8620000F16A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328860D1980D8620000F16A /* Carbon.framework */; };
 		432886101980DAD60000F16A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328860F1980DAD60000F16A /* Foundation.framework */; };
+		43BDD4D0198B421D00D135DF /* MyRelayServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43BDD4CD198B41AF00D135DF /* MyRelayServer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +37,8 @@
 		432885941980B2470000F16A /* liblibjingle_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibjingle_osx.a; path = ../DerivedData/webRTCAPP/Build/Products/Debug/liblibjingle_osx.a; sourceTree = "<group>"; };
 		4328860D1980D8620000F16A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		4328860F1980DAD60000F16A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		43BDD4CD198B41AF00D135DF /* MyRelayServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyRelayServer.cpp; sourceTree = "<group>"; };
+		43BDD4CE198B41AF00D135DF /* MyRelayServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRelayServer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +81,8 @@
 			children = (
 				4328847A19809D1C0000F16A /* main.cpp */,
 				4328847C19809D1C0000F16A /* relayserver.1 */,
+				43BDD4CD198B41AF00D135DF /* MyRelayServer.cpp */,
+				43BDD4CE198B41AF00D135DF /* MyRelayServer.h */,
 			);
 			path = relayserver;
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43BDD4D0198B421D00D135DF /* MyRelayServer.cpp in Sources */,
 				4328847B19809D1C0000F16A /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

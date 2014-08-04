@@ -101,7 +101,7 @@
 		43EC0AC6197CEF1400E9267B /* APPRTCConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AAE197CEF1400E9267B /* APPRTCConnectionManager.m */; };
 		43EC0AC7197CEF1400E9267B /* channel.html in Resources */ = {isa = PBXBuildFile; fileRef = 43EC0AAF197CEF1400E9267B /* channel.html */; };
 		43EC0AC8197CEF1400E9267B /* GAEChannelClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AB1197CEF1400E9267B /* GAEChannelClient.m */; };
-		43EC0AD7197D1D3500E9267B /* APPRTCViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AD6197D1D3500E9267B /* APPRTCViewController.mm */; };
+		43EC0AD7197D1D3500E9267B /* APPRTCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AD6197D1D3500E9267B /* APPRTCViewController.m */; };
 		43EC0B05197D222000E9267B /* brighten.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AE1197D222000E9267B /* brighten.cc */; };
 		43EC0B06197D222000E9267B /* brightness_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AE3197D222000E9267B /* brightness_detection.cc */; };
 		43EC0B07197D222000E9267B /* color_enhancement.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AE5197D222000E9267B /* color_enhancement.cc */; };
@@ -425,13 +425,6 @@
 			remoteGlobalIDString = 432885721980A8160000F16A;
 			remoteInfo = jingle_osx;
 		};
-		4316FE29198A0F7800595538 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430B22A4197F59BA0076767F;
-			remoteInfo = jingle_peerconnection;
-		};
 		4316FE2E198A0F7800595538 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 430B29C1197F690E0076767F /* jingle_sound.xcodeproj */;
@@ -445,6 +438,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 432886D41980FFFD0000F16A;
 			remoteInfo = RtcSameple;
+		};
+		43982D6D198F538B0090EABA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43982D69198F53890090EABA /* jingle_peerconnection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43982D62198F53890090EABA;
+			remoteInfo = jingle_peerconnection;
+		};
+		43982EE4198F55600090EABA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43982ECE198F555E0090EABA /* jingle_sound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43982EC7198F555E0090EABA;
+			remoteInfo = jingle_sound;
 		};
 		43998A7219862D95003C5793 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -478,7 +485,6 @@
 
 /* Begin PBXFileReference section */
 		430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection_objc.xcodeproj; path = libjingle_peerconnection_objc/jingle_peerconnection_objc.xcodeproj; sourceTree = "<group>"; };
-		430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection.xcodeproj; path = libjingle_peerconnection/jingle_peerconnection.xcodeproj; sourceTree = "<group>"; };
 		430B2363197F5BA70076767F /* jingle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle.xcodeproj; path = libjingle/jingle.xcodeproj; sourceTree = "<group>"; };
 		430B298D197F68AA0076767F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		430B29C1197F690E0076767F /* jingle_sound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_sound.xcodeproj; path = libjingle_sound/jingle_sound.xcodeproj; sourceTree = "<group>"; };
@@ -956,6 +962,8 @@
 		4328870C1980FFFD0000F16A /* RtcSameple.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RtcSameple.xcodeproj; path = RtcSameple/RtcSameple.xcodeproj; sourceTree = "<group>"; };
 		4328871919810B7A0000F16A /* MediaSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaSample.cpp; sourceTree = "<group>"; };
 		4328871A19810B7A0000F16A /* MediaSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaSample.h; sourceTree = "<group>"; };
+		43982D69198F53890090EABA /* jingle_peerconnection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection.xcodeproj; path = jingle_peerconnection/jingle_peerconnection.xcodeproj; sourceTree = "<group>"; };
+		43982ECE198F555E0090EABA /* jingle_sound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_sound.xcodeproj; path = jingle_sound/jingle_sound.xcodeproj; sourceTree = "<group>"; };
 		43998A6E19862D95003C5793 /* rtp_rtcp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtp_rtcp.xcodeproj; path = rtp_rtcp/rtp_rtcp.xcodeproj; sourceTree = "<group>"; };
 		43998B1B198631D9003C5793 /* bitrate_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = bitrate_controller.xcodeproj; path = bitrate_controller/bitrate_controller.xcodeproj; sourceTree = "<group>"; };
 		43998B401986327B003C5793 /* media_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = media_file.xcodeproj; path = media_file/media_file.xcodeproj; sourceTree = "<group>"; };
@@ -968,7 +976,7 @@
 		43EC0AB0197CEF1400E9267B /* GAEChannelClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAEChannelClient.h; sourceTree = "<group>"; };
 		43EC0AB1197CEF1400E9267B /* GAEChannelClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAEChannelClient.m; sourceTree = "<group>"; };
 		43EC0AD5197D1D3500E9267B /* APPRTCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPRTCViewController.h; sourceTree = "<group>"; };
-		43EC0AD6197D1D3500E9267B /* APPRTCViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = APPRTCViewController.mm; sourceTree = "<group>"; };
+		43EC0AD6197D1D3500E9267B /* APPRTCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPRTCViewController.m; sourceTree = "<group>"; };
 		43EC0AD8197D21D400E9267B /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		43EC0ADD197D222000E9267B /* video_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing.h; sourceTree = "<group>"; };
 		43EC0ADE197D222000E9267B /* video_processing_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing_defines.h; sourceTree = "<group>"; };
@@ -1728,14 +1736,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4316FE26198A0F7800595538 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4316FE2A198A0F7800595538 /* libjingle_peerconnection.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4316FE2B198A0F7800595538 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2340,6 +2340,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43982D6A198F53890090EABA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43982D6E198F538B0090EABA /* libjingle_peerconnection.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43982ECF198F555E0090EABA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43982EE5198F55600090EABA /* libjingle_sound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		43998A6F19862D95003C5793 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2669,6 +2685,8 @@
 		43ECEE86197CA80B00E9267B = {
 			isa = PBXGroup;
 			children = (
+				43982ECE198F555E0090EABA /* jingle_sound.xcodeproj */,
+				43982D69198F53890090EABA /* jingle_peerconnection.xcodeproj */,
 				43998B2F19863266003C5793 /* modules */,
 				430D8F5219862490009E763A /* neteq.xcodeproj */,
 				430D8E2919862159009E763A /* Codecs */,
@@ -2682,7 +2700,6 @@
 				430B2A1A197F69EE0076767F /* jingle_media.xcodeproj */,
 				430B29C1197F690E0076767F /* jingle_sound.xcodeproj */,
 				430B2363197F5BA70076767F /* jingle.xcodeproj */,
-				430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */,
 				430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */,
 				43ECEE98197CA80B00E9267B /* webRTCAPP */,
 				43ECEE91197CA80B00E9267B /* Frameworks */,
@@ -2736,7 +2753,7 @@
 				43ECEEA1197CA80B00E9267B /* AppDelegate.h */,
 				43ECEEA2197CA80B00E9267B /* AppDelegate.m */,
 				43EC0AD5197D1D3500E9267B /* APPRTCViewController.h */,
-				43EC0AD6197D1D3500E9267B /* APPRTCViewController.mm */,
+				43EC0AD6197D1D3500E9267B /* APPRTCViewController.m */,
 				4318D575197E725500D5CADB /* APPRTCViewController.xib */,
 				43ECEEAA197CA80B00E9267B /* Images.xcassets */,
 				43ECEE99197CA80B00E9267B /* Supporting Files */,
@@ -3464,12 +3481,16 @@
 					ProjectRef = 430B2AE4197F6CF10076767F /* jingle_p2p.xcodeproj */;
 				},
 				{
-					ProductGroup = 4316FE26198A0F7800595538 /* Products */;
-					ProjectRef = 430B22CD197F59BA0076767F /* jingle_peerconnection.xcodeproj */;
+					ProductGroup = 43982D6A198F53890090EABA /* Products */;
+					ProjectRef = 43982D69198F53890090EABA /* jingle_peerconnection.xcodeproj */;
 				},
 				{
 					ProductGroup = 4316FE14198A0F7700595538 /* Products */;
 					ProjectRef = 430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */;
+				},
+				{
+					ProductGroup = 43982ECF198F555E0090EABA /* Products */;
+					ProjectRef = 43982ECE198F555E0090EABA /* jingle_sound.xcodeproj */;
 				},
 				{
 					ProductGroup = 4316FE2B198A0F7800595538 /* Products */;
@@ -3689,13 +3710,6 @@
 			remoteRef = 4316FE24198A0F7800595538 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4316FE2A198A0F7800595538 /* libjingle_peerconnection.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjingle_peerconnection.a;
-			remoteRef = 4316FE29198A0F7800595538 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		4316FE2F198A0F7800595538 /* libjingle_sound.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3708,6 +3722,20 @@
 			fileType = wrapper.application;
 			path = RtcSameple.app;
 			remoteRef = 432887111980FFFE0000F16A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43982D6E198F538B0090EABA /* libjingle_peerconnection.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_peerconnection.a;
+			remoteRef = 43982D6D198F538B0090EABA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43982EE5198F55600090EABA /* libjingle_sound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjingle_sound.a;
+			remoteRef = 43982EE4198F55600090EABA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43998A7319862D95003C5793 /* librtp_rtcp.a */ = {
@@ -3960,7 +3988,7 @@
 				43EC0B06197D222000E9267B /* brightness_detection.cc in Sources */,
 				43EC1023197D25A700E9267B /* statistics.cc in Sources */,
 				43ECF6A5197CB11400E9267B /* vie_frame_provider_base.cc in Sources */,
-				43EC0AD7197D1D3500E9267B /* APPRTCViewController.mm in Sources */,
+				43EC0AD7197D1D3500E9267B /* APPRTCViewController.m in Sources */,
 				4318D17C197E452100D5CADB /* sslsock.c in Sources */,
 				43EC0EFF197D23CC00E9267B /* video_render_frames.cc in Sources */,
 				43ECFA99197CB47F00E9267B /* i420.cc in Sources */,
@@ -4102,6 +4130,8 @@
 					USE_WEBRTC_DEV_BRANCH,
 					"CLANG_ENABLE_OBJC_ARC=1",
 					WEBRTC_TRACE,
+					CHROMIUM_BUILD,
+					LIBPEERCONNECTION_LIB,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

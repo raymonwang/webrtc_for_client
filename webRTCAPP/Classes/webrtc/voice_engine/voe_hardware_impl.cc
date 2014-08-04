@@ -567,6 +567,14 @@ int VoEHardwareImpl::PlayoutSampleRate(unsigned int* samples_per_sec) const {
   }
   return _shared->audio_device()->PlayoutSampleRate(samples_per_sec);
 }
+    
+    int VoEHardwareImpl::SetLoudspeakerStatus(bool enable) {
+        if (!_shared->statistics().Initialized()) {
+            _shared->SetLastError(VE_NOT_INITED, kTraceError);
+            return false;
+        }
+        return _shared->audio_device()->SetLoudspeakerStatus(enable);
+    }
 
 #endif  // WEBRTC_VOICE_ENGINE_HARDWARE_API
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AF5417C2-8157-40C9-95FA-71B02C139B70</string>
+	<key>IDESourceControlProjectName</key>
+	<string>jingle_sound</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1224CDF8-4087-43CF-9B6B-9F0C1EF2C320</key>
+		<string>ssh://180.166.92.227:5678/~/git_repo/webRTC_xCode.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>libjingle_sound/jingle_sound.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1224CDF8-4087-43CF-9B6B-9F0C1EF2C320</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://180.166.92.227:5678/~/git_repo/webRTC_xCode.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1224CDF8-4087-43CF-9B6B-9F0C1EF2C320</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1224CDF8-4087-43CF-9B6B-9F0C1EF2C320</string>
+			<key>IDESourceControlWCCName</key>
+			<string>webRTC_xCode</string>
+		</dict>
+	</array>
+</dict>
+</plist>

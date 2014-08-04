@@ -1,0 +1,350 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43982F08198F55770090EABA /* automaticallychosensoundsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EF3198F55770090EABA /* automaticallychosensoundsystem.h */; };
+		43982F09198F55770090EABA /* nullsoundsystem.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982EF4198F55770090EABA /* nullsoundsystem.cc */; };
+		43982F0A198F55770090EABA /* nullsoundsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EF5198F55770090EABA /* nullsoundsystem.h */; };
+		43982F0B198F55770090EABA /* nullsoundsystemfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982EF6198F55770090EABA /* nullsoundsystemfactory.cc */; };
+		43982F0C198F55770090EABA /* nullsoundsystemfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EF7198F55770090EABA /* nullsoundsystemfactory.h */; };
+		43982F0D198F55770090EABA /* platformsoundsystem.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982EF8198F55770090EABA /* platformsoundsystem.cc */; };
+		43982F0E198F55770090EABA /* platformsoundsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EF9198F55770090EABA /* platformsoundsystem.h */; };
+		43982F0F198F55770090EABA /* platformsoundsystemfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982EFA198F55770090EABA /* platformsoundsystemfactory.cc */; };
+		43982F10198F55770090EABA /* platformsoundsystemfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EFB198F55770090EABA /* platformsoundsystemfactory.h */; };
+		43982F12198F55770090EABA /* pulseaudiosoundsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EFD198F55770090EABA /* pulseaudiosoundsystem.h */; };
+		43982F14198F55770090EABA /* pulseaudiosymboltable.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982EFF198F55770090EABA /* pulseaudiosymboltable.h */; };
+		43982F15198F55770090EABA /* sounddevicelocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F00198F55770090EABA /* sounddevicelocator.h */; };
+		43982F16198F55770090EABA /* soundinputstreaminterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F01198F55770090EABA /* soundinputstreaminterface.h */; };
+		43982F17198F55770090EABA /* soundoutputstreaminterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F02198F55770090EABA /* soundoutputstreaminterface.h */; };
+		43982F18198F55770090EABA /* soundsystemfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F03198F55770090EABA /* soundsystemfactory.h */; };
+		43982F19198F55770090EABA /* soundsysteminterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982F04198F55770090EABA /* soundsysteminterface.cc */; };
+		43982F1A198F55770090EABA /* soundsysteminterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F05198F55770090EABA /* soundsysteminterface.h */; };
+		43982F1B198F55770090EABA /* soundsystemproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982F06198F55770090EABA /* soundsystemproxy.cc */; };
+		43982F1C198F55770090EABA /* soundsystemproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F07198F55770090EABA /* soundsystemproxy.h */; };
+		43982F4A198F561E0090EABA /* alsasoundsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F43198F561E0090EABA /* alsasoundsystem.h */; };
+		43982F4C198F561F0090EABA /* alsasymboltable.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F45198F561E0090EABA /* alsasymboltable.h */; };
+		43982F4F198F561F0090EABA /* linuxsoundsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982F48198F561E0090EABA /* linuxsoundsystem.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43982EC7198F555E0090EABA /* libjingle_sound.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjingle_sound.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43982EF3198F55770090EABA /* automaticallychosensoundsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = automaticallychosensoundsystem.h; sourceTree = "<group>"; };
+		43982EF4198F55770090EABA /* nullsoundsystem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nullsoundsystem.cc; sourceTree = "<group>"; };
+		43982EF5198F55770090EABA /* nullsoundsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nullsoundsystem.h; sourceTree = "<group>"; };
+		43982EF6198F55770090EABA /* nullsoundsystemfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nullsoundsystemfactory.cc; sourceTree = "<group>"; };
+		43982EF7198F55770090EABA /* nullsoundsystemfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nullsoundsystemfactory.h; sourceTree = "<group>"; };
+		43982EF8198F55770090EABA /* platformsoundsystem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platformsoundsystem.cc; sourceTree = "<group>"; };
+		43982EF9198F55770090EABA /* platformsoundsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platformsoundsystem.h; sourceTree = "<group>"; };
+		43982EFA198F55770090EABA /* platformsoundsystemfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platformsoundsystemfactory.cc; sourceTree = "<group>"; };
+		43982EFB198F55770090EABA /* platformsoundsystemfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platformsoundsystemfactory.h; sourceTree = "<group>"; };
+		43982EFC198F55770090EABA /* pulseaudiosoundsystem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pulseaudiosoundsystem.cc; sourceTree = "<group>"; };
+		43982EFD198F55770090EABA /* pulseaudiosoundsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pulseaudiosoundsystem.h; sourceTree = "<group>"; };
+		43982EFE198F55770090EABA /* pulseaudiosymboltable.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pulseaudiosymboltable.cc; sourceTree = "<group>"; };
+		43982EFF198F55770090EABA /* pulseaudiosymboltable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pulseaudiosymboltable.h; sourceTree = "<group>"; };
+		43982F00198F55770090EABA /* sounddevicelocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sounddevicelocator.h; sourceTree = "<group>"; };
+		43982F01198F55770090EABA /* soundinputstreaminterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundinputstreaminterface.h; sourceTree = "<group>"; };
+		43982F02198F55770090EABA /* soundoutputstreaminterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundoutputstreaminterface.h; sourceTree = "<group>"; };
+		43982F03198F55770090EABA /* soundsystemfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundsystemfactory.h; sourceTree = "<group>"; };
+		43982F04198F55770090EABA /* soundsysteminterface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = soundsysteminterface.cc; sourceTree = "<group>"; };
+		43982F05198F55770090EABA /* soundsysteminterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundsysteminterface.h; sourceTree = "<group>"; };
+		43982F06198F55770090EABA /* soundsystemproxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = soundsystemproxy.cc; sourceTree = "<group>"; };
+		43982F07198F55770090EABA /* soundsystemproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundsystemproxy.h; sourceTree = "<group>"; };
+		43982F42198F561E0090EABA /* alsasoundsystem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = alsasoundsystem.cc; sourceTree = "<group>"; };
+		43982F43198F561E0090EABA /* alsasoundsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alsasoundsystem.h; sourceTree = "<group>"; };
+		43982F44198F561E0090EABA /* alsasymboltable.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = alsasymboltable.cc; sourceTree = "<group>"; };
+		43982F45198F561E0090EABA /* alsasymboltable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alsasymboltable.h; sourceTree = "<group>"; };
+		43982F47198F561E0090EABA /* linuxsoundsystem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linuxsoundsystem.cc; sourceTree = "<group>"; };
+		43982F48198F561E0090EABA /* linuxsoundsystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linuxsoundsystem.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43982EC4198F555E0090EABA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43982EBE198F555E0090EABA = {
+			isa = PBXGroup;
+			children = (
+				43982EF2198F55770090EABA /* sound */,
+				43982EC8198F555E0090EABA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43982EC8198F555E0090EABA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43982EC7198F555E0090EABA /* libjingle_sound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43982EF2198F55770090EABA /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				43982F42198F561E0090EABA /* alsasoundsystem.cc */,
+				43982F43198F561E0090EABA /* alsasoundsystem.h */,
+				43982F44198F561E0090EABA /* alsasymboltable.cc */,
+				43982F45198F561E0090EABA /* alsasymboltable.h */,
+				43982F47198F561E0090EABA /* linuxsoundsystem.cc */,
+				43982F48198F561E0090EABA /* linuxsoundsystem.h */,
+				43982EF3198F55770090EABA /* automaticallychosensoundsystem.h */,
+				43982EF4198F55770090EABA /* nullsoundsystem.cc */,
+				43982EF5198F55770090EABA /* nullsoundsystem.h */,
+				43982EF6198F55770090EABA /* nullsoundsystemfactory.cc */,
+				43982EF7198F55770090EABA /* nullsoundsystemfactory.h */,
+				43982EF8198F55770090EABA /* platformsoundsystem.cc */,
+				43982EF9198F55770090EABA /* platformsoundsystem.h */,
+				43982EFA198F55770090EABA /* platformsoundsystemfactory.cc */,
+				43982EFB198F55770090EABA /* platformsoundsystemfactory.h */,
+				43982EFC198F55770090EABA /* pulseaudiosoundsystem.cc */,
+				43982EFD198F55770090EABA /* pulseaudiosoundsystem.h */,
+				43982EFE198F55770090EABA /* pulseaudiosymboltable.cc */,
+				43982EFF198F55770090EABA /* pulseaudiosymboltable.h */,
+				43982F00198F55770090EABA /* sounddevicelocator.h */,
+				43982F01198F55770090EABA /* soundinputstreaminterface.h */,
+				43982F02198F55770090EABA /* soundoutputstreaminterface.h */,
+				43982F03198F55770090EABA /* soundsystemfactory.h */,
+				43982F04198F55770090EABA /* soundsysteminterface.cc */,
+				43982F05198F55770090EABA /* soundsysteminterface.h */,
+				43982F06198F55770090EABA /* soundsystemproxy.cc */,
+				43982F07198F55770090EABA /* soundsystemproxy.h */,
+			);
+			name = sound;
+			path = ../webRTCAPP/Classes/talk/sound;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43982EC5198F555E0090EABA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43982F12198F55770090EABA /* pulseaudiosoundsystem.h in Headers */,
+				43982F0A198F55770090EABA /* nullsoundsystem.h in Headers */,
+				43982F08198F55770090EABA /* automaticallychosensoundsystem.h in Headers */,
+				43982F18198F55770090EABA /* soundsystemfactory.h in Headers */,
+				43982F4A198F561E0090EABA /* alsasoundsystem.h in Headers */,
+				43982F14198F55770090EABA /* pulseaudiosymboltable.h in Headers */,
+				43982F4F198F561F0090EABA /* linuxsoundsystem.h in Headers */,
+				43982F0E198F55770090EABA /* platformsoundsystem.h in Headers */,
+				43982F1C198F55770090EABA /* soundsystemproxy.h in Headers */,
+				43982F17198F55770090EABA /* soundoutputstreaminterface.h in Headers */,
+				43982F0C198F55770090EABA /* nullsoundsystemfactory.h in Headers */,
+				43982F10198F55770090EABA /* platformsoundsystemfactory.h in Headers */,
+				43982F15198F55770090EABA /* sounddevicelocator.h in Headers */,
+				43982F16198F55770090EABA /* soundinputstreaminterface.h in Headers */,
+				43982F4C198F561F0090EABA /* alsasymboltable.h in Headers */,
+				43982F1A198F55770090EABA /* soundsysteminterface.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43982EC6198F555E0090EABA /* jingle_sound */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43982ECB198F555E0090EABA /* Build configuration list for PBXNativeTarget "jingle_sound" */;
+			buildPhases = (
+				43982EC3198F555E0090EABA /* Sources */,
+				43982EC4198F555E0090EABA /* Frameworks */,
+				43982EC5198F555E0090EABA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = jingle_sound;
+			productName = jingle_sound;
+			productReference = 43982EC7198F555E0090EABA /* libjingle_sound.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43982EBF198F555E0090EABA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43982EC2198F555E0090EABA /* Build configuration list for PBXProject "jingle_sound" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43982EBE198F555E0090EABA;
+			productRefGroup = 43982EC8198F555E0090EABA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43982EC6198F555E0090EABA /* jingle_sound */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43982EC3198F555E0090EABA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43982F0F198F55770090EABA /* platformsoundsystemfactory.cc in Sources */,
+				43982F0D198F55770090EABA /* platformsoundsystem.cc in Sources */,
+				43982F0B198F55770090EABA /* nullsoundsystemfactory.cc in Sources */,
+				43982F09198F55770090EABA /* nullsoundsystem.cc in Sources */,
+				43982F19198F55770090EABA /* soundsysteminterface.cc in Sources */,
+				43982F1B198F55770090EABA /* soundsystemproxy.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43982EC9198F555E0090EABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43982ECA198F555E0090EABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43982ECC198F555E0090EABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					POSIX,
+					IOS,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43982ECD198F555E0090EABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					POSIX,
+					IOS,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43982EC2198F555E0090EABA /* Build configuration list for PBXProject "jingle_sound" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43982EC9198F555E0090EABA /* Debug */,
+				43982ECA198F555E0090EABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43982ECB198F555E0090EABA /* Build configuration list for PBXNativeTarget "jingle_sound" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43982ECC198F555E0090EABA /* Debug */,
+				43982ECD198F555E0090EABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43982EBF198F555E0090EABA /* Project object */;
+}

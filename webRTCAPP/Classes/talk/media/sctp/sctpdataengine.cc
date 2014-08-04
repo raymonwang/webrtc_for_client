@@ -39,7 +39,7 @@
 #include "talk/media/base/codec.h"
 #include "talk/media/base/constants.h"
 #include "talk/media/base/streamparams.h"
-#include "usrsctp/usrsctp.h"
+#include "usrsctplib/usrsctp.h"
 
 namespace {
 typedef cricket::SctpDataMediaChannel::StreamSet StreamSet;

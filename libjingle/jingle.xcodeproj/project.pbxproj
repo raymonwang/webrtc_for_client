@@ -1469,8 +1469,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -1499,7 +1500,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1514,6 +1516,7 @@
 				GCC_PREFIX_HEADER = "libjingle/jingle-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					"CARBON_DEPRECATED=YES",
 					POSIX,
 					IOS,
 					SSL_USE_NSS,
@@ -1521,6 +1524,11 @@
 					SSL_USE_NSS_RNG,
 					JSONCPP_RELATIVE_PATH,
 					FEATURE_ENABLE_SSL,
+					FEATURE_ENABLE_VOICEMAIL,
+					FEATURE_ENABLE_PSTN,
+					HAVE_SCTP,
+					HAVE_SRTP,
+					CHROMIUM_BUILD,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1543,6 +1551,22 @@
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle/jingle-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"CARBON_DEPRECATED=YES",
+					POSIX,
+					IOS,
+					SSL_USE_NSS,
+					HAVE_NSS_SSL_H,
+					SSL_USE_NSS_RNG,
+					JSONCPP_RELATIVE_PATH,
+					FEATURE_ENABLE_SSL,
+					FEATURE_ENABLE_VOICEMAIL,
+					FEATURE_ENABLE_PSTN,
+					HAVE_SCTP,
+					HAVE_SRTP,
+					CHROMIUM_BUILD,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1565,15 +1589,22 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
+				GCC_PREFIX_HEADER = "libjingle/jingle-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					"CARBON_DEPRECATED=YES",
 					POSIX,
-					OSX,
+					IOS,
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
+					JSONCPP_RELATIVE_PATH,
 					FEATURE_ENABLE_SSL,
+					FEATURE_ENABLE_VOICEMAIL,
+					FEATURE_ENABLE_PSTN,
+					HAVE_SCTP,
+					HAVE_SRTP,
+					CHROMIUM_BUILD,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1584,7 +1615,7 @@
 				PRODUCT_NAME = jingle_osx;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include/json";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include";
 			};
 			name = Debug;
 		};
@@ -1597,7 +1628,23 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libjingle/libjingle-Prefix.pch";
+				GCC_PREFIX_HEADER = "libjingle/jingle-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"CARBON_DEPRECATED=YES",
+					POSIX,
+					IOS,
+					SSL_USE_NSS,
+					HAVE_NSS_SSL_H,
+					SSL_USE_NSS_RNG,
+					JSONCPP_RELATIVE_PATH,
+					FEATURE_ENABLE_SSL,
+					FEATURE_ENABLE_VOICEMAIL,
+					FEATURE_ENABLE_PSTN,
+					HAVE_SCTP,
+					HAVE_SRTP,
+					CHROMIUM_BUILD,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1607,7 +1654,7 @@
 				PRODUCT_NAME = jingle_osx;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include/json";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include $(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include $(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include";
 			};
 			name = Release;
 		};

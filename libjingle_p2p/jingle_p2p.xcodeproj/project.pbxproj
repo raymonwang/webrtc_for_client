@@ -785,14 +785,41 @@
 				GCC_PREFIX_HEADER = "libjingle_p2p/jingle_p2p-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					"CARBON_DEPRECATED=YES",
+					"LIBPEERCONNECTION_LIB=1",
 					POSIX,
+					IOS,
+					SSL_USE_NSS,
+					HAVE_NSS_SSL_H,
+					SSL_USE_NSS_RNG,
+					JSONCPP_RELATIVE_PATH,
+					SRTP_RELATIVE_PATH,
+					FEATURE_ENABLE_SSL,
+					FEATURE_ENABLE_VOICEMAIL,
+					FEATURE_ENABLE_PSTN,
+					HAVE_SCTP,
+					HAVE_SRTP,
+					HAVE_WEBRTC_VOICE,
+					CHROMIUM_BUILD,
+					USE_WEBRTC_DEV_BRANCH,
+					HAVE_STDINT_H,
+					HAVE_INTTYPES_H,
+					HAVE_UINT64_T,
+					"INLINE=inline",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
+				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_p2p;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -802,10 +829,42 @@
 				DSTROOT = /tmp/libjingle_p2p.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle_p2p/jingle_p2p-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"CARBON_DEPRECATED=YES",
+					"LIBPEERCONNECTION_LIB=1",
+					POSIX,
+					IOS,
+					SSL_USE_NSS,
+					HAVE_NSS_SSL_H,
+					SSL_USE_NSS_RNG,
+					JSONCPP_RELATIVE_PATH,
+					SRTP_RELATIVE_PATH,
+					FEATURE_ENABLE_SSL,
+					FEATURE_ENABLE_VOICEMAIL,
+					FEATURE_ENABLE_PSTN,
+					HAVE_SCTP,
+					HAVE_SRTP,
+					HAVE_WEBRTC_VOICE,
+					CHROMIUM_BUILD,
+					USE_WEBRTC_DEV_BRANCH,
+					HAVE_STDINT_H,
+					HAVE_INTTYPES_H,
+					HAVE_UINT64_T,
+					"INLINE=inline",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_p2p;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -822,7 +881,7 @@
 					"$(inherited)",
 					POSIX,
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_p2p_osx;
 				SDKROOT = macosx;
