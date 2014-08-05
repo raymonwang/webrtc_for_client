@@ -7,12 +7,22 @@
 		<key>crnssckbi.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>42</integer>
+			<integer>35</integer>
+		</dict>
+		<key>crnssckbi_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>36</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>43AD806F1990A579006EAB38</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43AD849A1990E957006EAB38</key>
 		<dict>
 			<key>primary</key>
 			<true/>

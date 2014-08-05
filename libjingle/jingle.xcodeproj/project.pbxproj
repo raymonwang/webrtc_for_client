@@ -279,6 +279,12 @@
 		4328859E1980B7880000F16A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885991980B7620000F16A /* Security.framework */; };
 		432885C51980BD520000F16A /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B272E197F5CE10076767F /* scoped_autorelease_pool.mm */; };
 		432885C61980C0020000F16A /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2767197F5CE10076767F /* thread.cc */; };
+		43AD84CC1990EB3F006EAB38 /* macasyncsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 432885AD1980BC3E0000F16A /* macasyncsocket.cc */; };
+		43AD84CD1990EB3F006EAB38 /* maccocoasocketserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 432885B11980BC3E0000F16A /* maccocoasocketserver.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		43AD84CE1990EB3F006EAB38 /* macconversion.cc in Sources */ = {isa = PBXBuildFile; fileRef = 432885B21980BC3E0000F16A /* macconversion.cc */; };
+		43AD84CF1990EB3F006EAB38 /* macsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 432885B51980BC3E0000F16A /* macsocketserver.cc */; };
+		43AD84D01990EB3F006EAB38 /* macutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 432885B71980BC3E0000F16A /* macutils.cc */; };
+		43AD84D11990EB3F006EAB38 /* macwindowpicker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 432885BA1980BC3E0000F16A /* macwindowpicker.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1298,6 +1304,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AD84CC1990EB3F006EAB38 /* macasyncsocket.cc in Sources */,
+				43AD84CD1990EB3F006EAB38 /* maccocoasocketserver.mm in Sources */,
+				43AD84CE1990EB3F006EAB38 /* macconversion.cc in Sources */,
+				43AD84CF1990EB3F006EAB38 /* macsocketserver.cc in Sources */,
+				43AD84D01990EB3F006EAB38 /* macutils.cc in Sources */,
+				43AD84D11990EB3F006EAB38 /* macwindowpicker.cc in Sources */,
 				432885C51980BD520000F16A /* scoped_autorelease_pool.mm in Sources */,
 				432884E51980A8160000F16A /* httpclient.cc in Sources */,
 				432884E61980A8160000F16A /* sslstreamadapter.cc in Sources */,
@@ -1647,16 +1659,33 @@
 					HAVE_SCTP,
 					HAVE_SRTP,
 					CHROMIUM_BUILD,
+					OSX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/pr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/ds",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/libc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/base",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certdb",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certhigh",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/cryptohi",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/dev",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl/ecl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/nss",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pk11wrap",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pkcs7",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pki",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/smime",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/softoken",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/util",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw/builtins",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_osx;
@@ -1697,10 +1726,26 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/include",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/include",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/pr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/ds",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/libc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/base",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certdb",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certhigh",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/cryptohi",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/dev",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl/ecl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/nss",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pk11wrap",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pkcs7",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pki",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/smime",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/softoken",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/util",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw/builtins",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_osx;

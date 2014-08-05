@@ -45,6 +45,44 @@
 		43AD80C91990A596006EAB38 /* slot.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A31990A596006EAB38 /* slot.c */; };
 		43AD80CA1990A596006EAB38 /* token.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A41990A596006EAB38 /* token.c */; };
 		43AD80CB1990A596006EAB38 /* wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A51990A596006EAB38 /* wrap.c */; };
+		43AD849C1990E957006EAB38 /* instance.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80941990A596006EAB38 /* instance.c */; };
+		43AD849D1990E957006EAB38 /* object.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A01990A596006EAB38 /* object.c */; };
+		43AD849E1990E957006EAB38 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80931990A596006EAB38 /* hash.c */; };
+		43AD849F1990E957006EAB38 /* token.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A41990A596006EAB38 /* token.c */; };
+		43AD84A01990E957006EAB38 /* ckbiver.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80881990A596006EAB38 /* ckbiver.c */; };
+		43AD84A11990E957006EAB38 /* bslot.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80841990A596006EAB38 /* bslot.c */; };
+		43AD84A21990E957006EAB38 /* slot.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A31990A596006EAB38 /* slot.c */; };
+		43AD84A31990E957006EAB38 /* bsession.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80831990A596006EAB38 /* bsession.c */; };
+		43AD84A41990E957006EAB38 /* sessobj.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A21990A596006EAB38 /* sessobj.c */; };
+		43AD84A51990E957006EAB38 /* wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A51990A596006EAB38 /* wrap.c */; };
+		43AD84A61990E957006EAB38 /* binst.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80811990A596006EAB38 /* binst.c */; };
+		43AD84A71990E957006EAB38 /* crypto.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80911990A596006EAB38 /* crypto.c */; };
+		43AD84A81990E957006EAB38 /* certdata.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80871990A596006EAB38 /* certdata.c */; };
+		43AD84A91990E957006EAB38 /* mechanism.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80951990A596006EAB38 /* mechanism.c */; };
+		43AD84AA1990E957006EAB38 /* session.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80A11990A596006EAB38 /* session.c */; };
+		43AD84AB1990E957006EAB38 /* constants.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80891990A596006EAB38 /* constants.c */; };
+		43AD84AC1990E957006EAB38 /* anchor.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD807F1990A596006EAB38 /* anchor.c */; };
+		43AD84AD1990E957006EAB38 /* mutex.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80961990A596006EAB38 /* mutex.c */; };
+		43AD84AE1990E957006EAB38 /* find.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80921990A596006EAB38 /* find.c */; };
+		43AD84AF1990E957006EAB38 /* bfind.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80801990A596006EAB38 /* bfind.c */; };
+		43AD84B01990E957006EAB38 /* bobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80821990A596006EAB38 /* bobject.c */; };
+		43AD84B11990E957006EAB38 /* btoken.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD80851990A596006EAB38 /* btoken.c */; };
+		43AD84B41990E957006EAB38 /* ck.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD808B1990A596006EAB38 /* ck.h */; };
+		43AD84B51990E957006EAB38 /* nssckmdt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD809E1990A596006EAB38 /* nssckmdt.h */; };
+		43AD84B61990E957006EAB38 /* nssckbi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD808A1990A596006EAB38 /* nssckbi.h */; };
+		43AD84B71990E957006EAB38 /* nssckfwc.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD809B1990A596006EAB38 /* nssckfwc.h */; };
+		43AD84B81990E957006EAB38 /* nssckt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD809F1990A596006EAB38 /* nssckt.h */; };
+		43AD84B91990E957006EAB38 /* builtins.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD80861990A596006EAB38 /* builtins.h */; };
+		43AD84BA1990E957006EAB38 /* ckfw.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD808C1990A596006EAB38 /* ckfw.h */; };
+		43AD84BB1990E957006EAB38 /* nssckepv.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD80981990A596006EAB38 /* nssckepv.h */; };
+		43AD84BC1990E957006EAB38 /* ckfwtm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD808E1990A596006EAB38 /* ckfwtm.h */; };
+		43AD84BD1990E957006EAB38 /* ckt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD80901990A596006EAB38 /* ckt.h */; };
+		43AD84BE1990E957006EAB38 /* nssckfw.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD809A1990A596006EAB38 /* nssckfw.h */; };
+		43AD84BF1990E957006EAB38 /* nssckft.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD80991990A596006EAB38 /* nssckft.h */; };
+		43AD84C01990E957006EAB38 /* nssckfwt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD809C1990A596006EAB38 /* nssckfwt.h */; };
+		43AD84C11990E957006EAB38 /* ckfwm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD808D1990A596006EAB38 /* ckfwm.h */; };
+		43AD84C21990E957006EAB38 /* ckmd.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD808F1990A596006EAB38 /* ckmd.h */; };
+		43AD84C31990E957006EAB38 /* nssckg.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD809D1990A596006EAB38 /* nssckg.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,10 +126,18 @@
 		43AD80A31990A596006EAB38 /* slot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = slot.c; sourceTree = "<group>"; };
 		43AD80A41990A596006EAB38 /* token.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = token.c; sourceTree = "<group>"; };
 		43AD80A51990A596006EAB38 /* wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wrap.c; sourceTree = "<group>"; };
+		43AD84C71990E957006EAB38 /* libcrnssckbi_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcrnssckbi_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		43AD806D1990A579006EAB38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43AD84B21990E957006EAB38 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -113,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				43AD80701990A579006EAB38 /* libcrnssckbi.a */,
+				43AD84C71990E957006EAB38 /* libcrnssckbi_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,6 +245,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43AD84B31990E957006EAB38 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43AD84B41990E957006EAB38 /* ck.h in Headers */,
+				43AD84B51990E957006EAB38 /* nssckmdt.h in Headers */,
+				43AD84B61990E957006EAB38 /* nssckbi.h in Headers */,
+				43AD84B71990E957006EAB38 /* nssckfwc.h in Headers */,
+				43AD84B81990E957006EAB38 /* nssckt.h in Headers */,
+				43AD84B91990E957006EAB38 /* builtins.h in Headers */,
+				43AD84BA1990E957006EAB38 /* ckfw.h in Headers */,
+				43AD84BB1990E957006EAB38 /* nssckepv.h in Headers */,
+				43AD84BC1990E957006EAB38 /* ckfwtm.h in Headers */,
+				43AD84BD1990E957006EAB38 /* ckt.h in Headers */,
+				43AD84BE1990E957006EAB38 /* nssckfw.h in Headers */,
+				43AD84BF1990E957006EAB38 /* nssckft.h in Headers */,
+				43AD84C01990E957006EAB38 /* nssckfwt.h in Headers */,
+				43AD84C11990E957006EAB38 /* ckfwm.h in Headers */,
+				43AD84C21990E957006EAB38 /* ckmd.h in Headers */,
+				43AD84C31990E957006EAB38 /* nssckg.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -216,6 +286,23 @@
 			name = crnssckbi;
 			productName = crnssckbi;
 			productReference = 43AD80701990A579006EAB38 /* libcrnssckbi.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43AD849A1990E957006EAB38 /* crnssckbi_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43AD84C41990E957006EAB38 /* Build configuration list for PBXNativeTarget "crnssckbi_osx" */;
+			buildPhases = (
+				43AD849B1990E957006EAB38 /* Sources */,
+				43AD84B21990E957006EAB38 /* Frameworks */,
+				43AD84B31990E957006EAB38 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = crnssckbi_osx;
+			productName = crnssckbi;
+			productReference = 43AD84C71990E957006EAB38 /* libcrnssckbi_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -240,6 +327,7 @@
 			projectRoot = "";
 			targets = (
 				43AD806F1990A579006EAB38 /* crnssckbi */,
+				43AD849A1990E957006EAB38 /* crnssckbi_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -271,6 +359,35 @@
 				43AD80A71990A596006EAB38 /* bfind.c in Sources */,
 				43AD80A91990A596006EAB38 /* bobject.c in Sources */,
 				43AD80AC1990A596006EAB38 /* btoken.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43AD849B1990E957006EAB38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43AD849C1990E957006EAB38 /* instance.c in Sources */,
+				43AD849D1990E957006EAB38 /* object.c in Sources */,
+				43AD849E1990E957006EAB38 /* hash.c in Sources */,
+				43AD849F1990E957006EAB38 /* token.c in Sources */,
+				43AD84A01990E957006EAB38 /* ckbiver.c in Sources */,
+				43AD84A11990E957006EAB38 /* bslot.c in Sources */,
+				43AD84A21990E957006EAB38 /* slot.c in Sources */,
+				43AD84A31990E957006EAB38 /* bsession.c in Sources */,
+				43AD84A41990E957006EAB38 /* sessobj.c in Sources */,
+				43AD84A51990E957006EAB38 /* wrap.c in Sources */,
+				43AD84A61990E957006EAB38 /* binst.c in Sources */,
+				43AD84A71990E957006EAB38 /* crypto.c in Sources */,
+				43AD84A81990E957006EAB38 /* certdata.c in Sources */,
+				43AD84A91990E957006EAB38 /* mechanism.c in Sources */,
+				43AD84AA1990E957006EAB38 /* session.c in Sources */,
+				43AD84AB1990E957006EAB38 /* constants.c in Sources */,
+				43AD84AC1990E957006EAB38 /* anchor.c in Sources */,
+				43AD84AD1990E957006EAB38 /* mutex.c in Sources */,
+				43AD84AE1990E957006EAB38 /* find.c in Sources */,
+				43AD84AF1990E957006EAB38 /* bfind.c in Sources */,
+				43AD84B01990E957006EAB38 /* bobject.c in Sources */,
+				43AD84B11990E957006EAB38 /* btoken.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +536,80 @@
 			};
 			name = Release;
 		};
+		43AD84C51990E957006EAB38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					NSS_STATIC,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/pr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/ds",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/libc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/base",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certdb",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certhigh",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/cryptohi",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/dev",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl/ecl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/nss",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pk11wrap",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pkcs7",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pki",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/smime",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/softoken",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/util",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = crnssckbi_osx;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43AD84C61990E957006EAB38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NDEBUG=1",
+					NSS_STATIC,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/pr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/ds",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/libc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/base",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certdb",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certhigh",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/cryptohi",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/dev",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl/ecl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/nss",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pk11wrap",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pkcs7",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pki",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/smime",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/softoken",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/util",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = crnssckbi_osx;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -438,6 +629,16 @@
 				43AD80761990A579006EAB38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43AD84C41990E957006EAB38 /* Build configuration list for PBXNativeTarget "crnssckbi_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43AD84C51990E957006EAB38 /* Debug */,
+				43AD84C61990E957006EAB38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

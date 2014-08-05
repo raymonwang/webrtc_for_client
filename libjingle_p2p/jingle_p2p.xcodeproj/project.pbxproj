@@ -875,11 +875,19 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)-iphoneos";
 				DSTROOT = /tmp/libjingle_p2p.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libjingle_p2p/libjingle_p2p-Prefix.pch";
+				GCC_PREFIX_HEADER = "libjingle_p2p/jingle_p2p-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 					POSIX,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -887,7 +895,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -899,13 +907,21 @@
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)-iphoneos";
 				DSTROOT = /tmp/libjingle_p2p.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "libjingle_p2p/libjingle_p2p-Prefix.pch";
+				GCC_PREFIX_HEADER = "libjingle_p2p/jingle_p2p-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_p2p_osx;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;

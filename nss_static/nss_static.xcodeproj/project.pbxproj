@@ -498,6 +498,497 @@
 		43AD7EDD19908132006EAB38 /* utilpars.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CBB19908132006EAB38 /* utilpars.h */; };
 		43AD7EDE19908132006EAB38 /* utilparst.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CBC19908132006EAB38 /* utilparst.h */; };
 		43AD7EDF19908132006EAB38 /* utilrename.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CBD19908132006EAB38 /* utilrename.h */; };
+		43AD81A61990CBFB006EAB38 /* pkix_logger.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BB419908132006EAB38 /* pkix_logger.c */; };
+		43AD81A71990CBFB006EAB38 /* pkix_ocspchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8119908132006EAB38 /* pkix_ocspchecker.c */; };
+		43AD81A81990CBFB006EAB38 /* drbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0719908132006EAB38 /* drbg.c */; };
+		43AD81A91990CBFB006EAB38 /* ecp_aff.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1C19908132006EAB38 /* ecp_aff.c */; };
+		43AD81AA1990CBFB006EAB38 /* xconst.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9819908132006EAB38 /* xconst.c */; };
+		43AD81AB1990CBFB006EAB38 /* symmkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C5519908132006EAB38 /* symmkey.c */; };
+		43AD81AC1990CBFB006EAB38 /* pkix_pl_hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BFD19908132006EAB38 /* pkix_pl_hashtable.c */; };
+		43AD81AD1990CBFB006EAB38 /* mpmontg.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3E19908132006EAB38 /* mpmontg.c */; };
+		43AD81AE1990CBFB006EAB38 /* pkix_pl_colcertstore.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BBC19908132006EAB38 /* pkix_pl_colcertstore.c */; };
+		43AD81AF1990CBFB006EAB38 /* rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B4919908132006EAB38 /* rijndael.c */; };
+		43AD81B01990CBFB006EAB38 /* ecp_256.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1819908132006EAB38 /* ecp_256.c */; };
+		43AD81B11990CBFB006EAB38 /* pk11nobj.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2619908132006EAB38 /* pk11nobj.c */; };
+		43AD81B21990CBFB006EAB38 /* pkix_ekuchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7919908132006EAB38 /* pkix_ekuchecker.c */; };
+		43AD81B31990CBFB006EAB38 /* pkix_expirationchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7B19908132006EAB38 /* pkix_expirationchecker.c */; };
+		43AD81B41990CBFB006EAB38 /* pk11mech.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2419908132006EAB38 /* pk11mech.c */; };
+		43AD81B51990CBFB006EAB38 /* p7create.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3C19908132006EAB38 /* p7create.c */; };
+		43AD81B61990CBFB006EAB38 /* pk11obj.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2719908132006EAB38 /* pk11obj.c */; };
+		43AD81B71990CBFB006EAB38 /* ecl.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1219908132006EAB38 /* ecl.c */; };
+		43AD81B81990CBFB006EAB38 /* dsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0819908132006EAB38 /* dsa.c */; };
+		43AD81B91990CBFB006EAB38 /* certv3.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8D19908132006EAB38 /* certv3.c */; };
+		43AD81BA1990CBFB006EAB38 /* pkix_pl_httpcertstore.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BBE19908132006EAB38 /* pkix_pl_httpcertstore.c */; };
+		43AD81BB1990CBFB006EAB38 /* secitem.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CAE19908132006EAB38 /* secitem.c */; };
+		43AD81BC1990CBFB006EAB38 /* mpi.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3619908132006EAB38 /* mpi.c */; };
+		43AD81BD1990CBFB006EAB38 /* hmacct.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B2219908132006EAB38 /* hmacct.c */; };
+		43AD81BE1990CBFB006EAB38 /* rawhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B4819908132006EAB38 /* rawhash.c */; };
+		43AD81BF1990CBFB006EAB38 /* secdig.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CA919908132006EAB38 /* secdig.c */; };
+		43AD81C01990CBFB006EAB38 /* pkix_pl_certpolicyinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BD719908132006EAB38 /* pkix_pl_certpolicyinfo.c */; };
+		43AD81C11990CBFB006EAB38 /* arcfive.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AF119908132006EAB38 /* arcfive.c */; };
+		43AD81C21990CBFB006EAB38 /* pkix_namechainingchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7D19908132006EAB38 /* pkix_namechainingchecker.c */; };
+		43AD81C31990CBFB006EAB38 /* nssb64e.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8C19908132006EAB38 /* nssb64e.c */; };
+		43AD81C41990CBFB006EAB38 /* utilpars.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CBA19908132006EAB38 /* utilpars.c */; };
+		43AD81C51990CBFB006EAB38 /* pk11auth.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1C19908132006EAB38 /* pk11auth.c */; };
+		43AD81C61990CBFB006EAB38 /* lowpbe.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6819908132006EAB38 /* lowpbe.c */; };
+		43AD81C71990CBFB006EAB38 /* pkix_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BB219908132006EAB38 /* pkix_list.c */; };
+		43AD81C81990CBFB006EAB38 /* alg1485.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8719908132006EAB38 /* alg1485.c */; };
+		43AD81C91990CBFB006EAB38 /* pkix_resourcelimits.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9519908132006EAB38 /* pkix_resourcelimits.c */; };
+		43AD81CA1990CBFB006EAB38 /* devutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AE919908132006EAB38 /* devutil.c */; };
+		43AD81CB1990CBFB006EAB38 /* tdcache.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C5619908132006EAB38 /* tdcache.c */; };
+		43AD81CC1990CBFB006EAB38 /* nssilock.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8F19908132006EAB38 /* nssilock.c */; };
+		43AD81CD1990CBFB006EAB38 /* dsautil.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AD519908132006EAB38 /* dsautil.c */; };
+		43AD81CE1990CBFB006EAB38 /* nssinit.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1319908132006EAB38 /* nssinit.c */; };
+		43AD81CF1990CBFB006EAB38 /* portreg.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C9D19908132006EAB38 /* portreg.c */; };
+		43AD81D01990CBFB006EAB38 /* chacha20_vec.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AFC19908132006EAB38 /* chacha20_vec.c */; };
+		43AD81D11990CBFB006EAB38 /* derdec.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8419908132006EAB38 /* derdec.c */; };
+		43AD81D21990CBFB006EAB38 /* p7encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3E19908132006EAB38 /* p7encode.c */; };
+		43AD81D31990CBFB006EAB38 /* pkix_pl_monitorlock.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0319908132006EAB38 /* pkix_pl_monitorlock.c */; };
+		43AD81D41990CBFB006EAB38 /* pk11err.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1F19908132006EAB38 /* pk11err.c */; };
+		43AD81D51990CBFB006EAB38 /* sftkpwd.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7919908132006EAB38 /* sftkpwd.c */; };
+		43AD81D61990CBFB006EAB38 /* pkix_pl_crldp.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BDF19908132006EAB38 /* pkix_pl_crldp.c */; };
+		43AD81D71990CBFB006EAB38 /* certificate.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4819908132006EAB38 /* certificate.c */; };
+		43AD81D81990CBFB006EAB38 /* secasn1d.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CA219908132006EAB38 /* secasn1d.c */; };
+		43AD81D91990CBFB006EAB38 /* cts.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0119908132006EAB38 /* cts.c */; };
+		43AD81DA1990CBFB006EAB38 /* oidstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C9619908132006EAB38 /* oidstring.c */; };
+		43AD81DB1990CBFB006EAB38 /* pkix_lifecycle.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BAA19908132006EAB38 /* pkix_lifecycle.c */; };
+		43AD81DC1990CBFB006EAB38 /* certdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8919908132006EAB38 /* certdb.c */; };
+		43AD81DD1990CBFB006EAB38 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B2D19908132006EAB38 /* md5.c */; };
+		43AD81DE1990CBFB006EAB38 /* alghmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AEF19908132006EAB38 /* alghmac.c */; };
+		43AD81DF1990CBFB006EAB38 /* mpi_arm_mac.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3A19908132006EAB38 /* mpi_arm_mac.c */; };
+		43AD81E01990CBFB006EAB38 /* lowkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6519908132006EAB38 /* lowkey.c */; };
+		43AD81E11990CBFB006EAB38 /* tracker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8519908132006EAB38 /* tracker.c */; };
+		43AD81E21990CBFB006EAB38 /* mp_gf2m.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3119908132006EAB38 /* mp_gf2m.c */; };
+		43AD81E31990CBFB006EAB38 /* ctr.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AFF19908132006EAB38 /* ctr.c */; };
+		43AD81E41990CBFB006EAB38 /* pkix_pl_nameconstraints.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BE919908132006EAB38 /* pkix_pl_nameconstraints.c */; };
+		43AD81E51990CBFB006EAB38 /* pkix_pl_oid.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0919908132006EAB38 /* pkix_pl_oid.c */; };
+		43AD81E61990CBFB006EAB38 /* crlv2.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AA119908132006EAB38 /* crlv2.c */; };
+		43AD81E71990CBFB006EAB38 /* asymmkey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4619908132006EAB38 /* asymmkey.c */; };
+		43AD81E81990CBFB006EAB38 /* derenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8519908132006EAB38 /* derenc.c */; };
+		43AD81E91990CBFB006EAB38 /* templates.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CB619908132006EAB38 /* templates.c */; };
+		43AD81EA1990CBFB006EAB38 /* pkix_procparams.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9319908132006EAB38 /* pkix_procparams.c */; };
+		43AD81EB1990CBFB006EAB38 /* pkix_revocationchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8519908132006EAB38 /* pkix_revocationchecker.c */; };
+		43AD81EC1990CBFB006EAB38 /* pkix_valresult.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BA019908132006EAB38 /* pkix_valresult.c */; };
+		43AD81ED1990CBFB006EAB38 /* ec_naf.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0E19908132006EAB38 /* ec_naf.c */; };
+		43AD81EE1990CBFB006EAB38 /* p7common.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3B19908132006EAB38 /* p7common.c */; };
+		43AD81EF1990CBFB006EAB38 /* pkix_pl_certpolicymap.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BD919908132006EAB38 /* pkix_pl_certpolicymap.c */; };
+		43AD81F01990CBFB006EAB38 /* devtoken.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AE819908132006EAB38 /* devtoken.c */; };
+		43AD81F11990CBFB006EAB38 /* ecl_curve.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1419908132006EAB38 /* ecl_curve.c */; };
+		43AD81F21990CBFB006EAB38 /* pkix_certselector.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B6E19908132006EAB38 /* pkix_certselector.c */; };
+		43AD81F31990CBFB006EAB38 /* pkix_pl_lifecycle.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BFF19908132006EAB38 /* pkix_pl_lifecycle.c */; };
+		43AD81F41990CBFB006EAB38 /* chacha20poly1305.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AFD19908132006EAB38 /* chacha20poly1305.c */; };
+		43AD81F51990CBFB006EAB38 /* errstrs.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8819908132006EAB38 /* errstrs.c */; };
+		43AD81F61990CBFB006EAB38 /* pkix_pl_object.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0719908132006EAB38 /* pkix_pl_object.c */; };
+		43AD81F71990CBFB006EAB38 /* secvfy.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7ADF19908132006EAB38 /* secvfy.c */; };
+		43AD81F81990CBFB006EAB38 /* pk11slot.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3219908132006EAB38 /* pk11slot.c */; };
+		43AD81F91990CBFB006EAB38 /* pk11cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1D19908132006EAB38 /* pk11cert.c */; };
+		43AD81FA1990CBFB006EAB38 /* pkix_trustanchor.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9719908132006EAB38 /* pkix_trustanchor.c */; };
+		43AD81FB1990CBFB006EAB38 /* pkix_pl_bytearray.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BF819908132006EAB38 /* pkix_pl_bytearray.c */; };
+		43AD81FC1990CBFB006EAB38 /* nssutf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8419908132006EAB38 /* nssutf8.c */; };
+		43AD81FD1990CBFB006EAB38 /* tlsprf.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7E19908132006EAB38 /* tlsprf.c */; };
+		43AD81FE1990CBFB006EAB38 /* nssb64d.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8B19908132006EAB38 /* nssb64d.c */; };
+		43AD81FF1990CBFB006EAB38 /* secasn1e.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CA319908132006EAB38 /* secasn1e.c */; };
+		43AD82001990CBFB006EAB38 /* pk11pars.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2819908132006EAB38 /* pk11pars.c */; };
+		43AD82011990CBFB006EAB38 /* sectime.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CB519908132006EAB38 /* sectime.c */; };
+		43AD82021990CBFB006EAB38 /* ecl_mult.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1619908132006EAB38 /* ecl_mult.c */; };
+		43AD82031990CBFB006EAB38 /* certvfypkix.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9F19908132006EAB38 /* certvfypkix.c */; };
+		43AD82041990CBFB006EAB38 /* xcrldist.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AA819908132006EAB38 /* xcrldist.c */; };
+		43AD82051990CBFB006EAB38 /* pk11merge.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2519908132006EAB38 /* pk11merge.c */; };
+		43AD82061990CBFB006EAB38 /* pkix_pl_publickey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BF119908132006EAB38 /* pkix_pl_publickey.c */; };
+		43AD82071990CBFB006EAB38 /* md2.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B2C19908132006EAB38 /* md2.c */; };
+		43AD82081990CBFB006EAB38 /* pkix_errpaths.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BB119908132006EAB38 /* pkix_errpaths.c */; };
+		43AD82091990CBFB006EAB38 /* ecdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0B19908132006EAB38 /* ecdecode.c */; };
+		43AD820A1990CBFB006EAB38 /* secoid.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CB019908132006EAB38 /* secoid.c */; };
+		43AD820B1990CBFB006EAB38 /* certhtml.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9C19908132006EAB38 /* certhtml.c */; };
+		43AD820C1990CBFB006EAB38 /* certvfy.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9E19908132006EAB38 /* certvfy.c */; };
+		43AD820D1990CBFB006EAB38 /* pkix_comcertselparams.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7019908132006EAB38 /* pkix_comcertselparams.c */; };
+		43AD820E1990CBFB006EAB38 /* aeskeywrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AED19908132006EAB38 /* aeskeywrap.c */; };
+		43AD820F1990CBFB006EAB38 /* pkix_policychecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8319908132006EAB38 /* pkix_policychecker.c */; };
+		43AD82101990CBFB006EAB38 /* pkix_store.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BA519908132006EAB38 /* pkix_store.c */; };
+		43AD82111990CBFB006EAB38 /* ocsp.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AA219908132006EAB38 /* ocsp.c */; };
+		43AD82121990CBFB006EAB38 /* ckhelper.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AE119908132006EAB38 /* ckhelper.c */; };
+		43AD82131990CBFB006EAB38 /* sha_fast.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5419908132006EAB38 /* sha_fast.c */; };
+		43AD82141990CBFB006EAB38 /* genname.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9119908132006EAB38 /* genname.c */; };
+		43AD82151990CBFB006EAB38 /* pkix_pl_aiamgr.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BBA19908132006EAB38 /* pkix_pl_aiamgr.c */; };
+		43AD82161990CBFB006EAB38 /* arcfour.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AF219908132006EAB38 /* arcfour.c */; };
+		43AD82171990CBFB006EAB38 /* pkix_pl_socket.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BD019908132006EAB38 /* pkix_pl_socket.c */; };
+		43AD82181990CBFB006EAB38 /* cryptocontext.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4919908132006EAB38 /* cryptocontext.c */; };
+		43AD82191990CBFB006EAB38 /* fipstest.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6019908132006EAB38 /* fipstest.c */; };
+		43AD821A1990CBFB006EAB38 /* pk11akey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1B19908132006EAB38 /* pk11akey.c */; };
+		43AD821B1990CBFB006EAB38 /* certreq.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9D19908132006EAB38 /* certreq.c */; };
+		43AD821C1990CBFB006EAB38 /* quickder.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C9F19908132006EAB38 /* quickder.c */; };
+		43AD821D1990CBFB006EAB38 /* ecl_gf.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1519908132006EAB38 /* ecl_gf.c */; };
+		43AD821E1990CBFB006EAB38 /* pk11kea.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2119908132006EAB38 /* pk11kea.c */; };
+		43AD821F1990CBFB006EAB38 /* pkix_pl_nsscontext.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BCC19908132006EAB38 /* pkix_pl_nsscontext.c */; };
+		43AD82201990CBFB006EAB38 /* secsign.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7ADE19908132006EAB38 /* secsign.c */; };
+		43AD82211990CBFB006EAB38 /* chacha20.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AFA19908132006EAB38 /* chacha20.c */; };
+		43AD82221990CBFB006EAB38 /* pkcs11.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6B19908132006EAB38 /* pkcs11.c */; };
+		43AD82231990CBFB006EAB38 /* pk11skey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3119908132006EAB38 /* pk11skey.c */; };
+		43AD82241990CBFB006EAB38 /* polcyxtn.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9319908132006EAB38 /* polcyxtn.c */; };
+		43AD82251990CBFB006EAB38 /* sftkhmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7619908132006EAB38 /* sftkhmac.c */; };
+		43AD82261990CBFB006EAB38 /* des.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0319908132006EAB38 /* des.c */; };
+		43AD82271990CBFB006EAB38 /* sysrand.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5819908132006EAB38 /* sysrand.c */; };
+		43AD82281990CBFB006EAB38 /* rsapkcs.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B4D19908132006EAB38 /* rsapkcs.c */; };
+		43AD82291990CBFB006EAB38 /* pkix_pl_basicconstraints.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BD319908132006EAB38 /* pkix_pl_basicconstraints.c */; };
+		43AD822A1990CBFB006EAB38 /* pkix_policynode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9E19908132006EAB38 /* pkix_policynode.c */; };
+		43AD822B1990CBFB006EAB38 /* poly1305.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B4419908132006EAB38 /* poly1305.c */; };
+		43AD822C1990CBFB006EAB38 /* seed.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5019908132006EAB38 /* seed.c */; };
+		43AD822D1990CBFB006EAB38 /* pkix_pl_ocspresponse.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BEF19908132006EAB38 /* pkix_pl_ocspresponse.c */; };
+		43AD822E1990CBFB006EAB38 /* lgglue.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6319908132006EAB38 /* lgglue.c */; };
+		43AD822F1990CBFB006EAB38 /* rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B4C19908132006EAB38 /* rsa.c */; };
+		43AD82301990CBFB006EAB38 /* secasn1u.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CA519908132006EAB38 /* secasn1u.c */; };
+		43AD82311990CBFB006EAB38 /* sftkpars.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7719908132006EAB38 /* sftkpars.c */; };
+		43AD82321990CBFB006EAB38 /* pkix_basicconstraintschecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7319908132006EAB38 /* pkix_basicconstraintschecker.c */; };
+		43AD82331990CBFB006EAB38 /* pk11pk12.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2A19908132006EAB38 /* pk11pk12.c */; };
+		43AD82341990CBFB006EAB38 /* ec.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0919908132006EAB38 /* ec.c */; };
+		43AD82351990CBFB006EAB38 /* pkibase.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4F19908132006EAB38 /* pkibase.c */; };
+		43AD82361990CBFB006EAB38 /* pkix_pl_generalname.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BE519908132006EAB38 /* pkix_pl_generalname.c */; };
+		43AD82371990CBFB006EAB38 /* pkix_pl_rwlock.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0D19908132006EAB38 /* pkix_pl_rwlock.c */; };
+		43AD82381990CBFB006EAB38 /* pkix_tools.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BB619908132006EAB38 /* pkix_tools.c */; };
+		43AD82391990CBFB006EAB38 /* pkix_nameconstraintschecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7F19908132006EAB38 /* pkix_nameconstraintschecker.c */; };
+		43AD823A1990CBFB006EAB38 /* devslot.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AE519908132006EAB38 /* devslot.c */; };
+		43AD823B1990CBFB006EAB38 /* libc.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8019908132006EAB38 /* libc.c */; };
+		43AD823C1990CBFB006EAB38 /* pki3hack.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4D19908132006EAB38 /* pki3hack.c */; };
+		43AD823D1990CBFB006EAB38 /* pkix_certchainchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7519908132006EAB38 /* pkix_certchainchecker.c */; };
+		43AD823E1990CBFB006EAB38 /* win_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5B19908132006EAB38 /* win_rand.c */; };
+		43AD823F1990CBFB006EAB38 /* item.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A7F19908132006EAB38 /* item.c */; };
+		43AD82401990CBFB006EAB38 /* sftkdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7219908132006EAB38 /* sftkdb.c */; };
+		43AD82411990CBFB006EAB38 /* pk11sdr.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2F19908132006EAB38 /* pk11sdr.c */; };
+		43AD82421990CBFB006EAB38 /* seckey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7ADD19908132006EAB38 /* seckey.c */; };
+		43AD82431990CBFB006EAB38 /* pkix_comcrlselparams.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8E19908132006EAB38 /* pkix_comcrlselparams.c */; };
+		43AD82441990CBFB006EAB38 /* gcm.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B2019908132006EAB38 /* gcm.c */; };
+		43AD82451990CBFB006EAB38 /* pkix_crlselector.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9019908132006EAB38 /* pkix_crlselector.c */; };
+		43AD82461990CBFB006EAB38 /* unix_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5A19908132006EAB38 /* unix_rand.c */; };
+		43AD82471990CBFB006EAB38 /* pkix_pl_mem.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0119908132006EAB38 /* pkix_pl_mem.c */; };
+		43AD82481990CBFB006EAB38 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A7B19908132006EAB38 /* error.c */; };
+		43AD82491990CBFB006EAB38 /* ocspsig.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AA519908132006EAB38 /* ocspsig.c */; };
+		43AD824A1990CBFB006EAB38 /* pkix_pl_httpdefaultclient.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BC019908132006EAB38 /* pkix_pl_httpdefaultclient.c */; };
+		43AD824B1990CBFB006EAB38 /* pkix_verifynode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BA219908132006EAB38 /* pkix_verifynode.c */; };
+		43AD824C1990CBFB006EAB38 /* pkix_pl_string.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0F19908132006EAB38 /* pkix_pl_string.c */; };
+		43AD824D1990CBFB006EAB38 /* pkix_pl_x500name.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BF319908132006EAB38 /* pkix_pl_x500name.c */; };
+		43AD824E1990CBFB006EAB38 /* pkix_pl_ocspcertid.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BEB19908132006EAB38 /* pkix_pl_ocspcertid.c */; };
+		43AD824F1990CBFB006EAB38 /* secname.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9419908132006EAB38 /* secname.c */; };
+		43AD82501990CBFB006EAB38 /* shvfy.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5719908132006EAB38 /* shvfy.c */; };
+		43AD82511990CBFB006EAB38 /* pkix_revocationmethod.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8719908132006EAB38 /* pkix_revocationmethod.c */; };
+		43AD82521990CBFB006EAB38 /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8119908132006EAB38 /* list.c */; };
+		43AD82531990CBFB006EAB38 /* certhigh.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9B19908132006EAB38 /* certhigh.c */; };
+		43AD82541990CBFB006EAB38 /* pkix_pl_certpolicyqualifier.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BDB19908132006EAB38 /* pkix_pl_certpolicyqualifier.c */; };
+		43AD82551990CBFB006EAB38 /* pk11cxt.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1E19908132006EAB38 /* pk11cxt.c */; };
+		43AD82561990CBFB006EAB38 /* jpake.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B2B19908132006EAB38 /* jpake.c */; };
+		43AD82571990CBFB006EAB38 /* sdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7019908132006EAB38 /* sdb.c */; };
+		43AD82581990CBFB006EAB38 /* p7local.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3F19908132006EAB38 /* p7local.c */; };
+		43AD82591990CBFB006EAB38 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CB719908132006EAB38 /* utf8.c */; };
+		43AD825A1990CBFB006EAB38 /* ecp_256_32.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1919908132006EAB38 /* ecp_256_32.c */; };
+		43AD825B1990CBFB006EAB38 /* errorval.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A7C19908132006EAB38 /* errorval.c */; };
+		43AD825C1990CBFB006EAB38 /* pkix_pl_infoaccess.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BE719908132006EAB38 /* pkix_pl_infoaccess.c */; };
+		43AD825D1990CBFB006EAB38 /* pk11list.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2219908132006EAB38 /* pk11list.c */; };
+		43AD825E1990CBFB006EAB38 /* pkistore.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C5119908132006EAB38 /* pkistore.c */; };
+		43AD825F1990CBFB006EAB38 /* fipsaudt.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C5F19908132006EAB38 /* fipsaudt.c */; };
+		43AD82601990CBFB006EAB38 /* mplogic.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3C19908132006EAB38 /* mplogic.c */; };
+		43AD82611990CBFB006EAB38 /* pqg.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B4619908132006EAB38 /* pqg.c */; };
+		43AD82621990CBFB006EAB38 /* certvfypkixprint.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AA019908132006EAB38 /* certvfypkixprint.c */; };
+		43AD82631990CBFB006EAB38 /* certxutl.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A8E19908132006EAB38 /* certxutl.c */; };
+		43AD82641990CBFB006EAB38 /* pkix_pl_primhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0B19908132006EAB38 /* pkix_pl_primhash.c */; };
+		43AD82651990CBFB006EAB38 /* stanpcertdb.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9519908132006EAB38 /* stanpcertdb.c */; };
+		43AD82661990CBFB006EAB38 /* pk11pbe.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2919908132006EAB38 /* pk11pbe.c */; };
+		43AD82671990CBFB006EAB38 /* ecp_384.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1A19908132006EAB38 /* ecp_384.c */; };
+		43AD82681990CBFB006EAB38 /* pkcs11u.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6F19908132006EAB38 /* pkcs11u.c */; };
+		43AD82691990CBFB006EAB38 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5319908132006EAB38 /* sha512.c */; };
+		43AD826A1990CBFB006EAB38 /* dh.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0619908132006EAB38 /* dh.c */; };
+		43AD826B1990CBFB006EAB38 /* pkix_error.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BAF19908132006EAB38 /* pkix_error.c */; };
+		43AD826C1990CBFB006EAB38 /* pkix_buildresult.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9C19908132006EAB38 /* pkix_buildresult.c */; };
+		43AD826D1990CBFB006EAB38 /* pkix_pl_cert.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BD519908132006EAB38 /* pkix_pl_cert.c */; };
+		43AD826E1990CBFB006EAB38 /* certdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4719908132006EAB38 /* certdecode.c */; };
+		43AD826F1990CBFB006EAB38 /* tlsprfalg.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B5919908132006EAB38 /* tlsprfalg.c */; };
+		43AD82701990CBFB006EAB38 /* pkix_signaturechecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8919908132006EAB38 /* pkix_signaturechecker.c */; };
+		43AD82711990CBFB006EAB38 /* hashops.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A7E19908132006EAB38 /* hashops.c */; };
+		43AD82721990CBFB006EAB38 /* dertime.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8719908132006EAB38 /* dertime.c */; };
+		43AD82731990CBFB006EAB38 /* ecp_521.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1B19908132006EAB38 /* ecp_521.c */; };
+		43AD82741990CBFB006EAB38 /* pkix_pl_ocsprequest.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BED19908132006EAB38 /* pkix_pl_ocsprequest.c */; };
+		43AD82751990CBFB006EAB38 /* ecp_jac.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1D19908132006EAB38 /* ecp_jac.c */; };
+		43AD82761990CBFB006EAB38 /* pkix_validate.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BAC19908132006EAB38 /* pkix_validate.c */; };
+		43AD82771990CBFB006EAB38 /* mpprime.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3F19908132006EAB38 /* mpprime.c */; };
+		43AD82781990CBFB006EAB38 /* secmime.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C4219908132006EAB38 /* secmime.c */; };
+		43AD82791990CBFB006EAB38 /* pkcs11c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6C19908132006EAB38 /* pkcs11c.c */; };
+		43AD827A1990CBFB006EAB38 /* pkix_valparams.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B9919908132006EAB38 /* pkix_valparams.c */; };
+		43AD827B1990CBFB006EAB38 /* pkix_crlchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B7719908132006EAB38 /* pkix_crlchecker.c */; };
+		43AD827C1990CBFB006EAB38 /* secalgid.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CA019908132006EAB38 /* secalgid.c */; };
+		43AD827D1990CBFB006EAB38 /* utilmod.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CB819908132006EAB38 /* utilmod.c */; };
+		43AD827E1990CBFB006EAB38 /* secport.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7CB319908132006EAB38 /* secport.c */; };
+		43AD827F1990CBFB006EAB38 /* utilwrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1619908132006EAB38 /* utilwrap.c */; };
+		43AD82801990CBFB006EAB38 /* pkix_pl_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BFA19908132006EAB38 /* pkix_pl_common.c */; };
+		43AD82811990CBFB006EAB38 /* ecp_mont.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1F19908132006EAB38 /* ecp_mont.c */; };
+		43AD82821990CBFB006EAB38 /* crl.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9019908132006EAB38 /* crl.c */; };
+		43AD82831990CBFB006EAB38 /* jpakesftk.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6219908132006EAB38 /* jpakesftk.c */; };
+		43AD82841990CBFB006EAB38 /* pkix_pl_mutex.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C0519908132006EAB38 /* pkix_pl_mutex.c */; };
+		43AD82851990CBFB006EAB38 /* pk11pqg.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2B19908132006EAB38 /* pk11pqg.c */; };
+		43AD82861990CBFB006EAB38 /* pkix_pl_date.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BE319908132006EAB38 /* pkix_pl_date.c */; };
+		43AD82871990CBFB006EAB38 /* pkix_pl_error.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BFC19908132006EAB38 /* pkix_pl_error.c */; };
+		43AD82881990CBFB006EAB38 /* alg2268.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AEE19908132006EAB38 /* alg2268.c */; };
+		43AD82891990CBFB006EAB38 /* xauthkid.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9619908132006EAB38 /* xauthkid.c */; };
+		43AD828A1990CBFB006EAB38 /* softkver.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C7A19908132006EAB38 /* softkver.c */; };
+		43AD828B1990CBFB006EAB38 /* pk11load.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C2319908132006EAB38 /* pk11load.c */; };
+		43AD828C1990CBFB006EAB38 /* desblapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B0519908132006EAB38 /* desblapi.c */; };
+		43AD828D1990CBFB006EAB38 /* mpcpucache.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B3319908132006EAB38 /* mpcpucache.c */; };
+		43AD828E1990CBFB006EAB38 /* sechash.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7ADB19908132006EAB38 /* sechash.c */; };
+		43AD828F1990CBFB006EAB38 /* dev3hack.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C1919908132006EAB38 /* dev3hack.c */; };
+		43AD82901990CBFB006EAB38 /* trustdomain.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C5719908132006EAB38 /* trustdomain.c */; };
+		43AD82911990CBFB006EAB38 /* pkix_pl_bigint.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BF619908132006EAB38 /* pkix_pl_bigint.c */; };
+		43AD82921990CBFB006EAB38 /* certread.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3A19908132006EAB38 /* certread.c */; };
+		43AD82931990CBFB006EAB38 /* pkix_pl_crlentry.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BE119908132006EAB38 /* pkix_pl_crlentry.c */; };
+		43AD82941990CBFB006EAB38 /* pkix_pl_pk11certstore.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BCE19908132006EAB38 /* pkix_pl_pk11certstore.c */; };
+		43AD82951990CBFB006EAB38 /* camellia.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7AF719908132006EAB38 /* camellia.c */; };
+		43AD82961990CBFB006EAB38 /* fipstokn.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6119908132006EAB38 /* fipstokn.c */; };
+		43AD82971990CBFB006EAB38 /* ecp_jm.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B1E19908132006EAB38 /* ecp_jm.c */; };
+		43AD82981990CBFB006EAB38 /* dersubr.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C8619908132006EAB38 /* dersubr.c */; };
+		43AD82991990CBFB006EAB38 /* xbsconst.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A9719908132006EAB38 /* xbsconst.c */; };
+		43AD829A1990CBFB006EAB38 /* pkix_pl_crl.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BDD19908132006EAB38 /* pkix_pl_crl.c */; };
+		43AD829B1990CBFB006EAB38 /* pkix_targetcertchecker.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7B8B19908132006EAB38 /* pkix_targetcertchecker.c */; };
+		43AD829C1990CBFB006EAB38 /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A7819908132006EAB38 /* arena.c */; };
+		43AD829D1990CBFB006EAB38 /* nssrwlk.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C9219908132006EAB38 /* nssrwlk.c */; };
+		43AD829E1990CBFB006EAB38 /* pkix_build.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7BA819908132006EAB38 /* pkix_build.c */; };
+		43AD829F1990CBFB006EAB38 /* pk11util.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3319908132006EAB38 /* pk11util.c */; };
+		43AD82A01990CBFB006EAB38 /* p7decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C3D19908132006EAB38 /* p7decode.c */; };
+		43AD82A11990CBFB006EAB38 /* padbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7C6A19908132006EAB38 /* padbuf.c */; };
+		43AD82A21990CBFB006EAB38 /* hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD7A7D19908132006EAB38 /* hash.c */; };
+		43AD82A51990CBFB006EAB38 /* SECerrs.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CAD19908132006EAB38 /* SECerrs.h */; };
+		43AD82A61990CBFB006EAB38 /* ecl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B1319908132006EAB38 /* ecl.h */; };
+		43AD82A71990CBFB006EAB38 /* pkix_pl_rwlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0E19908132006EAB38 /* pkix_pl_rwlock.h */; };
+		43AD82A81990CBFB006EAB38 /* cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8819908132006EAB38 /* cert.h */; };
+		43AD82A91990CBFB006EAB38 /* pk11func.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C2019908132006EAB38 /* pk11func.h */; };
+		43AD82AA1990CBFB006EAB38 /* nss.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C1219908132006EAB38 /* nss.h */; };
+		43AD82AB1990CBFB006EAB38 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9B19908132006EAB38 /* pkcs11t.h */; };
+		43AD82AC1990CBFB006EAB38 /* pkix_pl_monitorlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0419908132006EAB38 /* pkix_pl_monitorlock.h */; };
+		43AD82AD1990CBFB006EAB38 /* pk11pqg.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C2C19908132006EAB38 /* pk11pqg.h */; };
+		43AD82AE1990CBFB006EAB38 /* chacha20poly1305.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AFE19908132006EAB38 /* chacha20poly1305.h */; };
+		43AD82AF1990CBFB006EAB38 /* devtm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AE719908132006EAB38 /* devtm.h */; };
+		43AD82B01990CBFB006EAB38 /* pkix_revchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6819908132006EAB38 /* pkix_revchecker.h */; };
+		43AD82B11990CBFB006EAB38 /* pkix_pl_infoaccess.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BE819908132006EAB38 /* pkix_pl_infoaccess.h */; };
+		43AD82B21990CBFB006EAB38 /* ciferfam.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8319908132006EAB38 /* ciferfam.h */; };
+		43AD82B31990CBFB006EAB38 /* sftkpars.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7819908132006EAB38 /* sftkpars.h */; };
+		43AD82B41990CBFB006EAB38 /* pkcs11p.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9A19908132006EAB38 /* pkcs11p.h */; };
+		43AD82B51990CBFB006EAB38 /* nssbase.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8219908132006EAB38 /* nssbase.h */; };
+		43AD82B61990CBFB006EAB38 /* pkix_build.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BA919908132006EAB38 /* pkix_build.h */; };
+		43AD82B71990CBFB006EAB38 /* gcm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B2119908132006EAB38 /* gcm.h */; };
+		43AD82B81990CBFB006EAB38 /* pkix_comcrlselparams.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8F19908132006EAB38 /* pkix_comcrlselparams.h */; };
+		43AD82B91990CBFB006EAB38 /* pkix_pl_ocsprequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BEE19908132006EAB38 /* pkix_pl_ocsprequest.h */; };
+		43AD82BA1990CBFB006EAB38 /* pkix_validate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BAD19908132006EAB38 /* pkix_validate.h */; };
+		43AD82BB1990CBFB006EAB38 /* pkix_pl_aiamgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BBB19908132006EAB38 /* pkix_pl_aiamgr.h */; };
+		43AD82BC1990CBFB006EAB38 /* certxutl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8F19908132006EAB38 /* certxutl.h */; };
+		43AD82BD1990CBFB006EAB38 /* keythi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7ADA19908132006EAB38 /* keythi.h */; };
+		43AD82BE1990CBFB006EAB38 /* devt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AE619908132006EAB38 /* devt.h */; };
+		43AD82BF1990CBFB006EAB38 /* pkix_pl_certpolicymap.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BDA19908132006EAB38 /* pkix_pl_certpolicymap.h */; };
+		43AD82C01990CBFB006EAB38 /* nssutil.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9519908132006EAB38 /* nssutil.h */; };
+		43AD82C11990CBFB006EAB38 /* sslerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8019908132006EAB38 /* sslerr.h */; };
+		43AD82C21990CBFB006EAB38 /* certdb.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8A19908132006EAB38 /* certdb.h */; };
+		43AD82C31990CBFB006EAB38 /* smime.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5D19908132006EAB38 /* smime.h */; };
+		43AD82C41990CBFB006EAB38 /* mpi-config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B3419908132006EAB38 /* mpi-config.h */; };
+		43AD82C51990CBFB006EAB38 /* secmodt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C3619908132006EAB38 /* secmodt.h */; };
+		43AD82C61990CBFB006EAB38 /* pkix_pl_oid.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0A19908132006EAB38 /* pkix_pl_oid.h */; };
+		43AD82C71990CBFB006EAB38 /* cryptoht.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AD419908132006EAB38 /* cryptoht.h */; };
+		43AD82C81990CBFB006EAB38 /* pk11sdr.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C3019908132006EAB38 /* pk11sdr.h */; };
+		43AD82C91990CBFB006EAB38 /* pkix_pl_bytearray.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BF919908132006EAB38 /* pkix_pl_bytearray.h */; };
+		43AD82CA1990CBFB006EAB38 /* pkix_pl_ldapresponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BC919908132006EAB38 /* pkix_pl_ldapresponse.h */; };
+		43AD82CB1990CBFB006EAB38 /* mpi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B3719908132006EAB38 /* mpi.h */; };
+		43AD82CC1990CBFB006EAB38 /* seccomon.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CA619908132006EAB38 /* seccomon.h */; };
+		43AD82CD1990CBFB006EAB38 /* utilparst.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CBC19908132006EAB38 /* utilparst.h */; };
+		43AD82CE1990CBFB006EAB38 /* certi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8B19908132006EAB38 /* certi.h */; };
+		43AD82CF1990CBFB006EAB38 /* p7local.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4019908132006EAB38 /* p7local.h */; };
+		43AD82D01990CBFB006EAB38 /* nssilock.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9019908132006EAB38 /* nssilock.h */; };
+		43AD82D11990CBFB006EAB38 /* secmod.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C3419908132006EAB38 /* secmod.h */; };
+		43AD82D21990CBFB006EAB38 /* dev3hack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C1A19908132006EAB38 /* dev3hack.h */; };
+		43AD82D31990CBFB006EAB38 /* pkix_crlchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7819908132006EAB38 /* pkix_crlchecker.h */; };
+		43AD82D41990CBFB006EAB38 /* pkix_procparams.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9419908132006EAB38 /* pkix_procparams.h */; };
+		43AD82D51990CBFB006EAB38 /* pkix_targetcertchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8C19908132006EAB38 /* pkix_targetcertchecker.h */; };
+		43AD82D61990CBFB006EAB38 /* ocsp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AA319908132006EAB38 /* ocsp.h */; };
+		43AD82D71990CBFB006EAB38 /* sftkdbti.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7519908132006EAB38 /* sftkdbti.h */; };
+		43AD82D81990CBFB006EAB38 /* pkix_checker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6119908132006EAB38 /* pkix_checker.h */; };
+		43AD82D91990CBFB006EAB38 /* pkix_pl_ocspcertid.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BEC19908132006EAB38 /* pkix_pl_ocspcertid.h */; };
+		43AD82DA1990CBFB006EAB38 /* pkix_store.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BA619908132006EAB38 /* pkix_store.h */; };
+		43AD82DB1990CBFB006EAB38 /* lowkeyti.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C6719908132006EAB38 /* lowkeyti.h */; };
+		43AD82DC1990CBFB006EAB38 /* secmodi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C3519908132006EAB38 /* secmodi.h */; };
+		43AD82DD1990CBFB006EAB38 /* pkix_basicconstraintschecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7419908132006EAB38 /* pkix_basicconstraintschecker.h */; };
+		43AD82DE1990CBFB006EAB38 /* pkix_crlsel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6219908132006EAB38 /* pkix_crlsel.h */; };
+		43AD82DF1990CBFB006EAB38 /* lgglue.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C6419908132006EAB38 /* lgglue.h */; };
+		43AD82E01990CBFB006EAB38 /* pkcs7t.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4119908132006EAB38 /* pkcs7t.h */; };
+		43AD82E11990CBFB006EAB38 /* pkix_certstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6019908132006EAB38 /* pkix_certstore.h */; };
+		43AD82E21990CBFB006EAB38 /* lowpbe.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C6919908132006EAB38 /* lowpbe.h */; };
+		43AD82E31990CBFB006EAB38 /* baset.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A7A19908132006EAB38 /* baset.h */; };
+		43AD82E41990CBFB006EAB38 /* pkix_pl_pki.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6519908132006EAB38 /* pkix_pl_pki.h */; };
+		43AD82E51990CBFB006EAB38 /* sftkdbt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7419908132006EAB38 /* sftkdbt.h */; };
+		43AD82E61990CBFB006EAB38 /* secmodti.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C3719908132006EAB38 /* secmodti.h */; };
+		43AD82E71990CBFB006EAB38 /* pkix_nameconstraintschecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8019908132006EAB38 /* pkix_nameconstraintschecker.h */; };
+		43AD82E81990CBFB006EAB38 /* camellia.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AF819908132006EAB38 /* camellia.h */; };
+		43AD82E91990CBFB006EAB38 /* nsspkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4B19908132006EAB38 /* nsspkit.h */; };
+		43AD82EA1990CBFB006EAB38 /* pkix_pl_ocspresponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BF019908132006EAB38 /* pkix_pl_ocspresponse.h */; };
+		43AD82EB1990CBFB006EAB38 /* pkix_expirationchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7C19908132006EAB38 /* pkix_expirationchecker.h */; };
+		43AD82EC1990CBFB006EAB38 /* pkix_pl_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BFB19908132006EAB38 /* pkix_pl_common.h */; };
+		43AD82ED1990CBFB006EAB38 /* softkver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7B19908132006EAB38 /* softkver.h */; };
+		43AD82EE1990CBFB006EAB38 /* mp_gf2m-priv.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B3019908132006EAB38 /* mp_gf2m-priv.h */; };
+		43AD82EF1990CBFB006EAB38 /* pkix_errorstrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6319908132006EAB38 /* pkix_errorstrings.h */; };
+		43AD82F01990CBFB006EAB38 /* seed.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B5119908132006EAB38 /* seed.h */; };
+		43AD82F11990CBFB006EAB38 /* pkix_comcertselparams.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7119908132006EAB38 /* pkix_comcertselparams.h */; };
+		43AD82F21990CBFB006EAB38 /* poly1305.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B4519908132006EAB38 /* poly1305.h */; };
+		43AD82F31990CBFB006EAB38 /* pkix_trustanchor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9819908132006EAB38 /* pkix_trustanchor.h */; };
+		43AD82F41990CBFB006EAB38 /* pkix_error.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BB019908132006EAB38 /* pkix_error.h */; };
+		43AD82F51990CBFB006EAB38 /* pkix_verifynode.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BA319908132006EAB38 /* pkix_verifynode.h */; };
+		43AD82F61990CBFB006EAB38 /* pkcs11n.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9919908132006EAB38 /* pkcs11n.h */; };
+		43AD82F71990CBFB006EAB38 /* softoken.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7C19908132006EAB38 /* softoken.h */; };
+		43AD82F81990CBFB006EAB38 /* utilpars.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CBB19908132006EAB38 /* utilpars.h */; };
+		43AD82F91990CBFB006EAB38 /* pkix_pl_certpolicyqualifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BDC19908132006EAB38 /* pkix_pl_certpolicyqualifier.h */; };
+		43AD82FA1990CBFB006EAB38 /* intel-aes.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B2619908132006EAB38 /* intel-aes.h */; };
+		43AD82FB1990CBFB006EAB38 /* hmacct.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B2319908132006EAB38 /* hmacct.h */; };
+		43AD82FC1990CBFB006EAB38 /* cmslocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5A19908132006EAB38 /* cmslocal.h */; };
+		43AD82FD1990CBFB006EAB38 /* pkix_signaturechecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8A19908132006EAB38 /* pkix_signaturechecker.h */; };
+		43AD82FE1990CBFB006EAB38 /* sftkdb.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7319908132006EAB38 /* sftkdb.h */; };
+		43AD82FF1990CBFB006EAB38 /* nsslocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9119908132006EAB38 /* nsslocks.h */; };
+		43AD83001990CBFB006EAB38 /* pkix_pl_httpdefaultclient.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BC119908132006EAB38 /* pkix_pl_httpdefaultclient.h */; };
+		43AD83011990CBFB006EAB38 /* ec2.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B0D19908132006EAB38 /* ec2.h */; };
+		43AD83021990CBFB006EAB38 /* nssilckt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8E19908132006EAB38 /* nssilckt.h */; };
+		43AD83031990CBFB006EAB38 /* pkix_pl_nameconstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BEA19908132006EAB38 /* pkix_pl_nameconstraints.h */; };
+		43AD83041990CBFB006EAB38 /* cts.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B0219908132006EAB38 /* cts.h */; };
+		43AD83051990CBFB006EAB38 /* pkix_valparams.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9A19908132006EAB38 /* pkix_valparams.h */; };
+		43AD83061990CBFB006EAB38 /* pkix_pl_nsscontext.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BCD19908132006EAB38 /* pkix_pl_nsscontext.h */; };
+		43AD83071990CBFB006EAB38 /* secasn1t.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CA419908132006EAB38 /* secasn1t.h */; };
+		43AD83081990CBFB006EAB38 /* pkix.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B5E19908132006EAB38 /* pkix.h */; };
+		43AD83091990CBFB006EAB38 /* key.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AD619908132006EAB38 /* key.h */; };
+		43AD830A1990CBFB006EAB38 /* secpkcs5.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C3819908132006EAB38 /* secpkcs5.h */; };
+		43AD830B1990CBFB006EAB38 /* pkix_pl_pk11certstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BCF19908132006EAB38 /* pkix_pl_pk11certstore.h */; };
+		43AD830C1990CBFB006EAB38 /* pkix_pl_string.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C1019908132006EAB38 /* pkix_pl_string.h */; };
+		43AD830D1990CBFB006EAB38 /* nssrwlkt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9419908132006EAB38 /* nssrwlkt.h */; };
+		43AD830E1990CBFB006EAB38 /* ctr.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B0019908132006EAB38 /* ctr.h */; };
+		43AD830F1990CBFB006EAB38 /* secerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CAC19908132006EAB38 /* secerr.h */; };
+		43AD83101990CBFB006EAB38 /* mpi-priv.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B3519908132006EAB38 /* mpi-priv.h */; };
+		43AD83111990CBFB006EAB38 /* base.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A7919908132006EAB38 /* base.h */; };
+		43AD83121990CBFB006EAB38 /* secpkcs7.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4419908132006EAB38 /* secpkcs7.h */; };
+		43AD83131990CBFB006EAB38 /* pkix_pl_publickey.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BF219908132006EAB38 /* pkix_pl_publickey.h */; };
+		43AD83141990CBFB006EAB38 /* nssb64.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8A19908132006EAB38 /* nssb64.h */; };
+		43AD83151990CBFB006EAB38 /* pkix_policynode.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9F19908132006EAB38 /* pkix_policynode.h */; };
+		43AD83161990CBFB006EAB38 /* softoknt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7D19908132006EAB38 /* softoknt.h */; };
+		43AD83171990CBFB006EAB38 /* blapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AF319908132006EAB38 /* blapi.h */; };
+		43AD83181990CBFB006EAB38 /* keyi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AD819908132006EAB38 /* keyi.h */; };
+		43AD83191990CBFB006EAB38 /* pkix_ocspchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8219908132006EAB38 /* pkix_ocspchecker.h */; };
+		43AD831A1990CBFB006EAB38 /* pk11pub.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C2E19908132006EAB38 /* pk11pub.h */; };
+		43AD831B1990CBFB006EAB38 /* pki3hack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4E19908132006EAB38 /* pki3hack.h */; };
+		43AD831C1990CBFB006EAB38 /* pkix_pl_cert.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BD619908132006EAB38 /* pkix_pl_cert.h */; };
+		43AD831D1990CBFB006EAB38 /* shsign.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B5619908132006EAB38 /* shsign.h */; };
+		43AD831E1990CBFB006EAB38 /* des.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B0419908132006EAB38 /* des.h */; };
+		43AD831F1990CBFB006EAB38 /* lowkeyi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C6619908132006EAB38 /* lowkeyi.h */; };
+		43AD83201990CBFB006EAB38 /* nssbaset.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8319908132006EAB38 /* nssbaset.h */; };
+		43AD83211990CBFB006EAB38 /* secrng.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B4F19908132006EAB38 /* secrng.h */; };
+		43AD83221990CBFB006EAB38 /* alghmac.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AF019908132006EAB38 /* alghmac.h */; };
+		43AD83231990CBFB006EAB38 /* pkixt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6B19908132006EAB38 /* pkixt.h */; };
+		43AD83241990CBFB006EAB38 /* cryptohi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AD319908132006EAB38 /* cryptohi.h */; };
+		43AD83251990CBFB006EAB38 /* mpprime.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B4019908132006EAB38 /* mpprime.h */; };
+		43AD83261990CBFB006EAB38 /* pkix_pl_basicconstraints.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BD419908132006EAB38 /* pkix_pl_basicconstraints.h */; };
+		43AD83271990CBFB006EAB38 /* utilmodt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CB919908132006EAB38 /* utilmodt.h */; };
+		43AD83281990CBFB006EAB38 /* nssdev.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AEA19908132006EAB38 /* nssdev.h */; };
+		43AD83291990CBFB006EAB38 /* pkix_certsel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B5F19908132006EAB38 /* pkix_certsel.h */; };
+		43AD832A1990CBFB006EAB38 /* pkix_pl_ldaprequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BC719908132006EAB38 /* pkix_pl_ldaprequest.h */; };
+		43AD832B1990CBFB006EAB38 /* keyhi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AD719908132006EAB38 /* keyhi.h */; };
+		43AD832C1990CBFB006EAB38 /* pkix_pl_x500name.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BF419908132006EAB38 /* pkix_pl_x500name.h */; };
+		43AD832D1990CBFB006EAB38 /* pkix_params.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6419908132006EAB38 /* pkix_params.h */; };
+		43AD832E1990CBFB006EAB38 /* ec.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B0A19908132006EAB38 /* ec.h */; };
+		43AD832F1990CBFB006EAB38 /* secdigt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CAB19908132006EAB38 /* secdigt.h */; };
+		43AD83301990CBFB006EAB38 /* secmpi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B4E19908132006EAB38 /* secmpi.h */; };
+		43AD83311990CBFB006EAB38 /* pkistore.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5219908132006EAB38 /* pkistore.h */; };
+		43AD83321990CBFB006EAB38 /* pkix_revocationmethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8819908132006EAB38 /* pkix_revocationmethod.h */; };
+		43AD83331990CBFB006EAB38 /* pkix_results.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6719908132006EAB38 /* pkix_results.h */; };
+		43AD83341990CBFB006EAB38 /* pkix_tools.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BB719908132006EAB38 /* pkix_tools.h */; };
+		43AD83351990CBFB006EAB38 /* pkix_pl_crldp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BE019908132006EAB38 /* pkix_pl_crldp.h */; };
+		43AD83361990CBFB006EAB38 /* genname.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A9219908132006EAB38 /* genname.h */; };
+		43AD83371990CBFB006EAB38 /* pki.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4C19908132006EAB38 /* pki.h */; };
+		43AD83381990CBFB006EAB38 /* cms.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5919908132006EAB38 /* cms.h */; };
+		43AD83391990CBFB006EAB38 /* sha256.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B5219908132006EAB38 /* sha256.h */; };
+		43AD833A1990CBFB006EAB38 /* pkix_pl_crl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BDE19908132006EAB38 /* pkix_pl_crl.h */; };
+		43AD833B1990CBFB006EAB38 /* pkix_pl_ldapdefaultclient.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BC519908132006EAB38 /* pkix_pl_ldapdefaultclient.h */; };
+		43AD833C1990CBFB006EAB38 /* secoidt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CB219908132006EAB38 /* secoidt.h */; };
+		43AD833D1990CBFB006EAB38 /* pkim.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5019908132006EAB38 /* pkim.h */; };
+		43AD833E1990CBFB006EAB38 /* pkix_policychecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8419908132006EAB38 /* pkix_policychecker.h */; };
+		43AD833F1990CBFB006EAB38 /* devm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AE419908132006EAB38 /* devm.h */; };
+		43AD83401990CBFB006EAB38 /* blapii.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AF419908132006EAB38 /* blapii.h */; };
+		43AD83411990CBFB006EAB38 /* sdb.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C7119908132006EAB38 /* sdb.h */; };
+		43AD83421990CBFB006EAB38 /* pkix_pl_generalname.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BE619908132006EAB38 /* pkix_pl_generalname.h */; };
+		43AD83431990CBFB006EAB38 /* pkix_namechainingchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7E19908132006EAB38 /* pkix_namechainingchecker.h */; };
+		43AD83441990CBFB006EAB38 /* dev.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AE319908132006EAB38 /* dev.h */; };
+		43AD83451990CBFB006EAB38 /* pkix_crlselector.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9119908132006EAB38 /* pkix_crlselector.h */; };
+		43AD83461990CBFB006EAB38 /* ecl-exp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B1019908132006EAB38 /* ecl-exp.h */; };
+		43AD83471990CBFB006EAB38 /* pkix_pl_ldapcertstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BC319908132006EAB38 /* pkix_pl_ldapcertstore.h */; };
+		43AD83481990CBFB006EAB38 /* sechash.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7ADC19908132006EAB38 /* sechash.h */; };
+		43AD83491990CBFB006EAB38 /* intel-gcm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B2A19908132006EAB38 /* intel-gcm.h */; };
+		43AD834A1990CBFB006EAB38 /* pkitm.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5419908132006EAB38 /* pkitm.h */; };
+		43AD834B1990CBFB006EAB38 /* rijndael.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B4A19908132006EAB38 /* rijndael.h */; };
+		43AD834C1990CBFB006EAB38 /* secdert.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CA819908132006EAB38 /* secdert.h */; };
+		43AD834D1990CBFB006EAB38 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9719908132006EAB38 /* pkcs11.h */; };
+		43AD834E1990CBFB006EAB38 /* pqg.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B4719908132006EAB38 /* pqg.h */; };
+		43AD834F1990CBFB006EAB38 /* chacha20.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AFB19908132006EAB38 /* chacha20.h */; };
+		43AD83501990CBFB006EAB38 /* pkix_sample_modules.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6919908132006EAB38 /* pkix_sample_modules.h */; };
+		43AD83511990CBFB006EAB38 /* build_config_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AF619908132006EAB38 /* build_config_mac.h */; };
+		43AD83521990CBFB006EAB38 /* utilrename.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CBD19908132006EAB38 /* utilrename.h */; };
+		43AD83531990CBFB006EAB38 /* pkix_lifecycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BAB19908132006EAB38 /* pkix_lifecycle.h */; };
+		43AD83541990CBFB006EAB38 /* nssrwlk.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9319908132006EAB38 /* nssrwlk.h */; };
+		43AD83551990CBFB006EAB38 /* mp_gf2m.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B3219908132006EAB38 /* mp_gf2m.h */; };
+		43AD83561990CBFB006EAB38 /* pkix_certselector.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6F19908132006EAB38 /* pkix_certselector.h */; };
+		43AD83571990CBFB006EAB38 /* pkix_pl_object.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0819908132006EAB38 /* pkix_pl_object.h */; };
+		43AD83581990CBFB006EAB38 /* blapit.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AF519908132006EAB38 /* blapit.h */; };
+		43AD83591990CBFB006EAB38 /* ckhelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AE219908132006EAB38 /* ckhelper.h */; };
+		43AD835A1990CBFB006EAB38 /* pkix_ekuchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7A19908132006EAB38 /* pkix_ekuchecker.h */; };
+		43AD835B1990CBFB006EAB38 /* pkix_pl_date.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BE419908132006EAB38 /* pkix_pl_date.h */; };
+		43AD835C1990CBFB006EAB38 /* portreg.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9E19908132006EAB38 /* portreg.h */; };
+		43AD835D1990CBFB006EAB38 /* pkix_revocationchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B8619908132006EAB38 /* pkix_revocationchecker.h */; };
+		43AD835E1990CBFB006EAB38 /* ecp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B1719908132006EAB38 /* ecp.h */; };
+		43AD835F1990CBFB006EAB38 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8219908132006EAB38 /* base64.h */; };
+		43AD83601990CBFB006EAB38 /* ocspt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AA619908132006EAB38 /* ocspt.h */; };
+		43AD83611990CBFB006EAB38 /* nssb64t.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8D19908132006EAB38 /* nssb64t.h */; };
+		43AD83621990CBFB006EAB38 /* secasn1.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CA119908132006EAB38 /* secasn1.h */; };
+		43AD83631990CBFB006EAB38 /* pkix_pl_primhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0C19908132006EAB38 /* pkix_pl_primhash.h */; };
+		43AD83641990CBFB006EAB38 /* pkcs11u.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9C19908132006EAB38 /* pkcs11u.h */; };
+		43AD83651990CBFB006EAB38 /* cmsreclist.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5B19908132006EAB38 /* cmsreclist.h */; };
+		43AD83661990CBFB006EAB38 /* pkix_pl_system.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6619908132006EAB38 /* pkix_pl_system.h */; };
+		43AD83671990CBFB006EAB38 /* pkix_logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BB519908132006EAB38 /* pkix_logger.h */; };
+		43AD83681990CBFB006EAB38 /* secdig.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CAA19908132006EAB38 /* secdig.h */; };
+		43AD83691990CBFB006EAB38 /* pkix_certchainchecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B7619908132006EAB38 /* pkix_certchainchecker.h */; };
+		43AD836A1990CBFB006EAB38 /* secmime.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4319908132006EAB38 /* secmime.h */; };
+		43AD836B1990CBFB006EAB38 /* ecl-curve.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B0F19908132006EAB38 /* ecl-curve.h */; };
+		43AD836C1990CBFB006EAB38 /* pkix_pl_crlentry.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BE219908132006EAB38 /* pkix_pl_crlentry.h */; };
+		43AD836D1990CBFB006EAB38 /* logtab.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B2F19908132006EAB38 /* logtab.h */; };
+		43AD836E1990CBFB006EAB38 /* secport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CB419908132006EAB38 /* secport.h */; };
+		43AD836F1990CBFB006EAB38 /* pkix_pl_httpcertstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BBF19908132006EAB38 /* pkix_pl_httpcertstore.h */; };
+		43AD83701990CBFB006EAB38 /* ocspti.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AA719908132006EAB38 /* ocspti.h */; };
+		43AD83711990CBFB006EAB38 /* pkix_pl_colcertstore.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BBD19908132006EAB38 /* pkix_pl_colcertstore.h */; };
+		43AD83721990CBFB006EAB38 /* pkix_pl_mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0619908132006EAB38 /* pkix_pl_mutex.h */; };
+		43AD83731990CBFB006EAB38 /* ocspi.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AA419908132006EAB38 /* ocspi.h */; };
+		43AD83741990CBFB006EAB38 /* pkix_buildresult.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9D19908132006EAB38 /* pkix_buildresult.h */; };
+		43AD83751990CBFB006EAB38 /* pkcs11i.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C6D19908132006EAB38 /* pkcs11i.h */; };
+		43AD83761990CBFB006EAB38 /* pkix_resourcelimits.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B9619908132006EAB38 /* pkix_resourcelimits.h */; };
+		43AD83771990CBFB006EAB38 /* pkix_valresult.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BA119908132006EAB38 /* pkix_valresult.h */; };
+		43AD83781990CBFB006EAB38 /* pkix_pl_mem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0219908132006EAB38 /* pkix_pl_mem.h */; };
+		43AD83791990CBFB006EAB38 /* pkix_pl_certpolicyinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BD819908132006EAB38 /* pkix_pl_certpolicyinfo.h */; };
+		43AD837A1990CBFB006EAB38 /* pkix_pl_socket.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BD119908132006EAB38 /* pkix_pl_socket.h */; };
+		43AD837B1990CBFB006EAB38 /* nssdevt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AEB19908132006EAB38 /* nssdevt.h */; };
+		43AD837C1990CBFB006EAB38 /* pkit.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5319908132006EAB38 /* pkit.h */; };
+		43AD837D1990CBFB006EAB38 /* pkix_list.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BB319908132006EAB38 /* pkix_list.h */; };
+		43AD837E1990CBFB006EAB38 /* ecl-priv.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B1119908132006EAB38 /* ecl-priv.h */; };
+		43AD837F1990CBFB006EAB38 /* pkix_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B6A19908132006EAB38 /* pkix_util.h */; };
+		43AD83801990CBFB006EAB38 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C9819908132006EAB38 /* pkcs11f.h */; };
+		43AD83811990CBFB006EAB38 /* pkix_pl_ldapt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BCA19908132006EAB38 /* pkix_pl_ldapt.h */; };
+		43AD83821990CBFB006EAB38 /* pk11priv.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C2D19908132006EAB38 /* pk11priv.h */; };
+		43AD83831990CBFB006EAB38 /* nsspki.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C4A19908132006EAB38 /* nsspki.h */; };
+		43AD83841990CBFB006EAB38 /* nssrenam.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C1419908132006EAB38 /* nssrenam.h */; };
+		43AD83851990CBFB006EAB38 /* secitem.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CAF19908132006EAB38 /* secitem.h */; };
+		43AD83861990CBFB006EAB38 /* mplogic.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B3D19908132006EAB38 /* mplogic.h */; };
+		43AD83871990CBFB006EAB38 /* pkix_pl_bigint.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BF719908132006EAB38 /* pkix_pl_bigint.h */; };
+		43AD83881990CBFB006EAB38 /* hasht.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C8919908132006EAB38 /* hasht.h */; };
+		43AD83891990CBFB006EAB38 /* pkcs11ni.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C6E19908132006EAB38 /* pkcs11ni.h */; };
+		43AD838A1990CBFB006EAB38 /* keyt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7AD919908132006EAB38 /* keyt.h */; };
+		43AD838B1990CBFB006EAB38 /* pkix_pl_lifecycle.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C0019908132006EAB38 /* pkix_pl_lifecycle.h */; };
+		43AD838C1990CBFB006EAB38 /* secder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CA719908132006EAB38 /* secder.h */; };
+		43AD838D1990CBFB006EAB38 /* sha_fast.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7B5519908132006EAB38 /* sha_fast.h */; };
+		43AD838E1990CBFB006EAB38 /* pkix_pl_hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7BFE19908132006EAB38 /* pkix_pl_hashtable.h */; };
+		43AD838F1990CBFB006EAB38 /* cmst.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7C5C19908132006EAB38 /* cmst.h */; };
+		43AD83901990CBFB006EAB38 /* secoid.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7CB119908132006EAB38 /* secoid.h */; };
+		43AD83911990CBFB006EAB38 /* xconst.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A9919908132006EAB38 /* xconst.h */; };
+		43AD83921990CBFB006EAB38 /* certt.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD7A8C19908132006EAB38 /* certt.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1010,10 +1501,18 @@
 		43AD7CBB19908132006EAB38 /* utilpars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilpars.h; sourceTree = "<group>"; };
 		43AD7CBC19908132006EAB38 /* utilparst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilparst.h; sourceTree = "<group>"; };
 		43AD7CBD19908132006EAB38 /* utilrename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utilrename.h; sourceTree = "<group>"; };
+		43AD83961990CBFB006EAB38 /* libnss_static_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libnss_static_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		43AD7A3C1990809E006EAB38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43AD82A31990CBFB006EAB38 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1035,6 +1534,7 @@
 			isa = PBXGroup;
 			children = (
 				43AD7A3F1990809E006EAB38 /* libnss_static.a */,
+				43AD83961990CBFB006EAB38 /* libnss_static_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2075,6 +2575,251 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43AD82A41990CBFB006EAB38 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43AD82A51990CBFB006EAB38 /* SECerrs.h in Headers */,
+				43AD82A61990CBFB006EAB38 /* ecl.h in Headers */,
+				43AD82A71990CBFB006EAB38 /* pkix_pl_rwlock.h in Headers */,
+				43AD82A81990CBFB006EAB38 /* cert.h in Headers */,
+				43AD82A91990CBFB006EAB38 /* pk11func.h in Headers */,
+				43AD82AA1990CBFB006EAB38 /* nss.h in Headers */,
+				43AD82AB1990CBFB006EAB38 /* pkcs11t.h in Headers */,
+				43AD82AC1990CBFB006EAB38 /* pkix_pl_monitorlock.h in Headers */,
+				43AD82AD1990CBFB006EAB38 /* pk11pqg.h in Headers */,
+				43AD82AE1990CBFB006EAB38 /* chacha20poly1305.h in Headers */,
+				43AD82AF1990CBFB006EAB38 /* devtm.h in Headers */,
+				43AD82B01990CBFB006EAB38 /* pkix_revchecker.h in Headers */,
+				43AD82B11990CBFB006EAB38 /* pkix_pl_infoaccess.h in Headers */,
+				43AD82B21990CBFB006EAB38 /* ciferfam.h in Headers */,
+				43AD82B31990CBFB006EAB38 /* sftkpars.h in Headers */,
+				43AD82B41990CBFB006EAB38 /* pkcs11p.h in Headers */,
+				43AD82B51990CBFB006EAB38 /* nssbase.h in Headers */,
+				43AD82B61990CBFB006EAB38 /* pkix_build.h in Headers */,
+				43AD82B71990CBFB006EAB38 /* gcm.h in Headers */,
+				43AD82B81990CBFB006EAB38 /* pkix_comcrlselparams.h in Headers */,
+				43AD82B91990CBFB006EAB38 /* pkix_pl_ocsprequest.h in Headers */,
+				43AD82BA1990CBFB006EAB38 /* pkix_validate.h in Headers */,
+				43AD82BB1990CBFB006EAB38 /* pkix_pl_aiamgr.h in Headers */,
+				43AD82BC1990CBFB006EAB38 /* certxutl.h in Headers */,
+				43AD82BD1990CBFB006EAB38 /* keythi.h in Headers */,
+				43AD82BE1990CBFB006EAB38 /* devt.h in Headers */,
+				43AD82BF1990CBFB006EAB38 /* pkix_pl_certpolicymap.h in Headers */,
+				43AD82C01990CBFB006EAB38 /* nssutil.h in Headers */,
+				43AD82C11990CBFB006EAB38 /* sslerr.h in Headers */,
+				43AD82C21990CBFB006EAB38 /* certdb.h in Headers */,
+				43AD82C31990CBFB006EAB38 /* smime.h in Headers */,
+				43AD82C41990CBFB006EAB38 /* mpi-config.h in Headers */,
+				43AD82C51990CBFB006EAB38 /* secmodt.h in Headers */,
+				43AD82C61990CBFB006EAB38 /* pkix_pl_oid.h in Headers */,
+				43AD82C71990CBFB006EAB38 /* cryptoht.h in Headers */,
+				43AD82C81990CBFB006EAB38 /* pk11sdr.h in Headers */,
+				43AD82C91990CBFB006EAB38 /* pkix_pl_bytearray.h in Headers */,
+				43AD82CA1990CBFB006EAB38 /* pkix_pl_ldapresponse.h in Headers */,
+				43AD82CB1990CBFB006EAB38 /* mpi.h in Headers */,
+				43AD82CC1990CBFB006EAB38 /* seccomon.h in Headers */,
+				43AD82CD1990CBFB006EAB38 /* utilparst.h in Headers */,
+				43AD82CE1990CBFB006EAB38 /* certi.h in Headers */,
+				43AD82CF1990CBFB006EAB38 /* p7local.h in Headers */,
+				43AD82D01990CBFB006EAB38 /* nssilock.h in Headers */,
+				43AD82D11990CBFB006EAB38 /* secmod.h in Headers */,
+				43AD82D21990CBFB006EAB38 /* dev3hack.h in Headers */,
+				43AD82D31990CBFB006EAB38 /* pkix_crlchecker.h in Headers */,
+				43AD82D41990CBFB006EAB38 /* pkix_procparams.h in Headers */,
+				43AD82D51990CBFB006EAB38 /* pkix_targetcertchecker.h in Headers */,
+				43AD82D61990CBFB006EAB38 /* ocsp.h in Headers */,
+				43AD82D71990CBFB006EAB38 /* sftkdbti.h in Headers */,
+				43AD82D81990CBFB006EAB38 /* pkix_checker.h in Headers */,
+				43AD82D91990CBFB006EAB38 /* pkix_pl_ocspcertid.h in Headers */,
+				43AD82DA1990CBFB006EAB38 /* pkix_store.h in Headers */,
+				43AD82DB1990CBFB006EAB38 /* lowkeyti.h in Headers */,
+				43AD82DC1990CBFB006EAB38 /* secmodi.h in Headers */,
+				43AD82DD1990CBFB006EAB38 /* pkix_basicconstraintschecker.h in Headers */,
+				43AD82DE1990CBFB006EAB38 /* pkix_crlsel.h in Headers */,
+				43AD82DF1990CBFB006EAB38 /* lgglue.h in Headers */,
+				43AD82E01990CBFB006EAB38 /* pkcs7t.h in Headers */,
+				43AD82E11990CBFB006EAB38 /* pkix_certstore.h in Headers */,
+				43AD82E21990CBFB006EAB38 /* lowpbe.h in Headers */,
+				43AD82E31990CBFB006EAB38 /* baset.h in Headers */,
+				43AD82E41990CBFB006EAB38 /* pkix_pl_pki.h in Headers */,
+				43AD82E51990CBFB006EAB38 /* sftkdbt.h in Headers */,
+				43AD82E61990CBFB006EAB38 /* secmodti.h in Headers */,
+				43AD82E71990CBFB006EAB38 /* pkix_nameconstraintschecker.h in Headers */,
+				43AD82E81990CBFB006EAB38 /* camellia.h in Headers */,
+				43AD82E91990CBFB006EAB38 /* nsspkit.h in Headers */,
+				43AD82EA1990CBFB006EAB38 /* pkix_pl_ocspresponse.h in Headers */,
+				43AD82EB1990CBFB006EAB38 /* pkix_expirationchecker.h in Headers */,
+				43AD82EC1990CBFB006EAB38 /* pkix_pl_common.h in Headers */,
+				43AD82ED1990CBFB006EAB38 /* softkver.h in Headers */,
+				43AD82EE1990CBFB006EAB38 /* mp_gf2m-priv.h in Headers */,
+				43AD82EF1990CBFB006EAB38 /* pkix_errorstrings.h in Headers */,
+				43AD82F01990CBFB006EAB38 /* seed.h in Headers */,
+				43AD82F11990CBFB006EAB38 /* pkix_comcertselparams.h in Headers */,
+				43AD82F21990CBFB006EAB38 /* poly1305.h in Headers */,
+				43AD82F31990CBFB006EAB38 /* pkix_trustanchor.h in Headers */,
+				43AD82F41990CBFB006EAB38 /* pkix_error.h in Headers */,
+				43AD82F51990CBFB006EAB38 /* pkix_verifynode.h in Headers */,
+				43AD82F61990CBFB006EAB38 /* pkcs11n.h in Headers */,
+				43AD82F71990CBFB006EAB38 /* softoken.h in Headers */,
+				43AD82F81990CBFB006EAB38 /* utilpars.h in Headers */,
+				43AD82F91990CBFB006EAB38 /* pkix_pl_certpolicyqualifier.h in Headers */,
+				43AD82FA1990CBFB006EAB38 /* intel-aes.h in Headers */,
+				43AD82FB1990CBFB006EAB38 /* hmacct.h in Headers */,
+				43AD82FC1990CBFB006EAB38 /* cmslocal.h in Headers */,
+				43AD82FD1990CBFB006EAB38 /* pkix_signaturechecker.h in Headers */,
+				43AD82FE1990CBFB006EAB38 /* sftkdb.h in Headers */,
+				43AD82FF1990CBFB006EAB38 /* nsslocks.h in Headers */,
+				43AD83001990CBFB006EAB38 /* pkix_pl_httpdefaultclient.h in Headers */,
+				43AD83011990CBFB006EAB38 /* ec2.h in Headers */,
+				43AD83021990CBFB006EAB38 /* nssilckt.h in Headers */,
+				43AD83031990CBFB006EAB38 /* pkix_pl_nameconstraints.h in Headers */,
+				43AD83041990CBFB006EAB38 /* cts.h in Headers */,
+				43AD83051990CBFB006EAB38 /* pkix_valparams.h in Headers */,
+				43AD83061990CBFB006EAB38 /* pkix_pl_nsscontext.h in Headers */,
+				43AD83071990CBFB006EAB38 /* secasn1t.h in Headers */,
+				43AD83081990CBFB006EAB38 /* pkix.h in Headers */,
+				43AD83091990CBFB006EAB38 /* key.h in Headers */,
+				43AD830A1990CBFB006EAB38 /* secpkcs5.h in Headers */,
+				43AD830B1990CBFB006EAB38 /* pkix_pl_pk11certstore.h in Headers */,
+				43AD830C1990CBFB006EAB38 /* pkix_pl_string.h in Headers */,
+				43AD830D1990CBFB006EAB38 /* nssrwlkt.h in Headers */,
+				43AD830E1990CBFB006EAB38 /* ctr.h in Headers */,
+				43AD830F1990CBFB006EAB38 /* secerr.h in Headers */,
+				43AD83101990CBFB006EAB38 /* mpi-priv.h in Headers */,
+				43AD83111990CBFB006EAB38 /* base.h in Headers */,
+				43AD83121990CBFB006EAB38 /* secpkcs7.h in Headers */,
+				43AD83131990CBFB006EAB38 /* pkix_pl_publickey.h in Headers */,
+				43AD83141990CBFB006EAB38 /* nssb64.h in Headers */,
+				43AD83151990CBFB006EAB38 /* pkix_policynode.h in Headers */,
+				43AD83161990CBFB006EAB38 /* softoknt.h in Headers */,
+				43AD83171990CBFB006EAB38 /* blapi.h in Headers */,
+				43AD83181990CBFB006EAB38 /* keyi.h in Headers */,
+				43AD83191990CBFB006EAB38 /* pkix_ocspchecker.h in Headers */,
+				43AD831A1990CBFB006EAB38 /* pk11pub.h in Headers */,
+				43AD831B1990CBFB006EAB38 /* pki3hack.h in Headers */,
+				43AD831C1990CBFB006EAB38 /* pkix_pl_cert.h in Headers */,
+				43AD831D1990CBFB006EAB38 /* shsign.h in Headers */,
+				43AD831E1990CBFB006EAB38 /* des.h in Headers */,
+				43AD831F1990CBFB006EAB38 /* lowkeyi.h in Headers */,
+				43AD83201990CBFB006EAB38 /* nssbaset.h in Headers */,
+				43AD83211990CBFB006EAB38 /* secrng.h in Headers */,
+				43AD83221990CBFB006EAB38 /* alghmac.h in Headers */,
+				43AD83231990CBFB006EAB38 /* pkixt.h in Headers */,
+				43AD83241990CBFB006EAB38 /* cryptohi.h in Headers */,
+				43AD83251990CBFB006EAB38 /* mpprime.h in Headers */,
+				43AD83261990CBFB006EAB38 /* pkix_pl_basicconstraints.h in Headers */,
+				43AD83271990CBFB006EAB38 /* utilmodt.h in Headers */,
+				43AD83281990CBFB006EAB38 /* nssdev.h in Headers */,
+				43AD83291990CBFB006EAB38 /* pkix_certsel.h in Headers */,
+				43AD832A1990CBFB006EAB38 /* pkix_pl_ldaprequest.h in Headers */,
+				43AD832B1990CBFB006EAB38 /* keyhi.h in Headers */,
+				43AD832C1990CBFB006EAB38 /* pkix_pl_x500name.h in Headers */,
+				43AD832D1990CBFB006EAB38 /* pkix_params.h in Headers */,
+				43AD832E1990CBFB006EAB38 /* ec.h in Headers */,
+				43AD832F1990CBFB006EAB38 /* secdigt.h in Headers */,
+				43AD83301990CBFB006EAB38 /* secmpi.h in Headers */,
+				43AD83311990CBFB006EAB38 /* pkistore.h in Headers */,
+				43AD83321990CBFB006EAB38 /* pkix_revocationmethod.h in Headers */,
+				43AD83331990CBFB006EAB38 /* pkix_results.h in Headers */,
+				43AD83341990CBFB006EAB38 /* pkix_tools.h in Headers */,
+				43AD83351990CBFB006EAB38 /* pkix_pl_crldp.h in Headers */,
+				43AD83361990CBFB006EAB38 /* genname.h in Headers */,
+				43AD83371990CBFB006EAB38 /* pki.h in Headers */,
+				43AD83381990CBFB006EAB38 /* cms.h in Headers */,
+				43AD83391990CBFB006EAB38 /* sha256.h in Headers */,
+				43AD833A1990CBFB006EAB38 /* pkix_pl_crl.h in Headers */,
+				43AD833B1990CBFB006EAB38 /* pkix_pl_ldapdefaultclient.h in Headers */,
+				43AD833C1990CBFB006EAB38 /* secoidt.h in Headers */,
+				43AD833D1990CBFB006EAB38 /* pkim.h in Headers */,
+				43AD833E1990CBFB006EAB38 /* pkix_policychecker.h in Headers */,
+				43AD833F1990CBFB006EAB38 /* devm.h in Headers */,
+				43AD83401990CBFB006EAB38 /* blapii.h in Headers */,
+				43AD83411990CBFB006EAB38 /* sdb.h in Headers */,
+				43AD83421990CBFB006EAB38 /* pkix_pl_generalname.h in Headers */,
+				43AD83431990CBFB006EAB38 /* pkix_namechainingchecker.h in Headers */,
+				43AD83441990CBFB006EAB38 /* dev.h in Headers */,
+				43AD83451990CBFB006EAB38 /* pkix_crlselector.h in Headers */,
+				43AD83461990CBFB006EAB38 /* ecl-exp.h in Headers */,
+				43AD83471990CBFB006EAB38 /* pkix_pl_ldapcertstore.h in Headers */,
+				43AD83481990CBFB006EAB38 /* sechash.h in Headers */,
+				43AD83491990CBFB006EAB38 /* intel-gcm.h in Headers */,
+				43AD834A1990CBFB006EAB38 /* pkitm.h in Headers */,
+				43AD834B1990CBFB006EAB38 /* rijndael.h in Headers */,
+				43AD834C1990CBFB006EAB38 /* secdert.h in Headers */,
+				43AD834D1990CBFB006EAB38 /* pkcs11.h in Headers */,
+				43AD834E1990CBFB006EAB38 /* pqg.h in Headers */,
+				43AD834F1990CBFB006EAB38 /* chacha20.h in Headers */,
+				43AD83501990CBFB006EAB38 /* pkix_sample_modules.h in Headers */,
+				43AD83511990CBFB006EAB38 /* build_config_mac.h in Headers */,
+				43AD83521990CBFB006EAB38 /* utilrename.h in Headers */,
+				43AD83531990CBFB006EAB38 /* pkix_lifecycle.h in Headers */,
+				43AD83541990CBFB006EAB38 /* nssrwlk.h in Headers */,
+				43AD83551990CBFB006EAB38 /* mp_gf2m.h in Headers */,
+				43AD83561990CBFB006EAB38 /* pkix_certselector.h in Headers */,
+				43AD83571990CBFB006EAB38 /* pkix_pl_object.h in Headers */,
+				43AD83581990CBFB006EAB38 /* blapit.h in Headers */,
+				43AD83591990CBFB006EAB38 /* ckhelper.h in Headers */,
+				43AD835A1990CBFB006EAB38 /* pkix_ekuchecker.h in Headers */,
+				43AD835B1990CBFB006EAB38 /* pkix_pl_date.h in Headers */,
+				43AD835C1990CBFB006EAB38 /* portreg.h in Headers */,
+				43AD835D1990CBFB006EAB38 /* pkix_revocationchecker.h in Headers */,
+				43AD835E1990CBFB006EAB38 /* ecp.h in Headers */,
+				43AD835F1990CBFB006EAB38 /* base64.h in Headers */,
+				43AD83601990CBFB006EAB38 /* ocspt.h in Headers */,
+				43AD83611990CBFB006EAB38 /* nssb64t.h in Headers */,
+				43AD83621990CBFB006EAB38 /* secasn1.h in Headers */,
+				43AD83631990CBFB006EAB38 /* pkix_pl_primhash.h in Headers */,
+				43AD83641990CBFB006EAB38 /* pkcs11u.h in Headers */,
+				43AD83651990CBFB006EAB38 /* cmsreclist.h in Headers */,
+				43AD83661990CBFB006EAB38 /* pkix_pl_system.h in Headers */,
+				43AD83671990CBFB006EAB38 /* pkix_logger.h in Headers */,
+				43AD83681990CBFB006EAB38 /* secdig.h in Headers */,
+				43AD83691990CBFB006EAB38 /* pkix_certchainchecker.h in Headers */,
+				43AD836A1990CBFB006EAB38 /* secmime.h in Headers */,
+				43AD836B1990CBFB006EAB38 /* ecl-curve.h in Headers */,
+				43AD836C1990CBFB006EAB38 /* pkix_pl_crlentry.h in Headers */,
+				43AD836D1990CBFB006EAB38 /* logtab.h in Headers */,
+				43AD836E1990CBFB006EAB38 /* secport.h in Headers */,
+				43AD836F1990CBFB006EAB38 /* pkix_pl_httpcertstore.h in Headers */,
+				43AD83701990CBFB006EAB38 /* ocspti.h in Headers */,
+				43AD83711990CBFB006EAB38 /* pkix_pl_colcertstore.h in Headers */,
+				43AD83721990CBFB006EAB38 /* pkix_pl_mutex.h in Headers */,
+				43AD83731990CBFB006EAB38 /* ocspi.h in Headers */,
+				43AD83741990CBFB006EAB38 /* pkix_buildresult.h in Headers */,
+				43AD83751990CBFB006EAB38 /* pkcs11i.h in Headers */,
+				43AD83761990CBFB006EAB38 /* pkix_resourcelimits.h in Headers */,
+				43AD83771990CBFB006EAB38 /* pkix_valresult.h in Headers */,
+				43AD83781990CBFB006EAB38 /* pkix_pl_mem.h in Headers */,
+				43AD83791990CBFB006EAB38 /* pkix_pl_certpolicyinfo.h in Headers */,
+				43AD837A1990CBFB006EAB38 /* pkix_pl_socket.h in Headers */,
+				43AD837B1990CBFB006EAB38 /* nssdevt.h in Headers */,
+				43AD837C1990CBFB006EAB38 /* pkit.h in Headers */,
+				43AD837D1990CBFB006EAB38 /* pkix_list.h in Headers */,
+				43AD837E1990CBFB006EAB38 /* ecl-priv.h in Headers */,
+				43AD837F1990CBFB006EAB38 /* pkix_util.h in Headers */,
+				43AD83801990CBFB006EAB38 /* pkcs11f.h in Headers */,
+				43AD83811990CBFB006EAB38 /* pkix_pl_ldapt.h in Headers */,
+				43AD83821990CBFB006EAB38 /* pk11priv.h in Headers */,
+				43AD83831990CBFB006EAB38 /* nsspki.h in Headers */,
+				43AD83841990CBFB006EAB38 /* nssrenam.h in Headers */,
+				43AD83851990CBFB006EAB38 /* secitem.h in Headers */,
+				43AD83861990CBFB006EAB38 /* mplogic.h in Headers */,
+				43AD83871990CBFB006EAB38 /* pkix_pl_bigint.h in Headers */,
+				43AD83881990CBFB006EAB38 /* hasht.h in Headers */,
+				43AD83891990CBFB006EAB38 /* pkcs11ni.h in Headers */,
+				43AD838A1990CBFB006EAB38 /* keyt.h in Headers */,
+				43AD838B1990CBFB006EAB38 /* pkix_pl_lifecycle.h in Headers */,
+				43AD838C1990CBFB006EAB38 /* secder.h in Headers */,
+				43AD838D1990CBFB006EAB38 /* sha_fast.h in Headers */,
+				43AD838E1990CBFB006EAB38 /* pkix_pl_hashtable.h in Headers */,
+				43AD838F1990CBFB006EAB38 /* cmst.h in Headers */,
+				43AD83901990CBFB006EAB38 /* secoid.h in Headers */,
+				43AD83911990CBFB006EAB38 /* xconst.h in Headers */,
+				43AD83921990CBFB006EAB38 /* certt.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -2093,6 +2838,23 @@
 			name = nss_static;
 			productName = nss_static;
 			productReference = 43AD7A3F1990809E006EAB38 /* libnss_static.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43AD81A41990CBFB006EAB38 /* nss_static_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43AD83931990CBFB006EAB38 /* Build configuration list for PBXNativeTarget "nss_static_osx" */;
+			buildPhases = (
+				43AD81A51990CBFB006EAB38 /* Sources */,
+				43AD82A31990CBFB006EAB38 /* Frameworks */,
+				43AD82A41990CBFB006EAB38 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = nss_static_osx;
+			productName = nss_static;
+			productReference = 43AD83961990CBFB006EAB38 /* libnss_static_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -2117,6 +2879,7 @@
 			projectRoot = "";
 			targets = (
 				43AD7A3E1990809E006EAB38 /* nss_static */,
+				43AD81A41990CBFB006EAB38 /* nss_static_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -2382,6 +3145,266 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43AD81A51990CBFB006EAB38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43AD81A61990CBFB006EAB38 /* pkix_logger.c in Sources */,
+				43AD81A71990CBFB006EAB38 /* pkix_ocspchecker.c in Sources */,
+				43AD81A81990CBFB006EAB38 /* drbg.c in Sources */,
+				43AD81A91990CBFB006EAB38 /* ecp_aff.c in Sources */,
+				43AD81AA1990CBFB006EAB38 /* xconst.c in Sources */,
+				43AD81AB1990CBFB006EAB38 /* symmkey.c in Sources */,
+				43AD81AC1990CBFB006EAB38 /* pkix_pl_hashtable.c in Sources */,
+				43AD81AD1990CBFB006EAB38 /* mpmontg.c in Sources */,
+				43AD81AE1990CBFB006EAB38 /* pkix_pl_colcertstore.c in Sources */,
+				43AD81AF1990CBFB006EAB38 /* rijndael.c in Sources */,
+				43AD81B01990CBFB006EAB38 /* ecp_256.c in Sources */,
+				43AD81B11990CBFB006EAB38 /* pk11nobj.c in Sources */,
+				43AD81B21990CBFB006EAB38 /* pkix_ekuchecker.c in Sources */,
+				43AD81B31990CBFB006EAB38 /* pkix_expirationchecker.c in Sources */,
+				43AD81B41990CBFB006EAB38 /* pk11mech.c in Sources */,
+				43AD81B51990CBFB006EAB38 /* p7create.c in Sources */,
+				43AD81B61990CBFB006EAB38 /* pk11obj.c in Sources */,
+				43AD81B71990CBFB006EAB38 /* ecl.c in Sources */,
+				43AD81B81990CBFB006EAB38 /* dsa.c in Sources */,
+				43AD81B91990CBFB006EAB38 /* certv3.c in Sources */,
+				43AD81BA1990CBFB006EAB38 /* pkix_pl_httpcertstore.c in Sources */,
+				43AD81BB1990CBFB006EAB38 /* secitem.c in Sources */,
+				43AD81BC1990CBFB006EAB38 /* mpi.c in Sources */,
+				43AD81BD1990CBFB006EAB38 /* hmacct.c in Sources */,
+				43AD81BE1990CBFB006EAB38 /* rawhash.c in Sources */,
+				43AD81BF1990CBFB006EAB38 /* secdig.c in Sources */,
+				43AD81C01990CBFB006EAB38 /* pkix_pl_certpolicyinfo.c in Sources */,
+				43AD81C11990CBFB006EAB38 /* arcfive.c in Sources */,
+				43AD81C21990CBFB006EAB38 /* pkix_namechainingchecker.c in Sources */,
+				43AD81C31990CBFB006EAB38 /* nssb64e.c in Sources */,
+				43AD81C41990CBFB006EAB38 /* utilpars.c in Sources */,
+				43AD81C51990CBFB006EAB38 /* pk11auth.c in Sources */,
+				43AD81C61990CBFB006EAB38 /* lowpbe.c in Sources */,
+				43AD81C71990CBFB006EAB38 /* pkix_list.c in Sources */,
+				43AD81C81990CBFB006EAB38 /* alg1485.c in Sources */,
+				43AD81C91990CBFB006EAB38 /* pkix_resourcelimits.c in Sources */,
+				43AD81CA1990CBFB006EAB38 /* devutil.c in Sources */,
+				43AD81CB1990CBFB006EAB38 /* tdcache.c in Sources */,
+				43AD81CC1990CBFB006EAB38 /* nssilock.c in Sources */,
+				43AD81CD1990CBFB006EAB38 /* dsautil.c in Sources */,
+				43AD81CE1990CBFB006EAB38 /* nssinit.c in Sources */,
+				43AD81CF1990CBFB006EAB38 /* portreg.c in Sources */,
+				43AD81D01990CBFB006EAB38 /* chacha20_vec.c in Sources */,
+				43AD81D11990CBFB006EAB38 /* derdec.c in Sources */,
+				43AD81D21990CBFB006EAB38 /* p7encode.c in Sources */,
+				43AD81D31990CBFB006EAB38 /* pkix_pl_monitorlock.c in Sources */,
+				43AD81D41990CBFB006EAB38 /* pk11err.c in Sources */,
+				43AD81D51990CBFB006EAB38 /* sftkpwd.c in Sources */,
+				43AD81D61990CBFB006EAB38 /* pkix_pl_crldp.c in Sources */,
+				43AD81D71990CBFB006EAB38 /* certificate.c in Sources */,
+				43AD81D81990CBFB006EAB38 /* secasn1d.c in Sources */,
+				43AD81D91990CBFB006EAB38 /* cts.c in Sources */,
+				43AD81DA1990CBFB006EAB38 /* oidstring.c in Sources */,
+				43AD81DB1990CBFB006EAB38 /* pkix_lifecycle.c in Sources */,
+				43AD81DC1990CBFB006EAB38 /* certdb.c in Sources */,
+				43AD81DD1990CBFB006EAB38 /* md5.c in Sources */,
+				43AD81DE1990CBFB006EAB38 /* alghmac.c in Sources */,
+				43AD81DF1990CBFB006EAB38 /* mpi_arm_mac.c in Sources */,
+				43AD81E01990CBFB006EAB38 /* lowkey.c in Sources */,
+				43AD81E11990CBFB006EAB38 /* tracker.c in Sources */,
+				43AD81E21990CBFB006EAB38 /* mp_gf2m.c in Sources */,
+				43AD81E31990CBFB006EAB38 /* ctr.c in Sources */,
+				43AD81E41990CBFB006EAB38 /* pkix_pl_nameconstraints.c in Sources */,
+				43AD81E51990CBFB006EAB38 /* pkix_pl_oid.c in Sources */,
+				43AD81E61990CBFB006EAB38 /* crlv2.c in Sources */,
+				43AD81E71990CBFB006EAB38 /* asymmkey.c in Sources */,
+				43AD81E81990CBFB006EAB38 /* derenc.c in Sources */,
+				43AD81E91990CBFB006EAB38 /* templates.c in Sources */,
+				43AD81EA1990CBFB006EAB38 /* pkix_procparams.c in Sources */,
+				43AD81EB1990CBFB006EAB38 /* pkix_revocationchecker.c in Sources */,
+				43AD81EC1990CBFB006EAB38 /* pkix_valresult.c in Sources */,
+				43AD81ED1990CBFB006EAB38 /* ec_naf.c in Sources */,
+				43AD81EE1990CBFB006EAB38 /* p7common.c in Sources */,
+				43AD81EF1990CBFB006EAB38 /* pkix_pl_certpolicymap.c in Sources */,
+				43AD81F01990CBFB006EAB38 /* devtoken.c in Sources */,
+				43AD81F11990CBFB006EAB38 /* ecl_curve.c in Sources */,
+				43AD81F21990CBFB006EAB38 /* pkix_certselector.c in Sources */,
+				43AD81F31990CBFB006EAB38 /* pkix_pl_lifecycle.c in Sources */,
+				43AD81F41990CBFB006EAB38 /* chacha20poly1305.c in Sources */,
+				43AD81F51990CBFB006EAB38 /* errstrs.c in Sources */,
+				43AD81F61990CBFB006EAB38 /* pkix_pl_object.c in Sources */,
+				43AD81F71990CBFB006EAB38 /* secvfy.c in Sources */,
+				43AD81F81990CBFB006EAB38 /* pk11slot.c in Sources */,
+				43AD81F91990CBFB006EAB38 /* pk11cert.c in Sources */,
+				43AD81FA1990CBFB006EAB38 /* pkix_trustanchor.c in Sources */,
+				43AD81FB1990CBFB006EAB38 /* pkix_pl_bytearray.c in Sources */,
+				43AD81FC1990CBFB006EAB38 /* nssutf8.c in Sources */,
+				43AD81FD1990CBFB006EAB38 /* tlsprf.c in Sources */,
+				43AD81FE1990CBFB006EAB38 /* nssb64d.c in Sources */,
+				43AD81FF1990CBFB006EAB38 /* secasn1e.c in Sources */,
+				43AD82001990CBFB006EAB38 /* pk11pars.c in Sources */,
+				43AD82011990CBFB006EAB38 /* sectime.c in Sources */,
+				43AD82021990CBFB006EAB38 /* ecl_mult.c in Sources */,
+				43AD82031990CBFB006EAB38 /* certvfypkix.c in Sources */,
+				43AD82041990CBFB006EAB38 /* xcrldist.c in Sources */,
+				43AD82051990CBFB006EAB38 /* pk11merge.c in Sources */,
+				43AD82061990CBFB006EAB38 /* pkix_pl_publickey.c in Sources */,
+				43AD82071990CBFB006EAB38 /* md2.c in Sources */,
+				43AD82081990CBFB006EAB38 /* pkix_errpaths.c in Sources */,
+				43AD82091990CBFB006EAB38 /* ecdecode.c in Sources */,
+				43AD820A1990CBFB006EAB38 /* secoid.c in Sources */,
+				43AD820B1990CBFB006EAB38 /* certhtml.c in Sources */,
+				43AD820C1990CBFB006EAB38 /* certvfy.c in Sources */,
+				43AD820D1990CBFB006EAB38 /* pkix_comcertselparams.c in Sources */,
+				43AD820E1990CBFB006EAB38 /* aeskeywrap.c in Sources */,
+				43AD820F1990CBFB006EAB38 /* pkix_policychecker.c in Sources */,
+				43AD82101990CBFB006EAB38 /* pkix_store.c in Sources */,
+				43AD82111990CBFB006EAB38 /* ocsp.c in Sources */,
+				43AD82121990CBFB006EAB38 /* ckhelper.c in Sources */,
+				43AD82131990CBFB006EAB38 /* sha_fast.c in Sources */,
+				43AD82141990CBFB006EAB38 /* genname.c in Sources */,
+				43AD82151990CBFB006EAB38 /* pkix_pl_aiamgr.c in Sources */,
+				43AD82161990CBFB006EAB38 /* arcfour.c in Sources */,
+				43AD82171990CBFB006EAB38 /* pkix_pl_socket.c in Sources */,
+				43AD82181990CBFB006EAB38 /* cryptocontext.c in Sources */,
+				43AD82191990CBFB006EAB38 /* fipstest.c in Sources */,
+				43AD821A1990CBFB006EAB38 /* pk11akey.c in Sources */,
+				43AD821B1990CBFB006EAB38 /* certreq.c in Sources */,
+				43AD821C1990CBFB006EAB38 /* quickder.c in Sources */,
+				43AD821D1990CBFB006EAB38 /* ecl_gf.c in Sources */,
+				43AD821E1990CBFB006EAB38 /* pk11kea.c in Sources */,
+				43AD821F1990CBFB006EAB38 /* pkix_pl_nsscontext.c in Sources */,
+				43AD82201990CBFB006EAB38 /* secsign.c in Sources */,
+				43AD82211990CBFB006EAB38 /* chacha20.c in Sources */,
+				43AD82221990CBFB006EAB38 /* pkcs11.c in Sources */,
+				43AD82231990CBFB006EAB38 /* pk11skey.c in Sources */,
+				43AD82241990CBFB006EAB38 /* polcyxtn.c in Sources */,
+				43AD82251990CBFB006EAB38 /* sftkhmac.c in Sources */,
+				43AD82261990CBFB006EAB38 /* des.c in Sources */,
+				43AD82271990CBFB006EAB38 /* sysrand.c in Sources */,
+				43AD82281990CBFB006EAB38 /* rsapkcs.c in Sources */,
+				43AD82291990CBFB006EAB38 /* pkix_pl_basicconstraints.c in Sources */,
+				43AD822A1990CBFB006EAB38 /* pkix_policynode.c in Sources */,
+				43AD822B1990CBFB006EAB38 /* poly1305.c in Sources */,
+				43AD822C1990CBFB006EAB38 /* seed.c in Sources */,
+				43AD822D1990CBFB006EAB38 /* pkix_pl_ocspresponse.c in Sources */,
+				43AD822E1990CBFB006EAB38 /* lgglue.c in Sources */,
+				43AD822F1990CBFB006EAB38 /* rsa.c in Sources */,
+				43AD82301990CBFB006EAB38 /* secasn1u.c in Sources */,
+				43AD82311990CBFB006EAB38 /* sftkpars.c in Sources */,
+				43AD82321990CBFB006EAB38 /* pkix_basicconstraintschecker.c in Sources */,
+				43AD82331990CBFB006EAB38 /* pk11pk12.c in Sources */,
+				43AD82341990CBFB006EAB38 /* ec.c in Sources */,
+				43AD82351990CBFB006EAB38 /* pkibase.c in Sources */,
+				43AD82361990CBFB006EAB38 /* pkix_pl_generalname.c in Sources */,
+				43AD82371990CBFB006EAB38 /* pkix_pl_rwlock.c in Sources */,
+				43AD82381990CBFB006EAB38 /* pkix_tools.c in Sources */,
+				43AD82391990CBFB006EAB38 /* pkix_nameconstraintschecker.c in Sources */,
+				43AD823A1990CBFB006EAB38 /* devslot.c in Sources */,
+				43AD823B1990CBFB006EAB38 /* libc.c in Sources */,
+				43AD823C1990CBFB006EAB38 /* pki3hack.c in Sources */,
+				43AD823D1990CBFB006EAB38 /* pkix_certchainchecker.c in Sources */,
+				43AD823E1990CBFB006EAB38 /* win_rand.c in Sources */,
+				43AD823F1990CBFB006EAB38 /* item.c in Sources */,
+				43AD82401990CBFB006EAB38 /* sftkdb.c in Sources */,
+				43AD82411990CBFB006EAB38 /* pk11sdr.c in Sources */,
+				43AD82421990CBFB006EAB38 /* seckey.c in Sources */,
+				43AD82431990CBFB006EAB38 /* pkix_comcrlselparams.c in Sources */,
+				43AD82441990CBFB006EAB38 /* gcm.c in Sources */,
+				43AD82451990CBFB006EAB38 /* pkix_crlselector.c in Sources */,
+				43AD82461990CBFB006EAB38 /* unix_rand.c in Sources */,
+				43AD82471990CBFB006EAB38 /* pkix_pl_mem.c in Sources */,
+				43AD82481990CBFB006EAB38 /* error.c in Sources */,
+				43AD82491990CBFB006EAB38 /* ocspsig.c in Sources */,
+				43AD824A1990CBFB006EAB38 /* pkix_pl_httpdefaultclient.c in Sources */,
+				43AD824B1990CBFB006EAB38 /* pkix_verifynode.c in Sources */,
+				43AD824C1990CBFB006EAB38 /* pkix_pl_string.c in Sources */,
+				43AD824D1990CBFB006EAB38 /* pkix_pl_x500name.c in Sources */,
+				43AD824E1990CBFB006EAB38 /* pkix_pl_ocspcertid.c in Sources */,
+				43AD824F1990CBFB006EAB38 /* secname.c in Sources */,
+				43AD82501990CBFB006EAB38 /* shvfy.c in Sources */,
+				43AD82511990CBFB006EAB38 /* pkix_revocationmethod.c in Sources */,
+				43AD82521990CBFB006EAB38 /* list.c in Sources */,
+				43AD82531990CBFB006EAB38 /* certhigh.c in Sources */,
+				43AD82541990CBFB006EAB38 /* pkix_pl_certpolicyqualifier.c in Sources */,
+				43AD82551990CBFB006EAB38 /* pk11cxt.c in Sources */,
+				43AD82561990CBFB006EAB38 /* jpake.c in Sources */,
+				43AD82571990CBFB006EAB38 /* sdb.c in Sources */,
+				43AD82581990CBFB006EAB38 /* p7local.c in Sources */,
+				43AD82591990CBFB006EAB38 /* utf8.c in Sources */,
+				43AD825A1990CBFB006EAB38 /* ecp_256_32.c in Sources */,
+				43AD825B1990CBFB006EAB38 /* errorval.c in Sources */,
+				43AD825C1990CBFB006EAB38 /* pkix_pl_infoaccess.c in Sources */,
+				43AD825D1990CBFB006EAB38 /* pk11list.c in Sources */,
+				43AD825E1990CBFB006EAB38 /* pkistore.c in Sources */,
+				43AD825F1990CBFB006EAB38 /* fipsaudt.c in Sources */,
+				43AD82601990CBFB006EAB38 /* mplogic.c in Sources */,
+				43AD82611990CBFB006EAB38 /* pqg.c in Sources */,
+				43AD82621990CBFB006EAB38 /* certvfypkixprint.c in Sources */,
+				43AD82631990CBFB006EAB38 /* certxutl.c in Sources */,
+				43AD82641990CBFB006EAB38 /* pkix_pl_primhash.c in Sources */,
+				43AD82651990CBFB006EAB38 /* stanpcertdb.c in Sources */,
+				43AD82661990CBFB006EAB38 /* pk11pbe.c in Sources */,
+				43AD82671990CBFB006EAB38 /* ecp_384.c in Sources */,
+				43AD82681990CBFB006EAB38 /* pkcs11u.c in Sources */,
+				43AD82691990CBFB006EAB38 /* sha512.c in Sources */,
+				43AD826A1990CBFB006EAB38 /* dh.c in Sources */,
+				43AD826B1990CBFB006EAB38 /* pkix_error.c in Sources */,
+				43AD826C1990CBFB006EAB38 /* pkix_buildresult.c in Sources */,
+				43AD826D1990CBFB006EAB38 /* pkix_pl_cert.c in Sources */,
+				43AD826E1990CBFB006EAB38 /* certdecode.c in Sources */,
+				43AD826F1990CBFB006EAB38 /* tlsprfalg.c in Sources */,
+				43AD82701990CBFB006EAB38 /* pkix_signaturechecker.c in Sources */,
+				43AD82711990CBFB006EAB38 /* hashops.c in Sources */,
+				43AD82721990CBFB006EAB38 /* dertime.c in Sources */,
+				43AD82731990CBFB006EAB38 /* ecp_521.c in Sources */,
+				43AD82741990CBFB006EAB38 /* pkix_pl_ocsprequest.c in Sources */,
+				43AD82751990CBFB006EAB38 /* ecp_jac.c in Sources */,
+				43AD82761990CBFB006EAB38 /* pkix_validate.c in Sources */,
+				43AD82771990CBFB006EAB38 /* mpprime.c in Sources */,
+				43AD82781990CBFB006EAB38 /* secmime.c in Sources */,
+				43AD82791990CBFB006EAB38 /* pkcs11c.c in Sources */,
+				43AD827A1990CBFB006EAB38 /* pkix_valparams.c in Sources */,
+				43AD827B1990CBFB006EAB38 /* pkix_crlchecker.c in Sources */,
+				43AD827C1990CBFB006EAB38 /* secalgid.c in Sources */,
+				43AD827D1990CBFB006EAB38 /* utilmod.c in Sources */,
+				43AD827E1990CBFB006EAB38 /* secport.c in Sources */,
+				43AD827F1990CBFB006EAB38 /* utilwrap.c in Sources */,
+				43AD82801990CBFB006EAB38 /* pkix_pl_common.c in Sources */,
+				43AD82811990CBFB006EAB38 /* ecp_mont.c in Sources */,
+				43AD82821990CBFB006EAB38 /* crl.c in Sources */,
+				43AD82831990CBFB006EAB38 /* jpakesftk.c in Sources */,
+				43AD82841990CBFB006EAB38 /* pkix_pl_mutex.c in Sources */,
+				43AD82851990CBFB006EAB38 /* pk11pqg.c in Sources */,
+				43AD82861990CBFB006EAB38 /* pkix_pl_date.c in Sources */,
+				43AD82871990CBFB006EAB38 /* pkix_pl_error.c in Sources */,
+				43AD82881990CBFB006EAB38 /* alg2268.c in Sources */,
+				43AD82891990CBFB006EAB38 /* xauthkid.c in Sources */,
+				43AD828A1990CBFB006EAB38 /* softkver.c in Sources */,
+				43AD828B1990CBFB006EAB38 /* pk11load.c in Sources */,
+				43AD828C1990CBFB006EAB38 /* desblapi.c in Sources */,
+				43AD828D1990CBFB006EAB38 /* mpcpucache.c in Sources */,
+				43AD828E1990CBFB006EAB38 /* sechash.c in Sources */,
+				43AD828F1990CBFB006EAB38 /* dev3hack.c in Sources */,
+				43AD82901990CBFB006EAB38 /* trustdomain.c in Sources */,
+				43AD82911990CBFB006EAB38 /* pkix_pl_bigint.c in Sources */,
+				43AD82921990CBFB006EAB38 /* certread.c in Sources */,
+				43AD82931990CBFB006EAB38 /* pkix_pl_crlentry.c in Sources */,
+				43AD82941990CBFB006EAB38 /* pkix_pl_pk11certstore.c in Sources */,
+				43AD82951990CBFB006EAB38 /* camellia.c in Sources */,
+				43AD82961990CBFB006EAB38 /* fipstokn.c in Sources */,
+				43AD82971990CBFB006EAB38 /* ecp_jm.c in Sources */,
+				43AD82981990CBFB006EAB38 /* dersubr.c in Sources */,
+				43AD82991990CBFB006EAB38 /* xbsconst.c in Sources */,
+				43AD829A1990CBFB006EAB38 /* pkix_pl_crl.c in Sources */,
+				43AD829B1990CBFB006EAB38 /* pkix_targetcertchecker.c in Sources */,
+				43AD829C1990CBFB006EAB38 /* arena.c in Sources */,
+				43AD829D1990CBFB006EAB38 /* nssrwlk.c in Sources */,
+				43AD829E1990CBFB006EAB38 /* pkix_build.c in Sources */,
+				43AD829F1990CBFB006EAB38 /* pk11util.c in Sources */,
+				43AD82A01990CBFB006EAB38 /* p7decode.c in Sources */,
+				43AD82A11990CBFB006EAB38 /* padbuf.c in Sources */,
+				43AD82A21990CBFB006EAB38 /* hash.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -2571,6 +3594,124 @@
 			};
 			name = Release;
 		};
+		43AD83941990CBFB006EAB38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					MP_API_COMPATIBLE,
+					NSS_DISABLE_DBM,
+					NSS_STATIC,
+					NSS_USE_STATIC_LIBS,
+					RIJNDAEL_INCLUDE_TABLES,
+					"SHLIB_VERSION=\\\"3\\\"",
+					"SOFTOKEN_SHLIB_VERSION=\\\"3\\\"",
+					USE_UTIL_DIRECTLY,
+					NSS_PKIX_NO_LDAP,
+					XP_UNIX,
+					DARWIN,
+					HAVE_STRERROR,
+					"SHLIB_SUFFIX=\\\"dylib\\\"",
+					"SHLIB_PREFIX=\\\"lib\\\"",
+					"SOFTOKEN_LIB_NAME=\\\"libsoftokn3.dylib\\\"",
+					HAVE_BSD_FLOCK,
+					NO_NSPR_10_SUPPORT,
+					NSPR_STATIC,
+					USE_SYSTEM_SQLITE,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/pr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/ds",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/libc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/base",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certdb",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certhigh",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/cryptohi",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/dev",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl/ecl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/nss",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pk11wrap",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pkcs7",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pki",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/smime",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/softoken",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/util",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw/builtins",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = nss_static_osx;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43AD83951990CBFB006EAB38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					MP_API_COMPATIBLE,
+					NSS_DISABLE_DBM,
+					NSS_STATIC,
+					NSS_USE_STATIC_LIBS,
+					RIJNDAEL_INCLUDE_TABLES,
+					"SHLIB_VERSION=\\\"3\\\"",
+					"SOFTOKEN_SHLIB_VERSION=\\\"3\\\"",
+					USE_UTIL_DIRECTLY,
+					NSS_PKIX_NO_LDAP,
+					XP_UNIX,
+					DARWIN,
+					HAVE_STRERROR,
+					"SHLIB_SUFFIX=\\\"dylib\\\"",
+					"SHLIB_PREFIX=\\\"lib\\\"",
+					"SOFTOKEN_LIB_NAME=\\\"libsoftokn3.dylib\\\"",
+					HAVE_BSD_FLOCK,
+					NO_NSPR_10_SUPPORT,
+					NSPR_STATIC,
+					USE_SYSTEM_SQLITE,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/pr/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/ds",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nspr/lib/libc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/base",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certdb",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/certhigh",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/cryptohi",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/dev",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/freebl/ecl",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/nss",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pk11wrap",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pkcs7",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/pki",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/smime",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/softoken",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/util",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw/builtins",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = nss_static_osx;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2590,6 +3731,16 @@
 				43AD7A451990809E006EAB38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43AD83931990CBFB006EAB38 /* Build configuration list for PBXNativeTarget "nss_static_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43AD83941990CBFB006EAB38 /* Debug */,
+				43AD83951990CBFB006EAB38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
