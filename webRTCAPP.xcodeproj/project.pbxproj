@@ -30,7 +30,6 @@
 		4318D0EC197E3E2C00D5CADB /* libcrnss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0EB197E3E2C00D5CADB /* libcrnss.a */; };
 		4318D0EE197E3F4800D5CADB /* libcrnssckbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0ED197E3F4800D5CADB /* libcrnssckbi.a */; };
 		4318D0F0197E3FCF00D5CADB /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0EF197E3FCF00D5CADB /* libcrnspr.a */; };
-		4318D190197E4EA000D5CADB /* icu.c in Sources */ = {isa = PBXBuildFile; fileRef = 4318D18E197E4EA000D5CADB /* icu.c */; };
 		4318D566197E629600D5CADB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D565197E629600D5CADB /* libsqlite3.dylib */; };
 		4318D569197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D567197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a */; };
 		4318D56A197E65EA00D5CADB /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D568197E65EA00D5CADB /* libvpx.a */; };
@@ -107,20 +106,6 @@
 		43EC1039197D25A700E9267B /* video_capturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0FE7197D25A700E9267B /* video_capturer.cc */; };
 		43EC103A197D25A700E9267B /* video_renderer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0FE9197D25A700E9267B /* video_renderer.cc */; };
 		43EC103B197D25A700E9267B /* webrtc_test_common.gyp in Resources */ = {isa = PBXBuildFile; fileRef = 43EC0FEB197D25A700E9267B /* webrtc_test_common.gyp */; };
-		43EC1069197D297700E9267B /* expat.gyp in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1046197D297700E9267B /* expat.gyp */; };
-		43EC106A197D297700E9267B /* expat_nacl.gyp in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1047197D297700E9267B /* expat_nacl.gyp */; };
-		43EC106B197D297700E9267B /* Changes in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1049197D297700E9267B /* Changes */; };
-		43EC106C197D297700E9267B /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 43EC104A197D297700E9267B /* COPYING */; };
-		43EC106D197D297700E9267B /* libexpat.def in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1055197D297700E9267B /* libexpat.def */; };
-		43EC106E197D297700E9267B /* libexpatw.def in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1056197D297700E9267B /* libexpatw.def */; };
-		43EC106F197D297700E9267B /* winconfig.h.original in Resources */ = {isa = PBXBuildFile; fileRef = 43EC105B197D297700E9267B /* winconfig.h.original */; };
-		43EC1070197D297700E9267B /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 43EC105C197D297700E9267B /* xmlparse.c */; };
-		43EC1071197D297700E9267B /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 43EC105D197D297700E9267B /* xmlrole.c */; };
-		43EC1072197D297700E9267B /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 43EC105F197D297700E9267B /* xmltok.c */; };
-		43EC1073197D297700E9267B /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 43EC1061197D297700E9267B /* xmltok_impl.c */; };
-		43EC1074197D297700E9267B /* xmltok_impl.c.original in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1062197D297700E9267B /* xmltok_impl.c.original */; };
-		43EC1075197D297700E9267B /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 43EC1064197D297700E9267B /* xmltok_ns.c */; };
-		43EC1076197D297700E9267B /* MANIFEST in Resources */ = {isa = PBXBuildFile; fileRef = 43EC1065197D297700E9267B /* MANIFEST */; };
 		43ECEE93197CA80B00E9267B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ECEE92197CA80B00E9267B /* Foundation.framework */; };
 		43ECEE95197CA80B00E9267B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ECEE94197CA80B00E9267B /* CoreGraphics.framework */; };
 		43ECEE97197CA80B00E9267B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ECEE96197CA80B00E9267B /* UIKit.framework */; };
@@ -472,6 +457,20 @@
 			remoteGlobalIDString = 43998B651986332A003C5793;
 			remoteInfo = webrtc_utility;
 		};
+		43AD795E19907938006EAB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD795219907938006EAB38 /* expat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD794B19907938006EAB38;
+			remoteInfo = expat;
+		};
+		43AD79C719907B97006EAB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD79BC19907B96006EAB38;
+			remoteInfo = sqlite_regexp;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -539,8 +538,6 @@
 		4318D0EB197E3E2C00D5CADB /* libcrnss.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrnss.a; path = webRTCAPP/libs/libcrnss.a; sourceTree = "<group>"; };
 		4318D0ED197E3F4800D5CADB /* libcrnssckbi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrnssckbi.a; path = webRTCAPP/libs/libcrnssckbi.a; sourceTree = "<group>"; };
 		4318D0EF197E3FCF00D5CADB /* libcrnspr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrnspr.a; path = webRTCAPP/libs/libcrnspr.a; sourceTree = "<group>"; };
-		4318D18E197E4EA000D5CADB /* icu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = icu.c; sourceTree = "<group>"; };
-		4318D18F197E4EA000D5CADB /* sqliteicu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqliteicu.h; sourceTree = "<group>"; };
 		4318D565197E629600D5CADB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4318D567197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx_asm_offsets_vpx_scale.a; path = webRTCAPP/libs/libvpx_asm_offsets_vpx_scale.a; sourceTree = "<group>"; };
 		4318D568197E65EA00D5CADB /* libvpx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvpx.a; path = webRTCAPP/libs/libvpx.a; sourceTree = "<group>"; };
@@ -562,6 +559,8 @@
 		43998B1B198631D9003C5793 /* bitrate_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = bitrate_controller.xcodeproj; path = bitrate_controller/bitrate_controller.xcodeproj; sourceTree = "<group>"; };
 		43998B401986327B003C5793 /* media_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = media_file.xcodeproj; path = media_file/media_file.xcodeproj; sourceTree = "<group>"; };
 		43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility.xcodeproj; path = webrtc_utility/webrtc_utility.xcodeproj; sourceTree = "<group>"; };
+		43AD795219907938006EAB38 /* expat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = expat.xcodeproj; path = expat/expat.xcodeproj; sourceTree = "<group>"; };
+		43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite_regexp.xcodeproj; path = sqlite_regexp/sqlite_regexp.xcodeproj; sourceTree = "<group>"; };
 		43EC0AAB197CEF1400E9267B /* APPRTCAppClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPRTCAppClient.h; sourceTree = "<group>"; };
 		43EC0AAC197CEF1400E9267B /* APPRTCAppClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPRTCAppClient.m; sourceTree = "<group>"; };
 		43EC0AAD197CEF1400E9267B /* APPRTCConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPRTCConnectionManager.h; sourceTree = "<group>"; };
@@ -683,36 +682,6 @@
 		43EC1041197D267400E9267B /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		43EC1042197D279100E9267B /* call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = call.h; sourceTree = "<group>"; };
 		43EC1043197D27A900E9267B /* transport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transport.h; sourceTree = "<group>"; };
-		43EC1046197D297700E9267B /* expat.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = expat.gyp; sourceTree = "<group>"; };
-		43EC1047197D297700E9267B /* expat_nacl.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = expat_nacl.gyp; sourceTree = "<group>"; };
-		43EC1049197D297700E9267B /* Changes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Changes; sourceTree = "<group>"; };
-		43EC104A197D297700E9267B /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		43EC104C197D297700E9267B /* amigaconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigaconfig.h; sourceTree = "<group>"; };
-		43EC104D197D297700E9267B /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ascii.h; sourceTree = "<group>"; };
-		43EC104E197D297700E9267B /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asciitab.h; sourceTree = "<group>"; };
-		43EC104F197D297700E9267B /* expat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expat.h; sourceTree = "<group>"; };
-		43EC1050197D297700E9267B /* expat_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expat_config.h; sourceTree = "<group>"; };
-		43EC1051197D297700E9267B /* expat_external.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expat_external.h; sourceTree = "<group>"; };
-		43EC1052197D297700E9267B /* iasciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iasciitab.h; sourceTree = "<group>"; };
-		43EC1053197D297700E9267B /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
-		43EC1054197D297700E9267B /* latin1tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = latin1tab.h; sourceTree = "<group>"; };
-		43EC1055197D297700E9267B /* libexpat.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libexpat.def; sourceTree = "<group>"; };
-		43EC1056197D297700E9267B /* libexpatw.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libexpatw.def; sourceTree = "<group>"; };
-		43EC1057197D297700E9267B /* macconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macconfig.h; sourceTree = "<group>"; };
-		43EC1058197D297700E9267B /* nametab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nametab.h; sourceTree = "<group>"; };
-		43EC1059197D297700E9267B /* utf8tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8tab.h; sourceTree = "<group>"; };
-		43EC105A197D297700E9267B /* winconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winconfig.h; sourceTree = "<group>"; };
-		43EC105B197D297700E9267B /* winconfig.h.original */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = winconfig.h.original; sourceTree = "<group>"; };
-		43EC105C197D297700E9267B /* xmlparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmlparse.c; sourceTree = "<group>"; };
-		43EC105D197D297700E9267B /* xmlrole.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmlrole.c; sourceTree = "<group>"; };
-		43EC105E197D297700E9267B /* xmlrole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlrole.h; sourceTree = "<group>"; };
-		43EC105F197D297700E9267B /* xmltok.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmltok.c; sourceTree = "<group>"; };
-		43EC1060197D297700E9267B /* xmltok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltok.h; sourceTree = "<group>"; };
-		43EC1061197D297700E9267B /* xmltok_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmltok_impl.c; sourceTree = "<group>"; };
-		43EC1062197D297700E9267B /* xmltok_impl.c.original */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xmltok_impl.c.original; sourceTree = "<group>"; };
-		43EC1063197D297700E9267B /* xmltok_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltok_impl.h; sourceTree = "<group>"; };
-		43EC1064197D297700E9267B /* xmltok_ns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmltok_ns.c; sourceTree = "<group>"; };
-		43EC1065197D297700E9267B /* MANIFEST */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MANIFEST; sourceTree = "<group>"; };
 		43ECEE8F197CA80B00E9267B /* webRTCAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webRTCAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43ECEE92197CA80B00E9267B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		43ECEE94197CA80B00E9267B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1265,39 +1234,6 @@
 			path = util;
 			sourceTree = "<group>";
 		};
-		4318D18A197E4EA000D5CADB /* sqlite */ = {
-			isa = PBXGroup;
-			children = (
-				4318D18B197E4EA000D5CADB /* src */,
-			);
-			path = sqlite;
-			sourceTree = "<group>";
-		};
-		4318D18B197E4EA000D5CADB /* src */ = {
-			isa = PBXGroup;
-			children = (
-				4318D18C197E4EA000D5CADB /* ext */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		4318D18C197E4EA000D5CADB /* ext */ = {
-			isa = PBXGroup;
-			children = (
-				4318D18D197E4EA000D5CADB /* icu */,
-			);
-			path = ext;
-			sourceTree = "<group>";
-		};
-		4318D18D197E4EA000D5CADB /* icu */ = {
-			isa = PBXGroup;
-			children = (
-				4318D18E197E4EA000D5CADB /* icu.c */,
-				4318D18F197E4EA000D5CADB /* sqliteicu.h */,
-			);
-			path = icu;
-			sourceTree = "<group>";
-		};
 		4328870D1980FFFD0000F16A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1413,6 +1349,22 @@
 			isa = PBXGroup;
 			children = (
 				43998B711986332B003C5793 /* libwebrtc_utility.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43AD795319907938006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD795F19907938006EAB38 /* libexpat.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43AD79C419907B96006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD79C819907B97006EAB38 /* libsqlite_regexp.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1643,62 +1595,11 @@
 			path = mock;
 			sourceTree = "<group>";
 		};
-		43EC1044197D297700E9267B /* expat */ = {
-			isa = PBXGroup;
-			children = (
-				43EC1046197D297700E9267B /* expat.gyp */,
-				43EC1047197D297700E9267B /* expat_nacl.gyp */,
-				43EC1048197D297700E9267B /* files */,
-			);
-			path = expat;
-			sourceTree = "<group>";
-		};
-		43EC1048197D297700E9267B /* files */ = {
-			isa = PBXGroup;
-			children = (
-				43EC1049197D297700E9267B /* Changes */,
-				43EC104A197D297700E9267B /* COPYING */,
-				43EC104B197D297700E9267B /* lib */,
-				43EC1065197D297700E9267B /* MANIFEST */,
-			);
-			path = files;
-			sourceTree = "<group>";
-		};
-		43EC104B197D297700E9267B /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				43EC104C197D297700E9267B /* amigaconfig.h */,
-				43EC104D197D297700E9267B /* ascii.h */,
-				43EC104E197D297700E9267B /* asciitab.h */,
-				43EC104F197D297700E9267B /* expat.h */,
-				43EC1050197D297700E9267B /* expat_config.h */,
-				43EC1051197D297700E9267B /* expat_external.h */,
-				43EC1052197D297700E9267B /* iasciitab.h */,
-				43EC1053197D297700E9267B /* internal.h */,
-				43EC1054197D297700E9267B /* latin1tab.h */,
-				43EC1055197D297700E9267B /* libexpat.def */,
-				43EC1056197D297700E9267B /* libexpatw.def */,
-				43EC1057197D297700E9267B /* macconfig.h */,
-				43EC1058197D297700E9267B /* nametab.h */,
-				43EC1059197D297700E9267B /* utf8tab.h */,
-				43EC105A197D297700E9267B /* winconfig.h */,
-				43EC105B197D297700E9267B /* winconfig.h.original */,
-				43EC105C197D297700E9267B /* xmlparse.c */,
-				43EC105D197D297700E9267B /* xmlrole.c */,
-				43EC105E197D297700E9267B /* xmlrole.h */,
-				43EC105F197D297700E9267B /* xmltok.c */,
-				43EC1060197D297700E9267B /* xmltok.h */,
-				43EC1061197D297700E9267B /* xmltok_impl.c */,
-				43EC1062197D297700E9267B /* xmltok_impl.c.original */,
-				43EC1063197D297700E9267B /* xmltok_impl.h */,
-				43EC1064197D297700E9267B /* xmltok_ns.c */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
 		43ECEE86197CA80B00E9267B = {
 			isa = PBXGroup;
 			children = (
+				43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */,
+				43AD795219907938006EAB38 /* expat.xcodeproj */,
 				4398355C198FAE110090EABA /* jsoncpp.xcodeproj */,
 				43983537198FACD30090EABA /* paced_sender.xcodeproj */,
 				439834D8198FAAC60090EABA /* rbe_components.xcodeproj */,
@@ -2328,9 +2229,7 @@
 		43ECFB03197CB59900E9267B /* third_party */ = {
 			isa = PBXGroup;
 			children = (
-				4318D18A197E4EA000D5CADB /* sqlite */,
 				4318D0C6197E3A7900D5CADB /* libyuv */,
-				43EC1044197D297700E9267B /* expat */,
 			);
 			path = third_party;
 			sourceTree = "<group>";
@@ -2407,6 +2306,10 @@
 				{
 					ProductGroup = 43983115198F6E650090EABA /* Products */;
 					ProjectRef = 43983114198F6E650090EABA /* crssl.xcodeproj */;
+				},
+				{
+					ProductGroup = 43AD795319907938006EAB38 /* Products */;
+					ProjectRef = 43AD795219907938006EAB38 /* expat.xcodeproj */;
 				},
 				{
 					ProductGroup = 430D8E5D1986217B009E763A /* Products */;
@@ -2491,6 +2394,10 @@
 				{
 					ProductGroup = 43998A6F19862D95003C5793 /* Products */;
 					ProjectRef = 43998A6E19862D95003C5793 /* rtp_rtcp.xcodeproj */;
+				},
+				{
+					ProductGroup = 43AD79C419907B96006EAB38 /* Products */;
+					ProjectRef = 43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */;
 				},
 				{
 					ProductGroup = 439831A9198F760B0090EABA /* Products */;
@@ -2784,6 +2691,20 @@
 			remoteRef = 43998B701986332B003C5793 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		43AD795F19907938006EAB38 /* libexpat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libexpat.a;
+			remoteRef = 43AD795E19907938006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43AD79C819907B97006EAB38 /* libsqlite_regexp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsqlite_regexp.a;
+			remoteRef = 43AD79C719907B97006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -2791,10 +2712,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43EC1069197D297700E9267B /* expat.gyp in Resources */,
 				43EC0F01197D23CC00E9267B /* video_render_tests.isolate in Resources */,
 				43ECFAE2197CB47F00E9267B /* video_coding_test.gypi in Resources */,
-				43EC106B197D297700E9267B /* Changes in Resources */,
 				4318D576197E725500D5CADB /* APPRTCViewController.xib in Resources */,
 				43ECFB02197CB47F00E9267B /* video_coding_utility.gyp in Resources */,
 				43EC0AC7197CEF1400E9267B /* channel.html in Resources */,
@@ -2806,18 +2725,11 @@
 				43ECEEAB197CA80B00E9267B /* Images.xcassets in Resources */,
 				43ECF9C0197CB37000E9267B /* video_capture.gypi in Resources */,
 				43ECFABD197CB47F00E9267B /* vp8.gyp in Resources */,
-				43EC106F197D297700E9267B /* winconfig.h.original in Resources */,
 				43ECEE9D197CA80B00E9267B /* InfoPlist.strings in Resources */,
-				43EC106D197D297700E9267B /* libexpat.def in Resources */,
 				43EC101B197D25A700E9267B /* metrics.gyp in Resources */,
 				43EC0EFE197D23CC00E9267B /* video_render.gypi in Resources */,
-				43EC106E197D297700E9267B /* libexpatw.def in Resources */,
-				43EC106C197D297700E9267B /* COPYING in Resources */,
 				43ECFA9A197CB47F00E9267B /* i420.gypi in Resources */,
 				43ECF697197CB11400E9267B /* video_engine_core.gypi in Resources */,
-				43EC1076197D297700E9267B /* MANIFEST in Resources */,
-				43EC106A197D297700E9267B /* expat_nacl.gyp in Resources */,
-				43EC1074197D297700E9267B /* xmltok_impl.c.original in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2857,7 +2769,6 @@
 				43ECFACC197CB47F00E9267B /* jitter_buffer.cc in Sources */,
 				43ECF699197CB11400E9267B /* vie_base_impl.cc in Sources */,
 				43ECF6A2197CB11400E9267B /* vie_encoder.cc in Sources */,
-				43EC1070197D297700E9267B /* xmlparse.c in Sources */,
 				43EC1035197D25A700E9267B /* perf_test.cc in Sources */,
 				43ECF69E197CB11400E9267B /* vie_channel_group.cc in Sources */,
 				43ECF69B197CB11400E9267B /* vie_capturer.cc in Sources */,
@@ -2865,14 +2776,12 @@
 				43ECF6AB197CB11400E9267B /* vie_receiver.cc in Sources */,
 				43ECF6AF197CB11400E9267B /* vie_render_impl.cc in Sources */,
 				43ECF9C2197CB37000E9267B /* video_capture_impl.cc in Sources */,
-				4318D190197E4EA000D5CADB /* icu.c in Sources */,
 				43ECFAE0197CB47F00E9267B /* video_coding_impl.cc in Sources */,
 				43EC1031197D25A700E9267B /* video_metrics.cc in Sources */,
 				43ECF9AE197CB37000E9267B /* device_info_impl.cc in Sources */,
 				43ECFAD6197CB47F00E9267B /* receiver.cc in Sources */,
 				43ECF8B2197CB1F500E9267B /* i420_video_frame.cc in Sources */,
 				43ECF6A9197CB11400E9267B /* vie_manager_base.cc in Sources */,
-				43EC1072197D297700E9267B /* xmltok.c in Sources */,
 				43EC0EED197D23CC00E9267B /* video_render_ios_gles20.mm in Sources */,
 				43EC0AC6197CEF1400E9267B /* APPRTCConnectionManager.m in Sources */,
 				43EC0FFE197D25A700E9267B /* udp_transport_impl.cc in Sources */,
@@ -2911,9 +2820,7 @@
 				43ECFAD0197CB47F00E9267B /* media_optimization.cc in Sources */,
 				43EC0EE9197D23CC00E9267B /* video_render_external_impl.cc in Sources */,
 				43ECF654197CB11400E9267B /* stream_synchronization.cc in Sources */,
-				43EC1071197D297700E9267B /* xmlrole.c in Sources */,
 				43ECFABE197CB47F00E9267B /* vp8_factory.cc in Sources */,
-				43EC1075197D297700E9267B /* xmltok_ns.c in Sources */,
 				43ECF6A3197CB11400E9267B /* vie_external_codec_impl.cc in Sources */,
 				43ECF9AF197CB37000E9267B /* ensure_initialized.cc in Sources */,
 				43ECF6B0197CB11400E9267B /* vie_render_manager.cc in Sources */,
@@ -2932,7 +2839,6 @@
 				43ECF6B4197CB11400E9267B /* vie_shared_data.cc in Sources */,
 				43EC102E197D25A700E9267B /* frame_writer.cc in Sources */,
 				43ECF6A8197CB11400E9267B /* vie_input_manager.cc in Sources */,
-				43EC1073197D297700E9267B /* xmltok_impl.c in Sources */,
 				43ECEEA3197CA80B00E9267B /* AppDelegate.m in Sources */,
 				43ECEE9F197CA80B00E9267B /* main.m in Sources */,
 				43EC0B07197D222000E9267B /* color_enhancement.cc in Sources */,

@@ -504,6 +504,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					NSS_ENABLE_ECC,
+					NO_PKCS11_BYPASS,
+					XP_UNIX,
+					DARWIN,
+					XP_MACOSX,
+					NO_PKCS11_BYPASS,
+					NSS_ENABLE_ECC,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

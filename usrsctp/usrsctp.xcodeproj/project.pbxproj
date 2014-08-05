@@ -541,6 +541,24 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					HAVE_SA_LEN,
+					HAVE_SCONN_LEN,
+					__Userspace__,
+					__Userspace_os_Darwin,
+					SCTP_PROCESS_LEVEL_LOCKS,
+					SCTP_SIMPLE_ALLOCATOR,
+					SCTP_USE_NSS_SHA1,
+					NON_WINDOWS_DEFINE,
+					"CR_CLANG_REVISION=209387",
+					__APPLE_USE_RFC_2292,
+					NSS_USE_STATIC_LIBS,
+					CHROMIUM_BUILD,
+					DISABLE_NACL,
+					NO_NSPR_10_SUPPORT,
+					USE_UTIL_DIRECTLY,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -594,6 +612,7 @@
 				43983387198F87EE0090EABA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,21 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43983547198FAD030090EABA /* mock_paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983541198FAD030090EABA /* mock_paced_sender.h */; };
-		43983548198FAD030090EABA /* paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983542198FAD030090EABA /* paced_sender.h */; };
-		43983549198FAD030090EABA /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43983544198FAD030090EABA /* paced_sender.cc */; };
+		43AD79CF19907BB0006EAB38 /* icu.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD79CD19907BB0006EAB38 /* icu.c */; };
+		43AD79D019907BB0006EAB38 /* sqliteicu.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD79CE19907BB0006EAB38 /* sqliteicu.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		43983530198FACD30090EABA /* libpaced_sender.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpaced_sender.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43983541198FAD030090EABA /* mock_paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_paced_sender.h; sourceTree = "<group>"; };
-		43983542198FAD030090EABA /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paced_sender.h; sourceTree = "<group>"; };
-		43983544198FAD030090EABA /* paced_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = paced_sender.cc; sourceTree = "<group>"; };
-		43983546198FAD030090EABA /* pacing.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pacing.gypi; sourceTree = "<group>"; };
+		43AD79BC19907B96006EAB38 /* libsqlite_regexp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsqlite_regexp.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AD79CD19907BB0006EAB38 /* icu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = icu.c; sourceTree = "<group>"; };
+		43AD79CE19907BB0006EAB38 /* sqliteicu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqliteicu.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4398352D198FACD30090EABA /* Frameworks */ = {
+		43AD79B919907B96006EAB38 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -31,121 +28,126 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		43983527198FACD30090EABA = {
+		43AD79B319907B96006EAB38 = {
 			isa = PBXGroup;
 			children = (
-				4398353D198FAD030090EABA /* pacing */,
-				43983531198FACD30090EABA /* Products */,
+				43AD79C919907BB0006EAB38 /* sqlite */,
+				43AD79BD19907B96006EAB38 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		43983531198FACD30090EABA /* Products */ = {
+		43AD79BD19907B96006EAB38 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43983530198FACD30090EABA /* libpaced_sender.a */,
+				43AD79BC19907B96006EAB38 /* libsqlite_regexp.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4398353D198FAD030090EABA /* pacing */ = {
+		43AD79C919907BB0006EAB38 /* sqlite */ = {
 			isa = PBXGroup;
 			children = (
-				4398353F198FAD030090EABA /* include */,
-				43983544198FAD030090EABA /* paced_sender.cc */,
-				43983546198FAD030090EABA /* pacing.gypi */,
+				43AD79CA19907BB0006EAB38 /* src */,
 			);
-			name = pacing;
-			path = ../webRTCAPP/Classes/webrtc/modules/pacing;
+			name = sqlite;
+			path = ../webRTCAPP/Classes/third_party/sqlite;
 			sourceTree = "<group>";
 		};
-		4398353F198FAD030090EABA /* include */ = {
+		43AD79CA19907BB0006EAB38 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				43983540198FAD030090EABA /* mock */,
-				43983542198FAD030090EABA /* paced_sender.h */,
+				43AD79CB19907BB0006EAB38 /* ext */,
 			);
-			path = include;
+			path = src;
 			sourceTree = "<group>";
 		};
-		43983540198FAD030090EABA /* mock */ = {
+		43AD79CB19907BB0006EAB38 /* ext */ = {
 			isa = PBXGroup;
 			children = (
-				43983541198FAD030090EABA /* mock_paced_sender.h */,
+				43AD79CC19907BB0006EAB38 /* icu */,
 			);
-			path = mock;
+			path = ext;
+			sourceTree = "<group>";
+		};
+		43AD79CC19907BB0006EAB38 /* icu */ = {
+			isa = PBXGroup;
+			children = (
+				43AD79CD19907BB0006EAB38 /* icu.c */,
+				43AD79CE19907BB0006EAB38 /* sqliteicu.h */,
+			);
+			path = icu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		4398352E198FACD30090EABA /* Headers */ = {
+		43AD79BA19907B96006EAB38 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43983547198FAD030090EABA /* mock_paced_sender.h in Headers */,
-				43983548198FAD030090EABA /* paced_sender.h in Headers */,
+				43AD79D019907BB0006EAB38 /* sqliteicu.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4398352F198FACD30090EABA /* paced_sender */ = {
+		43AD79BB19907B96006EAB38 /* sqlite_regexp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43983534198FACD30090EABA /* Build configuration list for PBXNativeTarget "paced_sender" */;
+			buildConfigurationList = 43AD79C019907B96006EAB38 /* Build configuration list for PBXNativeTarget "sqlite_regexp" */;
 			buildPhases = (
-				4398352C198FACD30090EABA /* Sources */,
-				4398352D198FACD30090EABA /* Frameworks */,
-				4398352E198FACD30090EABA /* Headers */,
+				43AD79B819907B96006EAB38 /* Sources */,
+				43AD79B919907B96006EAB38 /* Frameworks */,
+				43AD79BA19907B96006EAB38 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = paced_sender;
-			productName = paced_sender;
-			productReference = 43983530198FACD30090EABA /* libpaced_sender.a */;
+			name = sqlite_regexp;
+			productName = sqlite_regexp;
+			productReference = 43AD79BC19907B96006EAB38 /* libsqlite_regexp.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		43983528198FACD30090EABA /* Project object */ = {
+		43AD79B419907B96006EAB38 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = yunwei;
 			};
-			buildConfigurationList = 4398352B198FACD30090EABA /* Build configuration list for PBXProject "paced_sender" */;
+			buildConfigurationList = 43AD79B719907B96006EAB38 /* Build configuration list for PBXProject "sqlite_regexp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 43983527198FACD30090EABA;
-			productRefGroup = 43983531198FACD30090EABA /* Products */;
+			mainGroup = 43AD79B319907B96006EAB38;
+			productRefGroup = 43AD79BD19907B96006EAB38 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4398352F198FACD30090EABA /* paced_sender */,
+				43AD79BB19907B96006EAB38 /* sqlite_regexp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4398352C198FACD30090EABA /* Sources */ = {
+		43AD79B819907B96006EAB38 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43983549198FAD030090EABA /* paced_sender.cc in Sources */,
+				43AD79CF19907BB0006EAB38 /* icu.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		43983532198FACD30090EABA /* Debug */ = {
+		43AD79BE19907B96006EAB38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -183,7 +185,7 @@
 			};
 			name = Debug;
 		};
-		43983533198FACD30090EABA /* Release */ = {
+		43AD79BF19907B96006EAB38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -215,32 +217,56 @@
 			};
 			name = Release;
 		};
-		43983535198FACD30090EABA /* Debug */ = {
+		43AD79C119907B96006EAB38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					SQLITE_CORE,
+					SQLITE_ENABLE_BROKEN_FTS2,
+					SQLITE_ENABLE_FTS2,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_ICU,
+					SQLITE_ENABLE_MEMORY_MANAGEMENT,
+					SQLITE_SECURE_DELETE,
+					SQLITE_SEPARATE_CACHE_POOLS,
+					THREADSAFE,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/icu/source/i18n",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/icu/source/common",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		43983536198FACD30090EABA /* Release */ = {
+		43AD79C219907B96006EAB38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
-					"$(inherited)",
+					SQLITE_CORE,
+					SQLITE_ENABLE_BROKEN_FTS2,
+					SQLITE_ENABLE_FTS2,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_ICU,
+					SQLITE_ENABLE_MEMORY_MANAGEMENT,
+					SQLITE_SECURE_DELETE,
+					SQLITE_SEPARATE_CACHE_POOLS,
+					THREADSAFE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/icu/source/i18n",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/icu/source/common",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -250,25 +276,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4398352B198FACD30090EABA /* Build configuration list for PBXProject "paced_sender" */ = {
+		43AD79B719907B96006EAB38 /* Build configuration list for PBXProject "sqlite_regexp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				43983532198FACD30090EABA /* Debug */,
-				43983533198FACD30090EABA /* Release */,
+				43AD79BE19907B96006EAB38 /* Debug */,
+				43AD79BF19907B96006EAB38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43983534198FACD30090EABA /* Build configuration list for PBXNativeTarget "paced_sender" */ = {
+		43AD79C019907B96006EAB38 /* Build configuration list for PBXNativeTarget "sqlite_regexp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				43983535198FACD30090EABA /* Debug */,
-				43983536198FACD30090EABA /* Release */,
+				43AD79C119907B96006EAB38 /* Debug */,
+				43AD79C219907B96006EAB38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 43983528198FACD30090EABA /* Project object */;
+	rootObject = 43AD79B419907B96006EAB38 /* Project object */;
 }

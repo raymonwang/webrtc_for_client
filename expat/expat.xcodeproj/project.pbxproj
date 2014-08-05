@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43AD799E19907965006EAB38 /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798419907965006EAB38 /* amigaconfig.h */; };
+		43AD799F19907965006EAB38 /* ascii.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798519907965006EAB38 /* ascii.h */; };
+		43AD79A019907965006EAB38 /* asciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798619907965006EAB38 /* asciitab.h */; };
+		43AD79A119907965006EAB38 /* expat.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798719907965006EAB38 /* expat.h */; };
+		43AD79A219907965006EAB38 /* expat_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798819907965006EAB38 /* expat_config.h */; };
+		43AD79A319907965006EAB38 /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798919907965006EAB38 /* expat_external.h */; };
+		43AD79A419907965006EAB38 /* iasciitab.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798A19907965006EAB38 /* iasciitab.h */; };
+		43AD79A519907965006EAB38 /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798B19907965006EAB38 /* internal.h */; };
+		43AD79A619907965006EAB38 /* latin1tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798C19907965006EAB38 /* latin1tab.h */; };
+		43AD79A719907965006EAB38 /* macconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD798F19907965006EAB38 /* macconfig.h */; };
+		43AD79A819907965006EAB38 /* nametab.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD799019907965006EAB38 /* nametab.h */; };
+		43AD79A919907965006EAB38 /* utf8tab.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD799119907965006EAB38 /* utf8tab.h */; };
+		43AD79AA19907965006EAB38 /* winconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD799219907965006EAB38 /* winconfig.h */; };
+		43AD79AB19907965006EAB38 /* xmlparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD799419907965006EAB38 /* xmlparse.c */; };
+		43AD79AC19907965006EAB38 /* xmlrole.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD799519907965006EAB38 /* xmlrole.c */; };
+		43AD79AD19907965006EAB38 /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD799619907965006EAB38 /* xmlrole.h */; };
+		43AD79AE19907965006EAB38 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD799719907965006EAB38 /* xmltok.c */; };
+		43AD79AF19907965006EAB38 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD799819907965006EAB38 /* xmltok.h */; };
+		43AD79B019907965006EAB38 /* xmltok_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD799919907965006EAB38 /* xmltok_impl.c */; };
+		43AD79B119907965006EAB38 /* xmltok_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AD799B19907965006EAB38 /* xmltok_impl.h */; };
+		43AD79B219907965006EAB38 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = 43AD799C19907965006EAB38 /* xmltok_ns.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43AD794B19907938006EAB38 /* libexpat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libexpat.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AD797E19907965006EAB38 /* expat.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = expat.gyp; sourceTree = "<group>"; };
+		43AD797F19907965006EAB38 /* expat_nacl.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = expat_nacl.gyp; sourceTree = "<group>"; };
+		43AD798419907965006EAB38 /* amigaconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigaconfig.h; sourceTree = "<group>"; };
+		43AD798519907965006EAB38 /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ascii.h; sourceTree = "<group>"; };
+		43AD798619907965006EAB38 /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asciitab.h; sourceTree = "<group>"; };
+		43AD798719907965006EAB38 /* expat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expat.h; sourceTree = "<group>"; };
+		43AD798819907965006EAB38 /* expat_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expat_config.h; sourceTree = "<group>"; };
+		43AD798919907965006EAB38 /* expat_external.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expat_external.h; sourceTree = "<group>"; };
+		43AD798A19907965006EAB38 /* iasciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iasciitab.h; sourceTree = "<group>"; };
+		43AD798B19907965006EAB38 /* internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
+		43AD798C19907965006EAB38 /* latin1tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = latin1tab.h; sourceTree = "<group>"; };
+		43AD798D19907965006EAB38 /* libexpat.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libexpat.def; sourceTree = "<group>"; };
+		43AD798E19907965006EAB38 /* libexpatw.def */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libexpatw.def; sourceTree = "<group>"; };
+		43AD798F19907965006EAB38 /* macconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macconfig.h; sourceTree = "<group>"; };
+		43AD799019907965006EAB38 /* nametab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nametab.h; sourceTree = "<group>"; };
+		43AD799119907965006EAB38 /* utf8tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8tab.h; sourceTree = "<group>"; };
+		43AD799219907965006EAB38 /* winconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winconfig.h; sourceTree = "<group>"; };
+		43AD799319907965006EAB38 /* winconfig.h.original */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = winconfig.h.original; sourceTree = "<group>"; };
+		43AD799419907965006EAB38 /* xmlparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmlparse.c; sourceTree = "<group>"; };
+		43AD799519907965006EAB38 /* xmlrole.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmlrole.c; sourceTree = "<group>"; };
+		43AD799619907965006EAB38 /* xmlrole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmlrole.h; sourceTree = "<group>"; };
+		43AD799719907965006EAB38 /* xmltok.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmltok.c; sourceTree = "<group>"; };
+		43AD799819907965006EAB38 /* xmltok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltok.h; sourceTree = "<group>"; };
+		43AD799919907965006EAB38 /* xmltok_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmltok_impl.c; sourceTree = "<group>"; };
+		43AD799B19907965006EAB38 /* xmltok_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmltok_impl.h; sourceTree = "<group>"; };
+		43AD799C19907965006EAB38 /* xmltok_ns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xmltok_ns.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43AD794819907938006EAB38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43AD794219907938006EAB38 = {
+			isa = PBXGroup;
+			children = (
+				43AD797D19907965006EAB38 /* expat */,
+				43AD794C19907938006EAB38 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43AD794C19907938006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD794B19907938006EAB38 /* libexpat.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43AD797D19907965006EAB38 /* expat */ = {
+			isa = PBXGroup;
+			children = (
+				43AD797E19907965006EAB38 /* expat.gyp */,
+				43AD797F19907965006EAB38 /* expat_nacl.gyp */,
+				43AD798019907965006EAB38 /* files */,
+			);
+			name = expat;
+			path = ../webRTCAPP/Classes/third_party/expat;
+			sourceTree = "<group>";
+		};
+		43AD798019907965006EAB38 /* files */ = {
+			isa = PBXGroup;
+			children = (
+				43AD798319907965006EAB38 /* lib */,
+			);
+			path = files;
+			sourceTree = "<group>";
+		};
+		43AD798319907965006EAB38 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				43AD798419907965006EAB38 /* amigaconfig.h */,
+				43AD798519907965006EAB38 /* ascii.h */,
+				43AD798619907965006EAB38 /* asciitab.h */,
+				43AD798719907965006EAB38 /* expat.h */,
+				43AD798819907965006EAB38 /* expat_config.h */,
+				43AD798919907965006EAB38 /* expat_external.h */,
+				43AD798A19907965006EAB38 /* iasciitab.h */,
+				43AD798B19907965006EAB38 /* internal.h */,
+				43AD798C19907965006EAB38 /* latin1tab.h */,
+				43AD798D19907965006EAB38 /* libexpat.def */,
+				43AD798E19907965006EAB38 /* libexpatw.def */,
+				43AD798F19907965006EAB38 /* macconfig.h */,
+				43AD799019907965006EAB38 /* nametab.h */,
+				43AD799119907965006EAB38 /* utf8tab.h */,
+				43AD799219907965006EAB38 /* winconfig.h */,
+				43AD799319907965006EAB38 /* winconfig.h.original */,
+				43AD799419907965006EAB38 /* xmlparse.c */,
+				43AD799519907965006EAB38 /* xmlrole.c */,
+				43AD799619907965006EAB38 /* xmlrole.h */,
+				43AD799719907965006EAB38 /* xmltok.c */,
+				43AD799819907965006EAB38 /* xmltok.h */,
+				43AD799919907965006EAB38 /* xmltok_impl.c */,
+				43AD799B19907965006EAB38 /* xmltok_impl.h */,
+				43AD799C19907965006EAB38 /* xmltok_ns.c */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43AD794919907938006EAB38 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43AD79AD19907965006EAB38 /* xmlrole.h in Headers */,
+				43AD79A719907965006EAB38 /* macconfig.h in Headers */,
+				43AD799F19907965006EAB38 /* ascii.h in Headers */,
+				43AD79B119907965006EAB38 /* xmltok_impl.h in Headers */,
+				43AD79A019907965006EAB38 /* asciitab.h in Headers */,
+				43AD799E19907965006EAB38 /* amigaconfig.h in Headers */,
+				43AD79A119907965006EAB38 /* expat.h in Headers */,
+				43AD79A819907965006EAB38 /* nametab.h in Headers */,
+				43AD79AF19907965006EAB38 /* xmltok.h in Headers */,
+				43AD79AA19907965006EAB38 /* winconfig.h in Headers */,
+				43AD79A319907965006EAB38 /* expat_external.h in Headers */,
+				43AD79A519907965006EAB38 /* internal.h in Headers */,
+				43AD79A219907965006EAB38 /* expat_config.h in Headers */,
+				43AD79A919907965006EAB38 /* utf8tab.h in Headers */,
+				43AD79A619907965006EAB38 /* latin1tab.h in Headers */,
+				43AD79A419907965006EAB38 /* iasciitab.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43AD794A19907938006EAB38 /* expat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43AD794F19907938006EAB38 /* Build configuration list for PBXNativeTarget "expat" */;
+			buildPhases = (
+				43AD794719907938006EAB38 /* Sources */,
+				43AD794819907938006EAB38 /* Frameworks */,
+				43AD794919907938006EAB38 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = expat;
+			productName = expat;
+			productReference = 43AD794B19907938006EAB38 /* libexpat.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43AD794319907938006EAB38 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43AD794619907938006EAB38 /* Build configuration list for PBXProject "expat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43AD794219907938006EAB38;
+			productRefGroup = 43AD794C19907938006EAB38 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43AD794A19907938006EAB38 /* expat */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43AD794719907938006EAB38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43AD79AE19907965006EAB38 /* xmltok.c in Sources */,
+				43AD79AB19907965006EAB38 /* xmlparse.c in Sources */,
+				43AD79B019907965006EAB38 /* xmltok_impl.c in Sources */,
+				43AD79B219907965006EAB38 /* xmltok_ns.c in Sources */,
+				43AD79AC19907965006EAB38 /* xmlrole.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43AD794D19907938006EAB38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43AD794E19907938006EAB38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		43AD795019907938006EAB38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					HAVE_EXPAT_CONFIG_H,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		43AD795119907938006EAB38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					HAVE_EXPAT_CONFIG_H,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43AD794619907938006EAB38 /* Build configuration list for PBXProject "expat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43AD794D19907938006EAB38 /* Debug */,
+				43AD794E19907938006EAB38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43AD794F19907938006EAB38 /* Build configuration list for PBXNativeTarget "expat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43AD795019907938006EAB38 /* Debug */,
+				43AD795119907938006EAB38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43AD794319907938006EAB38 /* Project object */;
+}
