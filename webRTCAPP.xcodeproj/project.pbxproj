@@ -24,12 +24,8 @@
 		430D903219862823009E763A /* libaudio_conference_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D901219862791009E763A /* libaudio_conference_mixer.a */; };
 		430D907F198628DF009E763A /* libaudio_device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D904819862877009E763A /* libaudio_device.a */; };
 		4316FE32198A0FBB00595538 /* MyThreadTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4316FE30198A0FBB00595538 /* MyThreadTest.cpp */; };
-		4318D0E6197E3B4900D5CADB /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0E0197E3B4900D5CADB /* libnss_static.a */; };
 		4318D0E9197E3B4900D5CADB /* libvpx_asm_offsets_vp8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0E3197E3B4900D5CADB /* libvpx_asm_offsets_vp8.a */; };
 		4318D0EA197E3B4900D5CADB /* libyuv_neon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0E4197E3B4900D5CADB /* libyuv_neon.a */; };
-		4318D0EC197E3E2C00D5CADB /* libcrnss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0EB197E3E2C00D5CADB /* libcrnss.a */; };
-		4318D0EE197E3F4800D5CADB /* libcrnssckbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0ED197E3F4800D5CADB /* libcrnssckbi.a */; };
-		4318D0F0197E3FCF00D5CADB /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D0EF197E3FCF00D5CADB /* libcrnspr.a */; };
 		4318D566197E629600D5CADB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D565197E629600D5CADB /* libsqlite3.dylib */; };
 		4318D569197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D567197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a */; };
 		4318D56A197E65EA00D5CADB /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D568197E65EA00D5CADB /* libvpx.a */; };
@@ -53,6 +49,10 @@
 		43998B2E19863242003C5793 /* libbitrate_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B20198631DA003C5793 /* libbitrate_controller.a */; };
 		43998B5B198632CF003C5793 /* libmedia_file.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B451986327B003C5793 /* libmedia_file.a */; };
 		43998BA6198633A0003C5793 /* libwebrtc_utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B711986332B003C5793 /* libwebrtc_utility.a */; };
+		43AD80E41990A931006EAB38 /* libcrnss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD80E11990A827006EAB38 /* libcrnss.a */; };
+		43AD80E51990A942006EAB38 /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7A641990809F006EAB38 /* libnss_static.a */; };
+		43AD80E61990A95B006EAB38 /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7EF51990934E006EAB38 /* libcrnspr.a */; };
+		43AD80E71990A97D006EAB38 /* libcrnssckbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD807C1990A57A006EAB38 /* libcrnssckbi.a */; };
 		43EC0AC5197CEF1400E9267B /* APPRTCAppClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AAC197CEF1400E9267B /* APPRTCAppClient.m */; };
 		43EC0AC6197CEF1400E9267B /* APPRTCConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EC0AAE197CEF1400E9267B /* APPRTCConnectionManager.m */; };
 		43EC0AC7197CEF1400E9267B /* channel.html in Resources */ = {isa = PBXBuildFile; fileRef = 43EC0AAF197CEF1400E9267B /* channel.html */; };
@@ -471,6 +471,34 @@
 			remoteGlobalIDString = 43AD79BC19907B96006EAB38;
 			remoteInfo = sqlite_regexp;
 		};
+		43AD7A631990809F006EAB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD7A461990809F006EAB38 /* nss_static.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD7A3F1990809E006EAB38;
+			remoteInfo = nss_static;
+		};
+		43AD7EF41990934E006EAB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD7EE91990934D006EAB38;
+			remoteInfo = crnspr;
+		};
+		43AD807B1990A57A006EAB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD80771990A579006EAB38 /* crnssckbi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD80701990A579006EAB38;
+			remoteInfo = crnssckbi;
+		};
+		43AD80E01990A827006EAB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD80DC1990A826006EAB38 /* crnss.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD80D51990A826006EAB38;
+			remoteInfo = crnss;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -561,6 +589,10 @@
 		43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility.xcodeproj; path = webrtc_utility/webrtc_utility.xcodeproj; sourceTree = "<group>"; };
 		43AD795219907938006EAB38 /* expat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = expat.xcodeproj; path = expat/expat.xcodeproj; sourceTree = "<group>"; };
 		43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite_regexp.xcodeproj; path = sqlite_regexp/sqlite_regexp.xcodeproj; sourceTree = "<group>"; };
+		43AD7A461990809F006EAB38 /* nss_static.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nss_static.xcodeproj; path = nss_static/nss_static.xcodeproj; sourceTree = "<group>"; };
+		43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = crnspr.xcodeproj; path = crnspr/crnspr.xcodeproj; sourceTree = "<group>"; };
+		43AD80771990A579006EAB38 /* crnssckbi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = crnssckbi.xcodeproj; path = crnssckbi/crnssckbi.xcodeproj; sourceTree = "<group>"; };
+		43AD80DC1990A826006EAB38 /* crnss.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = crnss.xcodeproj; path = crnss/crnss.xcodeproj; sourceTree = "<group>"; };
 		43EC0AAB197CEF1400E9267B /* APPRTCAppClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPRTCAppClient.h; sourceTree = "<group>"; };
 		43EC0AAC197CEF1400E9267B /* APPRTCAppClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPRTCAppClient.m; sourceTree = "<group>"; };
 		43EC0AAD197CEF1400E9267B /* APPRTCConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPRTCConnectionManager.h; sourceTree = "<group>"; };
@@ -916,6 +948,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AD80E71990A97D006EAB38 /* libcrnssckbi.a in Frameworks */,
+				43AD80E61990A95B006EAB38 /* libcrnspr.a in Frameworks */,
+				43AD80E51990A942006EAB38 /* libnss_static.a in Frameworks */,
+				43AD80E41990A931006EAB38 /* libcrnss.a in Frameworks */,
 				4398354B198FAD790090EABA /* libpaced_sender.a in Frameworks */,
 				43983526198FAC240090EABA /* librbe_components.a in Frameworks */,
 				439834C7198FA7370090EABA /* libusrsctp.a in Frameworks */,
@@ -951,10 +987,6 @@
 				4318D56C197E668F00D5CADB /* libyuv.a in Frameworks */,
 				4318D569197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a in Frameworks */,
 				4318D56A197E65EA00D5CADB /* libvpx.a in Frameworks */,
-				4318D0F0197E3FCF00D5CADB /* libcrnspr.a in Frameworks */,
-				4318D0EC197E3E2C00D5CADB /* libcrnss.a in Frameworks */,
-				4318D0EE197E3F4800D5CADB /* libcrnssckbi.a in Frameworks */,
-				4318D0E6197E3B4900D5CADB /* libnss_static.a in Frameworks */,
 				4318D0E9197E3B4900D5CADB /* libvpx_asm_offsets_vp8.a in Frameworks */,
 				4318D0EA197E3B4900D5CADB /* libyuv_neon.a in Frameworks */,
 				4318D566197E629600D5CADB /* libsqlite3.dylib in Frameworks */,
@@ -1369,6 +1401,38 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43AD7A471990809F006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD7A641990809F006EAB38 /* libnss_static.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43AD7EF11990934E006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD7EF51990934E006EAB38 /* libcrnspr.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43AD80781990A579006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD807C1990A57A006EAB38 /* libcrnssckbi.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43AD80DD1990A826006EAB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43AD80E11990A827006EAB38 /* libcrnss.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		43EC0AAA197CEF1400E9267B /* AppRTCDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1598,6 +1662,10 @@
 		43ECEE86197CA80B00E9267B = {
 			isa = PBXGroup;
 			children = (
+				43AD80DC1990A826006EAB38 /* crnss.xcodeproj */,
+				43AD80771990A579006EAB38 /* crnssckbi.xcodeproj */,
+				43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */,
+				43AD7A461990809F006EAB38 /* nss_static.xcodeproj */,
 				43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */,
 				43AD795219907938006EAB38 /* expat.xcodeproj */,
 				4398355C198FAE110090EABA /* jsoncpp.xcodeproj */,
@@ -2304,6 +2372,18 @@
 					ProjectRef = 430D881C198608F8009E763A /* common_audio.xcodeproj */;
 				},
 				{
+					ProductGroup = 43AD7EF11990934E006EAB38 /* Products */;
+					ProjectRef = 43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */;
+				},
+				{
+					ProductGroup = 43AD80DD1990A826006EAB38 /* Products */;
+					ProjectRef = 43AD80DC1990A826006EAB38 /* crnss.xcodeproj */;
+				},
+				{
+					ProductGroup = 43AD80781990A579006EAB38 /* Products */;
+					ProjectRef = 43AD80771990A579006EAB38 /* crnssckbi.xcodeproj */;
+				},
+				{
 					ProductGroup = 43983115198F6E650090EABA /* Products */;
 					ProjectRef = 43983114198F6E650090EABA /* crssl.xcodeproj */;
 				},
@@ -2366,6 +2446,10 @@
 				{
 					ProductGroup = 430D8F5319862490009E763A /* Products */;
 					ProjectRef = 430D8F5219862490009E763A /* neteq.xcodeproj */;
+				},
+				{
+					ProductGroup = 43AD7A471990809F006EAB38 /* Products */;
+					ProjectRef = 43AD7A461990809F006EAB38 /* nss_static.xcodeproj */;
 				},
 				{
 					ProductGroup = 430D8EED19862272009E763A /* Products */;
@@ -2703,6 +2787,34 @@
 			fileType = archive.ar;
 			path = libsqlite_regexp.a;
 			remoteRef = 43AD79C719907B97006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43AD7A641990809F006EAB38 /* libnss_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnss_static.a;
+			remoteRef = 43AD7A631990809F006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43AD7EF51990934E006EAB38 /* libcrnspr.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcrnspr.a;
+			remoteRef = 43AD7EF41990934E006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43AD807C1990A57A006EAB38 /* libcrnssckbi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcrnssckbi.a;
+			remoteRef = 43AD807B1990A57A006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43AD80E11990A827006EAB38 /* libcrnss.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcrnss.a;
+			remoteRef = 43AD80E01990A827006EAB38 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
