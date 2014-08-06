@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "43AD83FC1990D687006EAB38"
-               BuildableName = "libcrnspr copy.a"
+               BuildableName = "libcrnspr_osx.a"
                BlueprintName = "crnspr_osx"
                ReferencedContainer = "container:crnspr.xcodeproj">
             </BuildableReference>

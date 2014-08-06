@@ -569,6 +569,47 @@ int VoERTP_RTCPImpl::SetVideoEngineBWETarget(int channel,
   channelPtr->SetVideoEngineBWETarget(vie_network, video_channel);
   return 0;
 }
+    
+int VoERTP_RTCPImpl::RegisterRTCPObserver(int channel, VoERTCPObserver& observer)
+{
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    
+    voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+    voe::Channel* channelPtr = ch.channel();
+    
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "RegisterRTCPObserver() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->RegisterRTCPObserver(observer);
+}
+    
+int VoERTP_RTCPImpl::InsertExtraRTPPacket(int channel, unsigned char payloadType, bool markerBit,
+                                 const char* payloadData, unsigned short payloadSize)
+{
+    if (!_shared->statistics().Initialized())
+    {
+        _shared->SetLastError(VE_NOT_INITED, kTraceError);
+        return -1;
+    }
+    
+    voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+    voe::Channel* channelPtr = ch.channel();
+    
+    if (channelPtr == NULL)
+    {
+        _shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+                              "InsertExtraRTPPacket() failed to locate channel");
+        return -1;
+    }
+    return channelPtr->SendData(kFrameEmpty, payloadType, -1, (const uint8_t*)payloadData, payloadSize, NULL);
+}
 
 #endif  // #ifdef WEBRTC_VOICE_ENGINE_RTP_RTCP_API
 
