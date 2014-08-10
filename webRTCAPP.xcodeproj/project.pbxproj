@@ -16,7 +16,6 @@
 		430D8E2819862138009E763A /* libCNG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8E1A198620D9009E763A /* libCNG.a */; };
 		430D8E70198621C6009E763A /* libG711.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8E621986217C009E763A /* libG711.a */; };
 		430D8EB919862235009E763A /* libG722.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8EA9198621E8009E763A /* libG722.a */; };
-		430D8EFC1986238E009E763A /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8EF219862273009E763A /* libopus.a */; };
 		430D8F4019862421009E763A /* libiSAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8BCE19861C2E009E763A /* libiSAC.a */; };
 		430D8F4119862421009E763A /* libPCM16B.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8F35198623C7009E763A /* libPCM16B.a */; };
 		430D8FFB198626FE009E763A /* libneteq.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8F5719862491009E763A /* libneteq.a */; };
@@ -198,6 +197,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		430955031994839800012AD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD848C1990D687006EAB38;
+			remoteInfo = crnspr_osx;
+		};
+		430955081994839800012AD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD80771990A579006EAB38 /* crnssckbi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD84C71990E957006EAB38;
+			remoteInfo = crnssckbi_osx;
+		};
+		4309551E1994839800012AD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43AD7A461990809F006EAB38 /* nss_static.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43AD83961990CBFB006EAB38;
+			remoteInfo = nss_static_osx;
+		};
+		43095541199483C600012AD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4309553D199483C600012AD8 /* webrtc_opus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43095536199483C600012AD8;
+			remoteInfo = webrtc_opus;
+		};
+		4309555F1994859300012AD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4309555B1994859200012AD8 /* opus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430955541994859200012AD8;
+			remoteInfo = opus;
+		};
+		430959EE1994DE3E00012AD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 430959D11994DE3D00012AD8;
+			remoteInfo = iSACFix;
+		};
 		430D835C1985E422009E763A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 430D834D1985E422009E763A /* webrtc_base.xcodeproj */;
@@ -267,13 +308,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 430D8E7A198621E7009E763A;
 			remoteInfo = G722;
-		};
-		430D8EF119862273009E763A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 430D8EEC19862272009E763A /* opus.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 430D8EC319862272009E763A;
-			remoteInfo = opus;
 		};
 		430D8F34198623C7009E763A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -502,6 +536,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4309553D199483C600012AD8 /* webrtc_opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_opus.xcodeproj; path = webrtc_opus/webrtc_opus.xcodeproj; sourceTree = "<group>"; };
+		4309555B1994859200012AD8 /* opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = opus.xcodeproj; path = opus/opus.xcodeproj; sourceTree = "<group>"; };
+		430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iSACFix.xcodeproj; path = iSACFix/iSACFix.xcodeproj; sourceTree = "<group>"; };
 		430B224F197F526D0076767F /* jingle_peerconnection_objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection_objc.xcodeproj; path = libjingle_peerconnection_objc/jingle_peerconnection_objc.xcodeproj; sourceTree = "<group>"; };
 		430B2363197F5BA70076767F /* jingle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle.xcodeproj; path = libjingle/jingle.xcodeproj; sourceTree = "<group>"; };
 		430B298D197F68AA0076767F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -522,7 +559,6 @@
 		430D8E14198620D8009E763A /* CNG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CNG.xcodeproj; path = CNG/CNG.xcodeproj; sourceTree = "<group>"; };
 		430D8E5C1986217B009E763A /* G711.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = G711.xcodeproj; path = G711/G711.xcodeproj; sourceTree = "<group>"; };
 		430D8EA3198621E8009E763A /* G722.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = G722.xcodeproj; path = G722/G722.xcodeproj; sourceTree = "<group>"; };
-		430D8EEC19862272009E763A /* opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = opus.xcodeproj; path = opus/opus.xcodeproj; sourceTree = "<group>"; };
 		430D8F2F198623C6009E763A /* PCM16B.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PCM16B.xcodeproj; path = PCM16B/PCM16B.xcodeproj; sourceTree = "<group>"; };
 		430D8F5219862490009E763A /* neteq.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = neteq.xcodeproj; path = neteq/neteq.xcodeproj; sourceTree = "<group>"; };
 		430D900D19862790009E763A /* audio_conference_mixer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_conference_mixer.xcodeproj; path = audio_conference_mixer/audio_conference_mixer.xcodeproj; sourceTree = "<group>"; };
@@ -974,7 +1010,6 @@
 				430D8FFB198626FE009E763A /* libneteq.a in Frameworks */,
 				430D8F4019862421009E763A /* libiSAC.a in Frameworks */,
 				430D8F4119862421009E763A /* libPCM16B.a in Frameworks */,
-				430D8EFC1986238E009E763A /* libopus.a in Frameworks */,
 				430D8EB919862235009E763A /* libG722.a in Frameworks */,
 				430D8E70198621C6009E763A /* libG711.a in Frameworks */,
 				430D8E2819862138009E763A /* libCNG.a in Frameworks */,
@@ -999,6 +1034,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4309553E199483C600012AD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43095542199483C600012AD8 /* libwebrtc_opus.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4309555C1994859200012AD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430955601994859300012AD8 /* libopus.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		430959D91994DE3E00012AD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				430959EF1994DE3E00012AD8 /* libiSACFix.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		430B2BD1197F9C2C0076767F /* peerconnection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1089,8 +1148,10 @@
 		430D8E2919862159009E763A /* Codecs */ = {
 			isa = PBXGroup;
 			children = (
+				430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */,
+				4309555B1994859200012AD8 /* opus.xcodeproj */,
+				4309553D199483C600012AD8 /* webrtc_opus.xcodeproj */,
 				430D8F2F198623C6009E763A /* PCM16B.xcodeproj */,
-				430D8EEC19862272009E763A /* opus.xcodeproj */,
 				430D8EA3198621E8009E763A /* G722.xcodeproj */,
 				430D8E5C1986217B009E763A /* G711.xcodeproj */,
 				430D8E14198620D8009E763A /* CNG.xcodeproj */,
@@ -1112,14 +1173,6 @@
 			isa = PBXGroup;
 			children = (
 				430D8EA9198621E8009E763A /* libG722.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		430D8EED19862272009E763A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				430D8EF219862273009E763A /* libopus.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1405,6 +1458,7 @@
 			isa = PBXGroup;
 			children = (
 				43AD7A641990809F006EAB38 /* libnss_static.a */,
+				4309551F1994839800012AD8 /* libnss_static_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1413,6 +1467,7 @@
 			isa = PBXGroup;
 			children = (
 				43AD7EF51990934E006EAB38 /* libcrnspr.a */,
+				430955041994839800012AD8 /* libcrnspr_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1421,6 +1476,7 @@
 			isa = PBXGroup;
 			children = (
 				43AD807C1990A57A006EAB38 /* libcrnssckbi.a */,
+				430955091994839800012AD8 /* libcrnssckbi_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2408,6 +2464,10 @@
 					ProjectRef = 430D8BC619861C2E009E763A /* iSAC.xcodeproj */;
 				},
 				{
+					ProductGroup = 430959D91994DE3E00012AD8 /* Products */;
+					ProjectRef = 430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */;
+				},
+				{
 					ProductGroup = 4316FE1E198A0F7800595538 /* Products */;
 					ProjectRef = 430B2363197F5BA70076767F /* jingle.xcodeproj */;
 				},
@@ -2452,8 +2512,8 @@
 					ProjectRef = 43AD7A461990809F006EAB38 /* nss_static.xcodeproj */;
 				},
 				{
-					ProductGroup = 430D8EED19862272009E763A /* Products */;
-					ProjectRef = 430D8EEC19862272009E763A /* opus.xcodeproj */;
+					ProductGroup = 4309555C1994859200012AD8 /* Products */;
+					ProjectRef = 4309555B1994859200012AD8 /* opus.xcodeproj */;
 				},
 				{
 					ProductGroup = 43983538198FACD30090EABA /* Products */;
@@ -2504,6 +2564,10 @@
 					ProjectRef = 430D834D1985E422009E763A /* webrtc_base.xcodeproj */;
 				},
 				{
+					ProductGroup = 4309553E199483C600012AD8 /* Products */;
+					ProjectRef = 4309553D199483C600012AD8 /* webrtc_opus.xcodeproj */;
+				},
+				{
 					ProductGroup = 43998B6D1986332A003C5793 /* Products */;
 					ProjectRef = 43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */;
 				},
@@ -2516,6 +2580,48 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		430955041994839800012AD8 /* libcrnspr_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcrnspr_osx.a;
+			remoteRef = 430955031994839800012AD8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		430955091994839800012AD8 /* libcrnssckbi_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcrnssckbi_osx.a;
+			remoteRef = 430955081994839800012AD8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4309551F1994839800012AD8 /* libnss_static_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libnss_static_osx.a;
+			remoteRef = 4309551E1994839800012AD8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43095542199483C600012AD8 /* libwebrtc_opus.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_opus.a;
+			remoteRef = 43095541199483C600012AD8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		430955601994859300012AD8 /* libopus.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libopus.a;
+			remoteRef = 4309555F1994859300012AD8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		430959EF1994DE3E00012AD8 /* libiSACFix.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libiSACFix.a;
+			remoteRef = 430959EE1994DE3E00012AD8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		430D835D1985E422009E763A /* libwebrtc_base.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2584,13 +2690,6 @@
 			fileType = archive.ar;
 			path = libG722.a;
 			remoteRef = 430D8EA8198621E8009E763A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		430D8EF219862273009E763A /* libopus.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libopus.a;
-			remoteRef = 430D8EF119862273009E763A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		430D8F35198623C7009E763A /* libPCM16B.a */ = {

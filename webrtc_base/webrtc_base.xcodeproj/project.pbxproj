@@ -993,7 +993,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw/builtins",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

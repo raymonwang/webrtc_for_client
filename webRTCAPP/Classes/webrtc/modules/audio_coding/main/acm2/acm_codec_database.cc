@@ -34,10 +34,13 @@
 #ifdef WEBRTC_CODEC_ISAC
 #include "webrtc/modules/audio_coding/codecs/isac/main/interface/isac.h"
 #endif
-//#if (defined WEBRTC_CODEC_ISACFX) || (defined WEBRTC_CODEC_ISAC)
-//#include "webrtc/modules/audio_coding/main/acm2/acm_isac.h"
-//#include "webrtc/modules/audio_coding/main/acm2/acm_isac_macros.h"
-//#endif
+#ifdef WEBRTC_CODEC_ISACFX
+#include "webrtc/modules/audio_coding/codecs/isac/fix/interface/isacfix.h"
+#endif
+#if (defined WEBRTC_CODEC_ISACFX) || (defined WEBRTC_CODEC_ISAC)
+#include "webrtc/modules/audio_coding/main/acm2/acm_isac.h"
+#include "webrtc/modules/audio_coding/main/acm2/acm_isac_macros.h"
+#endif
 #ifdef WEBRTC_CODEC_PCM16
 #include "webrtc/modules/audio_coding/codecs/pcm16b/include/pcm16b.h"
 #include "webrtc/modules/audio_coding/main/acm2/acm_pcm16b.h"
@@ -590,9 +593,9 @@ int ACMCodecDB::MirrorID(int codec_id) {
 ACMGenericCodec* ACMCodecDB::CreateCodecInstance(const CodecInst& codec_inst) {
   // All we have support for right now.
   if (!STR_CASE_CMP(codec_inst.plname, "ISAC")) {
-//#if (defined(WEBRTC_CODEC_ISAC) || defined(WEBRTC_CODEC_ISACFX))
-//    return new ACMISAC(kISAC);
-//#endif
+#if (defined(WEBRTC_CODEC_ISAC) || defined(WEBRTC_CODEC_ISACFX))
+    return new ACMISAC(kISAC);
+#endif
   } else if (!STR_CASE_CMP(codec_inst.plname, "PCMU")) {
     if (codec_inst.channels == 1) {
       return new ACMPCMU(kPCMU);

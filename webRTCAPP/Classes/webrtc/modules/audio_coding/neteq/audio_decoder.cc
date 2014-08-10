@@ -193,8 +193,8 @@ AudioDecoder* AudioDecoder::CreateAudioDecoder(NetEqDecoder codec_type) {
       return new AudioDecoderIlbc;
 #endif
 #if defined(WEBRTC_CODEC_ISACFX)
-//    case kDecoderISAC:
-//      return new AudioDecoderIsacFix;
+    case kDecoderISAC:
+      return new AudioDecoderIsacFix;
 #elif defined(WEBRTC_CODEC_ISAC)
     case kDecoderISAC:
       return new AudioDecoderIsac;

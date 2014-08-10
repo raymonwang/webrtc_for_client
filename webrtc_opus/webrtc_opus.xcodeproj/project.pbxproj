@@ -1,0 +1,295 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43095549199483EC00012AD8 /* opus_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095545199483EC00012AD8 /* opus_interface.h */; };
+		4309554A199483EC00012AD8 /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095547199483EC00012AD8 /* opus_interface.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43095536199483C600012AD8 /* libwebrtc_opus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_opus.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43095545199483EC00012AD8 /* opus_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opus_interface.h; sourceTree = "<group>"; };
+		43095546199483EC00012AD8 /* opus.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus.gypi; sourceTree = "<group>"; };
+		43095547199483EC00012AD8 /* opus_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = opus_interface.c; sourceTree = "<group>"; };
+		43095548199483EC00012AD8 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43095533199483C600012AD8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4309552D199483C600012AD8 = {
+			isa = PBXGroup;
+			children = (
+				43095543199483EC00012AD8 /* opus */,
+				43095537199483C600012AD8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43095537199483C600012AD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43095536199483C600012AD8 /* libwebrtc_opus.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43095543199483EC00012AD8 /* opus */ = {
+			isa = PBXGroup;
+			children = (
+				43095544199483EC00012AD8 /* interface */,
+				43095546199483EC00012AD8 /* opus.gypi */,
+				43095547199483EC00012AD8 /* opus_interface.c */,
+				43095548199483EC00012AD8 /* OWNERS */,
+			);
+			name = opus;
+			path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/opus;
+			sourceTree = "<group>";
+		};
+		43095544199483EC00012AD8 /* interface */ = {
+			isa = PBXGroup;
+			children = (
+				43095545199483EC00012AD8 /* opus_interface.h */,
+			);
+			path = interface;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43095534199483C600012AD8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43095549199483EC00012AD8 /* opus_interface.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43095535199483C600012AD8 /* webrtc_opus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4309553A199483C600012AD8 /* Build configuration list for PBXNativeTarget "webrtc_opus" */;
+			buildPhases = (
+				43095532199483C600012AD8 /* Sources */,
+				43095533199483C600012AD8 /* Frameworks */,
+				43095534199483C600012AD8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = webrtc_opus;
+			productName = webrtc_opus;
+			productReference = 43095536199483C600012AD8 /* libwebrtc_opus.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4309552E199483C600012AD8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = yunwei;
+			};
+			buildConfigurationList = 43095531199483C600012AD8 /* Build configuration list for PBXProject "webrtc_opus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4309552D199483C600012AD8;
+			productRefGroup = 43095537199483C600012AD8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43095535199483C600012AD8 /* webrtc_opus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43095532199483C600012AD8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4309554A199483EC00012AD8 /* opus_interface.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43095538199483C600012AD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43095539199483C600012AD8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		4309553B199483C600012AD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					OPUS_BUILD,
+					"OPUS_EXPORT=",
+					HAVE_LRINT,
+					HAVE_LRINTF,
+					VAR_ARRAYS,
+					FIXED_POINT,
+					OPUS_ARM_ASM,
+					DOPUS_ARM_INLINE_ASM,
+					OPUS_ARM_INLINE_EDSP,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/opus/interface",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4309553C199483C600012AD8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					OPUS_BUILD,
+					"OPUS_EXPORT=",
+					HAVE_LRINT,
+					HAVE_LRINTF,
+					VAR_ARRAYS,
+					FIXED_POINT,
+					OPUS_ARM_ASM,
+					DOPUS_ARM_INLINE_ASM,
+					OPUS_ARM_INLINE_EDSP,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/opus/interface",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43095531199483C600012AD8 /* Build configuration list for PBXProject "webrtc_opus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43095538199483C600012AD8 /* Debug */,
+				43095539199483C600012AD8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4309553A199483C600012AD8 /* Build configuration list for PBXNativeTarget "webrtc_opus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4309553B199483C600012AD8 /* Debug */,
+				4309553C199483C600012AD8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4309552E199483C600012AD8 /* Project object */;
+}

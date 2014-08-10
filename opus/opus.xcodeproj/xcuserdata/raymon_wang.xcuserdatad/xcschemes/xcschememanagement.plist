@@ -7,17 +7,12 @@
 		<key>opus.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>18</integer>
+			<integer>47</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>430D8EC219862272009E763A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>430D8ED219862272009E763A</key>
+		<key>430955531994859200012AD8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

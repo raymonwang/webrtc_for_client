@@ -611,6 +611,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/usrsctp",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_media;
 				SKIP_INSTALL = YES;

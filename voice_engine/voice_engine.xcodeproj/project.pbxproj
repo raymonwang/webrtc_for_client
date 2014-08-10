@@ -646,6 +646,9 @@
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -653,11 +656,12 @@
 					"$(SRCROOT)/../webRTCAPP/Classes",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -672,6 +676,9 @@
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -683,6 +690,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};

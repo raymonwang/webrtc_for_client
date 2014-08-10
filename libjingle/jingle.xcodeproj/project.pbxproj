@@ -1568,6 +1568,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle;
 				SDKROOT = iphoneos;

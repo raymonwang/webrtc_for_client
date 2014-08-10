@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "430D8EC219862272009E763A"
+               BlueprintIdentifier = "430955531994859200012AD8"
                BuildableName = "libopus.a"
                BlueprintName = "opus"
                ReferencedContainer = "container:opus.xcodeproj">
@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "430D8ED219862272009E763A"
-               BuildableName = "opusTests.xctest"
-               BlueprintName = "opusTests"
-               ReferencedContainer = "container:opus.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

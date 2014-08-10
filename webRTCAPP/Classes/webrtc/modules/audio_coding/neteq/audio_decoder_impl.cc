@@ -24,6 +24,9 @@
 #ifdef WEBRTC_CODEC_ILBC
 #include "webrtc/modules/audio_coding/codecs/ilbc/interface/ilbc.h"
 #endif
+#ifdef WEBRTC_CODEC_ISACFX
+#include "webrtc/modules/audio_coding/codecs/isac/fix/interface/isacfix.h"
+#endif
 #ifdef WEBRTC_CODEC_ISAC
 #include "webrtc/modules/audio_coding/codecs/isac/main/interface/isac.h"
 #endif
@@ -216,6 +219,48 @@ AudioDecoderIsacSwb::AudioDecoderIsacSwb() : AudioDecoderIsac() {
 // iSAC FB
 AudioDecoderIsacFb::AudioDecoderIsacFb() : AudioDecoderIsacSwb() {
   codec_type_ = kDecoderISACfb;
+}
+#endif
+
+// iSAC fix
+#ifdef WEBRTC_CODEC_ISACFX
+AudioDecoderIsacFix::AudioDecoderIsacFix() : AudioDecoder(kDecoderISAC) {
+  WebRtcIsacfix_Create(reinterpret_cast<ISACFIX_MainStruct**>(&state_));
+}
+
+AudioDecoderIsacFix::~AudioDecoderIsacFix() {
+  WebRtcIsacfix_Free(static_cast<ISACFIX_MainStruct*>(state_));
+}
+
+int AudioDecoderIsacFix::Decode(const uint8_t* encoded, size_t encoded_len,
+                                int16_t* decoded, SpeechType* speech_type) {
+  int16_t temp_type = 1;  // Default is speech.
+  int16_t ret = WebRtcIsacfix_Decode(static_cast<ISACFIX_MainStruct*>(state_),
+                                     reinterpret_cast<const uint16_t*>(encoded),
+                                     static_cast<int16_t>(encoded_len), decoded,
+                                     &temp_type);
+  *speech_type = ConvertSpeechType(temp_type);
+  return ret;
+}
+
+int AudioDecoderIsacFix::Init() {
+  return WebRtcIsacfix_DecoderInit(static_cast<ISACFIX_MainStruct*>(state_));
+}
+
+int AudioDecoderIsacFix::IncomingPacket(const uint8_t* payload,
+                                        size_t payload_len,
+                                        uint16_t rtp_sequence_number,
+                                        uint32_t rtp_timestamp,
+                                        uint32_t arrival_timestamp) {
+  return WebRtcIsacfix_UpdateBwEstimate(
+      static_cast<ISACFIX_MainStruct*>(state_),
+      reinterpret_cast<const uint16_t*>(payload),
+      static_cast<int32_t>(payload_len),
+      rtp_sequence_number, rtp_timestamp, arrival_timestamp);
+}
+
+int AudioDecoderIsacFix::ErrorCode() {
+  return WebRtcIsacfix_GetErrorCode(static_cast<ISACFIX_MainStruct*>(state_));
 }
 #endif
 
