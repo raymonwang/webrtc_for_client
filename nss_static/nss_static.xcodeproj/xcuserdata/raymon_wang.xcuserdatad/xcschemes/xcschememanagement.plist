@@ -11,6 +11,8 @@
 		</dict>
 		<key>nss_static_osx.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>33</integer>
 		</dict>
