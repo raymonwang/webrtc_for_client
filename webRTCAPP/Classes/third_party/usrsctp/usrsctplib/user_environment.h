@@ -67,7 +67,7 @@ extern int nmbclusters;
 #define max(a,b) ((a)>(b)?(a):(b))
 #endif
 
-extern int read_random(void *buf, int count);
+extern int read_random_user(void *buf, int count);
 
 /* errno's may differ per OS.  errno.h now included in sctp_os_userspace.h */
 /* Source: /usr/src/sys/sys/errno.h */

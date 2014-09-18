@@ -1005,7 +1005,7 @@ int sctp_userspace_get_mtu_from_ifn(uint32_t if_index, int af);
 /* This is re-pulse ourselves for sendbuf */
 #define SCTP_ZERO_COPY_SENDQ_EVENT(inp, so)
 
-#define SCTP_READ_RANDOM(buf, len)	read_random(buf, len)
+#define SCTP_READ_RANDOM(buf, len)	read_random_user(buf, len)
 
 #define SCTP_SHA1_CTX		struct sctp_sha1_context
 #define SCTP_SHA1_INIT		sctp_sha1_init

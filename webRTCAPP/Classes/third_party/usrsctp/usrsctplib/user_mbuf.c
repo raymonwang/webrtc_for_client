@@ -46,7 +46,7 @@
 #include "user_atomic.h"
 #include "netinet/sctp_pcb.h"
 
-struct mbstat mbstat;
+struct mbstat_user mbstat;
 #define KIPC_MAX_LINKHDR        4       /* int: max length of link header (see sys/sysclt.h) */
 #define KIPC_MAX_PROTOHDR	5	/* int: max length of network header (see sys/sysclt.h)*/
 int max_linkhdr = KIPC_MAX_LINKHDR;

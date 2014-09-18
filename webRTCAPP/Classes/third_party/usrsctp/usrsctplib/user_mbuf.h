@@ -131,7 +131,7 @@ void		 m_copydata(const struct mbuf *, int, int, caddr_t);
  * In the kernel many of these statistics are no longer used as
  * they track allocator statistics through kernel UMA's built in statistics mechanism.
  */
-struct mbstat {
+struct mbstat_user {
 	u_long	m_mbufs;	/* XXX */
 	u_long	m_mclusts;	/* XXX */
 
@@ -350,7 +350,7 @@ void		 m_tag_free_default(struct m_tag *);
 extern int max_linkhdr;    /* Largest link-level header */
 extern int max_protohdr; /* Size of largest protocol layer header. See user_mbuf.c */
 
-extern struct mbstat	mbstat;		/* General mbuf stats/infos */
+extern struct mbstat_user	mbstat;		/* General mbuf stats/infos */
 
 
 /*

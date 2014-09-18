@@ -67,7 +67,7 @@ static int (*read_func)(void *, int) = read_random_phony;
 
 /* Userland-visible version of read_random */
 int
-read_random(void *buf, int count)
+read_random_user(void *buf, int count)
 {
 	return ((*read_func)(buf, count));
 }

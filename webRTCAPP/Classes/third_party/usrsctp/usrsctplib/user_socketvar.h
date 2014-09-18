@@ -349,7 +349,7 @@ extern userland_cond_t accept_cond;
 /*
  * Externalized form of struct socket used by the sysctl(3) interface.
  */
-struct xsocket {
+struct xsocket_user {
 	size_t	xso_len;	/* length of this structure */
 	struct	socket *xso_so;	/* makes a convenient handle sometimes */
 	short	so_type;
@@ -366,7 +366,7 @@ struct xsocket {
 	u_short	so_error;
 	pid_t	so_pgid;
 	u_long	so_oobmark;
-	struct xsockbuf {
+	struct xsockbuf_user {
 		u_int	sb_cc;
 		u_int	sb_hiwat;
 		u_int	sb_mbcnt;
