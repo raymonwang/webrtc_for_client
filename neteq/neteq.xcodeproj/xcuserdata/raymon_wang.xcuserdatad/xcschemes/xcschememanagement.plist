@@ -7,12 +7,22 @@
 		<key>neteq.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>21</integer>
+			<integer>12</integer>
+		</dict>
+		<key>neteq_sim.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>33</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>430D8F4A19862490009E763A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43C429E219CA82AD00E9DCFA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

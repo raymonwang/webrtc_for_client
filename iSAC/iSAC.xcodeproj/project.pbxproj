@@ -36,10 +36,48 @@
 		430D8CC019861C5B009E763A /* pitch_lag_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6319861C5B009E763A /* pitch_lag_tables.c */; };
 		430D8CC119861C5B009E763A /* spectrum_ar_model_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6619861C5B009E763A /* spectrum_ar_model_tables.c */; };
 		430D8CC219861C5B009E763A /* transform.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6919861C5B009E763A /* transform.c */; };
+		432B2DCA19CA85F5001267A7 /* filterbanks.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4C19861C5B009E763A /* filterbanks.c */; };
+		432B2DCB19CA85F5001267A7 /* arith_routines_logist.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3A19861C5B009E763A /* arith_routines_logist.c */; };
+		432B2DCC19CA85F5001267A7 /* isac.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4E19861C5B009E763A /* isac.c */; };
+		432B2DCD19CA85F5001267A7 /* lpc_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5A19861C5B009E763A /* lpc_tables.c */; };
+		432B2DCE19CA85F5001267A7 /* pitch_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5E19861C5B009E763A /* pitch_estimator.c */; };
+		432B2DCF19CA85F5001267A7 /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4019861C5B009E763A /* decode.c */; };
+		432B2DD019CA85F5001267A7 /* lattice.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5119861C5B009E763A /* lattice.c */; };
+		432B2DD119CA85F5001267A7 /* lpc_shape_swb16_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5819861C5B009E763A /* lpc_shape_swb16_tables.c */; };
+		432B2DD219CA85F5001267A7 /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4219861C5B009E763A /* encode.c */; };
+		432B2DD319CA85F5001267A7 /* lpc_shape_swb12_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5619861C5B009E763A /* lpc_shape_swb12_tables.c */; };
+		432B2DD419CA85F5001267A7 /* pitch_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6019861C5B009E763A /* pitch_filter.c */; };
+		432B2DD519CA85F5001267A7 /* decode_bwe.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4119861C5B009E763A /* decode_bwe.c */; };
+		432B2DD619CA85F5001267A7 /* bandwidth_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3B19861C5B009E763A /* bandwidth_estimator.c */; };
+		432B2DD719CA85F5001267A7 /* lpc_analysis.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5219861C5B009E763A /* lpc_analysis.c */; };
+		432B2DD819CA85F5001267A7 /* encode_lpc_swb.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4319861C5B009E763A /* encode_lpc_swb.c */; };
+		432B2DD919CA85F5001267A7 /* lpc_gain_swb_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C5419861C5B009E763A /* lpc_gain_swb_tables.c */; };
+		432B2DDA19CA85F5001267A7 /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3E19861C5B009E763A /* crc.c */; };
+		432B2DDB19CA85F5001267A7 /* spectrum_ar_model_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6619861C5B009E763A /* spectrum_ar_model_tables.c */; };
+		432B2DDC19CA85F5001267A7 /* arith_routines_hist.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3919861C5B009E763A /* arith_routines_hist.c */; };
+		432B2DDD19CA85F5001267A7 /* entropy_coding.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4519861C5B009E763A /* entropy_coding.c */; };
+		432B2DDE19CA85F5001267A7 /* pitch_lag_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6319861C5B009E763A /* pitch_lag_tables.c */; };
+		432B2DDF19CA85F5001267A7 /* transform.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6919861C5B009E763A /* transform.c */; };
+		432B2DE019CA85F5001267A7 /* pitch_gain_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C6119861C5B009E763A /* pitch_gain_tables.c */; };
+		432B2DE119CA85F5001267A7 /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4719861C5B009E763A /* fft.c */; };
+		432B2DE219CA85F5001267A7 /* filter_functions.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4919861C5B009E763A /* filter_functions.c */; };
+		432B2DE319CA85F5001267A7 /* intialize.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4D19861C5B009E763A /* intialize.c */; };
+		432B2DE419CA85F5001267A7 /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4A19861C5B009E763A /* filterbank_tables.c */; };
+		432B2DE519CA85F5001267A7 /* arith_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3719861C5B009E763A /* arith_routines.c */; };
+		432B2DE719CA85F5001267A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8BA019861C2D009E763A /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		430D8B9B19861C2D009E763A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		432B2DE819CA85F5001267A7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -108,6 +146,7 @@
 		430D8C6719861C5B009E763A /* spectrum_ar_model_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spectrum_ar_model_tables.h; sourceTree = "<group>"; };
 		430D8C6819861C5B009E763A /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
 		430D8C6919861C5B009E763A /* transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform.c; sourceTree = "<group>"; };
+		432B2DEC19CA85F5001267A7 /* libiSAC_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +155,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				430D8BA119861C2D009E763A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		432B2DE619CA85F5001267A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				432B2DE719CA85F5001267A7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				430D8B9D19861C2D009E763A /* libiSAC.a */,
+				432B2DEC19CA85F5001267A7 /* libiSAC_sim.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,6 +318,23 @@
 			productReference = 430D8B9D19861C2D009E763A /* libiSAC.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		432B2DC819CA85F5001267A7 /* iSAC_sim */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 432B2DE919CA85F5001267A7 /* Build configuration list for PBXNativeTarget "iSAC_sim" */;
+			buildPhases = (
+				432B2DC919CA85F5001267A7 /* Sources */,
+				432B2DE619CA85F5001267A7 /* Frameworks */,
+				432B2DE819CA85F5001267A7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iSAC_sim;
+			productName = iSAC;
+			productReference = 432B2DEC19CA85F5001267A7 /* libiSAC_sim.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -292,6 +357,7 @@
 			projectRoot = "";
 			targets = (
 				430D8B9C19861C2D009E763A /* iSAC */,
+				432B2DC819CA85F5001267A7 /* iSAC_sim */,
 			);
 		};
 /* End PBXProject section */
@@ -329,6 +395,41 @@
 				430D8CB419861C5B009E763A /* intialize.c in Sources */,
 				430D8CB219861C5B009E763A /* filterbank_tables.c in Sources */,
 				430D8CA619861C5B009E763A /* arith_routines.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		432B2DC919CA85F5001267A7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				432B2DCA19CA85F5001267A7 /* filterbanks.c in Sources */,
+				432B2DCB19CA85F5001267A7 /* arith_routines_logist.c in Sources */,
+				432B2DCC19CA85F5001267A7 /* isac.c in Sources */,
+				432B2DCD19CA85F5001267A7 /* lpc_tables.c in Sources */,
+				432B2DCE19CA85F5001267A7 /* pitch_estimator.c in Sources */,
+				432B2DCF19CA85F5001267A7 /* decode.c in Sources */,
+				432B2DD019CA85F5001267A7 /* lattice.c in Sources */,
+				432B2DD119CA85F5001267A7 /* lpc_shape_swb16_tables.c in Sources */,
+				432B2DD219CA85F5001267A7 /* encode.c in Sources */,
+				432B2DD319CA85F5001267A7 /* lpc_shape_swb12_tables.c in Sources */,
+				432B2DD419CA85F5001267A7 /* pitch_filter.c in Sources */,
+				432B2DD519CA85F5001267A7 /* decode_bwe.c in Sources */,
+				432B2DD619CA85F5001267A7 /* bandwidth_estimator.c in Sources */,
+				432B2DD719CA85F5001267A7 /* lpc_analysis.c in Sources */,
+				432B2DD819CA85F5001267A7 /* encode_lpc_swb.c in Sources */,
+				432B2DD919CA85F5001267A7 /* lpc_gain_swb_tables.c in Sources */,
+				432B2DDA19CA85F5001267A7 /* crc.c in Sources */,
+				432B2DDB19CA85F5001267A7 /* spectrum_ar_model_tables.c in Sources */,
+				432B2DDC19CA85F5001267A7 /* arith_routines_hist.c in Sources */,
+				432B2DDD19CA85F5001267A7 /* entropy_coding.c in Sources */,
+				432B2DDE19CA85F5001267A7 /* pitch_lag_tables.c in Sources */,
+				432B2DDF19CA85F5001267A7 /* transform.c in Sources */,
+				432B2DE019CA85F5001267A7 /* pitch_gain_tables.c in Sources */,
+				432B2DE119CA85F5001267A7 /* fft.c in Sources */,
+				432B2DE219CA85F5001267A7 /* filter_functions.c in Sources */,
+				432B2DE319CA85F5001267A7 /* intialize.c in Sources */,
+				432B2DE419CA85F5001267A7 /* filterbank_tables.c in Sources */,
+				432B2DE519CA85F5001267A7 /* arith_routines.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +567,67 @@
 			};
 			name = Release;
 		};
+		432B2DEA19CA85F5001267A7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/iSAC.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSAC/iSAC-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_NEON,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = iSAC_sim;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Debug;
+		};
+		432B2DEB19CA85F5001267A7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/iSAC.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSAC/iSAC-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_NEON,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = iSAC_sim;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -483,6 +645,15 @@
 			buildConfigurations = (
 				430D8BC119861C2E009E763A /* Debug */,
 				430D8BC219861C2E009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		432B2DE919CA85F5001267A7 /* Build configuration list for PBXNativeTarget "iSAC_sim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				432B2DEA19CA85F5001267A7 /* Debug */,
+				432B2DEB19CA85F5001267A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
