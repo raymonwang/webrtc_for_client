@@ -794,6 +794,9 @@ int32_t AudioDeviceIOS::InitPlayout() {
     _playIsInitialized = true;
 
     if (!_recIsInitialized) {
+        //保存原始audiosession状态
+        saveAudioSession();
+        
         // Audio init
         if (InitPlayOrRecord() == -1) {
             // todo: Handle error
@@ -1934,8 +1937,12 @@ void AudioDeviceIOS::restoreAudioSession()
 {
     AVAudioSession* session = [AVAudioSession sharedInstance];
     if (session) {
-        [session setMode:[NSString stringWithUTF8String:_oldMode] error:nil];
-        [session setCategory:[NSString stringWithUTF8String:_oldCategory] error:nil];
+        if (_oldMode) {
+            [session setMode:[NSString stringWithUTF8String:_oldMode] error:nil];
+        }
+        if (_oldCategory) {
+            [session setCategory:[NSString stringWithUTF8String:_oldCategory] error:nil];
+        }
     }
 }
 
