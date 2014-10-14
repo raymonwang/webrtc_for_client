@@ -208,6 +208,9 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
 
   static bool RunCapture(void* ptrThis);
   bool CaptureWorkerThread();
+    
+  void saveAudioSession();
+  void restoreAudioSession();
 
  private:
   AudioDeviceBuffer* _ptrAudioBuffer;
@@ -265,6 +268,9 @@ class AudioDeviceIOS : public AudioDeviceGeneric {
 
   // Current total size all data in buffers, used for delay estimate
   uint32_t _recordingBufferTotalSize;
+    
+    const char*   _oldMode;
+    const char*   _oldCategory;
 };
 
 }  // namespace webrtc

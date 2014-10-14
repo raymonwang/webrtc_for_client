@@ -28,9 +28,9 @@
 		430D9079198628A0009E763A /* audio_device_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9060198628A0009E763A /* audio_device_defines.h */; };
 		430D907A198628A0009E763A /* fake_audio_device.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9061198628A0009E763A /* fake_audio_device.h */; };
 		430D907B198628A0009E763A /* audio_device_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9063198628A0009E763A /* audio_device_ios.h */; };
-		430D907C198628A0009E763A /* audio_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430D9064198628A0009E763A /* audio_device_ios.mm */; };
 		430D907D198628A0009E763A /* audio_device_utility_ios.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9065198628A0009E763A /* audio_device_utility_ios.cc */; };
 		430D907E198628A0009E763A /* audio_device_utility_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9066198628A0009E763A /* audio_device_utility_ios.h */; };
+		43917A4719ECD3980080F523 /* audio_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430D9064198628A0009E763A /* audio_device_ios.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -225,13 +225,13 @@
 			files = (
 				430D906A198628A0009E763A /* audio_device_generic.cc in Sources */,
 				430D907D198628A0009E763A /* audio_device_utility_ios.cc in Sources */,
+				43917A4719ECD3980080F523 /* audio_device_ios.mm in Sources */,
 				430D9067198628A0009E763A /* audio_device_buffer.cc in Sources */,
 				430D9072198628A0009E763A /* audio_device_utility_dummy.cc in Sources */,
 				430D9070198628A0009E763A /* audio_device_dummy.cc in Sources */,
 				430D9074198628A0009E763A /* file_audio_device.cc in Sources */,
 				430D906C198628A0009E763A /* audio_device_impl.cc in Sources */,
 				430D906E198628A0009E763A /* audio_device_utility.cc in Sources */,
-				430D907C198628A0009E763A /* audio_device_ios.mm in Sources */,
 				430D9076198628A0009E763A /* file_audio_device_factory.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
