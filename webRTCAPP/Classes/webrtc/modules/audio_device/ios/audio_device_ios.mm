@@ -939,10 +939,10 @@ int32_t AudioDeviceIOS::StopRecording() {
     if (!_playing) {
         // Both playout and recording has stopped, shutdown the device
         ShutdownPlayOrRecord();
+        
+        //恢复原始audiosession状态
+        restoreAudioSession();
     }
-    
-    //恢复原始audiosession状态
-    restoreAudioSession();
 
     _recIsInitialized = false;
     _micIsInitialized = false;
