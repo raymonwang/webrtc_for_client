@@ -11,7 +11,6 @@
 		43095B771994E90E00012AD8 /* aec_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095AF41994E90E00012AD8 /* aec_core.c */; };
 		43095B781994E90E00012AD8 /* aec_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095AF51994E90E00012AD8 /* aec_core.h */; };
 		43095B791994E90E00012AD8 /* aec_core_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095AF61994E90E00012AD8 /* aec_core_internal.h */; };
-		43095B7B1994E90E00012AD8 /* aec_core_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095AF81994E90E00012AD8 /* aec_core_neon.c */; };
 		43095B7D1994E90E00012AD8 /* aec_rdft.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095AFA1994E90E00012AD8 /* aec_rdft.c */; };
 		43095B7E1994E90E00012AD8 /* aec_rdft.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095AFB1994E90E00012AD8 /* aec_rdft.h */; };
 		43095B801994E90E00012AD8 /* aec_rdft_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095AFD1994E90E00012AD8 /* aec_rdft_neon.c */; };
@@ -23,8 +22,6 @@
 		43095B891994E90E00012AD8 /* aecm_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B091994E90E00012AD8 /* aecm_core.c */; };
 		43095B8A1994E90E00012AD8 /* aecm_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B0A1994E90E00012AD8 /* aecm_core.h */; };
 		43095B8B1994E90E00012AD8 /* aecm_core_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B0B1994E90E00012AD8 /* aecm_core_c.c */; };
-		43095B8D1994E90E00012AD8 /* aecm_core_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B0D1994E90E00012AD8 /* aecm_core_neon.c */; };
-		43095B8E1994E90E00012AD8 /* aecm_core_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095B0E1994E90E00012AD8 /* aecm_core_neon.S */; };
 		43095B8F1994E90E00012AD8 /* aecm_core_neon_offsets.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B0F1994E90E00012AD8 /* aecm_core_neon_offsets.c */; };
 		43095B901994E90E00012AD8 /* aecm_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B101994E90E00012AD8 /* aecm_defines.h */; };
 		43095B911994E90E00012AD8 /* echo_control_mobile.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B121994E90E00012AD8 /* echo_control_mobile.c */; };
@@ -63,8 +60,6 @@
 		43095BB41994E90E00012AD8 /* nsx_core.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B451994E90E00012AD8 /* nsx_core.c */; };
 		43095BB51994E90E00012AD8 /* nsx_core.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B461994E90E00012AD8 /* nsx_core.h */; };
 		43095BB61994E90E00012AD8 /* nsx_core_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B471994E90E00012AD8 /* nsx_core_c.c */; };
-		43095BB81994E90E00012AD8 /* nsx_core_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B491994E90E00012AD8 /* nsx_core_neon.c */; };
-		43095BB91994E90E00012AD8 /* nsx_core_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095B4A1994E90E00012AD8 /* nsx_core_neon.S */; };
 		43095BBA1994E90E00012AD8 /* nsx_core_neon_offsets.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B4B1994E90E00012AD8 /* nsx_core_neon_offsets.c */; };
 		43095BBB1994E90E00012AD8 /* nsx_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B4C1994E90E00012AD8 /* nsx_defines.h */; };
 		43095BBC1994E90E00012AD8 /* windows_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B4D1994E90E00012AD8 /* windows_private.h */; };
@@ -648,9 +643,7 @@
 				43095B9E1994E90E00012AD8 /* echo_cancellation_impl.cc in Sources */,
 				43095B841994E90E00012AD8 /* echo_cancellation.c in Sources */,
 				43095BC91994E90E00012AD8 /* delay_estimator.c in Sources */,
-				43095B7B1994E90E00012AD8 /* aec_core_neon.c in Sources */,
 				43095B8B1994E90E00012AD8 /* aecm_core_c.c in Sources */,
-				43095BB81994E90E00012AD8 /* nsx_core_neon.c in Sources */,
 				43095BCD1994E90E00012AD8 /* delay_estimator_wrapper.c in Sources */,
 				43095BCF1994E90E00012AD8 /* fft4g.c in Sources */,
 				43095BB61994E90E00012AD8 /* nsx_core_c.c in Sources */,
@@ -663,7 +656,6 @@
 				43095B891994E90E00012AD8 /* aecm_core.c in Sources */,
 				43095B771994E90E00012AD8 /* aec_core.c in Sources */,
 				43095BA11994E90E00012AD8 /* echo_control_mobile_impl.cc in Sources */,
-				43095B8E1994E90E00012AD8 /* aecm_core_neon.S in Sources */,
 				43095BBD1994E90E00012AD8 /* processing_component.cc in Sources */,
 				43095BA51994E90E00012AD8 /* high_pass_filter_impl.cc in Sources */,
 				43095BBF1994E90E00012AD8 /* rms_level.cc in Sources */,
@@ -676,8 +668,6 @@
 				43095B981994E90E00012AD8 /* audio_buffer.cc in Sources */,
 				43095BAB1994E90E00012AD8 /* noise_suppression_impl.cc in Sources */,
 				43095BD11994E90E00012AD8 /* ring_buffer.c in Sources */,
-				43095BB91994E90E00012AD8 /* nsx_core_neon.S in Sources */,
-				43095B8D1994E90E00012AD8 /* aecm_core_neon.c in Sources */,
 				43095B821994E90E00012AD8 /* aec_resampler.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -807,8 +797,6 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
-					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -821,7 +809,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -836,8 +824,6 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
-					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -849,7 +835,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

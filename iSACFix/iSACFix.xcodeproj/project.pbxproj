@@ -28,24 +28,18 @@
 		43095A601994DE5900012AD8 /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A231994DE5900012AD8 /* filterbank_tables.c */; };
 		43095A611994DE5900012AD8 /* filterbank_tables.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A241994DE5900012AD8 /* filterbank_tables.h */; };
 		43095A621994DE5900012AD8 /* filterbanks.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A251994DE5900012AD8 /* filterbanks.c */; };
-		43095A641994DE5900012AD8 /* filterbanks_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A271994DE5900012AD8 /* filterbanks_neon.S */; };
 		43095A661994DE5900012AD8 /* filters.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A291994DE5900012AD8 /* filters.c */; };
-		43095A681994DE5900012AD8 /* filters_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A2B1994DE5900012AD8 /* filters_neon.S */; };
 		43095A6A1994DE5900012AD8 /* initialize.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A2D1994DE5900012AD8 /* initialize.c */; };
 		43095A6B1994DE5900012AD8 /* isacfix.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A2E1994DE5900012AD8 /* isacfix.c */; };
 		43095A6C1994DE5900012AD8 /* lattice.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A301994DE5900012AD8 /* lattice.c */; };
-		43095A6D1994DE5900012AD8 /* lattice_armv7.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A311994DE5900012AD8 /* lattice_armv7.S */; };
 		43095A6E1994DE5900012AD8 /* lattice_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A321994DE5900012AD8 /* lattice_c.c */; };
-		43095A701994DE5900012AD8 /* lattice_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A341994DE5900012AD8 /* lattice_neon.S */; };
 		43095A711994DE5900012AD8 /* lpc_masking_model.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A351994DE5900012AD8 /* lpc_masking_model.c */; };
 		43095A721994DE5900012AD8 /* lpc_masking_model.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A361994DE5900012AD8 /* lpc_masking_model.h */; };
-		43095A731994DE5900012AD8 /* lpc_masking_model_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A371994DE5900012AD8 /* lpc_masking_model_neon.S */; };
 		43095A751994DE5900012AD8 /* lpc_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A391994DE5900012AD8 /* lpc_tables.c */; };
 		43095A761994DE5900012AD8 /* lpc_tables.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A3A1994DE5900012AD8 /* lpc_tables.h */; };
 		43095A771994DE5900012AD8 /* pitch_estimator.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A3C1994DE5900012AD8 /* pitch_estimator.c */; };
 		43095A781994DE5900012AD8 /* pitch_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A3D1994DE5900012AD8 /* pitch_estimator.h */; };
 		43095A791994DE5900012AD8 /* pitch_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A3E1994DE5900012AD8 /* pitch_filter.c */; };
-		43095A7A1994DE5900012AD8 /* pitch_filter_armv6.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A3F1994DE5900012AD8 /* pitch_filter_armv6.S */; };
 		43095A7B1994DE5900012AD8 /* pitch_filter_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A401994DE5900012AD8 /* pitch_filter_c.c */; };
 		43095A7D1994DE5900012AD8 /* pitch_gain_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A421994DE5900012AD8 /* pitch_gain_tables.c */; };
 		43095A7E1994DE5900012AD8 /* pitch_gain_tables.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A431994DE5900012AD8 /* pitch_gain_tables.h */; };
@@ -56,7 +50,6 @@
 		43095A831994DE5900012AD8 /* spectrum_ar_model_tables.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A481994DE5900012AD8 /* spectrum_ar_model_tables.h */; };
 		43095A841994DE5900012AD8 /* structs.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A491994DE5900012AD8 /* structs.h */; };
 		43095A851994DE5900012AD8 /* transform.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A4A1994DE5900012AD8 /* transform.c */; };
-		43095A861994DE5900012AD8 /* transform_neon.S in Sources */ = {isa = PBXBuildFile; fileRef = 43095A4B1994DE5900012AD8 /* transform_neon.S */; };
 		432B2D8C19CA853F001267A7 /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A231994DE5900012AD8 /* filterbank_tables.c */; };
 		432B2D8D19CA853F001267A7 /* lattice.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A301994DE5900012AD8 /* lattice.c */; };
 		432B2D8F19CA853F001267A7 /* pitch_filter_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095A401994DE5900012AD8 /* pitch_filter_c.c */; };
@@ -391,27 +384,21 @@
 			files = (
 				43095A601994DE5900012AD8 /* filterbank_tables.c in Sources */,
 				43095A6C1994DE5900012AD8 /* lattice.c in Sources */,
-				43095A6D1994DE5900012AD8 /* lattice_armv7.S in Sources */,
 				43095A7B1994DE5900012AD8 /* pitch_filter_c.c in Sources */,
 				43095A6A1994DE5900012AD8 /* initialize.c in Sources */,
 				43095A711994DE5900012AD8 /* lpc_masking_model.c in Sources */,
 				43095A5D1994DE5900012AD8 /* fft.c in Sources */,
-				43095A641994DE5900012AD8 /* filterbanks_neon.S in Sources */,
 				43095A571994DE5900012AD8 /* decode_bwe.c in Sources */,
-				43095A731994DE5900012AD8 /* lpc_masking_model_neon.S in Sources */,
 				43095A791994DE5900012AD8 /* pitch_filter.c in Sources */,
 				43095A621994DE5900012AD8 /* filterbanks.c in Sources */,
 				43095A661994DE5900012AD8 /* filters.c in Sources */,
-				43095A861994DE5900012AD8 /* transform_neon.S in Sources */,
 				43095A5A1994DE5900012AD8 /* entropy_coding.c in Sources */,
 				43095A581994DE5900012AD8 /* decode_plc.c in Sources */,
-				43095A701994DE5900012AD8 /* lattice_neon.S in Sources */,
 				43095A7D1994DE5900012AD8 /* pitch_gain_tables.c in Sources */,
 				43095A511994DE5900012AD8 /* arith_routines_logist.c in Sources */,
 				43095A771994DE5900012AD8 /* pitch_estimator.c in Sources */,
 				43095A4F1994DE5900012AD8 /* arith_routines.c in Sources */,
 				43095A531994DE5900012AD8 /* bandwidth_estimator.c in Sources */,
-				43095A7A1994DE5900012AD8 /* pitch_filter_armv6.S in Sources */,
 				43095A561994DE5900012AD8 /* decode.c in Sources */,
 				43095A6E1994DE5900012AD8 /* lattice_c.c in Sources */,
 				43095A5C1994DE5900012AD8 /* entropy_coding_neon.c in Sources */,
@@ -419,7 +406,6 @@
 				43095A501994DE5900012AD8 /* arith_routines_hist.c in Sources */,
 				43095A591994DE5900012AD8 /* encode.c in Sources */,
 				43095A851994DE5900012AD8 /* transform.c in Sources */,
-				43095A681994DE5900012AD8 /* filters_neon.S in Sources */,
 				43095A6B1994DE5900012AD8 /* isacfix.c in Sources */,
 				43095A7F1994DE5900012AD8 /* pitch_lag_tables.c in Sources */,
 				43095A751994DE5900012AD8 /* lpc_tables.c in Sources */,
@@ -539,8 +525,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
-					WEBRTC_ARCH_ARM_NEON,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_POSIX,
@@ -555,7 +539,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -566,8 +550,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
-					WEBRTC_ARCH_ARM_NEON,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_POSIX,
@@ -581,7 +563,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

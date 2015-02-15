@@ -728,7 +728,6 @@
 					"DEBUG=1",
 					WEBRTC_CODEC_OPUS,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -745,7 +744,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -757,7 +756,6 @@
 					NDEBUG,
 					WEBRTC_CODEC_OPUS,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -773,7 +771,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

@@ -1774,7 +1774,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -1807,7 +1807,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
@@ -1826,8 +1826,6 @@
 					VAR_ARRAYS,
 					FIXED_POINT,
 					OPUS_ARM_ASM,
-					DOPUS_ARM_INLINE_ASM,
-					OPUS_ARM_INLINE_EDSP,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
@@ -1843,8 +1841,9 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1862,8 +1861,6 @@
 					VAR_ARRAYS,
 					FIXED_POINT,
 					OPUS_ARM_ASM,
-					DOPUS_ARM_INLINE_ASM,
-					OPUS_ARM_INLINE_EDSP,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
@@ -1878,8 +1875,9 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};

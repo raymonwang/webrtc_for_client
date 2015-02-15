@@ -10,29 +10,29 @@
 	<string>webRTCAPP</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>27C7B3E7-B638-4C8A-B714-1937ECC948A4</key>
+		<key>90C523589990CBC065023DE3C106E7B92D8CB1C8</key>
 		<string>ssh://180.166.92.227:5678/~/git_repo/webRTC_xCode.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>webRTCAPP.xcodeproj/project.xcworkspace</string>
+	<string>webRTCAPP.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>27C7B3E7-B638-4C8A-B714-1937ECC948A4</key>
+		<key>90C523589990CBC065023DE3C106E7B92D8CB1C8</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://180.166.92.227:5678/~/git_repo/webRTC_xCode.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>27C7B3E7-B638-4C8A-B714-1937ECC948A4</string>
+	<string>90C523589990CBC065023DE3C106E7B92D8CB1C8</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>27C7B3E7-B638-4C8A-B714-1937ECC948A4</string>
+			<string>90C523589990CBC065023DE3C106E7B92D8CB1C8</string>
 			<key>IDESourceControlWCCName</key>
 			<string>webRTC_xCode</string>
 		</dict>
