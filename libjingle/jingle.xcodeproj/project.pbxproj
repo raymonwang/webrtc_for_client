@@ -111,7 +111,6 @@
 		430B27BC197F5CE10076767F /* proxyserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2722197F5CE10076767F /* proxyserver.cc */; };
 		430B27BD197F5CE10076767F /* ratelimiter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2724197F5CE10076767F /* ratelimiter.cc */; };
 		430B27BE197F5CE10076767F /* ratetracker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2726197F5CE10076767F /* ratetracker.cc */; };
-		430B27BF197F5CE10076767F /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B272E197F5CE10076767F /* scoped_autorelease_pool.mm */; };
 		430B27C0197F5CE10076767F /* sha1.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2733197F5CE10076767F /* sha1.cc */; };
 		430B27C1197F5CE10076767F /* sharedexclusivelock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2736197F5CE10076767F /* sharedexclusivelock.cc */; };
 		430B27C2197F5CE10076767F /* signalthread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2738197F5CE10076767F /* signalthread.cc */; };
@@ -277,7 +276,6 @@
 		4328856B1980A8160000F16A /* pubsubstateclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B264B197F5CC60076767F /* pubsubstateclient.cc */; };
 		4328859D1980B7840000F16A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328859B1980B76A0000F16A /* SystemConfiguration.framework */; };
 		4328859E1980B7880000F16A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885991980B7620000F16A /* Security.framework */; };
-		432885C51980BD520000F16A /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430B272E197F5CE10076767F /* scoped_autorelease_pool.mm */; };
 		432885C61980C0020000F16A /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430B2767197F5CE10076767F /* thread.cc */; };
 		43AD84CC1990EB3F006EAB38 /* macasyncsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 432885AD1980BC3E0000F16A /* macasyncsocket.cc */; };
 		43AD84CD1990EB3F006EAB38 /* maccocoasocketserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 432885B11980BC3E0000F16A /* maccocoasocketserver.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1277,7 +1275,6 @@
 				430B2783197F5CE10076767F /* asyncsocket.cc in Sources */,
 				430B27A1197F5CE10076767F /* linux.cc in Sources */,
 				430B27A9197F5CE10076767F /* multipart.cc in Sources */,
-				430B27BF197F5CE10076767F /* scoped_autorelease_pool.mm in Sources */,
 				430B27B6197F5CE10076767F /* pathutils.cc in Sources */,
 				430B266E197F5CC60076767F /* chatroommoduleimpl.cc in Sources */,
 				430B27B8197F5CE10076767F /* posix.cc in Sources */,
@@ -1310,7 +1307,6 @@
 				43AD84CF1990EB3F006EAB38 /* macsocketserver.cc in Sources */,
 				43AD84D01990EB3F006EAB38 /* macutils.cc in Sources */,
 				43AD84D11990EB3F006EAB38 /* macwindowpicker.cc in Sources */,
-				432885C51980BD520000F16A /* scoped_autorelease_pool.mm in Sources */,
 				432884E51980A8160000F16A /* httpclient.cc in Sources */,
 				432884E61980A8160000F16A /* sslstreamadapter.cc in Sources */,
 				432884E71980A8160000F16A /* xmpplogintask.cc in Sources */,

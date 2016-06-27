@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>peerconnection_client.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>58</integer>
+		</dict>
+		<key>peerconnection_server.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>57</integer>
+		</dict>
 		<key>webRTCAPP.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +22,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>43C67C871D2112C100427D35</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43C67CCA1D2113E600427D35</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>43ECEE8E197CA80B00E9267B</key>
 		<dict>
 			<key>primary</key>

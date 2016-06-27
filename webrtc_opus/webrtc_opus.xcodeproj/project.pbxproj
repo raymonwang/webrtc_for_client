@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		43095549199483EC00012AD8 /* opus_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095545199483EC00012AD8 /* opus_interface.h */; };
-		4309554A199483EC00012AD8 /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095547199483EC00012AD8 /* opus_interface.c */; };
+		43C67C571D20CF6C00427D35 /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095547199483EC00012AD8 /* opus_interface.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,7 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4309554A199483EC00012AD8 /* opus_interface.c in Sources */,
+				43C67C571D20CF6C00427D35 /* opus_interface.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

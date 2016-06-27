@@ -815,7 +815,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = jingle_p2p;
 				SKIP_INSTALL = YES;
