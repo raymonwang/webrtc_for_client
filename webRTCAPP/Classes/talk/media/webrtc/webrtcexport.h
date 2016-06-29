@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2004--2013, Google Inc.
+ * Copyright 2004--2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -24,9 +24,13 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #ifndef TALK_MEDIA_WEBRTC_WEBRTCEXPORT_H_
 #define TALK_MEDIA_WEBRTC_WEBRTCEXPORT_H_
 
+// When building for Chrome a part of the code can be built into
+// a shared library, which is controlled by these macros.
+// For all other builds, we always build a static library.
 #if !defined(GOOGLE_CHROME_BUILD) && !defined(CHROMIUM_BUILD)
 #define LIBPEERCONNECTION_LIB 1
 #endif

@@ -794,9 +794,6 @@ int32_t AudioDeviceIOS::InitPlayout() {
     _playIsInitialized = true;
 
     if (!_recIsInitialized) {
-        //保存原始audiosession状态
-        saveAudioSession();
-        
         // Audio init
         if (InitPlayOrRecord() == -1) {
             // todo: Handle error
@@ -854,8 +851,6 @@ int32_t AudioDeviceIOS::InitRecording() {
     _recIsInitialized = true;
 
     if (!_playIsInitialized) {
-        //保存原始audiosession状态
-        saveAudioSession();
         // Audio init
         if (InitPlayOrRecord() == -1) {
             // todo: Handle error
@@ -939,9 +934,6 @@ int32_t AudioDeviceIOS::StopRecording() {
     if (!_playing) {
         // Both playout and recording has stopped, shutdown the device
         ShutdownPlayOrRecord();
-        
-        //恢复原始audiosession状态
-        restoreAudioSession();
     }
 
     _recIsInitialized = false;
@@ -1922,28 +1914,6 @@ bool AudioDeviceIOS::CaptureWorkerThread() {
     }
 
     return true;
-}
-
-void AudioDeviceIOS::saveAudioSession()
-{
-    AVAudioSession* session = [AVAudioSession sharedInstance];
-    if (session) {
-        _oldMode = [[session mode] UTF8String];
-        _oldCategory = [[session category] UTF8String];
-    }
-}
-
-void AudioDeviceIOS::restoreAudioSession()
-{
-    AVAudioSession* session = [AVAudioSession sharedInstance];
-    if (session) {
-        if (_oldMode) {
-            [session setMode:[NSString stringWithUTF8String:_oldMode] error:nil];
-        }
-        if (_oldCategory) {
-            [session setCategory:[NSString stringWithUTF8String:_oldCategory] error:nil];
-        }
-    }
 }
 
 }  // namespace webrtc

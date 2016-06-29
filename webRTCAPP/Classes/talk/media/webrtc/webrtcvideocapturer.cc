@@ -1,29 +1,29 @@
-// libjingle
-// Copyright 2011 Google Inc.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-//  1. Redistributions of source code must retain the above copyright notice,
-//     this list of conditions and the following disclaimer.
-//  2. Redistributions in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other materials provided with the distribution.
-//  3. The name of the author may not be used to endorse or promote products
-//     derived from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Implementation of class WebRtcVideoCapturer.
+/*
+ * libjingle
+ * Copyright 2011 Google Inc.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
+ *     this list of conditions and the following disclaimer.
+ *  2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *  3. The name of the author may not be used to endorse or promote products
+ *     derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "talk/media/webrtc/webrtcvideocapturer.h"
 
@@ -32,13 +32,15 @@
 #endif
 
 #ifdef HAVE_WEBRTC_VIDEO
-#include "talk/base/criticalsection.h"
-#include "talk/base/logging.h"
-#include "talk/base/thread.h"
-#include "talk/base/timeutils.h"
 #include "talk/media/webrtc/webrtcvideoframe.h"
+#include "talk/media/webrtc/webrtcvideoframefactory.h"
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/base/safe_conversions.h"
+#include "webrtc/base/thread.h"
+#include "webrtc/base/timeutils.h"
 
-#include "talk/base/win32.h"  // Need this to #include the impl files.
+#include "webrtc/base/win32.h"  // Need this to #include the impl files.
 #include "webrtc/modules/video_capture/include/video_capture_factory.h"
 
 namespace cricket {
@@ -53,10 +55,10 @@ struct kVideoFourCCEntry {
 static kVideoFourCCEntry kSupportedFourCCs[] = {
   { FOURCC_I420, webrtc::kVideoI420 },   // 12 bpp, no conversion.
   { FOURCC_YV12, webrtc::kVideoYV12 },   // 12 bpp, no conversion.
-  { FOURCC_NV12, webrtc::kVideoNV12 },   // 12 bpp, fast conversion.
-  { FOURCC_NV21, webrtc::kVideoNV21 },   // 12 bpp, fast conversion.
   { FOURCC_YUY2, webrtc::kVideoYUY2 },   // 16 bpp, fast conversion.
   { FOURCC_UYVY, webrtc::kVideoUYVY },   // 16 bpp, fast conversion.
+  { FOURCC_NV12, webrtc::kVideoNV12 },   // 12 bpp, fast conversion.
+  { FOURCC_NV21, webrtc::kVideoNV21 },   // 12 bpp, fast conversion.
   { FOURCC_MJPG, webrtc::kVideoMJPEG },  // compressed, slow conversion.
   { FOURCC_ARGB, webrtc::kVideoARGB },   // 32 bpp, slow conversion.
   { FOURCC_24BG, webrtc::kVideoRGB24 },  // 24 bpp, slow conversion.
@@ -126,12 +128,14 @@ WebRtcVideoCapturer::WebRtcVideoCapturer()
     : factory_(new WebRtcVcmFactory),
       module_(NULL),
       captured_frames_(0) {
+  set_frame_factory(new WebRtcVideoFrameFactory());
 }
 
 WebRtcVideoCapturer::WebRtcVideoCapturer(WebRtcVcmFactoryInterface* factory)
     : factory_(factory),
       module_(NULL),
       captured_frames_(0) {
+  set_frame_factory(new WebRtcVideoFrameFactory());
 }
 
 WebRtcVideoCapturer::~WebRtcVideoCapturer() {
@@ -252,7 +256,7 @@ CaptureState WebRtcVideoCapturer::Start(const VideoFormat& capture_format) {
     return CS_NO_DEVICE;
   }
 
-  talk_base::CritScope cs(&critical_section_stopping_);
+  rtc::CritScope cs(&critical_section_stopping_);
   // TODO(hellner): weird to return failure when it is in fact actually running.
   if (IsRunning()) {
     LOG(LS_ERROR) << "The capturer is already running";
@@ -268,7 +272,7 @@ CaptureState WebRtcVideoCapturer::Start(const VideoFormat& capture_format) {
   }
 
   std::string camera_id(GetId());
-  uint32 start = talk_base::Time();
+  uint32 start = rtc::Time();
   module_->RegisterCaptureDataCallback(*this);
   if (module_->StartCapture(cap) != 0) {
     LOG(LS_ERROR) << "Camera '" << camera_id << "' failed to start";
@@ -277,7 +281,7 @@ CaptureState WebRtcVideoCapturer::Start(const VideoFormat& capture_format) {
 
   LOG(LS_INFO) << "Camera '" << camera_id << "' started with format "
                << capture_format.ToString() << ", elapsed time "
-               << talk_base::TimeSince(start) << " ms";
+               << rtc::TimeSince(start) << " ms";
 
   captured_frames_ = 0;
   SetCaptureState(CS_RUNNING);
@@ -290,9 +294,9 @@ CaptureState WebRtcVideoCapturer::Start(const VideoFormat& capture_format) {
 // controlling the camera is reversed: system frame -> OnIncomingCapturedFrame;
 // Stop -> system stop camera).
 void WebRtcVideoCapturer::Stop() {
-  talk_base::CritScope cs(&critical_section_stopping_);
+  rtc::CritScope cs(&critical_section_stopping_);
   if (IsRunning()) {
-    talk_base::Thread::Current()->Clear(this);
+    rtc::Thread::Current()->Clear(this);
     module_->StopCapture();
     module_->DeRegisterCaptureDataCallback();
 
@@ -331,7 +335,7 @@ void WebRtcVideoCapturer::OnIncomingCapturedFrame(const int32_t id,
   // the same lock. Due to the reversed order, we have to try-lock in order to
   // avoid a potential deadlock. Besides, if we can't enter because we're
   // stopping, we may as well drop the frame.
-  talk_base::TryCritScope cs(&critical_section_stopping_);
+  rtc::TryCritScope cs(&critical_section_stopping_);
   if (!cs.locked() || !IsRunning()) {
     // Capturer has been stopped or is in the process of stopping.
     return;
@@ -348,8 +352,8 @@ void WebRtcVideoCapturer::OnIncomingCapturedFrame(const int32_t id,
   // Signal down stream components on captured frame.
   // The CapturedFrame class doesn't support planes. We have to ExtractBuffer
   // to one block for it.
-  int length = webrtc::CalcBufferSize(webrtc::kI420,
-                                      sample.width(), sample.height());
+  size_t length =
+      webrtc::CalcBufferSize(webrtc::kI420, sample.width(), sample.height());
   capture_buffer_.resize(length);
   // TODO(ronghuawu): Refactor the WebRtcCapturedFrame to avoid memory copy.
   webrtc::ExtractBuffer(sample, length, &capture_buffer_[0]);
@@ -365,7 +369,7 @@ void WebRtcVideoCapturer::OnCaptureDelayChanged(const int32_t id,
 // WebRtcCapturedFrame
 WebRtcCapturedFrame::WebRtcCapturedFrame(const webrtc::I420VideoFrame& sample,
                                          void* buffer,
-                                         int length) {
+                                         size_t length) {
   width = sample.width();
   height = sample.height();
   fourcc = FOURCC_I420;
@@ -373,9 +377,9 @@ WebRtcCapturedFrame::WebRtcCapturedFrame(const webrtc::I420VideoFrame& sample,
   pixel_width = 1;
   pixel_height = 1;
   // Convert units from VideoFrame RenderTimeMs to CapturedFrame (nanoseconds).
-  elapsed_time = sample.render_time_ms() * talk_base::kNumNanosecsPerMillisec;
+  elapsed_time = sample.render_time_ms() * rtc::kNumNanosecsPerMillisec;
   time_stamp = elapsed_time;
-  data_size = length;
+  data_size = rtc::checked_cast<uint32>(length);
   data = buffer;
 }
 

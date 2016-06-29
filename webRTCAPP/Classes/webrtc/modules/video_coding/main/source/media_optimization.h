@@ -58,7 +58,7 @@ class MediaOptimization {
   // an internal critical section.
   uint32_t SetTargetRates(uint32_t target_bitrate,
                           uint8_t fraction_lost,
-                          uint32_t round_trip_time_ms,
+                          int64_t round_trip_time_ms,
                           VCMProtectionCallback* protection_callback,
                           VCMQMSettingsCallback* qmsettings_callback);
 
@@ -76,10 +76,8 @@ class MediaOptimization {
 
   void UpdateContentData(const VideoContentMetrics* content_metrics);
 
-  // Informs Media Optimization of encoding output: Length and frame type.
-  int32_t UpdateWithEncodedData(int encoded_length,
-                                uint32_t timestamp,
-                                FrameType encoded_frame_type);
+  // Informs Media Optimization of encoded output.
+  int32_t UpdateWithEncodedData(const EncodedImage& encoded_image);
 
   uint32_t InputFrameRate();
   uint32_t SentFrameRate();

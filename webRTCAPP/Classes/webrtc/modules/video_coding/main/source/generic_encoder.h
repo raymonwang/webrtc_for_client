@@ -37,7 +37,7 @@ public:
     * Callback implementation - codec encode complete
     */
     int32_t Encoded(
-        EncodedImage& encodedImage,
+        const EncodedImage& encodedImage,
         const CodecSpecificInfo* codecSpecificInfo = NULL,
         const RTPFragmentationHeader* fragmentationHeader = NULL);
     /*
@@ -84,7 +84,7 @@ public:
     */
     int32_t InitEncode(const VideoCodec* settings,
                        int32_t numberOfCores,
-                       uint32_t maxPayloadSize);
+                       size_t maxPayloadSize);
     /**
     * Encode raw image
     * inputFrame        : Frame containing raw image
@@ -103,7 +103,7 @@ public:
     /**
     * Set a new packet loss rate and a new round-trip time in milliseconds.
     */
-    int32_t SetChannelParameters(int32_t packetLoss, int rtt);
+    int32_t SetChannelParameters(int32_t packetLoss, int64_t rtt);
     int32_t CodecConfigParameters(uint8_t* buffer, int32_t size);
     /**
     * Register a transport callback which will be called to deliver the encoded

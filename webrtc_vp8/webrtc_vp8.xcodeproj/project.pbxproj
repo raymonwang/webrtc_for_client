@@ -1,0 +1,335 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43C69C3C1D2281A600427D35 /* default_temporal_layers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C201D2281A600427D35 /* default_temporal_layers.cc */; };
+		43C69C3D1D2281A600427D35 /* default_temporal_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C211D2281A600427D35 /* default_temporal_layers.h */; };
+		43C69C3F1D2281A600427D35 /* vp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C241D2281A600427D35 /* vp8.h */; };
+		43C69C401D2281A600427D35 /* vp8_common_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C251D2281A600427D35 /* vp8_common_types.h */; };
+		43C69C411D2281A600427D35 /* realtime_temporal_layers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */; };
+		43C69C421D2281A600427D35 /* reference_picture_selection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C281D2281A600427D35 /* reference_picture_selection.cc */; };
+		43C69C431D2281A600427D35 /* reference_picture_selection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C291D2281A600427D35 /* reference_picture_selection.h */; };
+		43C69C451D2281A600427D35 /* screenshare_layers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C2B1D2281A600427D35 /* screenshare_layers.cc */; };
+		43C69C461D2281A600427D35 /* screenshare_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C2C1D2281A600427D35 /* screenshare_layers.h */; };
+		43C69C481D2281A600427D35 /* simulcast_encoder_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */; };
+		43C69C491D2281A600427D35 /* simulcast_encoder_adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C2F1D2281A600427D35 /* simulcast_encoder_adapter.h */; };
+		43C69C4D1D2281A600427D35 /* temporal_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C331D2281A600427D35 /* temporal_layers.h */; };
+		43C69C4F1D2281A600427D35 /* vp8_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C371D2281A600427D35 /* vp8_factory.cc */; };
+		43C69C501D2281A600427D35 /* vp8_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C381D2281A600427D35 /* vp8_factory.h */; };
+		43C69C511D2281A600427D35 /* vp8_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C391D2281A600427D35 /* vp8_impl.cc */; };
+		43C69C521D2281A600427D35 /* vp8_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C3A1D2281A600427D35 /* vp8_impl.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43C69BE51D2280DE00427D35 /* libwebrtc_vp8.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_vp8.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C69C201D2281A600427D35 /* default_temporal_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default_temporal_layers.cc; sourceTree = "<group>"; };
+		43C69C211D2281A600427D35 /* default_temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_temporal_layers.h; sourceTree = "<group>"; };
+		43C69C241D2281A600427D35 /* vp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8.h; sourceTree = "<group>"; };
+		43C69C251D2281A600427D35 /* vp8_common_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_common_types.h; sourceTree = "<group>"; };
+		43C69C261D2281A600427D35 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = realtime_temporal_layers.cc; sourceTree = "<group>"; };
+		43C69C281D2281A600427D35 /* reference_picture_selection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reference_picture_selection.cc; sourceTree = "<group>"; };
+		43C69C291D2281A600427D35 /* reference_picture_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference_picture_selection.h; sourceTree = "<group>"; };
+		43C69C2B1D2281A600427D35 /* screenshare_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = screenshare_layers.cc; sourceTree = "<group>"; };
+		43C69C2C1D2281A600427D35 /* screenshare_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screenshare_layers.h; sourceTree = "<group>"; };
+		43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulcast_encoder_adapter.cc; sourceTree = "<group>"; };
+		43C69C2F1D2281A600427D35 /* simulcast_encoder_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulcast_encoder_adapter.h; sourceTree = "<group>"; };
+		43C69C331D2281A600427D35 /* temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temporal_layers.h; sourceTree = "<group>"; };
+		43C69C361D2281A600427D35 /* vp8.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vp8.gyp; sourceTree = "<group>"; };
+		43C69C371D2281A600427D35 /* vp8_factory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_factory.cc; sourceTree = "<group>"; };
+		43C69C381D2281A600427D35 /* vp8_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_factory.h; sourceTree = "<group>"; };
+		43C69C391D2281A600427D35 /* vp8_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_impl.cc; sourceTree = "<group>"; };
+		43C69C3A1D2281A600427D35 /* vp8_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_impl.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43C69BE21D2280DE00427D35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43C69BDC1D2280DE00427D35 = {
+			isa = PBXGroup;
+			children = (
+				43C69C1F1D2281A600427D35 /* vp8 */,
+				43C69BE61D2280DE00427D35 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43C69BE61D2280DE00427D35 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43C69BE51D2280DE00427D35 /* libwebrtc_vp8.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43C69C1F1D2281A600427D35 /* vp8 */ = {
+			isa = PBXGroup;
+			children = (
+				43C69C231D2281A600427D35 /* include */,
+				43C69C201D2281A600427D35 /* default_temporal_layers.cc */,
+				43C69C211D2281A600427D35 /* default_temporal_layers.h */,
+				43C69C261D2281A600427D35 /* OWNERS */,
+				43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */,
+				43C69C281D2281A600427D35 /* reference_picture_selection.cc */,
+				43C69C291D2281A600427D35 /* reference_picture_selection.h */,
+				43C69C2B1D2281A600427D35 /* screenshare_layers.cc */,
+				43C69C2C1D2281A600427D35 /* screenshare_layers.h */,
+				43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */,
+				43C69C2F1D2281A600427D35 /* simulcast_encoder_adapter.h */,
+				43C69C331D2281A600427D35 /* temporal_layers.h */,
+				43C69C361D2281A600427D35 /* vp8.gyp */,
+				43C69C371D2281A600427D35 /* vp8_factory.cc */,
+				43C69C381D2281A600427D35 /* vp8_factory.h */,
+				43C69C391D2281A600427D35 /* vp8_impl.cc */,
+				43C69C3A1D2281A600427D35 /* vp8_impl.h */,
+			);
+			name = vp8;
+			path = ../webRTCAPP/Classes/webrtc/modules/video_coding/codecs/vp8;
+			sourceTree = "<group>";
+		};
+		43C69C231D2281A600427D35 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43C69C241D2281A600427D35 /* vp8.h */,
+				43C69C251D2281A600427D35 /* vp8_common_types.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43C69BE31D2280DE00427D35 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43C69C401D2281A600427D35 /* vp8_common_types.h in Headers */,
+				43C69C521D2281A600427D35 /* vp8_impl.h in Headers */,
+				43C69C501D2281A600427D35 /* vp8_factory.h in Headers */,
+				43C69C4D1D2281A600427D35 /* temporal_layers.h in Headers */,
+				43C69C3D1D2281A600427D35 /* default_temporal_layers.h in Headers */,
+				43C69C431D2281A600427D35 /* reference_picture_selection.h in Headers */,
+				43C69C491D2281A600427D35 /* simulcast_encoder_adapter.h in Headers */,
+				43C69C3F1D2281A600427D35 /* vp8.h in Headers */,
+				43C69C461D2281A600427D35 /* screenshare_layers.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43C69BE41D2280DE00427D35 /* webrtc_vp8 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43C69BE91D2280DE00427D35 /* Build configuration list for PBXNativeTarget "webrtc_vp8" */;
+			buildPhases = (
+				43C69BE11D2280DE00427D35 /* Sources */,
+				43C69BE21D2280DE00427D35 /* Frameworks */,
+				43C69BE31D2280DE00427D35 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = webrtc_vp8;
+			productName = webrtc_vp8;
+			productReference = 43C69BE51D2280DE00427D35 /* libwebrtc_vp8.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43C69BDD1D2280DE00427D35 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangxin;
+				TargetAttributes = {
+					43C69BE41D2280DE00427D35 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 43C69BE01D2280DE00427D35 /* Build configuration list for PBXProject "webrtc_vp8" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43C69BDC1D2280DE00427D35;
+			productRefGroup = 43C69BE61D2280DE00427D35 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43C69BE41D2280DE00427D35 /* webrtc_vp8 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43C69BE11D2280DE00427D35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43C69C511D2281A600427D35 /* vp8_impl.cc in Sources */,
+				43C69C4F1D2281A600427D35 /* vp8_factory.cc in Sources */,
+				43C69C451D2281A600427D35 /* screenshare_layers.cc in Sources */,
+				43C69C3C1D2281A600427D35 /* default_temporal_layers.cc in Sources */,
+				43C69C421D2281A600427D35 /* reference_picture_selection.cc in Sources */,
+				43C69C481D2281A600427D35 /* simulcast_encoder_adapter.cc in Sources */,
+				43C69C411D2281A600427D35 /* realtime_temporal_layers.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43C69BE71D2280DE00427D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43C69BE81D2280DE00427D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43C69BEA1D2280DE00427D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libvpx/source/libvpx",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43C69BEB1D2280DE00427D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libvpx/source/libvpx",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43C69BE01D2280DE00427D35 /* Build configuration list for PBXProject "webrtc_vp8" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43C69BE71D2280DE00427D35 /* Debug */,
+				43C69BE81D2280DE00427D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43C69BE91D2280DE00427D35 /* Build configuration list for PBXNativeTarget "webrtc_vp8" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43C69BEA1D2280DE00427D35 /* Debug */,
+				43C69BEB1D2280DE00427D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43C69BDD1D2280DE00427D35 /* Project object */;
+}

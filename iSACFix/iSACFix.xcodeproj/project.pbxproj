@@ -92,6 +92,9 @@
 		432B2DBD19CA853F001267A7 /* entropy_coding.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A1E1994DE5900012AD8 /* entropy_coding.h */; };
 		432B2DBE19CA853F001267A7 /* lpc_masking_model.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A361994DE5900012AD8 /* lpc_masking_model.h */; };
 		432B2DBF19CA853F001267A7 /* codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095A181994DE5900012AD8 /* codec.h */; };
+		43C696F11D222D2B00427D35 /* audio_encoder_isacfix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696EE1D222D2B00427D35 /* audio_encoder_isacfix.cc */; };
+		43C696F21D222D2B00427D35 /* pitch_estimator_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C696EF1D222D2B00427D35 /* pitch_estimator_c.c */; };
+		43C696F31D222D2B00427D35 /* transform_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C696F01D222D2B00427D35 /* transform_tables.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -150,6 +153,9 @@
 		43095A4A1994DE5900012AD8 /* transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform.c; sourceTree = "<group>"; };
 		43095A4B1994DE5900012AD8 /* transform_neon.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = transform_neon.S; sourceTree = "<group>"; };
 		432B2DC319CA853F001267A7 /* libiSACFix_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSACFix_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C696EE1D222D2B00427D35 /* audio_encoder_isacfix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_isacfix.cc; sourceTree = "<group>"; };
+		43C696EF1D222D2B00427D35 /* pitch_estimator_c.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pitch_estimator_c.c; sourceTree = "<group>"; };
+		43C696F01D222D2B00427D35 /* transform_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform_tables.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +214,9 @@
 		43095A101994DE5900012AD8 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				43C696EE1D222D2B00427D35 /* audio_encoder_isacfix.cc */,
+				43C696EF1D222D2B00427D35 /* pitch_estimator_c.c */,
+				43C696F01D222D2B00427D35 /* transform_tables.c */,
 				43095A111994DE5900012AD8 /* Android.mk */,
 				43095A121994DE5900012AD8 /* arith_routines.c */,
 				43095A131994DE5900012AD8 /* arith_routines_hist.c */,
@@ -385,6 +394,7 @@
 				43095A601994DE5900012AD8 /* filterbank_tables.c in Sources */,
 				43095A6C1994DE5900012AD8 /* lattice.c in Sources */,
 				43095A7B1994DE5900012AD8 /* pitch_filter_c.c in Sources */,
+				43C696F11D222D2B00427D35 /* audio_encoder_isacfix.cc in Sources */,
 				43095A6A1994DE5900012AD8 /* initialize.c in Sources */,
 				43095A711994DE5900012AD8 /* lpc_masking_model.c in Sources */,
 				43095A5D1994DE5900012AD8 /* fft.c in Sources */,
@@ -400,9 +410,11 @@
 				43095A4F1994DE5900012AD8 /* arith_routines.c in Sources */,
 				43095A531994DE5900012AD8 /* bandwidth_estimator.c in Sources */,
 				43095A561994DE5900012AD8 /* decode.c in Sources */,
+				43C696F31D222D2B00427D35 /* transform_tables.c in Sources */,
 				43095A6E1994DE5900012AD8 /* lattice_c.c in Sources */,
 				43095A5C1994DE5900012AD8 /* entropy_coding_neon.c in Sources */,
 				43095A821994DE5900012AD8 /* spectrum_ar_model_tables.c in Sources */,
+				43C696F21D222D2B00427D35 /* pitch_estimator_c.c in Sources */,
 				43095A501994DE5900012AD8 /* arith_routines_hist.c in Sources */,
 				43095A591994DE5900012AD8 /* encode.c in Sources */,
 				43095A851994DE5900012AD8 /* transform.c in Sources */,

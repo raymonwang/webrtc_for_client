@@ -36,35 +36,14 @@
 #define WEBRTC_SPL_ABS_W32(a) \
     (((int32_t)a >= 0) ? ((int32_t)a) : -((int32_t)a))
 
-#ifdef WEBRTC_ARCH_LITTLE_ENDIAN
-#define WEBRTC_SPL_GET_BYTE(a, nr)  (((int8_t *)a)[nr])
-#define WEBRTC_SPL_SET_BYTE(d_ptr, val, index) \
-    (((int8_t *)d_ptr)[index] = (val))
-#else
-#define WEBRTC_SPL_GET_BYTE(a, nr) \
-    ((((int16_t *)a)[nr >> 1]) >> (((nr + 1) & 0x1) * 8) & 0x00ff)
-#define WEBRTC_SPL_SET_BYTE(d_ptr, val, index) \
-    ((int16_t *)d_ptr)[index >> 1] = \
-    ((((int16_t *)d_ptr)[index >> 1]) \
-    & (0x00ff << (8 * ((index) & 0x1)))) | (val << (8 * ((index + 1) & 0x1)))
-#endif
-
 #define WEBRTC_SPL_MUL(a, b) \
     ((int32_t) ((int32_t)(a) * (int32_t)(b)))
 #define WEBRTC_SPL_UMUL(a, b) \
     ((uint32_t) ((uint32_t)(a) * (uint32_t)(b)))
-#define WEBRTC_SPL_UMUL_16_16(a, b) \
-    ((uint32_t) (uint16_t)(a) * (uint16_t)(b))
 #define WEBRTC_SPL_UMUL_32_16(a, b) \
     ((uint32_t) ((uint32_t)(a) * (uint16_t)(b)))
-#define WEBRTC_SPL_UMUL_32_16_RSFT16(a, b) \
-    ((uint32_t) ((uint32_t)(a) * (uint16_t)(b)) >> 16)
 #define WEBRTC_SPL_MUL_16_U16(a, b) \
     ((int32_t)(int16_t)(a) * (uint16_t)(b))
-#define WEBRTC_SPL_DIV(a, b) \
-    ((int32_t) ((int32_t)(a) / (int32_t)(b)))
-#define WEBRTC_SPL_UDIV(a, b) \
-    ((uint32_t) ((uint32_t)(a) / (uint32_t)(b)))
 
 #ifndef WEBRTC_ARCH_ARM_V7
 // For ARMv7 platforms, these are inline functions in spl_inl_armv7.h
@@ -75,9 +54,6 @@
 #define WEBRTC_SPL_MUL_16_32_RSFT16(a, b) \
     (WEBRTC_SPL_MUL_16_16(a, b >> 16) \
      + ((WEBRTC_SPL_MUL_16_16(a, (b & 0xffff) >> 1) + 0x4000) >> 15))
-#define WEBRTC_SPL_MUL_32_32_RSFT32(a32a, a32b, b32) \
-    ((int32_t)(WEBRTC_SPL_MUL_16_32_RSFT16(a32a, b32) \
-    + (WEBRTC_SPL_MUL_16_32_RSFT16(a32b, b32) >> 16)))
 #endif
 #endif
 
@@ -102,12 +78,7 @@
 #define WEBRTC_SPL_SCALEDIFF32(A, B, C) \
     (C + (B >> 16) * A + (((uint32_t)(0x0000FFFF & B) * A) >> 16))
 
-#define WEBRTC_SPL_ADD_SAT_W32(a, b)    WebRtcSpl_AddSatW32(a, b)
 #define WEBRTC_SPL_SAT(a, b, c)         (b > a ? a : b < c ? c : b)
-#define WEBRTC_SPL_MUL_32_16(a, b)      ((a) * (b))
-
-#define WEBRTC_SPL_SUB_SAT_W32(a, b)    WebRtcSpl_SubSatW32(a, b)
-#define WEBRTC_SPL_ADD_SAT_W16(a, b)    WebRtcSpl_AddSatW16(a, b)
 
 // Shifting with negative numbers allowed
 // Positive means left shift
@@ -116,13 +87,9 @@
 
 // Shifting with negative numbers not allowed
 // We cannot do casting here due to signed/unsigned problem
-#define WEBRTC_SPL_RSHIFT_W16(x, c)     ((x) >> (c))
-#define WEBRTC_SPL_LSHIFT_W16(x, c)     ((x) << (c))
-#define WEBRTC_SPL_RSHIFT_W32(x, c)     ((x) >> (c))
 #define WEBRTC_SPL_LSHIFT_W32(x, c)     ((x) << (c))
 
 #define WEBRTC_SPL_RSHIFT_U32(x, c)     ((uint32_t)(x) >> (c))
-#define WEBRTC_SPL_LSHIFT_U32(x, c)     ((uint32_t)(x) << (c))
 
 #define WEBRTC_SPL_RAND(a) \
     ((int16_t)(WEBRTC_SPL_MUL_16_16_RSFT((a), 18816, 7) & 0x00007fff))
@@ -131,13 +98,8 @@
 extern "C" {
 #endif
 
-#define WEBRTC_SPL_MEMCPY_W8(v1, v2, length) \
-  memcpy(v1, v2, (length) * sizeof(char))
 #define WEBRTC_SPL_MEMCPY_W16(v1, v2, length) \
   memcpy(v1, v2, (length) * sizeof(int16_t))
-
-#define WEBRTC_SPL_MEMMOVE_W16(v1, v2, length) \
-  memmove(v1, v2, (length) * sizeof(int16_t))
 
 // inline functions:
 #include "webrtc/common_audio/signal_processing/include/spl_inl.h"
@@ -152,12 +114,9 @@ extern "C" {
 // functions.
 void WebRtcSpl_Init();
 
-// Get SPL Version
-int16_t WebRtcSpl_get_version(char* version, int16_t length_in_bytes);
-
-int WebRtcSpl_GetScalingSquare(int16_t* in_vector,
-                               int in_vector_length,
-                               int times);
+int16_t WebRtcSpl_GetScalingSquare(int16_t* in_vector,
+                                   int in_vector_length,
+                                   int times);
 
 // Copy and set operations. Implementation in copy_set_operations.c.
 // Descriptions at bottom of file.
@@ -170,18 +129,14 @@ void WebRtcSpl_MemSetW32(int32_t* vector,
 void WebRtcSpl_MemCpyReversedOrder(int16_t* out_vector,
                                    int16_t* in_vector,
                                    int vector_length);
-int16_t WebRtcSpl_CopyFromEndW16(const int16_t* in_vector,
-                                 int16_t in_vector_length,
-                                 int16_t samples,
-                                 int16_t* out_vector);
-int16_t WebRtcSpl_ZerosArrayW16(int16_t* vector,
-                                int16_t vector_length);
-int16_t WebRtcSpl_ZerosArrayW32(int32_t* vector,
-                                int16_t vector_length);
-int16_t WebRtcSpl_OnesArrayW16(int16_t* vector,
-                               int16_t vector_length);
-int16_t WebRtcSpl_OnesArrayW32(int32_t* vector,
-                               int16_t vector_length);
+void WebRtcSpl_CopyFromEndW16(const int16_t* in_vector,
+                              int in_vector_length,
+                              int samples,
+                              int16_t* out_vector);
+void WebRtcSpl_ZerosArrayW16(int16_t* vector,
+                             int vector_length);
+void WebRtcSpl_ZerosArrayW32(int32_t* vector,
+                             int vector_length);
 // End: Copy and set operations.
 
 
@@ -428,15 +383,6 @@ int WebRtcSpl_ScaleAndAddVectorsWithRoundC(const int16_t* in_vector1,
                                            int right_shifts,
                                            int16_t* out_vector,
                                            int length);
-#if (defined WEBRTC_DETECT_ARM_NEON) || (defined WEBRTC_ARCH_ARM_NEON)
-int WebRtcSpl_ScaleAndAddVectorsWithRoundNeon(const int16_t* in_vector1,
-                                              int16_t in_vector1_scale,
-                                              const int16_t* in_vector2,
-                                              int16_t in_vector2_scale,
-                                              int right_shifts,
-                                              int16_t* out_vector,
-                                              int length);
-#endif
 #if defined(MIPS_DSP_R1_LE)
 int WebRtcSpl_ScaleAndAddVectorsWithRound_mips(const int16_t* in_vector1,
                                                int16_t in_vector1_scale,
@@ -510,17 +456,15 @@ int WebRtcSpl_AutoCorrelation(const int16_t* in_vector,
 // does NOT use the 64 bit class
 //
 // Input:
-//      - auto_corr : Vector with autocorrelation values of length >=
-//                    |use_order|+1
-//      - use_order : The LPC filter order (support up to order 20)
+//      - auto_corr : Vector with autocorrelation values of length >= |order|+1
+//      - order     : The LPC filter order (support up to order 20)
 //
 // Output:
-//      - lpc_coef  : lpc_coef[0..use_order] LPC coefficients in Q12
-//      - refl_coef : refl_coef[0...use_order-1]| Reflection coefficients in
-//                    Q15
+//      - lpc_coef  : lpc_coef[0..order] LPC coefficients in Q12
+//      - refl_coef : refl_coef[0...order-1]| Reflection coefficients in Q15
 //
 // Return value     : 1 for stable 0 for unstable
-int16_t WebRtcSpl_LevinsonDurbin(int32_t* auto_corr,
+int16_t WebRtcSpl_LevinsonDurbin(const int32_t* auto_corr,
                                  int16_t* lpc_coef,
                                  int16_t* refl_coef,
                                  int16_t order);
@@ -704,9 +648,23 @@ int WebRtcSpl_FilterAR(const int16_t* ar_coef,
                        int16_t* out_vector_low,
                        int out_vector_low_length);
 
-void WebRtcSpl_FilterMAFastQ12(int16_t* in_vector,
+// WebRtcSpl_FilterMAFastQ12(...)
+//
+// Performs a MA filtering on a vector in Q12
+//
+// Input:
+//      - in_vector         : Input samples (state in positions
+//                            in_vector[-order] .. in_vector[-1])
+//      - ma_coef           : Filter coefficients (in Q12)
+//      - ma_coef_length    : Number of B coefficients (order+1)
+//      - vector_length     : Number of samples to be filtered
+//
+// Output:
+//      - out_vector        : Filtered samples
+//
+void WebRtcSpl_FilterMAFastQ12(const int16_t* in_vector,
                                int16_t* out_vector,
-                               int16_t* ma_coef,
+                               const int16_t* ma_coef,
                                int16_t ma_coef_length,
                                int16_t vector_length);
 
@@ -963,10 +921,10 @@ void WebRtcSpl_ResetResample8khzTo48khz(WebRtcSpl_State8khzTo48khz* state);
  *
  ******************************************************************/
 
-void WebRtcSpl_DownsampleBy2(const int16_t* in, int16_t len,
+void WebRtcSpl_DownsampleBy2(const int16_t* in, int len,
                              int16_t* out, int32_t* filtState);
 
-void WebRtcSpl_UpsampleBy2(const int16_t* in, int16_t len,
+void WebRtcSpl_UpsampleBy2(const int16_t* in, int len,
                            int16_t* out, int32_t* filtState);
 
 /************************************************************
@@ -1142,8 +1100,6 @@ void WebRtcSpl_SynthesisQMF(const int16_t* low_band,
 // Output:
 //      - out_vector        : Vector with the requested samples
 //
-// Return value             : Number of copied samples in |out_vector|
-//
 
 //
 // WebRtcSpl_ZerosArrayW16(...)
@@ -1157,24 +1113,6 @@ void WebRtcSpl_SynthesisQMF(const int16_t* low_band,
 //
 // Output:
 //      - vector        : Vector containing all zeros
-//
-// Return value         : Number of samples in vector
-//
-
-//
-// WebRtcSpl_OnesArrayW16(...)
-// WebRtcSpl_OnesArrayW32(...)
-//
-// Inserts the value "one" in all positions of a w16 and a w32 vector
-// respectively.
-//
-// Input:
-//      - vector_length : Number of samples in vector
-//
-// Output:
-//      - vector        : Vector containing all ones
-//
-// Return value         : Number of samples in vector
 //
 
 //
@@ -1574,22 +1512,6 @@ void WebRtcSpl_SynthesisQMF(const int16_t* low_band,
 //
 
 //
-// WebRtcSpl_FilterMAFastQ12(...)
-//
-// Performs a MA filtering on a vector in Q12
-//
-// Input:
-//      - in_vector         : Input samples (state in positions
-//                            in_vector[-order] .. in_vector[-1])
-//      - ma_coef           : Filter coefficients (in Q12)
-//      - ma_coef_length    : Number of B coefficients (order+1)
-//      - vector_length     : Number of samples to be filtered
-//
-// Output:
-//      - out_vector        : Filtered samples
-//
-
-//
 // WebRtcSpl_ComplexIFFT(...)
 //
 // Complex Inverse FFT
@@ -1742,17 +1664,4 @@ void WebRtcSpl_SynthesisQMF(const int16_t* low_band,
 //      - c    : The value of an 32-bit integer.
 //
 // Return Value: The value of a * b + c.
-//
-
-// int16_t WebRtcSpl_get_version(...)
-//
-// This function gives the version string of the Signal Processing Library.
-//
-// Input:
-//      - length_in_bytes : The size of Allocated space (in Bytes) where
-//                          the version number is written to (in string format).
-//
-// Output:
-//      - version         : Pointer to a buffer where the version number is
-//                          written to.
 //

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2014, Google Inc.
+ * Copyright 2014 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -41,7 +41,7 @@ using webrtc::AudioSourceInterface;
 class RemoteAudioSource : public Notifier<AudioSourceInterface> {
  public:
   // Creates an instance of RemoteAudioSource.
-  static talk_base::scoped_refptr<RemoteAudioSource> Create();
+  static rtc::scoped_refptr<RemoteAudioSource> Create();
 
  protected:
   RemoteAudioSource();

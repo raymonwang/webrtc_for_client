@@ -96,12 +96,6 @@ public:
 
     virtual int SetVideoEngineBWETarget(int channel, ViENetwork* vie_network,
                                         int video_channel);
-    
-    virtual int RegisterRTCPObserver(int channel, VoERTCPObserver& observer);
-    
-    virtual int InsertExtraRTPPacket(int channel, unsigned char payloadType, bool markerBit,
-                                     const char* payloadData, unsigned short payloadSize);
-    
 protected:
     VoERTP_RTCPImpl(voe::SharedData* shared);
     virtual ~VoERTP_RTCPImpl();

@@ -27,7 +27,8 @@ ACMOpus::ACMOpus(int16_t /* codec_id */)
     : encoder_inst_ptr_(NULL),
       sample_freq_(0),
       bitrate_(0),
-      channels_(1) {
+      channels_(1),
+      packet_loss_rate_(0) {
   return;
 }
 
@@ -56,10 +57,6 @@ void ACMOpus::DestructEncoderSafe() {
   return;
 }
 
-void ACMOpus::InternalDestructEncoderInst(void* /* ptr_inst */) {
-  return;
-}
-
 int16_t ACMOpus::SetBitRateSafe(const int32_t /*rate*/) {
   return -1;
 }
@@ -70,7 +67,9 @@ ACMOpus::ACMOpus(int16_t codec_id)
     : encoder_inst_ptr_(NULL),
       sample_freq_(32000),  // Default sampling frequency.
       bitrate_(20000),  // Default bit-rate.
-      channels_(1) {  // Default mono
+      channels_(1),  // Default mono.
+      packet_loss_rate_(0),  // Initial packet loss rate.
+      application_(kVoip) {  // Initial application mode.
   codec_id_ = codec_id;
   // Opus has internal DTX, but we dont use it for now.
   has_internal_dtx_ = false;
@@ -115,6 +114,16 @@ int16_t ACMOpus::InternalEncode(uint8_t* bitstream,
   return *bitstream_len_byte;
 }
 
+int16_t ACMOpus::InitEncoderSafe(WebRtcACMCodecParams* codec_params,
+                                 bool force_initialization) {
+  // Determine target application if codec is not initialized or a forced
+  // initialization is requested.
+  if (!encoder_initialized_ || force_initialization) {
+    application_ = (codec_params->codec_inst.channels == 1) ? kVoip : kAudio;
+  }
+  return ACMGenericCodec::InitEncoderSafe(codec_params, force_initialization);
+}
+
 int16_t ACMOpus::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
   int16_t ret;
   if (encoder_inst_ptr_ != NULL) {
@@ -122,7 +131,8 @@ int16_t ACMOpus::InternalInitEncoder(WebRtcACMCodecParams* codec_params) {
     encoder_inst_ptr_ = NULL;
   }
   ret = WebRtcOpus_EncoderCreate(&encoder_inst_ptr_,
-                                 codec_params->codec_inst.channels);
+                                 codec_params->codec_inst.channels,
+                                 application_);
   // Store number of channels.
   channels_ = codec_params->codec_inst.channels;
 
@@ -175,13 +185,6 @@ void ACMOpus::DestructEncoderSafe() {
   }
 }
 
-void ACMOpus::InternalDestructEncoderInst(void* ptr_inst) {
-  if (ptr_inst != NULL) {
-    WebRtcOpus_EncoderFree(static_cast<OpusEncInst*>(ptr_inst));
-  }
-  return;
-}
-
 int16_t ACMOpus::SetBitRateSafe(const int32_t rate) {
   if (rate < 6000 || rate > 510000) {
     WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceAudioCoding, unique_id_,
@@ -203,26 +206,68 @@ int16_t ACMOpus::SetBitRateSafe(const int32_t rate) {
 int ACMOpus::SetFEC(bool enable_fec) {
   // Ask the encoder to enable FEC.
   if (enable_fec) {
-    if (WebRtcOpus_EnableFec(encoder_inst_ptr_) == 0) {
-      fec_enabled_ = true;
+    if (WebRtcOpus_EnableFec(encoder_inst_ptr_) == 0)
       return 0;
-    }
   } else {
-    if (WebRtcOpus_DisableFec(encoder_inst_ptr_) == 0) {
-      fec_enabled_ = false;
+    if (WebRtcOpus_DisableFec(encoder_inst_ptr_) == 0)
       return 0;
-    }
   }
   return -1;
 }
 
 int ACMOpus::SetPacketLossRate(int loss_rate) {
-  // Ask the encoder to change the target packet loss rate.
-  if (WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, loss_rate) == 0) {
-    packet_loss_rate_ = loss_rate;
+  // Optimize the loss rate to configure Opus. Basically, optimized loss rate is
+  // the input loss rate rounded down to various levels, because a robustly good
+  // audio quality is achieved by lowering the packet loss down.
+  // Additionally, to prevent toggling, margins are used, i.e., when jumping to
+  // a loss rate from below, a higher threshold is used than jumping to the same
+  // level from above.
+  const int kPacketLossRate20 = 20;
+  const int kPacketLossRate10 = 10;
+  const int kPacketLossRate5 = 5;
+  const int kPacketLossRate1 = 1;
+  const int kLossRate20Margin = 2;
+  const int kLossRate10Margin = 1;
+  const int kLossRate5Margin = 1;
+  int opt_loss_rate;
+  if (loss_rate >= kPacketLossRate20 + kLossRate20Margin *
+      (kPacketLossRate20 - packet_loss_rate_ > 0 ? 1 : -1)) {
+    opt_loss_rate = kPacketLossRate20;
+  } else if (loss_rate >= kPacketLossRate10 + kLossRate10Margin *
+      (kPacketLossRate10 - packet_loss_rate_ > 0 ? 1 : -1)) {
+    opt_loss_rate = kPacketLossRate10;
+  } else if (loss_rate >= kPacketLossRate5 + kLossRate5Margin *
+      (kPacketLossRate5 - packet_loss_rate_ > 0 ? 1 : -1)) {
+    opt_loss_rate = kPacketLossRate5;
+  } else if (loss_rate >= kPacketLossRate1) {
+    opt_loss_rate = kPacketLossRate1;
+  } else {
+    opt_loss_rate = 0;
+  }
+
+  if (packet_loss_rate_ == opt_loss_rate) {
     return 0;
   }
+
+  // Ask the encoder to change the target packet loss rate.
+  if (WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, opt_loss_rate) == 0) {
+    packet_loss_rate_ = opt_loss_rate;
+    return 0;
+  }
+
   return -1;
+}
+
+int ACMOpus::SetOpusMaxPlaybackRate(int frequency_hz) {
+  // Informs Opus encoder of the maximum playback rate the receiver will render.
+  return WebRtcOpus_SetMaxPlaybackRate(encoder_inst_ptr_, frequency_hz);
+}
+
+int ACMOpus::SetOpusApplication(OpusApplicationMode application) {
+  WriteLockScoped lockCodec(codec_wrapper_lock_);
+  application_ = application;
+  // Set Opus application invokes a reset of the encoder.
+  return InternalResetEncoder();
 }
 
 #endif  // WEBRTC_CODEC_OPUS

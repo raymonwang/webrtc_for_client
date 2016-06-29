@@ -9,12 +9,16 @@
 {
   'targets': [
     {
+      # Note this library is missing an implementation for the video capture.
+      # Targets must link with either 'video_capture_module_impl' or
+      # 'video_capture_module_internal_impl' depending on whether they want to
+      # use the internal capturer.
       'target_name': 'video_capture_module',
       'type': 'static_library',
       'dependencies': [
         'webrtc_utility',
         '<(webrtc_root)/common_video/common_video.gyp:common_video',
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
       ],
       'sources': [
         'device_info_impl.cc',
@@ -28,13 +32,30 @@
         'video_capture_impl.cc',
         'video_capture_impl.h',
       ],
-      'conditions': [
-        ['include_internal_video_capture==0', {
-          'sources': [
-            'external/device_info_external.cc',
-            'external/video_capture_external.cc',
+    },
+    {
+      # Default video capture module implementation that only supports external
+      # capture.
+      'target_name': 'video_capture_module_impl',
+      'type': 'static_library',
+      'dependencies': [
+        'video_capture_module',
+      ],
+      'sources': [
+        'external/device_info_external.cc',
+        'external/video_capture_external.cc',
+      ],
+    },
+  ], # targets
+  'conditions': [
+    ['build_with_chromium==0', {
+      'targets': [
+        {
+          'target_name': 'video_capture_module_internal_impl',
+          'type': 'static_library',
+          'dependencies': [
+            'video_capture_module',
           ],
-        }, {  # include_internal_video_capture == 1
           'conditions': [
             ['OS=="linux"', {
               'sources': [
@@ -60,6 +81,7 @@
               'link_settings': {
                 'xcode_settings': {
                   'OTHER_LDFLAGS': [
+                    '-framework Cocoa',
                     '-framework CoreVideo',
                     '-framework QTKit',
                   ],
@@ -129,20 +151,9 @@
               },
             }],  # ios
           ], # conditions
-        }],  # include_internal_video_capture
-      ], # conditions
-    },
-  ],
-  'conditions': [
-    ['include_tests==1 and build_with_chromium==1 and OS=="android"', {
-      # Use WebRTC capture code for Android APK tests that are built from a
-      # Chromium checkout. Normally when built as a part of Chromium the
-      # Chromium video capture code is used. This overrides the default in
-      # webrtc/build/common.gypi.
-      'variables': {
-        'include_internal_video_capture': 1,
-      },
-    }],
+        },
+      ],
+    }], # build_with_chromium==0
     ['include_tests==1', {
       'targets': [
         {
@@ -150,8 +161,9 @@
           'type': '<(gtest_target_type)',
           'dependencies': [
             'video_capture_module',
+            'video_capture_module_internal_impl',
             'webrtc_utility',
-            '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
             '<(DEPTH)/testing/gtest.gyp:gtest',
           ],
           'sources': [
@@ -176,11 +188,16 @@
                 '-lX11',
               ],
             }],
-            # TODO(henrike): remove build_with_chromium==1 when the bots are
-            # using Chromium's buildbots.
-            ['build_with_chromium==1 and OS=="android"', {
+            ['OS=="android"', {
               'dependencies': [
                 '<(DEPTH)/testing/android/native_test.gyp:native_test_native_code',
+              ],
+              # Need to disable error due to the line in
+              # base/android/jni_android.h triggering it:
+              # const BASE_EXPORT jobject GetApplicationContext()
+              # error: type qualifiers ignored on function return type
+              'cflags': [
+                '-Wno-ignored-qualifiers',
               ],
             }],
             ['OS=="mac"', {
@@ -205,6 +222,17 @@
         },
       ], # targets
       'conditions': [
+        ['OS=="android"', {
+          'targets': [
+            {
+              'target_name': 'video_capture_tests_apk_target',
+              'type': 'none',
+              'dependencies': [
+                '<(apk_tests_path):video_capture_tests_apk',
+              ],
+            },
+          ],
+        }],
         ['test_isolation_mode != "noop"', {
           'targets': [
             {
@@ -215,7 +243,6 @@
               ],
               'includes': [
                 '../../build/isolate.gypi',
-                'video_capture_tests.isolate',
               ],
               'sources': [
                 'video_capture_tests.isolate',

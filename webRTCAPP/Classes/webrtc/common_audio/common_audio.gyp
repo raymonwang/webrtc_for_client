@@ -15,7 +15,7 @@
       'target_name': 'common_audio',
       'type': 'static_library',
       'dependencies': [
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
       ],
       'include_dirs': [
         'resampler/include',
@@ -29,7 +29,12 @@
         ],
       },
       'sources': [
+        'audio_converter.cc',
+        'audio_converter.h',
         'audio_util.cc',
+        'audio_util.h',
+        'blocker.cc',
+        'blocker.h',
         'fir_filter.cc',
         'fir_filter.h',
         'fir_filter_neon.h',
@@ -43,6 +48,8 @@
         'resampler/resampler.cc',
         'resampler/sinc_resampler.cc',
         'resampler/sinc_resampler.h',
+        'ring_buffer.c',
+        'ring_buffer.h',
         'signal_processing/include/real_fft.h',
         'signal_processing/include/signal_processing_library.h',
         'signal_processing/include/spl_inl.h',
@@ -78,11 +85,12 @@
         'signal_processing/spl_init.c',
         'signal_processing/spl_sqrt.c',
         'signal_processing/spl_sqrt_floor.c',
-        'signal_processing/spl_version.c',
         'signal_processing/splitting_filter.c',
         'signal_processing/sqrt_of_one_minus_x_squared.c',
         'signal_processing/vector_scaling_operations.c',
+        'vad/include/vad.h',
         'vad/include/webrtc_vad.h',
+        'vad/vad.cc',
         'vad/webrtc_vad.c',
         'vad/vad_core.c',
         'vad/vad_core.h',
@@ -92,12 +100,29 @@
         'vad/vad_gmm.h',
         'vad/vad_sp.c',
         'vad/vad_sp.h',
+        'wav_header.cc',
+        'wav_header.h',
+        'wav_file.cc',
+        'wav_file.h',
+        'window_generator.cc',
+        'window_generator.h',
       ],
       'conditions': [
+        ['rtc_use_openmax_dl==1', {
+          'sources': [
+            'lapped_transform.cc',
+            'lapped_transform.h',
+            'real_fourier.cc',
+            'real_fourier.h',
+          ],
+          'dependencies': [
+            '<(DEPTH)/third_party/openmax_dl/dl/dl.gyp:openmax_dl',
+          ],
+        }],
         ['target_arch=="ia32" or target_arch=="x64"', {
           'dependencies': ['common_audio_sse2',],
         }],
-        ['target_arch=="arm" or target_arch=="armv7"', {
+        ['target_arch=="arm"', {
           'sources': [
             'signal_processing/complex_bit_reverse_arm.S',
             'signal_processing/spl_sqrt_floor_arm.S',
@@ -107,7 +132,7 @@
             'signal_processing/spl_sqrt_floor.c',
           ],
           'conditions': [
-            ['arm_version==7', {
+            ['arm_version>=7', {
               'dependencies': ['common_audio_neon',],
               'sources': [
                 'signal_processing/filter_ar_fast_q12_armv7.S',
@@ -118,7 +143,7 @@
             }],
           ],  # conditions
         }],
-        ['target_arch=="mipsel"', {
+        ['target_arch=="mipsel" and mips_arch_variant!="r6" and android_webview_build==0', {
           'sources': [
             'signal_processing/include/spl_inl_mips.h',
             'signal_processing/complex_bit_reverse_mips.c',
@@ -166,7 +191,7 @@
         },
       ],  # targets
     }],
-    ['(target_arch=="arm" and arm_version==7) or target_arch=="armv7"', {
+    ['target_arch=="arm" and arm_version>=7', {
       'targets': [
         {
           'target_name': 'common_audio_neon',
@@ -178,7 +203,15 @@
             'signal_processing/cross_correlation_neon.S',
             'signal_processing/downsample_fast_neon.S',
             'signal_processing/min_max_operations_neon.S',
-            'signal_processing/vector_scaling_operations_neon.S',
+          ],
+          'conditions': [
+            # Disable LTO in common_audio_neon target due to compiler bug
+            ['use_lto==1', {
+              'cflags!': [
+                '-flto',
+                '-ffat-lto-objects',
+              ],
+            }],
           ],
         },
       ],  # targets
@@ -195,7 +228,9 @@
             '<(DEPTH)/testing/gtest.gyp:gtest',
           ],
           'sources': [
+            'audio_converter_unittest.cc',
             'audio_util_unittest.cc',
+            'blocker_unittest.cc',
             'fir_filter_unittest.cc',
             'resampler/resampler_unittest.cc',
             'resampler/push_resampler_unittest.cc',
@@ -203,6 +238,7 @@
             'resampler/sinc_resampler_unittest.cc',
             'resampler/sinusoidal_linear_chirp_source.cc',
             'resampler/sinusoidal_linear_chirp_source.h',
+            'ring_buffer_unittest.cc',
             'signal_processing/real_fft_unittest.cc',
             'signal_processing/signal_processing_unittest.cc',
             'vad/vad_core_unittest.cc',
@@ -211,11 +247,18 @@
             'vad/vad_sp_unittest.cc',
             'vad/vad_unittest.cc',
             'vad/vad_unittest.h',
+            'wav_header_unittest.cc',
+            'wav_file_unittest.cc',
+            'window_generator_unittest.cc',
           ],
           'conditions': [
-            # TODO(henrike): remove build_with_chromium==1 when the bots are
-            # using Chromium's buildbots.
-            ['build_with_chromium==1 and OS=="android"', {
+            ['rtc_use_openmax_dl==1', {
+              'sources': [
+                'lapped_transform_unittest.cc',
+                'real_fourier_unittest.cc',
+              ],
+            }],
+            ['OS=="android"', {
               'dependencies': [
                 '<(DEPTH)/testing/android/native_test.gyp:native_test_native_code',
               ],
@@ -224,9 +267,7 @@
         },
       ],  # targets
       'conditions': [
-        # TODO(henrike): remove build_with_chromium==1 when the bots are using
-        # Chromium's buildbots.
-        ['build_with_chromium==1 and OS=="android"', {
+        ['OS=="android"', {
           'targets': [
             {
               'target_name': 'common_audio_unittests_apk_target',
@@ -247,7 +288,6 @@
               ],
               'includes': [
                 '../build/isolate.gypi',
-                'common_audio_unittests.isolate',
               ],
               'sources': [
                 'common_audio_unittests.isolate',

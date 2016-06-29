@@ -32,7 +32,7 @@
 
 
 int WebRtcIsacfix_EncodeImpl(int16_t      *in,
-                             ISACFIX_EncInst_t  *ISACenc_obj,
+                             IsacFixEncoderInstance  *ISACenc_obj,
                              BwEstimatorstr      *bw_estimatordata,
                              int16_t         CodingMode)
 {
@@ -194,7 +194,8 @@ int WebRtcIsacfix_EncodeImpl(int16_t      *in,
     }
     return status;
   }
-  AvgPitchGain_Q12 = WEBRTC_SPL_RSHIFT_W32(PitchGains_Q12[0] + PitchGains_Q12[1] + PitchGains_Q12[2] + PitchGains_Q12[3], 2);
+  AvgPitchGain_Q12 = (PitchGains_Q12[0] + PitchGains_Q12[1] +
+      PitchGains_Q12[2] + PitchGains_Q12[3]) >> 2;
 
   /* find coefficients for perceptual pre-filters */
   WebRtcIsacfix_GetLpcCoef(LPandHP, HP16a+QLOOKAHEAD, &ISACenc_obj->maskfiltstr_obj,
@@ -456,7 +457,8 @@ int WebRtcIsacfix_EncodeImpl(int16_t      *in,
       assert(stream_length >= 0);
       if (stream_length & 0x0001){
         ISACenc_obj->bitstr_seed = WEBRTC_SPL_RAND( ISACenc_obj->bitstr_seed );
-        ISACenc_obj->bitstr_obj.stream[ WEBRTC_SPL_RSHIFT_W16(stream_length, 1) ] |= (uint16_t)(ISACenc_obj->bitstr_seed & 0xFF);
+        ISACenc_obj->bitstr_obj.stream[stream_length / 2] |=
+            (uint16_t)(ISACenc_obj->bitstr_seed & 0xFF);
       } else {
         ISACenc_obj->bitstr_seed = WEBRTC_SPL_RAND( ISACenc_obj->bitstr_seed );
         ISACenc_obj->bitstr_obj.stream[stream_length / 2] =
@@ -489,7 +491,7 @@ int WebRtcIsacfix_EncodeImpl(int16_t      *in,
    The same data as previously encoded with the fucntion WebRtcIsacfix_EncodeImpl()
    is used. The data needed is taken from the struct, where it was stored
    when calling the encoder. */
-int WebRtcIsacfix_EncodeStoredData(ISACFIX_EncInst_t  *ISACenc_obj,
+int WebRtcIsacfix_EncodeStoredData(IsacFixEncoderInstance  *ISACenc_obj,
                                    int     BWnumber,
                                    float              scale)
 {
@@ -501,7 +503,7 @@ int WebRtcIsacfix_EncodeStoredData(ISACFIX_EncInst_t  *ISACenc_obj,
   int16_t model;
   const uint16_t *Q_PitchGain_cdf_ptr[1];
   const uint16_t **cdf;
-  const ISAC_SaveEncData_t *SaveEnc_str;
+  const IsacSaveEncoderData *SaveEnc_str;
   int32_t tmpLPCcoeffs_g[KLT_ORDER_GAIN<<1];
   int16_t tmpLPCindex_g[KLT_ORDER_GAIN<<1];
   int16_t tmp_fre[FRAMESAMPLES];

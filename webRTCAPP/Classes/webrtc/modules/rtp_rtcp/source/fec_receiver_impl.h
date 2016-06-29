@@ -30,10 +30,12 @@ class FecReceiverImpl : public FecReceiver {
 
   virtual int32_t AddReceivedRedPacket(const RTPHeader& rtp_header,
                                        const uint8_t* incoming_rtp_packet,
-                                       int packet_length,
+                                       size_t packet_length,
                                        uint8_t ulpfec_payload_type) OVERRIDE;
 
   virtual int32_t ProcessReceivedFec() OVERRIDE;
+
+  virtual FecPacketCounter GetPacketCounter() const OVERRIDE;
 
  private:
   scoped_ptr<CriticalSectionWrapper> crit_sect_;
@@ -44,6 +46,7 @@ class FecReceiverImpl : public FecReceiver {
   // arrives. We should remove the list.
   ForwardErrorCorrection::ReceivedPacketList received_packet_list_;
   ForwardErrorCorrection::RecoveredPacketList recovered_packet_list_;
+  FecPacketCounter packet_counter_;
 };
 }  // namespace webrtc
 

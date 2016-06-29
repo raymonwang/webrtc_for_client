@@ -15,21 +15,36 @@
       'target_name': 'remote_bitrate_estimator',
       'type': 'static_library',
       'dependencies': [
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
-        '<(rbe_components_path)/remote_bitrate_estimator_components.gyp:rbe_components',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
       ],
       'sources': [
         'include/bwe_defines.h',
         'include/remote_bitrate_estimator.h',
+        'aimd_rate_control.cc',
+        'aimd_rate_control.h',
+        'inter_arrival.cc',
+        'inter_arrival.h',
+        'mimd_rate_control.cc',
+        'mimd_rate_control.h',
+        'overuse_detector.cc',
+        'overuse_detector.h',
+        'overuse_estimator.cc',
+        'overuse_estimator.h',
         'rate_statistics.cc',
         'rate_statistics.h',
+        'remote_bitrate_estimator_abs_send_time.cc',
+        'remote_bitrate_estimator_single_stream.cc',
+        'remote_rate_control.cc',
+        'remote_rate_control.h',
+        'test/bwe_test_logging.cc',
+        'test/bwe_test_logging.h',
       ], # source
     },
     {
       'target_name': 'bwe_tools_util',
       'type': 'static_library',
       'dependencies': [
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
         'rtp_rtcp',
       ],
       'sources': [
@@ -44,8 +59,8 @@
         '../rtp_rtcp/source/rtp_rtcp.gypi',
       ],
       'dependencies': [
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:field_trial_default',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers_default',
         'bwe_tools_util',
         'rtp_rtcp',
       ],
@@ -56,8 +71,8 @@
       },
       'sources': [
         'tools/rtp_to_text.cc',
-        '<(webrtc_root)/modules/video_coding/main/test/rtp_file_reader.cc',
-        '<(webrtc_root)/modules/video_coding/main/test/rtp_file_reader.h',
+        '<(webrtc_root)/test/rtp_file_reader.cc',
+        '<(webrtc_root)/test/rtp_file_reader.h',
       ], # source
     },
     {
@@ -67,8 +82,8 @@
         '../rtp_rtcp/source/rtp_rtcp.gypi',
       ],
       'dependencies': [
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:field_trial_default',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers_default',
         'bwe_tools_util',
         'rtp_rtcp',
       ],
@@ -79,8 +94,8 @@
       },
       'sources': [
         'tools/bwe_rtp_play.cc',
-        '<(webrtc_root)/modules/video_coding/main/test/rtp_file_reader.cc',
-        '<(webrtc_root)/modules/video_coding/main/test/rtp_file_reader.h',
+        '<(webrtc_root)/test/rtp_file_reader.cc',
+        '<(webrtc_root)/test/rtp_file_reader.h',
       ], # source
     },
   ], # targets

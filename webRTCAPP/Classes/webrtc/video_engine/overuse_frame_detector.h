@@ -13,6 +13,7 @@
 
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/base/exp_filter.h"
+#include "webrtc/base/thread_annotations.h"
 #include "webrtc/modules/interface/module.h"
 #include "webrtc/system_wrappers/interface/scoped_ptr.h"
 #include "webrtc/video_engine/include/vie_base.h"
@@ -61,7 +62,7 @@ class OveruseFrameDetector : public Module {
   void SetOptions(const CpuOveruseOptions& options);
 
   // Called for each captured frame.
-  void FrameCaptured(int width, int height);
+  void FrameCaptured(int width, int height, int64_t capture_time_ms);
 
   // Called when the processing of a captured frame is started.
   void FrameProcessingStarted();
@@ -69,14 +70,19 @@ class OveruseFrameDetector : public Module {
   // Called for each encoded frame.
   void FrameEncoded(int encode_time_ms);
 
+  // Called for each sent frame.
+  void FrameSent(int64_t capture_time_ms);
+
   // Accessors.
 
   // Returns CpuOveruseMetrics where
   // capture_jitter_ms: The estimated jitter based on incoming captured frames.
   // avg_encode_time_ms: Running average of reported encode time
   //                     (FrameEncoded()). Only used for stats.
-  // encode_usage_percent: The average encode time divided by the average time
-  //                       difference between incoming captured frames.
+  // TODO(asapersson): Rename metric.
+  // encode_usage_percent: The average processing time of a frame on the
+  //                       send-side divided by the average time difference
+  //                       between incoming captured frames.
   // capture_queue_delay_ms_per_s: The current time delay between an incoming
   //                               captured frame (FrameCaptured()) until the
   //                               frame is being processed
@@ -87,40 +93,45 @@ class OveruseFrameDetector : public Module {
   //                               Only used for stats.
   void GetCpuOveruseMetrics(CpuOveruseMetrics* metrics) const;
 
+  // Only public for testing.
   int CaptureQueueDelayMsPerS() const;
+  int LastProcessingTimeMs() const;
+  int FramesInQueue() const;
 
   // Implements Module.
-  virtual int32_t TimeUntilNextProcess() OVERRIDE;
+  virtual int64_t TimeUntilNextProcess() OVERRIDE;
   virtual int32_t Process() OVERRIDE;
 
  private:
   class EncodeTimeAvg;
-  class EncodeTimeRsd;
-  class EncodeUsage;
+  class SendProcessingUsage;
   class CaptureQueueDelay;
+  class FrameQueue;
 
-  bool IsOverusing();
-  bool IsUnderusing(int64_t time_now);
+  void AddProcessingTime(int elapsed_ms) EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
-  bool FrameTimeoutDetected(int64_t now) const;
-  bool FrameSizeChanged(int num_pixels) const;
+  bool IsOverusing() EXCLUSIVE_LOCKS_REQUIRED(crit_);
+  bool IsUnderusing(int64_t time_now) EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
-  void ResetAll(int num_pixels);
+  bool FrameTimeoutDetected(int64_t now) const EXCLUSIVE_LOCKS_REQUIRED(crit_);
+  bool FrameSizeChanged(int num_pixels) const EXCLUSIVE_LOCKS_REQUIRED(crit_);
+
+  void ResetAll(int num_pixels) EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
   // Protecting all members.
   scoped_ptr<CriticalSectionWrapper> crit_;
 
   // Observer getting overuse reports.
-  CpuOveruseObserver* observer_;
+  CpuOveruseObserver* observer_ GUARDED_BY(crit_);
 
-  CpuOveruseOptions options_;
+  CpuOveruseOptions options_ GUARDED_BY(crit_);
 
   Clock* clock_;
   int64_t next_process_time_;
-  int64_t num_process_times_;
+  int64_t num_process_times_ GUARDED_BY(crit_);
 
-  Statistics capture_deltas_;
-  int64_t last_capture_time_;
+  Statistics capture_deltas_ GUARDED_BY(crit_);
+  int64_t last_capture_time_ GUARDED_BY(crit_);
 
   int64_t last_overuse_time_;
   int checks_above_threshold_;
@@ -131,14 +142,15 @@ class OveruseFrameDetector : public Module {
   int current_rampup_delay_ms_;
 
   // Number of pixels of last captured frame.
-  int num_pixels_;
+  int num_pixels_ GUARDED_BY(crit_);
 
-  int64_t last_encode_sample_ms_;
-  scoped_ptr<EncodeTimeAvg> encode_time_;
-  scoped_ptr<EncodeTimeRsd> encode_rsd_;
-  scoped_ptr<EncodeUsage> encode_usage_;
+  int64_t last_encode_sample_ms_ GUARDED_BY(crit_);
+  scoped_ptr<EncodeTimeAvg> encode_time_ GUARDED_BY(crit_);
+  scoped_ptr<SendProcessingUsage> usage_ GUARDED_BY(crit_);
+  scoped_ptr<FrameQueue> frame_queue_ GUARDED_BY(crit_);
+  int64_t last_sample_time_ms_ GUARDED_BY(crit_);
 
-  scoped_ptr<CaptureQueueDelay> capture_queue_delay_;
+  scoped_ptr<CaptureQueueDelay> capture_queue_delay_ GUARDED_BY(crit_);
 
   DISALLOW_COPY_AND_ASSIGN(OveruseFrameDetector);
 };

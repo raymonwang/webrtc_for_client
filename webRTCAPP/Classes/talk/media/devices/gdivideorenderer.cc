@@ -1,39 +1,41 @@
-// libjingle
-// Copyright 2004 Google Inc.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-//  1. Redistributions of source code must retain the above copyright notice,
-//     this list of conditions and the following disclaimer.
-//  2. Redistributions in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other materials provided with the distribution.
-//  3. The name of the author may not be used to endorse or promote products
-//     derived from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+/*
+ * libjingle
+ * Copyright 2004 Google Inc.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
+ *     this list of conditions and the following disclaimer.
+ *  2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *  3. The name of the author may not be used to endorse or promote products
+ *     derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 // Implementation of GdiVideoRenderer on Windows
 
 #ifdef WIN32
 
 #include "talk/media/devices/gdivideorenderer.h"
 
-#include "talk/base/scoped_ptr.h"
-#include "talk/base/thread.h"
-#include "talk/base/win32window.h"
 #include "talk/media/base/videocommon.h"
 #include "talk/media/base/videoframe.h"
+#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/thread.h"
+#include "webrtc/base/win32window.h"
 
 namespace cricket {
 
@@ -41,7 +43,7 @@ namespace cricket {
 // Definition of private class VideoWindow. We use a worker thread to manage
 // the window.
 /////////////////////////////////////////////////////////////////////////////
-class GdiVideoRenderer::VideoWindow : public talk_base::Win32Window {
+class GdiVideoRenderer::VideoWindow : public rtc::Win32Window {
  public:
   VideoWindow(int x, int y, int width, int height);
   virtual ~VideoWindow();
@@ -58,14 +60,14 @@ class GdiVideoRenderer::VideoWindow : public talk_base::Win32Window {
   bool RenderFrame(const VideoFrame* frame);
 
  protected:
-  // Override virtual method of talk_base::Win32Window. Context: worker Thread.
+  // Override virtual method of rtc::Win32Window. Context: worker Thread.
   virtual bool OnMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
                          LRESULT& result);
 
  private:
   enum { kSetSizeMsg = WM_USER, kRenderFrameMsg};
 
-  class WindowThread : public talk_base::Thread {
+  class WindowThread : public rtc::Thread {
    public:
     explicit WindowThread(VideoWindow* window) : window_(window) {}
 
@@ -73,7 +75,7 @@ class GdiVideoRenderer::VideoWindow : public talk_base::Win32Window {
       Stop();
     }
 
-    // Override virtual method of talk_base::Thread. Context: worker Thread.
+    // Override virtual method of rtc::Thread. Context: worker Thread.
     virtual void Run() {
       // Initialize the window
       if (!window_ || !window_->Initialize()) {
@@ -98,8 +100,8 @@ class GdiVideoRenderer::VideoWindow : public talk_base::Win32Window {
   void OnRenderFrame(const VideoFrame* frame);
 
   BITMAPINFO bmi_;
-  talk_base::scoped_ptr<uint8[]> image_;
-  talk_base::scoped_ptr<WindowThread> window_thread_;
+  rtc::scoped_ptr<uint8[]> image_;
+  rtc::scoped_ptr<WindowThread> window_thread_;
   // The initial position of the window.
   int initial_x_;
   int initial_y_;
@@ -180,7 +182,7 @@ bool GdiVideoRenderer::VideoWindow::OnMessage(UINT uMsg, WPARAM wParam,
 }
 
 bool GdiVideoRenderer::VideoWindow::Initialize() {
-  if (!talk_base::Win32Window::Create(
+  if (!rtc::Win32Window::Create(
       NULL, L"Video Renderer",
       WS_OVERLAPPEDWINDOW | WS_SIZEBOX,
       WS_EX_APPWINDOW,

@@ -64,14 +64,15 @@ class ViEBaseImpl
   ViESharedData* shared_data() { return &shared_data_; }
 
  private:
-  // Version functions.
-  int32_t AddViEVersion(char* str) const;
-  int32_t AddBuildInfo(char* str) const;
-  int32_t AddExternalTransportBuild(char* str) const;
-
   int CreateChannel(int& video_channel, int original_channel,  // NOLINT
                     bool sender);
 
+  virtual void RegisterSendStatisticsProxy(
+      int channel,
+      SendStatisticsProxy* send_statistics_proxy) OVERRIDE;
+  virtual void RegisterReceiveStatisticsProxy(
+      int channel,
+      ReceiveStatisticsProxy* receive_statistics_proxy) OVERRIDE;
   // ViEBaseImpl owns ViESharedData used by all interface implementations.
   ViESharedData shared_data_;
 };

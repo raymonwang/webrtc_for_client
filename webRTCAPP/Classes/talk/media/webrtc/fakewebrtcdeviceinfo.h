@@ -1,35 +1,37 @@
-// libjingle
-// Copyright 2004 Google Inc.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-//  1. Redistributions of source code must retain the above copyright notice,
-//     this list of conditions and the following disclaimer.
-//  2. Redistributions in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other materials provided with the distribution.
-//  3. The name of the author may not be used to endorse or promote products
-//     derived from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * libjingle
+ * Copyright 2004 Google Inc.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
+ *     this list of conditions and the following disclaimer.
+ *  2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *  3. The name of the author may not be used to endorse or promote products
+ *     derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #ifndef TALK_SESSION_PHONE_FAKEWEBRTCDEVICEINFO_H_
 #define TALK_SESSION_PHONE_FAKEWEBRTCDEVICEINFO_H_
 
 #include <vector>
 
-#include "talk/base/stringutils.h"
 #include "talk/media/webrtc/webrtcvideocapturer.h"
+#include "webrtc/base/stringutils.h"
 
 // Fake class for mocking out webrtc::VideoCaptureModule::DeviceInfo.
 class FakeWebRtcDeviceInfo : public webrtc::VideoCaptureModule::DeviceInfo {
@@ -64,12 +66,12 @@ class FakeWebRtcDeviceInfo : public webrtc::VideoCaptureModule::DeviceInfo {
                                 uint32_t product_id_len) {
     Device* dev = GetDeviceByIndex(device_num);
     if (!dev) return -1;
-    talk_base::strcpyn(reinterpret_cast<char*>(device_name), device_name_len,
+    rtc::strcpyn(reinterpret_cast<char*>(device_name), device_name_len,
                        dev->name.c_str());
-    talk_base::strcpyn(reinterpret_cast<char*>(device_id), device_id_len,
+    rtc::strcpyn(reinterpret_cast<char*>(device_id), device_id_len,
                        dev->id.c_str());
     if (product_id) {
-      talk_base::strcpyn(reinterpret_cast<char*>(product_id), product_id_len,
+      rtc::strcpyn(reinterpret_cast<char*>(product_id), product_id_len,
                          dev->product.c_str());
     }
     return 0;

@@ -88,7 +88,6 @@
 		430D868E1986051C009E763A /* voice_engine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "voice_engine-Prefix.pch"; sourceTree = "<group>"; };
 		430D86981986051D009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		430D869B1986051D009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		430D86BA1986054F009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D86BB1986054F009E763A /* channel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cc; sourceTree = "<group>"; };
 		430D86BC1986054F009E763A /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		430D86BD1986054F009E763A /* channel_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_manager.cc; sourceTree = "<group>"; };
@@ -98,7 +97,6 @@
 		430D86C11986054F009E763A /* dtmf_inband_queue.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_inband_queue.cc; sourceTree = "<group>"; };
 		430D86C21986054F009E763A /* dtmf_inband_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_inband_queue.h; sourceTree = "<group>"; };
 		430D86C51986054F009E763A /* fake_voe_external_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fake_voe_external_media.h; sourceTree = "<group>"; };
-		430D86C61986054F009E763A /* mock_voe_connection_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_voe_connection_observer.h; sourceTree = "<group>"; };
 		430D86C71986054F009E763A /* mock_voe_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_voe_observer.h; sourceTree = "<group>"; };
 		430D86C81986054F009E763A /* mock_voe_volume_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_voe_volume_control.h; sourceTree = "<group>"; };
 		430D86C91986054F009E763A /* voe_audio_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_audio_processing.h; sourceTree = "<group>"; };
@@ -230,7 +228,7 @@
 		430D86B91986054F009E763A /* voice_engine */ = {
 			isa = PBXGroup;
 			children = (
-				430D86BA1986054F009E763A /* Android.mk */,
+				430D86C31986054F009E763A /* include */,
 				430D86BB1986054F009E763A /* channel.cc */,
 				430D86BC1986054F009E763A /* channel.h */,
 				430D86BD1986054F009E763A /* channel_manager.cc */,
@@ -239,7 +237,6 @@
 				430D86C01986054F009E763A /* dtmf_inband.h */,
 				430D86C11986054F009E763A /* dtmf_inband_queue.cc */,
 				430D86C21986054F009E763A /* dtmf_inband_queue.h */,
-				430D86C31986054F009E763A /* include */,
 				430D86D61986054F009E763A /* level_indicator.cc */,
 				430D86D71986054F009E763A /* level_indicator.h */,
 				430D86D81986054F009E763A /* monitor_module.cc */,
@@ -252,7 +249,6 @@
 				430D86DF1986054F009E763A /* shared_data.h */,
 				430D86E01986054F009E763A /* statistics.cc */,
 				430D86E11986054F009E763A /* statistics.h */,
-				430D86E21986054F009E763A /* test */,
 				430D86FC1986054F009E763A /* transmit_mixer.cc */,
 				430D86FD1986054F009E763A /* transmit_mixer.h */,
 				430D86FE1986054F009E763A /* utility.cc */,
@@ -316,218 +312,10 @@
 			isa = PBXGroup;
 			children = (
 				430D86C51986054F009E763A /* fake_voe_external_media.h */,
-				430D86C61986054F009E763A /* mock_voe_connection_observer.h */,
 				430D86C71986054F009E763A /* mock_voe_observer.h */,
 				430D86C81986054F009E763A /* mock_voe_volume_control.h */,
 			);
 			path = mock;
-			sourceTree = "<group>";
-		};
-		430D86E21986054F009E763A /* test */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E31986054F009E763A /* android */,
-				430D86F41986054F009E763A /* auto_test */,
-				430D86F91986054F009E763A /* cmd_test */,
-				430D86FA1986054F009E763A /* win_test */,
-			);
-			path = test;
-			sourceTree = "<group>";
-		};
-		430D86E31986054F009E763A /* android */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E41986054F009E763A /* android_test */,
-			);
-			path = android;
-			sourceTree = "<group>";
-		};
-		430D86E41986054F009E763A /* android_test */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E51986054F009E763A /* gen */,
-				430D86EA1986054F009E763A /* jni */,
-				430D86EB1986054F009E763A /* res */,
-				430D86EF1986054F009E763A /* src */,
-			);
-			path = android_test;
-			sourceTree = "<group>";
-		};
-		430D86E51986054F009E763A /* gen */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E61986054F009E763A /* org */,
-			);
-			path = gen;
-			sourceTree = "<group>";
-		};
-		430D86E61986054F009E763A /* org */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E71986054F009E763A /* webrtc */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		430D86E71986054F009E763A /* webrtc */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E81986054F009E763A /* voiceengine */,
-			);
-			path = webrtc;
-			sourceTree = "<group>";
-		};
-		430D86E81986054F009E763A /* voiceengine */ = {
-			isa = PBXGroup;
-			children = (
-				430D86E91986054F009E763A /* test */,
-			);
-			path = voiceengine;
-			sourceTree = "<group>";
-		};
-		430D86E91986054F009E763A /* test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = test;
-			sourceTree = "<group>";
-		};
-		430D86EA1986054F009E763A /* jni */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = jni;
-			sourceTree = "<group>";
-		};
-		430D86EB1986054F009E763A /* res */ = {
-			isa = PBXGroup;
-			children = (
-				430D86EC1986054F009E763A /* drawable */,
-				430D86ED1986054F009E763A /* layout */,
-				430D86EE1986054F009E763A /* values */,
-			);
-			path = res;
-			sourceTree = "<group>";
-		};
-		430D86EC1986054F009E763A /* drawable */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = drawable;
-			sourceTree = "<group>";
-		};
-		430D86ED1986054F009E763A /* layout */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = layout;
-			sourceTree = "<group>";
-		};
-		430D86EE1986054F009E763A /* values */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = values;
-			sourceTree = "<group>";
-		};
-		430D86EF1986054F009E763A /* src */ = {
-			isa = PBXGroup;
-			children = (
-				430D86F01986054F009E763A /* org */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		430D86F01986054F009E763A /* org */ = {
-			isa = PBXGroup;
-			children = (
-				430D86F11986054F009E763A /* webrtc */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		430D86F11986054F009E763A /* webrtc */ = {
-			isa = PBXGroup;
-			children = (
-				430D86F21986054F009E763A /* voiceengine */,
-			);
-			path = webrtc;
-			sourceTree = "<group>";
-		};
-		430D86F21986054F009E763A /* voiceengine */ = {
-			isa = PBXGroup;
-			children = (
-				430D86F31986054F009E763A /* test */,
-			);
-			path = voiceengine;
-			sourceTree = "<group>";
-		};
-		430D86F31986054F009E763A /* test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = test;
-			sourceTree = "<group>";
-		};
-		430D86F41986054F009E763A /* auto_test */ = {
-			isa = PBXGroup;
-			children = (
-				430D86F51986054F009E763A /* extended */,
-				430D86F61986054F009E763A /* fakes */,
-				430D86F71986054F009E763A /* fixtures */,
-				430D86F81986054F009E763A /* standard */,
-			);
-			path = auto_test;
-			sourceTree = "<group>";
-		};
-		430D86F51986054F009E763A /* extended */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = extended;
-			sourceTree = "<group>";
-		};
-		430D86F61986054F009E763A /* fakes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = fakes;
-			sourceTree = "<group>";
-		};
-		430D86F71986054F009E763A /* fixtures */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = fixtures;
-			sourceTree = "<group>";
-		};
-		430D86F81986054F009E763A /* standard */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = standard;
-			sourceTree = "<group>";
-		};
-		430D86F91986054F009E763A /* cmd_test */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = cmd_test;
-			sourceTree = "<group>";
-		};
-		430D86FA1986054F009E763A /* win_test */ = {
-			isa = PBXGroup;
-			children = (
-				430D86FB1986054F009E763A /* res */,
-			);
-			path = win_test;
-			sourceTree = "<group>";
-		};
-		430D86FB1986054F009E763A /* res */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = res;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

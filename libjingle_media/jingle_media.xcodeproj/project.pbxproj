@@ -14,7 +14,6 @@
 		43982CB4198F3CCA0090EABA /* constants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C1E198F3CC90090EABA /* constants.cc */; };
 		43982CB5198F3CCA0090EABA /* cpuid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C20198F3CC90090EABA /* cpuid.cc */; };
 		43982CB7198F3CCA0090EABA /* filemediaengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C2B198F3CC90090EABA /* filemediaengine.cc */; };
-		43982CB9198F3CCA0090EABA /* hybridvideoengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C2F198F3CC90090EABA /* hybridvideoengine.cc */; };
 		43982CBB198F3CCA0090EABA /* mediaengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C34198F3CC90090EABA /* mediaengine.cc */; };
 		43982CBC198F3CCA0090EABA /* mutedvideocapturer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C36198F3CC90090EABA /* mutedvideocapturer.cc */; };
 		43982CBE198F3CCA0090EABA /* rtpdataengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982C3B198F3CC90090EABA /* rtpdataengine.cc */; };
@@ -42,6 +41,10 @@
 		43982CEE198F3CCA0090EABA /* webrtcvideoengine2.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982CA2198F3CC90090EABA /* webrtcvideoengine2.cc */; };
 		43982CF1198F3CCA0090EABA /* webrtcvideoframe.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982CA7198F3CC90090EABA /* webrtcvideoframe.cc */; };
 		43982CF3198F3CCA0090EABA /* webrtcvoiceengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982CAC198F3CC90090EABA /* webrtcvoiceengine.cc */; };
+		43C69BB91D227CF200427D35 /* simulcast.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BB31D227CF200427D35 /* simulcast.cc */; };
+		43C69BBA1D227CF200427D35 /* webrtcvideocapturerfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BB51D227CF200427D35 /* webrtcvideocapturerfactory.cc */; };
+		43C69BBB1D227CF200427D35 /* webrtcvideoframefactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BB71D227CF200427D35 /* webrtcvideoframefactory.cc */; };
+		43C69C971D228FD100427D35 /* videoframefactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C951D228FD100427D35 /* videoframefactory.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -85,8 +88,6 @@
 		43982C2B198F3CC90090EABA /* filemediaengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filemediaengine.cc; sourceTree = "<group>"; };
 		43982C2C198F3CC90090EABA /* filemediaengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filemediaengine.h; sourceTree = "<group>"; };
 		43982C2E198F3CC90090EABA /* hybriddataengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hybriddataengine.h; sourceTree = "<group>"; };
-		43982C2F198F3CC90090EABA /* hybridvideoengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hybridvideoengine.cc; sourceTree = "<group>"; };
-		43982C30198F3CC90090EABA /* hybridvideoengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hybridvideoengine.h; sourceTree = "<group>"; };
 		43982C32198F3CC90090EABA /* mediachannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediachannel.h; sourceTree = "<group>"; };
 		43982C33198F3CC90090EABA /* mediacommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediacommon.h; sourceTree = "<group>"; };
 		43982C34198F3CC90090EABA /* mediaengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediaengine.cc; sourceTree = "<group>"; };
@@ -186,6 +187,14 @@
 		43982CAB198F3CC90090EABA /* webrtcvoe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcvoe.h; sourceTree = "<group>"; };
 		43982CAC198F3CC90090EABA /* webrtcvoiceengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcvoiceengine.cc; sourceTree = "<group>"; };
 		43982CAD198F3CC90090EABA /* webrtcvoiceengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcvoiceengine.h; sourceTree = "<group>"; };
+		43C69BB31D227CF200427D35 /* simulcast.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulcast.cc; sourceTree = "<group>"; };
+		43C69BB41D227CF200427D35 /* simulcast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulcast.h; sourceTree = "<group>"; };
+		43C69BB51D227CF200427D35 /* webrtcvideocapturerfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcvideocapturerfactory.cc; sourceTree = "<group>"; };
+		43C69BB61D227CF200427D35 /* webrtcvideocapturerfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcvideocapturerfactory.h; sourceTree = "<group>"; };
+		43C69BB71D227CF200427D35 /* webrtcvideoframefactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcvideoframefactory.cc; sourceTree = "<group>"; };
+		43C69BB81D227CF200427D35 /* webrtcvideoframefactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcvideoframefactory.h; sourceTree = "<group>"; };
+		43C69C951D228FD100427D35 /* videoframefactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videoframefactory.cc; sourceTree = "<group>"; };
+		43C69C961D228FD100427D35 /* videoframefactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoframefactory.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +269,8 @@
 		43982C13198F3CC90090EABA /* base */ = {
 			isa = PBXGroup;
 			children = (
+				43C69C951D228FD100427D35 /* videoframefactory.cc */,
+				43C69C961D228FD100427D35 /* videoframefactory.h */,
 				43982C14198F3CC90090EABA /* audioframe.h */,
 				43982C15198F3CC90090EABA /* audiorenderer.h */,
 				43982C16198F3CC90090EABA /* capturemanager.cc */,
@@ -283,8 +294,6 @@
 				43982C2B198F3CC90090EABA /* filemediaengine.cc */,
 				43982C2C198F3CC90090EABA /* filemediaengine.h */,
 				43982C2E198F3CC90090EABA /* hybriddataengine.h */,
-				43982C2F198F3CC90090EABA /* hybridvideoengine.cc */,
-				43982C30198F3CC90090EABA /* hybridvideoengine.h */,
 				43982C32198F3CC90090EABA /* mediachannel.h */,
 				43982C33198F3CC90090EABA /* mediacommon.h */,
 				43982C34198F3CC90090EABA /* mediaengine.cc */,
@@ -381,6 +390,12 @@
 		43982C86198F3CC90090EABA /* webrtc */ = {
 			isa = PBXGroup;
 			children = (
+				43C69BB31D227CF200427D35 /* simulcast.cc */,
+				43C69BB41D227CF200427D35 /* simulcast.h */,
+				43C69BB51D227CF200427D35 /* webrtcvideocapturerfactory.cc */,
+				43C69BB61D227CF200427D35 /* webrtcvideocapturerfactory.h */,
+				43C69BB71D227CF200427D35 /* webrtcvideoframefactory.cc */,
+				43C69BB81D227CF200427D35 /* webrtcvideoframefactory.h */,
 				43982C87198F3CC90090EABA /* constants.h */,
 				43982C88198F3CC90090EABA /* dummyinstantiation.cc */,
 				43982C89198F3CC90090EABA /* fakewebrtccommon.h */,
@@ -484,20 +499,23 @@
 				43982CDF198F3CCA0090EABA /* win32deviceinfo.cc in Sources */,
 				43982CB5198F3CCA0090EABA /* cpuid.cc in Sources */,
 				43982CCA198F3CCA0090EABA /* videocommon.cc in Sources */,
+				43C69C971D228FD100427D35 /* videoframefactory.cc in Sources */,
 				43982CAF198F3CCA0090EABA /* capturemanager.cc in Sources */,
 				43982CD1198F3CCA0090EABA /* dummydevicemanager.cc in Sources */,
 				43982CD5198F3CCA0090EABA /* gdivideorenderer.cc in Sources */,
 				43982CE6198F3CCA0090EABA /* webrtcmediaengine.cc in Sources */,
+				43C69BB91D227CF200427D35 /* simulcast.cc in Sources */,
 				43982CDD198F3CCA0090EABA /* mobiledevicemanager.cc in Sources */,
+				43C69BBB1D227CF200427D35 /* webrtcvideoframefactory.cc in Sources */,
 				43982CD3198F3CCA0090EABA /* filevideocapturer.cc in Sources */,
 				43982CB2198F3CCA0090EABA /* codec.cc in Sources */,
 				43982CBE198F3CCA0090EABA /* rtpdataengine.cc in Sources */,
 				43982CB1198F3CCA0090EABA /* capturerenderadapter.cc in Sources */,
+				43C69BBA1D227CF200427D35 /* webrtcvideocapturerfactory.cc in Sources */,
 				43982CB4198F3CCA0090EABA /* constants.cc in Sources */,
 				43982CC0198F3CCA0090EABA /* rtpdump.cc in Sources */,
 				43982CBB198F3CCA0090EABA /* mediaengine.cc in Sources */,
 				43982CE3198F3CCA0090EABA /* sctpdataengine.cc in Sources */,
-				43982CB9198F3CCA0090EABA /* hybridvideoengine.cc in Sources */,
 				43982CED198F3CCA0090EABA /* webrtcvideoengine.cc in Sources */,
 				43982CC4198F3CCA0090EABA /* streamparams.cc in Sources */,
 				43982CC2198F3CCA0090EABA /* rtputils.cc in Sources */,
@@ -601,6 +619,7 @@
 					HAVE_WEBRTC_VIDEO,
 					CHROMIUM_BUILD,
 					USE_WEBRTC_DEV_BRANCH,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -627,7 +646,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle_media/jingle_media-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"DEBUG=1",
 					"CARBON_DEPRECATED=YES",
 					"LIBPEERCONNECTION_LIB=1",
 					POSIX,
@@ -645,6 +664,7 @@
 					HAVE_WEBRTC_VIDEO,
 					CHROMIUM_BUILD,
 					USE_WEBRTC_DEV_BRANCH,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

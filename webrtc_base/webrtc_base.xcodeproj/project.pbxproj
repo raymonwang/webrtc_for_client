@@ -85,7 +85,6 @@
 		430D84AF1985E4AC009E763A /* taskparent.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84381985E4AB009E763A /* taskparent.cc */; };
 		430D84B01985E4AC009E763A /* taskrunner.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D843A1985E4AB009E763A /* taskrunner.cc */; };
 		430D84B11985E4AC009E763A /* testclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D843E1985E4AB009E763A /* testclient.cc */; };
-		430D84B21985E4AC009E763A /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430D84421985E4AB009E763A /* thread.mm */; };
 		430D84B31985E4AC009E763A /* thread_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84451985E4AB009E763A /* thread_checker_impl.cc */; };
 		430D84B41985E4AC009E763A /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84471985E4AB009E763A /* timeutils.cc */; };
 		430D84B51985E4AC009E763A /* timing.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84491985E4AB009E763A /* timing.cc */; };
@@ -147,7 +146,6 @@
 		43C67D471D211C8A00427D35 /* filelock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83981985E4AB009E763A /* filelock.cc */; };
 		43C67D481D211C8A00427D35 /* asyncfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83611985E4AB009E763A /* asyncfile.cc */; };
 		43C67D491D211C8A00427D35 /* crc32.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83871985E4AB009E763A /* crc32.cc */; };
-		43C67D4A1D211C8A00427D35 /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430D84421985E4AB009E763A /* thread.mm */; };
 		43C67D4B1D211C8A00427D35 /* task.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84361985E4AB009E763A /* task.cc */; };
 		43C67D4C1D211C8A00427D35 /* socketaddress.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84151985E4AB009E763A /* socketaddress.cc */; };
 		43C67D4D1D211C8A00427D35 /* sslsocketfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84271985E4AB009E763A /* sslsocketfactory.cc */; };
@@ -183,6 +181,8 @@
 		43C67D6B1D211C8A00427D35 /* testclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D843E1985E4AB009E763A /* testclient.cc */; };
 		43C67D6C1D211C8A00427D35 /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83661985E4AB009E763A /* asyncinvoker.cc */; };
 		43C67D6E1D211C8A00427D35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D83271985E421009E763A /* Foundation.framework */; };
+		43C695911D2148FE00427D35 /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C695901D2148FE00427D35 /* thread.mm */; };
+		43C69C941D228EDA00427D35 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C921D228EDA00427D35 /* platform_file.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -246,7 +246,6 @@
 		430D83801985E4AB009E763A /* checks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checks.h; sourceTree = "<group>"; };
 		430D83811985E4AB009E763A /* common.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = common.cc; sourceTree = "<group>"; };
 		430D83821985E4AB009E763A /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
-		430D83831985E4AB009E763A /* compile_assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compile_assert.h; sourceTree = "<group>"; };
 		430D83841985E4AB009E763A /* constructormagic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constructormagic.h; sourceTree = "<group>"; };
 		430D83851985E4AB009E763A /* cpumonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpumonitor.cc; sourceTree = "<group>"; };
 		430D83861985E4AB009E763A /* cpumonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpumonitor.h; sourceTree = "<group>"; };
@@ -303,7 +302,6 @@
 		430D83B91985E4AB009E763A /* linked_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_ptr.h; sourceTree = "<group>"; };
 		430D83BA1985E4AB009E763A /* linux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linux.h; sourceTree = "<group>"; };
 		430D83BB1985E4AB009E763A /* linuxfdwalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linuxfdwalk.h; sourceTree = "<group>"; };
-		430D83BC1985E4AB009E763A /* linuxwindowpicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linuxwindowpicker.h; sourceTree = "<group>"; };
 		430D83BD1985E4AB009E763A /* logging.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logging.cc; sourceTree = "<group>"; };
 		430D83BE1985E4AB009E763A /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		430D83BF1985E4AB009E763A /* macasyncsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macasyncsocket.h; sourceTree = "<group>"; };
@@ -437,7 +435,6 @@
 		430D843F1985E4AB009E763A /* testclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testclient.h; sourceTree = "<group>"; };
 		430D84401985E4AB009E763A /* testechoserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testechoserver.h; sourceTree = "<group>"; };
 		430D84411985E4AB009E763A /* testutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testutils.h; sourceTree = "<group>"; };
-		430D84421985E4AB009E763A /* thread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = thread.mm; sourceTree = "<group>"; };
 		430D84431985E4AB009E763A /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread.h; sourceTree = "<group>"; };
 		430D84441985E4AB009E763A /* thread_checker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_checker.h; sourceTree = "<group>"; };
 		430D84451985E4AB009E763A /* thread_checker_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_checker_impl.cc; sourceTree = "<group>"; };
@@ -477,6 +474,9 @@
 		430D86791985EEE1009E763A /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		430D867A1985EEE1009E763A /* win32socketinit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32socketinit.cc; sourceTree = "<group>"; };
 		43C67D731D211C8A00427D35 /* libwebrtc_base_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C695901D2148FE00427D35 /* thread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = thread.mm; sourceTree = "<group>"; };
+		43C69C921D228EDA00427D35 /* platform_file.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_file.cc; sourceTree = "<group>"; };
+		43C69C931D228EDA00427D35 /* platform_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_file.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -548,6 +548,8 @@
 		430D83601985E4AB009E763A /* base */ = {
 			isa = PBXGroup;
 			children = (
+				43C69C921D228EDA00427D35 /* platform_file.cc */,
+				43C69C931D228EDA00427D35 /* platform_file.h */,
 				430D83611985E4AB009E763A /* asyncfile.cc */,
 				430D83621985E4AB009E763A /* asyncfile.h */,
 				430D83631985E4AB009E763A /* asynchttprequest.cc */,
@@ -582,7 +584,6 @@
 				430D83801985E4AB009E763A /* checks.h */,
 				430D83811985E4AB009E763A /* common.cc */,
 				430D83821985E4AB009E763A /* common.h */,
-				430D83831985E4AB009E763A /* compile_assert.h */,
 				430D83841985E4AB009E763A /* constructormagic.h */,
 				430D83851985E4AB009E763A /* cpumonitor.cc */,
 				430D83861985E4AB009E763A /* cpumonitor.h */,
@@ -639,7 +640,6 @@
 				430D83B91985E4AB009E763A /* linked_ptr.h */,
 				430D83BA1985E4AB009E763A /* linux.h */,
 				430D83BB1985E4AB009E763A /* linuxfdwalk.h */,
-				430D83BC1985E4AB009E763A /* linuxwindowpicker.h */,
 				430D83BD1985E4AB009E763A /* logging.cc */,
 				430D83BE1985E4AB009E763A /* logging.h */,
 				430D83BF1985E4AB009E763A /* macasyncsocket.h */,
@@ -773,7 +773,7 @@
 				430D843F1985E4AB009E763A /* testclient.h */,
 				430D84401985E4AB009E763A /* testechoserver.h */,
 				430D84411985E4AB009E763A /* testutils.h */,
-				430D84421985E4AB009E763A /* thread.mm */,
+				43C695901D2148FE00427D35 /* thread.mm */,
 				430D84431985E4AB009E763A /* thread.h */,
 				430D84441985E4AB009E763A /* thread_checker.h */,
 				430D84451985E4AB009E763A /* thread_checker_impl.cc */,
@@ -910,6 +910,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C69C941D228EDA00427D35 /* platform_file.cc in Sources */,
 				430D849C1985E4AC009E763A /* sha1.cc in Sources */,
 				430D84B81985E4AC009E763A /* urlencode.cc in Sources */,
 				430D84BA1985E4AC009E763A /* virtualsocketserver.cc in Sources */,
@@ -931,6 +932,7 @@
 				430D849A1985E4AC009E763A /* ratetracker.cc in Sources */,
 				430D847F1985E4AC009E763A /* iosfilesystem.mm in Sources */,
 				430D84651985E4AC009E763A /* asynchttprequest.cc in Sources */,
+				43C695911D2148FE00427D35 /* thread.mm in Sources */,
 				430D84961985E4AC009E763A /* proxydetect.cc in Sources */,
 				430D848E1985E4AC009E763A /* network.cc in Sources */,
 				430D84881985E4AC009E763A /* messagequeue.cc in Sources */,
@@ -962,7 +964,6 @@
 				430D84751985E4AC009E763A /* filelock.cc in Sources */,
 				430D84641985E4AC009E763A /* asyncfile.cc in Sources */,
 				430D84711985E4AC009E763A /* crc32.cc in Sources */,
-				430D84B21985E4AC009E763A /* thread.mm in Sources */,
 				430D84AE1985E4AC009E763A /* task.cc in Sources */,
 				430D84A01985E4AC009E763A /* socketaddress.cc in Sources */,
 				430D84A71985E4AC009E763A /* sslsocketfactory.cc in Sources */,
@@ -1056,7 +1057,6 @@
 				43C67D471D211C8A00427D35 /* filelock.cc in Sources */,
 				43C67D481D211C8A00427D35 /* asyncfile.cc in Sources */,
 				43C67D491D211C8A00427D35 /* crc32.cc in Sources */,
-				43C67D4A1D211C8A00427D35 /* thread.mm in Sources */,
 				43C67D4B1D211C8A00427D35 /* task.cc in Sources */,
 				43C67D4C1D211C8A00427D35 /* socketaddress.cc in Sources */,
 				43C67D4D1D211C8A00427D35 /* sslsocketfactory.cc in Sources */,
@@ -1175,14 +1175,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "webrtc_base/webrtc_base-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
-					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
+					WEBRTC_MAC,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1228,14 +1228,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "webrtc_base/webrtc_base-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
-					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
+					WEBRTC_MAC,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

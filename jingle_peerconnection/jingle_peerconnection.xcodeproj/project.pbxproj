@@ -73,6 +73,8 @@
 		43982E7C198F53BC0090EABA /* webrtcsession.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982DF6198F53BB0090EABA /* webrtcsession.h */; };
 		43982E7D198F53BC0090EABA /* webrtcsessiondescriptionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982DF7198F53BB0090EABA /* webrtcsessiondescriptionfactory.cc */; };
 		43982E7E198F53BC0090EABA /* webrtcsessiondescriptionfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982DF8198F53BC0090EABA /* webrtcsessiondescriptionfactory.h */; };
+		43C6970C1D22324E00427D35 /* peerconnectionfactoryproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C6970A1D22324E00427D35 /* peerconnectionfactoryproxy.h */; };
+		43C6970D1D22324E00427D35 /* statstypes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C6970B1D22324E00427D35 /* statstypes.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +145,8 @@
 		43982DF6198F53BB0090EABA /* webrtcsession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcsession.h; sourceTree = "<group>"; };
 		43982DF7198F53BB0090EABA /* webrtcsessiondescriptionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcsessiondescriptionfactory.cc; sourceTree = "<group>"; };
 		43982DF8198F53BC0090EABA /* webrtcsessiondescriptionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcsessiondescriptionfactory.h; sourceTree = "<group>"; };
+		43C6970A1D22324E00427D35 /* peerconnectionfactoryproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peerconnectionfactoryproxy.h; sourceTree = "<group>"; };
+		43C6970B1D22324E00427D35 /* statstypes.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = statstypes.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +188,8 @@
 		43982D70198F53BB0090EABA /* webrtc */ = {
 			isa = PBXGroup;
 			children = (
+				43C6970A1D22324E00427D35 /* peerconnectionfactoryproxy.h */,
+				43C6970B1D22324E00427D35 /* statstypes.cc */,
 				43982D71198F53BB0090EABA /* audiotrack.cc */,
 				43982D72198F53BB0090EABA /* audiotrack.h */,
 				43982D73198F53BB0090EABA /* audiotrackrenderer.cc */,
@@ -293,6 +299,7 @@
 				43982E08198F53BC0090EABA /* jsepsessiondescription.h in Headers */,
 				43982E67198F53BC0090EABA /* remoteaudiosource.h in Headers */,
 				43982E60198F53BC0090EABA /* peerconnectionfactory.h in Headers */,
+				43C6970C1D22324E00427D35 /* peerconnectionfactoryproxy.h in Headers */,
 				43982E73198F53BC0090EABA /* videosourceinterface.h in Headers */,
 				43982E6D198F53BC0090EABA /* statscollector.h in Headers */,
 				43982E18198F53BC0090EABA /* notifier.h in Headers */,
@@ -374,6 +381,7 @@
 				43982E77198F53BC0090EABA /* videotrackrenderers.cc in Sources */,
 				43982E7B198F53BC0090EABA /* webrtcsession.cc in Sources */,
 				43982E5D198F53BC0090EABA /* peerconnection.cc in Sources */,
+				43C6970D1D22324E00427D35 /* statstypes.cc in Sources */,
 				43982E6C198F53BC0090EABA /* statscollector.cc in Sources */,
 				43982E07198F53BC0090EABA /* jsepsessiondescription.cc in Sources */,
 				43982DFD198F53BC0090EABA /* datachannel.cc in Sources */,
@@ -462,9 +470,9 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					POSIX,
+					WEBRTC_POSIX,
 					IOS,
+					"DEBUG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -483,9 +491,9 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					POSIX,
+					WEBRTC_POSIX,
 					IOS,
+					"DEBUG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

@@ -40,8 +40,6 @@ int16_t ACMILBC::InternalCreateEncoder() { return -1; }
 
 void ACMILBC::DestructEncoderSafe() { return; }
 
-void ACMILBC::InternalDestructEncoderInst(void* /* ptr_inst */) { return; }
-
 int16_t ACMILBC::SetBitRateSafe(const int32_t /* rate */) { return -1; }
 
 #else  //===================== Actual Implementation =======================
@@ -63,7 +61,7 @@ int16_t ACMILBC::InternalEncode(uint8_t* bitstream,
                                 int16_t* bitstream_len_byte) {
   *bitstream_len_byte = WebRtcIlbcfix_Encode(
       encoder_inst_ptr_, &in_audio_[in_audio_ix_read_], frame_len_smpl_,
-      reinterpret_cast<int16_t*>(bitstream));
+      bitstream);
   if (*bitstream_len_byte < 0) {
     WEBRTC_TRACE(webrtc::kTraceError,
                  webrtc::kTraceAudioCoding,
@@ -115,13 +113,6 @@ void ACMILBC::DestructEncoderSafe() {
     WebRtcIlbcfix_EncoderFree(encoder_inst_ptr_);
     encoder_inst_ptr_ = NULL;
   }
-}
-
-void ACMILBC::InternalDestructEncoderInst(void* ptr_inst) {
-  if (ptr_inst != NULL) {
-    WebRtcIlbcfix_EncoderFree(static_cast<iLBC_encinst_t_*>(ptr_inst));
-  }
-  return;
 }
 
 int16_t ACMILBC::SetBitRateSafe(const int32_t rate) {

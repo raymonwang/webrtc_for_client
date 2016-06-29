@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2004--2011, Google Inc.
+ * Copyright 2004--2011 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -24,6 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #include "talk/app/webrtc/audiotrack.h"
 
 #include <string>
@@ -42,10 +43,10 @@ std::string AudioTrack::kind() const {
   return kAudioTrackKind;
 }
 
-talk_base::scoped_refptr<AudioTrack> AudioTrack::Create(
+rtc::scoped_refptr<AudioTrack> AudioTrack::Create(
     const std::string& id, AudioSourceInterface* source) {
-  talk_base::RefCountedObject<AudioTrack>* track =
-      new talk_base::RefCountedObject<AudioTrack>(id, source);
+  rtc::RefCountedObject<AudioTrack>* track =
+      new rtc::RefCountedObject<AudioTrack>(id, source);
   return track;
 }
 

@@ -25,7 +25,7 @@
 
 #include "webrtc/typedefs.h"
 // needed for NetEqDecoder
-#include "webrtc/modules/audio_coding/neteq/interface/audio_decoder.h"
+#include "webrtc/modules/audio_coding/neteq/audio_decoder_impl.h"
 #include "webrtc/modules/audio_coding/neteq/interface/neteq.h"
 
 /************************/
@@ -157,10 +157,6 @@ void stereoInterleave(unsigned char* data, int dataLen, int stride);
 #if ((defined CODEC_SPEEX_8)||(defined CODEC_SPEEX_16))
 	#include "SpeexInterface.h"
 #endif
-#ifdef CODEC_CELT_32
-#include "celt_interface.h"
-#endif
-
 
 /***********************************/
 /* Global codec instance variables */
@@ -208,7 +204,7 @@ WebRtcVadInst *VAD_inst[2];
 	int16_t		  AMRWB_bitrate;
 #endif
 #ifdef CODEC_ILBC
-	iLBC_encinst_t *iLBCenc_inst[2];
+	IlbcEncoderInstance *iLBCenc_inst[2];
 #endif
 #ifdef CODEC_ISAC
 	ISACStruct *ISAC_inst[2];
@@ -232,13 +228,6 @@ WebRtcVadInst *VAD_inst[2];
 #ifdef CODEC_SPEEX_16
 	SPEEX_encinst_t *SPEEX16enc_inst[2];
 #endif
-#ifdef CODEC_CELT_32
-  CELT_encinst_t *CELT32enc_inst[2];
-#endif
-#ifdef CODEC_G711
-    void *G711state[2]={NULL, NULL};
-#endif
-
 
 int main(int argc, char* argv[])
 {
@@ -261,7 +250,7 @@ int main(int argc, char* argv[])
     uint32_t red_TS[2] = {0};
     uint16_t red_len[2] = {0};
     int RTPheaderLen=12;
-	unsigned char red_data[8000];
+    uint8_t red_data[8000];
 #ifdef INSERT_OLD_PACKETS
 	uint16_t old_length, old_plen;
 	int old_enc_len;
@@ -375,9 +364,6 @@ int main(int argc, char* argv[])
 #endif
 #ifdef CODEC_SPEEX_16
 		printf("             : speex16      speex coder (16 kHz)\n");
-#endif
-#ifdef CODEC_CELT_32
-    printf("             : celt32       celt coder (32 kHz)\n");
 #endif
 #ifdef CODEC_RED
 #ifdef CODEC_G711
@@ -755,7 +741,8 @@ int main(int argc, char* argv[])
                 if(usedCodec==webrtc::kDecoderISAC)
                 {
                     assert(!usingStereo); // Cannot handle stereo yet
-                    red_len[0] = WebRtcIsac_GetRedPayload(ISAC_inst[0], (int16_t*)red_data);
+                    red_len[0] =
+                        WebRtcIsac_GetRedPayload(ISAC_inst[0], red_data);
                 }
                 else
                 {
@@ -857,11 +844,6 @@ void NetEQTest_GetCodec_and_PT(char * name, webrtc::NetEqDecoder *codec, int *PT
 		*codec=webrtc::kDecoderISACswb;
 		*PT=NETEQ_CODEC_ISACSWB_PT;
 	}
-  else if(!strcmp(name,"celt32")){
-    *fs=32000;
-    *codec=webrtc::kDecoderCELT_32;
-    *PT=NETEQ_CODEC_CELT32_PT;
-  }
     else if(!strcmp(name,"red_pcm")){
 		*codec=webrtc::kDecoderPCMa;
 		*PT=NETEQ_CODEC_PCMA_PT; /* this will be the PT for the sub-headers */
@@ -1030,26 +1012,6 @@ int NetEQTest_init_coders(webrtc::NetEqDecoder coder, int enc_frameSize, int bit
             if (ok!=0) exit(0);
         } else {
             printf("\nError - Speex16 called with sample frequency other than 16 kHz.\n\n");
-        }
-        break;
-#endif
-#ifdef CODEC_CELT_32
-    case webrtc::kDecoderCELT_32 :
-        if (sampfreq==32000) {
-            if (enc_frameSize==320) {
-                ok=WebRtcCelt_CreateEnc(&CELT32enc_inst[k], 1 /*mono*/);
-                if (ok!=0) {
-                    printf("Error: Couldn't allocate memory for Celt encoding instance\n");
-                    exit(0);
-                }
-            } else {
-                printf("\nError: Celt only supports 10 ms!!\n\n");
-                exit(0);
-            }
-            ok=WebRtcCelt_EncoderInit(CELT32enc_inst[k],  1 /*mono*/, 48000 /*bitrate*/);
-            if (ok!=0) exit(0);
-        } else {
-          printf("\nError - Celt32 called with sample frequency other than 32 kHz.\n\n");
         }
         break;
 #endif
@@ -1441,11 +1403,6 @@ int NetEQTest_free_coders(webrtc::NetEqDecoder coder, int numChannels) {
             WebRtcSpeex_FreeEnc(SPEEX16enc_inst[k]);
             break;
 #endif
-#ifdef CODEC_CELT_32
-        case webrtc::kDecoderCELT_32 :
-            WebRtcCelt_FreeEnc(CELT32enc_inst[k]);
-            break;
-#endif
 
 #ifdef CODEC_G722_1_16
         case webrtc::kDecoderG722_1_16 :
@@ -1601,12 +1558,12 @@ int NetEQTest_encode(int coder, int16_t *indata, int frameLen, unsigned char * e
         /* Encode with the selected coder type */
         if (coder==webrtc::kDecoderPCMu) { /*g711 u-law */
 #ifdef CODEC_G711
-            cdlen = WebRtcG711_EncodeU(G711state[k], indata, frameLen, (int16_t*) encoded);
+            cdlen = WebRtcG711_EncodeU(indata, frameLen, (int16_t*) encoded);
 #endif
         }  
         else if (coder==webrtc::kDecoderPCMa) { /*g711 A-law */
 #ifdef CODEC_G711
-            cdlen = WebRtcG711_EncodeA(G711state[k], indata, frameLen, (int16_t*) encoded);
+            cdlen = WebRtcG711_EncodeA(indata, frameLen, (int16_t*) encoded);
         }
 #endif
 #ifdef CODEC_PCM16B
@@ -1617,13 +1574,14 @@ int NetEQTest_encode(int coder, int16_t *indata, int frameLen, unsigned char * e
 #endif
 #ifdef CODEC_G722
         else if (coder==webrtc::kDecoderG722) { /*g722 */
-            cdlen=WebRtcG722_Encode(g722EncState[k], indata, frameLen, (int16_t*)encoded);
+            cdlen=WebRtcG722_Encode(g722EncState[k], indata, frameLen, encoded);
             assert(cdlen == frameLen>>1);
         }
 #endif
 #ifdef CODEC_ILBC
         else if (coder==webrtc::kDecoderILBC) { /*iLBC */
-            cdlen=WebRtcIlbcfix_Encode(iLBCenc_inst[k], indata,frameLen,(int16_t*)encoded);
+            cdlen = WebRtcIlbcfix_Encode(iLBCenc_inst[k], indata,
+                                         frameLen, encoded);
         }
 #endif
 #if (defined(CODEC_ISAC) || defined(NETEQ_ISACFIX_CODEC)) // TODO(hlundin): remove all NETEQ_ISACFIX_CODEC
@@ -1632,9 +1590,13 @@ int NetEQTest_encode(int coder, int16_t *indata, int frameLen, unsigned char * e
             cdlen=0;
             while (cdlen<=0) {
 #ifdef CODEC_ISAC /* floating point */
-                cdlen=WebRtcIsac_Encode(ISAC_inst[k],&indata[noOfCalls*160],(int16_t*)encoded);
+                cdlen = WebRtcIsac_Encode(ISAC_inst[k],
+                                          &indata[noOfCalls * 160],
+                                          encoded);
 #else /* fixed point */
-                cdlen=WebRtcIsacfix_Encode(ISAC_inst[k],&indata[noOfCalls*160],(int16_t*)encoded);
+                cdlen = WebRtcIsacfix_Encode(ISAC_inst[k],
+                                             &indata[noOfCalls * 160],
+                                             encoded);
 #endif
                 noOfCalls++;
             }
@@ -1645,26 +1607,13 @@ int NetEQTest_encode(int coder, int16_t *indata, int frameLen, unsigned char * e
             int noOfCalls=0;
             cdlen=0;
             while (cdlen<=0) {
-                cdlen=WebRtcIsac_Encode(ISACSWB_inst[k],&indata[noOfCalls*320],(int16_t*)encoded);
+                cdlen = WebRtcIsac_Encode(ISACSWB_inst[k],
+                                          &indata[noOfCalls * 320],
+                                          encoded);
                 noOfCalls++;
             }
         }
 #endif
-#ifdef CODEC_CELT_32
-        else if (coder==webrtc::kDecoderCELT_32) { /* Celt */
-            int encodedLen = 0;
-            cdlen = 0;
-            while (cdlen <= 0) {
-                cdlen = WebRtcCelt_Encode(CELT32enc_inst[k], &indata[encodedLen], encoded);
-                encodedLen += 10*32; /* 10 ms */
-            }
-            if( (encodedLen != frameLen) || cdlen < 0) {
-                printf("Error encoding Celt frame!\n");
-                exit(0);
-            }
-        }
-#endif
-
         indata += frameLen;
         encoded += cdlen;
         totalLen += cdlen;

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -35,7 +35,7 @@
 
 #include "talk/app/webrtc/jsep.h"
 #include "talk/app/webrtc/jsepicecandidate.h"
-#include "talk/base/scoped_ptr.h"
+#include "webrtc/base/scoped_ptr.h"
 
 namespace cricket {
 class SessionDescription;
@@ -89,7 +89,7 @@ class JsepSessionDescription : public SessionDescriptionInterface {
   static const int kDefaultVideoCodecPreference;
 
  private:
-  talk_base::scoped_ptr<cricket::SessionDescription> description_;
+  rtc::scoped_ptr<cricket::SessionDescription> description_;
   std::string session_id_;
   std::string session_version_;
   std::string type_;

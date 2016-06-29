@@ -109,4 +109,24 @@ typedef unsigned __int64    uint64_t;
 #endif
 #endif  // WARN_UNUSED_RESULT
 
+// Put after a variable that might not be used, to prevent compiler warnings:
+//   int result ATTRIBUTE_UNUSED = DoSomething();
+//   assert(result == 17);
+#ifndef ATTRIBUTE_UNUSED
+#if defined(__GNUC__) || defined(__clang__)
+#define ATTRIBUTE_UNUSED __attribute__((unused))
+#else
+#define ATTRIBUTE_UNUSED
+#endif
+#endif
+
+// Annotate a function that will not return control flow to the caller.
+#if defined(_MSC_VER)
+#define NO_RETURN __declspec(noreturn)
+#elif defined(__GNUC__)
+#define NO_RETURN __attribute__((noreturn))
+#else
+#define NO_RETURN
+#endif
+
 #endif  // WEBRTC_TYPEDEFS_H_

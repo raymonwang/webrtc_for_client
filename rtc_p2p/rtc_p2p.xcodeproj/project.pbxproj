@@ -1,0 +1,605 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43C69AEF1D225AE800427D35 /* asyncstuntcpsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A891D225AE800427D35 /* asyncstuntcpsocket.cc */; };
+		43C69AF01D225AE800427D35 /* asyncstuntcpsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A8A1D225AE800427D35 /* asyncstuntcpsocket.h */; };
+		43C69AF21D225AE800427D35 /* basicpacketsocketfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A8C1D225AE800427D35 /* basicpacketsocketfactory.cc */; };
+		43C69AF31D225AE800427D35 /* basicpacketsocketfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A8D1D225AE800427D35 /* basicpacketsocketfactory.h */; };
+		43C69AF41D225AE800427D35 /* candidate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A8E1D225AE800427D35 /* candidate.h */; };
+		43C69AF51D225AE800427D35 /* common.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A8F1D225AE800427D35 /* common.h */; };
+		43C69AF61D225AE800427D35 /* constants.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A901D225AE800427D35 /* constants.cc */; };
+		43C69AF71D225AE800427D35 /* constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A911D225AE800427D35 /* constants.h */; };
+		43C69AF81D225AE800427D35 /* dtlstransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A921D225AE800427D35 /* dtlstransport.h */; };
+		43C69AF91D225AE800427D35 /* dtlstransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A931D225AE800427D35 /* dtlstransportchannel.cc */; };
+		43C69AFA1D225AE800427D35 /* dtlstransportchannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A941D225AE800427D35 /* dtlstransportchannel.h */; };
+		43C69AFC1D225AE800427D35 /* fakesession.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A961D225AE800427D35 /* fakesession.h */; };
+		43C69AFD1D225AE800427D35 /* p2ptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A971D225AE800427D35 /* p2ptransport.cc */; };
+		43C69AFE1D225AE800427D35 /* p2ptransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A981D225AE800427D35 /* p2ptransport.h */; };
+		43C69AFF1D225AE800427D35 /* p2ptransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A991D225AE800427D35 /* p2ptransportchannel.cc */; };
+		43C69B001D225AE800427D35 /* p2ptransportchannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A9A1D225AE800427D35 /* p2ptransportchannel.h */; };
+		43C69B021D225AE800427D35 /* packetsocketfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A9C1D225AE800427D35 /* packetsocketfactory.h */; };
+		43C69B031D225AE800427D35 /* port.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A9D1D225AE800427D35 /* port.cc */; };
+		43C69B041D225AE800427D35 /* port.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A9E1D225AE800427D35 /* port.h */; };
+		43C69B061D225AE800427D35 /* portallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AA01D225AE800427D35 /* portallocator.cc */; };
+		43C69B071D225AE800427D35 /* portallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AA11D225AE800427D35 /* portallocator.h */; };
+		43C69B081D225AE800427D35 /* portallocatorsessionproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AA21D225AE800427D35 /* portallocatorsessionproxy.cc */; };
+		43C69B091D225AE800427D35 /* portallocatorsessionproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AA31D225AE800427D35 /* portallocatorsessionproxy.h */; };
+		43C69B0B1D225AE800427D35 /* portinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AA51D225AE800427D35 /* portinterface.h */; };
+		43C69B0C1D225AE800427D35 /* portproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AA61D225AE800427D35 /* portproxy.cc */; };
+		43C69B0D1D225AE800427D35 /* portproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AA71D225AE800427D35 /* portproxy.h */; };
+		43C69B0E1D225AE800427D35 /* pseudotcp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AA81D225AE800427D35 /* pseudotcp.cc */; };
+		43C69B0F1D225AE800427D35 /* pseudotcp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AA91D225AE800427D35 /* pseudotcp.h */; };
+		43C69B111D225AE800427D35 /* rawtransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AAB1D225AE800427D35 /* rawtransport.cc */; };
+		43C69B121D225AE800427D35 /* rawtransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AAC1D225AE800427D35 /* rawtransport.h */; };
+		43C69B131D225AE800427D35 /* rawtransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AAD1D225AE800427D35 /* rawtransportchannel.cc */; };
+		43C69B141D225AE800427D35 /* rawtransportchannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AAE1D225AE800427D35 /* rawtransportchannel.h */; };
+		43C69B151D225AE800427D35 /* relayport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AAF1D225AE800427D35 /* relayport.cc */; };
+		43C69B161D225AE800427D35 /* relayport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AB01D225AE800427D35 /* relayport.h */; };
+		43C69B181D225AE800427D35 /* relayserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AB21D225AE800427D35 /* relayserver.cc */; };
+		43C69B191D225AE800427D35 /* relayserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AB31D225AE800427D35 /* relayserver.h */; };
+		43C69B1B1D225AE800427D35 /* session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AB51D225AE800427D35 /* session.cc */; };
+		43C69B1C1D225AE800427D35 /* session.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AB61D225AE800427D35 /* session.h */; };
+		43C69B1D1D225AE800427D35 /* sessiondescription.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AB71D225AE800427D35 /* sessiondescription.cc */; };
+		43C69B1E1D225AE800427D35 /* sessiondescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AB81D225AE800427D35 /* sessiondescription.h */; };
+		43C69B1F1D225AE800427D35 /* sessionid.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AB91D225AE800427D35 /* sessionid.h */; };
+		43C69B201D225AE800427D35 /* stun.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69ABA1D225AE800427D35 /* stun.cc */; };
+		43C69B211D225AE800427D35 /* stun.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ABB1D225AE800427D35 /* stun.h */; };
+		43C69B231D225AE800427D35 /* stunport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69ABD1D225AE800427D35 /* stunport.cc */; };
+		43C69B241D225AE800427D35 /* stunport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ABE1D225AE800427D35 /* stunport.h */; };
+		43C69B261D225AE800427D35 /* stunrequest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AC01D225AE800427D35 /* stunrequest.cc */; };
+		43C69B271D225AE800427D35 /* stunrequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AC11D225AE800427D35 /* stunrequest.h */; };
+		43C69B291D225AE800427D35 /* stunserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AC31D225AE800427D35 /* stunserver.cc */; };
+		43C69B2A1D225AE800427D35 /* stunserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AC41D225AE800427D35 /* stunserver.h */; };
+		43C69B2C1D225AE800427D35 /* tcpport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AC61D225AE800427D35 /* tcpport.cc */; };
+		43C69B2D1D225AE800427D35 /* tcpport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AC71D225AE800427D35 /* tcpport.h */; };
+		43C69B2E1D225AE800427D35 /* testrelayserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AC81D225AE800427D35 /* testrelayserver.h */; };
+		43C69B2F1D225AE800427D35 /* teststunserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AC91D225AE800427D35 /* teststunserver.h */; };
+		43C69B301D225AE800427D35 /* testturnserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ACA1D225AE800427D35 /* testturnserver.h */; };
+		43C69B311D225AE800427D35 /* transport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69ACB1D225AE800427D35 /* transport.cc */; };
+		43C69B321D225AE800427D35 /* transport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ACC1D225AE800427D35 /* transport.h */; };
+		43C69B341D225AE800427D35 /* transportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69ACE1D225AE800427D35 /* transportchannel.cc */; };
+		43C69B351D225AE800427D35 /* transportchannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ACF1D225AE800427D35 /* transportchannel.h */; };
+		43C69B361D225AE800427D35 /* transportchannelimpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AD01D225AE800427D35 /* transportchannelimpl.h */; };
+		43C69B371D225AE800427D35 /* transportchannelproxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AD11D225AE800427D35 /* transportchannelproxy.cc */; };
+		43C69B381D225AE800427D35 /* transportchannelproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AD21D225AE800427D35 /* transportchannelproxy.h */; };
+		43C69B391D225AE800427D35 /* transportdescription.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AD31D225AE800427D35 /* transportdescription.cc */; };
+		43C69B3A1D225AE800427D35 /* transportdescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AD41D225AE800427D35 /* transportdescription.h */; };
+		43C69B3B1D225AE800427D35 /* transportdescriptionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AD51D225AE800427D35 /* transportdescriptionfactory.cc */; };
+		43C69B3C1D225AE800427D35 /* transportdescriptionfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AD61D225AE800427D35 /* transportdescriptionfactory.h */; };
+		43C69B3E1D225AE800427D35 /* transportinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AD81D225AE800427D35 /* transportinfo.h */; };
+		43C69B3F1D225AE800427D35 /* turnport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AD91D225AE800427D35 /* turnport.cc */; };
+		43C69B401D225AE800427D35 /* turnport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ADA1D225AE800427D35 /* turnport.h */; };
+		43C69B421D225AE800427D35 /* turnserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69ADC1D225AE800427D35 /* turnserver.cc */; };
+		43C69B431D225AE800427D35 /* turnserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ADD1D225AE800427D35 /* turnserver.h */; };
+		43C69B441D225AE800427D35 /* udpport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69ADE1D225AE800427D35 /* udpport.h */; };
+		43C69B451D225AE800427D35 /* autoportallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AE01D225AE800427D35 /* autoportallocator.h */; };
+		43C69B461D225AE800427D35 /* basicportallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AE11D225AE800427D35 /* basicportallocator.cc */; };
+		43C69B471D225AE800427D35 /* basicportallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AE21D225AE800427D35 /* basicportallocator.h */; };
+		43C69B481D225AE800427D35 /* connectivitychecker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AE31D225AE800427D35 /* connectivitychecker.cc */; };
+		43C69B491D225AE800427D35 /* connectivitychecker.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AE41D225AE800427D35 /* connectivitychecker.h */; };
+		43C69B4B1D225AE800427D35 /* fakeportallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AE61D225AE800427D35 /* fakeportallocator.h */; };
+		43C69B4C1D225AE800427D35 /* httpportallocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AE71D225AE800427D35 /* httpportallocator.cc */; };
+		43C69B4D1D225AE800427D35 /* httpportallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AE81D225AE800427D35 /* httpportallocator.h */; };
+		43C69B4F1D225AE800427D35 /* socketmonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69AEA1D225AE800427D35 /* socketmonitor.cc */; };
+		43C69B501D225AE800427D35 /* socketmonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69AEB1D225AE800427D35 /* socketmonitor.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43C6977F1D22567300427D35 /* librtc_p2p.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_p2p.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C69A891D225AE800427D35 /* asyncstuntcpsocket.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = asyncstuntcpsocket.cc; sourceTree = "<group>"; };
+		43C69A8A1D225AE800427D35 /* asyncstuntcpsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncstuntcpsocket.h; sourceTree = "<group>"; };
+		43C69A8C1D225AE800427D35 /* basicpacketsocketfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = basicpacketsocketfactory.cc; sourceTree = "<group>"; };
+		43C69A8D1D225AE800427D35 /* basicpacketsocketfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basicpacketsocketfactory.h; sourceTree = "<group>"; };
+		43C69A8E1D225AE800427D35 /* candidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = candidate.h; sourceTree = "<group>"; };
+		43C69A8F1D225AE800427D35 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		43C69A901D225AE800427D35 /* constants.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = constants.cc; sourceTree = "<group>"; };
+		43C69A911D225AE800427D35 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		43C69A921D225AE800427D35 /* dtlstransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtlstransport.h; sourceTree = "<group>"; };
+		43C69A931D225AE800427D35 /* dtlstransportchannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtlstransportchannel.cc; sourceTree = "<group>"; };
+		43C69A941D225AE800427D35 /* dtlstransportchannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtlstransportchannel.h; sourceTree = "<group>"; };
+		43C69A961D225AE800427D35 /* fakesession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakesession.h; sourceTree = "<group>"; };
+		43C69A971D225AE800427D35 /* p2ptransport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = p2ptransport.cc; sourceTree = "<group>"; };
+		43C69A981D225AE800427D35 /* p2ptransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = p2ptransport.h; sourceTree = "<group>"; };
+		43C69A991D225AE800427D35 /* p2ptransportchannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = p2ptransportchannel.cc; sourceTree = "<group>"; };
+		43C69A9A1D225AE800427D35 /* p2ptransportchannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = p2ptransportchannel.h; sourceTree = "<group>"; };
+		43C69A9C1D225AE800427D35 /* packetsocketfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packetsocketfactory.h; sourceTree = "<group>"; };
+		43C69A9D1D225AE800427D35 /* port.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = port.cc; sourceTree = "<group>"; };
+		43C69A9E1D225AE800427D35 /* port.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = port.h; sourceTree = "<group>"; };
+		43C69AA01D225AE800427D35 /* portallocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = portallocator.cc; sourceTree = "<group>"; };
+		43C69AA11D225AE800427D35 /* portallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portallocator.h; sourceTree = "<group>"; };
+		43C69AA21D225AE800427D35 /* portallocatorsessionproxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = portallocatorsessionproxy.cc; sourceTree = "<group>"; };
+		43C69AA31D225AE800427D35 /* portallocatorsessionproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portallocatorsessionproxy.h; sourceTree = "<group>"; };
+		43C69AA51D225AE800427D35 /* portinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portinterface.h; sourceTree = "<group>"; };
+		43C69AA61D225AE800427D35 /* portproxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = portproxy.cc; sourceTree = "<group>"; };
+		43C69AA71D225AE800427D35 /* portproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = portproxy.h; sourceTree = "<group>"; };
+		43C69AA81D225AE800427D35 /* pseudotcp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pseudotcp.cc; sourceTree = "<group>"; };
+		43C69AA91D225AE800427D35 /* pseudotcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pseudotcp.h; sourceTree = "<group>"; };
+		43C69AAB1D225AE800427D35 /* rawtransport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rawtransport.cc; sourceTree = "<group>"; };
+		43C69AAC1D225AE800427D35 /* rawtransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rawtransport.h; sourceTree = "<group>"; };
+		43C69AAD1D225AE800427D35 /* rawtransportchannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rawtransportchannel.cc; sourceTree = "<group>"; };
+		43C69AAE1D225AE800427D35 /* rawtransportchannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rawtransportchannel.h; sourceTree = "<group>"; };
+		43C69AAF1D225AE800427D35 /* relayport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = relayport.cc; sourceTree = "<group>"; };
+		43C69AB01D225AE800427D35 /* relayport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = relayport.h; sourceTree = "<group>"; };
+		43C69AB21D225AE800427D35 /* relayserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = relayserver.cc; sourceTree = "<group>"; };
+		43C69AB31D225AE800427D35 /* relayserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = relayserver.h; sourceTree = "<group>"; };
+		43C69AB51D225AE800427D35 /* session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session.cc; sourceTree = "<group>"; };
+		43C69AB61D225AE800427D35 /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session.h; sourceTree = "<group>"; };
+		43C69AB71D225AE800427D35 /* sessiondescription.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sessiondescription.cc; sourceTree = "<group>"; };
+		43C69AB81D225AE800427D35 /* sessiondescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sessiondescription.h; sourceTree = "<group>"; };
+		43C69AB91D225AE800427D35 /* sessionid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sessionid.h; sourceTree = "<group>"; };
+		43C69ABA1D225AE800427D35 /* stun.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stun.cc; sourceTree = "<group>"; };
+		43C69ABB1D225AE800427D35 /* stun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stun.h; sourceTree = "<group>"; };
+		43C69ABD1D225AE800427D35 /* stunport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stunport.cc; sourceTree = "<group>"; };
+		43C69ABE1D225AE800427D35 /* stunport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stunport.h; sourceTree = "<group>"; };
+		43C69AC01D225AE800427D35 /* stunrequest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stunrequest.cc; sourceTree = "<group>"; };
+		43C69AC11D225AE800427D35 /* stunrequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stunrequest.h; sourceTree = "<group>"; };
+		43C69AC31D225AE800427D35 /* stunserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stunserver.cc; sourceTree = "<group>"; };
+		43C69AC41D225AE800427D35 /* stunserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stunserver.h; sourceTree = "<group>"; };
+		43C69AC61D225AE800427D35 /* tcpport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tcpport.cc; sourceTree = "<group>"; };
+		43C69AC71D225AE800427D35 /* tcpport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tcpport.h; sourceTree = "<group>"; };
+		43C69AC81D225AE800427D35 /* testrelayserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testrelayserver.h; sourceTree = "<group>"; };
+		43C69AC91D225AE800427D35 /* teststunserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teststunserver.h; sourceTree = "<group>"; };
+		43C69ACA1D225AE800427D35 /* testturnserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testturnserver.h; sourceTree = "<group>"; };
+		43C69ACB1D225AE800427D35 /* transport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transport.cc; sourceTree = "<group>"; };
+		43C69ACC1D225AE800427D35 /* transport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transport.h; sourceTree = "<group>"; };
+		43C69ACE1D225AE800427D35 /* transportchannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transportchannel.cc; sourceTree = "<group>"; };
+		43C69ACF1D225AE800427D35 /* transportchannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transportchannel.h; sourceTree = "<group>"; };
+		43C69AD01D225AE800427D35 /* transportchannelimpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transportchannelimpl.h; sourceTree = "<group>"; };
+		43C69AD11D225AE800427D35 /* transportchannelproxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transportchannelproxy.cc; sourceTree = "<group>"; };
+		43C69AD21D225AE800427D35 /* transportchannelproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transportchannelproxy.h; sourceTree = "<group>"; };
+		43C69AD31D225AE800427D35 /* transportdescription.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transportdescription.cc; sourceTree = "<group>"; };
+		43C69AD41D225AE800427D35 /* transportdescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transportdescription.h; sourceTree = "<group>"; };
+		43C69AD51D225AE800427D35 /* transportdescriptionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transportdescriptionfactory.cc; sourceTree = "<group>"; };
+		43C69AD61D225AE800427D35 /* transportdescriptionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transportdescriptionfactory.h; sourceTree = "<group>"; };
+		43C69AD81D225AE800427D35 /* transportinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transportinfo.h; sourceTree = "<group>"; };
+		43C69AD91D225AE800427D35 /* turnport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = turnport.cc; sourceTree = "<group>"; };
+		43C69ADA1D225AE800427D35 /* turnport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turnport.h; sourceTree = "<group>"; };
+		43C69ADC1D225AE800427D35 /* turnserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = turnserver.cc; sourceTree = "<group>"; };
+		43C69ADD1D225AE800427D35 /* turnserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turnserver.h; sourceTree = "<group>"; };
+		43C69ADE1D225AE800427D35 /* udpport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udpport.h; sourceTree = "<group>"; };
+		43C69AE01D225AE800427D35 /* autoportallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autoportallocator.h; sourceTree = "<group>"; };
+		43C69AE11D225AE800427D35 /* basicportallocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = basicportallocator.cc; sourceTree = "<group>"; };
+		43C69AE21D225AE800427D35 /* basicportallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basicportallocator.h; sourceTree = "<group>"; };
+		43C69AE31D225AE800427D35 /* connectivitychecker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = connectivitychecker.cc; sourceTree = "<group>"; };
+		43C69AE41D225AE800427D35 /* connectivitychecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = connectivitychecker.h; sourceTree = "<group>"; };
+		43C69AE61D225AE800427D35 /* fakeportallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakeportallocator.h; sourceTree = "<group>"; };
+		43C69AE71D225AE800427D35 /* httpportallocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = httpportallocator.cc; sourceTree = "<group>"; };
+		43C69AE81D225AE800427D35 /* httpportallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = httpportallocator.h; sourceTree = "<group>"; };
+		43C69AEA1D225AE800427D35 /* socketmonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = socketmonitor.cc; sourceTree = "<group>"; };
+		43C69AEB1D225AE800427D35 /* socketmonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socketmonitor.h; sourceTree = "<group>"; };
+		43C69AEC1D225AE800427D35 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43C69AED1D225AE800427D35 /* p2p.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = p2p.gyp; sourceTree = "<group>"; };
+		43C69AEE1D225AE800427D35 /* p2p_tests.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = p2p_tests.gypi; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43C6977C1D22567300427D35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43C697761D22567300427D35 = {
+			isa = PBXGroup;
+			children = (
+				43C69A871D225AE800427D35 /* p2p */,
+				43C697801D22567300427D35 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43C697801D22567300427D35 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43C6977F1D22567300427D35 /* librtc_p2p.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43C69A871D225AE800427D35 /* p2p */ = {
+			isa = PBXGroup;
+			children = (
+				43C69A881D225AE800427D35 /* base */,
+				43C69ADF1D225AE800427D35 /* client */,
+				43C69AEC1D225AE800427D35 /* OWNERS */,
+				43C69AED1D225AE800427D35 /* p2p.gyp */,
+				43C69AEE1D225AE800427D35 /* p2p_tests.gypi */,
+			);
+			name = p2p;
+			path = ../webRTCAPP/Classes/webrtc/p2p;
+			sourceTree = "<group>";
+		};
+		43C69A881D225AE800427D35 /* base */ = {
+			isa = PBXGroup;
+			children = (
+				43C69A891D225AE800427D35 /* asyncstuntcpsocket.cc */,
+				43C69A8A1D225AE800427D35 /* asyncstuntcpsocket.h */,
+				43C69A8C1D225AE800427D35 /* basicpacketsocketfactory.cc */,
+				43C69A8D1D225AE800427D35 /* basicpacketsocketfactory.h */,
+				43C69A8E1D225AE800427D35 /* candidate.h */,
+				43C69A8F1D225AE800427D35 /* common.h */,
+				43C69A901D225AE800427D35 /* constants.cc */,
+				43C69A911D225AE800427D35 /* constants.h */,
+				43C69A921D225AE800427D35 /* dtlstransport.h */,
+				43C69A931D225AE800427D35 /* dtlstransportchannel.cc */,
+				43C69A941D225AE800427D35 /* dtlstransportchannel.h */,
+				43C69A961D225AE800427D35 /* fakesession.h */,
+				43C69A971D225AE800427D35 /* p2ptransport.cc */,
+				43C69A981D225AE800427D35 /* p2ptransport.h */,
+				43C69A991D225AE800427D35 /* p2ptransportchannel.cc */,
+				43C69A9A1D225AE800427D35 /* p2ptransportchannel.h */,
+				43C69A9C1D225AE800427D35 /* packetsocketfactory.h */,
+				43C69A9D1D225AE800427D35 /* port.cc */,
+				43C69A9E1D225AE800427D35 /* port.h */,
+				43C69AA01D225AE800427D35 /* portallocator.cc */,
+				43C69AA11D225AE800427D35 /* portallocator.h */,
+				43C69AA21D225AE800427D35 /* portallocatorsessionproxy.cc */,
+				43C69AA31D225AE800427D35 /* portallocatorsessionproxy.h */,
+				43C69AA51D225AE800427D35 /* portinterface.h */,
+				43C69AA61D225AE800427D35 /* portproxy.cc */,
+				43C69AA71D225AE800427D35 /* portproxy.h */,
+				43C69AA81D225AE800427D35 /* pseudotcp.cc */,
+				43C69AA91D225AE800427D35 /* pseudotcp.h */,
+				43C69AAB1D225AE800427D35 /* rawtransport.cc */,
+				43C69AAC1D225AE800427D35 /* rawtransport.h */,
+				43C69AAD1D225AE800427D35 /* rawtransportchannel.cc */,
+				43C69AAE1D225AE800427D35 /* rawtransportchannel.h */,
+				43C69AAF1D225AE800427D35 /* relayport.cc */,
+				43C69AB01D225AE800427D35 /* relayport.h */,
+				43C69AB21D225AE800427D35 /* relayserver.cc */,
+				43C69AB31D225AE800427D35 /* relayserver.h */,
+				43C69AB51D225AE800427D35 /* session.cc */,
+				43C69AB61D225AE800427D35 /* session.h */,
+				43C69AB71D225AE800427D35 /* sessiondescription.cc */,
+				43C69AB81D225AE800427D35 /* sessiondescription.h */,
+				43C69AB91D225AE800427D35 /* sessionid.h */,
+				43C69ABA1D225AE800427D35 /* stun.cc */,
+				43C69ABB1D225AE800427D35 /* stun.h */,
+				43C69ABD1D225AE800427D35 /* stunport.cc */,
+				43C69ABE1D225AE800427D35 /* stunport.h */,
+				43C69AC01D225AE800427D35 /* stunrequest.cc */,
+				43C69AC11D225AE800427D35 /* stunrequest.h */,
+				43C69AC31D225AE800427D35 /* stunserver.cc */,
+				43C69AC41D225AE800427D35 /* stunserver.h */,
+				43C69AC61D225AE800427D35 /* tcpport.cc */,
+				43C69AC71D225AE800427D35 /* tcpport.h */,
+				43C69AC81D225AE800427D35 /* testrelayserver.h */,
+				43C69AC91D225AE800427D35 /* teststunserver.h */,
+				43C69ACA1D225AE800427D35 /* testturnserver.h */,
+				43C69ACB1D225AE800427D35 /* transport.cc */,
+				43C69ACC1D225AE800427D35 /* transport.h */,
+				43C69ACE1D225AE800427D35 /* transportchannel.cc */,
+				43C69ACF1D225AE800427D35 /* transportchannel.h */,
+				43C69AD01D225AE800427D35 /* transportchannelimpl.h */,
+				43C69AD11D225AE800427D35 /* transportchannelproxy.cc */,
+				43C69AD21D225AE800427D35 /* transportchannelproxy.h */,
+				43C69AD31D225AE800427D35 /* transportdescription.cc */,
+				43C69AD41D225AE800427D35 /* transportdescription.h */,
+				43C69AD51D225AE800427D35 /* transportdescriptionfactory.cc */,
+				43C69AD61D225AE800427D35 /* transportdescriptionfactory.h */,
+				43C69AD81D225AE800427D35 /* transportinfo.h */,
+				43C69AD91D225AE800427D35 /* turnport.cc */,
+				43C69ADA1D225AE800427D35 /* turnport.h */,
+				43C69ADC1D225AE800427D35 /* turnserver.cc */,
+				43C69ADD1D225AE800427D35 /* turnserver.h */,
+				43C69ADE1D225AE800427D35 /* udpport.h */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
+		43C69ADF1D225AE800427D35 /* client */ = {
+			isa = PBXGroup;
+			children = (
+				43C69AE01D225AE800427D35 /* autoportallocator.h */,
+				43C69AE11D225AE800427D35 /* basicportallocator.cc */,
+				43C69AE21D225AE800427D35 /* basicportallocator.h */,
+				43C69AE31D225AE800427D35 /* connectivitychecker.cc */,
+				43C69AE41D225AE800427D35 /* connectivitychecker.h */,
+				43C69AE61D225AE800427D35 /* fakeportallocator.h */,
+				43C69AE71D225AE800427D35 /* httpportallocator.cc */,
+				43C69AE81D225AE800427D35 /* httpportallocator.h */,
+				43C69AEA1D225AE800427D35 /* socketmonitor.cc */,
+				43C69AEB1D225AE800427D35 /* socketmonitor.h */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43C6977D1D22567300427D35 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43C69AF71D225AE800427D35 /* constants.h in Headers */,
+				43C69B041D225AE800427D35 /* port.h in Headers */,
+				43C69B471D225AE800427D35 /* basicportallocator.h in Headers */,
+				43C69B1F1D225AE800427D35 /* sessionid.h in Headers */,
+				43C69B441D225AE800427D35 /* udpport.h in Headers */,
+				43C69AF01D225AE800427D35 /* asyncstuntcpsocket.h in Headers */,
+				43C69B501D225AE800427D35 /* socketmonitor.h in Headers */,
+				43C69B4B1D225AE800427D35 /* fakeportallocator.h in Headers */,
+				43C69B2D1D225AE800427D35 /* tcpport.h in Headers */,
+				43C69AFE1D225AE800427D35 /* p2ptransport.h in Headers */,
+				43C69B401D225AE800427D35 /* turnport.h in Headers */,
+				43C69B301D225AE800427D35 /* testturnserver.h in Headers */,
+				43C69B001D225AE800427D35 /* p2ptransportchannel.h in Headers */,
+				43C69B121D225AE800427D35 /* rawtransport.h in Headers */,
+				43C69B091D225AE800427D35 /* portallocatorsessionproxy.h in Headers */,
+				43C69AF31D225AE800427D35 /* basicpacketsocketfactory.h in Headers */,
+				43C69B0F1D225AE800427D35 /* pseudotcp.h in Headers */,
+				43C69AF81D225AE800427D35 /* dtlstransport.h in Headers */,
+				43C69B3E1D225AE800427D35 /* transportinfo.h in Headers */,
+				43C69B0D1D225AE800427D35 /* portproxy.h in Headers */,
+				43C69B3C1D225AE800427D35 /* transportdescriptionfactory.h in Headers */,
+				43C69B451D225AE800427D35 /* autoportallocator.h in Headers */,
+				43C69B3A1D225AE800427D35 /* transportdescription.h in Headers */,
+				43C69B1C1D225AE800427D35 /* session.h in Headers */,
+				43C69AF41D225AE800427D35 /* candidate.h in Headers */,
+				43C69B351D225AE800427D35 /* transportchannel.h in Headers */,
+				43C69B4D1D225AE800427D35 /* httpportallocator.h in Headers */,
+				43C69B321D225AE800427D35 /* transport.h in Headers */,
+				43C69B271D225AE800427D35 /* stunrequest.h in Headers */,
+				43C69B2A1D225AE800427D35 /* stunserver.h in Headers */,
+				43C69B1E1D225AE800427D35 /* sessiondescription.h in Headers */,
+				43C69B431D225AE800427D35 /* turnserver.h in Headers */,
+				43C69B381D225AE800427D35 /* transportchannelproxy.h in Headers */,
+				43C69B491D225AE800427D35 /* connectivitychecker.h in Headers */,
+				43C69B071D225AE800427D35 /* portallocator.h in Headers */,
+				43C69B2E1D225AE800427D35 /* testrelayserver.h in Headers */,
+				43C69AFA1D225AE800427D35 /* dtlstransportchannel.h in Headers */,
+				43C69B0B1D225AE800427D35 /* portinterface.h in Headers */,
+				43C69B191D225AE800427D35 /* relayserver.h in Headers */,
+				43C69B241D225AE800427D35 /* stunport.h in Headers */,
+				43C69B361D225AE800427D35 /* transportchannelimpl.h in Headers */,
+				43C69B2F1D225AE800427D35 /* teststunserver.h in Headers */,
+				43C69B161D225AE800427D35 /* relayport.h in Headers */,
+				43C69B211D225AE800427D35 /* stun.h in Headers */,
+				43C69AFC1D225AE800427D35 /* fakesession.h in Headers */,
+				43C69AF51D225AE800427D35 /* common.h in Headers */,
+				43C69B021D225AE800427D35 /* packetsocketfactory.h in Headers */,
+				43C69B141D225AE800427D35 /* rawtransportchannel.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43C6977E1D22567300427D35 /* rtc_p2p */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43C697831D22567300427D35 /* Build configuration list for PBXNativeTarget "rtc_p2p" */;
+			buildPhases = (
+				43C6977B1D22567300427D35 /* Sources */,
+				43C6977C1D22567300427D35 /* Frameworks */,
+				43C6977D1D22567300427D35 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rtc_p2p;
+			productName = rtc_p2p;
+			productReference = 43C6977F1D22567300427D35 /* librtc_p2p.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43C697771D22567300427D35 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangxin;
+				TargetAttributes = {
+					43C6977E1D22567300427D35 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 43C6977A1D22567300427D35 /* Build configuration list for PBXProject "rtc_p2p" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43C697761D22567300427D35;
+			productRefGroup = 43C697801D22567300427D35 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43C6977E1D22567300427D35 /* rtc_p2p */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43C6977B1D22567300427D35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43C69B291D225AE800427D35 /* stunserver.cc in Sources */,
+				43C69B4F1D225AE800427D35 /* socketmonitor.cc in Sources */,
+				43C69B311D225AE800427D35 /* transport.cc in Sources */,
+				43C69B201D225AE800427D35 /* stun.cc in Sources */,
+				43C69B1D1D225AE800427D35 /* sessiondescription.cc in Sources */,
+				43C69AFD1D225AE800427D35 /* p2ptransport.cc in Sources */,
+				43C69B0C1D225AE800427D35 /* portproxy.cc in Sources */,
+				43C69B391D225AE800427D35 /* transportdescription.cc in Sources */,
+				43C69B131D225AE800427D35 /* rawtransportchannel.cc in Sources */,
+				43C69B3B1D225AE800427D35 /* transportdescriptionfactory.cc in Sources */,
+				43C69B031D225AE800427D35 /* port.cc in Sources */,
+				43C69B3F1D225AE800427D35 /* turnport.cc in Sources */,
+				43C69AFF1D225AE800427D35 /* p2ptransportchannel.cc in Sources */,
+				43C69B481D225AE800427D35 /* connectivitychecker.cc in Sources */,
+				43C69B0E1D225AE800427D35 /* pseudotcp.cc in Sources */,
+				43C69B261D225AE800427D35 /* stunrequest.cc in Sources */,
+				43C69B061D225AE800427D35 /* portallocator.cc in Sources */,
+				43C69B1B1D225AE800427D35 /* session.cc in Sources */,
+				43C69B231D225AE800427D35 /* stunport.cc in Sources */,
+				43C69B2C1D225AE800427D35 /* tcpport.cc in Sources */,
+				43C69AEF1D225AE800427D35 /* asyncstuntcpsocket.cc in Sources */,
+				43C69B4C1D225AE800427D35 /* httpportallocator.cc in Sources */,
+				43C69B181D225AE800427D35 /* relayserver.cc in Sources */,
+				43C69B081D225AE800427D35 /* portallocatorsessionproxy.cc in Sources */,
+				43C69AF91D225AE800427D35 /* dtlstransportchannel.cc in Sources */,
+				43C69B341D225AE800427D35 /* transportchannel.cc in Sources */,
+				43C69B461D225AE800427D35 /* basicportallocator.cc in Sources */,
+				43C69B371D225AE800427D35 /* transportchannelproxy.cc in Sources */,
+				43C69B111D225AE800427D35 /* rawtransport.cc in Sources */,
+				43C69AF61D225AE800427D35 /* constants.cc in Sources */,
+				43C69AF21D225AE800427D35 /* basicpacketsocketfactory.cc in Sources */,
+				43C69B151D225AE800427D35 /* relayport.cc in Sources */,
+				43C69B421D225AE800427D35 /* turnserver.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43C697811D22567300427D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43C697821D22567300427D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43C697841D22567300427D35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43C697851D22567300427D35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43C6977A1D22567300427D35 /* Build configuration list for PBXProject "rtc_p2p" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43C697811D22567300427D35 /* Debug */,
+				43C697821D22567300427D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43C697831D22567300427D35 /* Build configuration list for PBXNativeTarget "rtc_p2p" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43C697841D22567300427D35 /* Debug */,
+				43C697851D22567300427D35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43C697771D22567300427D35 /* Project object */;
+}

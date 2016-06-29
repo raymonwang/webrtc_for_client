@@ -110,7 +110,7 @@ int32_t VideoSender::InitializeSender() {
   return VCM_OK;
 }
 
-int32_t VideoSender::TimeUntilNextProcess() {
+int64_t VideoSender::TimeUntilNextProcess() {
   return _sendStatsTimer.TimeUntilProcess();
 }
 
@@ -244,7 +244,7 @@ int VideoSender::FrameRate(unsigned int* framerate) const {
 // Set channel parameters
 int32_t VideoSender::SetChannelParameters(uint32_t target_bitrate,
                                           uint8_t lossRate,
-                                          uint32_t rtt) {
+                                          int64_t rtt) {
   int32_t ret = 0;
   {
     CriticalSectionScoped sendCs(_sendCritSect);
@@ -338,7 +338,6 @@ int32_t VideoSender::SetVideoProtection(VCMVideoProtection videoProtection,
       break;
     }
     case kProtectionNackReceiver:
-    case kProtectionDualDecoder:
     case kProtectionKeyOnLoss:
     case kProtectionKeyOnKeyLoss:
       // Ignore decoder modes.

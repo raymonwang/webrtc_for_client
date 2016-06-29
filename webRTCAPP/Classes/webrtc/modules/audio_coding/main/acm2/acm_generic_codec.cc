@@ -196,6 +196,12 @@ bool ACMGenericCodec::HasFrameToEncode() const {
   return true;
 }
 
+int ACMGenericCodec::SetFEC(bool enable_fec) {
+  if (!HasInternalFEC() && enable_fec)
+    return -1;
+  return 0;
+}
+
 int16_t ACMGenericCodec::Encode(uint8_t* bitstream,
                                 int16_t* bitstream_len_byte,
                                 uint32_t* timestamp,
@@ -622,13 +628,6 @@ int16_t ACMGenericCodec::CreateEncoder() {
   return status;
 }
 
-void ACMGenericCodec::DestructEncoderInst(void* ptr_inst) {
-  if (ptr_inst != NULL) {
-    WriteLockScoped lockCodec(codec_wrapper_lock_);
-    InternalDestructEncoderInst(ptr_inst);
-  }
-}
-
 uint32_t ACMGenericCodec::EarliestTimestamp() const {
   ReadLockScoped cs(codec_wrapper_lock_);
   return in_timestamp_[0];
@@ -816,7 +815,7 @@ int32_t ACMGenericCodec::IsInternalDTXReplaced(bool* internal_dtx_replaced) {
 
 int32_t ACMGenericCodec::IsInternalDTXReplacedSafe(
     bool* internal_dtx_replaced) {
-  *internal_dtx_replaced = false;
+  *internal_dtx_replaced = true;
   return 0;
 }
 
@@ -997,6 +996,18 @@ int16_t ACMGenericCodec::REDPayloadISAC(const int32_t /* isac_rate */,
                                         int16_t* /* payload_len_bytes */) {
   WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceAudioCoding, unique_id_,
                "Error: REDPayloadISAC is an iSAC specific function");
+  return -1;
+}
+
+int ACMGenericCodec::SetOpusApplication(OpusApplicationMode /*application*/) {
+  WEBRTC_TRACE(webrtc::kTraceWarning, webrtc::kTraceAudioCoding, unique_id_,
+      "The send-codec is not Opus, failed to set application.");
+  return -1;
+}
+
+int ACMGenericCodec::SetOpusMaxPlaybackRate(int /* frequency_hz */) {
+  WEBRTC_TRACE(webrtc::kTraceWarning, webrtc::kTraceAudioCoding, unique_id_,
+      "The send-codec is not Opus, failed to set maximum playback rate.");
   return -1;
 }
 

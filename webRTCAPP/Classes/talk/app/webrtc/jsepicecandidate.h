@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -33,8 +33,8 @@
 #include <string>
 
 #include "talk/app/webrtc/jsep.h"
-#include "talk/base/constructormagic.h"
-#include "talk/p2p/base/candidate.h"
+#include "webrtc/p2p/base/candidate.h"
+#include "webrtc/base/constructormagic.h"
 
 namespace webrtc {
 

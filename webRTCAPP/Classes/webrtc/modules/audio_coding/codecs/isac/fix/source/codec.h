@@ -33,19 +33,19 @@ int WebRtcIsacfix_EstimateBandwidth(BwEstimatorstr* bwest_str,
                                     uint32_t arr_ts);
 
 int16_t WebRtcIsacfix_DecodeImpl(int16_t* signal_out16,
-                                       ISACFIX_DecInst_t* ISACdec_obj,
+                                       IsacFixDecoderInstance* ISACdec_obj,
                                        int16_t* current_framesamples);
 
 int16_t WebRtcIsacfix_DecodePlcImpl(int16_t* decoded,
-                                          ISACFIX_DecInst_t* ISACdec_obj,
+                                          IsacFixDecoderInstance* ISACdec_obj,
                                           int16_t* current_framesample );
 
 int WebRtcIsacfix_EncodeImpl(int16_t* in,
-                             ISACFIX_EncInst_t* ISACenc_obj,
+                             IsacFixEncoderInstance* ISACenc_obj,
                              BwEstimatorstr* bw_estimatordata,
                              int16_t CodingMode);
 
-int WebRtcIsacfix_EncodeStoredData(ISACFIX_EncInst_t* ISACenc_obj,
+int WebRtcIsacfix_EncodeStoredData(IsacFixEncoderInstance* ISACenc_obj,
                                    int BWnumber,
                                    float scale);
 
@@ -101,6 +101,16 @@ void WebRtcIsacfix_Spec2TimeNeon(int16_t* inreQ7,
                                  int32_t* outre2Q16);
 #endif
 
+#if defined(MIPS32_LE)
+void WebRtcIsacfix_Time2SpecMIPS(int16_t* inre1Q9,
+                                 int16_t* inre2Q9,
+                                 int16_t* outre,
+                                 int16_t* outim);
+void WebRtcIsacfix_Spec2TimeMIPS(int16_t* inreQ7,
+                                 int16_t* inimQ7,
+                                 int32_t* outre1Q16,
+                                 int32_t* outre2Q16);
+#endif
 
 /* filterbank functions */
 

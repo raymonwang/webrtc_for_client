@@ -12,7 +12,7 @@
 #define WEBRTC_MODULES_UTILITY_INTERFACE_FILE_PLAYER_H_
 
 #include "webrtc/common_types.h"
-//#include "webrtc/common_video/interface/i420_video_frame.h"
+#include "webrtc/common_video/interface/i420_video_frame.h"
 #include "webrtc/engine_configurations.h"
 #include "webrtc/modules/interface/module_common_types.h"
 #include "webrtc/typedefs.h"
@@ -94,15 +94,15 @@ public:
     virtual int32_t video_codec_info(VideoCodec& /*videoCodec*/) const
     {return -1;}
 
-//    virtual int32_t GetVideoFromFile(I420VideoFrame& /*videoFrame*/)
-//    { return -1;}
+    virtual int32_t GetVideoFromFile(I420VideoFrame& /*videoFrame*/)
+    { return -1;}
 
     // Same as GetVideoFromFile(). videoFrame will have the resolution specified
     // by the width outWidth and height outHeight in pixels.
-//    virtual int32_t GetVideoFromFile(I420VideoFrame& /*videoFrame*/,
-//                                     const uint32_t /*outWidth*/,
-//                                     const uint32_t /*outHeight*/)
-//    {return -1;}
+    virtual int32_t GetVideoFromFile(I420VideoFrame& /*videoFrame*/,
+                                     const uint32_t /*outWidth*/,
+                                     const uint32_t /*outHeight*/)
+    {return -1;}
 protected:
     virtual ~FilePlayer() {}
 

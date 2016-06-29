@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -34,7 +34,7 @@
 @interface RTCPeerConnection (Internal)
 
 @property(nonatomic, assign, readonly)
-    talk_base::scoped_refptr<webrtc::PeerConnectionInterface> peerConnection;
+    rtc::scoped_refptr<webrtc::PeerConnectionInterface> peerConnection;
 
 - (instancetype)initWithFactory:(webrtc::PeerConnectionFactoryInterface*)factory
      iceServers:(const webrtc::PeerConnectionInterface::IceServers&)iceServers

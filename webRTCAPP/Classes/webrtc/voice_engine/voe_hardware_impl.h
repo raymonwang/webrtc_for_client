@@ -47,8 +47,9 @@ public:
     virtual int RecordingSampleRate(unsigned int* samples_per_sec) const;
     virtual int SetPlayoutSampleRate(unsigned int samples_per_sec);
     virtual int PlayoutSampleRate(unsigned int* samples_per_sec) const;
-    
-    virtual int SetLoudspeakerStatus(bool enable);
+
+    virtual bool BuiltInAECIsAvailable() const;
+    virtual int EnableBuiltInAEC(bool enable);
 
 protected:
     VoEHardwareImpl(voe::SharedData* shared);

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,8 +27,8 @@
 
 #include "talk/app/webrtc/remotevideocapturer.h"
 
-#include "talk/base/logging.h"
 #include "talk/media/base/videoframe.h"
+#include "webrtc/base/logging.h"
 
 namespace webrtc {
 

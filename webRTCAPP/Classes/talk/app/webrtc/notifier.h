@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2011, Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,8 +30,8 @@
 
 #include <list>
 
-#include "talk/base/common.h"
 #include "talk/app/webrtc/mediastreaminterface.h"
+#include "webrtc/base/common.h"
 
 namespace webrtc {
 

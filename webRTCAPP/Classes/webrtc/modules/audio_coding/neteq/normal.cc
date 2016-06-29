@@ -15,12 +15,12 @@
 #include <algorithm>  // min
 
 #include "webrtc/common_audio/signal_processing/include/signal_processing_library.h"
+#include "webrtc/modules/audio_coding/codecs/audio_decoder.h"
 #include "webrtc/modules/audio_coding/codecs/cng/include/webrtc_cng.h"
 #include "webrtc/modules/audio_coding/neteq/audio_multi_vector.h"
 #include "webrtc/modules/audio_coding/neteq/background_noise.h"
 #include "webrtc/modules/audio_coding/neteq/decoder_database.h"
 #include "webrtc/modules/audio_coding/neteq/expand.h"
-#include "webrtc/modules/audio_coding/neteq/interface/audio_decoder.h"
 
 namespace webrtc {
 
@@ -37,6 +37,11 @@ int Normal::Process(const int16_t* input,
 
   assert(output->Empty());
   // Output should be empty at this point.
+  if (length % output->Channels() != 0) {
+    // The length does not match the number of channels.
+    output->Clear();
+    return 0;
+  }
   output->PushBackInterleaved(input, length);
   int16_t* signal = &(*output)[0][0];
 
@@ -78,7 +83,11 @@ int Normal::Process(const int16_t* input,
       scaling = std::max(scaling, 0);  // |scaling| should always be >= 0.
       int32_t energy = WebRtcSpl_DotProductWithScale(signal, signal,
                                                      energy_length, scaling);
-      energy = energy / (energy_length >> scaling);
+      if ((energy_length >> scaling) > 0) {
+        energy = energy / (energy_length >> scaling);
+      } else {
+        energy = 0;
+      }
 
       int mute_factor;
       if ((energy != 0) &&
@@ -138,9 +147,9 @@ int Normal::Process(const int16_t* input,
     AudioDecoder* cng_decoder = decoder_database_->GetActiveCngDecoder();
 
     if (cng_decoder) {
-      CNG_dec_inst* cng_inst = static_cast<CNG_dec_inst*>(cng_decoder->state());
       // Generate long enough for 32kHz.
-      if (WebRtcCng_Generate(cng_inst, cng_output, kCngLength, 0) < 0) {
+      if (WebRtcCng_Generate(cng_decoder->CngDecoderInstance(), cng_output,
+                             kCngLength, 0) < 0) {
         // Error returned; set return vector to all zeros.
         memset(cng_output, 0, sizeof(cng_output));
       }

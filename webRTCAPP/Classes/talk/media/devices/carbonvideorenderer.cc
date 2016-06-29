@@ -1,35 +1,37 @@
-// libjingle
-// Copyright 2011 Google Inc.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-//  1. Redistributions of source code must retain the above copyright notice,
-//     this list of conditions and the following disclaimer.
-//  2. Redistributions in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other materials provided with the distribution.
-//  3. The name of the author may not be used to endorse or promote products
-//     derived from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+/*
+ * libjingle
+ * Copyright 2011 Google Inc.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
+ *     this list of conditions and the following disclaimer.
+ *  2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *  3. The name of the author may not be used to endorse or promote products
+ *     derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 // Implementation of CarbonVideoRenderer
 
 #include "talk/media/devices/carbonvideorenderer.h"
 
-#include "talk/base/logging.h"
 #include "talk/media/base/videocommon.h"
 #include "talk/media/base/videoframe.h"
+#include "webrtc/base/logging.h"
 
 namespace cricket {
 
@@ -65,7 +67,7 @@ OSStatus CarbonVideoRenderer::DrawEventHandler(EventHandlerCallRef handler,
 
 bool CarbonVideoRenderer::DrawFrame() {
   // Grab the image lock to make sure it is not changed why we'll draw it.
-  talk_base::CritScope cs(&image_crit_);
+  rtc::CritScope cs(&image_crit_);
 
   if (image_.get() == NULL) {
     // Nothing to draw, just return.
@@ -111,7 +113,7 @@ bool CarbonVideoRenderer::DrawFrame() {
 bool CarbonVideoRenderer::SetSize(int width, int height, int reserved) {
   if (width != image_width_ || height != image_height_) {
     // Grab the image lock while changing its size.
-    talk_base::CritScope cs(&image_crit_);
+    rtc::CritScope cs(&image_crit_);
     image_width_ = width;
     image_height_ = height;
     image_.reset(new uint8[width * height * 4]);
@@ -126,7 +128,7 @@ bool CarbonVideoRenderer::RenderFrame(const VideoFrame* frame) {
   }
   {
     // Grab the image lock so we are not trashing up the image being drawn.
-    talk_base::CritScope cs(&image_crit_);
+    rtc::CritScope cs(&image_crit_);
     frame->ConvertToRgbBuffer(cricket::FOURCC_ABGR,
                               image_.get(),
                               frame->GetWidth() * frame->GetHeight() * 4,

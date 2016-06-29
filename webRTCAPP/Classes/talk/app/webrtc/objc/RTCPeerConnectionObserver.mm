@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,9 +32,9 @@
 #import "RTCPeerConnectionObserver.h"
 
 #import "RTCDataChannel+Internal.h"
+#import "RTCEnumConverter.h"
 #import "RTCICECandidate+Internal.h"
 #import "RTCMediaStream+Internal.h"
-#import "RTCEnumConverter.h"
 
 namespace webrtc {
 
@@ -44,10 +44,6 @@ RTCPeerConnectionObserver::RTCPeerConnectionObserver(
 }
 
 RTCPeerConnectionObserver::~RTCPeerConnectionObserver() {
-}
-
-void RTCPeerConnectionObserver::OnError() {
-  [_peerConnection.delegate peerConnectionOnError:_peerConnection];
 }
 
 void RTCPeerConnectionObserver::OnSignalingChange(

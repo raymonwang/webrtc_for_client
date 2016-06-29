@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -26,7 +26,7 @@
  */
 
 #include "talk/app/webrtc/audiotrackrenderer.h"
-#include "talk/base/common.h"
+#include "webrtc/base/common.h"
 
 namespace webrtc {
 

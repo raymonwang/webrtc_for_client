@@ -24,7 +24,7 @@
         '<(webrtc_root)/modules/modules.gyp:media_file',
         '<(webrtc_root)/modules/modules.gyp:rtp_rtcp',
         '<(webrtc_root)/modules/modules.gyp:webrtc_utility',
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
       ],
       'sources': [
         '../common_types.h',
@@ -119,7 +119,7 @@
             '<(webrtc_root)/modules/modules.gyp:media_file',
             '<(webrtc_root)/modules/modules.gyp:rtp_rtcp',
             '<(webrtc_root)/modules/modules.gyp:webrtc_utility',
-            '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
             '<(webrtc_root)/test/test.gyp:test_support_main',
           ],
           'sources': [
@@ -132,9 +132,7 @@
             'voe_codec_unittest.cc',
           ],
           'conditions': [
-            # TODO(henrike): remove build_with_chromium==1 when the bots are
-            # using Chromium's buildbots.
-            ['build_with_chromium==1 and OS=="android"', {
+            ['OS=="android"', {
               'dependencies': [
                 '<(DEPTH)/testing/android/native_test.gyp:native_test_native_code',
               ],
@@ -149,8 +147,8 @@
             '<(DEPTH)/testing/gmock.gyp:gmock',
             '<(DEPTH)/testing/gtest.gyp:gtest',
             '<(DEPTH)/third_party/gflags/gflags.gyp:gflags',
-            '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
-            '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:field_trial_default',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers_default',
             '<(webrtc_root)/test/test.gyp:channel_transport',
             '<(webrtc_root)/test/test.gyp:test_support',
            ],
@@ -217,8 +215,8 @@
             'voice_engine',
             '<(DEPTH)/testing/gtest.gyp:gtest',
             '<(DEPTH)/third_party/gflags/gflags.gyp:gflags',
-            '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
-            '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:field_trial_default',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers_default',
             '<(webrtc_root)/test/test.gyp:channel_transport',
             '<(webrtc_root)/test/test.gyp:test_support',
           ],
@@ -238,7 +236,7 @@
               'type': 'executable',
               'dependencies': [
                 'voice_engine',
-                '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+                '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
                 '<(webrtc_root)/test/test.gyp:test_support',
               ],
               'sources': [
@@ -274,9 +272,7 @@
             },
           ],  # targets
         }],
-        # TODO(henrike): remove build_with_chromium==1 when the bots are using
-        # Chromium's buildbots.
-        ['build_with_chromium==1 and OS=="android"', {
+        ['OS=="android"', {
           'targets': [
             {
               'target_name': 'voice_engine_unittests_apk_target',
@@ -297,7 +293,6 @@
               ],
               'includes': [
                 '../build/isolate.gypi',
-                'voice_engine_unittests.isolate',
               ],
               'sources': [
                 'voice_engine_unittests.isolate',
@@ -311,7 +306,6 @@
               ],
               'includes': [
                 '../build/isolate.gypi',
-                'voe_auto_test.isolate',
               ],
               'sources': [
                 'voe_auto_test.isolate',

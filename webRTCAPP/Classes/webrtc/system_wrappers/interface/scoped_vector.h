@@ -13,12 +13,11 @@
 #ifndef WEBRTC_SYSTEM_WRAPPERS_INTERFACE_SCOPED_VECTOR_H_
 #define WEBRTC_SYSTEM_WRAPPERS_INTERFACE_SCOPED_VECTOR_H_
 
-#include <assert.h>
-#include <algorithm>
 #include <vector>
 
+#include "webrtc/base/checks.h"
+#include "webrtc/base/move.h"
 #include "webrtc/system_wrappers/interface/stl_util.h"
-#include "webrtc/system_wrappers/source/move.h"
 
 namespace webrtc {
 
@@ -26,7 +25,7 @@ namespace webrtc {
 // destructor.
 template <class T>
 class ScopedVector {
-  WEBRTC_MOVE_ONLY_TYPE_FOR_CPP_03(ScopedVector, RValue)
+  RTC_MOVE_ONLY_TYPE_FOR_CPP_03(ScopedVector, RValue)
 
  public:
   typedef typename std::vector<T*>::allocator_type allocator_type;
@@ -76,7 +75,7 @@ class ScopedVector {
   void push_back(T* elem) { v_.push_back(elem); }
 
   void pop_back() {
-    assert(!empty());
+    DCHECK(!empty());
     delete v_.back();
     v_.pop_back();
   }

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,11 +27,11 @@
 
 #import "RTCI420Frame.h"
 
-#include "talk/base/scoped_ptr.h"
 #include "talk/media/base/videoframe.h"
+#include "webrtc/base/scoped_ptr.h"
 
 @implementation RTCI420Frame {
-  talk_base::scoped_ptr<cricket::VideoFrame> _videoFrame;
+  rtc::scoped_ptr<cricket::VideoFrame> _videoFrame;
 }
 
 - (NSUInteger)width {
@@ -76,6 +76,10 @@
 
 - (NSInteger)vPitch {
   return _videoFrame->GetVPitch();
+}
+
+- (BOOL)makeExclusive {
+  return _videoFrame->MakeExclusive();
 }
 
 @end

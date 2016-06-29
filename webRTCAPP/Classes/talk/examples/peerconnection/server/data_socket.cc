@@ -103,7 +103,7 @@ bool DataSocket::PathEquals(const char* path) const {
 bool DataSocket::OnDataAvailable(bool* close_socket) {
   assert(valid());
   char buffer[0xfff] = {0};
-  size_t bytes = recv(socket_, buffer, sizeof(buffer), 0);
+  int bytes = recv(socket_, buffer, sizeof(buffer), 0);
   if (bytes == SOCKET_ERROR || bytes == 0) {
     *close_socket = true;
     return false;

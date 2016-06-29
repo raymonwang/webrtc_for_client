@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -36,9 +36,9 @@
 
 #include <vector>
 
-#include "talk/base/criticalsection.h"
-#include "talk/base/sigslot.h"
 #include "talk/media/base/videocapturer.h"
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/sigslot.h"
 
 namespace cricket {
 
@@ -83,7 +83,7 @@ class CaptureRenderAdapter : public sigslot::has_slots<> {
   VideoRenderers video_renderers_;
   VideoCapturer* video_capturer_;
   // Critical section synchronizing the capture thread.
-  mutable talk_base::CriticalSection capture_crit_;
+  mutable rtc::CriticalSection capture_crit_;
 };
 
 }  // namespace cricket

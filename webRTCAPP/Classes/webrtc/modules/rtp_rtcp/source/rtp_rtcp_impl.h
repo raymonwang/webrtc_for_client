@@ -31,7 +31,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   // Returns the number of milliseconds until the module want a worker thread to
   // call Process.
-  virtual int32_t TimeUntilNextProcess() OVERRIDE;
+  virtual int64_t TimeUntilNextProcess() OVERRIDE;
 
   // Process any pending tasks such as timeouts.
   virtual int32_t Process() OVERRIDE;
@@ -40,9 +40,9 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   // Called when we receive an RTCP packet.
   virtual int32_t IncomingRtcpPacket(const uint8_t* incoming_packet,
-                                     uint16_t incoming_packet_length) OVERRIDE;
+                                     size_t incoming_packet_length) OVERRIDE;
 
-  virtual void SetRemoteSSRC(const uint32_t ssrc);
+  virtual void SetRemoteSSRC(uint32_t ssrc) OVERRIDE;
 
   // Sender part.
 
@@ -50,28 +50,27 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   virtual int32_t RegisterSendPayload(const VideoCodec& video_codec) OVERRIDE;
 
-  virtual int32_t DeRegisterSendPayload(const int8_t payload_type) OVERRIDE;
+  virtual int32_t DeRegisterSendPayload(int8_t payload_type) OVERRIDE;
 
-  virtual int8_t SendPayloadType() const;
+  int8_t SendPayloadType() const;
 
   // Register RTP header extension.
-  virtual int32_t RegisterSendRtpHeaderExtension(
-      const RTPExtensionType type,
-      const uint8_t id) OVERRIDE;
+  virtual int32_t RegisterSendRtpHeaderExtension(RTPExtensionType type,
+                                                 uint8_t id) OVERRIDE;
 
   virtual int32_t DeregisterSendRtpHeaderExtension(
-      const RTPExtensionType type) OVERRIDE;
+      RTPExtensionType type) OVERRIDE;
 
   // Get start timestamp.
   virtual uint32_t StartTimestamp() const OVERRIDE;
 
   // Configure start timestamp, default is a random number.
-  virtual int32_t SetStartTimestamp(const uint32_t timestamp) OVERRIDE;
+  virtual void SetStartTimestamp(uint32_t timestamp) OVERRIDE;
 
   virtual uint16_t SequenceNumber() const OVERRIDE;
 
   // Set SequenceNumber, default is a random number.
-  virtual int32_t SetSequenceNumber(const uint16_t seq) OVERRIDE;
+  virtual void SetSequenceNumber(uint16_t seq) OVERRIDE;
 
   virtual void SetRtpStateForSsrc(uint32_t ssrc,
                                   const RtpState& rtp_state) OVERRIDE;
@@ -80,47 +79,40 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   virtual uint32_t SSRC() const OVERRIDE;
 
   // Configure SSRC, default is a random number.
-  virtual void SetSSRC(const uint32_t ssrc) OVERRIDE;
+  virtual void SetSSRC(uint32_t ssrc) OVERRIDE;
 
-  virtual int32_t CSRCs(uint32_t arr_of_csrc[kRtpCsrcSize]) const OVERRIDE;
+  virtual void SetCsrcs(const std::vector<uint32_t>& csrcs) OVERRIDE;
 
-  virtual int32_t SetCSRCs(const uint32_t arr_of_csrc[kRtpCsrcSize],
-                           const uint8_t arr_length) OVERRIDE;
+  RTCPSender::FeedbackState GetFeedbackState();
 
-  virtual int32_t SetCSRCStatus(const bool include) OVERRIDE;
+  int CurrentSendFrequencyHz() const;
 
-  virtual RTCPSender::FeedbackState GetFeedbackState();
-
-  virtual int CurrentSendFrequencyHz() const;
-
-  virtual void SetRTXSendStatus(const int mode) OVERRIDE;
-
-  virtual void RTXSendStatus(int* mode, uint32_t* ssrc,
-                             int* payloadType) const OVERRIDE;
+  virtual void SetRtxSendStatus(int mode) OVERRIDE;
+  virtual int RtxSendStatus() const OVERRIDE;
 
   virtual void SetRtxSsrc(uint32_t ssrc) OVERRIDE;
 
   virtual void SetRtxSendPayloadType(int payload_type) OVERRIDE;
 
   // Sends kRtcpByeCode when going from true to false.
-  virtual int32_t SetSendingStatus(const bool sending) OVERRIDE;
+  virtual int32_t SetSendingStatus(bool sending) OVERRIDE;
 
   virtual bool Sending() const OVERRIDE;
 
   // Drops or relays media packets.
-  virtual int32_t SetSendingMediaStatus(const bool sending) OVERRIDE;
+  virtual void SetSendingMediaStatus(bool sending) OVERRIDE;
 
   virtual bool SendingMedia() const OVERRIDE;
 
   // Used by the codec module to deliver a video or audio frame for
   // packetization.
   virtual int32_t SendOutgoingData(
-      const FrameType frame_type,
-      const int8_t payload_type,
-      const uint32_t time_stamp,
+      FrameType frame_type,
+      int8_t payload_type,
+      uint32_t time_stamp,
       int64_t capture_time_ms,
       const uint8_t* payload_data,
-      const uint32_t payload_size,
+      size_t payload_size,
       const RTPFragmentationHeader* fragmentation = NULL,
       const RTPVideoHeader* rtp_video_hdr = NULL) OVERRIDE;
 
@@ -128,9 +120,10 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
                                 uint16_t sequence_number,
                                 int64_t capture_time_ms,
                                 bool retransmission) OVERRIDE;
+
   // Returns the number of padding bytes actually sent, which can be more or
   // less than |bytes|.
-  virtual int TimeToSendPadding(int bytes) OVERRIDE;
+  virtual size_t TimeToSendPadding(size_t bytes) OVERRIDE;
 
   virtual bool GetSendSideDelay(int* avg_send_delay_ms,
                                 int* max_send_delay_ms) const OVERRIDE;
@@ -141,13 +134,13 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   virtual RTCPMethod RTCP() const OVERRIDE;
 
   // Configure RTCP status i.e on/off.
-  virtual int32_t SetRTCPStatus(const RTCPMethod method) OVERRIDE;
+  virtual void SetRTCPStatus(RTCPMethod method) OVERRIDE;
 
   // Set RTCP CName.
   virtual int32_t SetCNAME(const char c_name[RTCP_CNAME_SIZE]) OVERRIDE;
 
   // Get remote CName.
-  virtual int32_t RemoteCNAME(const uint32_t remote_ssrc,
+  virtual int32_t RemoteCNAME(uint32_t remote_ssrc,
                               char c_name[RTCP_CNAME_SIZE]) const OVERRIDE;
 
   // Get remote NTP.
@@ -157,20 +150,17 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
                             uint32_t* rtcp_arrival_time_frac,
                             uint32_t* rtcp_timestamp) const OVERRIDE;
 
-  virtual int32_t AddMixedCNAME(const uint32_t ssrc,
+  virtual int32_t AddMixedCNAME(uint32_t ssrc,
                                 const char c_name[RTCP_CNAME_SIZE]) OVERRIDE;
 
-  virtual int32_t RemoveMixedCNAME(const uint32_t ssrc) OVERRIDE;
+  virtual int32_t RemoveMixedCNAME(uint32_t ssrc) OVERRIDE;
 
   // Get RoundTripTime.
-  virtual int32_t RTT(const uint32_t remote_ssrc,
-                      uint16_t* rtt,
-                      uint16_t* avg_rtt,
-                      uint16_t* min_rtt,
-                      uint16_t* max_rtt) const OVERRIDE;
-
-  // Reset RoundTripTime statistics.
-  virtual int32_t ResetRTT(const uint32_t remote_ssrc) OVERRIDE;
+  virtual int32_t RTT(uint32_t remote_ssrc,
+                      int64_t* rtt,
+                      int64_t* avg_rtt,
+                      int64_t* min_rtt,
+                      int64_t* max_rtt) const OVERRIDE;
 
   // Force a send of an RTCP packet.
   // Normal SR and RR are triggered via the process function.
@@ -179,8 +169,12 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   virtual int32_t ResetSendDataCountersRTP() OVERRIDE;
 
   // Statistics of the amount of data sent and received.
-  virtual int32_t DataCountersRTP(uint32_t* bytes_sent,
+  virtual int32_t DataCountersRTP(size_t* bytes_sent,
                                   uint32_t* packets_sent) const OVERRIDE;
+
+  virtual void GetSendStreamDataCounters(
+      StreamDataCounters* rtp_counters,
+      StreamDataCounters* rtx_counters) const OVERRIDE;
 
   // Get received RTCP report, sender info.
   virtual int32_t RemoteRTCPStat(RTCPSenderInfo* sender_info) OVERRIDE;
@@ -191,9 +185,10 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   // Set received RTCP report block.
   virtual int32_t AddRTCPReportBlock(
-      const uint32_t ssrc, const RTCPReportBlock* receive_block) OVERRIDE;
+      uint32_t ssrc,
+      const RTCPReportBlock* receive_block) OVERRIDE;
 
-  virtual int32_t RemoveRTCPReportBlock(const uint32_t ssrc) OVERRIDE;
+  virtual int32_t RemoveRTCPReportBlock(uint32_t ssrc) OVERRIDE;
 
   virtual void GetRtcpPacketTypeCounters(
       RtcpPacketTypeCounter* packets_sent,
@@ -202,21 +197,20 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   // (REMB) Receiver Estimated Max Bitrate.
   virtual bool REMB() const OVERRIDE;
 
-  virtual int32_t SetREMBStatus(const bool enable) OVERRIDE;
+  virtual void SetREMBStatus(bool enable) OVERRIDE;
 
-  virtual int32_t SetREMBData(const uint32_t bitrate,
-                              const uint8_t number_of_ssrc,
-                              const uint32_t* ssrc) OVERRIDE;
+  virtual void SetREMBData(uint32_t bitrate,
+                           const std::vector<uint32_t>& ssrcs) OVERRIDE;
 
   // (IJ) Extended jitter report.
   virtual bool IJ() const OVERRIDE;
 
-  virtual int32_t SetIJStatus(const bool enable) OVERRIDE;
+  virtual void SetIJStatus(bool enable) OVERRIDE;
 
   // (TMMBR) Temporary Max Media Bit Rate.
   virtual bool TMMBR() const OVERRIDE;
 
-  virtual int32_t SetTMMBRStatus(const bool enable) OVERRIDE;
+  virtual void SetTMMBRStatus(bool enable) OVERRIDE;
 
   int32_t SetTMMBN(const TMMBRSet* bounding_set);
 
@@ -224,12 +218,12 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   virtual uint16_t MaxDataPayloadLength() const OVERRIDE;
 
-  virtual int32_t SetMaxTransferUnit(const uint16_t size) OVERRIDE;
+  virtual int32_t SetMaxTransferUnit(uint16_t size) OVERRIDE;
 
   virtual int32_t SetTransportOverhead(
-      const bool tcp,
-      const bool ipv6,
-      const uint8_t authentication_overhead = 0) OVERRIDE;
+      bool tcp,
+      bool ipv6,
+      uint8_t authentication_overhead = 0) OVERRIDE;
 
   // (NACK) Negative acknowledgment part.
 
@@ -238,28 +232,25 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   virtual int SetSelectiveRetransmissions(uint8_t settings) OVERRIDE;
 
   // Send a Negative acknowledgment packet.
-  virtual int32_t SendNACK(const uint16_t* nack_list,
-                           const uint16_t size) OVERRIDE;
+  virtual int32_t SendNACK(const uint16_t* nack_list, uint16_t size) OVERRIDE;
 
   // Store the sent packets, needed to answer to a negative acknowledgment
   // requests.
-  virtual int32_t SetStorePacketsStatus(
-      const bool enable, const uint16_t number_to_store) OVERRIDE;
+  virtual void SetStorePacketsStatus(bool enable,
+                                     uint16_t number_to_store) OVERRIDE;
 
   virtual bool StorePackets() const OVERRIDE;
 
   // Called on receipt of RTCP report block from remote side.
-  virtual void RegisterSendChannelRtcpStatisticsCallback(
+  virtual void RegisterRtcpStatisticsCallback(
       RtcpStatisticsCallback* callback) OVERRIDE;
-  virtual RtcpStatisticsCallback*
-      GetSendChannelRtcpStatisticsCallback() OVERRIDE;
+  virtual RtcpStatisticsCallback* GetRtcpStatisticsCallback() OVERRIDE;
 
   // (APP) Application specific data.
-  virtual int32_t SetRTCPApplicationSpecificData(
-      const uint8_t sub_type,
-      const uint32_t name,
-      const uint8_t* data,
-      const uint16_t length) OVERRIDE;
+  virtual int32_t SetRTCPApplicationSpecificData(uint8_t sub_type,
+                                                 uint32_t name,
+                                                 const uint8_t* data,
+                                                 uint16_t length) OVERRIDE;
 
   // (XR) VOIP metric.
   virtual int32_t SetRTCPVoIPMetrics(const RTCPVoIPMetric* VoIPMetric) OVERRIDE;
@@ -273,49 +264,44 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   // Set audio packet size, used to determine when it's time to send a DTMF
   // packet in silence (CNG).
-  virtual int32_t SetAudioPacketSize(
-      const uint16_t packet_size_samples) OVERRIDE;
+  virtual int32_t SetAudioPacketSize(uint16_t packet_size_samples) OVERRIDE;
 
   virtual bool SendTelephoneEventActive(int8_t& telephone_event) const OVERRIDE;
 
   // Send a TelephoneEvent tone using RFC 2833 (4733).
-  virtual int32_t SendTelephoneEventOutband(const uint8_t key,
-                                            const uint16_t time_ms,
-                                            const uint8_t level) OVERRIDE;
+  virtual int32_t SendTelephoneEventOutband(uint8_t key,
+                                            uint16_t time_ms,
+                                            uint8_t level) OVERRIDE;
 
   // Set payload type for Redundant Audio Data RFC 2198.
-  virtual int32_t SetSendREDPayloadType(const int8_t payload_type) OVERRIDE;
+  virtual int32_t SetSendREDPayloadType(int8_t payload_type) OVERRIDE;
 
   // Get payload type for Redundant Audio Data RFC 2198.
   virtual int32_t SendREDPayloadType(int8_t& payload_type) const OVERRIDE;
 
   // Store the audio level in d_bov for header-extension-for-audio-level-
   // indication.
-  virtual int32_t SetAudioLevel(const uint8_t level_d_bov) OVERRIDE;
+  virtual int32_t SetAudioLevel(uint8_t level_d_bov) OVERRIDE;
 
   // Video part.
 
-  virtual RtpVideoCodecTypes SendVideoCodec() const;
+  virtual int32_t SendRTCPSliceLossIndication(uint8_t picture_id) OVERRIDE;
 
-  virtual int32_t SendRTCPSliceLossIndication(
-      const uint8_t picture_id) OVERRIDE;
-
-  // Set method for requestion a new key frame.
+  // Set method for requesting a new key frame.
   virtual int32_t SetKeyFrameRequestMethod(
-      const KeyFrameRequestMethod method) OVERRIDE;
+      KeyFrameRequestMethod method) OVERRIDE;
 
   // Send a request for a keyframe.
   virtual int32_t RequestKeyFrame() OVERRIDE;
 
-  virtual int32_t SetCameraDelay(const int32_t delay_ms) OVERRIDE;
+  virtual int32_t SetCameraDelay(int32_t delay_ms) OVERRIDE;
 
   virtual void SetTargetSendBitrate(
       const std::vector<uint32_t>& stream_bitrates) OVERRIDE;
 
-  virtual int32_t SetGenericFECStatus(
-      const bool enable,
-      const uint8_t payload_type_red,
-      const uint8_t payload_type_fec) OVERRIDE;
+  virtual int32_t SetGenericFECStatus(bool enable,
+                                      uint8_t payload_type_red,
+                                      uint8_t payload_type_fec) OVERRIDE;
 
   virtual int32_t GenericFECStatus(
       bool& enable,
@@ -326,11 +312,11 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
       const FecProtectionParams* delta_params,
       const FecProtectionParams* key_params) OVERRIDE;
 
-  virtual bool LastReceivedNTP(uint32_t* NTPsecs,
-                               uint32_t* NTPfrac,
-                               uint32_t* remote_sr) const;
+  bool LastReceivedNTP(uint32_t* NTPsecs,
+                       uint32_t* NTPfrac,
+                       uint32_t* remote_sr) const;
 
-  virtual bool LastReceivedXrReferenceTimeInfo(RtcpReceiveTimeInfo* info) const;
+  bool LastReceivedXrReferenceTimeInfo(RtcpReceiveTimeInfo* info) const;
 
   virtual int32_t BoundingSet(bool& tmmbr_owner, TMMBRSet*& bounding_set_rec);
 
@@ -339,18 +325,18 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
                            uint32_t* fec_rate,
                            uint32_t* nackRate) const OVERRIDE;
 
-  virtual uint32_t SendTimeOfSendReport(const uint32_t send_report);
+  int64_t SendTimeOfSendReport(uint32_t send_report);
 
-  virtual bool SendTimeOfXrRrReport(uint32_t mid_ntp, int64_t* time_ms) const;
+  bool SendTimeOfXrRrReport(uint32_t mid_ntp, int64_t* time_ms) const;
 
   // Good state of RTP receiver inform sender.
   virtual int32_t SendRTCPReferencePictureSelection(
-      const uint64_t picture_id) OVERRIDE;
+      uint64_t picture_id) OVERRIDE;
 
   virtual void RegisterSendChannelRtpStatisticsCallback(
-      StreamDataCountersCallback* callback);
+      StreamDataCountersCallback* callback) OVERRIDE;
   virtual StreamDataCountersCallback*
-      GetSendChannelRtpStatisticsCallback() const;
+      GetSendChannelRtpStatisticsCallback() const OVERRIDE;
 
   void OnReceivedTMMBR();
 
@@ -358,11 +344,10 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   void OnRequestIntraFrame();
 
   // Received a request for a new SLI.
-  void OnReceivedSliceLossIndication(const uint8_t picture_id);
+  void OnReceivedSliceLossIndication(uint8_t picture_id);
 
   // Received a new reference frame.
-  void OnReceivedReferencePictureSelectionIndication(
-      const uint64_t picture_id);
+  void OnReceivedReferencePictureSelectionIndication(uint64_t picture_id);
 
   void OnReceivedNACK(const std::list<uint16_t>& nack_sequence_numbers);
 
@@ -381,14 +366,14 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   uint16_t RemoteSequenceNumber() const;
 
   // Only for internal testing.
-  uint32_t LastSendReport(uint32_t& last_rtcptime);
+  uint32_t LastSendReport(int64_t& last_rtcptime);
 
-  RTPSender                 rtp_sender_;
+  RTPSender rtp_sender_;
 
-  RTCPSender                rtcp_sender_;
-  RTCPReceiver              rtcp_receiver_;
+  RTCPSender rtcp_sender_;
+  RTCPReceiver rtcp_receiver_;
 
-  Clock*                    clock_;
+  Clock* clock_;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(RtpRtcpImplTest, Rtt);
@@ -396,32 +381,35 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
   int64_t RtcpReportInterval();
   void SetRtcpReceiverSsrcs(uint32_t main_ssrc);
 
-  void set_rtt_ms(uint32_t rtt_ms);
-  uint32_t rtt_ms() const;
+  void set_rtt_ms(int64_t rtt_ms);
+  int64_t rtt_ms() const;
+
+  bool TimeToSendFullNackList(int64_t now) const;
 
   bool IsDefaultModule() const;
 
-  int32_t             id_;
-  const bool                audio_;
-  bool                      collision_detected_;
-  int64_t             last_process_time_;
-  int64_t             last_bitrate_process_time_;
-  int64_t             last_rtt_process_time_;
-  uint16_t            packet_overhead_;
+  int32_t id_;
+  const bool audio_;
+  bool collision_detected_;
+  int64_t last_process_time_;
+  int64_t last_bitrate_process_time_;
+  int64_t last_rtt_process_time_;
+  uint16_t packet_overhead_;
 
   scoped_ptr<CriticalSectionWrapper> critical_section_module_ptrs_;
   scoped_ptr<CriticalSectionWrapper> critical_section_module_ptrs_feedback_;
-  ModuleRtpRtcpImpl*            default_module_;
+  ModuleRtpRtcpImpl* default_module_;
   std::vector<ModuleRtpRtcpImpl*> child_modules_;
   size_t padding_index_;
 
   // Send side
-  NACKMethod            nack_method_;
-  uint32_t        nack_last_time_sent_full_;
-  uint16_t        nack_last_seq_number_sent_;
+  NACKMethod nack_method_;
+  int64_t nack_last_time_sent_full_;
+  uint32_t nack_last_time_sent_full_prev_;
+  uint16_t nack_last_seq_number_sent_;
 
-  bool                  simulcast_;
-  VideoCodec            send_video_codec_;
+  bool simulcast_;
+  VideoCodec send_video_codec_;
   KeyFrameRequestMethod key_frame_req_method_;
 
   RemoteBitrateEstimator* remote_bitrate_;
@@ -430,7 +418,7 @@ class ModuleRtpRtcpImpl : public RtpRtcp {
 
   // The processed RTT from RtcpRttStats.
   scoped_ptr<CriticalSectionWrapper> critical_section_rtt_;
-  uint32_t rtt_ms_;
+  int64_t rtt_ms_;
 };
 
 }  // namespace webrtc

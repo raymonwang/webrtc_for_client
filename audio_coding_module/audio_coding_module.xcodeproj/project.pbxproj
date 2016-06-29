@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		430958E61994D61D00012AD8 /* acm_amr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958761994D61C00012AD8 /* acm_amr.cc */; };
 		430958E71994D61D00012AD8 /* acm_amrwb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958781994D61C00012AD8 /* acm_amrwb.cc */; };
-		430958E81994D61D00012AD8 /* acm_celt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309587A1994D61C00012AD8 /* acm_celt.cc */; };
 		430958E91994D61D00012AD8 /* acm_cng.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309587C1994D61C00012AD8 /* acm_cng.cc */; };
 		430958EA1994D61D00012AD8 /* acm_codec_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309587E1994D61C00012AD8 /* acm_codec_database.cc */; };
 		430958EB1994D61D00012AD8 /* acm_dtmf_playout.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958811994D61C00012AD8 /* acm_dtmf_playout.cc */; };
@@ -54,8 +53,6 @@
 		430958771994D61C00012AD8 /* acm_amr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acm_amr.h; sourceTree = "<group>"; };
 		430958781994D61C00012AD8 /* acm_amrwb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acm_amrwb.cc; sourceTree = "<group>"; };
 		430958791994D61C00012AD8 /* acm_amrwb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acm_amrwb.h; sourceTree = "<group>"; };
-		4309587A1994D61C00012AD8 /* acm_celt.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acm_celt.cc; sourceTree = "<group>"; };
-		4309587B1994D61C00012AD8 /* acm_celt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acm_celt.h; sourceTree = "<group>"; };
 		4309587C1994D61C00012AD8 /* acm_cng.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acm_cng.cc; sourceTree = "<group>"; };
 		4309587D1994D61C00012AD8 /* acm_cng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acm_cng.h; sourceTree = "<group>"; };
 		4309587E1994D61C00012AD8 /* acm_codec_database.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acm_codec_database.cc; sourceTree = "<group>"; };
@@ -142,8 +139,6 @@
 				430958771994D61C00012AD8 /* acm_amr.h */,
 				430958781994D61C00012AD8 /* acm_amrwb.cc */,
 				430958791994D61C00012AD8 /* acm_amrwb.h */,
-				4309587A1994D61C00012AD8 /* acm_celt.cc */,
-				4309587B1994D61C00012AD8 /* acm_celt.h */,
 				4309587C1994D61C00012AD8 /* acm_cng.cc */,
 				4309587D1994D61C00012AD8 /* acm_cng.h */,
 				4309587E1994D61C00012AD8 /* acm_codec_database.cc */,
@@ -297,7 +292,6 @@
 				430958ED1994D61D00012AD8 /* acm_g7221.cc in Sources */,
 				430959001994D61D00012AD8 /* audio_coding_module.cc in Sources */,
 				430958FD1994D61D00012AD8 /* acm_red.cc in Sources */,
-				430958E81994D61D00012AD8 /* acm_celt.cc in Sources */,
 				430958F81994D61D00012AD8 /* acm_pcma.cc in Sources */,
 				430958F31994D61D00012AD8 /* acm_ilbc.cc in Sources */,
 				430958F91994D61D00012AD8 /* acm_pcmu.cc in Sources */,

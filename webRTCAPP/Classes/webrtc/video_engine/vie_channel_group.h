@@ -31,8 +31,7 @@ class VieRemb;
 // group are assumed to send/receive data to the same end-point.
 class ChannelGroup {
  public:
-  ChannelGroup(int engine_id, ProcessThread* process_thread,
-               const Config* config);
+  ChannelGroup(ProcessThread* process_thread, const Config* config);
   ~ChannelGroup();
 
   void AddChannel(int channel_id);
@@ -40,7 +39,9 @@ class ChannelGroup {
   bool HasChannel(int channel_id);
   bool Empty();
 
-  bool SetChannelRembStatus(int channel_id, bool sender, bool receiver,
+  void SetChannelRembStatus(int channel_id,
+                            bool sender,
+                            bool receiver,
                             ViEChannel* channel);
   void SetBandwidthEstimationConfig(const webrtc::Config& config);
 

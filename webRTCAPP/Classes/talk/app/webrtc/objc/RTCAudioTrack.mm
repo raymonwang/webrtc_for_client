@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -38,7 +38,7 @@
 
 @implementation RTCAudioTrack (Internal)
 
-- (talk_base::scoped_refptr<webrtc::AudioTrackInterface>)audioTrack {
+- (rtc::scoped_refptr<webrtc::AudioTrackInterface>)audioTrack {
   return static_cast<webrtc::AudioTrackInterface*>(self.mediaTrack.get());
 }
 

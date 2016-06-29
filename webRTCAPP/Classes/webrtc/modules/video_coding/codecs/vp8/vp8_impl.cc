@@ -115,7 +115,7 @@ int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit,
 
 int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
                                int number_of_cores,
-                               uint32_t /*max_payload_size*/) {
+                               size_t /*max_payload_size*/) {
   if (inst == NULL) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
@@ -484,7 +484,7 @@ int VP8EncoderImpl::GetEncodedPartitions(const I420VideoFrame& input_image) {
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
-int VP8EncoderImpl::SetChannelParameters(uint32_t /*packet_loss*/, int rtt) {
+int VP8EncoderImpl::SetChannelParameters(uint32_t /*packet_loss*/, int64_t rtt) {
   rps_->SetRtt(rtt);
   return WEBRTC_VIDEO_CODEC_OK;
 }

@@ -16,6 +16,8 @@
 
 ******************************************************************/
 
+#include <string.h>
+
 #include "defines.h"
 #include "lpc_encode.h"
 #include "frame_classify.h"
@@ -43,7 +45,7 @@
 void WebRtcIlbcfix_EncodeImpl(
     uint16_t *bytes,     /* (o) encoded data bits iLBC */
     const int16_t *block, /* (i) speech vector to encode */
-    iLBC_Enc_Inst_t *iLBCenc_inst /* (i/o) the general encoder
+    IlbcEncoder *iLBCenc_inst /* (i/o) the general encoder
                                      state */
                           ){
   int n, meml_gotten, Nfor, Nback;
@@ -352,7 +354,7 @@ void WebRtcIlbcfix_EncodeImpl(
 
       /* update memory */
 
-      WEBRTC_SPL_MEMMOVE_W16(mem, mem+SUBL, (CB_MEML-SUBL));
+      memmove(mem, mem + SUBL, (CB_MEML - SUBL) * sizeof(*mem));
       WEBRTC_SPL_MEMCPY_W16(mem+CB_MEML-SUBL,
                             &decresidual[(iLBCbits_inst->startIdx+1+subframe)*SUBL], SUBL);
 
@@ -457,8 +459,7 @@ void WebRtcIlbcfix_EncodeImpl(
                                 );
 
       /* update memory */
-
-      WEBRTC_SPL_MEMMOVE_W16(mem, mem+SUBL, (CB_MEML-SUBL));
+      memmove(mem, mem + SUBL, (CB_MEML - SUBL) * sizeof(*mem));
       WEBRTC_SPL_MEMCPY_W16(mem+CB_MEML-SUBL,
                             &reverseDecresidual[subframe*SUBL], SUBL);
 

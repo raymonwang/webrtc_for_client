@@ -432,7 +432,7 @@ int VoEBaseImpl::Init(AudioDeviceModule* external_adm,
     }
 
     if (!audioproc) {
-      audioproc = AudioProcessing::Create(VoEId(_shared->instance_id(), -1));
+      audioproc = AudioProcessing::Create();
       if (!audioproc) {
         LOG(LS_ERROR) << "Failed to create AudioProcessing.";
         _shared->SetLastError(VE_NO_MEMORY);
@@ -777,15 +777,6 @@ int VoEBaseImpl::GetVersion(char version[1024])
     accLen += len;
     assert(accLen < kVoiceEngineVersionMaxMessageSize);
 
-    len = AddBuildInfo(versionPtr);
-    if (len == -1)
-    {
-        return -1;
-    }
-    versionPtr += len;
-    accLen += len;
-    assert(accLen < kVoiceEngineVersionMaxMessageSize);
-
 #ifdef WEBRTC_EXTERNAL_TRANSPORT
     len = AddExternalTransportBuild(versionPtr);
     if (len == -1)
@@ -826,11 +817,6 @@ int VoEBaseImpl::GetVersion(char version[1024])
     }
 
     return 0;
-}
-
-int32_t VoEBaseImpl::AddBuildInfo(char* str) const
-{
-    return sprintf(str, "Build: %s\n", BUILDINFO);
 }
 
 int32_t VoEBaseImpl::AddVoEVersion(char* str) const

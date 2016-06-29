@@ -1,5 +1,6 @@
-/* libjingle
- * Copyright 2012, Google Inc.
+/*
+ * libjingle
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -27,10 +28,10 @@
 #include "talk/app/webrtc/jsepsessiondescription.h"
 
 #include "talk/app/webrtc/webrtcsdp.h"
-#include "talk/base/stringencode.h"
 #include "talk/session/media/mediasession.h"
+#include "webrtc/base/stringencode.h"
 
-using talk_base::scoped_ptr;
+using rtc::scoped_ptr;
 using cricket::SessionDescription;
 
 namespace webrtc {
@@ -57,11 +58,20 @@ const char SessionDescriptionInterface::kPrAnswer[] = "pranswer";
 const char SessionDescriptionInterface::kAnswer[] = "answer";
 
 const int JsepSessionDescription::kDefaultVideoCodecId = 100;
-const int JsepSessionDescription::kDefaultVideoCodecFramerate = 30;
+// This is effectively a max value of the frame rate. 30 is default from camera.
+const int JsepSessionDescription::kDefaultVideoCodecFramerate = 60;
 const char JsepSessionDescription::kDefaultVideoCodecName[] = "VP8";
 // Used as default max video codec size before we have it in signaling.
-const int JsepSessionDescription::kMaxVideoCodecWidth = 3840;
-const int JsepSessionDescription::kMaxVideoCodecHeight = 2160;
+#if defined(ANDROID)
+// Limit default max video codec size for Android to avoid
+// HW VP8 codec initialization failure for resolutions higher
+// than 1280x720 or 720x1280.
+const int JsepSessionDescription::kMaxVideoCodecWidth = 1280;
+const int JsepSessionDescription::kMaxVideoCodecHeight = 1280;
+#else
+const int JsepSessionDescription::kMaxVideoCodecWidth = 1920;
+const int JsepSessionDescription::kMaxVideoCodecHeight = 1080;
+#endif
 const int JsepSessionDescription::kDefaultVideoCodecPreference = 1;
 
 SessionDescriptionInterface* CreateSessionDescription(const std::string& type,

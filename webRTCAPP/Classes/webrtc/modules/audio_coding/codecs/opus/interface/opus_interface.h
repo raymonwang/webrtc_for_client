@@ -21,7 +21,29 @@ extern "C" {
 typedef struct WebRtcOpusEncInst OpusEncInst;
 typedef struct WebRtcOpusDecInst OpusDecInst;
 
-int16_t WebRtcOpus_EncoderCreate(OpusEncInst** inst, int32_t channels);
+/****************************************************************************
+ * WebRtcOpus_EncoderCreate(...)
+ *
+ * This function create an Opus encoder.
+ *
+ * Input:
+ *      - channels           : number of channels.
+ *      - application        : 0 - VOIP applications.
+ *                                 Favor speech intelligibility.
+ *                             1 - Audio applications.
+ *                                 Favor faithfulness to the original input.
+ *
+ * Output:
+ *      - inst               : a pointer to Encoder context that is created
+ *                             if success.
+ *
+ * Return value              : 0 - Success
+ *                            -1 - Error
+ */
+int16_t WebRtcOpus_EncoderCreate(OpusEncInst** inst,
+                                 int32_t channels,
+                                 int32_t application);
+
 int16_t WebRtcOpus_EncoderFree(OpusEncInst* inst);
 
 /****************************************************************************
@@ -39,11 +61,14 @@ int16_t WebRtcOpus_EncoderFree(OpusEncInst* inst);
  * Output:
  *      - encoded               : Output compressed data buffer
  *
- * Return value                 : >0 - Length (in bytes) of coded data
+ * Return value                 : >=0 - Length (in bytes) of coded data
  *                                -1 - Error
  */
-int16_t WebRtcOpus_Encode(OpusEncInst* inst, int16_t* audio_in, int16_t samples,
-                          int16_t length_encoded_buffer, uint8_t* encoded);
+int16_t WebRtcOpus_Encode(OpusEncInst* inst,
+                          const int16_t* audio_in,
+                          int16_t samples,
+                          int16_t length_encoded_buffer,
+                          uint8_t* encoded);
 
 /****************************************************************************
  * WebRtcOpus_SetBitRate(...)
@@ -71,6 +96,31 @@ int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate);
  *                             -1 - Error
  */
 int16_t WebRtcOpus_SetPacketLossRate(OpusEncInst* inst, int32_t loss_rate);
+
+/****************************************************************************
+ * WebRtcOpus_SetMaxPlaybackRate(...)
+ *
+ * Configures the maximum playback rate for encoding. Due to hardware
+ * limitations, the receiver may render audio up to a playback rate. Opus
+ * encoder can use this information to optimize for network usage and encoding
+ * complexity. This will affect the audio bandwidth in the coded audio. However,
+ * the input/output sample rate is not affected.
+ *
+ * Input:
+ *      - inst               : Encoder context
+ *      - frequency_hz       : Maximum playback rate in Hz.
+ *                             This parameter can take any value. The relation
+ *                             between the value and the Opus internal mode is
+ *                             as following:
+ *                             frequency_hz <= 8000           narrow band
+ *                             8000 < frequency_hz <= 12000   medium band
+ *                             12000 < frequency_hz <= 16000  wide band
+ *                             16000 < frequency_hz <= 24000  super wide band
+ *                             frequency_hz > 24000           full band
+ * Return value              :  0 - Success
+ *                             -1 - Error
+ */
+int16_t WebRtcOpus_SetMaxPlaybackRate(OpusEncInst* inst, int32_t frequency_hz);
 
 /* TODO(minyue): Check whether an API to check the FEC and the packet loss rate
  * is needed. It might not be very useful since there are not many use cases and
@@ -101,6 +151,32 @@ int16_t WebRtcOpus_EnableFec(OpusEncInst* inst);
  *                             -1 - Error
  */
 int16_t WebRtcOpus_DisableFec(OpusEncInst* inst);
+
+/****************************************************************************
+ * WebRtcOpus_EnableDtx()
+ *
+ * This function enables Opus internal DTX for encoding.
+ *
+ * Input:
+ *      - inst               : Encoder context
+ *
+ * Return value              :  0 - Success
+ *                             -1 - Error
+ */
+int16_t WebRtcOpus_EnableDtx(OpusEncInst* inst);
+
+/****************************************************************************
+ * WebRtcOpus_DisableDtx()
+ *
+ * This function disables Opus internal DTX for encoding.
+ *
+ * Input:
+ *      - inst               : Encoder context
+ *
+ * Return value              :  0 - Success
+ *                             -1 - Error
+ */
+int16_t WebRtcOpus_DisableDtx(OpusEncInst* inst);
 
 /*
  * WebRtcOpus_SetComplexity(...)
@@ -138,9 +214,7 @@ int WebRtcOpus_DecoderChannels(OpusDecInst* inst);
  * Return value              :  0 - Success
  *                             -1 - Error
  */
-int16_t WebRtcOpus_DecoderInitNew(OpusDecInst* inst);
 int16_t WebRtcOpus_DecoderInit(OpusDecInst* inst);
-int16_t WebRtcOpus_DecoderInitSlave(OpusDecInst* inst);
 
 /****************************************************************************
  * WebRtcOpus_Decode(...)
@@ -162,21 +236,12 @@ int16_t WebRtcOpus_DecoderInitSlave(OpusDecInst* inst);
  * Return value              : >0 - Samples per channel in decoded vector
  *                             -1 - Error
  */
-int16_t WebRtcOpus_DecodeNew(OpusDecInst* inst, const uint8_t* encoded,
-                             int16_t encoded_bytes, int16_t* decoded,
-                             int16_t* audio_type);
-int16_t WebRtcOpus_Decode(OpusDecInst* inst, const int16_t* encoded,
+int16_t WebRtcOpus_Decode(OpusDecInst* inst, const uint8_t* encoded,
                           int16_t encoded_bytes, int16_t* decoded,
                           int16_t* audio_type);
-int16_t WebRtcOpus_DecodeSlave(OpusDecInst* inst, const int16_t* encoded,
-                               int16_t encoded_bytes, int16_t* decoded,
-                               int16_t* audio_type);
 
 /****************************************************************************
  * WebRtcOpus_DecodePlc(...)
- * TODO(tlegrand): Remove master and slave functions when NetEq4 is in place.
- * WebRtcOpus_DecodePlcMaster(...)
- * WebRtcOpus_DecodePlcSlave(...)
  *
  * This function processes PLC for opus frame(s).
  * Input:
@@ -191,10 +256,6 @@ int16_t WebRtcOpus_DecodeSlave(OpusDecInst* inst, const int16_t* encoded,
  */
 int16_t WebRtcOpus_DecodePlc(OpusDecInst* inst, int16_t* decoded,
                              int16_t number_of_lost_frames);
-int16_t WebRtcOpus_DecodePlcMaster(OpusDecInst* inst, int16_t* decoded,
-                                   int16_t number_of_lost_frames);
-int16_t WebRtcOpus_DecodePlcSlave(OpusDecInst* inst, int16_t* decoded,
-                                  int16_t number_of_lost_frames);
 
 /****************************************************************************
  * WebRtcOpus_DecodeFec(...)

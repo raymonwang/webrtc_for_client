@@ -8,17 +8,17 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-//#include "webrtc/common_video/libyuv/include/webrtc_libyuv.h"
+#include "webrtc/common_video/libyuv/include/webrtc_libyuv.h"
 #include "webrtc/engine_configurations.h"
 #include "webrtc/modules/media_file/interface/media_file.h"
 #include "webrtc/modules/utility/source/file_recorder_impl.h"
 #include "webrtc/system_wrappers/interface/logging.h"
 
 #ifdef WEBRTC_MODULE_UTILITY_VIDEO
-    #include "critical_section_wrapper.h"
-    #include "frame_scaler.h"
-    #include "video_coder.h"
-    #include "video_frames_queue.h"
+    #include "webrtc/modules/utility/source/frame_scaler.h"
+    #include "webrtc/modules/utility/source/video_coder.h"
+    #include "webrtc/modules/utility/source/video_frames_queue.h"
+    #include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
 #endif
 
 namespace webrtc {
@@ -227,7 +227,7 @@ int32_t FileRecorderImpl::RecordAudioToFile(
     // NOTE: stereo recording is only supported for WAV files.
     // TODO (hellner): WAV expect PCM in little endian byte order. Not
     // "encoding" with PCM coder should be a problem for big endian systems.
-    uint32_t encodedLenInBytes = 0;
+    size_t encodedLenInBytes = 0;
     if (_fileFormat == kFileFormatPreencodedFile ||
         STR_CASE_CMP(codec_info_.plname, "L16") != 0)
     {
@@ -272,9 +272,8 @@ int32_t FileRecorderImpl::RecordAudioToFile(
         uint16_t msOfData =
             ptrAudioFrame->samples_per_channel_ /
             uint16_t(ptrAudioFrame->sample_rate_hz_ / 1000);
-        if (WriteEncodedAudioData(_audioBuffer,
-                                  (uint16_t)encodedLenInBytes,
-                                  msOfData, playoutTS) == -1)
+        if (WriteEncodedAudioData(_audioBuffer, encodedLenInBytes, msOfData,
+                                  playoutTS) == -1)
         {
             return -1;
         }
@@ -309,7 +308,7 @@ int32_t FileRecorderImpl::codec_info(CodecInst& codecInst) const
 
 int32_t FileRecorderImpl::WriteEncodedAudioData(
     const int8_t* audioBuffer,
-    uint16_t bufferLength,
+    size_t bufferLength,
     uint16_t /*millisecondsOfData*/,
     const TickTime* /*playoutTS*/)
 {
@@ -398,7 +397,7 @@ int32_t AviRecorder::StopRecording()
     return FileRecorderImpl::StopRecording();
 }
 
-int32_t AviRecorder::CalcI420FrameSize( ) const
+size_t AviRecorder::CalcI420FrameSize( ) const
 {
     return 3 * _videoCodecInst.width * _videoCodecInst.height / 2;
 }
@@ -641,8 +640,8 @@ int32_t AviRecorder::EncodeAndWriteVideoToFile(I420VideoFrame& videoFrame)
 
     if( STR_CASE_CMP(_videoCodecInst.plName, "I420") == 0)
     {
-       int length  = CalcBufferSize(kI420, videoFrame.width(),
-                                    videoFrame.height());
+       size_t length =
+           CalcBufferSize(kI420, videoFrame.width(), videoFrame.height());
         _videoEncodedData.VerifyAndAllocate(length);
 
         // I420 is raw data. No encoding needed (each sample is represented by
@@ -681,7 +680,7 @@ int32_t AviRecorder::EncodeAndWriteVideoToFile(I420VideoFrame& videoFrame)
 // happens in AviRecorder::Process().
 int32_t AviRecorder::WriteEncodedAudioData(
     const int8_t* audioBuffer,
-    uint16_t bufferLength,
+    size_t bufferLength,
     uint16_t millisecondsOfData,
     const TickTime* playoutTS)
 {

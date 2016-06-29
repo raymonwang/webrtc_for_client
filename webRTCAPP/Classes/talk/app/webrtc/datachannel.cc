@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -24,14 +24,15 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #include "talk/app/webrtc/datachannel.h"
 
 #include <string>
 
 #include "talk/app/webrtc/mediastreamprovider.h"
 #include "talk/app/webrtc/sctputils.h"
-#include "talk/base/logging.h"
-#include "talk/base/refcount.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/base/refcount.h"
 
 namespace webrtc {
 
@@ -86,13 +87,13 @@ void DataChannel::PacketQueue::Swap(PacketQueue* other) {
   other->packets_.swap(packets_);
 }
 
-talk_base::scoped_refptr<DataChannel> DataChannel::Create(
+rtc::scoped_refptr<DataChannel> DataChannel::Create(
     DataChannelProviderInterface* provider,
     cricket::DataChannelType dct,
     const std::string& label,
     const InternalDataChannelInit& config) {
-  talk_base::scoped_refptr<DataChannel> channel(
-      new talk_base::RefCountedObject<DataChannel>(provider, dct, label));
+  rtc::scoped_refptr<DataChannel> channel(
+      new rtc::RefCountedObject<DataChannel>(provider, dct, label));
   if (!channel->Init(config)) {
     return NULL;
   }
@@ -151,7 +152,7 @@ bool DataChannel::Init(const InternalDataChannelInit& config) {
     // Chrome glue and WebKit) are not wired up properly until after this
     // function returns.
     if (provider_->ReadyToSendData()) {
-      talk_base::Thread::Current()->Post(this, MSG_CHANNELREADY, NULL);
+      rtc::Thread::Current()->Post(this, MSG_CHANNELREADY, NULL);
     }
   }
 
@@ -195,6 +196,14 @@ bool DataChannel::Send(const DataBuffer& buffer) {
   if (state_ != kOpen) {
     return false;
   }
+
+  // TODO(jiayl): the spec is unclear about if the remote side should get the
+  // onmessage event. We need to figure out the expected behavior and change the
+  // code accordingly.
+  if (buffer.size() == 0) {
+    return true;
+  }
+
   // If the queue is non-empty, we're waiting for SignalReadyToSend,
   // so just add to the end of the queue and keep waiting.
   if (!queued_send_data_.Empty()) {
@@ -207,7 +216,7 @@ bool DataChannel::Send(const DataBuffer& buffer) {
     return true;
   }
 
-  bool success = SendDataMessage(buffer);
+  bool success = SendDataMessage(buffer, true);
   if (data_channel_type_ == cricket::DCT_RTP) {
     return success;
   }
@@ -263,7 +272,7 @@ void DataChannel::SetSendSsrc(uint32 send_ssrc) {
   UpdateState();
 }
 
-void DataChannel::OnMessage(talk_base::Message* msg) {
+void DataChannel::OnMessage(rtc::Message* msg) {
   switch (msg->message_id) {
     case MSG_CHANNELREADY:
       OnChannelReady(true);
@@ -280,7 +289,7 @@ void DataChannel::OnDataEngineClose() {
 
 void DataChannel::OnDataReceived(cricket::DataChannel* channel,
                                  const cricket::ReceiveDataParams& params,
-                                 const talk_base::Buffer& payload) {
+                                 const rtc::Buffer& payload) {
   uint32 expected_ssrc =
       (data_channel_type_ == cricket::DCT_RTP) ? receive_ssrc_ : config_.id;
   if (params.ssrc != expected_ssrc) {
@@ -317,7 +326,7 @@ void DataChannel::OnDataReceived(cricket::DataChannel* channel,
   waiting_for_open_ack_ = false;
 
   bool binary = (params.type == cricket::DMT_BINARY);
-  talk_base::scoped_ptr<DataBuffer> buffer(new DataBuffer(payload, binary));
+  rtc::scoped_ptr<DataBuffer> buffer(new DataBuffer(payload, binary));
   if (was_ever_writable_ && observer_) {
     observer_->OnMessage(*buffer.get());
   } else {
@@ -347,7 +356,7 @@ void DataChannel::OnChannelReady(bool writable) {
     was_ever_writable_ = true;
 
     if (data_channel_type_ == cricket::DCT_SCTP) {
-      talk_base::Buffer payload;
+      rtc::Buffer payload;
 
       if (config_.open_handshake_role == InternalDataChannelInit::kOpener) {
         WriteDataChannelOpenMessage(label_, config_, &payload);
@@ -433,7 +442,7 @@ void DataChannel::DisconnectFromTransport() {
   provider_->DisconnectDataChannel(this);
   connected_to_provider_ = false;
 
-  if (data_channel_type_ == cricket::DCT_SCTP) {
+  if (data_channel_type_ == cricket::DCT_SCTP && config_.id >= 0) {
     provider_->RemoveSctpDataStream(config_.id);
   }
 }
@@ -444,7 +453,7 @@ void DataChannel::DeliverQueuedReceivedData() {
   }
 
   while (!queued_received_data_.Empty()) {
-    talk_base::scoped_ptr<DataBuffer> buffer(queued_received_data_.Front());
+    rtc::scoped_ptr<DataBuffer> buffer(queued_received_data_.Front());
     observer_->OnMessage(*buffer);
     queued_received_data_.Pop();
   }
@@ -453,17 +462,19 @@ void DataChannel::DeliverQueuedReceivedData() {
 void DataChannel::SendQueuedDataMessages() {
   ASSERT(was_ever_writable_ && state_ == kOpen);
 
-  PacketQueue packet_buffer;
-  packet_buffer.Swap(&queued_send_data_);
-
-  while (!packet_buffer.Empty()) {
-    talk_base::scoped_ptr<DataBuffer> buffer(packet_buffer.Front());
-    SendDataMessage(*buffer);
-    packet_buffer.Pop();
+  while (!queued_send_data_.Empty()) {
+    DataBuffer* buffer = queued_send_data_.Front();
+    if (!SendDataMessage(*buffer, false)) {
+      // Leave the message in the queue if sending is aborted.
+      break;
+    }
+    queued_send_data_.Pop();
+    delete buffer;
   }
 }
 
-bool DataChannel::SendDataMessage(const DataBuffer& buffer) {
+bool DataChannel::SendDataMessage(const DataBuffer& buffer,
+                                  bool queue_if_blocked) {
   cricket::SendDataParams send_params;
 
   if (data_channel_type_ == cricket::DCT_SCTP) {
@@ -486,14 +497,26 @@ bool DataChannel::SendDataMessage(const DataBuffer& buffer) {
   cricket::SendDataResult send_result = cricket::SDR_SUCCESS;
   bool success = provider_->SendData(send_params, buffer.data, &send_result);
 
-  if (!success && data_channel_type_ == cricket::DCT_SCTP) {
-    if (send_result != cricket::SDR_BLOCK || !QueueSendDataMessage(buffer)) {
-      LOG(LS_ERROR) << "Closing the DataChannel due to a failure to send data, "
-                    << "send_result = " << send_result;
-      Close();
+  if (success) {
+    return true;
+  }
+
+  if (data_channel_type_ != cricket::DCT_SCTP) {
+    return false;
+  }
+
+  if (send_result == cricket::SDR_BLOCK) {
+    if (!queue_if_blocked || QueueSendDataMessage(buffer)) {
+      return false;
     }
   }
-  return success;
+  // Close the channel if the error is not SDR_BLOCK, or if queuing the
+  // message failed.
+  LOG(LS_ERROR) << "Closing the DataChannel due to a failure to send data, "
+                << "send_result = " << send_result;
+  Close();
+
+  return false;
 }
 
 bool DataChannel::QueueSendDataMessage(const DataBuffer& buffer) {
@@ -512,17 +535,17 @@ void DataChannel::SendQueuedControlMessages() {
   control_packets.Swap(&queued_control_data_);
 
   while (!control_packets.Empty()) {
-    talk_base::scoped_ptr<DataBuffer> buf(control_packets.Front());
+    rtc::scoped_ptr<DataBuffer> buf(control_packets.Front());
     SendControlMessage(buf->data);
     control_packets.Pop();
   }
 }
 
-void DataChannel::QueueControlMessage(const talk_base::Buffer& buffer) {
+void DataChannel::QueueControlMessage(const rtc::Buffer& buffer) {
   queued_control_data_.Push(new DataBuffer(buffer, true));
 }
 
-bool DataChannel::SendControlMessage(const talk_base::Buffer& buffer) {
+bool DataChannel::SendControlMessage(const rtc::Buffer& buffer) {
   bool is_open_message =
       (config_.open_handshake_role == InternalDataChannelInit::kOpener);
 

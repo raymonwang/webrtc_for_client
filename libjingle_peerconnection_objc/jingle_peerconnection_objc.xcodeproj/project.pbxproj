@@ -28,7 +28,6 @@
 		43982FB1198F59B70090EABA /* RTCSessionDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F94198F59B70090EABA /* RTCSessionDescription.mm */; };
 		43982FB2198F59B70090EABA /* RTCStatsReport.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F96198F59B70090EABA /* RTCStatsReport.mm */; };
 		43982FB3198F59B70090EABA /* RTCVideoCapturer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F98198F59B70090EABA /* RTCVideoCapturer.mm */; };
-		43982FB4198F59B70090EABA /* RTCVideoRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F9A198F59B70090EABA /* RTCVideoRenderer.mm */; };
 		43982FB5198F59B70090EABA /* RTCVideoSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F9C198F59B70090EABA /* RTCVideoSource.mm */; };
 		43982FB6198F59B70090EABA /* RTCVideoTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43982F9E198F59B70090EABA /* RTCVideoTrack.mm */; };
 		43982FD2198F66B10090EABA /* RTCAudioSource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F58198F59B70090EABA /* RTCAudioSource.h */; };
@@ -57,6 +56,7 @@
 		43982FE9198F66B10090EABA /* RTCVideoRenderer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F6F198F59B70090EABA /* RTCVideoRenderer.h */; };
 		43982FEA198F66B10090EABA /* RTCVideoSource.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F70198F59B70090EABA /* RTCVideoSource.h */; };
 		43982FEB198F66B10090EABA /* RTCVideoTrack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 43982F71198F59B70090EABA /* RTCVideoTrack.h */; };
+		43C6A0A21D22945200427D35 /* RTCVideoRendererAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C6A0A11D22945200427D35 /* RTCVideoRendererAdapter.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -133,7 +133,6 @@
 		43982F74198F59B70090EABA /* RTCAudioTrack.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCAudioTrack.mm; sourceTree = "<group>"; };
 		43982F75198F59B70090EABA /* RTCDataChannel+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCDataChannel+Internal.h"; sourceTree = "<group>"; };
 		43982F76198F59B70090EABA /* RTCDataChannel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCDataChannel.mm; sourceTree = "<group>"; };
-		43982F77198F59B70090EABA /* RTCEAGLVideoView+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCEAGLVideoView+Internal.h"; sourceTree = "<group>"; };
 		43982F78198F59B70090EABA /* RTCEAGLVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCEAGLVideoView.m; sourceTree = "<group>"; };
 		43982F79198F59B70090EABA /* RTCEnumConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCEnumConverter.h; sourceTree = "<group>"; };
 		43982F7A198F59B70090EABA /* RTCEnumConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCEnumConverter.mm; sourceTree = "<group>"; };
@@ -167,12 +166,12 @@
 		43982F96198F59B70090EABA /* RTCStatsReport.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCStatsReport.mm; sourceTree = "<group>"; };
 		43982F97198F59B70090EABA /* RTCVideoCapturer+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCVideoCapturer+Internal.h"; sourceTree = "<group>"; };
 		43982F98198F59B70090EABA /* RTCVideoCapturer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCVideoCapturer.mm; sourceTree = "<group>"; };
-		43982F99198F59B70090EABA /* RTCVideoRenderer+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCVideoRenderer+Internal.h"; sourceTree = "<group>"; };
-		43982F9A198F59B70090EABA /* RTCVideoRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCVideoRenderer.mm; sourceTree = "<group>"; };
 		43982F9B198F59B70090EABA /* RTCVideoSource+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCVideoSource+Internal.h"; sourceTree = "<group>"; };
 		43982F9C198F59B70090EABA /* RTCVideoSource.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCVideoSource.mm; sourceTree = "<group>"; };
 		43982F9D198F59B70090EABA /* RTCVideoTrack+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCVideoTrack+Internal.h"; sourceTree = "<group>"; };
 		43982F9E198F59B70090EABA /* RTCVideoTrack.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCVideoTrack.mm; sourceTree = "<group>"; };
+		43C6A0A01D22945200427D35 /* RTCVideoRendererAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoRendererAdapter.h; sourceTree = "<group>"; };
+		43C6A0A11D22945200427D35 /* RTCVideoRendererAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCVideoRendererAdapter.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,11 +234,12 @@
 			isa = PBXGroup;
 			children = (
 				43982F57198F59B70090EABA /* public */,
+				43C6A0A01D22945200427D35 /* RTCVideoRendererAdapter.h */,
+				43C6A0A11D22945200427D35 /* RTCVideoRendererAdapter.mm */,
 				43982F73198F59B70090EABA /* RTCAudioTrack+Internal.h */,
 				43982F74198F59B70090EABA /* RTCAudioTrack.mm */,
 				43982F75198F59B70090EABA /* RTCDataChannel+Internal.h */,
 				43982F76198F59B70090EABA /* RTCDataChannel.mm */,
-				43982F77198F59B70090EABA /* RTCEAGLVideoView+Internal.h */,
 				43982F78198F59B70090EABA /* RTCEAGLVideoView.m */,
 				43982F79198F59B70090EABA /* RTCEnumConverter.h */,
 				43982F7A198F59B70090EABA /* RTCEnumConverter.mm */,
@@ -273,8 +273,6 @@
 				43982F96198F59B70090EABA /* RTCStatsReport.mm */,
 				43982F97198F59B70090EABA /* RTCVideoCapturer+Internal.h */,
 				43982F98198F59B70090EABA /* RTCVideoCapturer.mm */,
-				43982F99198F59B70090EABA /* RTCVideoRenderer+Internal.h */,
-				43982F9A198F59B70090EABA /* RTCVideoRenderer.mm */,
 				43982F9B198F59B70090EABA /* RTCVideoSource+Internal.h */,
 				43982F9C198F59B70090EABA /* RTCVideoSource.mm */,
 				43982F9D198F59B70090EABA /* RTCVideoTrack+Internal.h */,
@@ -374,13 +372,13 @@
 				43982FB1198F59B70090EABA /* RTCSessionDescription.mm in Sources */,
 				43982FA8198F59B70090EABA /* RTCMediaSource.mm in Sources */,
 				43982FB5198F59B70090EABA /* RTCVideoSource.mm in Sources */,
+				43C6A0A21D22945200427D35 /* RTCVideoRendererAdapter.mm in Sources */,
 				43982FA0198F59B70090EABA /* RTCDataChannel.mm in Sources */,
 				43982FB6198F59B70090EABA /* RTCVideoTrack.mm in Sources */,
 				43982FA6198F59B70090EABA /* RTCMediaConstraints.mm in Sources */,
 				43982FB0198F59B70090EABA /* RTCPeerConnectionObserver.mm in Sources */,
 				43982FAD198F59B70090EABA /* RTCPair.m in Sources */,
 				43982FAF198F59B70090EABA /* RTCPeerConnectionFactory.mm in Sources */,
-				43982FB4198F59B70090EABA /* RTCVideoRenderer.mm in Sources */,
 				43982FAA198F59B70090EABA /* RTCMediaStreamTrack.mm in Sources */,
 				43982FAC198F59B70090EABA /* RTCOpenGLVideoRenderer.mm in Sources */,
 				43982FB3198F59B70090EABA /* RTCVideoCapturer.mm in Sources */,
@@ -475,10 +473,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle_peerconnection_objc/jingle_peerconnection_objc-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"CLANG_ENABLE_OBJC_ARC=1",
-					POSIX,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -502,6 +499,11 @@
 				DSTROOT = /tmp/libjingle_peerconnection_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle_peerconnection_objc/jingle_peerconnection_objc-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"CLANG_ENABLE_OBJC_ARC=1",
+					WEBRTC_POSIX,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

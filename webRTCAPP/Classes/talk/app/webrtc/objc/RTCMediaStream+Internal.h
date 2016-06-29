@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,9 +32,9 @@
 @interface RTCMediaStream (Internal)
 
 @property(nonatomic, assign, readonly)
-    talk_base::scoped_refptr<webrtc::MediaStreamInterface> mediaStream;
+    rtc::scoped_refptr<webrtc::MediaStreamInterface> mediaStream;
 
 - (id)initWithMediaStream:
-        (talk_base::scoped_refptr<webrtc::MediaStreamInterface>)mediaStream;
+        (rtc::scoped_refptr<webrtc::MediaStreamInterface>)mediaStream;
 
 @end

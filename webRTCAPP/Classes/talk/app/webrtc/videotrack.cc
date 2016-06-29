@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2011, Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -24,6 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #include "talk/app/webrtc/videotrack.h"
 
 #include <string>
@@ -64,10 +65,10 @@ bool VideoTrack::set_enabled(bool enable) {
   return MediaStreamTrack<VideoTrackInterface>::set_enabled(enable);
 }
 
-talk_base::scoped_refptr<VideoTrack> VideoTrack::Create(
+rtc::scoped_refptr<VideoTrack> VideoTrack::Create(
     const std::string& id, VideoSourceInterface* source) {
-  talk_base::RefCountedObject<VideoTrack>* track =
-      new talk_base::RefCountedObject<VideoTrack>(id, source);
+  rtc::RefCountedObject<VideoTrack>* track =
+      new rtc::RefCountedObject<VideoTrack>(id, source);
   return track;
 }
 

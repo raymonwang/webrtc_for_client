@@ -25,12 +25,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
 #ifndef TALK_MEDIA_WEBRTCVIE_H_
 #define TALK_MEDIA_WEBRTCVIE_H_
 
-#include "talk/base/common.h"
 #include "talk/media/webrtc/webrtccommon.h"
+#include "webrtc/base/common.h"
 #include "webrtc/common_types.h"
 #include "webrtc/modules/interface/module_common_types.h"
 #include "webrtc/modules/video_capture/include/video_capture.h"

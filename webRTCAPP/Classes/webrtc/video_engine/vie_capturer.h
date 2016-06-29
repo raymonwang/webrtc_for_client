@@ -13,6 +13,7 @@
 
 #include <vector>
 
+#include "webrtc/base/thread_annotations.h"
 #include "webrtc/common_types.h"
 #include "webrtc/engine_configurations.h"
 #include "webrtc/modules/video_capture/include/video_capture.h"
@@ -20,7 +21,6 @@
 #include "webrtc/modules/video_coding/main/interface/video_coding.h"
 #include "webrtc/modules/video_processing/main/interface/video_processing.h"
 #include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/system_wrappers/interface/thread_annotations.h"
 #include "webrtc/typedefs.h"
 #include "webrtc/video_engine/include/vie_base.h"
 #include "webrtc/video_engine/include/vie_capture.h"
@@ -69,7 +69,7 @@ class ViECapturer
 
   // Implements ExternalCapture.
   virtual int IncomingFrame(unsigned char* video_frame,
-                            unsigned int video_frame_length,
+                            size_t video_frame_length,
                             uint16_t width,
                             uint16_t height,
                             RawVideoType video_type,

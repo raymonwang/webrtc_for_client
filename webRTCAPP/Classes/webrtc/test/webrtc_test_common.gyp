@@ -56,10 +56,12 @@
       'dependencies': [
         '<(DEPTH)/testing/gtest.gyp:gtest',
         '<(DEPTH)/third_party/gflags/gflags.gyp:gflags',
+        '<(webrtc_root)/base/base.gyp:rtc_base',
         '<(webrtc_root)/modules/modules.gyp:media_file',
-        '<(webrtc_root)/modules/modules.gyp:video_capture_module',
+        '<(webrtc_root)/modules/modules.gyp:video_render_module_impl',
         '<(webrtc_root)/test/test.gyp:frame_generator',
         '<(webrtc_root)/test/test.gyp:test_support',
+        '<(webrtc_root)/test/test.gyp:rtp_test_utils',
         '<(webrtc_root)/webrtc.gyp:webrtc',
       ],
     },
@@ -101,48 +103,17 @@
           'sources!': [
             'null_platform_renderer.cc',
           ],
+          'include_dirs': [
+            '<(directx_sdk_path)/Include',
+          ],
         }],
       ],
       'dependencies': [
         '<(DEPTH)/testing/gtest.gyp:gtest',
-        '<(webrtc_root)/modules/modules.gyp:video_capture_module',
         '<(webrtc_root)/modules/modules.gyp:media_file',
         '<(webrtc_root)/test/test.gyp:frame_generator',
         '<(webrtc_root)/test/test.gyp:test_support',
       ],
-      'direct_dependent_settings': {
-        'conditions': [
-          ['OS=="linux"', {
-            'libraries': [
-              '-lXext',
-              '-lX11',
-              '-lGL',
-            ],
-          }],
-          ['OS=="android"', {
-            'libraries' : [
-              '-lGLESv2', '-llog',
-            ],
-          }],
-          ['OS=="mac"', {
-            'xcode_settings' : {
-              'OTHER_LDFLAGS' : [
-                '-framework Cocoa',
-                '-framework OpenGL',
-                '-framework CoreVideo',
-              ],
-            },
-          }],
-        ],
-      },
-    },
-    {
-      # This target is only needed since the video render module builds platform
-      # specific code and depends on these libraries. This target should be
-      # removed as soon as the new video API doesn't depend on the module.
-      # TODO(mflodman) Remove this target as described above.
-      'target_name': 'webrtc_test_video_render_dependencies',
-      'type': 'static_library',
       'direct_dependent_settings': {
         'conditions': [
           ['OS=="linux"', {
@@ -180,10 +151,13 @@
             'webrtc_test_common',
             '<(DEPTH)/testing/gtest.gyp:gtest',
             '<(DEPTH)/testing/gmock.gyp:gmock',
+            '<(webrtc_root)/modules/modules.gyp:video_capture_module_impl',
             '<(webrtc_root)/test/test.gyp:test_support_main',
           ],
           'sources': [
             'fake_network_pipe_unittest.cc',
+            'rtp_file_reader_unittest.cc',
+            'rtp_file_writer_unittest.cc',
           ],
         },
       ],  #targets

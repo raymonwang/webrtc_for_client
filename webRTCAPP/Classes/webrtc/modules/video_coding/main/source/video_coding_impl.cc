@@ -21,20 +21,16 @@
 namespace webrtc {
 namespace vcm {
 
-uint32_t
+int64_t
 VCMProcessTimer::Period() const {
     return _periodMs;
 }
 
-uint32_t
+int64_t
 VCMProcessTimer::TimeUntilProcess() const {
-    const int64_t time_since_process = _clock->TimeInMilliseconds() -
-        static_cast<int64_t>(_latestMs);
-    const int64_t time_until_process = static_cast<int64_t>(_periodMs) -
-        time_since_process;
-    if (time_until_process < 0)
-      return 0;
-    return time_until_process;
+    const int64_t time_since_process = _clock->TimeInMilliseconds() - _latestMs;
+    const int64_t time_until_process = _periodMs - time_since_process;
+    return std::max<int64_t>(time_until_process, 0);
 }
 
 void
@@ -59,7 +55,7 @@ class EncodedImageCallbackWrapper : public EncodedImageCallback {
   }
 
   // TODO(andresp): Change to void as return value is ignored.
-  virtual int32_t Encoded(EncodedImage& encoded_image,
+  virtual int32_t Encoded(const EncodedImage& encoded_image,
                           const CodecSpecificInfo* codec_specific_info,
                           const RTPFragmentationHeader* fragmentation) {
     CriticalSectionScoped cs(cs_.get());
@@ -90,9 +86,9 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     own_event_factory_.reset();
   }
 
-  virtual int32_t TimeUntilNextProcess() OVERRIDE {
-    int32_t sender_time = sender_->TimeUntilNextProcess();
-    int32_t receiver_time = receiver_->TimeUntilNextProcess();
+  virtual int64_t TimeUntilNextProcess() OVERRIDE {
+    int64_t sender_time = sender_->TimeUntilNextProcess();
+    int64_t receiver_time = receiver_->TimeUntilNextProcess();
     assert(sender_time >= 0);
     assert(receiver_time >= 0);
     return VCM_MIN(sender_time, receiver_time);
@@ -131,8 +127,8 @@ class VideoCodingModuleImpl : public VideoCodingModule {
         externalEncoder, payloadType, internalSource);
   }
 
-  virtual int32_t CodecConfigParameters(uint8_t* buffer, int32_t size)
-      OVERRIDE {
+  virtual int32_t CodecConfigParameters(uint8_t* buffer,
+                                        int32_t size) OVERRIDE {
     return sender_->CodecConfigParameters(buffer, size);
   }
 
@@ -146,12 +142,12 @@ class VideoCodingModuleImpl : public VideoCodingModule {
 
   virtual int32_t SetChannelParameters(uint32_t target_bitrate,  // bits/s.
                                        uint8_t lossRate,
-                                       uint32_t rtt) OVERRIDE {
+                                       int64_t rtt) OVERRIDE {
     return sender_->SetChannelParameters(target_bitrate, lossRate, rtt);
   }
 
-  virtual int32_t RegisterTransportCallback(VCMPacketizationCallback* transport)
-      OVERRIDE {
+  virtual int32_t RegisterTransportCallback(
+      VCMPacketizationCallback* transport) OVERRIDE {
     return sender_->RegisterTransportCallback(transport);
   }
 
@@ -165,8 +161,8 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     return sender_->RegisterVideoQMCallback(videoQMSettings);
   }
 
-  virtual int32_t RegisterProtectionCallback(VCMProtectionCallback* protection)
-      OVERRIDE {
+  virtual int32_t RegisterProtectionCallback(
+      VCMProtectionCallback* protection) OVERRIDE {
     return sender_->RegisterProtectionCallback(protection);
   }
 
@@ -181,10 +177,10 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     return sender_return;
   }
 
-  virtual int32_t AddVideoFrame(const I420VideoFrame& videoFrame,
-                                const VideoContentMetrics* contentMetrics,
-                                const CodecSpecificInfo* codecSpecificInfo)
-      OVERRIDE {
+  virtual int32_t AddVideoFrame(
+      const I420VideoFrame& videoFrame,
+      const VideoContentMetrics* contentMetrics,
+      const CodecSpecificInfo* codecSpecificInfo) OVERRIDE {
     return sender_->AddVideoFrame(
         videoFrame, contentMetrics, codecSpecificInfo);
   }
@@ -226,11 +222,11 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     return VCM_OK;
   }
 
-  virtual void SuspendBelowMinBitrate() {
+  virtual void SuspendBelowMinBitrate() OVERRIDE {
     return sender_->SuspendBelowMinBitrate();
   }
 
-  virtual bool VideoSuspended() const {
+  virtual bool VideoSuspended() const OVERRIDE {
     return sender_->VideoSuspended();
   }
 
@@ -252,8 +248,8 @@ class VideoCodingModuleImpl : public VideoCodingModule {
         externalDecoder, payloadType, internalRenderTiming);
   }
 
-  virtual int32_t RegisterReceiveCallback(VCMReceiveCallback* receiveCallback)
-      OVERRIDE {
+  virtual int32_t RegisterReceiveCallback(
+      VCMReceiveCallback* receiveCallback) OVERRIDE {
     return receiver_->RegisterReceiveCallback(receiveCallback);
   }
 
@@ -286,13 +282,9 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     return receiver_->Decode(maxWaitTimeMs);
   }
 
-  virtual int32_t DecodeDualFrame(uint16_t maxWaitTimeMs) OVERRIDE {
-    return receiver_->DecodeDualFrame(maxWaitTimeMs);
-  }
-
   virtual int32_t ResetDecoder() OVERRIDE { return receiver_->ResetDecoder(); }
 
-  virtual int32_t ReceiveCodec(VideoCodec* currentReceiveCodec) const {
+  virtual int32_t ReceiveCodec(VideoCodec* currentReceiveCodec) const OVERRIDE {
     return receiver_->ReceiveCodec(currentReceiveCodec);
   }
 
@@ -301,7 +293,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
   }
 
   virtual int32_t IncomingPacket(const uint8_t* incomingPayload,
-                                 uint32_t payloadLength,
+                                 size_t payloadLength,
                                  const WebRtcRTPHeader& rtpInfo) OVERRIDE {
     return receiver_->IncomingPacket(incomingPayload, payloadLength, rtpInfo);
   }
@@ -315,10 +307,6 @@ class VideoCodingModuleImpl : public VideoCodingModule {
   }
 
   virtual int32_t Delay() const OVERRIDE { return receiver_->Delay(); }
-
-  virtual int32_t ReceivedFrameCount(VCMFrameCount& frameCount) const OVERRIDE {
-    return receiver_->ReceivedFrameCount(&frameCount);
-  }
 
   virtual uint32_t DiscardedPackets() const OVERRIDE {
     return receiver_->DiscardedPackets();
@@ -344,7 +332,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
     return receiver_->SetMinReceiverDelay(desired_delay_ms);
   }
 
-  virtual int32_t SetReceiveChannelParameters(uint32_t rtt) OVERRIDE {
+  virtual int32_t SetReceiveChannelParameters(int64_t rtt) OVERRIDE {
     return receiver_->SetReceiveChannelParameters(rtt);
   }
 

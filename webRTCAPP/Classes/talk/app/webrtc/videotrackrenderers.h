@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,8 +31,8 @@
 #include <vector>
 
 #include "talk/app/webrtc/mediastreaminterface.h"
-#include "talk/base/criticalsection.h"
 #include "talk/media/base/videorenderer.h"
+#include "webrtc/base/criticalsection.h"
 
 namespace webrtc {
 
@@ -69,7 +69,7 @@ class VideoTrackRenderers : public cricket::VideoRenderer {
   bool enabled_;
   std::vector<RenderObserver> renderers_;
 
-  talk_base::CriticalSection critical_section_;  // Protects the above variables
+  rtc::CriticalSection critical_section_;  // Protects the above variables
 };
 
 }  // namespace webrtc

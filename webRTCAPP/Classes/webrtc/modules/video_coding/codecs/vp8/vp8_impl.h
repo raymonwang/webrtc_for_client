@@ -56,7 +56,7 @@ class VP8EncoderImpl : public VP8Encoder {
   //                                  WEBRTC_VIDEO_CODEC_ERROR
   virtual int InitEncode(const VideoCodec* codec_settings,
                          int number_of_cores,
-                         uint32_t max_payload_size);
+                         size_t max_payload_size);
 
   // Encode an I420 image (as a part of a video stream). The encoded image
   // will be returned to the user through the encode complete callback.
@@ -93,7 +93,7 @@ class VP8EncoderImpl : public VP8Encoder {
   // Return value           : WEBRTC_VIDEO_CODEC_OK if OK
   //                          <0 - Errors: WEBRTC_VIDEO_CODEC_ERROR
   //
-  virtual int SetChannelParameters(uint32_t packet_loss, int rtt);
+  virtual int SetChannelParameters(uint32_t packet_loss, int64_t rtt);
 
   // Inform the encoder about the new target bit rate.
   //

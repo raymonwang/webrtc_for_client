@@ -52,8 +52,6 @@ int16_t ACMG722::InternalCreateEncoder() { return -1; }
 
 void ACMG722::DestructEncoderSafe() { return; }
 
-void ACMG722::InternalDestructEncoderInst(void* /* ptr_inst */) { return; }
-
 #else     //===================== Actual Implementation =======================
 
 // Encoder and decoder memory
@@ -117,11 +115,11 @@ int16_t ACMG722::InternalEncode(uint8_t* bitstream,
     }
     len_in_bytes = WebRtcG722_Encode(
         encoder_inst_ptr_, left_channel, frame_len_smpl_,
-        reinterpret_cast<int16_t*>(out_left));
+        out_left);
     len_in_bytes += WebRtcG722_Encode(encoder_inst_ptr_right_,
                                       right_channel,
                                       frame_len_smpl_,
-                                      reinterpret_cast<int16_t*>(out_right));
+                                      out_right);
     *bitstream_len_byte = len_in_bytes;
 
     // Interleave the 4 bits per sample from left and right channel
@@ -132,7 +130,7 @@ int16_t ACMG722::InternalEncode(uint8_t* bitstream,
   } else {
     *bitstream_len_byte = WebRtcG722_Encode(
         encoder_inst_ptr_, &in_audio_[in_audio_ix_read_], frame_len_smpl_,
-        reinterpret_cast<int16_t*>(bitstream));
+        bitstream);
   }
 
   // increment the read index this tell the caller how far
@@ -185,13 +183,6 @@ void ACMG722::DestructEncoderSafe() {
   }
   encoder_exist_ = false;
   encoder_initialized_ = false;
-}
-
-void ACMG722::InternalDestructEncoderInst(void* ptr_inst) {
-  if (ptr_inst != NULL) {
-    WebRtcG722_FreeEncoder(static_cast<G722EncInst*>(ptr_inst));
-  }
-  return;
 }
 
 #endif

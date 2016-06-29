@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2014, Google Inc.
+ * Copyright 2014 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,12 +30,12 @@
 #include <algorithm>
 #include <functional>
 
-#include "talk/base/logging.h"
+#include "webrtc/base/logging.h"
 
 namespace webrtc {
 
-talk_base::scoped_refptr<RemoteAudioSource> RemoteAudioSource::Create() {
-  return new talk_base::RefCountedObject<RemoteAudioSource>();
+rtc::scoped_refptr<RemoteAudioSource> RemoteAudioSource::Create() {
+  return new rtc::RefCountedObject<RemoteAudioSource>();
 }
 
 RemoteAudioSource::RemoteAudioSource() {

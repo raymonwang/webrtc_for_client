@@ -13,7 +13,7 @@
       'type': 'static_library',
       'dependencies': [
         '<(webrtc_root)/common_audio/common_audio.gyp:common_audio',
-        '<(webrtc_root)/system_wrappers/source/system_wrappers.gyp:system_wrappers',
+        '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
       ],
       'include_dirs': [
         '../interface',
@@ -26,10 +26,14 @@
         ],
       },
       'sources': [
+        '../../audio_encoder_isac_t.h',
+        '../../audio_encoder_isac_t_impl.h',
+        '../interface/audio_encoder_isacfix.h',
         '../interface/isacfix.h',
         'arith_routines.c',
         'arith_routines_hist.c',
         'arith_routines_logist.c',
+        'audio_encoder_isacfix.cc',
         'bandwidth_estimator.c',
         'decode.c',
         'decode_bwe.c',
@@ -47,12 +51,14 @@
         'lpc_masking_model.c',
         'lpc_tables.c',
         'pitch_estimator.c',
+        'pitch_estimator_c.c',
         'pitch_filter.c',
         'pitch_filter_c.c',
         'pitch_gain_tables.c',
         'pitch_lag_tables.c',
         'spectrum_ar_model_tables.c',
         'transform.c',
+        'transform_tables.c',
         'arith_routins.h',
         'bandwidth_estimator.h',
         'codec.h',
@@ -74,7 +80,7 @@
             'WEBRTC_LINUX',
           ],
         }],
-        ['(target_arch=="arm" and arm_version==7) or target_arch=="armv7"', {
+        ['target_arch=="arm" and arm_version>=7', {
           'dependencies': [ 'isac_neon', ],
           'sources': [
             'lattice_armv7.S',
@@ -85,13 +91,17 @@
             'pitch_filter_c.c',
           ],
         }],
-        ['target_arch=="mipsel"', {
+        ['target_arch=="mipsel" and mips_arch_variant!="r6" and android_webview_build==0', {
           'sources': [
+            'entropy_coding_mips.c',
             'filters_mips.c',
             'lattice_mips.c',
+            'pitch_estimator_mips.c',
+            'transform_mips.c',
           ],
           'sources!': [
             'lattice_c.c',
+            'pitch_estimator_c.c',
           ],
           'conditions': [
             ['mips_dsp_rev>0', {
@@ -101,6 +111,7 @@
             }],
             ['mips_dsp_rev>1', {
               'sources': [
+                'lpc_masking_model_mips.c',
                 'pitch_filter_mips.c',
               ],
               'sources!': [
@@ -113,7 +124,7 @@
     },
   ],
   'conditions': [
-    ['(target_arch=="arm" and arm_version==7) or target_arch=="armv7"', {
+    ['target_arch=="arm" and arm_version>=7', {
       'targets': [
         {
           'target_name': 'isac_neon',
@@ -132,6 +143,15 @@
             'lattice_neon.S',
             'lpc_masking_model_neon.S',
             'transform_neon.S',
+          ],
+          'conditions': [
+            # Disable LTO in isac_neon target due to compiler bug
+            ['use_lto==1', {
+              'cflags!': [
+                '-flto',
+                '-ffat-lto-objects',
+              ],
+            }],
           ],
         },
       ],

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -33,9 +33,10 @@
 
 #include <string>
 
-#include "talk/base/basictypes.h"
-#include "talk/base/buffer.h"
-#include "talk/base/refcount.h"
+#include "webrtc/base/basictypes.h"
+#include "webrtc/base/buffer.h"
+#include "webrtc/base/checks.h"
+#include "webrtc/base/refcount.h"
 
 
 namespace webrtc {
@@ -66,7 +67,7 @@ struct DataChannelInit {
 };
 
 struct DataBuffer {
-  DataBuffer(const talk_base::Buffer& data, bool binary)
+  DataBuffer(const rtc::Buffer& data, bool binary)
       : data(data),
         binary(binary) {
   }
@@ -77,7 +78,7 @@ struct DataBuffer {
   }
   size_t size() const { return data.length(); }
 
-  talk_base::Buffer data;
+  rtc::Buffer data;
   // Indicates if the received data contains UTF-8 or binary data.
   // Note that the upper layers are left to verify the UTF-8 encoding.
   // TODO(jiayl): prefer to use an enum instead of a bool.
@@ -95,7 +96,7 @@ class DataChannelObserver {
   virtual ~DataChannelObserver() {}
 };
 
-class DataChannelInterface : public talk_base::RefCountInterface {
+class DataChannelInterface : public rtc::RefCountInterface {
  public:
   // Keep in sync with DataChannel.java:State and
   // RTCDataChannel.h:RTCDataChannelState.
@@ -105,6 +106,21 @@ class DataChannelInterface : public talk_base::RefCountInterface {
     kClosing,
     kClosed
   };
+
+  static const char* DataStateString(DataState state) {
+    switch (state) {
+      case kConnecting:
+        return "connecting";
+      case kOpen:
+        return "open";
+      case kClosing:
+        return "closing";
+      case kClosed:
+        return "closed";
+    }
+    CHECK(false) << "Unknown DataChannel state: " << state;
+    return "";
+  }
 
   virtual void RegisterObserver(DataChannelObserver* observer) = 0;
   virtual void UnregisterObserver() = 0;

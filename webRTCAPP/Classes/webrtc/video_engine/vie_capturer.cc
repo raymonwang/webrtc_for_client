@@ -279,7 +279,7 @@ int32_t ViECapturer::SetRotateCapturedFrames(
 }
 
 int ViECapturer::IncomingFrame(unsigned char* video_frame,
-                               unsigned int video_frame_length,
+                               size_t video_frame_length,
                                uint16_t width,
                                uint16_t height,
                                RawVideoType video_type,
@@ -343,6 +343,10 @@ void ViECapturer::OnIncomingCapturedFrame(const int32_t capture_id,
   // the camera, and not when the camera actually captured the frame.
   video_frame.set_render_time_ms(video_frame.render_time_ms() - FrameDelay());
 
+  overuse_detector_->FrameCaptured(video_frame.width(),
+                                   video_frame.height(),
+                                   video_frame.render_time_ms());
+
   TRACE_EVENT_ASYNC_BEGIN1("webrtc", "Video", video_frame.render_time_ms(),
                            "render_time", video_frame.render_time_ms());
 
@@ -354,8 +358,6 @@ void ViECapturer::OnIncomingCapturedFrame(const int32_t capture_id,
     captured_frame_->SwapFrame(&video_frame);
   }
   capture_event_.Set();
-  overuse_detector_->FrameCaptured(captured_frame_->width(),
-                                   captured_frame_->height());
 }
 
 void ViECapturer::OnCaptureDelayChanged(const int32_t id,
@@ -450,11 +452,13 @@ bool ViECapturer::ViECaptureThreadFunction(void* obj) {
 }
 
 bool ViECapturer::ViECaptureProcess() {
+  int64_t capture_time = -1;
   if (capture_event_.Wait(kThreadWaitTimeMs) == kEventSignaled) {
     overuse_detector_->FrameProcessingStarted();
     int64_t encode_start_time = -1;
     deliver_cs_->Enter();
     if (SwapCapturedAndDeliverFrameIfAvailable()) {
+      capture_time = deliver_frame_->render_time_ms();
       encode_start_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
       DeliverI420Frame(deliver_frame_.get());
       if (deliver_frame_->native_handle() != NULL)
@@ -475,12 +479,15 @@ bool ViECapturer::ViECaptureProcess() {
     }
   }
   // We're done!
+  if (capture_time != -1) {
+    overuse_detector_->FrameSent(capture_time);
+  }
   return true;
 }
 
 void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
   if (video_frame->native_handle() != NULL) {
-    ViEFrameProviderBase::DeliverFrame(video_frame);
+    ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>());
     return;
   }
 
@@ -515,9 +522,8 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
     }
   }
   if (effect_filter_) {
-    unsigned int length = CalcBufferSize(kI420,
-                                         video_frame->width(),
-                                         video_frame->height());
+    size_t length =
+        CalcBufferSize(kI420, video_frame->width(), video_frame->height());
     scoped_ptr<uint8_t[]> video_buffer(new uint8_t[length]);
     ExtractBuffer(*video_frame, length, video_buffer.get());
     effect_filter_->Transform(length,
@@ -528,7 +534,7 @@ void ViECapturer::DeliverI420Frame(I420VideoFrame* video_frame) {
                               video_frame->height());
   }
   // Deliver the captured frame to all observers (channels, renderer or file).
-  ViEFrameProviderBase::DeliverFrame(video_frame);
+  ViEFrameProviderBase::DeliverFrame(video_frame, std::vector<uint32_t>());
 }
 
 int ViECapturer::DeregisterFrameCallback(

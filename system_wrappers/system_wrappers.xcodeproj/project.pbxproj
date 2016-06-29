@@ -38,6 +38,7 @@
 		430D87E61986075F009E763A /* timestamp_extrapolator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C61986075F009E763A /* timestamp_extrapolator.cc */; };
 		430D87E71986075F009E763A /* trace_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C71986075F009E763A /* trace_impl.cc */; };
 		430D87E81986075F009E763A /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C91986075F009E763A /* trace_posix.cc */; };
+		43C69C8E1D228CA900427D35 /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C8D1D228CA900427D35 /* metrics_default.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -142,6 +143,7 @@
 		430D87C81986075F009E763A /* trace_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_impl.h; sourceTree = "<group>"; };
 		430D87C91986075F009E763A /* trace_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace_posix.cc; sourceTree = "<group>"; };
 		430D87CA1986075F009E763A /* trace_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_posix.h; sourceTree = "<group>"; };
+		43C69C8D1D228CA900427D35 /* metrics_default.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrics_default.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 		430D879B1986075F009E763A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				43C69C8D1D228CA900427D35 /* metrics_default.cc */,
 				430D879C1986075F009E763A /* aligned_malloc.cc */,
 				430D879D1986075F009E763A /* android */,
 				430D879E1986075F009E763A /* Android.mk */,
@@ -395,6 +398,7 @@
 				430D87DF1986075F009E763A /* rw_lock_generic.cc in Sources */,
 				430D87E61986075F009E763A /* timestamp_extrapolator.cc in Sources */,
 				430D87CD1986075F009E763A /* clock.cc in Sources */,
+				43C69C8E1D228CA900427D35 /* metrics_default.cc in Sources */,
 				430D87DC1986075F009E763A /* logging.cc in Sources */,
 				430D87E11986075F009E763A /* sleep.cc in Sources */,
 				430D87E51986075F009E763A /* tick_util.cc in Sources */,

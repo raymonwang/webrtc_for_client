@@ -21,14 +21,12 @@
 
 #include "webrtc/common_types.h"
 
-#if defined(ANDROID) && !defined(WEBRTC_CHROMIUM_BUILD)
-#include <jni.h>
-#endif
-
 namespace webrtc {
 
 class Config;
 class VoiceEngine;
+class ReceiveStatisticsProxy;
+class SendStatisticsProxy;
 
 // CpuOveruseObserver is called when a system overuse is detected and
 // VideoEngine cannot keep up the encoding frequency.
@@ -45,14 +43,15 @@ class CpuOveruseObserver {
 
 struct CpuOveruseOptions {
   CpuOveruseOptions()
-      : enable_capture_jitter_method(true),
+      : enable_capture_jitter_method(false),
         low_capture_jitter_threshold_ms(20.0f),
         high_capture_jitter_threshold_ms(30.0f),
-        enable_encode_usage_method(false),
-        low_encode_usage_threshold_percent(60),
-        high_encode_usage_threshold_percent(90),
+        enable_encode_usage_method(true),
+        low_encode_usage_threshold_percent(55),
+        high_encode_usage_threshold_percent(85),
         low_encode_time_rsd_threshold(-1),
         high_encode_time_rsd_threshold(-1),
+        enable_extended_processing_usage(true),
         frame_timeout_interval_ms(1500),
         min_frame_samples(120),
         min_process_count(3),
@@ -66,12 +65,17 @@ struct CpuOveruseOptions {
   bool enable_encode_usage_method;
   int low_encode_usage_threshold_percent;  // Threshold for triggering underuse.
   int high_encode_usage_threshold_percent; // Threshold for triggering overuse.
+  // TODO(asapersson): Remove options, not used.
   int low_encode_time_rsd_threshold;   // Additional threshold for triggering
                                        // underuse (used in addition to
                                        // threshold above if configured).
   int high_encode_time_rsd_threshold;  // Additional threshold for triggering
                                        // overuse (used in addition to
                                        // threshold above if configured).
+  bool enable_extended_processing_usage;  // Include a larger time span (in
+                                          // addition to encode time) for
+                                          // measuring the processing time of a
+                                          // frame.
   // General settings.
   int frame_timeout_interval_ms;  // The maximum allowed interval between two
                                   // frames before resetting estimations.
@@ -94,6 +98,8 @@ struct CpuOveruseOptions {
         o.high_encode_usage_threshold_percent &&
         low_encode_time_rsd_threshold == o.low_encode_time_rsd_threshold &&
         high_encode_time_rsd_threshold == o.high_encode_time_rsd_threshold &&
+        enable_extended_processing_usage ==
+        o.enable_extended_processing_usage &&
         frame_timeout_interval_ms == o.frame_timeout_interval_ms &&
         min_frame_samples == o.min_frame_samples &&
         min_process_count == o.min_process_count &&
@@ -114,6 +120,7 @@ struct CpuOveruseMetrics {
   int avg_encode_time_ms;   // The average encode time in ms.
   int encode_usage_percent; // The average encode time divided by the average
                             // time difference between incoming captured frames.
+  // TODO(asapersson): Remove metric, not used.
   int encode_rsd;           // The relative std dev of encode time of frames.
   int capture_queue_delay_ms_per_s;  // The current time delay between an
                                      // incoming captured frame until the frame
@@ -141,11 +148,6 @@ class WEBRTC_DLLEXPORT VideoEngine {
   // Installs the TraceCallback implementation to ensure that the VideoEngine
   // user receives callbacks for generated trace messages.
   static int SetTraceCallback(TraceCallback* callback);
-
-#if defined(ANDROID) && !defined(WEBRTC_CHROMIUM_BUILD)
-  // Android specific.
-  static int SetAndroidObjects(JavaVM* java_vm, jobject context);
-#endif
 
  protected:
   VideoEngine() {}
@@ -237,6 +239,14 @@ class WEBRTC_DLLEXPORT ViEBase {
 
   // Returns the last VideoEngine error code.
   virtual int LastError() = 0;
+
+  virtual void RegisterSendStatisticsProxy(
+      int channel,
+      SendStatisticsProxy* send_statistics_proxy) = 0;
+
+  virtual void RegisterReceiveStatisticsProxy(
+      int channel,
+      ReceiveStatisticsProxy* receive_statistics_proxy) = 0;
 
  protected:
   ViEBase() {}

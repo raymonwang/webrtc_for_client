@@ -1,36 +1,38 @@
-// libjingle
-// Copyright 2010 Google Inc.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-//  1. Redistributions of source code must retain the above copyright notice,
-//     this list of conditions and the following disclaimer.
-//  2. Redistributions in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other materials provided with the distribution.
-//  3. The name of the author may not be used to endorse or promote products
-//     derived from this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
-// WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-// EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-// OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-// WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-// OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-// ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * libjingle
+ * Copyright 2010 Google Inc.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice,
+ *     this list of conditions and the following disclaimer.
+ *  2. Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *  3. The name of the author may not be used to endorse or promote products
+ *     derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #ifndef TALK_MEDIA_BASE_VIDEOADAPTER_H_  // NOLINT
 #define TALK_MEDIA_BASE_VIDEOADAPTER_H_
 
-#include "talk/base/common.h"  // For ASSERT
-#include "talk/base/criticalsection.h"
-#include "talk/base/scoped_ptr.h"
-#include "talk/base/sigslot.h"
 #include "talk/media/base/videocommon.h"
+#include "webrtc/base/common.h"  // For ASSERT
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/sigslot.h"
 
 namespace cricket {
 
@@ -56,6 +58,11 @@ class VideoAdapter {
   const VideoFormat& output_format();
   // If the parameter black is true, the adapted frames will be black.
   void SetBlackOutput(bool black);
+  bool IsBlackOutput();
+
+  // Return the adapted resolution given the input resolution. The returned
+  // resolution will be 0x0 if the frame should be dropped.
+  VideoFormat AdaptFrameResolution(int in_width, int in_height);
 
   // Adapt the input frame from the input format to the output format. Return
   // true and set the output frame to NULL if the input frame is dropped. Return
@@ -99,9 +106,9 @@ class VideoAdapter {
   bool black_output_;  // Flag to tell if we need to black output_frame_.
   bool is_black_;  // Flag to tell if output_frame_ is currently black.
   int64 interval_next_frame_;
-  talk_base::scoped_ptr<VideoFrame> output_frame_;
+  rtc::scoped_ptr<VideoFrame> output_frame_;
   // The critical section to protect the above variables.
-  talk_base::CriticalSection critical_section_;
+  rtc::CriticalSection critical_section_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoAdapter);
 };
@@ -206,7 +213,7 @@ class CoordinatedVideoAdapter
   int cpu_desired_num_pixels_;
   CoordinatedVideoAdapter::AdaptReason adapt_reason_;
   // The critical section to protect handling requests.
-  talk_base::CriticalSection request_critical_section_;
+  rtc::CriticalSection request_critical_section_;
 
   // The weighted average of cpu load over time. It's always updated (if cpu
   // adaptation is on), but only used if cpu_smoothing_ is set.

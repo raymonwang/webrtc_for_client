@@ -35,17 +35,17 @@
 #include "libyuv/scale.h"
 #endif
 
-#include "talk/base/logging.h"
 #include "talk/media/base/videocommon.h"
+#include "webrtc/base/logging.h"
 
 namespace cricket {
 
 // Round to 2 pixels because Chroma channels are half size.
 #define ROUNDTO2(v) (v & ~1)
 
-talk_base::StreamResult VideoFrame::Write(talk_base::StreamInterface* stream,
+rtc::StreamResult VideoFrame::Write(rtc::StreamInterface* stream,
                                           int* error) {
-  talk_base::StreamResult result = talk_base::SR_SUCCESS;
+  rtc::StreamResult result = rtc::SR_SUCCESS;
   const uint8* src_y = GetYPlane();
   const uint8* src_u = GetUPlane();
   const uint8* src_v = GetVPlane();
@@ -62,21 +62,21 @@ talk_base::StreamResult VideoFrame::Write(talk_base::StreamInterface* stream,
   // Write Y.
   for (size_t row = 0; row < height; ++row) {
     result = stream->Write(src_y + row * y_pitch, width, NULL, error);
-    if (result != talk_base::SR_SUCCESS) {
+    if (result != rtc::SR_SUCCESS) {
       return result;
     }
   }
   // Write U.
   for (size_t row = 0; row < half_height; ++row) {
     result = stream->Write(src_u + row * u_pitch, half_width, NULL, error);
-    if (result != talk_base::SR_SUCCESS) {
+    if (result != rtc::SR_SUCCESS) {
       return result;
     }
   }
   // Write V.
   for (size_t row = 0; row < half_height; ++row) {
     result = stream->Write(src_v + row * v_pitch, half_width, NULL, error);
-    if (result != talk_base::SR_SUCCESS) {
+    if (result != rtc::SR_SUCCESS) {
       return result;
     }
   }
@@ -113,6 +113,26 @@ void VideoFrame::CopyToFrame(VideoFrame* dst) const {
 
   CopyToPlanes(dst->GetYPlane(), dst->GetUPlane(), dst->GetVPlane(),
                dst->GetYPitch(), dst->GetUPitch(), dst->GetVPitch());
+}
+
+size_t VideoFrame::ConvertToRgbBuffer(uint32 to_fourcc,
+                                      uint8* buffer,
+                                      size_t size,
+                                      int stride_rgb) const {
+  const size_t needed = std::abs(stride_rgb) * GetHeight();
+  if (size < needed) {
+    LOG(LS_WARNING) << "RGB buffer is not large enough";
+    return needed;
+  }
+
+  if (libyuv::ConvertFromI420(GetYPlane(), GetYPitch(), GetUPlane(),
+                              GetUPitch(), GetVPlane(), GetVPitch(), buffer,
+                              stride_rgb, static_cast<int>(GetWidth()),
+                              static_cast<int>(GetHeight()), to_fourcc)) {
+    LOG(LS_ERROR) << "RGB type not supported: " << to_fourcc;
+    return 0;  // 0 indicates error
+  }
+  return needed;
 }
 
 // TODO(fbarchard): Handle odd width/height with rounding.
@@ -235,7 +255,7 @@ bool VideoFrame::SetToBlack() {
 }
 
 static const size_t kMaxSampleSize = 1000000000u;
-// Returns whether a sample is valid
+// Returns whether a sample is valid.
 bool VideoFrame::Validate(uint32 fourcc, int w, int h,
                           const uint8 *sample, size_t sample_size) {
   if (h < 0) {
@@ -311,6 +331,11 @@ bool VideoFrame::Validate(uint32 fourcc, int w, int h,
                   << " " << sample_size;
     return false;
   }
+  // TODO(fbarchard): Make function to dump information about frames.
+  uint8 four_samples[4] = { 0, 0, 0, 0 };
+  for (size_t i = 0; i < ARRAY_SIZE(four_samples) && i < sample_size; ++i) {
+    four_samples[i] = sample[i];
+  }
   if (sample_size < expected_size) {
     LOG(LS_ERROR) << "Size field is too small."
                   << " format: " << GetFourccName(format)
@@ -318,10 +343,10 @@ bool VideoFrame::Validate(uint32 fourcc, int w, int h,
                   << " size: " << w << "x" << h
                   << " " << sample_size
                   << " expected: " << expected_size
-                  << " sample[0..3]: " << static_cast<int>(sample[0])
-                  << ", " << static_cast<int>(sample[1])
-                  << ", " << static_cast<int>(sample[2])
-                  << ", " << static_cast<int>(sample[3]);
+                  << " sample[0..3]: " << static_cast<int>(four_samples[0])
+                  << ", " << static_cast<int>(four_samples[1])
+                  << ", " << static_cast<int>(four_samples[2])
+                  << ", " << static_cast<int>(four_samples[3]);
     return false;
   }
   if (sample_size > kMaxSampleSize) {
@@ -331,13 +356,14 @@ bool VideoFrame::Validate(uint32 fourcc, int w, int h,
                     << " size: " << w << "x" << h
                     << " " << sample_size
                     << " expected: " << 2 * expected_size
-                    << " sample[0..3]: " << static_cast<int>(sample[0])
-                    << ", " << static_cast<int>(sample[1])
-                    << ", " << static_cast<int>(sample[2])
-                    << ", " << static_cast<int>(sample[3]);
+                    << " sample[0..3]: " << static_cast<int>(four_samples[0])
+                    << ", " << static_cast<int>(four_samples[1])
+                    << ", " << static_cast<int>(four_samples[2])
+                    << ", " << static_cast<int>(four_samples[3]);
     return false;
   }
   // Show large size warning once every 100 frames.
+  // TODO(fbarchard): Make frame counter atomic for thread safety.
   static int large_warn100 = 0;
   size_t large_expected_size = expected_size * 2;
   if (expected_bpp >= 8 &&
@@ -350,27 +376,14 @@ bool VideoFrame::Validate(uint32 fourcc, int w, int h,
                     << " size: " << w << "x" << h
                     << " bytes: " << sample_size
                     << " expected: " << large_expected_size
-                    << " sample[0..3]: " << static_cast<int>(sample[0])
-                    << ", " << static_cast<int>(sample[1])
-                    << ", " << static_cast<int>(sample[2])
-                    << ", " << static_cast<int>(sample[3]);
-  }
-  // Scan pages to ensure they are there and don't contain a single value and
-  // to generate an error.
-  if (!memcmp(sample + sample_size - 8, sample + sample_size - 4, 4) &&
-      !memcmp(sample, sample + 4, sample_size - 4)) {
-    LOG(LS_WARNING) << "Duplicate value for all pixels."
-                    << " format: " << GetFourccName(format)
-                    << " bpp: " << expected_bpp
-                    << " size: " << w << "x" << h
-                    << " bytes: " << sample_size
-                    << " expected: " << expected_size
-                    << " sample[0..3]: " << static_cast<int>(sample[0])
-                    << ", " << static_cast<int>(sample[1])
-                    << ", " << static_cast<int>(sample[2])
-                    << ", " << static_cast<int>(sample[3]);
+                    << " sample[0..3]: " << static_cast<int>(four_samples[0])
+                    << ", " << static_cast<int>(four_samples[1])
+                    << ", " << static_cast<int>(four_samples[2])
+                    << ", " << static_cast<int>(four_samples[3]);
   }
 
+  // TODO(fbarchard): Add duplicate pixel check.
+  // TODO(fbarchard): Use frame counter atomic for thread safety.
   static bool valid_once = true;
   if (valid_once) {
     valid_once = false;
@@ -380,10 +393,10 @@ bool VideoFrame::Validate(uint32 fourcc, int w, int h,
                  << " size: " << w << "x" << h
                  << " bytes: " << sample_size
                  << " expected: " << expected_size
-                 << " sample[0..3]: " << static_cast<int>(sample[0])
-                 << ", " << static_cast<int>(sample[1])
-                 << ", " << static_cast<int>(sample[2])
-                 << ", " << static_cast<int>(sample[3]);
+                 << " sample[0..3]: " << static_cast<int>(four_samples[0])
+                 << ", " << static_cast<int>(four_samples[1])
+                 << ", " << static_cast<int>(four_samples[2])
+                 << ", " << static_cast<int>(four_samples[3]);
   }
   return true;
 }

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2011, Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -24,6 +24,7 @@
  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 #ifndef TALK_APP_WEBRTC_PEERCONNECTIONFACTORY_H_
 #define TALK_APP_WEBRTC_PEERCONNECTIONFACTORY_H_
 
@@ -31,20 +32,19 @@
 
 #include "talk/app/webrtc/mediastreaminterface.h"
 #include "talk/app/webrtc/peerconnectioninterface.h"
-#include "talk/base/scoped_ptr.h"
-#include "talk/base/thread.h"
 #include "talk/session/media/channelmanager.h"
+#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/thread.h"
 
 namespace webrtc {
 
-class PeerConnectionFactory : public PeerConnectionFactoryInterface,
-                              public talk_base::MessageHandler {
+class PeerConnectionFactory : public PeerConnectionFactoryInterface {
  public:
   virtual void SetOptions(const Options& options) {
     options_ = options;
   }
 
-  virtual talk_base::scoped_refptr<PeerConnectionInterface>
+  virtual rtc::scoped_refptr<PeerConnectionInterface>
       CreatePeerConnection(
           const PeerConnectionInterface::RTCConfiguration& configuration,
           const MediaConstraintsInterface* constraints,
@@ -54,77 +54,58 @@ class PeerConnectionFactory : public PeerConnectionFactoryInterface,
 
   bool Initialize();
 
-  virtual talk_base::scoped_refptr<MediaStreamInterface>
-      CreateLocalMediaStream(const std::string& label);
+  rtc::scoped_refptr<MediaStreamInterface>
+      CreateLocalMediaStream(const std::string& label) override;
 
-  virtual talk_base::scoped_refptr<AudioSourceInterface> CreateAudioSource(
-      const MediaConstraintsInterface* constraints);
+  rtc::scoped_refptr<AudioSourceInterface> CreateAudioSource(
+      const MediaConstraintsInterface* constraints) override;
 
-  virtual talk_base::scoped_refptr<VideoSourceInterface> CreateVideoSource(
+  rtc::scoped_refptr<VideoSourceInterface> CreateVideoSource(
       cricket::VideoCapturer* capturer,
-      const MediaConstraintsInterface* constraints);
+      const MediaConstraintsInterface* constraints) override;
 
-  virtual talk_base::scoped_refptr<VideoTrackInterface>
+  rtc::scoped_refptr<VideoTrackInterface>
       CreateVideoTrack(const std::string& id,
-                       VideoSourceInterface* video_source);
+                       VideoSourceInterface* video_source) override;
 
-  virtual talk_base::scoped_refptr<AudioTrackInterface>
+  rtc::scoped_refptr<AudioTrackInterface>
       CreateAudioTrack(const std::string& id,
-                       AudioSourceInterface* audio_source);
+                       AudioSourceInterface* audio_source) override;
 
-  virtual bool StartAecDump(talk_base::PlatformFile file);
+  bool StartAecDump(rtc::PlatformFile file) override;
 
   virtual cricket::ChannelManager* channel_manager();
-  virtual talk_base::Thread* signaling_thread();
-  virtual talk_base::Thread* worker_thread();
+  virtual rtc::Thread* signaling_thread();
+  virtual rtc::Thread* worker_thread();
   const Options& options() const { return options_; }
 
  protected:
   PeerConnectionFactory();
   PeerConnectionFactory(
-      talk_base::Thread* worker_thread,
-      talk_base::Thread* signaling_thread,
+      rtc::Thread* worker_thread,
+      rtc::Thread* signaling_thread,
       AudioDeviceModule* default_adm,
       cricket::WebRtcVideoEncoderFactory* video_encoder_factory,
       cricket::WebRtcVideoDecoderFactory* video_decoder_factory);
   virtual ~PeerConnectionFactory();
 
  private:
-  bool Initialize_s();
-  void Terminate_s();
-  talk_base::scoped_refptr<AudioSourceInterface> CreateAudioSource_s(
-      const MediaConstraintsInterface* constraints);
-  talk_base::scoped_refptr<VideoSourceInterface> CreateVideoSource_s(
-      cricket::VideoCapturer* capturer,
-      const MediaConstraintsInterface* constraints);
-
-  talk_base::scoped_refptr<PeerConnectionInterface> CreatePeerConnection_s(
-      const PeerConnectionInterface::RTCConfiguration& configuration,
-      const MediaConstraintsInterface* constraints,
-      PortAllocatorFactoryInterface* allocator_factory,
-      DTLSIdentityServiceInterface* dtls_identity_service,
-      PeerConnectionObserver* observer);
-
-  bool StartAecDump_s(talk_base::PlatformFile file);
-
-  // Implements talk_base::MessageHandler.
-  void OnMessage(talk_base::Message* msg);
-
   bool owns_ptrs_;
-  talk_base::Thread* signaling_thread_;
-  talk_base::Thread* worker_thread_;
+  bool wraps_current_thread_;
+  rtc::Thread* signaling_thread_;
+  rtc::Thread* worker_thread_;
   Options options_;
-  talk_base::scoped_refptr<PortAllocatorFactoryInterface> allocator_factory_;
+  rtc::scoped_refptr<PortAllocatorFactoryInterface> allocator_factory_;
   // External Audio device used for audio playback.
-  talk_base::scoped_refptr<AudioDeviceModule> default_adm_;
-  talk_base::scoped_ptr<cricket::ChannelManager> channel_manager_;
+  rtc::scoped_refptr<AudioDeviceModule> default_adm_;
+  rtc::scoped_ptr<cricket::ChannelManager> channel_manager_;
   // External Video encoder factory. This can be NULL if the client has not
   // injected any. In that case, video engine will use the internal SW encoder.
-  talk_base::scoped_ptr<cricket::WebRtcVideoEncoderFactory>
+  rtc::scoped_ptr<cricket::WebRtcVideoEncoderFactory>
       video_encoder_factory_;
   // External Video decoder factory. This can be NULL if the client has not
   // injected any. In that case, video engine will use the internal SW decoder.
-  talk_base::scoped_ptr<cricket::WebRtcVideoDecoderFactory>
+  rtc::scoped_ptr<cricket::WebRtcVideoDecoderFactory>
       video_decoder_factory_;
 };
 

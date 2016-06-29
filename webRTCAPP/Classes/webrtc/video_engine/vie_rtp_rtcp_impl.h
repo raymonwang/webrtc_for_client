@@ -41,7 +41,6 @@ class ViERTP_RTCPImpl
                              unsigned int CSRCs[kRtpCsrcSize]) const;
   virtual int SetRtxSendPayloadType(const int video_channel,
                                     const uint8_t payload_type);
-  virtual int SetPadWithRedundantPayloads(int video_channel, bool enable);
   virtual int SetRtxReceivePayloadType(const int video_channel,
                                        const uint8_t payload_type);
   virtual int SetStartSequenceNumber(const int video_channel,
@@ -100,10 +99,10 @@ class ViERTP_RTCPImpl
       int video_channel, unsigned int reserved_transmit_bitrate_bps);
   virtual int GetReceiveChannelRtcpStatistics(const int video_channel,
                                               RtcpStatistics& basic_stats,
-                                              int& rtt_ms) const;
+                                              int64_t& rtt_ms) const;
   virtual int GetSendChannelRtcpStatistics(const int video_channel,
                                            RtcpStatistics& basic_stats,
-                                           int& rtt_ms) const;
+                                           int64_t& rtt_ms) const;
   virtual int GetRtpStatistics(const int video_channel,
                                StreamDataCounters& sent,
                                StreamDataCounters& received) const;
@@ -125,7 +124,7 @@ class ViERTP_RTCPImpl
   virtual int GetReceiveBandwidthEstimatorStats(
       const int video_channel, ReceiveBandwidthEstimatorStats* output) const;
   virtual int GetPacerQueuingDelayMs(const int video_channel,
-                                     int* delay_ms) const;
+                                     int64_t* delay_ms) const;
   virtual int StartRTPDump(const int video_channel,
                            const char file_nameUTF8[1024],
                            RTPDirections direction);
@@ -133,9 +132,6 @@ class ViERTP_RTCPImpl
   virtual int RegisterRTPObserver(const int video_channel,
                                   ViERTPObserver& observer);
   virtual int DeregisterRTPObserver(const int video_channel);
-  virtual int RegisterRTCPObserver(const int video_channel,
-                                   ViERTCPObserver& observer);
-  virtual int DeregisterRTCPObserver(const int video_channel);
 
   virtual int RegisterSendChannelRtcpStatisticsCallback(
       int channel, RtcpStatisticsCallback* callback);

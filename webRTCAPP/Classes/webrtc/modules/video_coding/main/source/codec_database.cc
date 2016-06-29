@@ -19,10 +19,61 @@
 #ifdef VIDEOCODEC_VP8
 #include "webrtc/modules/video_coding/codecs/vp8/include/vp8.h"
 #endif
+#ifdef VIDEOCODEC_VP9
+#include "webrtc/modules/video_coding/codecs/vp9/include/vp9.h"
+#endif
 #include "webrtc/modules/video_coding/main/source/internal_defines.h"
 #include "webrtc/system_wrappers/interface/logging.h"
 
+namespace {
+const size_t kDefaultPayloadSize = 1440;
+}
+
 namespace webrtc {
+
+VideoCodecVP8 VideoEncoder::GetDefaultVp8Settings() {
+  VideoCodecVP8 vp8_settings;
+  memset(&vp8_settings, 0, sizeof(vp8_settings));
+
+  vp8_settings.resilience = kResilientStream;
+  vp8_settings.numberOfTemporalLayers = 1;
+  vp8_settings.denoisingOn = true;
+  vp8_settings.errorConcealmentOn = false;
+  vp8_settings.automaticResizeOn = false;
+  vp8_settings.frameDroppingOn = true;
+  vp8_settings.keyFrameInterval = 3000;
+
+  return vp8_settings;
+}
+
+VideoCodecVP9 VideoEncoder::GetDefaultVp9Settings() {
+  VideoCodecVP9 vp9_settings;
+  memset(&vp9_settings, 0, sizeof(vp9_settings));
+
+  vp9_settings.resilience = 1;
+  vp9_settings.numberOfTemporalLayers = 1;
+  vp9_settings.denoisingOn = false;
+  vp9_settings.frameDroppingOn = true;
+  vp9_settings.keyFrameInterval = 3000;
+  vp9_settings.adaptiveQpMode = true;
+
+  return vp9_settings;
+}
+
+VideoCodecH264 VideoEncoder::GetDefaultH264Settings() {
+  VideoCodecH264 h264_settings;
+  memset(&h264_settings, 0, sizeof(h264_settings));
+
+  h264_settings.profile = kProfileBase;
+  h264_settings.frameDroppingOn = true;
+  h264_settings.keyFrameInterval = 3000;
+  h264_settings.spsData = NULL;
+  h264_settings.spsLen = 0;
+  h264_settings.ppsData = NULL;
+  h264_settings.ppsLen = 0;
+
+  return h264_settings;
+}
 
 VCMDecoderMapItem::VCMDecoderMapItem(VideoCodec* settings,
                                      int number_of_cores,
@@ -84,6 +135,24 @@ bool VCMCodecDataBase::Codec(int list_id,
       settings->codecType = kVideoCodecVP8;
       // 96 to 127 dynamic payload types for video codecs.
       settings->plType = VCM_VP8_PAYLOAD_TYPE;
+      settings->startBitrate = kDefaultStartBitrateKbps;
+      settings->minBitrate = VCM_MIN_BITRATE;
+      settings->maxBitrate = 0;
+      settings->maxFramerate = VCM_DEFAULT_FRAME_RATE;
+      settings->width = VCM_DEFAULT_CODEC_WIDTH;
+      settings->height = VCM_DEFAULT_CODEC_HEIGHT;
+      settings->numberOfSimulcastStreams = 0;
+      settings->qpMax = 56;
+      settings->codecSpecific.VP8 = VideoEncoder::GetDefaultVp8Settings();
+      return true;
+    }
+#endif
+#ifdef VIDEOCODEC_VP9
+    case VCM_VP9_IDX: {
+      strncpy(settings->plName, "VP9", 4);
+      settings->codecType = kVideoCodecVP9;
+      // 96 to 127 dynamic payload types for video codecs.
+      settings->plType = VCM_VP9_PAYLOAD_TYPE;
       settings->startBitrate = 100;
       settings->minBitrate = VCM_MIN_BITRATE;
       settings->maxBitrate = 0;
@@ -92,13 +161,7 @@ bool VCMCodecDataBase::Codec(int list_id,
       settings->height = VCM_DEFAULT_CODEC_HEIGHT;
       settings->numberOfSimulcastStreams = 0;
       settings->qpMax = 56;
-      settings->codecSpecific.VP8.resilience = kResilientStream;
-      settings->codecSpecific.VP8.numberOfTemporalLayers = 1;
-      settings->codecSpecific.VP8.denoisingOn = true;
-      settings->codecSpecific.VP8.errorConcealmentOn = false;
-      settings->codecSpecific.VP8.automaticResizeOn = false;
-      settings->codecSpecific.VP8.frameDroppingOn = true;
-      settings->codecSpecific.VP8.keyFrameInterval = 3000;
+      settings->codecSpecific.VP9 = VideoEncoder::GetDefaultVp9Settings();
       return true;
     }
 #endif
@@ -108,7 +171,7 @@ bool VCMCodecDataBase::Codec(int list_id,
       settings->codecType = kVideoCodecH264;
       // 96 to 127 dynamic payload types for video codecs.
       settings->plType = VCM_H264_PAYLOAD_TYPE;
-      settings->startBitrate = 100;
+      settings->startBitrate = kDefaultStartBitrateKbps;
       settings->minBitrate = VCM_MIN_BITRATE;
       settings->maxBitrate = 0;
       settings->maxFramerate = VCM_DEFAULT_FRAME_RATE;
@@ -116,13 +179,7 @@ bool VCMCodecDataBase::Codec(int list_id,
       settings->height = VCM_DEFAULT_CODEC_HEIGHT;
       settings->numberOfSimulcastStreams = 0;
       settings->qpMax = 56;
-      settings->codecSpecific.H264.profile = kProfileBase;
-      settings->codecSpecific.H264.frameDroppingOn = true;
-      settings->codecSpecific.H264.keyFrameInterval = 3000;
-      settings->codecSpecific.H264.spsData = NULL;
-      settings->codecSpecific.H264.spsLen = 0;
-      settings->codecSpecific.H264.ppsData = NULL;
-      settings->codecSpecific.H264.ppsLen = 0;
+      settings->codecSpecific.H264 = VideoEncoder::GetDefaultH264Settings();
       return true;
     }
 #endif
@@ -174,12 +231,12 @@ void VCMCodecDataBase::ResetSender() {
 bool VCMCodecDataBase::SetSendCodec(
     const VideoCodec* send_codec,
     int number_of_cores,
-    int max_payload_size,
+    size_t max_payload_size,
     VCMEncodedFrameCallback* encoded_frame_callback) {
   if (!send_codec) {
     return false;
   }
-  if (max_payload_size <= 0) {
+  if (max_payload_size == 0) {
     max_payload_size = kDefaultPayloadSize;
   }
   if (number_of_cores <= 0) {
@@ -341,6 +398,13 @@ bool VCMCodecDataBase::RequiresEncoderReset(const VideoCodec& new_send_codec) {
       if (memcmp(&new_send_codec.codecSpecific.VP8,
                  &send_codec_.codecSpecific.VP8,
                  sizeof(new_send_codec.codecSpecific.VP8)) != 0) {
+        return true;
+      }
+      break;
+    case kVideoCodecVP9:
+      if (memcmp(&new_send_codec.codecSpecific.VP9,
+                 &send_codec_.codecSpecific.VP9,
+                 sizeof(new_send_codec.codecSpecific.VP9)) != 0) {
         return true;
       }
       break;
@@ -617,6 +681,10 @@ VCMGenericEncoder* VCMCodecDataBase::CreateEncoder(
     case kVideoCodecVP8:
       return new VCMGenericEncoder(*(VP8Encoder::Create()));
 #endif
+#ifdef VIDEOCODEC_VP9
+    case kVideoCodecVP9:
+      return new VCMGenericEncoder(*(VP9Encoder::Create()));
+#endif
 #ifdef VIDEOCODEC_I420
     case kVideoCodecI420:
       return new VCMGenericEncoder(*(new I420Encoder));
@@ -643,6 +711,10 @@ VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
 #ifdef VIDEOCODEC_VP8
     case kVideoCodecVP8:
       return new VCMGenericDecoder(*(VP8Decoder::Create()));
+#endif
+#ifdef VIDEOCODEC_VP9
+    case kVideoCodecVP9:
+      return new VCMGenericDecoder(*(VP9Decoder::Create()));
 #endif
 #ifdef VIDEOCODEC_I420
     case kVideoCodecI420:

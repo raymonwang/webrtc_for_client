@@ -14,15 +14,7 @@
 #include "webrtc/modules/interface/module.h"
 #include "webrtc/modules/video_capture/include/video_capture_defines.h"
 
-#ifdef ANDROID
-#include <jni.h>
-#endif
-
 namespace webrtc {
-
-#if defined(ANDROID)
-int32_t SetCaptureAndroidVM(JavaVM* javaVM, jobject context);
-#endif
 
 class VideoCaptureModule: public RefCountedModule {
  public:
@@ -95,7 +87,7 @@ class VideoCaptureModule: public RefCountedModule {
     //   - packetLoss   : Fraction lost
     //                    (loss rate in percent = 100 * packetLoss / 255).
     //   - rtt          : Round-trip time in milliseconds.
-    virtual int32_t SetChannelParameters(uint32_t packetLoss, int rtt) = 0;
+    virtual int32_t SetChannelParameters(uint32_t packetLoss, int64_t rtt) = 0;
 
     // Encode the next frame as key frame.
     virtual int32_t EncodeFrameType(const FrameType type) = 0;

@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -51,36 +51,47 @@
 #include "talk/app/webrtc/peerconnectioninterface.h"
 #include "talk/app/webrtc/videosourceinterface.h"
 #include "talk/app/webrtc/videotrack.h"
-#include "talk/base/logging.h"
-#include "talk/base/ssladapter.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/ssladapter.h"
 
 @interface RTCPeerConnectionFactory ()
 
-@property(nonatomic, assign) talk_base::scoped_refptr<
+@property(nonatomic, assign) rtc::scoped_refptr<
     webrtc::PeerConnectionFactoryInterface> nativeFactory;
 
 @end
 
-@implementation RTCPeerConnectionFactory
+@implementation RTCPeerConnectionFactory {
+  rtc::scoped_ptr<rtc::Thread> _signalingThread;
+  rtc::scoped_ptr<rtc::Thread> _workerThread;
+}
 
 @synthesize nativeFactory = _nativeFactory;
 
 + (void)initializeSSL {
-  BOOL initialized = talk_base::InitializeSSL();
+  BOOL initialized = rtc::InitializeSSL();
   NSAssert(initialized, @"Failed to initialize SSL library");
 }
 
 + (void)deinitializeSSL {
-  BOOL deinitialized = talk_base::CleanupSSL();
+  BOOL deinitialized = rtc::CleanupSSL();
   NSAssert(deinitialized, @"Failed to deinitialize SSL library");
 }
 
 - (id)init {
   if ((self = [super init])) {
-    _nativeFactory = webrtc::CreatePeerConnectionFactory();
+    _signalingThread.reset(new rtc::Thread());
+    BOOL result = _signalingThread->Start();
+    NSAssert(result, @"Failed to start signaling thread.");
+    _workerThread.reset(new rtc::Thread());
+    result = _workerThread->Start();
+    NSAssert(result, @"Failed to start worker thread.");
+    _nativeFactory = webrtc::CreatePeerConnectionFactory(
+        _signalingThread.get(), _workerThread.get(), NULL, NULL, NULL);
     NSAssert(_nativeFactory, @"Failed to initialize PeerConnectionFactory!");
     // Uncomment to get sensitive logs emitted (to stderr or logcat).
-    // talk_base::LogMessage::LogToDebug(talk_base::LS_SENSITIVE);
+    // rtc::LogMessage::LogToDebug(rtc::LS_SENSITIVE);
   }
   return self;
 }
@@ -102,7 +113,7 @@
 }
 
 - (RTCMediaStream*)mediaStreamWithLabel:(NSString*)label {
-  talk_base::scoped_refptr<webrtc::MediaStreamInterface> nativeMediaStream =
+  rtc::scoped_refptr<webrtc::MediaStreamInterface> nativeMediaStream =
       self.nativeFactory->CreateLocalMediaStream([label UTF8String]);
   return [[RTCMediaStream alloc] initWithMediaStream:nativeMediaStream];
 }
@@ -112,7 +123,7 @@
   if (!capturer) {
     return nil;
   }
-  talk_base::scoped_refptr<webrtc::VideoSourceInterface> source =
+  rtc::scoped_refptr<webrtc::VideoSourceInterface> source =
       self.nativeFactory->CreateVideoSource([capturer takeNativeCapturer],
                                             constraints.constraints);
   return [[RTCVideoSource alloc] initWithMediaSource:source];
@@ -120,14 +131,14 @@
 
 - (RTCVideoTrack*)videoTrackWithID:(NSString*)videoId
                             source:(RTCVideoSource*)source {
-  talk_base::scoped_refptr<webrtc::VideoTrackInterface> track =
+  rtc::scoped_refptr<webrtc::VideoTrackInterface> track =
       self.nativeFactory->CreateVideoTrack([videoId UTF8String],
                                            source.videoSource);
   return [[RTCVideoTrack alloc] initWithMediaTrack:track];
 }
 
 - (RTCAudioTrack*)audioTrackWithID:(NSString*)audioId {
-  talk_base::scoped_refptr<webrtc::AudioTrackInterface> track =
+  rtc::scoped_refptr<webrtc::AudioTrackInterface> track =
       self.nativeFactory->CreateAudioTrack([audioId UTF8String], NULL);
   return [[RTCAudioTrack alloc] initWithMediaTrack:track];
 }

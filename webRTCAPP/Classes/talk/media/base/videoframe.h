@@ -28,8 +28,8 @@
 #ifndef TALK_MEDIA_BASE_VIDEOFRAME_H_
 #define TALK_MEDIA_BASE_VIDEOFRAME_H_
 
-#include "talk/base/basictypes.h"
-#include "talk/base/stream.h"
+#include "webrtc/base/basictypes.h"
+#include "webrtc/base/stream.h"
 
 namespace cricket {
 
@@ -48,8 +48,8 @@ class VideoFrame {
   virtual ~VideoFrame() {}
 
   virtual bool InitToBlack(int w, int h, size_t pixel_width,
-                           size_t pixel_height, int64 elapsed_time,
-                           int64 time_stamp) = 0;
+                           size_t pixel_height, int64_t elapsed_time,
+                           int64_t time_stamp) = 0;
   // Creates a frame from a raw sample with FourCC |format| and size |w| x |h|.
   // |h| can be negative indicating a vertically flipped image.
   // |dw| is destination width; can be less than |w| if cropping is desired.
@@ -57,8 +57,8 @@ class VideoFrame {
   // Returns whether the function succeeded or failed.
   virtual bool Reset(uint32 fourcc, int w, int h, int dw, int dh, uint8 *sample,
                      size_t sample_size, size_t pixel_width,
-                     size_t pixel_height, int64 elapsed_time, int64 time_stamp,
-                     int rotation) = 0;
+                     size_t pixel_height, int64_t elapsed_time,
+                     int64_t time_stamp, int rotation) = 0;
 
   // Basic accessors.
   virtual size_t GetWidth() const = 0;
@@ -88,10 +88,10 @@ class VideoFrame {
   virtual size_t GetPixelWidth() const = 0;
   virtual size_t GetPixelHeight() const = 0;
 
-  virtual int64 GetElapsedTime() const = 0;
-  virtual int64 GetTimeStamp() const = 0;
-  virtual void SetElapsedTime(int64 elapsed_time) = 0;
-  virtual void SetTimeStamp(int64 time_stamp) = 0;
+  virtual int64_t GetElapsedTime() const = 0;
+  virtual int64_t GetTimeStamp() const = 0;
+  virtual void SetElapsedTime(int64_t elapsed_time) = 0;
+  virtual void SetTimeStamp(int64_t time_stamp) = 0;
 
   // Indicates the rotation angle in degrees.
   virtual int GetRotation() const = 0;
@@ -126,10 +126,10 @@ class VideoFrame {
   virtual void CopyToFrame(VideoFrame* target) const;
 
   // Writes the frame into the given stream and returns the StreamResult.
-  // See talk/base/stream.h for a description of StreamResult and error.
+  // See webrtc/base/stream.h for a description of StreamResult and error.
   // Error may be NULL. If a non-success value is returned from
   // StreamInterface::Write(), we immediately return with that value.
-  virtual talk_base::StreamResult Write(talk_base::StreamInterface *stream,
+  virtual rtc::StreamResult Write(rtc::StreamInterface *stream,
                                         int *error);
 
   // Converts the I420 data to RGB of a certain type such as ARGB and ABGR.
@@ -137,7 +137,7 @@ class VideoFrame {
   // not (like snprintf). Parameters size and stride_rgb are in units of bytes.
   // If there is insufficient space, nothing is written.
   virtual size_t ConvertToRgbBuffer(uint32 to_fourcc, uint8 *buffer,
-                                    size_t size, int stride_rgb) const = 0;
+                                    size_t size, int stride_rgb) const;
 
   // Writes the frame into the given planes, stretched to the given width and
   // height. The parameter "interpolate" controls whether to interpolate or just
@@ -186,8 +186,9 @@ class VideoFrame {
  protected:
   // Creates an empty frame.
   virtual VideoFrame *CreateEmptyFrame(int w, int h, size_t pixel_width,
-                                       size_t pixel_height, int64 elapsed_time,
-                                       int64 time_stamp) const = 0;
+                                       size_t pixel_height,
+                                       int64_t elapsed_time,
+                                       int64_t time_stamp) const = 0;
 };
 
 }  // namespace cricket

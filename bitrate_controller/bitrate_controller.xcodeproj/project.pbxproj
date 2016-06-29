@@ -12,6 +12,8 @@
 		43998B2B198631F8003C5793 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B26198631F8003C5793 /* bitrate_controller.h */; };
 		43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */; };
 		43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */; };
+		43C69BA91D2265E700427D35 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BA71D2265E700427D35 /* remb_suppressor.cc */; };
+		43C69BAA1D2265E700427D35 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BA81D2265E700427D35 /* remb_suppressor.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		43998B26198631F8003C5793 /* bitrate_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller.h; sourceTree = "<group>"; };
 		43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_side_bandwidth_estimation.cc; sourceTree = "<group>"; };
 		43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_side_bandwidth_estimation.h; sourceTree = "<group>"; };
+		43C69BA71D2265E700427D35 /* remb_suppressor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remb_suppressor.cc; sourceTree = "<group>"; };
+		43C69BA81D2265E700427D35 /* remb_suppressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remb_suppressor.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,10 +58,12 @@
 		43998B21198631F8003C5793 /* bitrate_controller */ = {
 			isa = PBXGroup;
 			children = (
+				43998B25198631F8003C5793 /* include */,
+				43C69BA71D2265E700427D35 /* remb_suppressor.cc */,
+				43C69BA81D2265E700427D35 /* remb_suppressor.h */,
 				43998B22198631F8003C5793 /* bitrate_controller.gypi */,
 				43998B23198631F8003C5793 /* bitrate_controller_impl.cc */,
 				43998B24198631F8003C5793 /* bitrate_controller_impl.h */,
-				43998B25198631F8003C5793 /* include */,
 				43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */,
 				43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */,
 			);
@@ -82,6 +88,7 @@
 			files = (
 				43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */,
 				43998B2B198631F8003C5793 /* bitrate_controller.h in Headers */,
+				43C69BAA1D2265E700427D35 /* remb_suppressor.h in Headers */,
 				43998B2A198631F8003C5793 /* bitrate_controller_impl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43998B29198631F8003C5793 /* bitrate_controller_impl.cc in Sources */,
+				43C69BA91D2265E700427D35 /* remb_suppressor.cc in Sources */,
 				43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

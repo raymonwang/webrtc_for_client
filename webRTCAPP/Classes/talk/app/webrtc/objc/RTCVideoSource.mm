@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2013, Google Inc.
+ * Copyright 2013 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,15 +29,15 @@
 #error "This file requires ARC support."
 #endif
 
-#import "RTCVideoSource+Internal.h"
 #import "RTCMediaSource+Internal.h"
+#import "RTCVideoSource+Internal.h"
 
 @implementation RTCVideoSource
 @end
 
 @implementation RTCVideoSource (Internal)
 
-- (talk_base::scoped_refptr<webrtc::VideoSourceInterface>)videoSource {
+- (rtc::scoped_refptr<webrtc::VideoSourceInterface>)videoSource {
   return static_cast<webrtc::VideoSourceInterface*>(self.mediaSource.get());
 }
 

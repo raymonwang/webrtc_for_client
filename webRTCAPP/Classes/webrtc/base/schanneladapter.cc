@@ -89,7 +89,7 @@ struct SChannelAdapter::SSLImpl {
 };
 
 SChannelAdapter::SChannelAdapter(AsyncSocket* socket)
-  : SSLAdapter(socket), state_(SSL_NONE),
+  : SSLAdapter(socket), state_(SSL_NONE), mode_(SSL_MODE_TLS),
     restartable_(false), signal_close_(false), message_pending_(false),
     impl_(new SSLImpl) {
 }
@@ -98,10 +98,20 @@ SChannelAdapter::~SChannelAdapter() {
   Cleanup();
 }
 
+void
+SChannelAdapter::SetMode(SSLMode mode) {
+  // SSL_MODE_DTLS isn't supported.
+  ASSERT(mode == SSL_MODE_TLS);
+  mode_ = mode;
+}
+
 int
 SChannelAdapter::StartSSL(const char* hostname, bool restartable) {
   if (state_ != SSL_NONE)
-    return ERROR_ALREADY_INITIALIZED;
+    return -1;
+
+  if (mode_ != SSL_MODE_TLS)
+    return -1;
 
   ssl_host_name_ = hostname;
   restartable_ = restartable;
@@ -132,8 +142,9 @@ SChannelAdapter::BeginSSL() {
   //sc_cred.dwMinimumCipherStrength = 128; // Note: use system default
   sc_cred.dwFlags = SCH_CRED_NO_DEFAULT_CREDS | SCH_CRED_AUTO_CRED_VALIDATION;
 
-  ret = AcquireCredentialsHandle(NULL, UNISP_NAME, SECPKG_CRED_OUTBOUND, NULL,
-                                 &sc_cred, NULL, NULL, &impl_->cred, NULL);
+  ret = AcquireCredentialsHandle(NULL, const_cast<LPTSTR>(UNISP_NAME),
+                                 SECPKG_CRED_OUTBOUND, NULL, &sc_cred, NULL,
+                                 NULL, &impl_->cred, NULL);
   if (ret != SEC_E_OK) {
     LOG(LS_ERROR) << "AcquireCredentialsHandle error: "
                   << ErrorName(ret, SECURITY_ERRORS);

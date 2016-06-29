@@ -278,11 +278,13 @@ int32_t AudioDeviceModuleImpl::CreatePlatformSpecificObjects()
         // AudioRecordJni provides hardware AEC and OpenSlesOutput low latency.
 #if defined(WEBRTC_ANDROID_OPENSLES)
         ptrAudioDevice = new AudioDeviceTemplate<OpenSlesInput, OpenSlesOutput>(Id());
-#else
-        ptrAudioDevice = new AudioDeviceTemplate<AudioRecordJni, AudioTrackJni>(Id());
-#endif
         WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
                      "Android OpenSLES Audio APIs will be utilized");
+#else
+        ptrAudioDevice = new AudioDeviceTemplate<AudioRecordJni, AudioTrackJni>(Id());
+        WEBRTC_TRACE(kTraceInfo, kTraceAudioDevice, _id,
+                     "Android JNI Audio APIs will be utilized");
+#endif
     }
 
     if (ptrAudioDevice != NULL)
@@ -478,7 +480,7 @@ int32_t AudioDeviceModuleImpl::ChangeUniqueId(const int32_t id)
 //  to call Process().
 // ----------------------------------------------------------------------------
 
-int32_t AudioDeviceModuleImpl::TimeUntilNextProcess()
+int64_t AudioDeviceModuleImpl::TimeUntilNextProcess()
 {
     uint32_t now = AudioDeviceUtility::GetTimeInMS();
     int32_t deltaProcess = kAdmMaxIdleTimeProcess - (now - _lastProcessTime);
@@ -1976,9 +1978,8 @@ int32_t AudioDeviceModuleImpl::GetLoudspeakerStatus(bool* enabled) const
 
 int32_t AudioDeviceModuleImpl::EnableBuiltInAEC(bool enable)
 {
-    CHECK_INITIALIZED();
-
-    return _ptrAudioDevice->EnableBuiltInAEC(enable);
+  CHECK_INITIALIZED();
+  return _ptrAudioDevice->EnableBuiltInAEC(enable);
 }
 
 bool AudioDeviceModuleImpl::BuiltInAECIsEnabled() const
@@ -1986,6 +1987,11 @@ bool AudioDeviceModuleImpl::BuiltInAECIsEnabled() const
     CHECK_INITIALIZED_BOOL();
 
     return _ptrAudioDevice->BuiltInAECIsEnabled();
+}
+
+bool AudioDeviceModuleImpl::BuiltInAECIsAvailable() const {
+  CHECK_INITIALIZED_BOOL();
+  return _ptrAudioDevice->BuiltInAECIsAvailable();
 }
 
 // ============================================================================

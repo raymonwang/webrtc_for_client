@@ -1,6 +1,6 @@
 /*
  * libjingle
- * Copyright 2012, Google Inc.
+ * Copyright 2012 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -28,16 +28,16 @@
 #ifndef TALK_APP_WEBRTC_DATACHANNEL_H_
 #define TALK_APP_WEBRTC_DATACHANNEL_H_
 
-#include <string>
 #include <deque>
+#include <string>
 
 #include "talk/app/webrtc/datachannelinterface.h"
 #include "talk/app/webrtc/proxy.h"
-#include "talk/base/messagehandler.h"
-#include "talk/base/scoped_ref_ptr.h"
-#include "talk/base/sigslot.h"
 #include "talk/media/base/mediachannel.h"
 #include "talk/session/media/channel.h"
+#include "webrtc/base/messagehandler.h"
+#include "webrtc/base/scoped_ref_ptr.h"
+#include "webrtc/base/sigslot.h"
 
 namespace webrtc {
 
@@ -47,16 +47,16 @@ class DataChannelProviderInterface {
  public:
   // Sends the data to the transport.
   virtual bool SendData(const cricket::SendDataParams& params,
-                        const talk_base::Buffer& payload,
+                        const rtc::Buffer& payload,
                         cricket::SendDataResult* result) = 0;
   // Connects to the transport signals.
   virtual bool ConnectDataChannel(DataChannel* data_channel) = 0;
   // Disconnects from the transport signals.
   virtual void DisconnectDataChannel(DataChannel* data_channel) = 0;
   // Adds the data channel SID to the transport for SCTP.
-  virtual void AddSctpDataStream(uint32 sid) = 0;
+  virtual void AddSctpDataStream(int sid) = 0;
   // Removes the data channel SID from the transport for SCTP.
-  virtual void RemoveSctpDataStream(uint32 sid) = 0;
+  virtual void RemoveSctpDataStream(int sid) = 0;
   // Returns true if the transport channel is ready to send data.
   virtual bool ReadyToSendData() const = 0;
 
@@ -100,9 +100,9 @@ struct InternalDataChannelInit : public DataChannelInit {
 //          SSRC==0.
 class DataChannel : public DataChannelInterface,
                     public sigslot::has_slots<>,
-                    public talk_base::MessageHandler {
+                    public rtc::MessageHandler {
  public:
-  static talk_base::scoped_refptr<DataChannel> Create(
+  static rtc::scoped_refptr<DataChannel> Create(
       DataChannelProviderInterface* provider,
       cricket::DataChannelType dct,
       const std::string& label,
@@ -128,8 +128,8 @@ class DataChannel : public DataChannelInterface,
   virtual DataState state() const { return state_; }
   virtual bool Send(const DataBuffer& buffer);
 
-  // talk_base::MessageHandler override.
-  virtual void OnMessage(talk_base::Message* msg);
+  // rtc::MessageHandler override.
+  virtual void OnMessage(rtc::Message* msg);
 
   // Called if the underlying data engine is closing.
   void OnDataEngineClose();
@@ -142,7 +142,7 @@ class DataChannel : public DataChannelInterface,
   // Sigslots from cricket::DataChannel
   void OnDataReceived(cricket::DataChannel* channel,
                       const cricket::ReceiveDataParams& params,
-                      const talk_base::Buffer& payload);
+                      const rtc::Buffer& payload);
 
   // The remote peer request that this channel should be closed.
   void RemotePeerRequestClose();
@@ -213,12 +213,12 @@ class DataChannel : public DataChannelInterface,
   void DeliverQueuedReceivedData();
 
   void SendQueuedDataMessages();
-  bool SendDataMessage(const DataBuffer& buffer);
+  bool SendDataMessage(const DataBuffer& buffer, bool queue_if_blocked);
   bool QueueSendDataMessage(const DataBuffer& buffer);
 
   void SendQueuedControlMessages();
-  void QueueControlMessage(const talk_base::Buffer& buffer);
-  bool SendControlMessage(const talk_base::Buffer& buffer);
+  void QueueControlMessage(const rtc::Buffer& buffer);
+  bool SendControlMessage(const rtc::Buffer& buffer);
 
   std::string label_;
   InternalDataChannelInit config_;
@@ -242,7 +242,7 @@ class DataChannel : public DataChannelInterface,
 
 class DataChannelFactory {
  public:
-  virtual talk_base::scoped_refptr<DataChannel> CreateDataChannel(
+  virtual rtc::scoped_refptr<DataChannel> CreateDataChannel(
       const std::string& label,
       const InternalDataChannelInit* config) = 0;
 

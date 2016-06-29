@@ -1251,7 +1251,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					_NSPR_BUILD_,
 					FORCE_PR_LOG,
 					XP_UNIX,
@@ -1264,8 +1264,8 @@
 					HAVE_SOCKLEN_T,
 					HAVE_STRERROR,
 					NSPR_STATIC,
-					NO_NSPR_10_SUPPORT,
 					_PR_POLL_AVAILABLE,
+					NO_NSPR_10_SUPPORT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1289,7 +1289,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					_NSPR_BUILD_,
 					FORCE_PR_LOG,
 					XP_UNIX,
@@ -1302,8 +1302,8 @@
 					HAVE_SOCKLEN_T,
 					HAVE_STRERROR,
 					NSPR_STATIC,
-					NO_NSPR_10_SUPPORT,
 					_PR_POLL_AVAILABLE,
+					NO_NSPR_10_SUPPORT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

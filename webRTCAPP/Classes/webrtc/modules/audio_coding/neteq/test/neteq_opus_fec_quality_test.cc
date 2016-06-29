@@ -21,8 +21,7 @@ namespace webrtc {
 namespace test {
 
 static const int kOpusBlockDurationMs = 20;
-static const int kOpusInputSamplingKhz = 48;
-static const int kOpusOutputSamplingKhz = 32;
+static const int kOpusSamplingKhz = 48;
 
 // Define switch for input file name.
 static bool ValidateInFilename(const char* flagname, const string& value) {
@@ -112,6 +111,8 @@ static const bool runtime_dummy =
 
 DEFINE_bool(fec, true, "Whether to enable FEC for encoding.");
 
+DEFINE_bool(dtx, true, "Whether to enable DTX for encoding.");
+
 class NetEqOpusFecQualityTest : public NetEqQualityTest {
  protected:
   NetEqOpusFecQualityTest();
@@ -124,12 +125,13 @@ class NetEqOpusFecQualityTest : public NetEqQualityTest {
   int channels_;
   int bit_rate_kbps_;
   bool fec_;
+  bool dtx_;
   int target_loss_rate_;
 };
 
 NetEqOpusFecQualityTest::NetEqOpusFecQualityTest()
-    : NetEqQualityTest(kOpusBlockDurationMs, kOpusInputSamplingKhz,
-                       kOpusOutputSamplingKhz,
+    : NetEqQualityTest(kOpusBlockDurationMs, kOpusSamplingKhz,
+                       kOpusSamplingKhz,
                        (FLAGS_channels == 1) ? kDecoderOpus : kDecoderOpus_2ch,
                        FLAGS_channels,
                        FLAGS_in_filename,
@@ -138,17 +140,23 @@ NetEqOpusFecQualityTest::NetEqOpusFecQualityTest()
       channels_(FLAGS_channels),
       bit_rate_kbps_(FLAGS_bit_rate_kbps),
       fec_(FLAGS_fec),
+      dtx_(FLAGS_dtx),
       target_loss_rate_(FLAGS_reported_loss_rate) {
 }
 
 void NetEqOpusFecQualityTest::SetUp() {
+  // If channels_ == 1, use Opus VOIP mode, otherwise, audio mode.
+  int app = channels_ == 1 ? 0 : 1;
   // Create encoder memory.
-  WebRtcOpus_EncoderCreate(&opus_encoder_, channels_);
+  WebRtcOpus_EncoderCreate(&opus_encoder_, channels_, app);
   ASSERT_TRUE(opus_encoder_ != NULL);
   // Set bitrate.
   EXPECT_EQ(0, WebRtcOpus_SetBitRate(opus_encoder_, bit_rate_kbps_ * 1000));
   if (fec_) {
     EXPECT_EQ(0, WebRtcOpus_EnableFec(opus_encoder_));
+  }
+  if (dtx_) {
+    EXPECT_EQ(0, WebRtcOpus_EnableDtx(opus_encoder_));
   }
   EXPECT_EQ(0, WebRtcOpus_SetPacketLossRate(opus_encoder_,
                                             target_loss_rate_));
@@ -167,7 +175,6 @@ int NetEqOpusFecQualityTest::EncodeBlock(int16_t* in_data,
   int value = WebRtcOpus_Encode(opus_encoder_, in_data,
                                 block_size_samples, max_bytes,
                                 payload);
-  EXPECT_GT(value, 0);
   return value;
 }
 

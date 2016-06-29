@@ -17,7 +17,6 @@
 #include "webrtc/base/md5digest.h"
 #include "webrtc/base/stringencode.h"
 #include "webrtc/modules/audio_coding/neteq/tools/audio_sink.h"
-#include "webrtc/system_wrappers/interface/compile_assert.h"
 #include "webrtc/typedefs.h"
 
 namespace webrtc {

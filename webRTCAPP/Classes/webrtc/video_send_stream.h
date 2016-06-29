@@ -41,11 +41,13 @@ class VideoSendStream {
     Stats()
         : input_frame_rate(0),
           encode_frame_rate(0),
+          media_bitrate_bps(0),
           suspended(false) {}
     int input_frame_rate;
     int encode_frame_rate;
+    int media_bitrate_bps;
     bool suspended;
-    std::map<uint32_t, StreamStats> substreams;
+    std::map<uint32_t, SsrcStats> substreams;
   };
 
   struct Config {
@@ -60,6 +62,7 @@ class VideoSendStream {
 
     struct EncoderSettings {
       EncoderSettings() : payload_type(-1), encoder(NULL) {}
+
       std::string ToString() const;
 
       std::string payload_name;
@@ -67,25 +70,18 @@ class VideoSendStream {
 
       // Uninitialized VideoEncoder instance to be used for encoding. Will be
       // initialized from inside the VideoSendStream.
-      webrtc::VideoEncoder* encoder;
+      VideoEncoder* encoder;
     } encoder_settings;
 
     static const size_t kDefaultMaxPacketSize = 1500 - 40;  // TCP over IPv4.
     struct Rtp {
-      Rtp()
-          : max_packet_size(kDefaultMaxPacketSize),
-            min_transmit_bitrate_bps(0) {}
+      Rtp() : max_packet_size(kDefaultMaxPacketSize) {}
       std::string ToString() const;
 
       std::vector<uint32_t> ssrcs;
 
       // Max RTP packet size delivered to send transport from VideoEngine.
       size_t max_packet_size;
-
-      // Padding will be used up to this bitrate regardless of the bitrate
-      // produced by the encoder. Padding above what's actually produced by the
-      // encoder helps maintaining a higher bitrate estimate.
-      int min_transmit_bitrate_bps;
 
       // RTP header extensions to use for this send stream.
       std::vector<RtpExtension> extensions;
@@ -99,17 +95,13 @@ class VideoSendStream {
       // Settings for RTP retransmission payload format, see RFC 4588 for
       // details.
       struct Rtx {
-        Rtx() : payload_type(-1), pad_with_redundant_payloads(false) {}
+        Rtx() : payload_type(-1) {}
         std::string ToString() const;
         // SSRCs to use for the RTX streams.
         std::vector<uint32_t> ssrcs;
 
         // Payload type to use for the RTX stream.
         int payload_type;
-        // Use redundant payloads to pad the bitrate. Instead of padding with
-        // randomized packets, we will preemptively retransmit media packets on
-        // the RTX stream.
-        bool pad_with_redundant_payloads;
       } rtx;
 
       // RTCP CNAME, see RFC 3550.
@@ -153,10 +145,9 @@ class VideoSendStream {
   // Set which streams to send. Must have at least as many SSRCs as configured
   // in the config. Encoder settings are passed on to the encoder instance along
   // with the VideoStream settings.
-  virtual bool ReconfigureVideoEncoder(const std::vector<VideoStream>& streams,
-                                       const void* encoder_settings) = 0;
+  virtual bool ReconfigureVideoEncoder(const VideoEncoderConfig& config) = 0;
 
-  virtual Stats GetStats() const = 0;
+  virtual Stats GetStats() = 0;
 
  protected:
   virtual ~VideoSendStream() {}

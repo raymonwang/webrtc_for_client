@@ -44,7 +44,10 @@ using namespace webrtc::videocapturemodule;
     _captureId = captureId;
     _captureSession = [[AVCaptureSession alloc] init];
 #if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
-    _captureSession.usesApplicationAudioSession = NO;
+    NSString* version = [[UIDevice currentDevice] systemVersion];
+    if ([version integerValue] >= 7) {
+      _captureSession.usesApplicationAudioSession = NO;
+    }
 #endif
     _captureChanging = NO;
     _captureChangingCondition = [[NSCondition alloc] init];
@@ -201,12 +204,31 @@ using namespace webrtc::videocapturemodule;
   [_captureSession setSessionPreset:captureQuality];
 
   // take care of capture framerate now
+  NSArray* sessionInputs = _captureSession.inputs;
+  AVCaptureDeviceInput* deviceInput = [sessionInputs count] > 0 ?
+      sessionInputs[0] : nil;
+  AVCaptureDevice* inputDevice = deviceInput.device;
+  if (inputDevice) {
+    AVCaptureDeviceFormat* activeFormat = inputDevice.activeFormat;
+    NSArray* supportedRanges = activeFormat.videoSupportedFrameRateRanges;
+    AVFrameRateRange* targetRange = [supportedRanges count] > 0 ?
+        supportedRanges[0] : nil;
+    // Find the largest supported framerate less than capability maxFPS.
+    for (AVFrameRateRange* range in supportedRanges) {
+      if (range.maxFrameRate <= _capability.maxFPS &&
+          targetRange.maxFrameRate <= range.maxFrameRate) {
+        targetRange = range;
+      }
+    }
+    if (targetRange && [inputDevice lockForConfiguration:NULL]) {
+      inputDevice.activeVideoMinFrameDuration = targetRange.minFrameDuration;
+      inputDevice.activeVideoMaxFrameDuration = targetRange.minFrameDuration;
+      [inputDevice unlockForConfiguration];
+    }
+  }
+
   _connection = [currentOutput connectionWithMediaType:AVMediaTypeVideo];
   [self setRelativeVideoOrientation];
-  CMTime cm_time = {1, _capability.maxFPS, kCMTimeFlags_Valid, 0};
-
-  [_connection setVideoMinFrameDuration:cm_time];
-  [_connection setVideoMaxFrameDuration:cm_time];
 
   // finished configuring, commit settings to AVCaptureSession.
   [_captureSession commitConfiguration];
@@ -346,13 +368,14 @@ using namespace webrtc::videocapturemodule;
 
   uint8_t* baseAddress =
       (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(videoFrame, kYPlaneIndex);
-  int yPlaneBytesPerRow =
+  size_t yPlaneBytesPerRow =
       CVPixelBufferGetBytesPerRowOfPlane(videoFrame, kYPlaneIndex);
-  int yPlaneHeight = CVPixelBufferGetHeightOfPlane(videoFrame, kYPlaneIndex);
-  int uvPlaneBytesPerRow =
+  size_t yPlaneHeight = CVPixelBufferGetHeightOfPlane(videoFrame, kYPlaneIndex);
+  size_t uvPlaneBytesPerRow =
       CVPixelBufferGetBytesPerRowOfPlane(videoFrame, kUVPlaneIndex);
-  int uvPlaneHeight = CVPixelBufferGetHeightOfPlane(videoFrame, kUVPlaneIndex);
-  int frameSize =
+  size_t uvPlaneHeight =
+      CVPixelBufferGetHeightOfPlane(videoFrame, kUVPlaneIndex);
+  size_t frameSize =
       yPlaneBytesPerRow * yPlaneHeight + uvPlaneBytesPerRow * uvPlaneHeight;
 
   VideoCaptureCapability tempCaptureCapability;

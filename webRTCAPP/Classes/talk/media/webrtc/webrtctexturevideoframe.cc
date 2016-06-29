@@ -27,9 +27,9 @@
 
 #include "talk/media/webrtc/webrtctexturevideoframe.h"
 
-#include "talk/base/common.h"
-#include "talk/base/logging.h"
-#include "talk/base/stream.h"
+#include "webrtc/base/common.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/base/stream.h"
 
 #define UNIMPLEMENTED \
   LOG(LS_ERROR) << "Call to unimplemented function "<< __FUNCTION__; \
@@ -38,16 +38,16 @@
 namespace cricket {
 
 WebRtcTextureVideoFrame::WebRtcTextureVideoFrame(
-    webrtc::NativeHandle* handle, int width, int height, int64 elapsed_time,
-    int64 time_stamp)
+    webrtc::NativeHandle* handle, int width, int height, int64_t elapsed_time,
+    int64_t time_stamp)
     : handle_(handle), width_(width), height_(height),
       elapsed_time_(elapsed_time), time_stamp_(time_stamp) {}
 
 WebRtcTextureVideoFrame::~WebRtcTextureVideoFrame() {}
 
 bool WebRtcTextureVideoFrame::InitToBlack(
-    int w, int h, size_t pixel_width, size_t pixel_height, int64 elapsed_time,
-    int64 time_stamp) {
+    int w, int h, size_t pixel_width, size_t pixel_height, int64_t elapsed_time,
+    int64_t time_stamp) {
   UNIMPLEMENTED;
   return false;
 }
@@ -55,7 +55,7 @@ bool WebRtcTextureVideoFrame::InitToBlack(
 bool WebRtcTextureVideoFrame::Reset(
     uint32 fourcc, int w, int h, int dw, int dh, uint8* sample,
     size_t sample_size, size_t pixel_width, size_t pixel_height,
-    int64 elapsed_time, int64 time_stamp, int rotation) {
+    int64_t elapsed_time, int64_t time_stamp, int rotation) {
   UNIMPLEMENTED;
   return false;
 }
@@ -137,10 +137,10 @@ void WebRtcTextureVideoFrame::CopyToFrame(VideoFrame* dst) const {
   UNIMPLEMENTED;
 }
 
-talk_base::StreamResult WebRtcTextureVideoFrame::Write(
-    talk_base::StreamInterface* stream, int* error) {
+rtc::StreamResult WebRtcTextureVideoFrame::Write(
+    rtc::StreamInterface* stream, int* error) {
   UNIMPLEMENTED;
-  return talk_base::SR_ERROR;
+  return rtc::SR_ERROR;
 }
 void WebRtcTextureVideoFrame::StretchToPlanes(
     uint8* dst_y, uint8* dst_u, uint8* dst_v, int32 dst_pitch_y,
@@ -174,8 +174,8 @@ bool WebRtcTextureVideoFrame::SetToBlack() {
 }
 
 VideoFrame* WebRtcTextureVideoFrame::CreateEmptyFrame(
-    int w, int h, size_t pixel_width, size_t pixel_height, int64 elapsed_time,
-    int64 time_stamp) const {
+    int w, int h, size_t pixel_width, size_t pixel_height, int64_t elapsed_time,
+    int64_t time_stamp) const {
   UNIMPLEMENTED;
   return NULL;
 }
