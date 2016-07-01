@@ -374,10 +374,13 @@
 		43095AF11994E90E00012AD8 /* audio_processing */ = {
 			isa = PBXGroup;
 			children = (
+				43095B331994E90E00012AD8 /* include */,
 				43C69B591D225FB500427D35 /* transient */,
 				43095AF21994E90E00012AD8 /* aec */,
 				43095B081994E90E00012AD8 /* aecm */,
 				43095B151994E90E00012AD8 /* agc */,
+				43095B3B1994E90E00012AD8 /* ns */,
+				43095B671994E90E00012AD8 /* utility */,
 				43C69B511D225F5A00427D35 /* channel_buffer.cc */,
 				43C69B521D225F5A00427D35 /* channel_buffer.h */,
 				43C69B531D225F5A00427D35 /* splitting_filter.cc */,
@@ -399,12 +402,10 @@
 				43095B2E1994E90E00012AD8 /* gain_control_impl.h */,
 				43095B311994E90E00012AD8 /* high_pass_filter_impl.cc */,
 				43095B321994E90E00012AD8 /* high_pass_filter_impl.h */,
-				43095B331994E90E00012AD8 /* include */,
 				43095B361994E90E00012AD8 /* level_estimator_impl.cc */,
 				43095B371994E90E00012AD8 /* level_estimator_impl.h */,
 				43095B391994E90E00012AD8 /* noise_suppression_impl.cc */,
 				43095B3A1994E90E00012AD8 /* noise_suppression_impl.h */,
-				43095B3B1994E90E00012AD8 /* ns */,
 				43095B4E1994E90E00012AD8 /* OWNERS */,
 				43095B4F1994E90E00012AD8 /* processing_component.cc */,
 				43095B501994E90E00012AD8 /* processing_component.h */,
@@ -412,7 +413,6 @@
 				43095B521994E90E00012AD8 /* rms_level.h */,
 				43095B651994E90E00012AD8 /* typing_detection.cc */,
 				43095B661994E90E00012AD8 /* typing_detection.h */,
-				43095B671994E90E00012AD8 /* utility */,
 				43095B741994E90E00012AD8 /* voice_detection_impl.cc */,
 				43095B751994E90E00012AD8 /* voice_detection_impl.h */,
 			);
