@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D8E371986217B009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8E361986217B009E763A /* Foundation.framework */; };
 		430D8E6E19862197009E763A /* g711.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E6719862197009E763A /* g711.c */; };
 		430D8E6F19862197009E763A /* g711_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E6A19862197009E763A /* g711_interface.c */; };
+		43E04B4A1D26254200B39549 /* g711.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E6719862197009E763A /* g711.c */; };
+		43E04B4B1D26254200B39549 /* g711_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E6A19862197009E763A /* g711_interface.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -22,14 +23,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04B4D1D26254200B39549 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		430D8E331986217B009E763A /* libG711.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libG711.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8E361986217B009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		430D8E3A1986217B009E763A /* G711-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "G711-Prefix.pch"; sourceTree = "<group>"; };
-		430D8E441986217B009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		430D8E471986217B009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		430D8E6619862197009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D8E6719862197009E763A /* g711.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g711.c; sourceTree = "<group>"; };
 		430D8E6819862197009E763A /* g711.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = g711.gypi; sourceTree = "<group>"; };
@@ -37,6 +43,7 @@
 		430D8E6A19862197009E763A /* g711_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g711_interface.c; sourceTree = "<group>"; };
 		430D8E6C19862197009E763A /* g711_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g711_interface.h; sourceTree = "<group>"; };
 		430D8E6D19862197009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43E04B511D26254200B39549 /* libG711_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libG711_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +51,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D8E371986217B009E763A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04B4C1D26254200B39549 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				430D8E381986217B009E763A /* G711 */,
-				430D8E351986217B009E763A /* Frameworks */,
 				430D8E341986217B009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,35 +76,17 @@
 			isa = PBXGroup;
 			children = (
 				430D8E331986217B009E763A /* libG711.a */,
+				43E04B511D26254200B39549 /* libG711_osx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		430D8E351986217B009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				430D8E361986217B009E763A /* Foundation.framework */,
-				430D8E441986217B009E763A /* XCTest.framework */,
-				430D8E471986217B009E763A /* UIKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		430D8E381986217B009E763A /* G711 */ = {
 			isa = PBXGroup;
 			children = (
 				430D8E6519862197009E763A /* g711 */,
-				430D8E391986217B009E763A /* Supporting Files */,
 			);
 			path = G711;
-			sourceTree = "<group>";
-		};
-		430D8E391986217B009E763A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				430D8E3A1986217B009E763A /* G711-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		430D8E6519862197009E763A /* g711 */ = {
@@ -138,6 +132,23 @@
 			productReference = 430D8E331986217B009E763A /* libG711.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		43E04B481D26254200B39549 /* G711_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04B4E1D26254200B39549 /* Build configuration list for PBXNativeTarget "G711_osx" */;
+			buildPhases = (
+				43E04B491D26254200B39549 /* Sources */,
+				43E04B4C1D26254200B39549 /* Frameworks */,
+				43E04B4D1D26254200B39549 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = G711_osx;
+			productName = G711;
+			productReference = 43E04B511D26254200B39549 /* libG711_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -160,6 +171,7 @@
 			projectRoot = "";
 			targets = (
 				430D8E321986217B009E763A /* G711 */,
+				43E04B481D26254200B39549 /* G711_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -171,6 +183,15 @@
 			files = (
 				430D8E6E19862197009E763A /* g711.c in Sources */,
 				430D8E6F19862197009E763A /* g711_interface.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04B491D26254200B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04B4A1D26254200B39549 /* g711.c in Sources */,
+				43E04B4B1D26254200B39549 /* g711_interface.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,8 +272,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/G711.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "G711/G711-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -273,8 +294,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/G711.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "G711/G711-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -286,6 +307,52 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		43E04B4F1D26254200B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/G711.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04B501D26254200B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/G711.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -308,6 +375,15 @@
 			buildConfigurations = (
 				430D8E571986217B009E763A /* Debug */,
 				430D8E581986217B009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04B4E1D26254200B39549 /* Build configuration list for PBXNativeTarget "G711_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04B4F1D26254200B39549 /* Debug */,
+				43E04B501D26254200B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

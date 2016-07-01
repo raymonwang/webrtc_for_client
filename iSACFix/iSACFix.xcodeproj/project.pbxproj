@@ -95,6 +95,9 @@
 		43C696F11D222D2B00427D35 /* audio_encoder_isacfix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696EE1D222D2B00427D35 /* audio_encoder_isacfix.cc */; };
 		43C696F21D222D2B00427D35 /* pitch_estimator_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C696EF1D222D2B00427D35 /* pitch_estimator_c.c */; };
 		43C696F31D222D2B00427D35 /* transform_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C696F01D222D2B00427D35 /* transform_tables.c */; };
+		43E04C6B1D26294B00B39549 /* pitch_estimator_c.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C696EF1D222D2B00427D35 /* pitch_estimator_c.c */; };
+		43E04C6C1D26296A00B39549 /* transform_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C696F01D222D2B00427D35 /* transform_tables.c */; };
+		43E04DC31D262EAA00B39549 /* audio_encoder_isacfix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696EE1D222D2B00427D35 /* audio_encoder_isacfix.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,7 +155,7 @@
 		43095A491994DE5900012AD8 /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
 		43095A4A1994DE5900012AD8 /* transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform.c; sourceTree = "<group>"; };
 		43095A4B1994DE5900012AD8 /* transform_neon.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = transform_neon.S; sourceTree = "<group>"; };
-		432B2DC319CA853F001267A7 /* libiSACFix_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSACFix_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		432B2DC319CA853F001267A7 /* libiSACFix_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSACFix_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C696EE1D222D2B00427D35 /* audio_encoder_isacfix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_isacfix.cc; sourceTree = "<group>"; };
 		43C696EF1D222D2B00427D35 /* pitch_estimator_c.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pitch_estimator_c.c; sourceTree = "<group>"; };
 		43C696F01D222D2B00427D35 /* transform_tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform_tables.c; sourceTree = "<group>"; };
@@ -188,7 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				430959D11994DE3D00012AD8 /* libiSACFix.a */,
-				432B2DC319CA853F001267A7 /* libiSACFix_sim.a */,
+				432B2DC319CA853F001267A7 /* libiSACFix_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -342,9 +345,9 @@
 			productReference = 430959D11994DE3D00012AD8 /* libiSACFix.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		432B2D8A19CA853F001267A7 /* iSACFix_sim */ = {
+		432B2D8A19CA853F001267A7 /* iSACFix_osx */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 432B2DC019CA853F001267A7 /* Build configuration list for PBXNativeTarget "iSACFix_sim" */;
+			buildConfigurationList = 432B2DC019CA853F001267A7 /* Build configuration list for PBXNativeTarget "iSACFix_osx" */;
 			buildPhases = (
 				432B2D8B19CA853F001267A7 /* Sources */,
 				432B2DAE19CA853F001267A7 /* Frameworks */,
@@ -354,9 +357,9 @@
 			);
 			dependencies = (
 			);
-			name = iSACFix_sim;
+			name = iSACFix_osx;
 			productName = iSACFix;
-			productReference = 432B2DC319CA853F001267A7 /* libiSACFix_sim.a */;
+			productReference = 432B2DC319CA853F001267A7 /* libiSACFix_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -381,7 +384,7 @@
 			projectRoot = "";
 			targets = (
 				430959D01994DE3D00012AD8 /* iSACFix */,
-				432B2D8A19CA853F001267A7 /* iSACFix_sim */,
+				432B2D8A19CA853F001267A7 /* iSACFix_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -437,8 +440,10 @@
 				432B2D9419CA853F001267A7 /* decode_bwe.c in Sources */,
 				432B2D9619CA853F001267A7 /* pitch_filter.c in Sources */,
 				432B2D9719CA853F001267A7 /* filterbanks.c in Sources */,
+				43E04C6C1D26296A00B39549 /* transform_tables.c in Sources */,
 				432B2D9819CA853F001267A7 /* filters.c in Sources */,
 				432B2D9A19CA853F001267A7 /* entropy_coding.c in Sources */,
+				43E04C6B1D26294B00B39549 /* pitch_estimator_c.c in Sources */,
 				432B2D9B19CA853F001267A7 /* decode_plc.c in Sources */,
 				432B2D9D19CA853F001267A7 /* pitch_gain_tables.c in Sources */,
 				432B2D9E19CA853F001267A7 /* arith_routines_logist.c in Sources */,
@@ -449,6 +454,7 @@
 				432B2DA419CA853F001267A7 /* lattice_c.c in Sources */,
 				432B2DA619CA853F001267A7 /* spectrum_ar_model_tables.c in Sources */,
 				432B2DA719CA853F001267A7 /* arith_routines_hist.c in Sources */,
+				43E04DC31D262EAA00B39549 /* audio_encoder_isacfix.cc in Sources */,
 				432B2DA819CA853F001267A7 /* encode.c in Sources */,
 				432B2DA919CA853F001267A7 /* transform.c in Sources */,
 				432B2DAB19CA853F001267A7 /* isacfix.c in Sources */,
@@ -599,10 +605,11 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = iSACFix_sim;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				PRODUCT_NAME = iSACFix_osx;
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -626,9 +633,10 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MACOSX_DEPLOYMENT_TARGET = "";
-				PRODUCT_NAME = iSACFix_sim;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = iSACFix_osx;
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -653,7 +661,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		432B2DC019CA853F001267A7 /* Build configuration list for PBXNativeTarget "iSACFix_sim" */ = {
+		432B2DC019CA853F001267A7 /* Build configuration list for PBXNativeTarget "iSACFix_osx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				432B2DC119CA853F001267A7 /* Debug */,

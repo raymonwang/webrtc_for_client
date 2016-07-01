@@ -7,7 +7,12 @@
 		<key>G722.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>18</integer>
+			<integer>22</integer>
+		</dict>
+		<key>G722_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>30</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>430D8E89198621E7009E763A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43E04B7A1D2625A900B39549</key>
 		<dict>
 			<key>primary</key>
 			<true/>

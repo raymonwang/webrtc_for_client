@@ -15,6 +15,14 @@
 		43998B581986328F003C5793 /* media_file_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B501986328F003C5793 /* media_file_impl.h */; };
 		43998B591986328F003C5793 /* media_file_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B511986328F003C5793 /* media_file_utility.cc */; };
 		43998B5A1986328F003C5793 /* media_file_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B521986328F003C5793 /* media_file_utility.h */; };
+		43E04ECF1D263F0F00B39549 /* media_file_utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B511986328F003C5793 /* media_file_utility.cc */; };
+		43E04ED01D263F0F00B39549 /* media_file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B4F1986328F003C5793 /* media_file_impl.cc */; };
+		43E04ED11D263F0F00B39549 /* avi_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B4C1986328F003C5793 /* avi_file.cc */; };
+		43E04ED41D263F0F00B39549 /* media_file_utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B521986328F003C5793 /* media_file_utility.h */; };
+		43E04ED51D263F0F00B39549 /* media_file_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B491986328F003C5793 /* media_file_defines.h */; };
+		43E04ED61D263F0F00B39549 /* avi_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B4D1986328F003C5793 /* avi_file.h */; };
+		43E04ED71D263F0F00B39549 /* media_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B481986328F003C5793 /* media_file.h */; };
+		43E04ED81D263F0F00B39549 /* media_file_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B501986328F003C5793 /* media_file_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,10 +37,18 @@
 		43998B501986328F003C5793 /* media_file_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_impl.h; sourceTree = "<group>"; };
 		43998B511986328F003C5793 /* media_file_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media_file_utility.cc; sourceTree = "<group>"; };
 		43998B521986328F003C5793 /* media_file_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_utility.h; sourceTree = "<group>"; };
+		43E04EDC1D263F0F00B39549 /* libmedia_file_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmedia_file_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		43998B361986327B003C5793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04ED21D263F0F00B39549 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -54,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				43998B391986327B003C5793 /* libmedia_file.a */,
+				43E04EDC1D263F0F00B39549 /* libmedia_file_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,6 +124,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04ED31D263F0F00B39549 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04ED41D263F0F00B39549 /* media_file_utility.h in Headers */,
+				43E04ED51D263F0F00B39549 /* media_file_defines.h in Headers */,
+				43E04ED61D263F0F00B39549 /* avi_file.h in Headers */,
+				43E04ED71D263F0F00B39549 /* media_file.h in Headers */,
+				43E04ED81D263F0F00B39549 /* media_file_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -125,6 +154,23 @@
 			name = media_file;
 			productName = media_file;
 			productReference = 43998B391986327B003C5793 /* libmedia_file.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43E04ECD1D263F0F00B39549 /* media_file_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04ED91D263F0F00B39549 /* Build configuration list for PBXNativeTarget "media_file_osx" */;
+			buildPhases = (
+				43E04ECE1D263F0F00B39549 /* Sources */,
+				43E04ED21D263F0F00B39549 /* Frameworks */,
+				43E04ED31D263F0F00B39549 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = media_file_osx;
+			productName = media_file;
+			productReference = 43E04EDC1D263F0F00B39549 /* libmedia_file_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -149,6 +195,7 @@
 			projectRoot = "";
 			targets = (
 				43998B381986327B003C5793 /* media_file */,
+				43E04ECD1D263F0F00B39549 /* media_file_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -161,6 +208,16 @@
 				43998B591986328F003C5793 /* media_file_utility.cc in Sources */,
 				43998B571986328F003C5793 /* media_file_impl.cc in Sources */,
 				43998B551986328F003C5793 /* avi_file.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04ECE1D263F0F00B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04ECF1D263F0F00B39549 /* media_file_utility.cc in Sources */,
+				43E04ED01D263F0F00B39549 /* media_file_impl.cc in Sources */,
+				43E04ED11D263F0F00B39549 /* avi_file.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +327,43 @@
 			};
 			name = Release;
 		};
+		43E04EDA1D263F0F00B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04EDB1D263F0F00B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -287,6 +381,15 @@
 			buildConfigurations = (
 				43998B3E1986327B003C5793 /* Debug */,
 				43998B3F1986327B003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04ED91D263F0F00B39549 /* Build configuration list for PBXNativeTarget "media_file_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04EDA1D263F0F00B39549 /* Debug */,
+				43E04EDB1D263F0F00B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -14,6 +14,13 @@
 		43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */; };
 		43C69BA91D2265E700427D35 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BA71D2265E700427D35 /* remb_suppressor.cc */; };
 		43C69BAA1D2265E700427D35 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BA81D2265E700427D35 /* remb_suppressor.h */; };
+		43E04F271D263FB500B39549 /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B23198631F8003C5793 /* bitrate_controller_impl.cc */; };
+		43E04F281D263FB500B39549 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BA71D2265E700427D35 /* remb_suppressor.cc */; };
+		43E04F291D263FB500B39549 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */; };
+		43E04F2C1D263FB500B39549 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */; };
+		43E04F2D1D263FB500B39549 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B26198631F8003C5793 /* bitrate_controller.h */; };
+		43E04F2E1D263FB500B39549 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BA81D2265E700427D35 /* remb_suppressor.h */; };
+		43E04F2F1D263FB500B39549 /* bitrate_controller_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B24198631F8003C5793 /* bitrate_controller_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +33,18 @@
 		43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_side_bandwidth_estimation.h; sourceTree = "<group>"; };
 		43C69BA71D2265E700427D35 /* remb_suppressor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remb_suppressor.cc; sourceTree = "<group>"; };
 		43C69BA81D2265E700427D35 /* remb_suppressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remb_suppressor.h; sourceTree = "<group>"; };
+		43E04F331D263FB500B39549 /* libbitrate_controller_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		43998B11198631D9003C5793 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04F2A1D263FB500B39549 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -51,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				43998B14198631D9003C5793 /* libbitrate_controller.a */,
+				43E04F331D263FB500B39549 /* libbitrate_controller_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,6 +109,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04F2B1D263FB500B39549 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04F2C1D263FB500B39549 /* send_side_bandwidth_estimation.h in Headers */,
+				43E04F2D1D263FB500B39549 /* bitrate_controller.h in Headers */,
+				43E04F2E1D263FB500B39549 /* remb_suppressor.h in Headers */,
+				43E04F2F1D263FB500B39549 /* bitrate_controller_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -111,6 +138,23 @@
 			name = bitrate_controller;
 			productName = bitrate_controller;
 			productReference = 43998B14198631D9003C5793 /* libbitrate_controller.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43E04F251D263FB500B39549 /* bitrate_controller_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04F301D263FB500B39549 /* Build configuration list for PBXNativeTarget "bitrate_controller_osx" */;
+			buildPhases = (
+				43E04F261D263FB500B39549 /* Sources */,
+				43E04F2A1D263FB500B39549 /* Frameworks */,
+				43E04F2B1D263FB500B39549 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = bitrate_controller_osx;
+			productName = bitrate_controller;
+			productReference = 43E04F331D263FB500B39549 /* libbitrate_controller_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -135,6 +179,7 @@
 			projectRoot = "";
 			targets = (
 				43998B13198631D9003C5793 /* bitrate_controller */,
+				43E04F251D263FB500B39549 /* bitrate_controller_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -147,6 +192,16 @@
 				43998B29198631F8003C5793 /* bitrate_controller_impl.cc in Sources */,
 				43C69BA91D2265E700427D35 /* remb_suppressor.cc in Sources */,
 				43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04F261D263FB500B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04F271D263FB500B39549 /* bitrate_controller_impl.cc in Sources */,
+				43E04F281D263FB500B39549 /* remb_suppressor.cc in Sources */,
+				43E04F291D263FB500B39549 /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +327,59 @@
 			};
 			name = Release;
 		};
+		43E04F311D263FB500B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04F321D263FB500B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -289,6 +397,15 @@
 			buildConfigurations = (
 				43998B19198631D9003C5793 /* Debug */,
 				43998B1A198631D9003C5793 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04F301D263FB500B39549 /* Build configuration list for PBXNativeTarget "bitrate_controller_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04F311D263FB500B39549 /* Debug */,
+				43E04F321D263FB500B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

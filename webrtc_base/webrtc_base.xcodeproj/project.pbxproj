@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D83281985E421009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D83271985E421009E763A /* Foundation.framework */; };
 		430D84641985E4AC009E763A /* asyncfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83611985E4AB009E763A /* asyncfile.cc */; };
 		430D84651985E4AC009E763A /* asynchttprequest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83631985E4AB009E763A /* asynchttprequest.cc */; };
 		430D84661985E4AC009E763A /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83661985E4AB009E763A /* asyncinvoker.cc */; };
@@ -180,9 +179,10 @@
 		43C67D6A1D211C8A00427D35 /* ratelimiter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83F81985E4AB009E763A /* ratelimiter.cc */; };
 		43C67D6B1D211C8A00427D35 /* testclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D843E1985E4AB009E763A /* testclient.cc */; };
 		43C67D6C1D211C8A00427D35 /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83661985E4AB009E763A /* asyncinvoker.cc */; };
-		43C67D6E1D211C8A00427D35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D83271985E421009E763A /* Foundation.framework */; };
 		43C695911D2148FE00427D35 /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C695901D2148FE00427D35 /* thread.mm */; };
 		43C69C941D228EDA00427D35 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C921D228EDA00427D35 /* platform_file.cc */; };
+		43E03CC61D24D26900B39549 /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C695901D2148FE00427D35 /* thread.mm */; };
+		43E04CBC1D262B1A00B39549 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C921D228EDA00427D35 /* platform_file.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -208,10 +208,6 @@
 
 /* Begin PBXFileReference section */
 		430D83241985E421009E763A /* libwebrtc_base.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D83271985E421009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		430D832B1985E421009E763A /* webrtc_base-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "webrtc_base-Prefix.pch"; sourceTree = "<group>"; };
-		430D83351985E422009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		430D83381985E422009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		430D83611985E4AB009E763A /* asyncfile.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = asyncfile.cc; sourceTree = "<group>"; };
 		430D83621985E4AB009E763A /* asyncfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncfile.h; sourceTree = "<group>"; };
 		430D83631985E4AB009E763A /* asynchttprequest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = asynchttprequest.cc; sourceTree = "<group>"; };
@@ -262,10 +258,6 @@
 		430D83911985E4AB009E763A /* event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
 		430D83921985E4AB009E763A /* exp_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exp_filter.cc; sourceTree = "<group>"; };
 		430D83931985E4AB009E763A /* exp_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exp_filter.h; sourceTree = "<group>"; };
-		430D83941985E4AB009E763A /* fakecpumonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakecpumonitor.h; sourceTree = "<group>"; };
-		430D83951985E4AB009E763A /* fakenetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakenetwork.h; sourceTree = "<group>"; };
-		430D83961985E4AB009E763A /* fakesslidentity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakesslidentity.h; sourceTree = "<group>"; };
-		430D83971985E4AB009E763A /* faketaskrunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = faketaskrunner.h; sourceTree = "<group>"; };
 		430D83981985E4AB009E763A /* filelock.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filelock.cc; sourceTree = "<group>"; };
 		430D83991985E4AB009E763A /* filelock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filelock.h; sourceTree = "<group>"; };
 		430D839A1985E4AB009E763A /* fileutils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileutils.cc; sourceTree = "<group>"; };
@@ -484,7 +476,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D83281985E421009E763A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,7 +483,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43C67D6E1D211C8A00427D35 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +493,6 @@
 			isa = PBXGroup;
 			children = (
 				430D83291985E421009E763A /* webrtc_base */,
-				430D83261985E421009E763A /* Frameworks */,
 				430D83251985E421009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -517,32 +506,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		430D83261985E421009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				430D83271985E421009E763A /* Foundation.framework */,
-				430D83351985E422009E763A /* XCTest.framework */,
-				430D83381985E422009E763A /* UIKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		430D83291985E421009E763A /* webrtc_base */ = {
 			isa = PBXGroup;
 			children = (
 				430D86731985EEE1009E763A /* overrides */,
 				430D83601985E4AB009E763A /* base */,
-				430D832A1985E421009E763A /* Supporting Files */,
 			);
 			path = webrtc_base;
-			sourceTree = "<group>";
-		};
-		430D832A1985E421009E763A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				430D832B1985E421009E763A /* webrtc_base-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		430D83601985E4AB009E763A /* base */ = {
@@ -600,10 +570,6 @@
 				430D83911985E4AB009E763A /* event.h */,
 				430D83921985E4AB009E763A /* exp_filter.cc */,
 				430D83931985E4AB009E763A /* exp_filter.h */,
-				430D83941985E4AB009E763A /* fakecpumonitor.h */,
-				430D83951985E4AB009E763A /* fakenetwork.h */,
-				430D83961985E4AB009E763A /* fakesslidentity.h */,
-				430D83971985E4AB009E763A /* faketaskrunner.h */,
 				430D83981985E4AB009E763A /* filelock.cc */,
 				430D83991985E4AB009E763A /* filelock.h */,
 				430D839A1985E4AB009E763A /* fileutils.cc */,
@@ -1005,6 +971,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43E04CBC1D262B1A00B39549 /* platform_file.cc in Sources */,
 				43C67D161D211C8A00427D35 /* sha1.cc in Sources */,
 				43C67D171D211C8A00427D35 /* urlencode.cc in Sources */,
 				43C67D181D211C8A00427D35 /* virtualsocketserver.cc in Sources */,
@@ -1016,6 +983,7 @@
 				43C67D1E1D211C8A00427D35 /* httprequest.cc in Sources */,
 				43C67D1F1D211C8A00427D35 /* stringutils.cc in Sources */,
 				43C67D201D211C8A00427D35 /* optionsfile.cc in Sources */,
+				43E03CC61D24D26900B39549 /* thread.mm in Sources */,
 				43C67D211D211C8A00427D35 /* sslfingerprint.cc in Sources */,
 				43C67D221D211C8A00427D35 /* unixfilesystem.cc in Sources */,
 				43C67D231D211C8A00427D35 /* socketadapters.cc in Sources */,
@@ -1172,8 +1140,8 @@
 				DSTROOT = /tmp/webrtc_base.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "webrtc_base/webrtc_base-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
@@ -1225,8 +1193,8 @@
 				DSTROOT = /tmp/webrtc_base.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "webrtc_base/webrtc_base-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
@@ -1277,12 +1245,11 @@
 				DSTROOT = /tmp/webrtc_base.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "webrtc_base/webrtc_base-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					WEBRTC_POSIX,
-					WEBRTC_IOS,
 					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
 					SSL_USE_NSS,
@@ -1331,12 +1298,11 @@
 				DSTROOT = /tmp/webrtc_base.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "webrtc_base/webrtc_base-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					WEBRTC_POSIX,
-					WEBRTC_IOS,
 					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
 					SSL_USE_NSS,

@@ -7,12 +7,22 @@
 		<key>audio_conference_mixer.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>22</integer>
+			<integer>25</integer>
+		</dict>
+		<key>audio_conference_mixer_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>37</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>430D900519862790009E763A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43E04C921D2629E600B39549</key>
 		<dict>
 			<key>primary</key>
 			<true/>

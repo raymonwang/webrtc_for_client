@@ -20,6 +20,19 @@
 		430D902F198627A2009E763A /* memory_pool_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9022198627A2009E763A /* memory_pool_win.h */; };
 		430D9030198627A2009E763A /* time_scheduler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9023198627A2009E763A /* time_scheduler.cc */; };
 		430D9031198627A2009E763A /* time_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9024198627A2009E763A /* time_scheduler.h */; };
+		43E04C941D2629E600B39549 /* audio_conference_mixer_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901A198627A2009E763A /* audio_conference_mixer_impl.cc */; };
+		43E04C951D2629E600B39549 /* audio_frame_manipulator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901C198627A2009E763A /* audio_frame_manipulator.cc */; };
+		43E04C961D2629E600B39549 /* time_scheduler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9023198627A2009E763A /* time_scheduler.cc */; };
+		43E04C971D2629E600B39549 /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901E198627A2009E763A /* level_indicator.cc */; };
+		43E04C9A1D2629E600B39549 /* audio_conference_mixer_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9016198627A2009E763A /* audio_conference_mixer_defines.h */; };
+		43E04C9B1D2629E600B39549 /* memory_pool_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9021198627A2009E763A /* memory_pool_posix.h */; };
+		43E04C9C1D2629E600B39549 /* audio_conference_mixer_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901B198627A2009E763A /* audio_conference_mixer_impl.h */; };
+		43E04C9D1D2629E600B39549 /* audio_frame_manipulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901D198627A2009E763A /* audio_frame_manipulator.h */; };
+		43E04C9E1D2629E600B39549 /* audio_conference_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9015198627A2009E763A /* audio_conference_mixer.h */; };
+		43E04C9F1D2629E600B39549 /* time_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9024198627A2009E763A /* time_scheduler.h */; };
+		43E04CA01D2629E600B39549 /* level_indicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901F198627A2009E763A /* level_indicator.h */; };
+		43E04CA11D2629E600B39549 /* memory_pool_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9022198627A2009E763A /* memory_pool_win.h */; };
+		43E04CA21D2629E600B39549 /* memory_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9020198627A2009E763A /* memory_pool.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,10 +52,18 @@
 		430D9022198627A2009E763A /* memory_pool_win.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_pool_win.h; sourceTree = "<group>"; };
 		430D9023198627A2009E763A /* time_scheduler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = time_scheduler.cc; sourceTree = "<group>"; };
 		430D9024198627A2009E763A /* time_scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_scheduler.h; sourceTree = "<group>"; };
+		43E04CA61D2629E600B39549 /* libaudio_conference_mixer_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_conference_mixer_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		430D900319862790009E763A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04C981D2629E600B39549 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -64,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				430D900619862790009E763A /* libaudio_conference_mixer.a */,
+				43E04CA61D2629E600B39549 /* libaudio_conference_mixer_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,6 +148,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04C991D2629E600B39549 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04C9A1D2629E600B39549 /* audio_conference_mixer_defines.h in Headers */,
+				43E04C9B1D2629E600B39549 /* memory_pool_posix.h in Headers */,
+				43E04C9C1D2629E600B39549 /* audio_conference_mixer_impl.h in Headers */,
+				43E04C9D1D2629E600B39549 /* audio_frame_manipulator.h in Headers */,
+				43E04C9E1D2629E600B39549 /* audio_conference_mixer.h in Headers */,
+				43E04C9F1D2629E600B39549 /* time_scheduler.h in Headers */,
+				43E04CA01D2629E600B39549 /* level_indicator.h in Headers */,
+				43E04CA11D2629E600B39549 /* memory_pool_win.h in Headers */,
+				43E04CA21D2629E600B39549 /* memory_pool.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -144,6 +182,23 @@
 			name = audio_conference_mixer;
 			productName = audio_conference_mixer;
 			productReference = 430D900619862790009E763A /* libaudio_conference_mixer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43E04C921D2629E600B39549 /* audio_conference_mixer_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04CA31D2629E600B39549 /* Build configuration list for PBXNativeTarget "audio_conference_mixer_osx" */;
+			buildPhases = (
+				43E04C931D2629E600B39549 /* Sources */,
+				43E04C981D2629E600B39549 /* Frameworks */,
+				43E04C991D2629E600B39549 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = audio_conference_mixer_osx;
+			productName = audio_conference_mixer;
+			productReference = 43E04CA61D2629E600B39549 /* libaudio_conference_mixer_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -168,6 +223,7 @@
 			projectRoot = "";
 			targets = (
 				430D900519862790009E763A /* audio_conference_mixer */,
+				43E04C921D2629E600B39549 /* audio_conference_mixer_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -181,6 +237,17 @@
 				430D9029198627A2009E763A /* audio_frame_manipulator.cc in Sources */,
 				430D9030198627A2009E763A /* time_scheduler.cc in Sources */,
 				430D902B198627A2009E763A /* level_indicator.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04C931D2629E600B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04C941D2629E600B39549 /* audio_conference_mixer_impl.cc in Sources */,
+				43E04C951D2629E600B39549 /* audio_frame_manipulator.cc in Sources */,
+				43E04C961D2629E600B39549 /* time_scheduler.cc in Sources */,
+				43E04C971D2629E600B39549 /* level_indicator.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +377,59 @@
 			};
 			name = Release;
 		};
+		43E04CA41D2629E600B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04CA51D2629E600B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +447,15 @@
 			buildConfigurations = (
 				430D900B19862790009E763A /* Debug */,
 				430D900C19862790009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04CA31D2629E600B39549 /* Build configuration list for PBXNativeTarget "audio_conference_mixer_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04CA41D2629E600B39549 /* Debug */,
+				43E04CA51D2629E600B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

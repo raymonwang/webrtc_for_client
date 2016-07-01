@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D8BA119861C2D009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8BA019861C2D009E763A /* Foundation.framework */; };
 		430D8CA619861C5B009E763A /* arith_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3719861C5B009E763A /* arith_routines.c */; };
 		430D8CA719861C5B009E763A /* arith_routines_hist.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3919861C5B009E763A /* arith_routines_hist.c */; };
 		430D8CA819861C5B009E763A /* arith_routines_logist.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3A19861C5B009E763A /* arith_routines_logist.c */; };
@@ -64,7 +63,6 @@
 		432B2DE319CA85F5001267A7 /* intialize.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4D19861C5B009E763A /* intialize.c */; };
 		432B2DE419CA85F5001267A7 /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4A19861C5B009E763A /* filterbank_tables.c */; };
 		432B2DE519CA85F5001267A7 /* arith_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3719861C5B009E763A /* arith_routines.c */; };
-		432B2DE719CA85F5001267A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8BA019861C2D009E763A /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,10 +88,6 @@
 
 /* Begin PBXFileReference section */
 		430D8B9D19861C2D009E763A /* libiSAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8BA019861C2D009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		430D8BA419861C2D009E763A /* iSAC-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iSAC-Prefix.pch"; sourceTree = "<group>"; };
-		430D8BAE19861C2E009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		430D8BB119861C2E009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		430D8C3419861C5B009E763A /* isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isac.h; sourceTree = "<group>"; };
 		430D8C3619861C5B009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D8C3719861C5B009E763A /* arith_routines.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = arith_routines.c; sourceTree = "<group>"; };
@@ -146,7 +140,7 @@
 		430D8C6719861C5B009E763A /* spectrum_ar_model_tables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spectrum_ar_model_tables.h; sourceTree = "<group>"; };
 		430D8C6819861C5B009E763A /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
 		430D8C6919861C5B009E763A /* transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform.c; sourceTree = "<group>"; };
-		432B2DEC19CA85F5001267A7 /* libiSAC_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		432B2DEC19CA85F5001267A7 /* libiSAC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +148,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D8BA119861C2D009E763A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +155,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				432B2DE719CA85F5001267A7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				430D8BA219861C2D009E763A /* iSAC */,
-				430D8B9F19861C2D009E763A /* Frameworks */,
 				430D8B9E19861C2D009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -182,36 +173,17 @@
 			isa = PBXGroup;
 			children = (
 				430D8B9D19861C2D009E763A /* libiSAC.a */,
-				432B2DEC19CA85F5001267A7 /* libiSAC_sim.a */,
+				432B2DEC19CA85F5001267A7 /* libiSAC_osx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		430D8B9F19861C2D009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				430D8BA019861C2D009E763A /* Foundation.framework */,
-				430D8BAE19861C2E009E763A /* XCTest.framework */,
-				430D8BB119861C2E009E763A /* UIKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		430D8BA219861C2D009E763A /* iSAC */ = {
 			isa = PBXGroup;
 			children = (
 				430D8BDE19861C5B009E763A /* isac */,
-				430D8BA319861C2D009E763A /* Supporting Files */,
 			);
 			path = iSAC;
-			sourceTree = "<group>";
-		};
-		430D8BA319861C2D009E763A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				430D8BA419861C2D009E763A /* iSAC-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		430D8BDE19861C5B009E763A /* isac */ = {
@@ -318,9 +290,9 @@
 			productReference = 430D8B9D19861C2D009E763A /* libiSAC.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		432B2DC819CA85F5001267A7 /* iSAC_sim */ = {
+		432B2DC819CA85F5001267A7 /* iSAC_osx */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 432B2DE919CA85F5001267A7 /* Build configuration list for PBXNativeTarget "iSAC_sim" */;
+			buildConfigurationList = 432B2DE919CA85F5001267A7 /* Build configuration list for PBXNativeTarget "iSAC_osx" */;
 			buildPhases = (
 				432B2DC919CA85F5001267A7 /* Sources */,
 				432B2DE619CA85F5001267A7 /* Frameworks */,
@@ -330,9 +302,9 @@
 			);
 			dependencies = (
 			);
-			name = iSAC_sim;
+			name = iSAC_osx;
 			productName = iSAC;
-			productReference = 432B2DEC19CA85F5001267A7 /* libiSAC_sim.a */;
+			productReference = 432B2DEC19CA85F5001267A7 /* libiSAC_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -357,7 +329,7 @@
 			projectRoot = "";
 			targets = (
 				430D8B9C19861C2D009E763A /* iSAC */,
-				432B2DC819CA85F5001267A7 /* iSAC_sim */,
+				432B2DC819CA85F5001267A7 /* iSAC_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -508,8 +480,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/iSAC.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iSAC/iSAC-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					WEBRTC_ARCH_ARM,
@@ -539,8 +510,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/iSAC.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iSAC/iSAC-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					WEBRTC_ARCH_ARM,
@@ -569,8 +539,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/iSAC.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iSAC/iSAC-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					WEBRTC_ARCH_ARM,
@@ -587,12 +557,14 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = iSAC_sim;
+				PRODUCT_NAME = iSAC_osx;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -600,8 +572,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/iSAC.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iSAC/iSAC-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					WEBRTC_ARCH_ARM,
@@ -618,11 +590,13 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = iSAC_sim;
+				PRODUCT_NAME = iSAC_osx;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -647,7 +621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		432B2DE919CA85F5001267A7 /* Build configuration list for PBXNativeTarget "iSAC_sim" */ = {
+		432B2DE919CA85F5001267A7 /* Build configuration list for PBXNativeTarget "iSAC_osx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				432B2DEA19CA85F5001267A7 /* Debug */,

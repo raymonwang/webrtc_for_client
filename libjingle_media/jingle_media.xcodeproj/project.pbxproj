@@ -78,13 +78,6 @@
 		43982C20198F3CC90090EABA /* cpuid.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpuid.cc; sourceTree = "<group>"; };
 		43982C21198F3CC90090EABA /* cpuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpuid.h; sourceTree = "<group>"; };
 		43982C23198F3CC90090EABA /* cryptoparams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cryptoparams.h; sourceTree = "<group>"; };
-		43982C24198F3CC90090EABA /* fakecapturemanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakecapturemanager.h; sourceTree = "<group>"; };
-		43982C25198F3CC90090EABA /* fakemediaengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakemediaengine.h; sourceTree = "<group>"; };
-		43982C26198F3CC90090EABA /* fakemediaprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakemediaprocessor.h; sourceTree = "<group>"; };
-		43982C27198F3CC90090EABA /* fakenetworkinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakenetworkinterface.h; sourceTree = "<group>"; };
-		43982C28198F3CC90090EABA /* fakertp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakertp.h; sourceTree = "<group>"; };
-		43982C29198F3CC90090EABA /* fakevideocapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakevideocapturer.h; sourceTree = "<group>"; };
-		43982C2A198F3CC90090EABA /* fakevideorenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakevideorenderer.h; sourceTree = "<group>"; };
 		43982C2B198F3CC90090EABA /* filemediaengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filemediaengine.cc; sourceTree = "<group>"; };
 		43982C2C198F3CC90090EABA /* filemediaengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filemediaengine.h; sourceTree = "<group>"; };
 		43982C2E198F3CC90090EABA /* hybriddataengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hybriddataengine.h; sourceTree = "<group>"; };
@@ -127,7 +120,6 @@
 		43982C60198F3CC90090EABA /* devicemanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = devicemanager.h; sourceTree = "<group>"; };
 		43982C62198F3CC90090EABA /* dummydevicemanager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dummydevicemanager.cc; sourceTree = "<group>"; };
 		43982C63198F3CC90090EABA /* dummydevicemanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dummydevicemanager.h; sourceTree = "<group>"; };
-		43982C65198F3CC90090EABA /* fakedevicemanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakedevicemanager.h; sourceTree = "<group>"; };
 		43982C66198F3CC90090EABA /* filevideocapturer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filevideocapturer.cc; sourceTree = "<group>"; };
 		43982C67198F3CC90090EABA /* filevideocapturer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filevideocapturer.h; sourceTree = "<group>"; };
 		43982C69198F3CC90090EABA /* gdivideorenderer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gdivideorenderer.cc; sourceTree = "<group>"; };
@@ -158,12 +150,6 @@
 		43982C84198F3CC90090EABA /* sctpdataengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctpdataengine.h; sourceTree = "<group>"; };
 		43982C87198F3CC90090EABA /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		43982C88198F3CC90090EABA /* dummyinstantiation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dummyinstantiation.cc; sourceTree = "<group>"; };
-		43982C89198F3CC90090EABA /* fakewebrtccommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtccommon.h; sourceTree = "<group>"; };
-		43982C8A198F3CC90090EABA /* fakewebrtcdeviceinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcdeviceinfo.h; sourceTree = "<group>"; };
-		43982C8B198F3CC90090EABA /* fakewebrtcvcmfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvcmfactory.h; sourceTree = "<group>"; };
-		43982C8C198F3CC90090EABA /* fakewebrtcvideocapturemodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvideocapturemodule.h; sourceTree = "<group>"; };
-		43982C8D198F3CC90090EABA /* fakewebrtcvideoengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvideoengine.h; sourceTree = "<group>"; };
-		43982C8E198F3CC90090EABA /* fakewebrtcvoiceengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvoiceengine.h; sourceTree = "<group>"; };
 		43982C90198F3CC90090EABA /* webrtccommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtccommon.h; sourceTree = "<group>"; };
 		43982C91198F3CC90090EABA /* webrtcexport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcexport.h; sourceTree = "<group>"; };
 		43982C92198F3CC90090EABA /* webrtcmediaengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcmediaengine.cc; sourceTree = "<group>"; };
@@ -284,13 +270,6 @@
 				43982C20198F3CC90090EABA /* cpuid.cc */,
 				43982C21198F3CC90090EABA /* cpuid.h */,
 				43982C23198F3CC90090EABA /* cryptoparams.h */,
-				43982C24198F3CC90090EABA /* fakecapturemanager.h */,
-				43982C25198F3CC90090EABA /* fakemediaengine.h */,
-				43982C26198F3CC90090EABA /* fakemediaprocessor.h */,
-				43982C27198F3CC90090EABA /* fakenetworkinterface.h */,
-				43982C28198F3CC90090EABA /* fakertp.h */,
-				43982C29198F3CC90090EABA /* fakevideocapturer.h */,
-				43982C2A198F3CC90090EABA /* fakevideorenderer.h */,
 				43982C2B198F3CC90090EABA /* filemediaengine.cc */,
 				43982C2C198F3CC90090EABA /* filemediaengine.h */,
 				43982C2E198F3CC90090EABA /* hybriddataengine.h */,
@@ -340,7 +319,6 @@
 				43982C60198F3CC90090EABA /* devicemanager.h */,
 				43982C62198F3CC90090EABA /* dummydevicemanager.cc */,
 				43982C63198F3CC90090EABA /* dummydevicemanager.h */,
-				43982C65198F3CC90090EABA /* fakedevicemanager.h */,
 				43982C66198F3CC90090EABA /* filevideocapturer.cc */,
 				43982C67198F3CC90090EABA /* filevideocapturer.h */,
 				43982C69198F3CC90090EABA /* gdivideorenderer.cc */,
@@ -398,12 +376,6 @@
 				43C69BB81D227CF200427D35 /* webrtcvideoframefactory.h */,
 				43982C87198F3CC90090EABA /* constants.h */,
 				43982C88198F3CC90090EABA /* dummyinstantiation.cc */,
-				43982C89198F3CC90090EABA /* fakewebrtccommon.h */,
-				43982C8A198F3CC90090EABA /* fakewebrtcdeviceinfo.h */,
-				43982C8B198F3CC90090EABA /* fakewebrtcvcmfactory.h */,
-				43982C8C198F3CC90090EABA /* fakewebrtcvideocapturemodule.h */,
-				43982C8D198F3CC90090EABA /* fakewebrtcvideoengine.h */,
-				43982C8E198F3CC90090EABA /* fakewebrtcvoiceengine.h */,
 				43982C90198F3CC90090EABA /* webrtccommon.h */,
 				43982C91198F3CC90090EABA /* webrtcexport.h */,
 				43982C92198F3CC90090EABA /* webrtcmediaengine.cc */,

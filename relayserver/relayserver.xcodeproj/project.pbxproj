@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4328847B19809D1C0000F16A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4328847A19809D1C0000F16A /* main.cpp */; };
 		4328847D19809D1C0000F16A /* relayserver.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4328847C19809D1C0000F16A /* relayserver.1 */; };
 		432884E21980A7220000F16A /* liblibjingle_p2p_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432884E11980A7220000F16A /* liblibjingle_p2p_osx.a */; };
 		432885951980B2470000F16A /* liblibjingle_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432885941980B2470000F16A /* liblibjingle_osx.a */; };
 		4328860E1980D8620000F16A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328860D1980D8620000F16A /* Carbon.framework */; };
 		432886101980DAD60000F16A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4328860F1980DAD60000F16A /* Foundation.framework */; };
 		43BDD4D0198B421D00D135DF /* MyRelayServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 43BDD4CD198B41AF00D135DF /* MyRelayServer.cpp */; };
+		43E03CF81D24D50200B39549 /* relayserver_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E03CF71D24D50200B39549 /* relayserver_main.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,7 +31,6 @@
 
 /* Begin PBXFileReference section */
 		4328847719809D1C0000F16A /* relayserver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = relayserver; sourceTree = BUILT_PRODUCTS_DIR; };
-		4328847A19809D1C0000F16A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4328847C19809D1C0000F16A /* relayserver.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = relayserver.1; sourceTree = "<group>"; };
 		432884E11980A7220000F16A /* liblibjingle_p2p_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibjingle_p2p_osx.a; path = "../DerivedData/webRTCAPP/Build/Products/Debug-iphoneos/liblibjingle_p2p_osx.a"; sourceTree = "<group>"; };
 		432885941980B2470000F16A /* liblibjingle_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibjingle_osx.a; path = ../DerivedData/webRTCAPP/Build/Products/Debug/liblibjingle_osx.a; sourceTree = "<group>"; };
@@ -39,6 +38,7 @@
 		4328860F1980DAD60000F16A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		43BDD4CD198B41AF00D135DF /* MyRelayServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyRelayServer.cpp; sourceTree = "<group>"; };
 		43BDD4CE198B41AF00D135DF /* MyRelayServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRelayServer.h; sourceTree = "<group>"; };
+		43E03CF71D24D50200B39549 /* relayserver_main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = relayserver_main.cc; path = ../../webRTCAPP/Classes/talk/examples/relayserver/relayserver_main.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +79,7 @@
 		4328847919809D1C0000F16A /* relayserver */ = {
 			isa = PBXGroup;
 			children = (
-				4328847A19809D1C0000F16A /* main.cpp */,
+				43E03CF71D24D50200B39549 /* relayserver_main.cc */,
 				4328847C19809D1C0000F16A /* relayserver.1 */,
 				43BDD4CD198B41AF00D135DF /* MyRelayServer.cpp */,
 				43BDD4CE198B41AF00D135DF /* MyRelayServer.h */,
@@ -139,7 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43BDD4D0198B421D00D135DF /* MyRelayServer.cpp in Sources */,
-				4328847B19809D1C0000F16A /* main.cpp in Sources */,
+				43E03CF81D24D50200B39549 /* relayserver_main.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

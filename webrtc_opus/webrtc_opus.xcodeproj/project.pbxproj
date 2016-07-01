@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		43095549199483EC00012AD8 /* opus_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095545199483EC00012AD8 /* opus_interface.h */; };
 		43C67C571D20CF6C00427D35 /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095547199483EC00012AD8 /* opus_interface.c */; };
+		43E04AF91D2623CC00B39549 /* opus_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095547199483EC00012AD8 /* opus_interface.c */; };
+		43E04AFC1D2623CC00B39549 /* opus_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095545199483EC00012AD8 /* opus_interface.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,10 +19,18 @@
 		43095546199483EC00012AD8 /* opus.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus.gypi; sourceTree = "<group>"; };
 		43095547199483EC00012AD8 /* opus_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = opus_interface.c; sourceTree = "<group>"; };
 		43095548199483EC00012AD8 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43E04B001D2623CC00B39549 /* libwebrtc_opus_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_opus_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		43095533199483C600012AD8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04AFA1D2623CC00B39549 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				43095536199483C600012AD8 /* libwebrtc_opus.a */,
+				43E04B001D2623CC00B39549 /* libwebrtc_opus_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,6 +88,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04AFB1D2623CC00B39549 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04AFC1D2623CC00B39549 /* opus_interface.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -95,6 +114,23 @@
 			name = webrtc_opus;
 			productName = webrtc_opus;
 			productReference = 43095536199483C600012AD8 /* libwebrtc_opus.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43E04AF71D2623CC00B39549 /* webrtc_opus_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04AFD1D2623CC00B39549 /* Build configuration list for PBXNativeTarget "webrtc_opus_osx" */;
+			buildPhases = (
+				43E04AF81D2623CC00B39549 /* Sources */,
+				43E04AFA1D2623CC00B39549 /* Frameworks */,
+				43E04AFB1D2623CC00B39549 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = webrtc_opus_osx;
+			productName = webrtc_opus;
+			productReference = 43E04B001D2623CC00B39549 /* libwebrtc_opus_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -119,6 +155,7 @@
 			projectRoot = "";
 			targets = (
 				43095535199483C600012AD8 /* webrtc_opus */,
+				43E04AF71D2623CC00B39549 /* webrtc_opus_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -129,6 +166,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				43C67C571D20CF6C00427D35 /* opus_interface.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04AF81D2623CC00B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04AF91D2623CC00B39549 /* opus_interface.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +313,73 @@
 			};
 			name = Release;
 		};
+		43E04AFE1D2623CC00B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					OPUS_BUILD,
+					"OPUS_EXPORT=",
+					HAVE_LRINT,
+					HAVE_LRINTF,
+					VAR_ARRAYS,
+					FIXED_POINT,
+					OPUS_ARM_ASM,
+					DOPUS_ARM_INLINE_ASM,
+					OPUS_ARM_INLINE_EDSP,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/opus/interface",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43E04AFF1D2623CC00B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					OPUS_BUILD,
+					"OPUS_EXPORT=",
+					HAVE_LRINT,
+					HAVE_LRINTF,
+					VAR_ARRAYS,
+					FIXED_POINT,
+					OPUS_ARM_ASM,
+					DOPUS_ARM_INLINE_ASM,
+					OPUS_ARM_INLINE_EDSP,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/opus/interface",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -285,6 +397,15 @@
 			buildConfigurations = (
 				4309553B199483C600012AD8 /* Debug */,
 				4309553C199483C600012AD8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04AFD1D2623CC00B39549 /* Build configuration list for PBXNativeTarget "webrtc_opus_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04AFE1D2623CC00B39549 /* Debug */,
+				43E04AFF1D2623CC00B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

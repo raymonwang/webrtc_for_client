@@ -96,9 +96,6 @@
 		430D86C01986054F009E763A /* dtmf_inband.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_inband.h; sourceTree = "<group>"; };
 		430D86C11986054F009E763A /* dtmf_inband_queue.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_inband_queue.cc; sourceTree = "<group>"; };
 		430D86C21986054F009E763A /* dtmf_inband_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_inband_queue.h; sourceTree = "<group>"; };
-		430D86C51986054F009E763A /* fake_voe_external_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fake_voe_external_media.h; sourceTree = "<group>"; };
-		430D86C71986054F009E763A /* mock_voe_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_voe_observer.h; sourceTree = "<group>"; };
-		430D86C81986054F009E763A /* mock_voe_volume_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_voe_volume_control.h; sourceTree = "<group>"; };
 		430D86C91986054F009E763A /* voe_audio_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_audio_processing.h; sourceTree = "<group>"; };
 		430D86CA1986054F009E763A /* voe_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_base.h; sourceTree = "<group>"; };
 		430D86CB1986054F009E763A /* voe_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_codec.h; sourceTree = "<group>"; };
@@ -290,7 +287,6 @@
 		430D86C31986054F009E763A /* include */ = {
 			isa = PBXGroup;
 			children = (
-				430D86C41986054F009E763A /* mock */,
 				430D86C91986054F009E763A /* voe_audio_processing.h */,
 				430D86CA1986054F009E763A /* voe_base.h */,
 				430D86CB1986054F009E763A /* voe_codec.h */,
@@ -306,16 +302,6 @@
 				430D86D51986054F009E763A /* voe_volume_control.h */,
 			);
 			path = include;
-			sourceTree = "<group>";
-		};
-		430D86C41986054F009E763A /* mock */ = {
-			isa = PBXGroup;
-			children = (
-				430D86C51986054F009E763A /* fake_voe_external_media.h */,
-				430D86C71986054F009E763A /* mock_voe_observer.h */,
-				430D86C81986054F009E763A /* mock_voe_volume_control.h */,
-			);
-			path = mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

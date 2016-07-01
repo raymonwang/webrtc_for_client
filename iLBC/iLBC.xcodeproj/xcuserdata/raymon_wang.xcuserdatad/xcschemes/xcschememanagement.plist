@@ -7,12 +7,12 @@
 		<key>iLBC.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>13</integer>
+			<integer>2</integer>
 		</dict>
-		<key>iLBC_sim.xcscheme</key>
+		<key>iLBC_osx.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>49</integer>
+			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -28,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>432B2DF119CA8671001267A7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43E049851D2619DE00B39549</key>
 		<dict>
 			<key>primary</key>
 			<true/>

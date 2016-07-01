@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>23</integer>
 		</dict>
+		<key>audio_device_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>40</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>430D903B19862876009E763A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43E04DFF1D2639D500B39549</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -34,10 +34,46 @@
 		430959031994D61D00012AD8 /* call_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958AF1994D61C00012AD8 /* call_statistics.cc */; };
 		430959051994D61D00012AD8 /* initial_delay_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958B21994D61C00012AD8 /* initial_delay_manager.cc */; };
 		430959071994D61D00012AD8 /* nack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958B51994D61C00012AD8 /* nack.cc */; };
+		43E04A171D261EFD00B39549 /* call_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958AF1994D61C00012AD8 /* call_statistics.cc */; };
+		43E04A181D261EFD00B39549 /* acm_amr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958761994D61C00012AD8 /* acm_amr.cc */; };
+		43E04A191D261EFD00B39549 /* acm_g7291.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309588B1994D61C00012AD8 /* acm_g7291.cc */; };
+		43E04A1A1D261EFD00B39549 /* acm_generic_codec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309588D1994D61C00012AD8 /* acm_generic_codec.cc */; };
+		43E04A1B1D261EFD00B39549 /* acm_resampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958A61994D61C00012AD8 /* acm_resampler.cc */; };
+		43E04A1C1D261EFD00B39549 /* acm_dtmf_playout.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958811994D61C00012AD8 /* acm_dtmf_playout.cc */; };
+		43E04A1D1D261EFD00B39549 /* acm_codec_database.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309587E1994D61C00012AD8 /* acm_codec_database.cc */; };
+		43E04A1E1D261EFD00B39549 /* acm_gsmfr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309588F1994D61C00012AD8 /* acm_gsmfr.cc */; };
+		43E04A1F1D261EFD00B39549 /* acm_g7221c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958871994D61C00012AD8 /* acm_g7221c.cc */; };
+		43E04A201D261EFD00B39549 /* acm_g7221.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958851994D61C00012AD8 /* acm_g7221.cc */; };
+		43E04A211D261EFD00B39549 /* audio_coding_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958AA1994D61C00012AD8 /* audio_coding_module.cc */; };
+		43E04A221D261EFD00B39549 /* acm_red.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958A41994D61C00012AD8 /* acm_red.cc */; };
+		43E04A231D261EFD00B39549 /* acm_pcma.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309589B1994D61C00012AD8 /* acm_pcma.cc */; };
+		43E04A241D261EFD00B39549 /* acm_ilbc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958911994D61C00012AD8 /* acm_ilbc.cc */; };
+		43E04A251D261EFD00B39549 /* acm_pcmu.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309589D1994D61C00012AD8 /* acm_pcmu.cc */; };
+		43E04A261D261EFD00B39549 /* audio_coding_module_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958AC1994D61C00012AD8 /* audio_coding_module_impl.cc */; };
+		43E04A271D261EFD00B39549 /* acm_speex.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958A81994D61C00012AD8 /* acm_speex.cc */; };
+		43E04A281D261EFD00B39549 /* nack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958B51994D61C00012AD8 /* nack.cc */; };
+		43E04A291D261EFD00B39549 /* acm_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958A11994D61C00012AD8 /* acm_receiver.cc */; };
+		43E04A2A1D261EFD00B39549 /* acm_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958931994D61C00012AD8 /* acm_isac.cc */; };
+		43E04A2B1D261EFD00B39549 /* acm_opus.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958971994D61C00012AD8 /* acm_opus.cc */; };
+		43E04A2C1D261EFD00B39549 /* acm_g729.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958891994D61C00012AD8 /* acm_g729.cc */; };
+		43E04A2D1D261EFD00B39549 /* acm_cng.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4309587C1994D61C00012AD8 /* acm_cng.cc */; };
+		43E04A2E1D261EFD00B39549 /* acm_g722.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958831994D61C00012AD8 /* acm_g722.cc */; };
+		43E04A2F1D261EFD00B39549 /* acm_pcm16b.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958991994D61C00012AD8 /* acm_pcm16b.cc */; };
+		43E04A301D261EFD00B39549 /* initial_delay_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958B21994D61C00012AD8 /* initial_delay_manager.cc */; };
+		43E04A311D261EFD00B39549 /* acm_amrwb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430958781994D61C00012AD8 /* acm_amrwb.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		430D88BD19860C3F009E763A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04A331D261EFD00B39549 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -109,10 +145,18 @@
 		430958BA1994D61C00012AD8 /* audio_coding_module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_coding_module.h; sourceTree = "<group>"; };
 		430958BB1994D61C00012AD8 /* audio_coding_module_typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_coding_module_typedefs.h; sourceTree = "<group>"; };
 		430D88BF19860C3F009E763A /* libaudio_coding_module.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_coding_module.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43E04A371D261EFD00B39549 /* libaudio_coding_module_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_coding_module_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		430D88BC19860C3F009E763A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04A321D261EFD00B39549 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -209,7 +253,6 @@
 			isa = PBXGroup;
 			children = (
 				430958741994D61C00012AD8 /* main */,
-				430D88C119860C3F009E763A /* Frameworks */,
 				430D88C019860C3F009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -218,15 +261,9 @@
 			isa = PBXGroup;
 			children = (
 				430D88BF19860C3F009E763A /* libaudio_coding_module.a */,
+				43E04A371D261EFD00B39549 /* libaudio_coding_module_osx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		430D88C119860C3F009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +284,23 @@
 			name = audio_coding_module;
 			productName = audio_coding_module;
 			productReference = 430D88BF19860C3F009E763A /* libaudio_coding_module.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		43E04A151D261EFD00B39549 /* audio_coding_module_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04A341D261EFD00B39549 /* Build configuration list for PBXNativeTarget "audio_coding_module_osx" */;
+			buildPhases = (
+				43E04A161D261EFD00B39549 /* Sources */,
+				43E04A321D261EFD00B39549 /* Frameworks */,
+				43E04A331D261EFD00B39549 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = audio_coding_module_osx;
+			productName = audio_coding_module;
+			productReference = 43E04A371D261EFD00B39549 /* libaudio_coding_module_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -271,6 +325,7 @@
 			projectRoot = "";
 			targets = (
 				430D88BE19860C3F009E763A /* audio_coding_module */,
+				43E04A151D261EFD00B39549 /* audio_coding_module_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -307,6 +362,40 @@
 				430958F71994D61D00012AD8 /* acm_pcm16b.cc in Sources */,
 				430959051994D61D00012AD8 /* initial_delay_manager.cc in Sources */,
 				430958E71994D61D00012AD8 /* acm_amrwb.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04A161D261EFD00B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04A171D261EFD00B39549 /* call_statistics.cc in Sources */,
+				43E04A181D261EFD00B39549 /* acm_amr.cc in Sources */,
+				43E04A191D261EFD00B39549 /* acm_g7291.cc in Sources */,
+				43E04A1A1D261EFD00B39549 /* acm_generic_codec.cc in Sources */,
+				43E04A1B1D261EFD00B39549 /* acm_resampler.cc in Sources */,
+				43E04A1C1D261EFD00B39549 /* acm_dtmf_playout.cc in Sources */,
+				43E04A1D1D261EFD00B39549 /* acm_codec_database.cc in Sources */,
+				43E04A1E1D261EFD00B39549 /* acm_gsmfr.cc in Sources */,
+				43E04A1F1D261EFD00B39549 /* acm_g7221c.cc in Sources */,
+				43E04A201D261EFD00B39549 /* acm_g7221.cc in Sources */,
+				43E04A211D261EFD00B39549 /* audio_coding_module.cc in Sources */,
+				43E04A221D261EFD00B39549 /* acm_red.cc in Sources */,
+				43E04A231D261EFD00B39549 /* acm_pcma.cc in Sources */,
+				43E04A241D261EFD00B39549 /* acm_ilbc.cc in Sources */,
+				43E04A251D261EFD00B39549 /* acm_pcmu.cc in Sources */,
+				43E04A261D261EFD00B39549 /* audio_coding_module_impl.cc in Sources */,
+				43E04A271D261EFD00B39549 /* acm_speex.cc in Sources */,
+				43E04A281D261EFD00B39549 /* nack.cc in Sources */,
+				43E04A291D261EFD00B39549 /* acm_receiver.cc in Sources */,
+				43E04A2A1D261EFD00B39549 /* acm_isac.cc in Sources */,
+				43E04A2B1D261EFD00B39549 /* acm_opus.cc in Sources */,
+				43E04A2C1D261EFD00B39549 /* acm_g729.cc in Sources */,
+				43E04A2D1D261EFD00B39549 /* acm_cng.cc in Sources */,
+				43E04A2E1D261EFD00B39549 /* acm_g722.cc in Sources */,
+				43E04A2F1D261EFD00B39549 /* acm_pcm16b.cc in Sources */,
+				43E04A301D261EFD00B39549 /* initial_delay_manager.cc in Sources */,
+				43E04A311D261EFD00B39549 /* acm_amrwb.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,8 +474,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/audio_coding_module.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "audio_coding_module/audio_coding_module-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					WEBRTC_CODEC_OPUS,
@@ -422,8 +511,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/audio_coding_module.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "audio_coding_module/audio_coding_module-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					WEBRTC_CODEC_OPUS,
@@ -454,6 +543,81 @@
 			};
 			name = Release;
 		};
+		43E04A351D261EFD00B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/audio_coding_module.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_CODEC_OPUS,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g711/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/ilbc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/interface",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04A361D261EFD00B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/audio_coding_module.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_CODEC_OPUS,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g711/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/ilbc/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/modules/interface",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -471,6 +635,15 @@
 			buildConfigurations = (
 				430D88E319860C3F009E763A /* Debug */,
 				430D88E419860C3F009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04A341D261EFD00B39549 /* Build configuration list for PBXNativeTarget "audio_coding_module_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04A351D261EFD00B39549 /* Debug */,
+				43E04A361D261EFD00B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

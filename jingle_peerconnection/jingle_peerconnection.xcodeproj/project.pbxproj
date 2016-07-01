@@ -17,7 +17,6 @@
 		43982E00198F53BC0090EABA /* dtmfsender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982D78198F53BB0090EABA /* dtmfsender.cc */; };
 		43982E01198F53BC0090EABA /* dtmfsender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982D79198F53BB0090EABA /* dtmfsender.h */; };
 		43982E02198F53BC0090EABA /* dtmfsenderinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982D7A198F53BB0090EABA /* dtmfsenderinterface.h */; };
-		43982E03198F53BC0090EABA /* fakeportallocatorfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982D7B198F53BB0090EABA /* fakeportallocatorfactory.h */; };
 		43982E04198F53BC0090EABA /* jsep.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982D7C198F53BB0090EABA /* jsep.h */; };
 		43982E05198F53BC0090EABA /* jsepicecandidate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43982D7D198F53BB0090EABA /* jsepicecandidate.cc */; };
 		43982E06198F53BC0090EABA /* jsepicecandidate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43982D7E198F53BB0090EABA /* jsepicecandidate.h */; };
@@ -89,7 +88,6 @@
 		43982D78198F53BB0090EABA /* dtmfsender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmfsender.cc; sourceTree = "<group>"; };
 		43982D79198F53BB0090EABA /* dtmfsender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmfsender.h; sourceTree = "<group>"; };
 		43982D7A198F53BB0090EABA /* dtmfsenderinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmfsenderinterface.h; sourceTree = "<group>"; };
-		43982D7B198F53BB0090EABA /* fakeportallocatorfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakeportallocatorfactory.h; sourceTree = "<group>"; };
 		43982D7C198F53BB0090EABA /* jsep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsep.h; sourceTree = "<group>"; };
 		43982D7D198F53BB0090EABA /* jsepicecandidate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsepicecandidate.cc; sourceTree = "<group>"; };
 		43982D7E198F53BB0090EABA /* jsepicecandidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsepicecandidate.h; sourceTree = "<group>"; };
@@ -200,7 +198,6 @@
 				43982D78198F53BB0090EABA /* dtmfsender.cc */,
 				43982D79198F53BB0090EABA /* dtmfsender.h */,
 				43982D7A198F53BB0090EABA /* dtmfsenderinterface.h */,
-				43982D7B198F53BB0090EABA /* fakeportallocatorfactory.h */,
 				43982D7C198F53BB0090EABA /* jsep.h */,
 				43982D7D198F53BB0090EABA /* jsepicecandidate.cc */,
 				43982D7E198F53BB0090EABA /* jsepicecandidate.h */,
@@ -281,7 +278,6 @@
 				43982E11198F53BC0090EABA /* mediastreaminterface.h in Headers */,
 				43982E7C198F53BC0090EABA /* webrtcsession.h in Headers */,
 				43982E74198F53BC0090EABA /* videosourceproxy.h in Headers */,
-				43982E03198F53BC0090EABA /* fakeportallocatorfactory.h in Headers */,
 				43982E06198F53BC0090EABA /* jsepicecandidate.h in Headers */,
 				43982E69198F53BC0090EABA /* remotevideocapturer.h in Headers */,
 				43982DFA198F53BC0090EABA /* audiotrack.h in Headers */,

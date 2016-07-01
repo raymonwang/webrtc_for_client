@@ -752,7 +752,7 @@
 		430956AE199485A900012AD8 /* repacketizer_demo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = repacketizer_demo.c; sourceTree = "<group>"; };
 		430956AF199485A900012AD8 /* tansig_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tansig_table.h; sourceTree = "<group>"; };
 		430956B7199485A900012AD8 /* version.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = version.mk; sourceTree = "<group>"; };
-		432B2F6A19CA982B001267A7 /* libopus_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libopus_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		432B2F6A19CA982B001267A7 /* libopus_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libopus_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -785,7 +785,7 @@
 			isa = PBXGroup;
 			children = (
 				430955541994859200012AD8 /* libopus.a */,
-				432B2F6A19CA982B001267A7 /* libopus_sim.a */,
+				432B2F6A19CA982B001267A7 /* libopus_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1402,9 +1402,9 @@
 			productReference = 430955541994859200012AD8 /* libopus.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		432B2E8C19CA982B001267A7 /* opus_sim */ = {
+		432B2E8C19CA982B001267A7 /* opus_opus */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 432B2F6719CA982B001267A7 /* Build configuration list for PBXNativeTarget "opus_sim" */;
+			buildConfigurationList = 432B2F6719CA982B001267A7 /* Build configuration list for PBXNativeTarget "opus_opus" */;
 			buildPhases = (
 				432B2E8D19CA982B001267A7 /* Sources */,
 				432B2F1919CA982B001267A7 /* Frameworks */,
@@ -1414,9 +1414,9 @@
 			);
 			dependencies = (
 			);
-			name = opus_sim;
+			name = opus_opus;
 			productName = opus;
-			productReference = 432B2F6A19CA982B001267A7 /* libopus_sim.a */;
+			productReference = 432B2F6A19CA982B001267A7 /* libopus_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -1441,7 +1441,7 @@
 			projectRoot = "";
 			targets = (
 				430955531994859200012AD8 /* opus */,
-				432B2E8C19CA982B001267A7 /* opus_sim */,
+				432B2E8C19CA982B001267A7 /* opus_opus */,
 			);
 		};
 /* End PBXProject section */
@@ -1905,9 +1905,11 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = opus_sim;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				PRODUCT_NAME = opus_osx;
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1937,8 +1939,10 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = opus_sim;
-				VALID_ARCHS = "armv7 armv7s arm64";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = opus_osx;
+				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -1963,7 +1967,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		432B2F6719CA982B001267A7 /* Build configuration list for PBXNativeTarget "opus_sim" */ = {
+		432B2F6719CA982B001267A7 /* Build configuration list for PBXNativeTarget "opus_opus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				432B2F6819CA982B001267A7 /* Debug */,

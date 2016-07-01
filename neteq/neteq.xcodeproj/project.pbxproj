@@ -165,6 +165,7 @@
 		43C696EB1D222CD500427D35 /* audio_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C696E71D222CD500427D35 /* audio_decoder.h */; };
 		43C696EC1D222CD500427D35 /* audio_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696E81D222CD500427D35 /* audio_encoder.cc */; };
 		43C696ED1D222CD500427D35 /* audio_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C696E91D222CD500427D35 /* audio_encoder.h */; };
+		43E04CBB1D262AC100B39549 /* audio_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696E61D222CD500427D35 /* audio_decoder.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -248,7 +249,7 @@
 		430D8FA9198624BE009E763A /* time_stretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_stretch.h; sourceTree = "<group>"; };
 		430D8FAA198624BE009E763A /* timestamp_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timestamp_scaler.cc; sourceTree = "<group>"; };
 		430D8FAB198624BE009E763A /* timestamp_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timestamp_scaler.h; sourceTree = "<group>"; };
-		43C42A3819CA82AD00E9DCFA /* libneteq_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libneteq_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C42A3819CA82AD00E9DCFA /* libneteq_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libneteq_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C696E61D222CD500427D35 /* audio_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_decoder.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_decoder.cc; sourceTree = "<group>"; };
 		43C696E71D222CD500427D35 /* audio_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_decoder.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_decoder.h; sourceTree = "<group>"; };
 		43C696E81D222CD500427D35 /* audio_encoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_encoder.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_encoder.cc; sourceTree = "<group>"; };
@@ -289,7 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				430D8F4B19862490009E763A /* libneteq.a */,
-				43C42A3819CA82AD00E9DCFA /* libneteq_sim.a */,
+				43C42A3819CA82AD00E9DCFA /* libneteq_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -526,9 +527,9 @@
 			productReference = 430D8F4B19862490009E763A /* libneteq.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		43C429E219CA82AD00E9DCFA /* neteq_sim */ = {
+		43C429E219CA82AD00E9DCFA /* neteq_osx */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43C42A3519CA82AD00E9DCFA /* Build configuration list for PBXNativeTarget "neteq_sim" */;
+			buildConfigurationList = 43C42A3519CA82AD00E9DCFA /* Build configuration list for PBXNativeTarget "neteq_osx" */;
 			buildPhases = (
 				43C429E319CA82AD00E9DCFA /* Sources */,
 				43C42A0519CA82AD00E9DCFA /* Frameworks */,
@@ -538,9 +539,9 @@
 			);
 			dependencies = (
 			);
-			name = neteq_sim;
+			name = neteq_osx;
 			productName = neteq;
-			productReference = 43C42A3819CA82AD00E9DCFA /* libneteq_sim.a */;
+			productReference = 43C42A3819CA82AD00E9DCFA /* libneteq_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -565,7 +566,7 @@
 			projectRoot = "";
 			targets = (
 				430D8F4A19862490009E763A /* neteq */,
-				43C429E219CA82AD00E9DCFA /* neteq_sim */,
+				43C429E219CA82AD00E9DCFA /* neteq_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -627,6 +628,7 @@
 				43C429EC19CA82AD00E9DCFA /* expand.cc in Sources */,
 				43C429ED19CA82AD00E9DCFA /* delay_manager.cc in Sources */,
 				43C429EE19CA82AD00E9DCFA /* accelerate.cc in Sources */,
+				43E04CBB1D262AC100B39549 /* audio_decoder.cc in Sources */,
 				43C429EF19CA82AD00E9DCFA /* decision_logic_fax.cc in Sources */,
 				43C429F019CA82AD00E9DCFA /* preemptive_expand.cc in Sources */,
 				43C429F119CA82AD00E9DCFA /* dsp_helper.cc in Sources */,
@@ -799,11 +801,12 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/src",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = neteq_sim;
-				SDKROOT = iphoneos;
+				PRODUCT_NAME = neteq_osx;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -828,10 +831,11 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus/src/src",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = neteq_sim;
-				SDKROOT = iphoneos;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = neteq_osx;
+				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -856,7 +860,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43C42A3519CA82AD00E9DCFA /* Build configuration list for PBXNativeTarget "neteq_sim" */ = {
+		43C42A3519CA82AD00E9DCFA /* Build configuration list for PBXNativeTarget "neteq_osx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43C42A3619CA82AD00E9DCFA /* Debug */,

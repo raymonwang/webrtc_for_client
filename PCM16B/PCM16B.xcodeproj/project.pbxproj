@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D8F0A198623C6009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8F09198623C6009E763A /* Foundation.framework */; };
 		430D8F3F198623E3009E763A /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F3D198623E3009E763A /* pcm16b.c */; };
+		43E04C1B1D2627B000B39549 /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F3D198623E3009E763A /* pcm16b.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,19 +21,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04C1D1D2627B000B39549 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		430D8F06198623C6009E763A /* libPCM16B.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM16B.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8F09198623C6009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		430D8F0D198623C6009E763A /* PCM16B-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PCM16B-Prefix.pch"; sourceTree = "<group>"; };
-		430D8F17198623C6009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		430D8F1A198623C6009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		430D8F39198623E3009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D8F3B198623E3009E763A /* pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcm16b.h; sourceTree = "<group>"; };
 		430D8F3C198623E3009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		430D8F3D198623E3009E763A /* pcm16b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcm16b.c; sourceTree = "<group>"; };
 		430D8F3E198623E3009E763A /* pcm16b.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pcm16b.gypi; sourceTree = "<group>"; };
+		43E04C211D2627B000B39549 /* libPCM16B_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM16B_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +47,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D8F0A198623C6009E763A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04C1C1D2627B000B39549 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				430D8F0B198623C6009E763A /* PCM16B */,
-				430D8F08198623C6009E763A /* Frameworks */,
 				430D8F07198623C6009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,35 +72,17 @@
 			isa = PBXGroup;
 			children = (
 				430D8F06198623C6009E763A /* libPCM16B.a */,
+				43E04C211D2627B000B39549 /* libPCM16B_osx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		430D8F08198623C6009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				430D8F09198623C6009E763A /* Foundation.framework */,
-				430D8F17198623C6009E763A /* XCTest.framework */,
-				430D8F1A198623C6009E763A /* UIKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		430D8F0B198623C6009E763A /* PCM16B */ = {
 			isa = PBXGroup;
 			children = (
 				430D8F38198623E3009E763A /* pcm16b */,
-				430D8F0C198623C6009E763A /* Supporting Files */,
 			);
 			path = PCM16B;
-			sourceTree = "<group>";
-		};
-		430D8F0C198623C6009E763A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				430D8F0D198623C6009E763A /* PCM16B-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		430D8F38198623E3009E763A /* pcm16b */ = {
@@ -133,6 +126,23 @@
 			productReference = 430D8F06198623C6009E763A /* libPCM16B.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		43E04C191D2627B000B39549 /* PCM16B_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04C1E1D2627B000B39549 /* Build configuration list for PBXNativeTarget "PCM16B_osx" */;
+			buildPhases = (
+				43E04C1A1D2627B000B39549 /* Sources */,
+				43E04C1C1D2627B000B39549 /* Frameworks */,
+				43E04C1D1D2627B000B39549 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PCM16B_osx;
+			productName = PCM16B;
+			productReference = 43E04C211D2627B000B39549 /* libPCM16B_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -155,6 +165,7 @@
 			projectRoot = "";
 			targets = (
 				430D8F05198623C6009E763A /* PCM16B */,
+				43E04C191D2627B000B39549 /* PCM16B_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -165,6 +176,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				430D8F3F198623E3009E763A /* pcm16b.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04C1A1D2627B000B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04C1B1D2627B000B39549 /* pcm16b.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,8 +262,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/PCM16B.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PCM16B/PCM16B-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -266,8 +285,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/PCM16B.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PCM16B/PCM16B-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -280,6 +299,56 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		43E04C1F1D2627B000B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/PCM16B.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04C201D2627B000B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/PCM16B.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc",
+					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/common_audio/signal_processing/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/opus",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -302,6 +371,15 @@
 			buildConfigurations = (
 				430D8F2A198623C6009E763A /* Debug */,
 				430D8F2B198623C6009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04C1E1D2627B000B39549 /* Build configuration list for PBXNativeTarget "PCM16B_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04C1F1D2627B000B39549 /* Debug */,
+				43E04C201D2627B000B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

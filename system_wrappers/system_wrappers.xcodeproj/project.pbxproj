@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D87441986073F009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D87431986073F009E763A /* Foundation.framework */; };
 		430D87CB1986075F009E763A /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D879C1986075F009E763A /* aligned_malloc.cc */; };
 		430D87CC1986075F009E763A /* atomic32_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D879F1986075F009E763A /* atomic32_mac.cc */; };
 		430D87CD1986075F009E763A /* clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A01986075F009E763A /* clock.cc */; };
@@ -39,6 +38,37 @@
 		430D87E71986075F009E763A /* trace_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C71986075F009E763A /* trace_impl.cc */; };
 		430D87E81986075F009E763A /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C91986075F009E763A /* trace_posix.cc */; };
 		43C69C8E1D228CA900427D35 /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C8D1D228CA900427D35 /* metrics_default.cc */; };
+		43E04CE71D262BB500B39549 /* critical_section_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A71986075F009E763A /* critical_section_posix.cc */; };
+		43E04CE81D262BB500B39549 /* data_log_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87AA1986075F009E763A /* data_log_c.cc */; };
+		43E04CE91D262BB500B39549 /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D879C1986075F009E763A /* aligned_malloc.cc */; };
+		43E04CEA1D262BB500B39549 /* sort.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87BD1986075F009E763A /* sort.cc */; };
+		43E04CEB1D262BB500B39549 /* cpu_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A51986075F009E763A /* cpu_info.cc */; };
+		43E04CEC1D262BB500B39549 /* cpu_features.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A41986075F009E763A /* cpu_features.cc */; };
+		43E04CED1D262BB500B39549 /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87AC1986075F009E763A /* event.cc */; };
+		43E04CEE1D262BB500B39549 /* event_tracer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87AF1986075F009E763A /* event_tracer.cc */; };
+		43E04CEF1D262BB500B39549 /* data_log.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A91986075F009E763A /* data_log.cc */; };
+		43E04CF01D262BB500B39549 /* data_log_no_op.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87AB1986075F009E763A /* data_log_no_op.cc */; };
+		43E04CF11D262BB500B39549 /* rw_lock_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B91986075F009E763A /* rw_lock_posix.cc */; };
+		43E04CF21D262BB500B39549 /* rtp_to_ntp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B51986075F009E763A /* rtp_to_ntp.cc */; };
+		43E04CF31D262BB500B39549 /* trace_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C71986075F009E763A /* trace_impl.cc */; };
+		43E04CF41D262BB500B39549 /* event_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87AD1986075F009E763A /* event_posix.cc */; };
+		43E04CF51D262BB500B39549 /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C21986075F009E763A /* thread.cc */; };
+		43E04CF61D262BB500B39549 /* condition_variable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A11986075F009E763A /* condition_variable.cc */; };
+		43E04CF71D262BB500B39549 /* atomic32_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D879F1986075F009E763A /* atomic32_mac.cc */; };
+		43E04CF81D262BB500B39549 /* rw_lock_generic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B71986075F009E763A /* rw_lock_generic.cc */; };
+		43E04CF91D262BB500B39549 /* timestamp_extrapolator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C61986075F009E763A /* timestamp_extrapolator.cc */; };
+		43E04CFA1D262BB500B39549 /* clock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A01986075F009E763A /* clock.cc */; };
+		43E04CFB1D262BB500B39549 /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C8D1D228CA900427D35 /* metrics_default.cc */; };
+		43E04CFC1D262BB500B39549 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B31986075F009E763A /* logging.cc */; };
+		43E04CFD1D262BB500B39549 /* sleep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87BC1986075F009E763A /* sleep.cc */; };
+		43E04CFE1D262BB500B39549 /* tick_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C51986075F009E763A /* tick_util.cc */; };
+		43E04CFF1D262BB500B39549 /* rw_lock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B61986075F009E763A /* rw_lock.cc */; };
+		43E04D001D262BB500B39549 /* field_trial_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B01986075F009E763A /* field_trial_default.cc */; };
+		43E04D011D262BB500B39549 /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C91986075F009E763A /* trace_posix.cc */; };
+		43E04D021D262BB500B39549 /* file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87B11986075F009E763A /* file_impl.cc */; };
+		43E04D031D262BB500B39549 /* thread_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87C31986075F009E763A /* thread_posix.cc */; };
+		43E04D041D262BB500B39549 /* critical_section.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A61986075F009E763A /* critical_section.cc */; };
+		43E04D051D262BB500B39549 /* condition_variable_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87A21986075F009E763A /* condition_variable_posix.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,14 +81,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		43E04D071D262BB500B39549 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		430D87401986073F009E763A /* libsystem_wrappers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsystem_wrappers.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D87431986073F009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		430D87471986073F009E763A /* system_wrappers-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "system_wrappers-Prefix.pch"; sourceTree = "<group>"; };
-		430D87511986073F009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		430D87541986073F009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		430D87741986075F009E763A /* aligned_malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aligned_malloc.h; sourceTree = "<group>"; };
 		430D87751986075F009E763A /* asm_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asm_defines.h; sourceTree = "<group>"; };
 		430D87761986075F009E763A /* atomic32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atomic32.h; sourceTree = "<group>"; };
@@ -144,6 +179,7 @@
 		430D87C91986075F009E763A /* trace_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace_posix.cc; sourceTree = "<group>"; };
 		430D87CA1986075F009E763A /* trace_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_posix.h; sourceTree = "<group>"; };
 		43C69C8D1D228CA900427D35 /* metrics_default.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrics_default.cc; sourceTree = "<group>"; };
+		43E04D0B1D262BB500B39549 /* libsystem_wrappers_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsystem_wrappers_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,7 +187,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D87441986073F009E763A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04D061D262BB500B39549 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				430D87451986073F009E763A /* system_wrappers */,
-				430D87421986073F009E763A /* Frameworks */,
 				430D87411986073F009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,35 +212,17 @@
 			isa = PBXGroup;
 			children = (
 				430D87401986073F009E763A /* libsystem_wrappers.a */,
+				43E04D0B1D262BB500B39549 /* libsystem_wrappers_osx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		430D87421986073F009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				430D87431986073F009E763A /* Foundation.framework */,
-				430D87511986073F009E763A /* XCTest.framework */,
-				430D87541986073F009E763A /* UIKit.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		430D87451986073F009E763A /* system_wrappers */ = {
 			isa = PBXGroup;
 			children = (
 				430D87721986075F009E763A /* system_wrappers */,
-				430D87461986073F009E763A /* Supporting Files */,
 			);
 			path = system_wrappers;
-			sourceTree = "<group>";
-		};
-		430D87461986073F009E763A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				430D87471986073F009E763A /* system_wrappers-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		430D87721986075F009E763A /* system_wrappers */ = {
@@ -347,6 +370,23 @@
 			productReference = 430D87401986073F009E763A /* libsystem_wrappers.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		43E04CE51D262BB500B39549 /* system_wrappers_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E04D081D262BB500B39549 /* Build configuration list for PBXNativeTarget "system_wrappers_osx" */;
+			buildPhases = (
+				43E04CE61D262BB500B39549 /* Sources */,
+				43E04D061D262BB500B39549 /* Frameworks */,
+				43E04D071D262BB500B39549 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = system_wrappers_osx;
+			productName = system_wrappers;
+			productReference = 43E04D0B1D262BB500B39549 /* libsystem_wrappers_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -369,6 +409,7 @@
 			projectRoot = "";
 			targets = (
 				430D873F1986073F009E763A /* system_wrappers */,
+				43E04CE51D262BB500B39549 /* system_wrappers_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -409,6 +450,44 @@
 				430D87E41986075F009E763A /* thread_posix.cc in Sources */,
 				430D87D21986075F009E763A /* critical_section.cc in Sources */,
 				430D87CF1986075F009E763A /* condition_variable_posix.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		43E04CE61D262BB500B39549 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E04CE71D262BB500B39549 /* critical_section_posix.cc in Sources */,
+				43E04CE81D262BB500B39549 /* data_log_c.cc in Sources */,
+				43E04CE91D262BB500B39549 /* aligned_malloc.cc in Sources */,
+				43E04CEA1D262BB500B39549 /* sort.cc in Sources */,
+				43E04CEB1D262BB500B39549 /* cpu_info.cc in Sources */,
+				43E04CEC1D262BB500B39549 /* cpu_features.cc in Sources */,
+				43E04CED1D262BB500B39549 /* event.cc in Sources */,
+				43E04CEE1D262BB500B39549 /* event_tracer.cc in Sources */,
+				43E04CEF1D262BB500B39549 /* data_log.cc in Sources */,
+				43E04CF01D262BB500B39549 /* data_log_no_op.cc in Sources */,
+				43E04CF11D262BB500B39549 /* rw_lock_posix.cc in Sources */,
+				43E04CF21D262BB500B39549 /* rtp_to_ntp.cc in Sources */,
+				43E04CF31D262BB500B39549 /* trace_impl.cc in Sources */,
+				43E04CF41D262BB500B39549 /* event_posix.cc in Sources */,
+				43E04CF51D262BB500B39549 /* thread.cc in Sources */,
+				43E04CF61D262BB500B39549 /* condition_variable.cc in Sources */,
+				43E04CF71D262BB500B39549 /* atomic32_mac.cc in Sources */,
+				43E04CF81D262BB500B39549 /* rw_lock_generic.cc in Sources */,
+				43E04CF91D262BB500B39549 /* timestamp_extrapolator.cc in Sources */,
+				43E04CFA1D262BB500B39549 /* clock.cc in Sources */,
+				43E04CFB1D262BB500B39549 /* metrics_default.cc in Sources */,
+				43E04CFC1D262BB500B39549 /* logging.cc in Sources */,
+				43E04CFD1D262BB500B39549 /* sleep.cc in Sources */,
+				43E04CFE1D262BB500B39549 /* tick_util.cc in Sources */,
+				43E04CFF1D262BB500B39549 /* rw_lock.cc in Sources */,
+				43E04D001D262BB500B39549 /* field_trial_default.cc in Sources */,
+				43E04D011D262BB500B39549 /* trace_posix.cc in Sources */,
+				43E04D021D262BB500B39549 /* file_impl.cc in Sources */,
+				43E04D031D262BB500B39549 /* thread_posix.cc in Sources */,
+				43E04D041D262BB500B39549 /* critical_section.cc in Sources */,
+				43E04D051D262BB500B39549 /* condition_variable_posix.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,14 +581,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/system_wrappers.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "system_wrappers/system_wrappers-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -522,8 +602,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/system_wrappers.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "system_wrappers/system_wrappers-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					WEBRTC_POSIX,
@@ -537,8 +617,59 @@
 					"$(SRCROOT)/../webRTCAPP/Classes",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+		43E04D091D262BB500B39549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/system_wrappers.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		43E04D0A1D262BB500B39549 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/system_wrappers.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_CLOCK_TYPE_REALTIME,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -561,6 +692,15 @@
 			buildConfigurations = (
 				430D87641986073F009E763A /* Debug */,
 				430D87651986073F009E763A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E04D081D262BB500B39549 /* Build configuration list for PBXNativeTarget "system_wrappers_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E04D091D262BB500B39549 /* Debug */,
+				43E04D0A1D262BB500B39549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
