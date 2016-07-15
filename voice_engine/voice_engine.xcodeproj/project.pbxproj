@@ -511,12 +511,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "voice_engine/voice_engine-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_NEON,
+					WEBRTC_VOICE_ENGINE_TYPING_DETECTION,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -540,13 +541,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "voice_engine/voice_engine-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
+					WEBRTC_VOICE_ENGINE_TYPING_DETECTION,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
