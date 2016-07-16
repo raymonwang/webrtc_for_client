@@ -1,0 +1,67 @@
+rw_lock_posix.o: rw_lock_posix.cc \
+ ../../../webrtc/system_wrappers/source/rw_lock_posix.h \
+ ../../../webrtc/system_wrappers/interface/rw_lock_wrapper.h \
+ ../../../webrtc/base/thread_annotations.h ../../../webrtc/typedefs.h \
+ /usr/local/gcc-5.3.0/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-64.h /usr/include/bits/wchar.h \
+ /usr/include/pthread.h /usr/include/endian.h /usr/include/bits/endian.h \
+ /usr/include/bits/byteswap.h /usr/include/sched.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/local/gcc-5.3.0/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/stddef.h \
+ /usr/include/time.h /usr/include/bits/sched.h /usr/include/bits/time.h \
+ /usr/include/xlocale.h /usr/include/bits/pthreadtypes.h \
+ /usr/include/bits/setjmp.h
+
+../../../webrtc/system_wrappers/source/rw_lock_posix.h:
+
+../../../webrtc/system_wrappers/interface/rw_lock_wrapper.h:
+
+../../../webrtc/base/thread_annotations.h:
+
+../../../webrtc/typedefs.h:
+
+/usr/local/gcc-5.3.0/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/stdint.h:
+
+/usr/include/stdint.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/pthread.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/local/gcc-5.3.0/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/stddef.h:
+
+/usr/include/time.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/setjmp.h:
