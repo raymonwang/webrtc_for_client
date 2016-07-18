@@ -1,3 +1,0 @@
-opensslstreamadapter.o: opensslstreamadapter.cc config.h
-
-config.h:
