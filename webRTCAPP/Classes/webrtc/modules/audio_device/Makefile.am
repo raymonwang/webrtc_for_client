@@ -4,7 +4,7 @@ lib_LIBRARIES = libaudio_device.a
 
 INCLUDES = -I../../../ -I./linux
 
-DEFS = -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -D_DEBUG
+DEFS = -DWEBRTC_DUMMY_AUDIO_BUILD -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -D_DEBUG
 
 libaudio_device_a_SOURCES = audio_device_buffer.cc\
 audio_device_generic.cc\
