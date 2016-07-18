@@ -570,6 +570,20 @@
 			remoteGlobalIDString = 43288E841D38E4510044E4F5;
 			remoteInfo = video_processing_osx;
 		};
+		43288F5D1D38ED120044E4F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43288E951D38E8DD0044E4F5 /* video_capture_module.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43288F471D38EB680044E4F5;
+			remoteInfo = video_capture_module_osx;
+		};
+		43288F601D38ED120044E4F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43288F591D38ED110044E4F5 /* video_render_module.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43288F521D38ED110044E4F5;
+			remoteInfo = video_render_module;
+		};
 		43982D6D198F538B0090EABA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43982D69198F53890090EABA /* jingle_peerconnection.xcodeproj */;
@@ -893,6 +907,7 @@
 		43288DE51D38E2D20044E4F5 /* video_coding_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_coding_utility.xcodeproj; path = video_coding_utility/video_coding_utility.xcodeproj; sourceTree = "<group>"; };
 		43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_processing.xcodeproj; path = video_processing/video_processing.xcodeproj; sourceTree = "<group>"; };
 		43288E951D38E8DD0044E4F5 /* video_capture_module.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_capture_module.xcodeproj; path = video_capture_module/video_capture_module.xcodeproj; sourceTree = "<group>"; };
+		43288F591D38ED110044E4F5 /* video_render_module.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_render_module.xcodeproj; path = video_render_module/video_render_module.xcodeproj; sourceTree = "<group>"; };
 		43982D69198F53890090EABA /* jingle_peerconnection.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_peerconnection.xcodeproj; path = jingle_peerconnection/jingle_peerconnection.xcodeproj; sourceTree = "<group>"; };
 		43982ECE198F555E0090EABA /* jingle_sound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = jingle_sound.xcodeproj; path = jingle_sound/jingle_sound.xcodeproj; sourceTree = "<group>"; };
 		43983114198F6E650090EABA /* crssl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = crssl.xcodeproj; path = crssl/crssl.xcodeproj; sourceTree = "<group>"; };
@@ -1671,6 +1686,7 @@
 		43288A301D38DABE0044E4F5 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				43288F591D38ED110044E4F5 /* video_render_module.xcodeproj */,
 				43288E951D38E8DD0044E4F5 /* video_capture_module.xcodeproj */,
 				43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */,
 				43288DD41D38E2710044E4F5 /* Codes */,
@@ -1748,6 +1764,15 @@
 			isa = PBXGroup;
 			children = (
 				43288E9A1D38E8DE0044E4F5 /* libvideo_capture_module.a */,
+				43288F5E1D38ED120044E4F5 /* libvideo_capture_module_osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43288F5A1D38ED110044E4F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43288F611D38ED120044E4F5 /* libvideo_render_module.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3224,6 +3249,10 @@
 					ProjectRef = 43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */;
 				},
 				{
+					ProductGroup = 43288F5A1D38ED110044E4F5 /* Products */;
+					ProjectRef = 43288F591D38ED110044E4F5 /* video_render_module.xcodeproj */;
+				},
+				{
 					ProductGroup = 430D86B11986051D009E763A /* Products */;
 					ProjectRef = 430D86B01986051D009E763A /* voice_engine.xcodeproj */;
 				},
@@ -3596,6 +3625,20 @@
 			fileType = archive.ar;
 			path = libvideo_processing_osx.a;
 			remoteRef = 43288E9C1D38E8DE0044E4F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43288F5E1D38ED120044E4F5 /* libvideo_capture_module_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvideo_capture_module_osx.a;
+			remoteRef = 43288F5D1D38ED120044E4F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43288F611D38ED120044E4F5 /* libvideo_render_module.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvideo_render_module.a;
+			remoteRef = 43288F601D38ED120044E4F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43982D6E198F538B0090EABA /* libjingle_peerconnection.a */ = {

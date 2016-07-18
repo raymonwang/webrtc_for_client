@@ -92,6 +92,22 @@
 		430D9064198628A0009E763A /* audio_device_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = audio_device_ios.mm; sourceTree = "<group>"; };
 		430D9065198628A0009E763A /* audio_device_utility_ios.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_utility_ios.cc; sourceTree = "<group>"; };
 		430D9066198628A0009E763A /* audio_device_utility_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_utility_ios.h; sourceTree = "<group>"; };
+		4328906F1D3C7D6F0044E4F5 /* alsasymboltable_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = alsasymboltable_linux.cc; sourceTree = "<group>"; };
+		432890701D3C7D6F0044E4F5 /* alsasymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alsasymboltable_linux.h; sourceTree = "<group>"; };
+		432890711D3C7D6F0044E4F5 /* audio_device_alsa_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_alsa_linux.cc; sourceTree = "<group>"; };
+		432890721D3C7D6F0044E4F5 /* audio_device_alsa_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_device_alsa_linux.h; sourceTree = "<group>"; };
+		432890731D3C7D6F0044E4F5 /* audio_device_pulse_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_pulse_linux.cc; sourceTree = "<group>"; };
+		432890741D3C7D6F0044E4F5 /* audio_device_pulse_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_device_pulse_linux.h; sourceTree = "<group>"; };
+		432890751D3C7D6F0044E4F5 /* audio_device_utility_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_utility_linux.cc; sourceTree = "<group>"; };
+		432890761D3C7D6F0044E4F5 /* audio_device_utility_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_device_utility_linux.h; sourceTree = "<group>"; };
+		432890771D3C7D6F0044E4F5 /* audio_mixer_manager_alsa_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_mixer_manager_alsa_linux.cc; sourceTree = "<group>"; };
+		432890781D3C7D6F0044E4F5 /* audio_mixer_manager_alsa_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_mixer_manager_alsa_linux.h; sourceTree = "<group>"; };
+		432890791D3C7D6F0044E4F5 /* audio_mixer_manager_pulse_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_mixer_manager_pulse_linux.cc; sourceTree = "<group>"; };
+		4328907A1D3C7D6F0044E4F5 /* audio_mixer_manager_pulse_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_mixer_manager_pulse_linux.h; sourceTree = "<group>"; };
+		4328907B1D3C7D6F0044E4F5 /* latebindingsymboltable_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = latebindingsymboltable_linux.cc; sourceTree = "<group>"; };
+		4328907C1D3C7D6F0044E4F5 /* latebindingsymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = latebindingsymboltable_linux.h; sourceTree = "<group>"; };
+		4328907D1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pulseaudiosymboltable_linux.cc; sourceTree = "<group>"; };
+		4328907E1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pulseaudiosymboltable_linux.h; sourceTree = "<group>"; };
 		43E04E1E1D2639D500B39549 /* libaudio_device_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_device_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43E04E371D263A4600B39549 /* audio_device_mac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_mac.cc; sourceTree = "<group>"; };
 		43E04E381D263A4600B39549 /* audio_device_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_mac.h; sourceTree = "<group>"; };
@@ -142,6 +158,7 @@
 		430D9049198628A0009E763A /* audio_device */ = {
 			isa = PBXGroup;
 			children = (
+				4328906E1D3C7D6F0044E4F5 /* linux */,
 				430D904B198628A0009E763A /* audio_device.gypi */,
 				430D904C198628A0009E763A /* audio_device_buffer.cc */,
 				430D904D198628A0009E763A /* audio_device_buffer.h */,
@@ -195,6 +212,29 @@
 				430D9066198628A0009E763A /* audio_device_utility_ios.h */,
 			);
 			path = ios;
+			sourceTree = "<group>";
+		};
+		4328906E1D3C7D6F0044E4F5 /* linux */ = {
+			isa = PBXGroup;
+			children = (
+				4328906F1D3C7D6F0044E4F5 /* alsasymboltable_linux.cc */,
+				432890701D3C7D6F0044E4F5 /* alsasymboltable_linux.h */,
+				432890711D3C7D6F0044E4F5 /* audio_device_alsa_linux.cc */,
+				432890721D3C7D6F0044E4F5 /* audio_device_alsa_linux.h */,
+				432890731D3C7D6F0044E4F5 /* audio_device_pulse_linux.cc */,
+				432890741D3C7D6F0044E4F5 /* audio_device_pulse_linux.h */,
+				432890751D3C7D6F0044E4F5 /* audio_device_utility_linux.cc */,
+				432890761D3C7D6F0044E4F5 /* audio_device_utility_linux.h */,
+				432890771D3C7D6F0044E4F5 /* audio_mixer_manager_alsa_linux.cc */,
+				432890781D3C7D6F0044E4F5 /* audio_mixer_manager_alsa_linux.h */,
+				432890791D3C7D6F0044E4F5 /* audio_mixer_manager_pulse_linux.cc */,
+				4328907A1D3C7D6F0044E4F5 /* audio_mixer_manager_pulse_linux.h */,
+				4328907B1D3C7D6F0044E4F5 /* latebindingsymboltable_linux.cc */,
+				4328907C1D3C7D6F0044E4F5 /* latebindingsymboltable_linux.h */,
+				4328907D1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.cc */,
+				4328907E1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.h */,
+			);
+			path = linux;
 			sourceTree = "<group>";
 		};
 		43E04E361D263A4600B39549 /* mac */ = {

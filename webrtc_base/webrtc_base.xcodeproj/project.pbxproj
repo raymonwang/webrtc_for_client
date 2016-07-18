@@ -93,6 +93,7 @@
 		430D84B91985E4AC009E763A /* versionparsing.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84511985E4AB009E763A /* versionparsing.cc */; };
 		430D84BA1985E4AC009E763A /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84531985E4AB009E763A /* virtualsocketserver.cc */; };
 		430D84BB1985E4AC009E763A /* worker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84621985E4AC009E763A /* worker.cc */; };
+		432890051D3A32FA0044E4F5 /* linuxfdwalk.c in Sources */ = {isa = PBXBuildFile; fileRef = 432890041D3A32FA0044E4F5 /* linuxfdwalk.c */; };
 		43C67D161D211C8A00427D35 /* sha1.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84081985E4AB009E763A /* sha1.cc */; };
 		43C67D171D211C8A00427D35 /* urlencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D844F1985E4AB009E763A /* urlencode.cc */; };
 		43C67D181D211C8A00427D35 /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84531985E4AB009E763A /* virtualsocketserver.cc */; };
@@ -465,6 +466,7 @@
 		430D86781985EEE1009E763A /* logging.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logging.cc; sourceTree = "<group>"; };
 		430D86791985EEE1009E763A /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		430D867A1985EEE1009E763A /* win32socketinit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32socketinit.cc; sourceTree = "<group>"; };
+		432890041D3A32FA0044E4F5 /* linuxfdwalk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linuxfdwalk.c; sourceTree = "<group>"; };
 		43C67D731D211C8A00427D35 /* libwebrtc_base_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C695901D2148FE00427D35 /* thread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = thread.mm; sourceTree = "<group>"; };
 		43C69C921D228EDA00427D35 /* platform_file.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_file.cc; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 		430D83601985E4AB009E763A /* base */ = {
 			isa = PBXGroup;
 			children = (
+				432890041D3A32FA0044E4F5 /* linuxfdwalk.c */,
 				43C69C921D228EDA00427D35 /* platform_file.cc */,
 				43C69C931D228EDA00427D35 /* platform_file.h */,
 				430D83611985E4AB009E763A /* asyncfile.cc */,
@@ -946,6 +949,7 @@
 				430D84B01985E4AC009E763A /* taskrunner.cc in Sources */,
 				430D849D1985E4AC009E763A /* sharedexclusivelock.cc in Sources */,
 				430D847B1985E4AC009E763A /* httpclient.cc in Sources */,
+				432890051D3A32FA0044E4F5 /* linuxfdwalk.c in Sources */,
 				430D848A1985E4AC009E763A /* natserver.cc in Sources */,
 				430D84941985E4AC009E763A /* posix.cc in Sources */,
 				430D84791985E4AC009E763A /* helpers.cc in Sources */,
