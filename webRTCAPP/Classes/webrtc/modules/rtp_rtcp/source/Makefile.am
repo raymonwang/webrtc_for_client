@@ -4,9 +4,7 @@ lib_LIBRARIES = librtp_rtcp.a
 
 INCLUDES = -I../../../../
 
-AM_CXXFLAGS = -DWEBRTC_POSIX -std=gnu++11
-
-AM_CXXFLAGS += 
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
 
 librtp_rtcp_a_SOURCES = bitrate.cc\
 dtmf_queue.cc\
@@ -39,6 +37,7 @@ rtp_sender_audio.cc\
 rtp_sender.cc\
 rtp_sender_video.cc\
 rtp_utility.cc\
+rtp_utility.h\
 ssrc_database.cc\
 tmmbr_help.cc\
 vp8_partition_aggregator.cc

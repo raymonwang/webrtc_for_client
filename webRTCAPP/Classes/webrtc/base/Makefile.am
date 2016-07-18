@@ -1,6 +1,13 @@
 AUTOMAKE_OPTIONS = foreign
 
-noinst_LIBRARIES = libwebrtc_base.a
+lib_LIBRARIES = libwebrtc_base.a
+
+INCLUDES = -I../../ -I../../third_party/jsoncpp/source/include
+
+DEFS = -DWEBRTC_POSIX -std=gnu++11 -D_DEBUG
+
+DEFS += -DFEATURE_ENABLE_SSL -DSSL_USE_OPENSSL
+
 libwebrtc_base_a_SOURCES = asyncfile.cc \
 asyncinvoker.cc \
 asyncsocket.cc \
@@ -76,8 +83,12 @@ latebindingsymboltable.cc \
 posix.cc \
 x11windowpicker.cc \
 unixfilesystem.cc \
-linux.cc
-
-INCLUDES = -I../../ -I../../third_party/jsoncpp/source/include
-AM_CXXFLAGS = -DWEBRTC_POSIX -std=gnu++11 -fPIC
-AM_CXXFLAGS += -DFEATURE_ENABLE_SSL -DSSL_USE_OPENSSL
+linux.cc \
+logging.cc \
+timeutils.cc \
+checks.cc \
+thread_checker_impl.cc \
+stringencode.cc \
+event.cc\
+exp_filter.cc\
+platform_file.cc

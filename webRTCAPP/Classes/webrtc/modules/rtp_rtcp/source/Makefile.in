@@ -97,6 +97,10 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(librtp_rtcp_a_SOURCES)
 DIST_SOURCES = $(librtp_rtcp_a_SOURCES)
 ETAGS = etags
@@ -117,7 +121,7 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DEFS = @DEFS@
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
 DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -195,7 +199,6 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 lib_LIBRARIES = librtp_rtcp.a
 INCLUDES = -I../../../../
-AM_CXXFLAGS = -DWEBRTC_POSIX -std=gnu++11
 librtp_rtcp_a_SOURCES = bitrate.cc\
 dtmf_queue.cc\
 fec_receiver_impl.cc\
@@ -227,6 +230,7 @@ rtp_sender_audio.cc\
 rtp_sender.cc\
 rtp_sender_video.cc\
 rtp_utility.cc\
+rtp_utility.h\
 ssrc_database.cc\
 tmmbr_help.cc\
 vp8_partition_aggregator.cc
