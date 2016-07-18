@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "432B2FC919CAB14D001267A7"
-               BuildableName = "libvoice_engine_sim.a"
+               BuildableName = "libvoice_engine_osx.a"
                BlueprintName = "voice_engine_osx"
                ReferencedContainer = "container:voice_engine.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "432B2FC919CAB14D001267A7"
-            BuildableName = "libvoice_engine_sim.a"
+            BuildableName = "libvoice_engine_osx.a"
             BlueprintName = "voice_engine_osx"
             ReferencedContainer = "container:voice_engine.xcodeproj">
          </BuildableReference>
