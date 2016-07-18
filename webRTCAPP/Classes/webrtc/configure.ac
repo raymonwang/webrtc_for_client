@@ -40,7 +40,7 @@ AC_FUNC_REALLOC
 AC_CHECK_FUNCS([alarm floor gethostbyname gethostname gettimeofday memmove memset mkdir munmap pow select socket sqrt strchr strdup strerror strncasecmp strrchr strstr strtol])
 
 AC_PROG_RANLIB
-AC_CONFIG_FILES([Makefile modules/Makefile common_audio/Makefile system_wrappers/source/Makefile voice_engine/Makefile base/Makefile])
+AC_CONFIG_FILES([Makefile modules/Makefile common_audio/Makefile system_wrappers/source/Makefile voice_engine/Makefile base/Makefile modules/rtp_rtcp/source/Makefile])
 AM_INIT_AUTOMAKE(webrtc, 1.0)
 
 AC_OUTPUT
