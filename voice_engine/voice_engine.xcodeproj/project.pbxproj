@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D868B1986051C009E763A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D868A1986051C009E763A /* Foundation.framework */; };
 		430D871D1986054F009E763A /* channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BB1986054F009E763A /* channel.cc */; };
 		430D871E1986054F009E763A /* channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BD1986054F009E763A /* channel_manager.cc */; };
 		430D871F1986054F009E763A /* dtmf_inband.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BF1986054F009E763A /* dtmf_inband.cc */; };
@@ -58,7 +57,6 @@
 		432B2FE119CAB14D001267A7 /* channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BD1986054F009E763A /* channel_manager.cc */; };
 		432B2FE219CAB14D001267A7 /* voe_hardware_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D870D1986054F009E763A /* voe_hardware_impl.cc */; };
 		432B2FE319CAB14D001267A7 /* voe_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87031986054F009E763A /* voe_base_impl.cc */; };
-		432B2FE519CAB14D001267A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D868A1986051C009E763A /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,10 +82,6 @@
 
 /* Begin PBXFileReference section */
 		430D86871986051C009E763A /* libvoice_engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoice_engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D868A1986051C009E763A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		430D868E1986051C009E763A /* voice_engine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "voice_engine-Prefix.pch"; sourceTree = "<group>"; };
-		430D86981986051D009E763A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		430D869B1986051D009E763A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		430D86BB1986054F009E763A /* channel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cc; sourceTree = "<group>"; };
 		430D86BC1986054F009E763A /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		430D86BD1986054F009E763A /* channel_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_manager.cc; sourceTree = "<group>"; };
@@ -154,7 +148,7 @@
 		430D871A1986054F009E763A /* voice_engine_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_defines.h; sourceTree = "<group>"; };
 		430D871B1986054F009E763A /* voice_engine_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_engine_impl.cc; sourceTree = "<group>"; };
 		430D871C1986054F009E763A /* voice_engine_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_impl.h; sourceTree = "<group>"; };
-		432B2FEA19CAB14D001267A7 /* libvoice_engine_sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoice_engine_sim.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoice_engine_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +156,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D868B1986051C009E763A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +163,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				432B2FE519CAB14D001267A7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				430D86871986051C009E763A /* libvoice_engine.a */,
-				432B2FEA19CAB14D001267A7 /* libvoice_engine_sim.a */,
+				432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -198,9 +190,6 @@
 		430D86891986051C009E763A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				430D868A1986051C009E763A /* Foundation.framework */,
-				430D86981986051D009E763A /* XCTest.framework */,
-				430D869B1986051D009E763A /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -209,17 +198,8 @@
 			isa = PBXGroup;
 			children = (
 				430D86B91986054F009E763A /* voice_engine */,
-				430D868D1986051C009E763A /* Supporting Files */,
 			);
 			path = voice_engine;
-			sourceTree = "<group>";
-		};
-		430D868D1986051C009E763A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				430D868E1986051C009E763A /* voice_engine-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		430D86B91986054F009E763A /* voice_engine */ = {
@@ -324,9 +304,9 @@
 			productReference = 430D86871986051C009E763A /* libvoice_engine.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		432B2FC919CAB14D001267A7 /* voice_engine_sim */ = {
+		432B2FC919CAB14D001267A7 /* voice_engine_osx */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 432B2FE719CAB14D001267A7 /* Build configuration list for PBXNativeTarget "voice_engine_sim" */;
+			buildConfigurationList = 432B2FE719CAB14D001267A7 /* Build configuration list for PBXNativeTarget "voice_engine_osx" */;
 			buildPhases = (
 				432B2FCA19CAB14D001267A7 /* Sources */,
 				432B2FE419CAB14D001267A7 /* Frameworks */,
@@ -336,9 +316,9 @@
 			);
 			dependencies = (
 			);
-			name = voice_engine_sim;
+			name = voice_engine_osx;
 			productName = voice_engine;
-			productReference = 432B2FEA19CAB14D001267A7 /* libvoice_engine_sim.a */;
+			productReference = 432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -363,7 +343,7 @@
 			projectRoot = "";
 			targets = (
 				430D86861986051C009E763A /* voice_engine */,
-				432B2FC919CAB14D001267A7 /* voice_engine_sim */,
+				432B2FC919CAB14D001267A7 /* voice_engine_osx */,
 			);
 		};
 /* End PBXProject section */
@@ -509,7 +489,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "voice_engine/voice_engine-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
@@ -539,7 +519,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "voice_engine/voice_engine-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
@@ -568,7 +548,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "voice_engine/voice_engine-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					WEBRTC_POSIX,
@@ -584,10 +564,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = voice_engine_sim;
+				PRODUCT_NAME = voice_engine_osx;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -596,7 +577,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/voice_engine.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "voice_engine/voice_engine-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					WEBRTC_POSIX,
@@ -611,10 +592,11 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = voice_engine_sim;
+				PRODUCT_NAME = voice_engine_osx;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};
@@ -639,7 +621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		432B2FE719CAB14D001267A7 /* Build configuration list for PBXNativeTarget "voice_engine_sim" */ = {
+		432B2FE719CAB14D001267A7 /* Build configuration list for PBXNativeTarget "voice_engine_osx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				432B2FE819CAB14D001267A7 /* Debug */,
