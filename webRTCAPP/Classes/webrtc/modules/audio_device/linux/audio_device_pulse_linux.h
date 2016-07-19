@@ -375,7 +375,9 @@ private:
     pa_buffer_attr _recBufferAttr;
 
     char _oldKeyState[32];
+#if defined(USE_X11)
     Display* _XDisplay;
+#endif
 };
 
 }
