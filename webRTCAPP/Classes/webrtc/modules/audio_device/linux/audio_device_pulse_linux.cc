@@ -201,7 +201,8 @@ int32_t AudioDeviceLinuxPulse::Init()
     _playError = 0;
     _recWarning = 0;
     _recError = 0;
-
+    
+#if defined(USE_X11)
     //Get X display handle for typing detection
     _XDisplay = XOpenDisplay(NULL);
     if (!_XDisplay)
@@ -209,6 +210,7 @@ int32_t AudioDeviceLinuxPulse::Init()
         WEBRTC_TRACE(kTraceWarning, kTraceAudioDevice, _id,
           "  failed to open X display, typing detection will not work");
     }
+#endif
 
     // RECORDING
     const char* threadName = "webrtc_audio_module_rec_thread";
@@ -322,13 +324,13 @@ int32_t AudioDeviceLinuxPulse::Terminate()
                      "  failed to terminate PulseAudio");
         return -1;
     }
-
+#if defined(USE_X11)
     if (_XDisplay)
     {
       XCloseDisplay(_XDisplay);
       _XDisplay = NULL;
     }
-
+#endif
     _initialized = false;
     _outputDeviceIsSpecified = false;
     _inputDeviceIsSpecified = false;
@@ -3025,7 +3027,7 @@ bool AudioDeviceLinuxPulse::RecThreadProcess()
 }
 
 bool AudioDeviceLinuxPulse::KeyPressed() const{
-
+#if defined(USE_X11)
   char szKey[32];
   unsigned int i = 0;
   char state = 0;
@@ -3043,5 +3045,8 @@ bool AudioDeviceLinuxPulse::KeyPressed() const{
   // Save old state
   memcpy((char*)_oldKeyState, (char*)szKey, sizeof(_oldKeyState));
   return (state != 0);
+#else
+    return false;
+#endif
 }
 }
