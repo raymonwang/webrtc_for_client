@@ -1,3 +1,3 @@
 AUTOMAKE_OPTIONS = foreign
 
-SUBDIRS = modules base common_audio voice_engine
+SUBDIRS = modules base common_audio voice_engine system_wrappers/source

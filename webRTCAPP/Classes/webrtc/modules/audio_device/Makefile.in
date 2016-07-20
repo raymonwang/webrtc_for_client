@@ -77,10 +77,17 @@ am_libaudio_device_a_OBJECTS = audio_device_buffer.$(OBJEXT) \
 	audio_device_generic.$(OBJEXT) audio_device_impl.$(OBJEXT) \
 	audio_device_utility.$(OBJEXT) \
 	audio_device_utility_linux.$(OBJEXT) \
+	alsasymboltable_linux.$(OBJEXT) \
+	audio_device_alsa_linux.$(OBJEXT) \
+	audio_device_utility_linux.$(OBJEXT) \
+	audio_mixer_manager_alsa_linux.$(OBJEXT) \
+	latebindingsymboltable_linux.$(OBJEXT) \
+	pulseaudiosymboltable_linux.$(OBJEXT) \
+	audio_device_pulse_linux.$(OBJEXT) \
+	audio_mixer_manager_pulse_linux.$(OBJEXT) \
+	audio_device_rtchat_linux.$(OBJEXT) \
 	audio_device_dummy.$(OBJEXT) \
-	audio_device_utility_dummy.$(OBJEXT) \
-	file_audio_device.$(OBJEXT) \
-	file_audio_device_factory.$(OBJEXT)
+	audio_device_utility_dummy.$(OBJEXT)
 libaudio_device_a_OBJECTS = $(am_libaudio_device_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -121,7 +128,7 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
-DEFS = -DWEBRTC_DUMMY_AUDIO_BUILD -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -D_DEBUG
+DEFS = -DWEBRTC_POSIX -DWEBRTC_LINUX -DRTCHAT_SERVER -std=gnu++11 -D_DEBUG
 DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -203,9 +210,16 @@ INCLUDES = -I../../../ -I./linux
 libaudio_device_a_SOURCES = audio_device_buffer.cc \
 	audio_device_generic.cc audio_device_impl.cc \
 	audio_device_utility.cc linux/audio_device_utility_linux.cc \
-	dummy/audio_device_dummy.cc \
-	dummy/audio_device_utility_dummy.cc dummy/file_audio_device.cc \
-	dummy/file_audio_device_factory.cc
+	linux/alsasymboltable_linux.cc \
+	linux/audio_device_alsa_linux.cc \
+	linux/audio_device_utility_linux.cc \
+	linux/audio_mixer_manager_alsa_linux.cc \
+	linux/latebindingsymboltable_linux.cc \
+	linux/pulseaudiosymboltable_linux.cc \
+	linux/audio_device_pulse_linux.cc \
+	linux/audio_mixer_manager_pulse_linux.cc \
+	linux/audio_device_rtchat_linux.cc dummy/audio_device_dummy.cc \
+	dummy/audio_device_utility_dummy.cc
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -305,15 +319,21 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alsasymboltable_linux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_alsa_linux.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_buffer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_dummy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_generic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_impl.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_pulse_linux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_rtchat_linux.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_utility.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_utility_dummy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_device_utility_linux.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_audio_device.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_audio_device_factory.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_mixer_manager_alsa_linux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/audio_mixer_manager_pulse_linux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/latebindingsymboltable_linux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pulseaudiosymboltable_linux.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -343,6 +363,118 @@ audio_device_utility_linux.obj: linux/audio_device_utility_linux.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_utility_linux.obj `if test -f 'linux/audio_device_utility_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_utility_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_utility_linux.cc'; fi`
 
+alsasymboltable_linux.o: linux/alsasymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT alsasymboltable_linux.o -MD -MP -MF $(DEPDIR)/alsasymboltable_linux.Tpo -c -o alsasymboltable_linux.o `test -f 'linux/alsasymboltable_linux.cc' || echo '$(srcdir)/'`linux/alsasymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/alsasymboltable_linux.Tpo $(DEPDIR)/alsasymboltable_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/alsasymboltable_linux.cc' object='alsasymboltable_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o alsasymboltable_linux.o `test -f 'linux/alsasymboltable_linux.cc' || echo '$(srcdir)/'`linux/alsasymboltable_linux.cc
+
+alsasymboltable_linux.obj: linux/alsasymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT alsasymboltable_linux.obj -MD -MP -MF $(DEPDIR)/alsasymboltable_linux.Tpo -c -o alsasymboltable_linux.obj `if test -f 'linux/alsasymboltable_linux.cc'; then $(CYGPATH_W) 'linux/alsasymboltable_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/alsasymboltable_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/alsasymboltable_linux.Tpo $(DEPDIR)/alsasymboltable_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/alsasymboltable_linux.cc' object='alsasymboltable_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o alsasymboltable_linux.obj `if test -f 'linux/alsasymboltable_linux.cc'; then $(CYGPATH_W) 'linux/alsasymboltable_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/alsasymboltable_linux.cc'; fi`
+
+audio_device_alsa_linux.o: linux/audio_device_alsa_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_alsa_linux.o -MD -MP -MF $(DEPDIR)/audio_device_alsa_linux.Tpo -c -o audio_device_alsa_linux.o `test -f 'linux/audio_device_alsa_linux.cc' || echo '$(srcdir)/'`linux/audio_device_alsa_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_alsa_linux.Tpo $(DEPDIR)/audio_device_alsa_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_device_alsa_linux.cc' object='audio_device_alsa_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_alsa_linux.o `test -f 'linux/audio_device_alsa_linux.cc' || echo '$(srcdir)/'`linux/audio_device_alsa_linux.cc
+
+audio_device_alsa_linux.obj: linux/audio_device_alsa_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_alsa_linux.obj -MD -MP -MF $(DEPDIR)/audio_device_alsa_linux.Tpo -c -o audio_device_alsa_linux.obj `if test -f 'linux/audio_device_alsa_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_alsa_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_alsa_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_alsa_linux.Tpo $(DEPDIR)/audio_device_alsa_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_device_alsa_linux.cc' object='audio_device_alsa_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_alsa_linux.obj `if test -f 'linux/audio_device_alsa_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_alsa_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_alsa_linux.cc'; fi`
+
+audio_mixer_manager_alsa_linux.o: linux/audio_mixer_manager_alsa_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_mixer_manager_alsa_linux.o -MD -MP -MF $(DEPDIR)/audio_mixer_manager_alsa_linux.Tpo -c -o audio_mixer_manager_alsa_linux.o `test -f 'linux/audio_mixer_manager_alsa_linux.cc' || echo '$(srcdir)/'`linux/audio_mixer_manager_alsa_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_mixer_manager_alsa_linux.Tpo $(DEPDIR)/audio_mixer_manager_alsa_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_mixer_manager_alsa_linux.cc' object='audio_mixer_manager_alsa_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_mixer_manager_alsa_linux.o `test -f 'linux/audio_mixer_manager_alsa_linux.cc' || echo '$(srcdir)/'`linux/audio_mixer_manager_alsa_linux.cc
+
+audio_mixer_manager_alsa_linux.obj: linux/audio_mixer_manager_alsa_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_mixer_manager_alsa_linux.obj -MD -MP -MF $(DEPDIR)/audio_mixer_manager_alsa_linux.Tpo -c -o audio_mixer_manager_alsa_linux.obj `if test -f 'linux/audio_mixer_manager_alsa_linux.cc'; then $(CYGPATH_W) 'linux/audio_mixer_manager_alsa_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_mixer_manager_alsa_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_mixer_manager_alsa_linux.Tpo $(DEPDIR)/audio_mixer_manager_alsa_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_mixer_manager_alsa_linux.cc' object='audio_mixer_manager_alsa_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_mixer_manager_alsa_linux.obj `if test -f 'linux/audio_mixer_manager_alsa_linux.cc'; then $(CYGPATH_W) 'linux/audio_mixer_manager_alsa_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_mixer_manager_alsa_linux.cc'; fi`
+
+latebindingsymboltable_linux.o: linux/latebindingsymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT latebindingsymboltable_linux.o -MD -MP -MF $(DEPDIR)/latebindingsymboltable_linux.Tpo -c -o latebindingsymboltable_linux.o `test -f 'linux/latebindingsymboltable_linux.cc' || echo '$(srcdir)/'`linux/latebindingsymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/latebindingsymboltable_linux.Tpo $(DEPDIR)/latebindingsymboltable_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/latebindingsymboltable_linux.cc' object='latebindingsymboltable_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o latebindingsymboltable_linux.o `test -f 'linux/latebindingsymboltable_linux.cc' || echo '$(srcdir)/'`linux/latebindingsymboltable_linux.cc
+
+latebindingsymboltable_linux.obj: linux/latebindingsymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT latebindingsymboltable_linux.obj -MD -MP -MF $(DEPDIR)/latebindingsymboltable_linux.Tpo -c -o latebindingsymboltable_linux.obj `if test -f 'linux/latebindingsymboltable_linux.cc'; then $(CYGPATH_W) 'linux/latebindingsymboltable_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/latebindingsymboltable_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/latebindingsymboltable_linux.Tpo $(DEPDIR)/latebindingsymboltable_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/latebindingsymboltable_linux.cc' object='latebindingsymboltable_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o latebindingsymboltable_linux.obj `if test -f 'linux/latebindingsymboltable_linux.cc'; then $(CYGPATH_W) 'linux/latebindingsymboltable_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/latebindingsymboltable_linux.cc'; fi`
+
+pulseaudiosymboltable_linux.o: linux/pulseaudiosymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pulseaudiosymboltable_linux.o -MD -MP -MF $(DEPDIR)/pulseaudiosymboltable_linux.Tpo -c -o pulseaudiosymboltable_linux.o `test -f 'linux/pulseaudiosymboltable_linux.cc' || echo '$(srcdir)/'`linux/pulseaudiosymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pulseaudiosymboltable_linux.Tpo $(DEPDIR)/pulseaudiosymboltable_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/pulseaudiosymboltable_linux.cc' object='pulseaudiosymboltable_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pulseaudiosymboltable_linux.o `test -f 'linux/pulseaudiosymboltable_linux.cc' || echo '$(srcdir)/'`linux/pulseaudiosymboltable_linux.cc
+
+pulseaudiosymboltable_linux.obj: linux/pulseaudiosymboltable_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pulseaudiosymboltable_linux.obj -MD -MP -MF $(DEPDIR)/pulseaudiosymboltable_linux.Tpo -c -o pulseaudiosymboltable_linux.obj `if test -f 'linux/pulseaudiosymboltable_linux.cc'; then $(CYGPATH_W) 'linux/pulseaudiosymboltable_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/pulseaudiosymboltable_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pulseaudiosymboltable_linux.Tpo $(DEPDIR)/pulseaudiosymboltable_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/pulseaudiosymboltable_linux.cc' object='pulseaudiosymboltable_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pulseaudiosymboltable_linux.obj `if test -f 'linux/pulseaudiosymboltable_linux.cc'; then $(CYGPATH_W) 'linux/pulseaudiosymboltable_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/pulseaudiosymboltable_linux.cc'; fi`
+
+audio_device_pulse_linux.o: linux/audio_device_pulse_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_pulse_linux.o -MD -MP -MF $(DEPDIR)/audio_device_pulse_linux.Tpo -c -o audio_device_pulse_linux.o `test -f 'linux/audio_device_pulse_linux.cc' || echo '$(srcdir)/'`linux/audio_device_pulse_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_pulse_linux.Tpo $(DEPDIR)/audio_device_pulse_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_device_pulse_linux.cc' object='audio_device_pulse_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_pulse_linux.o `test -f 'linux/audio_device_pulse_linux.cc' || echo '$(srcdir)/'`linux/audio_device_pulse_linux.cc
+
+audio_device_pulse_linux.obj: linux/audio_device_pulse_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_pulse_linux.obj -MD -MP -MF $(DEPDIR)/audio_device_pulse_linux.Tpo -c -o audio_device_pulse_linux.obj `if test -f 'linux/audio_device_pulse_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_pulse_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_pulse_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_pulse_linux.Tpo $(DEPDIR)/audio_device_pulse_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_device_pulse_linux.cc' object='audio_device_pulse_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_pulse_linux.obj `if test -f 'linux/audio_device_pulse_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_pulse_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_pulse_linux.cc'; fi`
+
+audio_mixer_manager_pulse_linux.o: linux/audio_mixer_manager_pulse_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_mixer_manager_pulse_linux.o -MD -MP -MF $(DEPDIR)/audio_mixer_manager_pulse_linux.Tpo -c -o audio_mixer_manager_pulse_linux.o `test -f 'linux/audio_mixer_manager_pulse_linux.cc' || echo '$(srcdir)/'`linux/audio_mixer_manager_pulse_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_mixer_manager_pulse_linux.Tpo $(DEPDIR)/audio_mixer_manager_pulse_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_mixer_manager_pulse_linux.cc' object='audio_mixer_manager_pulse_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_mixer_manager_pulse_linux.o `test -f 'linux/audio_mixer_manager_pulse_linux.cc' || echo '$(srcdir)/'`linux/audio_mixer_manager_pulse_linux.cc
+
+audio_mixer_manager_pulse_linux.obj: linux/audio_mixer_manager_pulse_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_mixer_manager_pulse_linux.obj -MD -MP -MF $(DEPDIR)/audio_mixer_manager_pulse_linux.Tpo -c -o audio_mixer_manager_pulse_linux.obj `if test -f 'linux/audio_mixer_manager_pulse_linux.cc'; then $(CYGPATH_W) 'linux/audio_mixer_manager_pulse_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_mixer_manager_pulse_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_mixer_manager_pulse_linux.Tpo $(DEPDIR)/audio_mixer_manager_pulse_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_mixer_manager_pulse_linux.cc' object='audio_mixer_manager_pulse_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_mixer_manager_pulse_linux.obj `if test -f 'linux/audio_mixer_manager_pulse_linux.cc'; then $(CYGPATH_W) 'linux/audio_mixer_manager_pulse_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_mixer_manager_pulse_linux.cc'; fi`
+
+audio_device_rtchat_linux.o: linux/audio_device_rtchat_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_rtchat_linux.o -MD -MP -MF $(DEPDIR)/audio_device_rtchat_linux.Tpo -c -o audio_device_rtchat_linux.o `test -f 'linux/audio_device_rtchat_linux.cc' || echo '$(srcdir)/'`linux/audio_device_rtchat_linux.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_rtchat_linux.Tpo $(DEPDIR)/audio_device_rtchat_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_device_rtchat_linux.cc' object='audio_device_rtchat_linux.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_rtchat_linux.o `test -f 'linux/audio_device_rtchat_linux.cc' || echo '$(srcdir)/'`linux/audio_device_rtchat_linux.cc
+
+audio_device_rtchat_linux.obj: linux/audio_device_rtchat_linux.cc
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_rtchat_linux.obj -MD -MP -MF $(DEPDIR)/audio_device_rtchat_linux.Tpo -c -o audio_device_rtchat_linux.obj `if test -f 'linux/audio_device_rtchat_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_rtchat_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_rtchat_linux.cc'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_rtchat_linux.Tpo $(DEPDIR)/audio_device_rtchat_linux.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='linux/audio_device_rtchat_linux.cc' object='audio_device_rtchat_linux.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_rtchat_linux.obj `if test -f 'linux/audio_device_rtchat_linux.cc'; then $(CYGPATH_W) 'linux/audio_device_rtchat_linux.cc'; else $(CYGPATH_W) '$(srcdir)/linux/audio_device_rtchat_linux.cc'; fi`
+
 audio_device_dummy.o: dummy/audio_device_dummy.cc
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT audio_device_dummy.o -MD -MP -MF $(DEPDIR)/audio_device_dummy.Tpo -c -o audio_device_dummy.o `test -f 'dummy/audio_device_dummy.cc' || echo '$(srcdir)/'`dummy/audio_device_dummy.cc
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/audio_device_dummy.Tpo $(DEPDIR)/audio_device_dummy.Po
@@ -370,34 +502,6 @@ audio_device_utility_dummy.obj: dummy/audio_device_utility_dummy.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dummy/audio_device_utility_dummy.cc' object='audio_device_utility_dummy.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o audio_device_utility_dummy.obj `if test -f 'dummy/audio_device_utility_dummy.cc'; then $(CYGPATH_W) 'dummy/audio_device_utility_dummy.cc'; else $(CYGPATH_W) '$(srcdir)/dummy/audio_device_utility_dummy.cc'; fi`
-
-file_audio_device.o: dummy/file_audio_device.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT file_audio_device.o -MD -MP -MF $(DEPDIR)/file_audio_device.Tpo -c -o file_audio_device.o `test -f 'dummy/file_audio_device.cc' || echo '$(srcdir)/'`dummy/file_audio_device.cc
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/file_audio_device.Tpo $(DEPDIR)/file_audio_device.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dummy/file_audio_device.cc' object='file_audio_device.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o file_audio_device.o `test -f 'dummy/file_audio_device.cc' || echo '$(srcdir)/'`dummy/file_audio_device.cc
-
-file_audio_device.obj: dummy/file_audio_device.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT file_audio_device.obj -MD -MP -MF $(DEPDIR)/file_audio_device.Tpo -c -o file_audio_device.obj `if test -f 'dummy/file_audio_device.cc'; then $(CYGPATH_W) 'dummy/file_audio_device.cc'; else $(CYGPATH_W) '$(srcdir)/dummy/file_audio_device.cc'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/file_audio_device.Tpo $(DEPDIR)/file_audio_device.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dummy/file_audio_device.cc' object='file_audio_device.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o file_audio_device.obj `if test -f 'dummy/file_audio_device.cc'; then $(CYGPATH_W) 'dummy/file_audio_device.cc'; else $(CYGPATH_W) '$(srcdir)/dummy/file_audio_device.cc'; fi`
-
-file_audio_device_factory.o: dummy/file_audio_device_factory.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT file_audio_device_factory.o -MD -MP -MF $(DEPDIR)/file_audio_device_factory.Tpo -c -o file_audio_device_factory.o `test -f 'dummy/file_audio_device_factory.cc' || echo '$(srcdir)/'`dummy/file_audio_device_factory.cc
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/file_audio_device_factory.Tpo $(DEPDIR)/file_audio_device_factory.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dummy/file_audio_device_factory.cc' object='file_audio_device_factory.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o file_audio_device_factory.o `test -f 'dummy/file_audio_device_factory.cc' || echo '$(srcdir)/'`dummy/file_audio_device_factory.cc
-
-file_audio_device_factory.obj: dummy/file_audio_device_factory.cc
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT file_audio_device_factory.obj -MD -MP -MF $(DEPDIR)/file_audio_device_factory.Tpo -c -o file_audio_device_factory.obj `if test -f 'dummy/file_audio_device_factory.cc'; then $(CYGPATH_W) 'dummy/file_audio_device_factory.cc'; else $(CYGPATH_W) '$(srcdir)/dummy/file_audio_device_factory.cc'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/file_audio_device_factory.Tpo $(DEPDIR)/file_audio_device_factory.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='dummy/file_audio_device_factory.cc' object='file_audio_device_factory.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o file_audio_device_factory.obj `if test -f 'dummy/file_audio_device_factory.cc'; then $(CYGPATH_W) 'dummy/file_audio_device_factory.cc'; else $(CYGPATH_W) '$(srcdir)/dummy/file_audio_device_factory.cc'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

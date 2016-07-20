@@ -190,7 +190,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = modules base common_audio voice_engine
+SUBDIRS = modules base common_audio voice_engine system_wrappers/source
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 

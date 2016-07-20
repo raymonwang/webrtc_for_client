@@ -4,7 +4,7 @@ lib_LIBRARIES = libaudio_processing.a
 
 INCLUDES = -I../../../
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -DWEBRTC_NS_FIXED -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -DWEBRTC_NS_FLOAT -std=gnu++11
 
 
 libaudio_processing_a_SOURCES = audio_buffer.cc\
