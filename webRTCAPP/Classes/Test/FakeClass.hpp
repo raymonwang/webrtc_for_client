@@ -6,8 +6,6 @@
 //  Copyright © 2016年 yunwei. All rights reserved.
 //
 
-#include "FakeClass.hpp"
-
 class FakeClass {
 public:
     FakeClass() {};

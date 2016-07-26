@@ -1,247 +1,138 @@
-/* config.h.  Generated from config.h.in by configure.  */
-/* config.h.in.  Generated from configure.ac by autoheader.  */
-
-/* Define to 1 if you have the `alarm' function. */
-#define HAVE_ALARM 1
-
-/* Define to 1 if you have the <arpa/inet.h> header file. */
-#define HAVE_ARPA_INET_H 1
-
-/* Define to 1 if you have the <fcntl.h> header file. */
-#define HAVE_FCNTL_H 1
-
-/* Define to 1 if you have the <float.h> header file. */
-#define HAVE_FLOAT_H 1
-
-/* Define to 1 if you have the `floor' function. */
-/* #undef HAVE_FLOOR */
-
-/* Define to 1 if you have the `gethostbyname' function. */
-#define HAVE_GETHOSTBYNAME 1
-
-/* Define to 1 if you have the `gethostname' function. */
-#define HAVE_GETHOSTNAME 1
-
-/* Define to 1 if you have the `getpagesize' function. */
-#define HAVE_GETPAGESIZE 1
-
-/* Define to 1 if you have the `gettimeofday' function. */
-#define HAVE_GETTIMEOFDAY 1
-
-/* Define to 1 if you have the <inttypes.h> header file. */
-#define HAVE_INTTYPES_H 1
-
-/* Define to 1 if you have the <limits.h> header file. */
-#define HAVE_LIMITS_H 1
-
-/* Define to 1 if your system has a GNU libc compatible `malloc' function, and
-   to 0 otherwise. */
-#define HAVE_MALLOC 1
-
-/* Define to 1 if you have the `memmove' function. */
-#define HAVE_MEMMOVE 1
-
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
-/* Define to 1 if you have the `memset' function. */
-#define HAVE_MEMSET 1
-
-/* Define to 1 if you have the `mkdir' function. */
-#define HAVE_MKDIR 1
-
-/* Define to 1 if you have a working `mmap' system call. */
-#define HAVE_MMAP 1
-
-/* Define to 1 if you have the `munmap' function. */
-#define HAVE_MUNMAP 1
-
-/* Define to 1 if you have the <netdb.h> header file. */
-#define HAVE_NETDB_H 1
-
-/* Define to 1 if you have the <netinet/in.h> header file. */
-#define HAVE_NETINET_IN_H 1
-
-/* Define to 1 if you have the `pow' function. */
-/* #undef HAVE_POW */
-
-/* Define to 1 if the system has the type `ptrdiff_t'. */
-#define HAVE_PTRDIFF_T 1
-
-/* Define to 1 if your system has a GNU libc compatible `realloc' function,
-   and to 0 otherwise. */
-#define HAVE_REALLOC 1
-
-/* Define to 1 if you have the `select' function. */
-#define HAVE_SELECT 1
-
-/* Define to 1 if you have the `socket' function. */
-#define HAVE_SOCKET 1
-
-/* Define to 1 if you have the `sqrt' function. */
-/* #undef HAVE_SQRT */
-
-/* Define to 1 if stdbool.h conforms to C99. */
-#define HAVE_STDBOOL_H 1
-
-/* Define to 1 if you have the <stddef.h> header file. */
-#define HAVE_STDDEF_H 1
-
-/* Define to 1 if you have the <stdint.h> header file. */
-#define HAVE_STDINT_H 1
-
-/* Define to 1 if you have the <stdlib.h> header file. */
-#define HAVE_STDLIB_H 1
-
-/* Define to 1 if you have the `strchr' function. */
-#define HAVE_STRCHR 1
-
-/* Define to 1 if you have the `strdup' function. */
-#define HAVE_STRDUP 1
-
-/* Define to 1 if you have the `strerror' function. */
-#define HAVE_STRERROR 1
-
-/* Define to 1 if you have the <strings.h> header file. */
-#define HAVE_STRINGS_H 1
-
-/* Define to 1 if you have the <string.h> header file. */
-#define HAVE_STRING_H 1
-
-/* Define to 1 if you have the `strncasecmp' function. */
-#define HAVE_STRNCASECMP 1
-
-/* Define to 1 if you have the `strrchr' function. */
-#define HAVE_STRRCHR 1
-
-/* Define to 1 if you have the `strstr' function. */
-#define HAVE_STRSTR 1
-
-/* Define to 1 if you have the `strtol' function. */
-#define HAVE_STRTOL 1
-
-/* Define to 1 if you have the <sys/ioctl.h> header file. */
-#define HAVE_SYS_IOCTL_H 1
-
-/* Define to 1 if you have the <sys/socket.h> header file. */
-#define HAVE_SYS_SOCKET_H 1
-
-/* Define to 1 if you have the <sys/stat.h> header file. */
-#define HAVE_SYS_STAT_H 1
-
-/* Define to 1 if you have the <sys/time.h> header file. */
-#define HAVE_SYS_TIME_H 1
-
-/* Define to 1 if you have the <sys/types.h> header file. */
-#define HAVE_SYS_TYPES_H 1
-
-/* Define to 1 if you have the <termios.h> header file. */
-#define HAVE_TERMIOS_H 1
-
-/* Define to 1 if you have the <unistd.h> header file. */
-#define HAVE_UNISTD_H 1
-
-/* Define to 1 if the system has the type `_Bool'. */
-#define HAVE__BOOL 1
-
-/* Name of package */
-#define PACKAGE "webrtc"
-
-/* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "BUG-REPORT-ADDRESS"
-
-/* Define to the full name of this package. */
-#define PACKAGE_NAME "webrtc"
-
-/* Define to the full name and version of this package. */
-#define PACKAGE_STRING "webrtc VERSION"
-
-/* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "webrtc"
-
-/* Define to the version of this package. */
-#define PACKAGE_VERSION "VERSION"
-
-/* Define to 1 if you have the ANSI C header files. */
-#define STDC_HEADERS 1
-
-/* Version number of package */
-#define VERSION "1.0"
-
-/* Define for Solaris 2.5.1 so the uint32_t typedef from <sys/synch.h>,
-   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
-   #define below would cause a syntax error. */
-/* #undef _UINT32_T */
-
-/* Define for Solaris 2.5.1 so the uint64_t typedef from <sys/synch.h>,
-   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
-   #define below would cause a syntax error. */
-/* #undef _UINT64_T */
-
-/* Define for Solaris 2.5.1 so the uint8_t typedef from <sys/synch.h>,
-   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
-   #define below would cause a syntax error. */
-/* #undef _UINT8_T */
-
-/* Define to `__inline__' or `__inline' if that's what the C compiler
-   calls it, or to nothing if 'inline' is not supported under any name.  */
-#ifndef __cplusplus
-/* #undef inline */
-#endif
-
-/* Define to the type of a signed integer type of width exactly 16 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef int16_t */
-
-/* Define to the type of a signed integer type of width exactly 32 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef int32_t */
-
-/* Define to the type of a signed integer type of width exactly 64 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef int64_t */
-
-/* Define to the type of a signed integer type of width exactly 8 bits if such
-   a type exists and the standard includes do not define it. */
-/* #undef int8_t */
-
-/* Define to rpl_malloc if the replacement function should be used. */
-/* #undef malloc */
-
-/* Define to rpl_realloc if the replacement function should be used. */
-/* #undef realloc */
-
-/* Define to the equivalent of the C99 'restrict' keyword, or to
-   nothing if this is not supported.  Do not define if restrict is
-   supported directly.  */
-#define restrict __restrict
-/* Work around a bug in Sun C++: it does not support _Restrict, even
-   though the corresponding Sun C compiler does, which causes
-   "#define restrict _Restrict" in the previous line.  Perhaps some future
-   version of Sun C++ will work with _Restrict; if so, it'll probably
-   define __RESTRICT, just as Sun C does.  */
-#if defined __SUNPRO_CC && !defined __RESTRICT
-# define _Restrict
-#endif
-
-/* Define to `unsigned int' if <sys/types.h> does not define. */
-/* #undef size_t */
-
-/* Define to `int' if <sys/types.h> does not define. */
-/* #undef ssize_t */
-
-/* Define to the type of an unsigned integer type of width exactly 16 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef uint16_t */
-
-/* Define to the type of an unsigned integer type of width exactly 32 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef uint32_t */
-
-/* Define to the type of an unsigned integer type of width exactly 64 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef uint64_t */
-
-/* Define to the type of an unsigned integer type of width exactly 8 bits if
-   such a type exists and the standard includes do not define it. */
-/* #undef uint8_t */
+/*
+ *  Copyright (c) 2013 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+// TODO(pbos): Move Config from common.h to here.
+
+#ifndef WEBRTC_CONFIG_H_
+#define WEBRTC_CONFIG_H_
+
+#include <string>
+#include <vector>
+
+#include "webrtc/common_types.h"
+#include "webrtc/typedefs.h"
+
+namespace webrtc {
+
+struct SsrcStats {
+  SsrcStats()
+      : sent_width(0),
+        sent_height(0),
+        total_bitrate_bps(0),
+        retransmit_bitrate_bps(0),
+        avg_delay_ms(0),
+        max_delay_ms(0) {}
+  FrameCounts frame_counts;
+  int sent_width;
+  int sent_height;
+  // TODO(holmer): Move bitrate_bps out to the webrtc::Call layer.
+  int total_bitrate_bps;
+  int retransmit_bitrate_bps;
+  int avg_delay_ms;
+  int max_delay_ms;
+  StreamDataCounters rtp_stats;
+  RtcpStatistics rtcp_stats;
+};
+
+// Settings for NACK, see RFC 4585 for details.
+struct NackConfig {
+  NackConfig() : rtp_history_ms(0) {}
+  // Send side: the time RTP packets are stored for retransmissions.
+  // Receive side: the time the receiver is prepared to wait for
+  // retransmissions.
+  // Set to '0' to disable.
+  int rtp_history_ms;
+};
+
+// Settings for forward error correction, see RFC 5109 for details. Set the
+// payload types to '-1' to disable.
+struct FecConfig {
+  FecConfig() : ulpfec_payload_type(-1), red_payload_type(-1) {}
+  std::string ToString() const;
+  // Payload type used for ULPFEC packets.
+  int ulpfec_payload_type;
+
+  // Payload type used for RED packets.
+  int red_payload_type;
+};
+
+// RTP header extension to use for the video stream, see RFC 5285.
+struct RtpExtension {
+  RtpExtension(const std::string& name, int id) : name(name), id(id) {}
+  std::string ToString() const;
+  static bool IsSupported(const std::string& name);
+
+  static const char* kTOffset;
+  static const char* kAbsSendTime;
+  std::string name;
+  int id;
+};
+
+struct VideoStream {
+  VideoStream()
+      : width(0),
+        height(0),
+        max_framerate(-1),
+        min_bitrate_bps(-1),
+        target_bitrate_bps(-1),
+        max_bitrate_bps(-1),
+        max_qp(-1) {}
+  std::string ToString() const;
+
+  size_t width;
+  size_t height;
+  int max_framerate;
+
+  int min_bitrate_bps;
+  int target_bitrate_bps;
+  int max_bitrate_bps;
+
+  int max_qp;
+
+  // Bitrate thresholds for enabling additional temporal layers. Since these are
+  // thresholds in between layers, we have one additional layer. One threshold
+  // gives two temporal layers, one below the threshold and one above, two give
+  // three, and so on.
+  // The VideoEncoder may redistribute bitrates over the temporal layers so a
+  // bitrate threshold of 100k and an estimate of 105k does not imply that we
+  // get 100k in one temporal layer and 5k in the other, just that the bitrate
+  // in the first temporal layer should not exceed 100k.
+  // TODO(pbos): Apart from a special case for two-layer screencast these
+  // thresholds are not propagated to the VideoEncoder. To be implemented.
+  std::vector<int> temporal_layer_thresholds_bps;
+};
+
+struct VideoEncoderConfig {
+  enum ContentType {
+    kRealtimeVideo,
+    kScreenshare,
+  };
+
+  VideoEncoderConfig()
+      : content_type(kRealtimeVideo),
+        encoder_specific_settings(NULL),
+        min_transmit_bitrate_bps(0) {}
+
+  std::string ToString() const;
+
+  std::vector<VideoStream> streams;
+  ContentType content_type;
+  void* encoder_specific_settings;
+
+  // Padding will be used up to this bitrate regardless of the bitrate produced
+  // by the encoder. Padding above what's actually produced by the encoder helps
+  // maintaining a higher bitrate estimate. Padding will however not be sent
+  // unless the estimated bandwidth indicates that the link can handle it.
+  int min_transmit_bitrate_bps;
+};
+
+}  // namespace webrtc
+
+#endif  // WEBRTC_CONFIG_H_
