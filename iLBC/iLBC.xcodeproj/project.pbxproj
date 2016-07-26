@@ -145,6 +145,7 @@
 		43E049C91D2619DE00B39549 /* interpolate.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D5419861F05009E763A /* interpolate.c */; };
 		43E049CA1D2619DE00B39549 /* index_conv_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D4C19861F05009E763A /* index_conv_enc.c */; };
 		43E049CB1D2619DE00B39549 /* enhancer.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D3219861F05009E763A /* enhancer.c */; };
+		43FDB1031D4793F5004DD0EA /* audio_encoder_ilbc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB1021D4793F5004DD0EA /* audio_encoder_ilbc.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -313,6 +314,7 @@
 		430D8D9619861F05009E763A /* xcorr_coef.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xcorr_coef.c; sourceTree = "<group>"; };
 		430D8D9719861F05009E763A /* xcorr_coef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xcorr_coef.h; sourceTree = "<group>"; };
 		43E049D21D2619DE00B39549 /* libiLBC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiLBC_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43FDB1021D4793F5004DD0EA /* audio_encoder_ilbc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_ilbc.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +382,7 @@
 				430D8D1319861F05009E763A /* cb_mem_energy_calc.h */,
 				430D8D1419861F05009E763A /* cb_search.c */,
 				430D8D1519861F05009E763A /* cb_search.h */,
+				43FDB1021D4793F5004DD0EA /* audio_encoder_ilbc.cc */,
 				430D8D1619861F05009E763A /* cb_search_core.c */,
 				430D8D1719861F05009E763A /* cb_search_core.h */,
 				430D8D1819861F05009E763A /* cb_update_best_index.c */,
@@ -640,6 +643,7 @@
 				430D8D9D19861F05009E763A /* cb_mem_energy.c in Sources */,
 				430D8D9919861F05009E763A /* abs_quant_loop.c in Sources */,
 				430D8DA919861F05009E763A /* decode_residual.c in Sources */,
+				43FDB1031D4793F5004DD0EA /* audio_encoder_ilbc.cc in Sources */,
 				430D8DBB19861F05009E763A /* index_conv_dec.c in Sources */,
 				430D8DC119861F05009E763A /* lpc_encode.c in Sources */,
 				430D8D9A19861F05009E763A /* augmented_cb_corr.c in Sources */,
