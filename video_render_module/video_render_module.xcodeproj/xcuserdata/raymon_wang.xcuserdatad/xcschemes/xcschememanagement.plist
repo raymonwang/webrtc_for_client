@@ -7,12 +7,22 @@
 		<key>video_render_module.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>85</integer>
+			<integer>72</integer>
+		</dict>
+		<key>video_render_module_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>73</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>43288F511D38ED110044E4F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43819A401D45FFD3000656B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

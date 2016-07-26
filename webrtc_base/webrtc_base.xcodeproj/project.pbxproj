@@ -94,6 +94,8 @@
 		430D84BA1985E4AC009E763A /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84531985E4AB009E763A /* virtualsocketserver.cc */; };
 		430D84BB1985E4AC009E763A /* worker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84621985E4AC009E763A /* worker.cc */; };
 		432890051D3A32FA0044E4F5 /* linuxfdwalk.c in Sources */ = {isa = PBXBuildFile; fileRef = 432890041D3A32FA0044E4F5 /* linuxfdwalk.c */; };
+		4381C9691D47523E000656B1 /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4381C9681D47523E000656B1 /* thread.cc */; };
+		4381C96A1D475251000656B1 /* thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4381C9681D47523E000656B1 /* thread.cc */; };
 		43C67D161D211C8A00427D35 /* sha1.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84081985E4AB009E763A /* sha1.cc */; };
 		43C67D171D211C8A00427D35 /* urlencode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D844F1985E4AB009E763A /* urlencode.cc */; };
 		43C67D181D211C8A00427D35 /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D84531985E4AB009E763A /* virtualsocketserver.cc */; };
@@ -180,9 +182,7 @@
 		43C67D6A1D211C8A00427D35 /* ratelimiter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83F81985E4AB009E763A /* ratelimiter.cc */; };
 		43C67D6B1D211C8A00427D35 /* testclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D843E1985E4AB009E763A /* testclient.cc */; };
 		43C67D6C1D211C8A00427D35 /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D83661985E4AB009E763A /* asyncinvoker.cc */; };
-		43C695911D2148FE00427D35 /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C695901D2148FE00427D35 /* thread.mm */; };
 		43C69C941D228EDA00427D35 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C921D228EDA00427D35 /* platform_file.cc */; };
-		43E03CC61D24D26900B39549 /* thread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C695901D2148FE00427D35 /* thread.mm */; };
 		43E04CBC1D262B1A00B39549 /* platform_file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C921D228EDA00427D35 /* platform_file.cc */; };
 /* End PBXBuildFile section */
 
@@ -467,8 +467,8 @@
 		430D86791985EEE1009E763A /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		430D867A1985EEE1009E763A /* win32socketinit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32socketinit.cc; sourceTree = "<group>"; };
 		432890041D3A32FA0044E4F5 /* linuxfdwalk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linuxfdwalk.c; sourceTree = "<group>"; };
+		4381C9681D47523E000656B1 /* thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread.cc; sourceTree = "<group>"; };
 		43C67D731D211C8A00427D35 /* libwebrtc_base_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43C695901D2148FE00427D35 /* thread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = thread.mm; sourceTree = "<group>"; };
 		43C69C921D228EDA00427D35 /* platform_file.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_file.cc; sourceTree = "<group>"; };
 		43C69C931D228EDA00427D35 /* platform_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_file.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -520,6 +520,7 @@
 		430D83601985E4AB009E763A /* base */ = {
 			isa = PBXGroup;
 			children = (
+				4381C9681D47523E000656B1 /* thread.cc */,
 				432890041D3A32FA0044E4F5 /* linuxfdwalk.c */,
 				43C69C921D228EDA00427D35 /* platform_file.cc */,
 				43C69C931D228EDA00427D35 /* platform_file.h */,
@@ -742,7 +743,6 @@
 				430D843F1985E4AB009E763A /* testclient.h */,
 				430D84401985E4AB009E763A /* testechoserver.h */,
 				430D84411985E4AB009E763A /* testutils.h */,
-				43C695901D2148FE00427D35 /* thread.mm */,
 				430D84431985E4AB009E763A /* thread.h */,
 				430D84441985E4AB009E763A /* thread_checker.h */,
 				430D84451985E4AB009E763A /* thread_checker_impl.cc */,
@@ -901,7 +901,6 @@
 				430D849A1985E4AC009E763A /* ratetracker.cc in Sources */,
 				430D847F1985E4AC009E763A /* iosfilesystem.mm in Sources */,
 				430D84651985E4AC009E763A /* asynchttprequest.cc in Sources */,
-				43C695911D2148FE00427D35 /* thread.mm in Sources */,
 				430D84961985E4AC009E763A /* proxydetect.cc in Sources */,
 				430D848E1985E4AC009E763A /* network.cc in Sources */,
 				430D84881985E4AC009E763A /* messagequeue.cc in Sources */,
@@ -932,6 +931,7 @@
 				430D84781985E4AC009E763A /* flags.cc in Sources */,
 				430D84751985E4AC009E763A /* filelock.cc in Sources */,
 				430D84641985E4AC009E763A /* asyncfile.cc in Sources */,
+				4381C9691D47523E000656B1 /* thread.cc in Sources */,
 				430D84711985E4AC009E763A /* crc32.cc in Sources */,
 				430D84AE1985E4AC009E763A /* task.cc in Sources */,
 				430D84A01985E4AC009E763A /* socketaddress.cc in Sources */,
@@ -987,7 +987,6 @@
 				43C67D1E1D211C8A00427D35 /* httprequest.cc in Sources */,
 				43C67D1F1D211C8A00427D35 /* stringutils.cc in Sources */,
 				43C67D201D211C8A00427D35 /* optionsfile.cc in Sources */,
-				43E03CC61D24D26900B39549 /* thread.mm in Sources */,
 				43C67D211D211C8A00427D35 /* sslfingerprint.cc in Sources */,
 				43C67D221D211C8A00427D35 /* unixfilesystem.cc in Sources */,
 				43C67D231D211C8A00427D35 /* socketadapters.cc in Sources */,
@@ -997,6 +996,7 @@
 				43C67D271D211C8A00427D35 /* fileutils.cc in Sources */,
 				43C67D281D211C8A00427D35 /* ratetracker.cc in Sources */,
 				43C67D291D211C8A00427D35 /* iosfilesystem.mm in Sources */,
+				4381C96A1D475251000656B1 /* thread.cc in Sources */,
 				43C67D2A1D211C8A00427D35 /* asynchttprequest.cc in Sources */,
 				43C67D2B1D211C8A00427D35 /* proxydetect.cc in Sources */,
 				43C67D2C1D211C8A00427D35 /* network.cc in Sources */,

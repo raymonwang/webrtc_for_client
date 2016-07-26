@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4381C0601D4716DA000656B1 /* overuse_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B971D2260D500427D35 /* overuse_estimator.cc */; };
+		4381C0611D4716DA000656B1 /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B991D2260D500427D35 /* remote_bitrate_estimator_abs_send_time.cc */; };
+		4381C0621D4716DA000656B1 /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B931D2260D500427D35 /* inter_arrival.cc */; };
+		4381C0631D4716DA000656B1 /* remote_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439834F3198FAAFB0090EABA /* remote_rate_control.cc */; };
+		4381C0641D4716DA000656B1 /* remote_bitrate_estimator_single_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439834EE198FAAFB0090EABA /* remote_bitrate_estimator_single_stream.cc */; };
+		4381C0651D4716DA000656B1 /* rate_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439834E9198FAAFB0090EABA /* rate_statistics.cc */; };
+		4381C0661D4716DA000656B1 /* mimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B951D2260D500427D35 /* mimd_rate_control.cc */; };
+		4381C0671D4716DA000656B1 /* aimd_rate_control.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B911D2260D500427D35 /* aimd_rate_control.cc */; };
+		4381C0681D4716DA000656B1 /* overuse_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439834E6198FAAFB0090EABA /* overuse_detector.cc */; };
+		4381C06B1D4716DA000656B1 /* remote_bitrate_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E5198FAAFB0090EABA /* remote_bitrate_estimator.h */; };
+		4381C06C1D4716DA000656B1 /* mock_remote_bitrate_observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E4198FAAFB0090EABA /* mock_remote_bitrate_observer.h */; };
+		4381C06D1D4716DA000656B1 /* overuse_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E7198FAAFB0090EABA /* overuse_detector.h */; };
+		4381C06E1D4716DA000656B1 /* mimd_rate_control.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69B961D2260D500427D35 /* mimd_rate_control.h */; };
+		4381C06F1D4716DA000656B1 /* bwe_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E2198FAAFB0090EABA /* bwe_defines.h */; };
+		4381C0701D4716DA000656B1 /* overuse_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69B981D2260D500427D35 /* overuse_estimator.h */; };
+		4381C0711D4716DA000656B1 /* aimd_rate_control.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69B921D2260D500427D35 /* aimd_rate_control.h */; };
+		4381C0721D4716DA000656B1 /* remote_rate_control.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834F4198FAAFB0090EABA /* remote_rate_control.h */; };
+		4381C0731D4716DA000656B1 /* rate_statistics.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834EA198FAAFB0090EABA /* rate_statistics.h */; };
+		4381C0741D4716DA000656B1 /* inter_arrival.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69B941D2260D500427D35 /* inter_arrival.h */; };
 		43983508198FAAFB0090EABA /* bwe_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E2198FAAFB0090EABA /* bwe_defines.h */; };
 		43983509198FAAFB0090EABA /* mock_remote_bitrate_observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E4198FAAFB0090EABA /* mock_remote_bitrate_observer.h */; };
 		4398350A198FAAFB0090EABA /* remote_bitrate_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 439834E5198FAAFB0090EABA /* remote_bitrate_estimator.h */; };
@@ -29,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4381C0781D4716DA000656B1 /* librbe_components_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librbe_components_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		439834D1198FAAC60090EABA /* librbe_components.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librbe_components.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		439834E2198FAAFB0090EABA /* bwe_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bwe_defines.h; sourceTree = "<group>"; };
 		439834E4198FAAFB0090EABA /* mock_remote_bitrate_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_remote_bitrate_observer.h; sourceTree = "<group>"; };
@@ -54,6 +74,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4381C0691D4716DA000656B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		439834CE198FAAC60090EABA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -76,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				439834D1198FAAC60090EABA /* librbe_components.a */,
+				4381C0781D4716DA000656B1 /* librbe_components_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +156,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4381C06A1D4716DA000656B1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4381C06B1D4716DA000656B1 /* remote_bitrate_estimator.h in Headers */,
+				4381C06C1D4716DA000656B1 /* mock_remote_bitrate_observer.h in Headers */,
+				4381C06D1D4716DA000656B1 /* overuse_detector.h in Headers */,
+				4381C06E1D4716DA000656B1 /* mimd_rate_control.h in Headers */,
+				4381C06F1D4716DA000656B1 /* bwe_defines.h in Headers */,
+				4381C0701D4716DA000656B1 /* overuse_estimator.h in Headers */,
+				4381C0711D4716DA000656B1 /* aimd_rate_control.h in Headers */,
+				4381C0721D4716DA000656B1 /* remote_rate_control.h in Headers */,
+				4381C0731D4716DA000656B1 /* rate_statistics.h in Headers */,
+				4381C0741D4716DA000656B1 /* inter_arrival.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		439834CF198FAAC60090EABA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -148,6 +193,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4381C05E1D4716DA000656B1 /* rbe_components_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4381C0751D4716DA000656B1 /* Build configuration list for PBXNativeTarget "rbe_components_osx" */;
+			buildPhases = (
+				4381C05F1D4716DA000656B1 /* Sources */,
+				4381C0691D4716DA000656B1 /* Frameworks */,
+				4381C06A1D4716DA000656B1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rbe_components_osx;
+			productName = rbe_components;
+			productReference = 4381C0781D4716DA000656B1 /* librbe_components_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		439834D0198FAAC60090EABA /* rbe_components */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 439834D5198FAAC60090EABA /* Build configuration list for PBXNativeTarget "rbe_components" */;
@@ -187,11 +249,28 @@
 			projectRoot = "";
 			targets = (
 				439834D0198FAAC60090EABA /* rbe_components */,
+				4381C05E1D4716DA000656B1 /* rbe_components_osx */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4381C05F1D4716DA000656B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4381C0601D4716DA000656B1 /* overuse_estimator.cc in Sources */,
+				4381C0611D4716DA000656B1 /* remote_bitrate_estimator_abs_send_time.cc in Sources */,
+				4381C0621D4716DA000656B1 /* inter_arrival.cc in Sources */,
+				4381C0631D4716DA000656B1 /* remote_rate_control.cc in Sources */,
+				4381C0641D4716DA000656B1 /* remote_bitrate_estimator_single_stream.cc in Sources */,
+				4381C0651D4716DA000656B1 /* rate_statistics.cc in Sources */,
+				4381C0661D4716DA000656B1 /* mimd_rate_control.cc in Sources */,
+				4381C0671D4716DA000656B1 /* aimd_rate_control.cc in Sources */,
+				4381C0681D4716DA000656B1 /* overuse_detector.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		439834CD198FAAC60090EABA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,6 +290,41 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4381C0761D4716DA000656B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4381C0771D4716DA000656B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		439834D3198FAAC60090EABA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -291,6 +405,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -316,6 +431,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4381C0751D4716DA000656B1 /* Build configuration list for PBXNativeTarget "rbe_components_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4381C0761D4716DA000656B1 /* Debug */,
+				4381C0771D4716DA000656B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		439834CC198FAAC60090EABA /* Build configuration list for PBXProject "rbe_components" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

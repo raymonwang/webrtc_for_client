@@ -7,11 +7,21 @@
 		<key>rbe_components.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>53</integer>
+			<integer>57</integer>
+		</dict>
+		<key>rbe_components_osx.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>100</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>4381C05E1D4716DA000656B1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>439834D0198FAAC60090EABA</key>
 		<dict>
 			<key>primary</key>

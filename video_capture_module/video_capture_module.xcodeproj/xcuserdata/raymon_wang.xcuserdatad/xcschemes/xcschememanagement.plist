@@ -7,12 +7,12 @@
 		<key>video_capture_module.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>83</integer>
+			<integer>89</integer>
 		</dict>
 		<key>video_capture_module_osx.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>84</integer>
+			<integer>90</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

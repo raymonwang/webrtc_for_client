@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4381C04E1D4714C8000656B1 /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43983544198FAD030090EABA /* paced_sender.cc */; };
+		4381C04F1D4714C8000656B1 /* bitrate_prober.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BA31D22626400427D35 /* bitrate_prober.cc */; };
+		4381C0521D4714C8000656B1 /* bitrate_prober.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BA41D22626400427D35 /* bitrate_prober.h */; };
+		4381C0531D4714C8000656B1 /* mock_paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983541198FAD030090EABA /* mock_paced_sender.h */; };
+		4381C0541D4714C8000656B1 /* paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983542198FAD030090EABA /* paced_sender.h */; };
 		43983547198FAD030090EABA /* mock_paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983541198FAD030090EABA /* mock_paced_sender.h */; };
 		43983548198FAD030090EABA /* paced_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983542198FAD030090EABA /* paced_sender.h */; };
 		43983549198FAD030090EABA /* paced_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43983544198FAD030090EABA /* paced_sender.cc */; };
@@ -15,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4381C0581D4714C8000656B1 /* libpaced_sender_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpaced_sender_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43983530198FACD30090EABA /* libpaced_sender.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpaced_sender.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43983541198FAD030090EABA /* mock_paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_paced_sender.h; sourceTree = "<group>"; };
 		43983542198FAD030090EABA /* paced_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = paced_sender.h; sourceTree = "<group>"; };
@@ -25,6 +31,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4381C0501D4714C8000656B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4398352D198FACD30090EABA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -47,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				43983530198FACD30090EABA /* libpaced_sender.a */,
+				4381C0581D4714C8000656B1 /* libpaced_sender_osx.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -84,6 +98,16 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4381C0511D4714C8000656B1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4381C0521D4714C8000656B1 /* bitrate_prober.h in Headers */,
+				4381C0531D4714C8000656B1 /* mock_paced_sender.h in Headers */,
+				4381C0541D4714C8000656B1 /* paced_sender.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4398352E198FACD30090EABA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -97,6 +121,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4381C04C1D4714C8000656B1 /* paced_sender_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4381C0551D4714C8000656B1 /* Build configuration list for PBXNativeTarget "paced_sender_osx" */;
+			buildPhases = (
+				4381C04D1D4714C8000656B1 /* Sources */,
+				4381C0501D4714C8000656B1 /* Frameworks */,
+				4381C0511D4714C8000656B1 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = paced_sender_osx;
+			productName = paced_sender;
+			productReference = 4381C0581D4714C8000656B1 /* libpaced_sender_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		4398352F198FACD30090EABA /* paced_sender */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43983534198FACD30090EABA /* Build configuration list for PBXNativeTarget "paced_sender" */;
@@ -136,11 +177,21 @@
 			projectRoot = "";
 			targets = (
 				4398352F198FACD30090EABA /* paced_sender */,
+				4381C04C1D4714C8000656B1 /* paced_sender_osx */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4381C04D1D4714C8000656B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4381C04E1D4714C8000656B1 /* paced_sender.cc in Sources */,
+				4381C04F1D4714C8000656B1 /* bitrate_prober.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4398352C198FACD30090EABA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -153,6 +204,54 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4381C0561D4714C8000656B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4381C0571D4714C8000656B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					WEBRTC_POSIX,
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_V7,
+					WEBRTC_ARCH_ARM_NEON,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../webRTCAPP/Classes",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		43983532198FACD30090EABA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -272,6 +371,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4381C0551D4714C8000656B1 /* Build configuration list for PBXNativeTarget "paced_sender_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4381C0561D4714C8000656B1 /* Debug */,
+				4381C0571D4714C8000656B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4398352B198FACD30090EABA /* Build configuration list for PBXProject "paced_sender" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
