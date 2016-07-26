@@ -180,6 +180,9 @@
 		43ECEE97197CA80B00E9267B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ECEE96197CA80B00E9267B /* UIKit.framework */; };
 		43ECEE9D197CA80B00E9267B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43ECEE9B197CA80B00E9267B /* InfoPlist.strings */; };
 		43ECEEAB197CA80B00E9267B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43ECEEAA197CA80B00E9267B /* Images.xcassets */; };
+		43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4381A06A1D462CDD000656B1 /* libvpx.a */; };
+		43F1EEEB1D477DE200AEAEC2 /* libwebrtc_i420.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F1EED51D477D5E00AEAEC2 /* libwebrtc_i420.a */; };
+		43FDB02B1D477E9B004DD0EA /* libwebrtc_i420_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43FDB02A1D477E9B004DD0EA /* libwebrtc_i420_osx.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -820,6 +823,20 @@
 			remoteGlobalIDString = 432B2FEA19CAB14D001267A7;
 			remoteInfo = voice_engine_sim;
 		};
+		43F1EED41D477D5E00AEAEC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43F1EE7A1D477D5D00AEAEC2;
+			remoteInfo = webrtc_i420;
+		};
+		43FDB0291D477E9B004DD0EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43F1EEF51D477DEE00AEAEC2;
+			remoteInfo = webrtc_i420_osx;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1068,6 +1085,8 @@
 		43ECEFD1197CA9D200E9267B /* RTCVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoRenderer.h; sourceTree = "<group>"; };
 		43ECEFD2197CA9D200E9267B /* RTCVideoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoSource.h; sourceTree = "<group>"; };
 		43ECEFD3197CA9D200E9267B /* RTCVideoTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoTrack.h; sourceTree = "<group>"; };
+		43F1EDE11D477C3000AEAEC2 /* engine_configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = engine_configurations.h; path = webRTCAPP/Classes/webrtc/engine_configurations.h; sourceTree = "<group>"; };
+		43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_i420.xcodeproj; path = webrtc_i420/webrtc_i420.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1133,6 +1152,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43F1EEEB1D477DE200AEAEC2 /* libwebrtc_i420.a in Frameworks */,
+				43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */,
 				4381C0901D472076000656B1 /* libwebrtc_vp9.a in Frameworks */,
 				4381C08F1D47206F000656B1 /* libwebrtc_vp8.a in Frameworks */,
 				4381C07E1D471745000656B1 /* libyuv.a in Frameworks */,
@@ -1153,6 +1174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43FDB02B1D477E9B004DD0EA /* libwebrtc_i420_osx.a in Frameworks */,
 				4381C07F1D47174B000656B1 /* libyuv_osx.a in Frameworks */,
 				4381C07D1D471710000656B1 /* librbe_components_osx.a in Frameworks */,
 				4381C05D1D4714FA000656B1 /* libpaced_sender_osx.a in Frameworks */,
@@ -1554,6 +1576,7 @@
 		43288DD41D38E2710044E4F5 /* Codes */ = {
 			isa = PBXGroup;
 			children = (
+				43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */,
 				43C69BCC1D227F4300427D35 /* webrtc_vp9.xcodeproj */,
 				43C69BEC1D22811B00427D35 /* webrtc_vp8.xcodeproj */,
 			);
@@ -2017,6 +2040,7 @@
 		43ECEE86197CA80B00E9267B = {
 			isa = PBXGroup;
 			children = (
+				43F1EDE11D477C3000AEAEC2 /* engine_configurations.h */,
 				4381BD6B1D470474000656B1 /* Test */,
 				43819DA11D4621C2000656B1 /* thirdpart */,
 				43288AD71D38DCAC0044E4F5 /* Voice */,
@@ -2201,6 +2225,15 @@
 				4318D0C6197E3A7900D5CADB /* libyuv */,
 			);
 			path = third_party;
+			sourceTree = "<group>";
+		};
+		43F1EE821D477D5D00AEAEC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43F1EED51D477D5E00AEAEC2 /* libwebrtc_i420.a */,
+				43FDB02A1D477E9B004DD0EA /* libwebrtc_i420_osx.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2585,6 +2618,10 @@
 				{
 					ProductGroup = 430D834E1985E422009E763A /* Products */;
 					ProjectRef = 430D834D1985E422009E763A /* webrtc_base.xcodeproj */;
+				},
+				{
+					ProductGroup = 43F1EE821D477D5D00AEAEC2 /* Products */;
+					ProjectRef = 43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */;
 				},
 				{
 					ProductGroup = 43C67C511D20CF2500427D35 /* Products */;
@@ -3253,6 +3290,20 @@
 			fileType = archive.ar;
 			path = libvoice_engine_osx.a;
 			remoteRef = 43F179741D1D5988001817B4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43F1EED51D477D5E00AEAEC2 /* libwebrtc_i420.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_i420.a;
+			remoteRef = 43F1EED41D477D5E00AEAEC2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43FDB02A1D477E9B004DD0EA /* libwebrtc_i420_osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_i420_osx.a;
+			remoteRef = 43FDB0291D477E9B004DD0EA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

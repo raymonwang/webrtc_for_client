@@ -157,6 +157,10 @@
 		43E04AB51D26215400B39549 /* vp8_partition_aggregator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998AC119863072003C5793 /* vp8_partition_aggregator.h */; };
 		43E04AB61D26215400B39549 /* fec_private_tables_bursty.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8519863071003C5793 /* fec_private_tables_bursty.h */; };
 		43E04AB71D26215400B39549 /* fec_private_tables_random.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998A8619863071003C5793 /* fec_private_tables_random.h */; };
+		43FDB0C31D478121004DD0EA /* bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0C11D478121004DD0EA /* bitrate.cc */; };
+		43FDB0C41D478121004DD0EA /* bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0C11D478121004DD0EA /* bitrate.cc */; };
+		43FDB0C51D478121004DD0EA /* bitrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0C21D478121004DD0EA /* bitrate.h */; };
+		43FDB0C61D478121004DD0EA /* bitrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0C21D478121004DD0EA /* bitrate.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,6 +242,8 @@
 		43C69C9B1D2290E900427D35 /* rtp_format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_format.h; sourceTree = "<group>"; };
 		43C69CA01D22918400427D35 /* rtp_format_video_generic.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_format_video_generic.cc; sourceTree = "<group>"; };
 		43E04ABB1D26215400B39549 /* librtp_rtcp_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtp_rtcp_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43FDB0C11D478121004DD0EA /* bitrate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitrate.cc; sourceTree = "<group>"; };
+		43FDB0C21D478121004DD0EA /* bitrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +309,8 @@
 		43998A7E19863071003C5793 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				43FDB0C11D478121004DD0EA /* bitrate.cc */,
+				43FDB0C21D478121004DD0EA /* bitrate.h */,
 				43C69C981D2290E900427D35 /* rtp_format_h264.cc */,
 				43C69C991D2290E900427D35 /* rtp_format_h264.h */,
 				43C69C9A1D2290E900427D35 /* rtp_format.cc */,
@@ -432,6 +440,7 @@
 				43998B0719863072003C5793 /* video_codec_information.h in Headers */,
 				43998B0919863072003C5793 /* vp8_partition_aggregator.h in Headers */,
 				43998ACF19863072003C5793 /* fec_private_tables_bursty.h in Headers */,
+				43FDB0C51D478121004DD0EA /* bitrate.h in Headers */,
 				43998AD019863072003C5793 /* fec_private_tables_random.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +491,7 @@
 				43E04AB41D26215400B39549 /* video_codec_information.h in Headers */,
 				43E04AB51D26215400B39549 /* vp8_partition_aggregator.h in Headers */,
 				43E04AB61D26215400B39549 /* fec_private_tables_bursty.h in Headers */,
+				43FDB0C61D478121004DD0EA /* bitrate.h in Headers */,
 				43E04AB71D26215400B39549 /* fec_private_tables_random.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,6 +592,7 @@
 				43998AD119863072003C5793 /* fec_receiver_impl.cc in Sources */,
 				43998AF419863072003C5793 /* rtp_receiver_strategy.cc in Sources */,
 				43998AE119863072003C5793 /* rtcp_receiver_help.cc in Sources */,
+				43FDB0C31D478121004DD0EA /* bitrate.cc in Sources */,
 				43998AFD19863072003C5793 /* rtp_sender_audio.cc in Sources */,
 				43998AD519863072003C5793 /* forward_error_correction_internal.cc in Sources */,
 				43998B0819863072003C5793 /* vp8_partition_aggregator.cc in Sources */,
@@ -621,6 +632,7 @@
 				43E04A811D26215400B39549 /* fec_receiver_impl.cc in Sources */,
 				43E04A831D26215400B39549 /* rtp_receiver_strategy.cc in Sources */,
 				43E04A841D26215400B39549 /* rtcp_receiver_help.cc in Sources */,
+				43FDB0C41D478121004DD0EA /* bitrate.cc in Sources */,
 				43E04A851D26215400B39549 /* rtp_sender_audio.cc in Sources */,
 				43E04A861D26215400B39549 /* forward_error_correction_internal.cc in Sources */,
 				43E04A871D26215400B39549 /* vp8_partition_aggregator.cc in Sources */,

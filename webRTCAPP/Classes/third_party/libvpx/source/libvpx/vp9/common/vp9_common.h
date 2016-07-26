@@ -15,7 +15,7 @@
 
 #include <assert.h>
 
-#include "vpx_config.h"
+#include "./vpx_config.h"
 #include "vpx_mem/vpx_mem.h"
 #include "vpx/vpx_integer.h"
 #include "vp9/common/vp9_systemdependent.h"

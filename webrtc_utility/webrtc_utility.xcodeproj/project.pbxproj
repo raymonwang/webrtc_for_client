@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4381C38C1D473F4E000656B1 /* helpers_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4381C38B1D473F4E000656B1 /* helpers_ios.mm */; };
 		43998B8F19863340003C5793 /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7419863340003C5793 /* audio_frame_operations.h */; };
 		43998B9019863340003C5793 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7519863340003C5793 /* file_player.h */; };
 		43998B9119863340003C5793 /* file_recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7619863340003C5793 /* file_recorder.h */; };
@@ -38,10 +37,11 @@
 		43E04DA21D262DD200B39549 /* file_player_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8119863340003C5793 /* file_player_impl.h */; };
 		43E04DA31D262DD200B39549 /* mock_process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7819863340003C5793 /* mock_process_thread.h */; };
 		43E04DA51D262DD200B39549 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7519863340003C5793 /* file_player.h */; };
+		43FDB0BF1D477F98004DD0EA /* rtp_dump_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */; };
+		43FDB0C01D477F98004DD0EA /* rtp_dump_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4381C38B1D473F4E000656B1 /* helpers_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = helpers_ios.mm; sourceTree = "<group>"; };
 		43998B651986332A003C5793 /* libwebrtc_utility.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_utility.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43998B7419863340003C5793 /* audio_frame_operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_operations.h; sourceTree = "<group>"; };
 		43998B7519863340003C5793 /* file_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_player.h; sourceTree = "<group>"; };
@@ -60,6 +60,8 @@
 		43998B8619863340003C5793 /* process_thread_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = process_thread_impl.cc; sourceTree = "<group>"; };
 		43998B8719863340003C5793 /* process_thread_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_thread_impl.h; sourceTree = "<group>"; };
 		43E04DA91D262DD200B39549 /* libwebrtc_utility_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_utility_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_dump_impl.cc; sourceTree = "<group>"; };
+		43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_dump_impl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,9 +133,10 @@
 		43998B7B19863340003C5793 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				4381C38B1D473F4E000656B1 /* helpers_ios.mm */,
 				43998B7C19863340003C5793 /* Android.mk */,
 				43998B7D19863340003C5793 /* audio_frame_operations.cc */,
+				43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */,
+				43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */,
 				43998B7E19863340003C5793 /* coder.cc */,
 				43998B7F19863340003C5793 /* coder.h */,
 				43998B8019863340003C5793 /* file_player_impl.cc */,
@@ -155,6 +158,7 @@
 			files = (
 				43998B8F19863340003C5793 /* audio_frame_operations.h in Headers */,
 				43998B9719863340003C5793 /* coder.h in Headers */,
+				43FDB0C01D477F98004DD0EA /* rtp_dump_impl.h in Headers */,
 				43998B9119863340003C5793 /* file_recorder.h in Headers */,
 				43998B9F19863340003C5793 /* process_thread_impl.h in Headers */,
 				43998B9B19863340003C5793 /* file_recorder_impl.h in Headers */,
@@ -254,7 +258,7 @@
 			files = (
 				43998B9819863340003C5793 /* file_player_impl.cc in Sources */,
 				43998B9519863340003C5793 /* audio_frame_operations.cc in Sources */,
-				4381C38C1D473F4E000656B1 /* helpers_ios.mm in Sources */,
+				43FDB0BF1D477F98004DD0EA /* rtp_dump_impl.cc in Sources */,
 				43998B9E19863340003C5793 /* process_thread_impl.cc in Sources */,
 				43998B9619863340003C5793 /* coder.cc in Sources */,
 				43998B9A19863340003C5793 /* file_recorder_impl.cc in Sources */,
