@@ -6859,7 +6859,7 @@ else
   RANLIB="$ac_cv_prog_RANLIB"
 fi
 
-ac_config_files="$ac_config_files Makefile modules/Makefile common_audio/Makefile system_wrappers/source/Makefile voice_engine/Makefile base/Makefile modules/rtp_rtcp/source/Makefile modules/bitrate_controller/Makefile"
+ac_config_files="$ac_config_files Makefile modules/audio_coding/codecs/ilbc/Makefile modules/audio_coding/codecs/isac/main/Makefile modules/audio_coding/codecs/isac/fix/Makefile modules/audio_coding/codecs/pcm16b/Makefile modules/audio_coding/codecs/Makefile modules/audio_coding/main/Makefile modules/audio_coding/neteq/Makefile modules/Makefile modules/audio_device/Makefile modules/audio_conference_mixer/Makefile common_audio/Makefile system_wrappers/source/Makefile voice_engine/Makefile base/Makefile modules/rtp_rtcp/source/Makefile modules/bitrate_controller/Makefile"
 
 am__api_version='1.11'
 
@@ -8335,7 +8335,16 @@ do
   case $ac_config_target in
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "modules/audio_coding/codecs/ilbc/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/codecs/ilbc/Makefile" ;;
+    "modules/audio_coding/codecs/isac/main/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/codecs/isac/main/Makefile" ;;
+    "modules/audio_coding/codecs/isac/fix/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/codecs/isac/fix/Makefile" ;;
+    "modules/audio_coding/codecs/pcm16b/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/codecs/pcm16b/Makefile" ;;
+    "modules/audio_coding/codecs/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/codecs/Makefile" ;;
+    "modules/audio_coding/main/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/main/Makefile" ;;
+    "modules/audio_coding/neteq/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_coding/neteq/Makefile" ;;
     "modules/Makefile") CONFIG_FILES="$CONFIG_FILES modules/Makefile" ;;
+    "modules/audio_device/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_device/Makefile" ;;
+    "modules/audio_conference_mixer/Makefile") CONFIG_FILES="$CONFIG_FILES modules/audio_conference_mixer/Makefile" ;;
     "common_audio/Makefile") CONFIG_FILES="$CONFIG_FILES common_audio/Makefile" ;;
     "system_wrappers/source/Makefile") CONFIG_FILES="$CONFIG_FILES system_wrappers/source/Makefile" ;;
     "voice_engine/Makefile") CONFIG_FILES="$CONFIG_FILES voice_engine/Makefile" ;;
