@@ -4,7 +4,7 @@ lib_LIBRARIES = libaudio_decoder_interface.a
 
 INCLUDES = -I../../../../ 
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libaudio_decoder_interface_a_SOURCES = audio_decoder.cc
 

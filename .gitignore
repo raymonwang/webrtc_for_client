@@ -6,3 +6,7 @@ tags
 *.Po
 *.log
 xcschememanagement.plist
+Makefile
+Makefile.in
+config.h
+autom4te.cache

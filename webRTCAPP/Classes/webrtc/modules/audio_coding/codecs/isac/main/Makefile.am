@@ -4,7 +4,7 @@ lib_LIBRARIES = libiSAC.a
 
 INCLUDES = -I../../../../../../ -I../../../../../modules/audio_coding/codecs/isac/main/interface -I../../../../../common_audio/signal_processing/include
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libiSAC_a_SOURCES = source/audio_encoder_isac.cc\
 source/arith_routines.c\

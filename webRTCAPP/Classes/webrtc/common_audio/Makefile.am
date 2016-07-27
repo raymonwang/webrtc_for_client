@@ -4,7 +4,7 @@ lib_LIBRARIES = libcommon_audio.a
 
 INCLUDES = -I../../ -I../../third_party/openmax_dl/
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libcommon_audio_a_SOURCES = audio_converter.cc\
 audio_util.cc\

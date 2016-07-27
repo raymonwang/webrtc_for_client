@@ -4,7 +4,7 @@ lib_LIBRARIES = libneteq.a
 
 INCLUDES = -I../../../../ -I../../../../third_party/opus/src/celt/ -I../../../../third_party/opus/src/include/ -I../../../../third_party/opus/src/src/
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libneteq_a_SOURCES = accelerate.cc\
 audio_classifier.cc\

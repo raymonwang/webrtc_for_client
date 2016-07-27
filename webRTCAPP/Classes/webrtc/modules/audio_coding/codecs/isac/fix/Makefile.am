@@ -4,7 +4,7 @@ lib_LIBRARIES = libiSACFix.a
 
 INCLUDES = -I../../../../../../ -I../../../../../common_audio/signal_processing/include/
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libiSACFix_a_SOURCES = source/audio_encoder_isacfix.cc\
 source/arith_routines.c\

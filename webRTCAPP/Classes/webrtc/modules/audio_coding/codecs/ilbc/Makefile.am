@@ -4,7 +4,7 @@ lib_LIBRARIES = libiLBC.a
 
 INCLUDES = -I../../../../../ -I../../../../../webrtc/common_audio/signal_processing/include/ -I../../../../../webrtc/modules/audio_coding/codecs/ilbc/interface/
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libiLBC_a_SOURCES = audio_encoder_ilbc.cc\
 abs_quant.c\

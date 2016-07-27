@@ -4,7 +4,7 @@ lib_LIBRARIES = libaudio_coding_module.a
 
 INCLUDES = -I../../../../
 
-DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11
+DEFS = -D_DEBUG -DWEBRTC_POSIX -DWEBRTC_LINUX -std=gnu++11 -march=athlon64
 
 libaudio_coding_module_a_SOURCES = acm2/acm_amr.cc\
 acm2/acm_amrwb.cc\
