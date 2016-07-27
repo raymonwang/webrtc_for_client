@@ -736,7 +736,6 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -765,7 +764,6 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

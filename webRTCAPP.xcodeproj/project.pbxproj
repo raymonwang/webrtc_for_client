@@ -181,8 +181,8 @@
 		43ECEE9D197CA80B00E9267B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43ECEE9B197CA80B00E9267B /* InfoPlist.strings */; };
 		43ECEEAB197CA80B00E9267B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43ECEEAA197CA80B00E9267B /* Images.xcassets */; };
 		43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4381A06A1D462CDD000656B1 /* libvpx.a */; };
-		43F1EEEB1D477DE200AEAEC2 /* libwebrtc_i420.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F1EED51D477D5E00AEAEC2 /* libwebrtc_i420.a */; };
 		43FDB02B1D477E9B004DD0EA /* libwebrtc_i420_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43FDB02A1D477E9B004DD0EA /* libwebrtc_i420_osx.a */; };
+		43FDB2371D489A56004DD0EA /* libwebrtc_i420.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F1EED51D477D5E00AEAEC2 /* libwebrtc_i420.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1152,7 +1152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43F1EEEB1D477DE200AEAEC2 /* libwebrtc_i420.a in Frameworks */,
+				43FDB2371D489A56004DD0EA /* libwebrtc_i420.a in Frameworks */,
 				43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */,
 				4381C0901D472076000656B1 /* libwebrtc_vp9.a in Frameworks */,
 				4381C08F1D47206F000656B1 /* libwebrtc_vp8.a in Frameworks */,
