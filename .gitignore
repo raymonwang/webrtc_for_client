@@ -9,3 +9,4 @@ xcschememanagement.plist
 Makefile
 Makefile.in
 autom4te.cache
+config.status
