@@ -39,6 +39,8 @@
 		43E04DA51D262DD200B39549 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7519863340003C5793 /* file_player.h */; };
 		43FDB0BF1D477F98004DD0EA /* rtp_dump_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */; };
 		43FDB0C01D477F98004DD0EA /* rtp_dump_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */; };
+		43FDB30A1D48A631004DD0EA /* rtp_dump_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */; };
+		43FDB30B1D48A631004DD0EA /* rtp_dump_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +178,7 @@
 			files = (
 				43E04D981D262DD200B39549 /* audio_frame_operations.h in Headers */,
 				43E04D991D262DD200B39549 /* coder.h in Headers */,
+				43FDB30B1D48A631004DD0EA /* rtp_dump_impl.h in Headers */,
 				43E04D9A1D262DD200B39549 /* file_recorder.h in Headers */,
 				43E04D9B1D262DD200B39549 /* process_thread_impl.h in Headers */,
 				43E04D9C1D262DD200B39549 /* file_recorder_impl.h in Headers */,
@@ -271,6 +274,7 @@
 			files = (
 				43E04D8E1D262DD200B39549 /* file_player_impl.cc in Sources */,
 				43E04D8F1D262DD200B39549 /* audio_frame_operations.cc in Sources */,
+				43FDB30A1D48A631004DD0EA /* rtp_dump_impl.cc in Sources */,
 				43E04D921D262DD200B39549 /* process_thread_impl.cc in Sources */,
 				43E04D941D262DD200B39549 /* coder.cc in Sources */,
 				43E04D951D262DD200B39549 /* file_recorder_impl.cc in Sources */,
