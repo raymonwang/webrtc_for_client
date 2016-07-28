@@ -119,6 +119,7 @@
 		43AD80E51990A942006EAB38 /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7A641990809F006EAB38 /* libnss_static.a */; };
 		43AD80E61990A95B006EAB38 /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7EF51990934E006EAB38 /* libcrnspr.a */; };
 		43AD80E71990A97D006EAB38 /* libcrnssckbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD807C1990A57A006EAB38 /* libcrnssckbi.a */; };
+		43C3ABA71D49BECB0017C373 /* libvpx_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C3ABA61D49BECB0017C373 /* libvpx_arm64.a */; };
 		43C67C4F1D20CDEF00427D35 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C4C1D20CDE000427D35 /* libopus.a */; };
 		43C67C561D20CF3D00427D35 /* libwebrtc_opus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C551D20CF2600427D35 /* libwebrtc_opus.a */; };
 		43C67C581D20D30400427D35 /* libiSACFix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430959EF1994DE3E00012AD8 /* libiSACFix.a */; };
@@ -711,6 +712,13 @@
 			remoteGlobalIDString = 43AD80D51990A826006EAB38;
 			remoteInfo = crnss;
 		};
+		43C3ABA51D49BECB0017C373 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4381A01B1D462CDC000656B1 /* vpx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43C3ABA01D49BD0A0017C373;
+			remoteInfo = vpx_arm64;
+		};
 		43C67C4B1D20CDE000427D35 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C67C461D20CDE000427D35 /* opus.xcodeproj */;
@@ -1152,6 +1160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C3ABA71D49BECB0017C373 /* libvpx_arm64.a in Frameworks */,
 				43FDB2371D489A56004DD0EA /* libwebrtc_i420.a in Frameworks */,
 				43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */,
 				4381C0901D472076000656B1 /* libwebrtc_vp9.a in Frameworks */,
@@ -1641,6 +1650,7 @@
 			isa = PBXGroup;
 			children = (
 				4381A06A1D462CDD000656B1 /* libvpx.a */,
+				43C3ABA61D49BECB0017C373 /* libvpx_arm64.a */,
 				4381BCBC1D47017C000656B1 /* libvpx_osx.a */,
 			);
 			name = Products;
@@ -3185,6 +3195,13 @@
 			fileType = archive.ar;
 			path = libcrnss.a;
 			remoteRef = 43AD80E01990A827006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43C3ABA61D49BECB0017C373 /* libvpx_arm64.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libvpx_arm64.a;
+			remoteRef = 43C3ABA51D49BECB0017C373 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43C67C4C1D20CDE000427D35 /* libopus.a */ = {

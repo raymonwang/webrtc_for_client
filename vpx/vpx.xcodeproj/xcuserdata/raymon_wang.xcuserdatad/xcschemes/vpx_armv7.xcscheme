@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4381A0131D462CDC000656B1"
-               BuildableName = "libvpx.a"
-               BlueprintName = "vpx"
+               BuildableName = "libvpx_armv7.a"
+               BlueprintName = "vpx_armv7"
                ReferencedContainer = "container:vpx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4381A0131D462CDC000656B1"
-            BuildableName = "libvpx.a"
-            BlueprintName = "vpx"
+            BuildableName = "libvpx_armv7.a"
+            BlueprintName = "vpx_armv7"
             ReferencedContainer = "container:vpx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4381A0131D462CDC000656B1"
-            BuildableName = "libvpx.a"
-            BlueprintName = "vpx"
+            BuildableName = "libvpx_armv7.a"
+            BlueprintName = "vpx_armv7"
             ReferencedContainer = "container:vpx.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
