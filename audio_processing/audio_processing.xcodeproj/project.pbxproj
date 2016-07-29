@@ -999,7 +999,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					WEBRTC_NS_FIXED,
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
@@ -1026,7 +1026,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					WEBRTC_NS_FIXED,
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
