@@ -683,6 +683,7 @@ static void y4m_convert_444_420jpeg(y4m_input *_y4m, unsigned char *_dst,
 static void y4m_convert_mono_420jpeg(y4m_input *_y4m, unsigned char *_dst,
                                      unsigned char *_aux) {
   int c_sz;
+  (void)_aux;
   _dst += _y4m->pic_w * _y4m->pic_h;
   c_sz = ((_y4m->pic_w + _y4m->dst_c_dec_h - 1) / _y4m->dst_c_dec_h) *
          ((_y4m->pic_h + _y4m->dst_c_dec_v - 1) / _y4m->dst_c_dec_v);
@@ -692,11 +693,14 @@ static void y4m_convert_mono_420jpeg(y4m_input *_y4m, unsigned char *_dst,
 /*No conversion function needed.*/
 static void y4m_convert_null(y4m_input *_y4m, unsigned char *_dst,
                              unsigned char *_aux) {
+  (void)_y4m;
+  (void)_dst;
+  (void)_aux;
 }
 
 int y4m_input_open(y4m_input *_y4m, FILE *_fin, char *_skip, int _nskip,
                    int only_420) {
-  char buffer[80];
+  char buffer[80] = {0};
   int  ret;
   int  i;
   /*Read until newline, or 80 cols, whichever happens first.*/
@@ -974,7 +978,9 @@ int y4m_input_open(y4m_input *_y4m, FILE *_fin, char *_skip, int _nskip,
     _y4m->dst_buf = (unsigned char *)malloc(_y4m->dst_buf_sz);
   else
     _y4m->dst_buf = (unsigned char *)malloc(2 * _y4m->dst_buf_sz);
-  _y4m->aux_buf = (unsigned char *)malloc(_y4m->aux_buf_sz);
+
+  if (_y4m->aux_buf_sz > 0)
+    _y4m->aux_buf = (unsigned char *)malloc(_y4m->aux_buf_sz);
   return 0;
 }
 
@@ -1035,12 +1041,12 @@ int y4m_input_fetch_frame(y4m_input *_y4m, FILE *_fin, vpx_image_t *_img) {
   c_w *= bytes_per_sample;
   c_h = (_y4m->pic_h + _y4m->dst_c_dec_v - 1) / _y4m->dst_c_dec_v;
   c_sz = c_w * c_h;
-  _img->stride[PLANE_Y] = _img->stride[PLANE_ALPHA] =
+  _img->stride[VPX_PLANE_Y] = _img->stride[VPX_PLANE_ALPHA] =
       _y4m->pic_w * bytes_per_sample;
-  _img->stride[PLANE_U] = _img->stride[PLANE_V] = c_w;
-  _img->planes[PLANE_Y] = _y4m->dst_buf;
-  _img->planes[PLANE_U] = _y4m->dst_buf + pic_sz;
-  _img->planes[PLANE_V] = _y4m->dst_buf + pic_sz + c_sz;
-  _img->planes[PLANE_ALPHA] = _y4m->dst_buf + pic_sz + 2 * c_sz;
+  _img->stride[VPX_PLANE_U] = _img->stride[VPX_PLANE_V] = c_w;
+  _img->planes[VPX_PLANE_Y] = _y4m->dst_buf;
+  _img->planes[VPX_PLANE_U] = _y4m->dst_buf + pic_sz;
+  _img->planes[VPX_PLANE_V] = _y4m->dst_buf + pic_sz + c_sz;
+  _img->planes[VPX_PLANE_ALPHA] = _y4m->dst_buf + pic_sz + 2 * c_sz;
   return 1;
 }

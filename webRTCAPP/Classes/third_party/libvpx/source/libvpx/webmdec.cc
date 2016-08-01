@@ -13,8 +13,8 @@
 #include <cstring>
 #include <cstdio>
 
-#include "third_party/libwebm/mkvparser.hpp"
-#include "third_party/libwebm/mkvreader.hpp"
+#include "third_party/libwebm/mkvparser/mkvparser.h"
+#include "third_party/libwebm/mkvparser/mkvreader.h"
 
 namespace {
 
@@ -41,6 +41,7 @@ void reset(struct WebmInputContext *const webm_ctx) {
   webm_ctx->block_frame_index = 0;
   webm_ctx->video_track_index = 0;
   webm_ctx->timestamp_ns = 0;
+  webm_ctx->is_key_frame = false;
 }
 
 void get_first_cluster(struct WebmInputContext *const webm_ctx) {
@@ -62,6 +63,7 @@ int file_is_webm(struct WebmInputContext *webm_ctx,
                  struct VpxInputContext *vpx_ctx) {
   mkvparser::MkvReader *const reader = new mkvparser::MkvReader(vpx_ctx->file);
   webm_ctx->reader = reader;
+  webm_ctx->reached_eos = 0;
 
   mkvparser::EBMLHeader header;
   long long pos = 0;
@@ -92,7 +94,7 @@ int file_is_webm(struct WebmInputContext *webm_ctx,
     }
   }
 
-  if (video_track == NULL) {
+  if (video_track == NULL || video_track->GetCodecId() == NULL) {
     rewind_and_reset(webm_ctx, vpx_ctx);
     return 0;
   }
@@ -118,8 +120,12 @@ int file_is_webm(struct WebmInputContext *webm_ctx,
 
 int webm_read_frame(struct WebmInputContext *webm_ctx,
                     uint8_t **buffer,
-                    size_t *bytes_in_buffer,
                     size_t *buffer_size) {
+  // This check is needed for frame parallel decoding, in which case this
+  // function could be called even after it has reached end of input stream.
+  if (webm_ctx->reached_eos) {
+    return 1;
+  }
   mkvparser::Segment *const segment =
       reinterpret_cast<mkvparser::Segment*>(webm_ctx->segment);
   const mkvparser::Cluster* cluster =
@@ -138,7 +144,8 @@ int webm_read_frame(struct WebmInputContext *webm_ctx,
     } else if (block_entry_eos || block_entry->EOS()) {
       cluster = segment->GetNext(cluster);
       if (cluster == NULL || cluster->EOS()) {
-        *bytes_in_buffer = 0;
+        *buffer_size = 0;
+        webm_ctx->reached_eos = 1;
         return 1;
       }
       status = cluster->GetFirst(block_entry);
@@ -154,7 +161,7 @@ int webm_read_frame(struct WebmInputContext *webm_ctx,
       }
       get_new_block = true;
     }
-    if (status) {
+    if (status || block_entry == NULL) {
       return -1;
     }
     if (get_new_block) {
@@ -177,11 +184,11 @@ int webm_read_frame(struct WebmInputContext *webm_ctx,
     if (*buffer == NULL) {
       return -1;
     }
-    *buffer_size = frame.len;
     webm_ctx->buffer = *buffer;
   }
-  *bytes_in_buffer = frame.len;
+  *buffer_size = frame.len;
   webm_ctx->timestamp_ns = block->GetTime(cluster);
+  webm_ctx->is_key_frame = block->IsKey();
 
   mkvparser::MkvReader *const reader =
       reinterpret_cast<mkvparser::MkvReader*>(webm_ctx->reader);
@@ -192,10 +199,9 @@ int webm_guess_framerate(struct WebmInputContext *webm_ctx,
                          struct VpxInputContext *vpx_ctx) {
   uint32_t i = 0;
   uint8_t *buffer = NULL;
-  size_t bytes_in_buffer = 0;
   size_t buffer_size = 0;
   while (webm_ctx->timestamp_ns < 1000000000 && i < 50) {
-    if (webm_read_frame(webm_ctx, &buffer, &bytes_in_buffer, &buffer_size)) {
+    if (webm_read_frame(webm_ctx, &buffer, &buffer_size)) {
       break;
     }
     ++i;
@@ -210,6 +216,7 @@ int webm_guess_framerate(struct WebmInputContext *webm_ctx,
   webm_ctx->block_entry = NULL;
   webm_ctx->block_frame_index = 0;
   webm_ctx->timestamp_ns = 0;
+  webm_ctx->reached_eos = 0;
 
   return 0;
 }

@@ -106,22 +106,24 @@ check_git_hashes() {
   fi
 }
 
+# $1 is the name of an environment variable containing a directory name to
+# test.
+test_env_var_dir() {
+  local dir=$(eval echo "\${$1}")
+  if [ ! -d "${dir}" ]; then
+    elog "'${dir}': No such directory"
+    elog "The $1 environment variable must be set to a valid directory."
+    return 1
+  fi
+}
+
 # This script requires that the LIBVPX_BIN_PATH, LIBVPX_CONFIG_PATH, and
 # LIBVPX_TEST_DATA_PATH variables are in the environment: Confirm that
 # the variables are set and that they all evaluate to directory paths.
 verify_vpx_test_environment() {
-  if [ ! -d "${LIBVPX_BIN_PATH}" ]; then
-    echo "The LIBVPX_BIN_PATH environment variable must be set."
-    return 1
-  fi
-  if [ ! -d "${LIBVPX_CONFIG_PATH}" ]; then
-    echo "The LIBVPX_CONFIG_PATH environment variable must be set."
-    return 1
-  fi
-  if [ ! -d "${LIBVPX_TEST_DATA_PATH}" ]; then
-    echo "The LIBVPX_TEST_DATA_PATH environment variable must be set."
-    return 1
-  fi
+  test_env_var_dir "LIBVPX_BIN_PATH" \
+    && test_env_var_dir "LIBVPX_CONFIG_PATH" \
+    && test_env_var_dir "LIBVPX_TEST_DATA_PATH"
 }
 
 # Greps vpx_config.h in LIBVPX_CONFIG_PATH for positional parameter one, which
@@ -142,6 +144,24 @@ is_windows_target() {
      | grep -q -e win32 -e win64 > /dev/null 2>&1; then
     echo yes
   fi
+}
+
+# Echoes path to $1 when it's executable and exists in ${LIBVPX_BIN_PATH}, or an
+# empty string. Caller is responsible for testing the string once the function
+# returns.
+vpx_tool_path() {
+  local readonly tool_name="$1"
+  local tool_path="${LIBVPX_BIN_PATH}/${tool_name}${VPX_TEST_EXE_SUFFIX}"
+  if [ ! -x "${tool_path}" ]; then
+    # Try one directory up: when running via examples.sh the tool could be in
+    # the parent directory of $LIBVPX_BIN_PATH.
+    tool_path="${LIBVPX_BIN_PATH}/../${tool_name}${VPX_TEST_EXE_SUFFIX}"
+  fi
+
+  if [ ! -x "${tool_path}" ]; then
+    tool_path=""
+  fi
+  echo "${tool_path}"
 }
 
 # Echoes yes to stdout when the file named by positional parameter one exists
@@ -182,102 +202,11 @@ webm_io_available() {
   [ "$(vpx_config_option_enabled CONFIG_WEBM_IO)" = "yes" ] && echo yes
 }
 
-# Echoes yes to stdout when vpxdec exists according to vpx_tool_available().
-vpxdec_available() {
-  [ -n $(vpx_tool_available vpxdec) ] && echo yes
-}
-
-# Wrapper function for running vpxdec in noblit mode. Requires that
-# LIBVPX_BIN_PATH points to the directory containing vpxdec. Positional
-# parameter one is used as the input file path. Positional parameter two, when
-# present, is interpreted as a boolean flag that means the input should be sent
-# to vpxdec via pipe from cat instead of directly.
-vpxdec() {
-  local input="${1}"
-  local pipe_input=${2}
-
-  if [ $# -gt 2 ]; then
-    # shift away $1 and $2 so the remaining arguments can be passed to vpxdec
-    # via $@.
-    shift 2
-  fi
-
-  local decoder="${LIBVPX_BIN_PATH}/vpxdec${VPX_TEST_EXE_SUFFIX}"
-
-  if [ -z "${pipe_input}" ]; then
-    eval "${VPX_TEST_PREFIX}" "${decoder}" "$input" --summary --noblit "$@" \
-        ${devnull}
-  else
-    cat "${input}" \
-        | eval "${VPX_TEST_PREFIX}" "${decoder}" - --summary --noblit "$@" \
-            ${devnull}
-  fi
-}
-
-# Echoes yes to stdout when vpxenc exists according to vpx_tool_available().
-vpxenc_available() {
-  [ -n $(vpx_tool_available vpxenc) ] && echo yes
-}
-
-# Wrapper function for running vpxenc. Positional parameters are interpreted as
-# follows:
-#   1 - codec name
-#   2 - input width
-#   3 - input height
-#   4 - number of frames to encode
-#   5 - path to input file
-#   6 - path to output file
-#       Note: The output file path must end in .ivf to output an IVF file.
-#   7 - extra flags
-#       Note: Extra flags currently supports a special case: when set to "-"
-#             input is piped to vpxenc via cat.
-vpxenc() {
-  local encoder="${LIBVPX_BIN_PATH}/vpxenc${VPX_TEST_EXE_SUFFIX}"
-  local codec="${1}"
-  local width=${2}
-  local height=${3}
-  local frames=${4}
-  local input=${5}
-  local output="${VPX_TEST_OUTPUT_DIR}/${6}"
-  local extra_flags=${7}
-
-  # Because --ivf must be within the command line to get IVF from vpxenc.
-  if echo "${output}" | egrep -q 'ivf$'; then
-    use_ivf=--ivf
-  else
-    unset use_ivf
-  fi
-
-  if [ "${extra_flags}" = "-" ]; then
-    pipe_input=yes
-    extra_flags=${8}
-  else
-    unset pipe_input
-  fi
-
-  if [ -z "${pipe_input}" ]; then
-    eval "${VPX_TEST_PREFIX}" "${encoder}" --codec=${codec} --width=${width} \
-        --height=${height} --limit=${frames} ${use_ivf} ${extra_flags} \
-        --output="${output}" "${input}" ${devnull}
-  else
-    cat "${input}" \
-        | eval "${VPX_TEST_PREFIX}" "${encoder}" --codec=${codec} \
-            --width=${width} --height=${height} --limit=${frames} ${use_ivf} \
-            ${extra_flags} --output="${output}" - ${devnull}
-  fi
-
-  if [ ! -e "${output}" ]; then
-    # Return non-zero exit status: output file doesn't exist, so something
-    # definitely went wrong.
-    return 1
-  fi
-}
-
-# Filters strings from positional parameter one using the filter specified by
-# positional parameter two. Filter behavior depends on the presence of a third
-# positional parameter. When parameter three is present, strings that match the
-# filter are excluded. When omitted, strings matching the filter are included.
-# The filtered string is echoed to stdout.
+# Filters strings from $1 using the filter specified by $2. Filter behavior
+# depends on the presence of $3. When $3 is present, strings that match the
+# filter are excluded. When $3 is omitted, strings matching the filter are
+# included.
+# The filtered result is echoed to stdout.
 filter_strings() {
   strings=${1}
   filter=${2}
@@ -326,6 +255,18 @@ run_tests() {
     tests_to_filter=$(filter_strings "${tests_to_filter}" ${VPX_TEST_FILTER})
   fi
 
+  # User requested test listing: Dump test names and return.
+  if [ "${VPX_TEST_LIST_TESTS}" = "yes" ]; then
+    for test_name in $tests_to_filter; do
+      echo ${test_name}
+    done
+    return
+  fi
+
+  # Don't bother with the environment tests if everything else was disabled.
+  [ -z "${tests_to_filter}" ] && return
+
+  # Combine environment and actual tests.
   local tests_to_run="${env_tests} ${tests_to_filter}"
 
   check_git_hashes
@@ -356,6 +297,7 @@ cat << EOF
     --prefix: Allows for a user specified prefix to be inserted before all test
               programs. Grants the ability, for example, to run test programs
               within valgrind.
+    --list-tests: List all test names and exit without actually running tests.
     --verbose: Verbose output.
 
     When the --bin-path option is not specified the script attempts to use
@@ -415,6 +357,9 @@ while [ -n "$1" ]; do
     --show-program-output)
       devnull=
       ;;
+    --list-tests)
+      VPX_TEST_LIST_TESTS=yes
+      ;;
     *)
       vpx_test_usage
       exit 1
@@ -438,8 +383,7 @@ else
   VPX_TEST_TEMP_ROOT=/tmp
 fi
 
-VPX_TEST_RAND=$(awk 'BEGIN { srand(); printf "%d\n",(rand() * 32768)}')
-VPX_TEST_OUTPUT_DIR="${VPX_TEST_TEMP_ROOT}/vpx_test_${VPX_TEST_RAND}"
+VPX_TEST_OUTPUT_DIR="${VPX_TEST_TEMP_ROOT}/vpx_test_$$"
 
 if ! mkdir -p "${VPX_TEST_OUTPUT_DIR}" || \
    [ ! -d "${VPX_TEST_OUTPUT_DIR}" ]; then
@@ -457,10 +401,15 @@ VP8_IVF_FILE="${LIBVPX_TEST_DATA_PATH}/vp80-00-comprehensive-001.ivf"
 VP9_IVF_FILE="${LIBVPX_TEST_DATA_PATH}/vp90-2-09-subpixel-00.ivf"
 
 VP9_WEBM_FILE="${LIBVPX_TEST_DATA_PATH}/vp90-2-00-quantizer-00.webm"
+VP9_FPM_WEBM_FILE="${LIBVPX_TEST_DATA_PATH}/vp90-2-07-frame_parallel-1.webm"
+VP9_LT_50_FRAMES_WEBM_FILE="${LIBVPX_TEST_DATA_PATH}/vp90-2-02-size-32x08.webm"
 
 YUV_RAW_INPUT="${LIBVPX_TEST_DATA_PATH}/hantro_collage_w352h288.yuv"
 YUV_RAW_INPUT_WIDTH=352
 YUV_RAW_INPUT_HEIGHT=288
+
+Y4M_NOSQ_PAR_INPUT="${LIBVPX_TEST_DATA_PATH}/park_joy_90p_8_420_a10-1.y4m"
+Y4M_720P_INPUT="${LIBVPX_TEST_DATA_PATH}/niklas_1280_720_30.y4m"
 
 # Setup a trap function to clean up after tests complete.
 trap cleanup EXIT
@@ -474,15 +423,16 @@ vlog "$(basename "${0%.*}") test configuration:
   VP9_WEBM_FILE=${VP9_WEBM_FILE}
   VPX_TEST_EXE_SUFFIX=${VPX_TEST_EXE_SUFFIX}
   VPX_TEST_FILTER=${VPX_TEST_FILTER}
+  VPX_TEST_LIST_TESTS=${VPX_TEST_LIST_TESTS}
   VPX_TEST_OUTPUT_DIR=${VPX_TEST_OUTPUT_DIR}
   VPX_TEST_PREFIX=${VPX_TEST_PREFIX}
-  VPX_TEST_RAND=${VPX_TEST_RAND}
   VPX_TEST_RUN_DISABLED_TESTS=${VPX_TEST_RUN_DISABLED_TESTS}
   VPX_TEST_SHOW_PROGRAM_OUTPUT=${VPX_TEST_SHOW_PROGRAM_OUTPUT}
   VPX_TEST_TEMP_ROOT=${VPX_TEST_TEMP_ROOT}
   VPX_TEST_VERBOSE_OUTPUT=${VPX_TEST_VERBOSE_OUTPUT}
   YUV_RAW_INPUT=${YUV_RAW_INPUT}
   YUV_RAW_INPUT_WIDTH=${YUV_RAW_INPUT_WIDTH}
-  YUV_RAW_INPUT_HEIGHT=${YUV_RAW_INPUT_HEIGHT}"
+  YUV_RAW_INPUT_HEIGHT=${YUV_RAW_INPUT_HEIGHT}
+  Y4M_NOSQ_PAR_INPUT=${Y4M_NOSQ_PAR_INPUT}"
 
 fi  # End $VPX_TEST_TOOLS_COMMON_SH pseudo include guard.
