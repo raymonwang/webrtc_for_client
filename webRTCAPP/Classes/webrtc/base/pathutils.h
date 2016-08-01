@@ -44,8 +44,13 @@ public:
   static char DefaultFolderDelimiter();
 
   Pathname();
+  Pathname(const Pathname&);
+  Pathname(Pathname&&);
   Pathname(const std::string& pathname);
   Pathname(const std::string& folder, const std::string& filename);
+
+  Pathname& operator=(const Pathname&);
+  Pathname& operator=(Pathname&&);
 
   // Set's the default folder delimiter for this Pathname
   char folder_delimiter() const { return folder_delimiter_; }
@@ -92,8 +97,10 @@ public:
   bool SetFilename(const std::string& filename);
 
 #if defined(WEBRTC_WIN)
-  bool GetDrive(char *drive, uint32 bytes) const;
-  static bool GetDrive(char *drive, uint32 bytes,const std::string& pathname);
+  bool GetDrive(char* drive, uint32_t bytes) const;
+  static bool GetDrive(char* drive,
+                       uint32_t bytes,
+                       const std::string& pathname);
 #endif
 
 private:

@@ -15,11 +15,12 @@
  * video_capture_impl.h
  */
 
-#include "webrtc/common_video/interface/i420_video_frame.h"
+#include "webrtc/base/scoped_ref_ptr.h"
 #include "webrtc/common_video/libyuv/include/webrtc_libyuv.h"
-#include "webrtc/modules/video_capture/include/video_capture.h"
+#include "webrtc/common_video/rotation.h"
+#include "webrtc/modules/video_capture/video_capture.h"
 #include "webrtc/modules/video_capture/video_capture_config.h"
-#include "webrtc/system_wrappers/interface/tick_util.h"
+#include "webrtc/video_frame.h"
 
 namespace webrtc
 {
@@ -37,8 +38,9 @@ public:
      *   id              - unique identifier of this video capture module object
      *   deviceUniqueIdUTF8 -  name of the device. Available names can be found by using GetDeviceName
      */
-    static VideoCaptureModule* Create(const int32_t id,
-                                      const char* deviceUniqueIdUTF8);
+   static rtc::scoped_refptr<VideoCaptureModule> Create(
+       const int32_t id,
+       const char* deviceUniqueIdUTF8);
 
     /*
      *   Create a video capture module object used for external capture.
@@ -46,20 +48,16 @@ public:
      *   id              - unique identifier of this video capture module object
      *   externalCapture - [out] interface to call when a new frame is captured.
      */
-    static VideoCaptureModule* Create(const int32_t id,
-                                      VideoCaptureExternal*& externalCapture);
+   static rtc::scoped_refptr<VideoCaptureModule> Create(
+       const int32_t id,
+       VideoCaptureExternal*& externalCapture);
 
     static DeviceInfo* CreateDeviceInfo(const int32_t id);
 
     // Helpers for converting between (integral) degrees and
-    // VideoCaptureRotation values.  Return 0 on success.
-    static int32_t RotationFromDegrees(int degrees,
-                                       VideoCaptureRotation* rotation);
-    static int32_t RotationInDegrees(VideoCaptureRotation rotation,
-                                     int* degrees);
-
-    // Implements Module declared functions.
-    virtual int32_t ChangeUniqueId(const int32_t id);
+    // VideoRotation values.  Return 0 on success.
+    static int32_t RotationFromDegrees(int degrees, VideoRotation* rotation);
+    static int32_t RotationInDegrees(VideoRotation rotation, int* degrees);
 
     //Call backs
     virtual void RegisterCaptureDataCallback(
@@ -70,7 +68,11 @@ public:
 
     virtual void SetCaptureDelay(int32_t delayMS);
     virtual int32_t CaptureDelay();
-    virtual int32_t SetCaptureRotation(VideoCaptureRotation rotation);
+    virtual int32_t SetCaptureRotation(VideoRotation rotation);
+    virtual bool SetApplyRotation(bool enable);
+    virtual bool GetApplyRotation() {
+      return apply_rotation_;
+    }
 
     virtual void EnableFrameRateCallback(const bool enable);
     virtual void EnableNoPictureAlarm(const bool enable);
@@ -79,17 +81,14 @@ public:
 
     // Module handling
     virtual int64_t TimeUntilNextProcess();
-    virtual int32_t Process();
+    virtual void Process();
 
     // Implement VideoCaptureExternal
-    // |capture_time| must be specified in the NTP time format in milliseconds.
+    // |capture_time| must be specified in NTP time format in milliseconds.
     virtual int32_t IncomingFrame(uint8_t* videoFrame,
                                   size_t videoFrameLength,
                                   const VideoCaptureCapability& frameInfo,
                                   int64_t captureTime = 0);
-
-    virtual int32_t IncomingI420VideoFrame(I420VideoFrame* video_frame,
-                                           int64_t captureTime = 0);
 
     // Platform dependent
     virtual int32_t StartCapture(const VideoCaptureCapability& capability)
@@ -107,8 +106,7 @@ public:
 protected:
     VideoCaptureImpl(const int32_t id);
     virtual ~VideoCaptureImpl();
-    int32_t DeliverCapturedFrame(I420VideoFrame& captureFrame,
-                                 int64_t capture_time);
+    int32_t DeliverCapturedFrame(VideoFrame& captureFrame);
 
     int32_t _id; // Module ID
     char* _deviceUniqueId; // current Device unique name;
@@ -117,12 +115,14 @@ protected:
     VideoCaptureCapability _requestedCapability; // Should be set by platform dependent code in StartCapture.
 private:
     void UpdateFrameCount();
-    uint32_t CalculateFrameRate(const TickTime& now);
+    uint32_t CalculateFrameRate(int64_t now_ns);
 
     CriticalSectionWrapper& _callBackCs;
 
-    TickTime _lastProcessTime; // last time the module process function was called.
-    TickTime _lastFrameRateCallbackTime; // last time the frame rate callback function was called.
+    // last time the module process function was called.
+    int64_t _lastProcessTimeNanos;
+    // last time the frame rate callback function was called.
+    int64_t _lastFrameRateCallbackTimeNanos;
     bool _frameRateCallBack; // true if EnableFrameRateCallback
     bool _noPictureAlarmCallBack; //true if EnableNoPictureAlarm
     VideoCaptureAlarm _captureAlarm; // current value of the noPictureAlarm
@@ -131,18 +131,16 @@ private:
     VideoCaptureDataCallback* _dataCallBack;
     VideoCaptureFeedBack* _captureCallBack;
 
-    TickTime _lastProcessFrameCount;
-    TickTime _incomingFrameTimes[kFrameRateCountHistorySize];// timestamp for local captured frames
-    VideoRotationMode _rotateFrame; //Set if the frame should be rotated by the capture module.
+    int64_t _lastProcessFrameTimeNanos;
+    // timestamp for local captured frames
+    int64_t _incomingFrameTimesNanos[kFrameRateCountHistorySize];
+    VideoRotation _rotateFrame;  // Set if the frame should be rotated by the
+                                 // capture module.
 
-    I420VideoFrame _captureFrame;
-    VideoFrame _capture_encoded_frame;
+    VideoFrame _captureFrame;
 
-    // Used to make sure incoming timestamp is increasing for every frame.
-    int64_t last_capture_time_;
-
-    // Delta used for translating between NTP and internal timestamps.
-    const int64_t delta_ntp_internal_ms_;
+    // Indicate whether rotation should be applied before delivered externally.
+    bool apply_rotation_;
 };
 }  // namespace videocapturemodule
 }  // namespace webrtc

@@ -8,9 +8,10 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/common.h"
 #include "webrtc/voice_engine/channel_manager.h"
 
+#include "webrtc/common.h"
+#include "webrtc/modules/audio_coding/codecs/builtin_audio_decoder_factory.h"
 #include "webrtc/voice_engine/channel.h"
 
 namespace webrtc {
@@ -46,25 +47,36 @@ ChannelOwner::ChannelRef::ChannelRef(class Channel* channel)
     : channel(channel), ref_count(1) {}
 
 ChannelManager::ChannelManager(uint32_t instance_id, const Config& config)
-    : instance_id_(instance_id),
-      last_channel_id_(-1),
-      lock_(CriticalSectionWrapper::CreateCriticalSection()),
-      config_(config) {}
+    : instance_id_(instance_id), last_channel_id_(-1), config_(config) {}
 
 ChannelOwner ChannelManager::CreateChannel() {
-  return CreateChannelInternal(config_);
+  return CreateChannel(CreateBuiltinAudioDecoderFactory());
 }
 
 ChannelOwner ChannelManager::CreateChannel(const Config& external_config) {
-  return CreateChannelInternal(external_config);
+  return CreateChannel(external_config, CreateBuiltinAudioDecoderFactory());
 }
 
-ChannelOwner ChannelManager::CreateChannelInternal(const Config& config) {
+ChannelOwner ChannelManager::CreateChannel(
+    const rtc::scoped_refptr<AudioDecoderFactory>& decoder_factory) {
+  return CreateChannelInternal(config_, decoder_factory);
+}
+
+ChannelOwner ChannelManager::CreateChannel(
+    const Config& external_config,
+    const rtc::scoped_refptr<AudioDecoderFactory>& decoder_factory) {
+  return CreateChannelInternal(external_config, decoder_factory);
+}
+
+ChannelOwner ChannelManager::CreateChannelInternal(
+    const Config& config,
+    const rtc::scoped_refptr<AudioDecoderFactory>& decoder_factory) {
   Channel* channel;
-  Channel::CreateChannel(channel, ++last_channel_id_, instance_id_, config);
+  Channel::CreateChannel(channel, ++last_channel_id_, instance_id_, config,
+                         decoder_factory);
   ChannelOwner channel_owner(channel);
 
-  CriticalSectionScoped crit(lock_.get());
+  rtc::CritScope crit(&lock_);
 
   channels_.push_back(channel_owner);
 
@@ -72,7 +84,7 @@ ChannelOwner ChannelManager::CreateChannelInternal(const Config& config) {
 }
 
 ChannelOwner ChannelManager::GetChannel(int32_t channel_id) {
-  CriticalSectionScoped crit(lock_.get());
+  rtc::CritScope crit(&lock_);
 
   for (size_t i = 0; i < channels_.size(); ++i) {
     if (channels_[i].channel()->ChannelId() == channel_id)
@@ -82,7 +94,7 @@ ChannelOwner ChannelManager::GetChannel(int32_t channel_id) {
 }
 
 void ChannelManager::GetAllChannels(std::vector<ChannelOwner>* channels) {
-  CriticalSectionScoped crit(lock_.get());
+  rtc::CritScope crit(&lock_);
 
   *channels = channels_;
 }
@@ -93,16 +105,21 @@ void ChannelManager::DestroyChannel(int32_t channel_id) {
   // Channels while holding a lock, but rather when the method returns.
   ChannelOwner reference(NULL);
   {
-    CriticalSectionScoped crit(lock_.get());
+    rtc::CritScope crit(&lock_);
+    std::vector<ChannelOwner>::iterator to_delete = channels_.end();
+    for (auto it = channels_.begin(); it != channels_.end(); ++it) {
+      Channel* channel = it->channel();
+      // For channels associated with the channel to be deleted, disassociate
+      // with that channel.
+      channel->DisassociateSendChannel(channel_id);
 
-    for (std::vector<ChannelOwner>::iterator it = channels_.begin();
-         it != channels_.end();
-         ++it) {
-      if (it->channel()->ChannelId() == channel_id) {
-        reference = *it;
-        channels_.erase(it);
-        break;
+      if (channel->ChannelId() == channel_id) {
+        to_delete = it;
       }
+    }
+    if (to_delete != channels_.end()) {
+      reference = *to_delete;
+      channels_.erase(to_delete);
     }
   }
 }
@@ -112,14 +129,14 @@ void ChannelManager::DestroyAllChannels() {
   // lock, but rather when the method returns.
   std::vector<ChannelOwner> references;
   {
-    CriticalSectionScoped crit(lock_.get());
+    rtc::CritScope crit(&lock_);
     references = channels_;
     channels_.clear();
   }
 }
 
 size_t ChannelManager::NumOfChannels() const {
-  CriticalSectionScoped crit(lock_.get());
+  rtc::CritScope crit(&lock_);
   return channels_.size();
 }
 

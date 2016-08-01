@@ -11,39 +11,36 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_HIGH_PASS_FILTER_IMPL_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_HIGH_PASS_FILTER_IMPL_H_
 
+#include <memory>
+#include <vector>
+
+#include "webrtc/base/constructormagic.h"
+#include "webrtc/base/criticalsection.h"
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
-#include "webrtc/modules/audio_processing/processing_component.h"
 
 namespace webrtc {
 
 class AudioBuffer;
-class CriticalSectionWrapper;
 
-class HighPassFilterImpl : public HighPassFilter,
-                           public ProcessingComponent {
+class HighPassFilterImpl : public HighPassFilter {
  public:
-  HighPassFilterImpl(const AudioProcessing* apm, CriticalSectionWrapper* crit);
-  virtual ~HighPassFilterImpl();
+  explicit HighPassFilterImpl(rtc::CriticalSection* crit);
+  ~HighPassFilterImpl() override;
 
-  int ProcessCaptureAudio(AudioBuffer* audio);
+  // TODO(peah): Fold into ctor, once public API is removed.
+  void Initialize(size_t channels, int sample_rate_hz);
+  void ProcessCaptureAudio(AudioBuffer* audio);
 
   // HighPassFilter implementation.
-  virtual bool is_enabled() const OVERRIDE;
+  int Enable(bool enable) override;
+  bool is_enabled() const override;
 
  private:
-  // HighPassFilter implementation.
-  virtual int Enable(bool enable) OVERRIDE;
-
-  // ProcessingComponent implementation.
-  virtual void* CreateHandle() const OVERRIDE;
-  virtual int InitializeHandle(void* handle) const OVERRIDE;
-  virtual int ConfigureHandle(void* handle) const OVERRIDE;
-  virtual void DestroyHandle(void* handle) const OVERRIDE;
-  virtual int num_handles_required() const OVERRIDE;
-  virtual int GetHandleError(void* handle) const OVERRIDE;
-
-  const AudioProcessing* apm_;
-  CriticalSectionWrapper* crit_;
+  class BiquadFilter;
+  rtc::CriticalSection* const crit_ = nullptr;
+  bool enabled_ GUARDED_BY(crit_) = false;
+  std::vector<std::unique_ptr<BiquadFilter>> filters_ GUARDED_BY(crit_);
+  RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(HighPassFilterImpl);
 };
 }  // namespace webrtc
 

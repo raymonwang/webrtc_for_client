@@ -19,14 +19,14 @@
 
 #include <algorithm>
 
+#include "webrtc/base/constructormagic.h"
+#include "webrtc/base/scoped_ref_ptr.h"
 #include "webrtc/modules/desktop_capture/desktop_capture_options.h"
 #include "webrtc/modules/desktop_capture/desktop_frame.h"
 #include "webrtc/modules/desktop_capture/x11/shared_x_display.h"
 #include "webrtc/modules/desktop_capture/x11/x_error_trap.h"
 #include "webrtc/modules/desktop_capture/x11/x_server_pixel_buffer.h"
-#include "webrtc/system_wrappers/interface/logging.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/system_wrappers/interface/scoped_refptr.h"
+#include "webrtc/system_wrappers/include/logging.h"
 
 namespace webrtc {
 
@@ -36,10 +36,7 @@ namespace {
 template <class PropertyType>
 class XWindowProperty {
  public:
-  XWindowProperty(Display* display, Window window, Atom property)
-      : is_valid_(false),
-        size_(0),
-        data_(NULL) {
+  XWindowProperty(Display* display, Window window, Atom property) {
     const int kBitsPerByte = 8;
     Atom actual_type;
     int actual_format;
@@ -49,7 +46,7 @@ class XWindowProperty {
                                     &actual_format, &size_,
                                     &bytes_after, &data_);
     if (status != Success) {
-      data_ = NULL;
+      data_ = nullptr;
       return;
     }
     if (sizeof(PropertyType) * kBitsPerByte != actual_format) {
@@ -78,11 +75,11 @@ class XWindowProperty {
   }
 
  private:
-  bool is_valid_;
-  unsigned long size_;  // NOLINT: type required by XGetWindowProperty
-  unsigned char* data_;
+  bool is_valid_ = false;
+  unsigned long size_ = 0;  // NOLINT: type required by XGetWindowProperty
+  unsigned char* data_ = nullptr;
 
-  DISALLOW_COPY_AND_ASSIGN(XWindowProperty);
+  RTC_DISALLOW_COPY_AND_ASSIGN(XWindowProperty);
 };
 
 class WindowCapturerLinux : public WindowCapturer,
@@ -92,16 +89,16 @@ class WindowCapturerLinux : public WindowCapturer,
   virtual ~WindowCapturerLinux();
 
   // WindowCapturer interface.
-  virtual bool GetWindowList(WindowList* windows) OVERRIDE;
-  virtual bool SelectWindow(WindowId id) OVERRIDE;
-  virtual bool BringSelectedWindowToFront() OVERRIDE;
+  bool GetWindowList(WindowList* windows) override;
+  bool SelectWindow(WindowId id) override;
+  bool BringSelectedWindowToFront() override;
 
   // DesktopCapturer interface.
-  virtual void Start(Callback* callback) OVERRIDE;
-  virtual void Capture(const DesktopRegion& region) OVERRIDE;
+  void Start(Callback* callback) override;
+  void Capture(const DesktopRegion& region) override;
 
   // SharedXDisplay::XEventHandler interface.
-  virtual bool HandleXEvent(const XEvent& event) OVERRIDE;
+  bool HandleXEvent(const XEvent& event) override;
 
  private:
   Display* display() { return x_display_->display(); }
@@ -117,26 +114,23 @@ class WindowCapturerLinux : public WindowCapturer,
   // Returns window title for the specified X |window|.
   bool GetWindowTitle(::Window window, std::string* title);
 
-  Callback* callback_;
+  Callback* callback_ = nullptr;
 
-  scoped_refptr<SharedXDisplay> x_display_;
+  rtc::scoped_refptr<SharedXDisplay> x_display_;
 
   Atom wm_state_atom_;
   Atom window_type_atom_;
   Atom normal_window_type_atom_;
-  bool has_composite_extension_;
+  bool has_composite_extension_ = false;
 
-  ::Window selected_window_;
+  ::Window selected_window_ = 0;
   XServerPixelBuffer x_server_pixel_buffer_;
 
-  DISALLOW_COPY_AND_ASSIGN(WindowCapturerLinux);
+  RTC_DISALLOW_COPY_AND_ASSIGN(WindowCapturerLinux);
 };
 
 WindowCapturerLinux::WindowCapturerLinux(const DesktopCaptureOptions& options)
-    : callback_(NULL),
-      x_display_(options.x_display()),
-      has_composite_extension_(false),
-      selected_window_(0) {
+    : x_display_(options.x_display()) {
   // Create Atoms so we don't need to do it every time they are used.
   wm_state_atom_ = XInternAtom(display(), "WM_STATE", True);
   window_type_atom_ = XInternAtom(display(), "_NET_WM_WINDOW_TYPE", True);
@@ -280,7 +274,7 @@ void WindowCapturerLinux::Start(Callback* callback) {
 void WindowCapturerLinux::Capture(const DesktopRegion& region) {
   if (!x_server_pixel_buffer_.IsWindowValid()) {
     LOG(LS_INFO) << "The window is no longer valid.";
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_PERMANENT, nullptr);
     return;
   }
 
@@ -291,21 +285,21 @@ void WindowCapturerLinux::Capture(const DesktopRegion& region) {
     // visible on screen and not covered by any other window. This is not
     // something we want so instead, just bail out.
     LOG(LS_INFO) << "No Xcomposite extension detected.";
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_PERMANENT, nullptr);
     return;
   }
 
-  DesktopFrame* frame =
-      new BasicDesktopFrame(x_server_pixel_buffer_.window_size());
+  std::unique_ptr<DesktopFrame> frame(
+      new BasicDesktopFrame(x_server_pixel_buffer_.window_size()));
 
   x_server_pixel_buffer_.Synchronize();
   x_server_pixel_buffer_.CaptureRect(DesktopRect::MakeSize(frame->size()),
-                                     frame);
+                                     frame.get());
 
   frame->mutable_updated_region()->SetRect(
       DesktopRect::MakeSize(frame->size()));
 
-  callback_->OnCaptureCompleted(frame);
+  callback_->OnCaptureResult(Result::SUCCESS, std::move(frame));
 }
 
 bool WindowCapturerLinux::HandleXEvent(const XEvent& event) {
@@ -399,12 +393,12 @@ bool WindowCapturerLinux::GetWindowTitle(::Window window, std::string* title) {
   int status;
   bool result = false;
   XTextProperty window_name;
-  window_name.value = NULL;
+  window_name.value = nullptr;
   if (window) {
     status = XGetWMName(display(), window, &window_name);
     if (status && window_name.value && window_name.nitems) {
       int cnt;
-      char **list = NULL;
+      char** list = nullptr;
       status = Xutf8TextPropertyToTextList(display(), &window_name, &list,
                                            &cnt);
       if (status >= Success && cnt && *list) {
@@ -429,7 +423,7 @@ bool WindowCapturerLinux::GetWindowTitle(::Window window, std::string* title) {
 // static
 WindowCapturer* WindowCapturer::Create(const DesktopCaptureOptions& options) {
   if (!options.x_display())
-    return NULL;
+    return nullptr;
   return new WindowCapturerLinux(options);
 }
 

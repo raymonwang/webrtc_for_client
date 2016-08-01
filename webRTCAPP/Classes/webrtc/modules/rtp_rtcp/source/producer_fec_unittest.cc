@@ -9,8 +9,11 @@
  */
 
 #include <list>
+#include <memory>
+#include <vector>
 
 #include "testing/gtest/include/gtest/gtest.h"
+#include "webrtc/modules/rtp_rtcp/source/byte_io.h"
 #include "webrtc/modules/rtp_rtcp/source/fec_test_helper.h"
 #include "webrtc/modules/rtp_rtcp/source/forward_error_correction.h"
 #include "webrtc/modules/rtp_rtcp/source/producer_fec.h"
@@ -33,7 +36,7 @@ void VerifyHeader(uint16_t seq_num,
   uint32_t parsed_timestamp = (data[4] << 24) + (data[5] << 16) +
       (data[6] << 8) + data[7];
   EXPECT_EQ(timestamp, parsed_timestamp);
-  EXPECT_EQ(fec_pltype, data[kRtpHeaderSize]);
+  EXPECT_EQ(static_cast<uint8_t>(fec_pltype), data[kRtpHeaderSize]);
 }
 
 class ProducerFecTest : public ::testing::Test {
@@ -41,7 +44,7 @@ class ProducerFecTest : public ::testing::Test {
   virtual void SetUp() {
     fec_ = new ForwardErrorCorrection();
     producer_ = new ProducerFec(fec_);
-    generator_ = new FrameGenerator;
+    generator_ = new FrameGenerator();
   }
 
   virtual void TearDown() {
@@ -54,6 +57,53 @@ class ProducerFecTest : public ::testing::Test {
   FrameGenerator* generator_;
 };
 
+// Verifies bug found via fuzzing, where a gap in the packet sequence caused us
+// to move past the end of the current FEC packet mask byte without moving to
+// the next byte. That likely caused us to repeatedly read from the same byte,
+// and if that byte didn't protect packets we would generate empty FEC.
+TEST_F(ProducerFecTest, NoEmptyFecWithSeqNumGaps) {
+  struct Packet {
+    size_t header_size;
+    size_t payload_size;
+    uint16_t seq_num;
+    bool marker_bit;
+  };
+  std::vector<Packet> protected_packets;
+  protected_packets.push_back({15, 3, 41, 0});
+  protected_packets.push_back({14, 1, 43, 0});
+  protected_packets.push_back({19, 0, 48, 0});
+  protected_packets.push_back({19, 0, 50, 0});
+  protected_packets.push_back({14, 3, 51, 0});
+  protected_packets.push_back({13, 8, 52, 0});
+  protected_packets.push_back({19, 2, 53, 0});
+  protected_packets.push_back({12, 3, 54, 0});
+  protected_packets.push_back({21, 0, 55, 0});
+  protected_packets.push_back({13, 3, 57, 1});
+  FecProtectionParams params = {117, 3, kFecMaskBursty};
+  producer_->SetFecParameters(&params, 0);
+  uint8_t packet[28] = {0};
+  for (Packet p : protected_packets) {
+    if (p.marker_bit) {
+      packet[1] |= 0x80;
+    } else {
+      packet[1] &= ~0x80;
+    }
+    ByteWriter<uint16_t>::WriteBigEndian(&packet[2], p.seq_num);
+    producer_->AddRtpPacketAndGenerateFec(packet, p.payload_size,
+                                          p.header_size);
+    uint16_t num_fec_packets = producer_->NumAvailableFecPackets();
+    std::vector<RedPacket*> fec_packets;
+    if (num_fec_packets > 0) {
+      fec_packets =
+          producer_->GetFecPackets(kRedPayloadType, 99, 100, p.header_size);
+      EXPECT_EQ(num_fec_packets, fec_packets.size());
+    }
+    for (RedPacket* fec_packet : fec_packets) {
+      delete fec_packet;
+    }
+  }
+}
+
 TEST_F(ProducerFecTest, OneFrameFec) {
   // The number of media packets (|kNumPackets|), number of frames (one for
   // this test), and the protection factor (|params->fec_rate|) are set to make
@@ -62,13 +112,13 @@ TEST_F(ProducerFecTest, OneFrameFec) {
   // of packets is within |kMaxExcessOverhead|, and (2) the total number of
   // media packets for 1 frame is at least |minimum_media_packets_fec_|.
   const int kNumPackets = 4;
-  FecProtectionParams params = {15, false, 3};
-  std::list<RtpPacket*> rtp_packets;
+  FecProtectionParams params = {15, 3, kFecMaskRandom};
+  std::list<test::RawRtpPacket*> rtp_packets;
   generator_->NewFrame(kNumPackets);
   producer_->SetFecParameters(&params, 0);  // Expecting one FEC packet.
   uint32_t last_timestamp = 0;
   for (int i = 0; i < kNumPackets; ++i) {
-    RtpPacket* rtp_packet = generator_->NextPacket(i, 10);
+    test::RawRtpPacket* rtp_packet = generator_->NextPacket(i, 10);
     rtp_packets.push_back(rtp_packet);
     EXPECT_EQ(0, producer_->AddRtpPacketAndGenerateFec(rtp_packet->data,
                                                        rtp_packet->length,
@@ -77,19 +127,19 @@ TEST_F(ProducerFecTest, OneFrameFec) {
   }
   EXPECT_TRUE(producer_->FecAvailable());
   uint16_t seq_num = generator_->NextSeqNum();
-  RedPacket* packet = producer_->GetFecPacket(kRedPayloadType,
-                                              kFecPayloadType,
-                                              seq_num,
-                                              kRtpHeaderSize);
+  std::vector<RedPacket*> packets = producer_->GetFecPackets(kRedPayloadType,
+                                                             kFecPayloadType,
+                                                             seq_num,
+                                                             kRtpHeaderSize);
   EXPECT_FALSE(producer_->FecAvailable());
-  ASSERT_TRUE(packet != NULL);
+  ASSERT_EQ(1u, packets.size());
   VerifyHeader(seq_num, last_timestamp,
-               kRedPayloadType, kFecPayloadType, packet, false);
+               kRedPayloadType, kFecPayloadType, packets.front(), false);
   while (!rtp_packets.empty()) {
     delete rtp_packets.front();
     rtp_packets.pop_front();
   }
-  delete packet;
+  delete packets.front();
 }
 
 TEST_F(ProducerFecTest, TwoFrameFec) {
@@ -103,14 +153,15 @@ TEST_F(ProducerFecTest, TwoFrameFec) {
   const int kNumPackets = 2;
   const int kNumFrames = 2;
 
-  FecProtectionParams params = {15, 0, 3};
-  std::list<RtpPacket*> rtp_packets;
+  FecProtectionParams params = {15, 3, kFecMaskRandom};
+  std::list<test::RawRtpPacket*> rtp_packets;
   producer_->SetFecParameters(&params, 0);  // Expecting one FEC packet.
   uint32_t last_timestamp = 0;
   for (int i = 0; i < kNumFrames; ++i) {
     generator_->NewFrame(kNumPackets);
     for (int j = 0; j < kNumPackets; ++j) {
-      RtpPacket* rtp_packet = generator_->NextPacket(i * kNumPackets + j, 10);
+      test::RawRtpPacket* rtp_packet =
+          generator_->NextPacket(i * kNumPackets + j, 10);
       rtp_packets.push_back(rtp_packet);
       EXPECT_EQ(0, producer_->AddRtpPacketAndGenerateFec(rtp_packet->data,
                                            rtp_packet->length,
@@ -120,39 +171,36 @@ TEST_F(ProducerFecTest, TwoFrameFec) {
   }
   EXPECT_TRUE(producer_->FecAvailable());
   uint16_t seq_num = generator_->NextSeqNum();
-  RedPacket* packet = producer_->GetFecPacket(kRedPayloadType,
-                                              kFecPayloadType,
-                                              seq_num,
-                                              kRtpHeaderSize);
+  std::vector<RedPacket*> packets = producer_->GetFecPackets(kRedPayloadType,
+                                                             kFecPayloadType,
+                                                             seq_num,
+                                                             kRtpHeaderSize);
   EXPECT_FALSE(producer_->FecAvailable());
-  EXPECT_TRUE(packet != NULL);
-  VerifyHeader(seq_num, last_timestamp,
-               kRedPayloadType, kFecPayloadType, packet, false);
+  ASSERT_EQ(1u, packets.size());
+  VerifyHeader(seq_num, last_timestamp, kRedPayloadType, kFecPayloadType,
+               packets.front(), false);
   while (!rtp_packets.empty()) {
     delete rtp_packets.front();
     rtp_packets.pop_front();
   }
-  delete packet;
+  delete packets.front();
 }
 
 TEST_F(ProducerFecTest, BuildRedPacket) {
   generator_->NewFrame(1);
-  RtpPacket* packet = generator_->NextPacket(0, 10);
-  RedPacket* red_packet = producer_->BuildRedPacket(packet->data,
-                                                    packet->length -
-                                                    kRtpHeaderSize,
-                                                    kRtpHeaderSize,
-                                                    kRedPayloadType);
+  test::RawRtpPacket* packet = generator_->NextPacket(0, 10);
+  std::unique_ptr<RedPacket> red_packet(producer_->BuildRedPacket(
+      packet->data, packet->length - kRtpHeaderSize, kRtpHeaderSize,
+      kRedPayloadType));
   EXPECT_EQ(packet->length + 1, red_packet->length());
   VerifyHeader(packet->header.header.sequenceNumber,
                packet->header.header.timestamp,
                kRedPayloadType,
                packet->header.header.payloadType,
-               red_packet,
+               red_packet.get(),
                true);  // Marker bit set.
   for (int i = 0; i < 10; ++i)
     EXPECT_EQ(i, red_packet->data()[kRtpHeaderSize + 1 + i]);
-  delete red_packet;
   delete packet;
 }
 

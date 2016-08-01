@@ -11,8 +11,9 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_INCLUDE_MOCK_AUDIO_PROCESSING_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_INCLUDE_MOCK_AUDIO_PROCESSING_H_
 
+#include <memory>
+
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 
 namespace webrtc {
 
@@ -48,6 +49,8 @@ class MockEchoCancellation : public EchoCancellation {
       bool());
   MOCK_METHOD2(GetDelayMetrics,
       int(int* median, int* std));
+  MOCK_METHOD3(GetDelayMetrics,
+      int(int* median, int* std, float* fraction_poor_delays));
   MOCK_CONST_METHOD0(aec_core,
       struct AecCore*());
 };
@@ -138,6 +141,7 @@ class MockNoiseSuppression : public NoiseSuppression {
       Level());
   MOCK_CONST_METHOD0(speech_probability,
       float());
+  MOCK_METHOD0(NoiseEstimate, std::vector<float>());
 };
 
 class MockVoiceDetection : public VoiceDetection {
@@ -184,6 +188,8 @@ class MockAudioProcessing : public AudioProcessing {
           ChannelLayout input_layout,
           ChannelLayout output_layout,
           ChannelLayout reverse_layout));
+  MOCK_METHOD1(Initialize,
+      int(const ProcessingConfig& processing_config));
   MOCK_METHOD1(SetExtraOptions,
       void(const Config& config));
   MOCK_METHOD1(set_sample_rate_hz,
@@ -197,11 +203,11 @@ class MockAudioProcessing : public AudioProcessing {
   MOCK_CONST_METHOD0(proc_split_sample_rate_hz,
       int());
   MOCK_CONST_METHOD0(num_input_channels,
-      int());
+      size_t());
   MOCK_CONST_METHOD0(num_output_channels,
-      int());
+      size_t());
   MOCK_CONST_METHOD0(num_reverse_channels,
-      int());
+      size_t());
   MOCK_METHOD1(set_output_will_be_muted,
       void(bool muted));
   MOCK_CONST_METHOD0(output_will_be_muted,
@@ -210,17 +216,28 @@ class MockAudioProcessing : public AudioProcessing {
       int(AudioFrame* frame));
   MOCK_METHOD7(ProcessStream,
       int(const float* const* src,
-          int samples_per_channel,
+          size_t samples_per_channel,
           int input_sample_rate_hz,
           ChannelLayout input_layout,
           int output_sample_rate_hz,
           ChannelLayout output_layout,
           float* const* dest));
+  MOCK_METHOD4(ProcessStream,
+               int(const float* const* src,
+                   const StreamConfig& input_config,
+                   const StreamConfig& output_config,
+                   float* const* dest));
   MOCK_METHOD1(AnalyzeReverseStream,
       int(AudioFrame* frame));
+  MOCK_METHOD1(ProcessReverseStream, int(AudioFrame* frame));
   MOCK_METHOD4(AnalyzeReverseStream,
-      int(const float* const* data, int frames, int sample_rate_hz,
+      int(const float* const* data, size_t frames, int sample_rate_hz,
           ChannelLayout input_layout));
+  MOCK_METHOD4(ProcessReverseStream,
+               int(const float* const* src,
+                   const StreamConfig& input_config,
+                   const StreamConfig& output_config,
+                   float* const* dest));
   MOCK_METHOD1(set_stream_delay_ms,
       int(int delay));
   MOCK_CONST_METHOD0(stream_delay_ms,
@@ -235,12 +252,14 @@ class MockAudioProcessing : public AudioProcessing {
       void(int offset));
   MOCK_CONST_METHOD0(delay_offset_ms,
       int());
-  MOCK_METHOD1(StartDebugRecording,
-      int(const char filename[kMaxFilenameSize]));
-  MOCK_METHOD1(StartDebugRecording,
-      int(FILE* handle));
+  MOCK_METHOD2(StartDebugRecording,
+               int(const char filename[kMaxFilenameSize],
+                   int64_t max_log_size_bytes));
+  MOCK_METHOD2(StartDebugRecording,
+               int(FILE* handle, int64_t max_log_size_bytes));
   MOCK_METHOD0(StopDebugRecording,
       int());
+  MOCK_METHOD0(UpdateHistogramsOnCallEnd, void());
   virtual MockEchoCancellation* echo_cancellation() const {
     return echo_cancellation_.get();
   }
@@ -264,13 +283,13 @@ class MockAudioProcessing : public AudioProcessing {
   }
 
  private:
-  scoped_ptr<MockEchoCancellation> echo_cancellation_;
-  scoped_ptr<MockEchoControlMobile> echo_control_mobile_;
-  scoped_ptr<MockGainControl> gain_control_;
-  scoped_ptr<MockHighPassFilter> high_pass_filter_;
-  scoped_ptr<MockLevelEstimator> level_estimator_;
-  scoped_ptr<MockNoiseSuppression> noise_suppression_;
-  scoped_ptr<MockVoiceDetection> voice_detection_;
+  std::unique_ptr<MockEchoCancellation> echo_cancellation_;
+  std::unique_ptr<MockEchoControlMobile> echo_control_mobile_;
+  std::unique_ptr<MockGainControl> gain_control_;
+  std::unique_ptr<MockHighPassFilter> high_pass_filter_;
+  std::unique_ptr<MockLevelEstimator> level_estimator_;
+  std::unique_ptr<MockNoiseSuppression> noise_suppression_;
+  std::unique_ptr<MockVoiceDetection> voice_detection_;
 };
 
 }  // namespace webrtc

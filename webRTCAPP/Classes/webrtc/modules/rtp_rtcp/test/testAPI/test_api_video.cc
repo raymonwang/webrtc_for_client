@@ -11,29 +11,34 @@
 #include <stdlib.h>
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/common_types.h"
-#include "webrtc/modules/rtp_rtcp/interface/rtp_payload_registry.h"
-#include "webrtc/modules/rtp_rtcp/interface/rtp_rtcp.h"
-#include "webrtc/modules/rtp_rtcp/interface/rtp_rtcp_defines.h"
+#include "webrtc/modules/rtp_rtcp/include/rtp_payload_registry.h"
+#include "webrtc/modules/rtp_rtcp/include/rtp_rtcp.h"
+#include "webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h"
+#include "webrtc/modules/rtp_rtcp/source/byte_io.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_receiver_video.h"
-#include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
 #include "webrtc/modules/rtp_rtcp/test/testAPI/test_api.h"
+
+namespace {
+
+const unsigned char kPayloadType = 100;
+
+};
 
 namespace webrtc {
 
 class RtpRtcpVideoTest : public ::testing::Test {
  protected:
   RtpRtcpVideoTest()
-      : test_id_(123),
-        rtp_payload_registry_(RTPPayloadStrategy::CreateStrategy(false)),
+      : rtp_payload_registry_(RTPPayloadStrategy::CreateStrategy(false)),
         test_ssrc_(3456),
         test_timestamp_(4567),
         test_sequence_number_(2345),
-        fake_clock(123456) {
-  }
+        fake_clock(123456) {}
   ~RtpRtcpVideoTest() {}
 
   virtual void SetUp() {
@@ -41,18 +46,16 @@ class RtpRtcpVideoTest : public ::testing::Test {
     receiver_ = new TestRtpReceiver();
     receive_statistics_.reset(ReceiveStatistics::Create(&fake_clock));
     RtpRtcp::Configuration configuration;
-    configuration.id = test_id_;
     configuration.audio = false;
     configuration.clock = &fake_clock;
     configuration.outgoing_transport = transport_;
 
     video_module_ = RtpRtcp::CreateRtpRtcp(configuration);
     rtp_receiver_.reset(RtpReceiver::CreateVideoReceiver(
-        test_id_, &fake_clock, receiver_, NULL, &rtp_payload_registry_));
+        &fake_clock, receiver_, NULL, &rtp_payload_registry_));
 
-    video_module_->SetRTCPStatus(kRtcpCompound);
+    video_module_->SetRTCPStatus(RtcpMode::kCompound);
     video_module_->SetSSRC(test_ssrc_);
-    rtp_receiver_->SetNACKStatus(kNackRtcp);
     video_module_->SetStorePacketsStatus(true, 600);
     EXPECT_EQ(0, video_module_->SetSendingStatus(true));
 
@@ -83,9 +86,9 @@ class RtpRtcpVideoTest : public ::testing::Test {
                          uint32_t sequence_number) {
     dataBuffer[0] = static_cast<uint8_t>(0x80);  // version 2
     dataBuffer[1] = static_cast<uint8_t>(kPayloadType);
-    RtpUtility::AssignUWord16ToBuffer(dataBuffer + 2, sequence_number);
-    RtpUtility::AssignUWord32ToBuffer(dataBuffer + 4, timestamp);
-    RtpUtility::AssignUWord32ToBuffer(dataBuffer + 8, 0x1234);  // SSRC.
+    ByteWriter<uint16_t>::WriteBigEndian(dataBuffer + 2, sequence_number);
+    ByteWriter<uint32_t>::WriteBigEndian(dataBuffer + 4, timestamp);
+    ByteWriter<uint32_t>::WriteBigEndian(dataBuffer + 8, 0x1234);  // SSRC.
     size_t rtpHeaderLength = 12;
     return rtpHeaderLength;
   }
@@ -124,9 +127,9 @@ class RtpRtcpVideoTest : public ::testing::Test {
   }
 
   int test_id_;
-  scoped_ptr<ReceiveStatistics> receive_statistics_;
+  std::unique_ptr<ReceiveStatistics> receive_statistics_;
   RTPPayloadRegistry rtp_payload_registry_;
-  scoped_ptr<RtpReceiver> rtp_receiver_;
+  std::unique_ptr<RtpReceiver> rtp_receiver_;
   RtpRtcp* video_module_;
   LoopBackTransport* transport_;
   TestRtpReceiver* receiver_;
@@ -136,7 +139,6 @@ class RtpRtcpVideoTest : public ::testing::Test {
   uint8_t  video_frame_[65000];
   size_t payload_data_length_;
   SimulatedClock fake_clock;
-  enum { kPayloadType = 100 };
 };
 
 TEST_F(RtpRtcpVideoTest, BasicVideo) {
@@ -168,11 +170,11 @@ TEST_F(RtpRtcpVideoTest, PaddingOnlyFrames) {
                                          kPadSize);
       ++seq_num;
       RTPHeader header;
-      scoped_ptr<RtpHeaderParser> parser(RtpHeaderParser::Create());
+      std::unique_ptr<RtpHeaderParser> parser(RtpHeaderParser::Create());
       EXPECT_TRUE(parser->Parse(padding_packet, packet_size, &header));
       PayloadUnion payload_specific;
       EXPECT_TRUE(rtp_payload_registry_.GetPayloadSpecifics(header.payloadType,
-                                                           &payload_specific));
+                                                            &payload_specific));
       const uint8_t* payload = padding_packet + header.headerLength;
       const size_t payload_length = packet_size - header.headerLength;
       EXPECT_TRUE(rtp_receiver_->IncomingRtpPacket(header, payload,

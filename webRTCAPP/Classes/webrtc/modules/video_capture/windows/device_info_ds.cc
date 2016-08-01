@@ -13,8 +13,7 @@
 #include "webrtc/modules/video_capture/video_capture_config.h"
 #include "webrtc/modules/video_capture/video_capture_delay.h"
 #include "webrtc/modules/video_capture/windows/help_functions_ds.h"
-#include "webrtc/system_wrappers/interface/ref_count.h"
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc/system_wrappers/include/trace.h"
 
 #include <Dvdmedia.h>
 #include <Streams.h>

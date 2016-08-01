@@ -8,6 +8,7 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
 #include <string>
 
 #include "webrtc/p2p/base/stunserver.h"
@@ -39,18 +40,22 @@ class StunServerTest : public testing::Test {
     worker_.Start();
   }
   void Send(const StunMessage& msg) {
-    rtc::ByteBuffer buf;
+    rtc::ByteBufferWriter buf;
     msg.Write(&buf);
     Send(buf.Data(), static_cast<int>(buf.Length()));
   }
   void Send(const char* buf, int len) {
     client_->SendTo(buf, len, server_addr);
   }
+  bool ReceiveFails() {
+    return(client_->CheckNoPacket());
+  }
   StunMessage* Receive() {
     StunMessage* msg = NULL;
-    rtc::TestClient::Packet* packet = client_->NextPacket();
+    rtc::TestClient::Packet* packet =
+        client_->NextPacket(rtc::TestClient::kTimeoutMs);
     if (packet) {
-      rtc::ByteBuffer buf(packet->buf, packet->size);
+      rtc::ByteBufferReader buf(packet->buf, packet->size);
       msg = new StunMessage();
       msg->Read(&buf);
       delete packet;
@@ -58,11 +63,11 @@ class StunServerTest : public testing::Test {
     return msg;
   }
  private:
-  rtc::scoped_ptr<rtc::PhysicalSocketServer> pss_;
-  rtc::scoped_ptr<rtc::VirtualSocketServer> ss_;
+  std::unique_ptr<rtc::PhysicalSocketServer> pss_;
+  std::unique_ptr<rtc::VirtualSocketServer> ss_;
   rtc::Thread worker_;
-  rtc::scoped_ptr<StunServer> server_;
-  rtc::scoped_ptr<rtc::TestClient> client_;
+  std::unique_ptr<StunServer> server_;
+  std::unique_ptr<rtc::TestClient> client_;
 };
 
 // Disable for TSan v2, see
@@ -104,6 +109,5 @@ TEST_F(StunServerTest, TestBad) {
                     "look anything like a normal stun message";
   Send(bad, static_cast<int>(strlen(bad)));
 
-  StunMessage* msg = Receive();
-  ASSERT_TRUE(msg == NULL);
+  ASSERT_TRUE(ReceiveFails());
 }

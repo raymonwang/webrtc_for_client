@@ -56,9 +56,7 @@
         "mouse_cursor_monitor_mac.mm",
         "mouse_cursor_monitor_win.cc",
         "mouse_cursor_monitor_x11.cc",
-        "screen_capture_frame_queue.cc",
         "screen_capture_frame_queue.h",
-        "screen_capturer.cc",
         "screen_capturer.h",
         "screen_capturer_helper.cc",
         "screen_capturer_helper.h",
@@ -76,6 +74,8 @@
         "win/scoped_gdi_object.h",
         "win/scoped_thread_desktop.cc",
         "win/scoped_thread_desktop.h",
+        "win/screen_capturer_win_directx.cc",
+        "win/screen_capturer_win_directx.h",
         "win/screen_capturer_win_gdi.cc",
         "win/screen_capturer_win_gdi.h",
         "win/screen_capturer_win_magnifier.cc",
@@ -84,7 +84,6 @@
         "win/screen_capture_utils.h",
         "win/window_capture_utils.cc",
         "win/window_capture_utils.h",
-        "window_capturer.cc",
         "window_capturer.h",
         "window_capturer_mac.mm",
         "window_capturer_win.cc",
@@ -131,6 +130,19 @@
           },
         }],
       ],
+      'all_dependent_settings': {
+        'conditions': [
+          ['OS=="win"', {
+            'msvs_settings': {
+              'VCLinkerTool': {
+                'AdditionalDependencies': [
+                  'd3d11.lib',
+                ],
+              },
+            },
+          }],
+        ],
+      },
     },
   ],  # targets
   'conditions': [
@@ -146,10 +158,11 @@
             "differ_block_sse2.h",
           ],
           'conditions': [
-            [ 'os_posix == 1 and OS != "mac"', {
-              'cflags': [
-                '-msse2',
-              ],
+            ['os_posix==1', {
+              'cflags': [ '-msse2', ],
+              'xcode_settings': {
+                'OTHER_CFLAGS': [ '-msse2', ],
+              },
             }],
           ],
         },

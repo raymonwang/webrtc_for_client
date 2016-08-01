@@ -13,6 +13,7 @@
 
 #include <vector>
 #include "webrtc/base/asyncudpsocket.h"
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/base/criticalsection.h"
 
 namespace rtc {
@@ -23,19 +24,26 @@ class TestClient : public sigslot::has_slots<> {
  public:
   // Records the contents of a packet that was received.
   struct Packet {
-    Packet(const SocketAddress& a, const char* b, size_t s);
+    Packet(const SocketAddress& a,
+           const char* b,
+           size_t s,
+           const PacketTime& packet_time);
     Packet(const Packet& p);
     virtual ~Packet();
 
     SocketAddress addr;
     char*  buf;
     size_t size;
+    PacketTime packet_time;
   };
+
+  // Default timeout for NextPacket reads.
+  static const int kTimeoutMs = 5000;
 
   // Creates a client that will send and receive with the given socket and
   // will post itself messages with the given thread.
   explicit TestClient(AsyncPacketSocket* socket);
-  ~TestClient();
+  ~TestClient() override;
 
   SocketAddress address() const { return socket_->GetLocalAddress(); }
   SocketAddress remote_address() const { return socket_->GetRemoteAddress(); }
@@ -55,9 +63,9 @@ class TestClient : public sigslot::has_slots<> {
   int SendTo(const char* buf, size_t size, const SocketAddress& dest);
 
   // Returns the next packet received by the client or 0 if none is received
-  // within a reasonable amount of time.  The caller must delete the packet
+  // within the specified timeout. The caller must delete the packet
   // when done with it.
-  Packet* NextPacket();
+  Packet* NextPacket(int timeout_ms);
 
   // Checks that the next packet has the given contents. Returns the remote
   // address that the packet was sent from.
@@ -72,7 +80,8 @@ class TestClient : public sigslot::has_slots<> {
   bool ready_to_send() const;
 
  private:
-  static const int kTimeout = 1000;
+  // Timeout for reads when no packet is expected.
+  static const int kNoPacketTimeoutMs = 1000;
   // Workaround for the fact that AsyncPacketSocket::GetConnState doesn't exist.
   Socket::ConnState GetState();
   // Slot for packets read on the socket.
@@ -80,12 +89,14 @@ class TestClient : public sigslot::has_slots<> {
                 const SocketAddress& remote_addr,
                 const PacketTime& packet_time);
   void OnReadyToSend(AsyncPacketSocket* socket);
+  bool CheckTimestamp(int64_t packet_timestamp);
 
   CriticalSection crit_;
   AsyncPacketSocket* socket_;
   std::vector<Packet*>* packets_;
   bool ready_to_send_;
-  DISALLOW_EVIL_CONSTRUCTORS(TestClient);
+  int64_t prev_packet_timestamp_;
+  RTC_DISALLOW_COPY_AND_ASSIGN(TestClient);
 };
 
 }  // namespace rtc

@@ -7,12 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		438778911D4F49D500E6F9E9 /* screenshare_layers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387788D1D4F49D500E6F9E9 /* screenshare_layers.cc */; };
+		438778921D4F49D500E6F9E9 /* screenshare_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387788E1D4F49D500E6F9E9 /* screenshare_layers.h */; };
+		438778931D4F49D500E6F9E9 /* vp9_frame_buffer_pool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387788F1D4F49D500E6F9E9 /* vp9_frame_buffer_pool.cc */; };
+		438778941D4F49D500E6F9E9 /* vp9_frame_buffer_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 438778901D4F49D500E6F9E9 /* vp9_frame_buffer_pool.h */; };
 		43C69BD81D227FB000427D35 /* vp9.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BD41D227FB000427D35 /* vp9.h */; };
 		43C69BD91D227FB000427D35 /* vp9_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BD61D227FB000427D35 /* vp9_impl.cc */; };
 		43C69BDA1D227FB000427D35 /* vp9_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BD71D227FB000427D35 /* vp9_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4387788D1D4F49D500E6F9E9 /* screenshare_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = screenshare_layers.cc; sourceTree = "<group>"; };
+		4387788E1D4F49D500E6F9E9 /* screenshare_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screenshare_layers.h; sourceTree = "<group>"; };
+		4387788F1D4F49D500E6F9E9 /* vp9_frame_buffer_pool.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp9_frame_buffer_pool.cc; sourceTree = "<group>"; };
+		438778901D4F49D500E6F9E9 /* vp9_frame_buffer_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp9_frame_buffer_pool.h; sourceTree = "<group>"; };
 		43C69BC51D227F2F00427D35 /* libwebrtc_vp9.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_vp9.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C69BD41D227FB000427D35 /* vp9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp9.h; sourceTree = "<group>"; };
 		43C69BD51D227FB000427D35 /* vp9.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vp9.gyp; sourceTree = "<group>"; };
@@ -54,6 +62,10 @@
 				43C69BD51D227FB000427D35 /* vp9.gyp */,
 				43C69BD61D227FB000427D35 /* vp9_impl.cc */,
 				43C69BD71D227FB000427D35 /* vp9_impl.h */,
+				4387788D1D4F49D500E6F9E9 /* screenshare_layers.cc */,
+				4387788E1D4F49D500E6F9E9 /* screenshare_layers.h */,
+				4387788F1D4F49D500E6F9E9 /* vp9_frame_buffer_pool.cc */,
+				438778901D4F49D500E6F9E9 /* vp9_frame_buffer_pool.h */,
 			);
 			name = vp9;
 			path = ../webRTCAPP/Classes/webrtc/modules/video_coding/codecs/vp9;
@@ -74,6 +86,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				438778941D4F49D500E6F9E9 /* vp9_frame_buffer_pool.h in Headers */,
+				438778921D4F49D500E6F9E9 /* screenshare_layers.h in Headers */,
 				43C69BDA1D227FB000427D35 /* vp9_impl.h in Headers */,
 				43C69BD81D227FB000427D35 /* vp9.h in Headers */,
 			);
@@ -135,7 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				438778931D4F49D500E6F9E9 /* vp9_frame_buffer_pool.cc in Sources */,
 				43C69BD91D227FB000427D35 /* vp9_impl.cc in Sources */,
+				438778911D4F49D500E6F9E9 /* screenshare_layers.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

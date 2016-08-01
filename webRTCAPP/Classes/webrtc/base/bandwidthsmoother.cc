@@ -11,27 +11,29 @@
 #include "webrtc/base/bandwidthsmoother.h"
 
 #include <limits.h>
+#include <algorithm>
 
 namespace rtc {
 
 BandwidthSmoother::BandwidthSmoother(int initial_bandwidth_guess,
-                                     uint32 time_between_increase,
+                                     uint32_t time_between_increase,
                                      double percent_increase,
                                      size_t samples_count_to_average,
                                      double min_sample_count_percent)
     : time_between_increase_(time_between_increase),
-      percent_increase_(rtc::_max(1.0, percent_increase)),
+      percent_increase_(std::max(1.0, percent_increase)),
       time_at_last_change_(0),
       bandwidth_estimation_(initial_bandwidth_guess),
       accumulator_(samples_count_to_average),
       min_sample_count_percent_(
-          rtc::_min(1.0,
-                          rtc::_max(0.0, min_sample_count_percent))) {
+          std::min(1.0, std::max(0.0, min_sample_count_percent))) {
 }
+
+BandwidthSmoother::~BandwidthSmoother() = default;
 
 // Samples a new bandwidth measurement
 // returns true if the bandwidth estimation changed
-bool BandwidthSmoother::Sample(uint32 sample_time, int bandwidth) {
+bool BandwidthSmoother::Sample(uint32_t sample_time, int bandwidth) {
   if (bandwidth < 0) {
     return false;
   }

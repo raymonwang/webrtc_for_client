@@ -15,9 +15,11 @@
 #include <shlobj.h>
 #include <tchar.h>
 
+#include <memory>
+
+#include "webrtc/base/arraysize.h"
 #include "webrtc/base/fileutils.h"
 #include "webrtc/base/pathutils.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/stream.h"
 #include "webrtc/base/stringutils.h"
 
@@ -94,7 +96,7 @@ bool Win32Filesystem::CreatePrivateFile(const Pathname &filename) {
                               &token_user_size);
 
   // Get the TOKEN_USER structure.
-  scoped_ptr<char[]> token_user_bytes(new char[token_user_size]);
+  std::unique_ptr<char[]> token_user_bytes(new char[token_user_size]);
   PTOKEN_USER token_user = reinterpret_cast<PTOKEN_USER>(
       token_user_bytes.get());
   memset(token_user, 0, token_user_size);
@@ -120,7 +122,7 @@ bool Win32Filesystem::CreatePrivateFile(const Pathname &filename) {
       GetLengthSid(token_user->User.Sid);
 
   // Allocate it.
-  scoped_ptr<char[]> acl_bytes(new char[acl_size]);
+  std::unique_ptr<char[]> acl_bytes(new char[acl_size]);
   PACL acl = reinterpret_cast<PACL>(acl_bytes.get());
   memset(acl, 0, acl_size);
   if (!::InitializeAcl(acl, acl_size, ACL_REVISION)) {
@@ -197,16 +199,16 @@ bool Win32Filesystem::DeleteEmptyFolder(const Pathname &folder) {
 bool Win32Filesystem::GetTemporaryFolder(Pathname &pathname, bool create,
                                          const std::string *append) {
   wchar_t buffer[MAX_PATH + 1];
-  if (!::GetTempPath(ARRAY_SIZE(buffer), buffer))
+  if (!::GetTempPath(arraysize(buffer), buffer))
     return false;
   if (!IsCurrentProcessLowIntegrity() &&
-      !::GetLongPathName(buffer, buffer, ARRAY_SIZE(buffer)))
+      !::GetLongPathName(buffer, buffer, arraysize(buffer)))
     return false;
   size_t len = strlen(buffer);
   if ((len > 0) && (buffer[len-1] != '\\')) {
-    len += strcpyn(buffer + len, ARRAY_SIZE(buffer) - len, L"\\");
+    len += strcpyn(buffer + len, arraysize(buffer) - len, L"\\");
   }
-  if (len >= ARRAY_SIZE(buffer) - 1)
+  if (len >= arraysize(buffer) - 1)
     return false;
   pathname.clear();
   pathname.SetFolder(ToUtf8(buffer));
@@ -295,10 +297,10 @@ bool Win32Filesystem::CopyFile(const Pathname &old_path,
 
 bool Win32Filesystem::IsTemporaryPath(const Pathname& pathname) {
   TCHAR buffer[MAX_PATH + 1];
-  if (!::GetTempPath(ARRAY_SIZE(buffer), buffer))
+  if (!::GetTempPath(arraysize(buffer), buffer))
     return false;
   if (!IsCurrentProcessLowIntegrity() &&
-      !::GetLongPathName(buffer, buffer, ARRAY_SIZE(buffer)))
+      !::GetLongPathName(buffer, buffer, arraysize(buffer)))
     return false;
   return (::strnicmp(ToUtf16(pathname.pathname()).c_str(),
                      buffer, strlen(buffer)) == 0);
@@ -337,7 +339,7 @@ bool Win32Filesystem::GetFileTime(const Pathname& path, FileTimeType which,
 
 bool Win32Filesystem::GetAppPathname(Pathname* path) {
   TCHAR buffer[MAX_PATH + 1];
-  if (0 == ::GetModuleFileName(NULL, buffer, ARRAY_SIZE(buffer)))
+  if (0 == ::GetModuleFileName(NULL, buffer, arraysize(buffer)))
     return false;
   path->SetPathname(ToUtf8(buffer));
   return true;
@@ -351,20 +353,20 @@ bool Win32Filesystem::GetAppDataFolder(Pathname* path, bool per_user) {
   if (!::SHGetSpecialFolderPath(NULL, buffer, csidl, TRUE))
     return false;
   if (!IsCurrentProcessLowIntegrity() &&
-      !::GetLongPathName(buffer, buffer, ARRAY_SIZE(buffer)))
+      !::GetLongPathName(buffer, buffer, arraysize(buffer)))
     return false;
-  size_t len = strcatn(buffer, ARRAY_SIZE(buffer), __T("\\"));
-  len += strcpyn(buffer + len, ARRAY_SIZE(buffer) - len,
+  size_t len = strcatn(buffer, arraysize(buffer), __T("\\"));
+  len += strcpyn(buffer + len, arraysize(buffer) - len,
                  ToUtf16(organization_name_).c_str());
   if ((len > 0) && (buffer[len-1] != __T('\\'))) {
-    len += strcpyn(buffer + len, ARRAY_SIZE(buffer) - len, __T("\\"));
+    len += strcpyn(buffer + len, arraysize(buffer) - len, __T("\\"));
   }
-  len += strcpyn(buffer + len, ARRAY_SIZE(buffer) - len,
+  len += strcpyn(buffer + len, arraysize(buffer) - len,
                  ToUtf16(application_name_).c_str());
   if ((len > 0) && (buffer[len-1] != __T('\\'))) {
-    len += strcpyn(buffer + len, ARRAY_SIZE(buffer) - len, __T("\\"));
+    len += strcpyn(buffer + len, arraysize(buffer) - len, __T("\\"));
   }
-  if (len >= ARRAY_SIZE(buffer) - 1)
+  if (len >= arraysize(buffer) - 1)
     return false;
   path->clear();
   path->SetFolder(ToUtf8(buffer));
@@ -378,8 +380,9 @@ bool Win32Filesystem::GetAppTempFolder(Pathname* path) {
   return GetTemporaryFolder(*path, true, &filename);
 }
 
-bool Win32Filesystem::GetDiskFreeSpace(const Pathname& path, int64 *freebytes) {
-  if (!freebytes) {
+bool Win32Filesystem::GetDiskFreeSpace(const Pathname& path,
+                                       int64_t* free_bytes) {
+  if (!free_bytes) {
     return false;
   }
   char drive[4];
@@ -398,24 +401,24 @@ bool Win32Filesystem::GetDiskFreeSpace(const Pathname& path, int64 *freebytes) {
     // TODO: Add method to Pathname to determine if the path is relative.
     // TODO: Add method to Pathname to convert a path to absolute.
   }
-  UINT driveType = ::GetDriveType(target_drive);
-  if ( (driveType & DRIVE_REMOTE) || (driveType & DRIVE_UNKNOWN) ) {
-    LOG(LS_VERBOSE) << " remove or unknown drive " << drive;
+  UINT drive_type = ::GetDriveType(target_drive);
+  if ((drive_type == DRIVE_REMOTE) || (drive_type == DRIVE_UNKNOWN)) {
+    LOG(LS_VERBOSE) << "Remote or unknown drive: " << drive;
     return false;
   }
 
-  int64 totalNumberOfBytes;  // receives the number of bytes on disk
-  int64 totalNumberOfFreeBytes;  // receives the free bytes on disk
+  int64_t total_number_of_bytes;       // receives the number of bytes on disk
+  int64_t total_number_of_free_bytes;  // receives the free bytes on disk
   // make sure things won't change in 64 bit machine
   // TODO replace with compile time assert
-  ASSERT(sizeof(ULARGE_INTEGER) == sizeof(uint64));  //NOLINT
+  ASSERT(sizeof(ULARGE_INTEGER) == sizeof(uint64_t));  // NOLINT
   if (::GetDiskFreeSpaceEx(target_drive,
-                           (PULARGE_INTEGER)freebytes,
-                           (PULARGE_INTEGER)&totalNumberOfBytes,
-                           (PULARGE_INTEGER)&totalNumberOfFreeBytes)) {
+                           (PULARGE_INTEGER)free_bytes,
+                           (PULARGE_INTEGER)&total_number_of_bytes,
+                           (PULARGE_INTEGER)&total_number_of_free_bytes)) {
     return true;
   } else {
-    LOG(LS_VERBOSE) << " GetDiskFreeSpaceEx returns error ";
+    LOG(LS_VERBOSE) << "GetDiskFreeSpaceEx returns error.";
     return false;
   }
 }
@@ -423,7 +426,7 @@ bool Win32Filesystem::GetDiskFreeSpace(const Pathname& path, int64 *freebytes) {
 Pathname Win32Filesystem::GetCurrentDirectory() {
   Pathname cwd;
   int path_len = 0;
-  scoped_ptr<wchar_t[]> path;
+  std::unique_ptr<wchar_t[]> path;
   do {
     int needed = ::GetCurrentDirectory(path_len, path.get());
     if (needed == 0) {

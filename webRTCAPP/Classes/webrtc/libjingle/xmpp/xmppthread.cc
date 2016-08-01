@@ -16,8 +16,8 @@
 namespace buzz {
 namespace {
 
-const uint32 MSG_LOGIN = 1;
-const uint32 MSG_DISCONNECT = 2;
+const uint32_t MSG_LOGIN = 1;
+const uint32_t MSG_DISCONNECT = 2;
 
 struct LoginData: public rtc::MessageData {
   LoginData(const buzz::XmppClientSettings& s) : xcs(s) {}
@@ -42,11 +42,11 @@ void XmppThread::ProcessMessages(int cms) {
 }
 
 void XmppThread::Login(const buzz::XmppClientSettings& xcs) {
-  Post(this, MSG_LOGIN, new LoginData(xcs));
+  Post(RTC_FROM_HERE, this, MSG_LOGIN, new LoginData(xcs));
 }
 
 void XmppThread::Disconnect() {
-  Post(this, MSG_DISCONNECT);
+  Post(RTC_FROM_HERE, this, MSG_DISCONNECT);
 }
 
 void XmppThread::OnStateChange(buzz::XmppEngine::State state) {

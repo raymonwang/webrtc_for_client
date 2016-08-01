@@ -19,50 +19,29 @@
 #include "webrtc/common_audio/resampler/include/resampler.h"
 #include "webrtc/common_audio/signal_processing/include/signal_processing_library.h"
 
-
-namespace webrtc
-{
+namespace webrtc {
 
 Resampler::Resampler()
-{
-    state1_ = NULL;
-    state2_ = NULL;
-    state3_ = NULL;
-    in_buffer_ = NULL;
-    out_buffer_ = NULL;
-    in_buffer_size_ = 0;
-    out_buffer_size_ = 0;
-    in_buffer_size_max_ = 0;
-    out_buffer_size_max_ = 0;
-    // we need a reset before we will work
-    my_in_frequency_khz_ = 0;
-    my_out_frequency_khz_ = 0;
-    my_mode_ = kResamplerMode1To1;
-    my_type_ = kResamplerInvalid;
-    slave_left_ = NULL;
-    slave_right_ = NULL;
+    : state1_(nullptr),
+      state2_(nullptr),
+      state3_(nullptr),
+      in_buffer_(nullptr),
+      out_buffer_(nullptr),
+      in_buffer_size_(0),
+      out_buffer_size_(0),
+      in_buffer_size_max_(0),
+      out_buffer_size_max_(0),
+      my_in_frequency_khz_(0),
+      my_out_frequency_khz_(0),
+      my_mode_(kResamplerMode1To1),
+      num_channels_(0),
+      slave_left_(nullptr),
+      slave_right_(nullptr) {
 }
 
-Resampler::Resampler(int inFreq, int outFreq, ResamplerType type)
-{
-    state1_ = NULL;
-    state2_ = NULL;
-    state3_ = NULL;
-    in_buffer_ = NULL;
-    out_buffer_ = NULL;
-    in_buffer_size_ = 0;
-    out_buffer_size_ = 0;
-    in_buffer_size_max_ = 0;
-    out_buffer_size_max_ = 0;
-    // we need a reset before we will work
-    my_in_frequency_khz_ = 0;
-    my_out_frequency_khz_ = 0;
-    my_mode_ = kResamplerMode1To1;
-    my_type_ = kResamplerInvalid;
-    slave_left_ = NULL;
-    slave_right_ = NULL;
-
-    Reset(inFreq, outFreq, type);
+Resampler::Resampler(int inFreq, int outFreq, size_t num_channels)
+    : Resampler() {
+  Reset(inFreq, outFreq, num_channels);
 }
 
 Resampler::~Resampler()
@@ -97,23 +76,27 @@ Resampler::~Resampler()
     }
 }
 
-int Resampler::ResetIfNeeded(int inFreq, int outFreq, ResamplerType type)
+int Resampler::ResetIfNeeded(int inFreq, int outFreq, size_t num_channels)
 {
     int tmpInFreq_kHz = inFreq / 1000;
     int tmpOutFreq_kHz = outFreq / 1000;
 
     if ((tmpInFreq_kHz != my_in_frequency_khz_) || (tmpOutFreq_kHz != my_out_frequency_khz_)
-            || (type != my_type_))
+            || (num_channels != num_channels_))
     {
-        return Reset(inFreq, outFreq, type);
+        return Reset(inFreq, outFreq, num_channels);
     } else
     {
         return 0;
     }
 }
 
-int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
+int Resampler::Reset(int inFreq, int outFreq, size_t num_channels)
 {
+    if (num_channels != 1 && num_channels != 2) {
+      return -1;
+    }
+    num_channels_ = num_channels;
 
     if (state1_)
     {
@@ -156,11 +139,7 @@ int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
     in_buffer_size_max_ = 0;
     out_buffer_size_max_ = 0;
 
-    // This might be overridden if parameters are not accepted.
-    my_type_ = type;
-
     // Start with a math exercise, Euclid's algorithm to find the gcd:
-
     int a = inFreq;
     int b = outFreq;
     int c = a % b;
@@ -180,14 +159,11 @@ int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
     inFreq = inFreq / b;
     outFreq = outFreq / b;
 
-    // Do we need stereo?
-    if ((my_type_ & 0xf0) == 0x20)
+    if (num_channels_ == 2)
     {
-        // Change type to mono
-        type = static_cast<ResamplerType>(
-            ((static_cast<int>(type) & 0x0f) + 0x10));
-        slave_left_ = new Resampler(inFreq, outFreq, type);
-        slave_right_ = new Resampler(inFreq, outFreq, type);
+        // Create two mono resamplers.
+        slave_left_ = new Resampler(inFreq, outFreq, 1);
+        slave_right_ = new Resampler(inFreq, outFreq, 1);
     }
 
     if (inFreq == outFreq)
@@ -213,7 +189,6 @@ int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
                 my_mode_ = kResamplerMode1To12;
                 break;
             default:
-                my_type_ = kResamplerInvalid;
                 return -1;
         }
     } else if (outFreq == 1)
@@ -236,7 +211,6 @@ int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
                 my_mode_ = kResamplerMode12To1;
                 break;
             default:
-                my_type_ = kResamplerInvalid;
                 return -1;
         }
     } else if ((inFreq == 2) && (outFreq == 3))
@@ -271,7 +245,6 @@ int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
         my_mode_ = kResamplerMode11To8;
     } else
     {
-        my_type_ = kResamplerInvalid;
         return -1;
     }
 
@@ -428,28 +401,19 @@ int Resampler::Reset(int inFreq, int outFreq, ResamplerType type)
 }
 
 // Synchronous resampling, all output samples are written to samplesOut
-int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut,
-                    int maxLen, int &outLen)
+int Resampler::Push(const int16_t * samplesIn, size_t lengthIn,
+                    int16_t* samplesOut, size_t maxLen, size_t &outLen)
 {
-    // Check that the resampler is not in asynchronous mode
-    if (my_type_ & 0x0f)
+    if (num_channels_ == 2)
     {
-        return -1;
-    }
-
-    // Do we have a stereo signal?
-    if ((my_type_ & 0xf0) == 0x20)
-    {
-
         // Split up the signal and call the slave object for each channel
-
         int16_t* left = (int16_t*)malloc(lengthIn * sizeof(int16_t) / 2);
         int16_t* right = (int16_t*)malloc(lengthIn * sizeof(int16_t) / 2);
         int16_t* out_left = (int16_t*)malloc(maxLen / 2 * sizeof(int16_t));
         int16_t* out_right =
                 (int16_t*)malloc(maxLen / 2 * sizeof(int16_t));
         int res = 0;
-        for (int i = 0; i < lengthIn; i += 2)
+        for (size_t i = 0; i < lengthIn; i += 2)
         {
             left[i >> 1] = samplesIn[i];
             right[i >> 1] = samplesIn[i + 1];
@@ -458,8 +422,8 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
         // It's OK to overwrite the local parameter, since it's just a copy
         lengthIn = lengthIn / 2;
 
-        int actualOutLen_left = 0;
-        int actualOutLen_right = 0;
+        size_t actualOutLen_left = 0;
+        size_t actualOutLen_right = 0;
         // Do resampling for right channel
         res |= slave_left_->Push(left, lengthIn, out_left, maxLen / 2, actualOutLen_left);
         res |= slave_right_->Push(right, lengthIn, out_right, maxLen / 2, actualOutLen_right);
@@ -473,7 +437,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
         }
 
         // Reassemble the signal
-        for (int i = 0; i < actualOutLen_left; i++)
+        for (size_t i = 0; i < actualOutLen_left; i++)
         {
             samplesOut[i * 2] = out_left[i];
             samplesOut[i * 2 + 1] = out_right[i];
@@ -522,7 +486,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp_mem = (int32_t*)malloc(336 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 160)
+            for (size_t i = 0; i < lengthIn; i += 160)
             {
                 WebRtcSpl_Resample16khzTo48khz(samplesIn + i, samplesOut + i * 3,
                                                (WebRtcSpl_State16khzTo48khz *)state1_,
@@ -565,7 +529,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             WebRtcSpl_UpsampleBy2(samplesIn, lengthIn, tmp, (int32_t*)state1_);
             outLen = lengthIn * 2;
 
-            for (int i = 0; i < outLen; i += 160)
+            for (size_t i = 0; i < outLen; i += 160)
             {
                 WebRtcSpl_Resample16khzTo48khz(tmp + i, samplesOut + i * 3,
                                                (WebRtcSpl_State16khzTo48khz *)state2_,
@@ -596,7 +560,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             WebRtcSpl_UpsampleBy2(samplesOut, outLen, tmp, (int32_t*) state2_);
             outLen = outLen * 2;
             // 4:12
-            for (int i = 0; i < outLen; i += 160) {
+            for (size_t i = 0; i < outLen; i += 160) {
               // WebRtcSpl_Resample16khzTo48khz() takes a block of 160 samples
               // as input and outputs a resampled block of 480 samples. The
               // data is now actually in 32 kHz sampling rate, despite the
@@ -625,7 +589,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp = static_cast<int16_t*> (malloc(sizeof(int16_t) * lengthIn * 3));
             tmp_mem = (int32_t*)malloc(336 * sizeof(int32_t));
-            for (int i = 0; i < lengthIn; i += 160)
+            for (size_t i = 0; i < lengthIn; i += 160)
             {
                 WebRtcSpl_Resample16khzTo48khz(samplesIn + i, tmp + i * 3,
                                                (WebRtcSpl_State16khzTo48khz *)state1_,
@@ -657,7 +621,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
 
             tmp_mem = (int32_t*)malloc(98 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 80)
+            for (size_t i = 0; i < lengthIn; i += 80)
             {
                 WebRtcSpl_Resample8khzTo22khz(tmp + i, samplesOut + (i * 11) / 4,
                                               (WebRtcSpl_State8khzTo22khz *)state2_,
@@ -681,7 +645,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp_mem = (int32_t*)malloc(98 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 80)
+            for (size_t i = 0; i < lengthIn; i += 80)
             {
                 WebRtcSpl_Resample8khzTo22khz(samplesIn + i, samplesOut + (i * 11) / 4,
                                               (WebRtcSpl_State8khzTo22khz *)state1_,
@@ -703,7 +667,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp_mem = (int32_t*)malloc(88 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 160)
+            for (size_t i = 0; i < lengthIn; i += 160)
             {
                 WebRtcSpl_Resample16khzTo22khz(samplesIn + i, samplesOut + (i * 11) / 8,
                                                (WebRtcSpl_State16khzTo22khz *)state1_,
@@ -729,7 +693,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
 
             WebRtcSpl_UpsampleBy2(samplesIn, lengthIn, tmp, (int32_t*)state1_);
 
-            for (int i = 0; i < (lengthIn * 2); i += 220)
+            for (size_t i = 0; i < (lengthIn * 2); i += 220)
             {
                 WebRtcSpl_Resample22khzTo16khz(tmp + i, samplesOut + (i / 220) * 160,
                                                (WebRtcSpl_State22khzTo16khz *)state2_,
@@ -761,7 +725,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             WebRtcSpl_UpsampleBy2(samplesIn, lengthIn, samplesOut, (int32_t*)state1_);
 
             // 22 -> 16 in tmp
-            for (int i = 0; i < (lengthIn * 2); i += 220)
+            for (size_t i = 0; i < (lengthIn * 2); i += 220)
             {
                 WebRtcSpl_Resample22khzTo16khz(samplesOut + i, tmp + (i / 220) * 160,
                                                (WebRtcSpl_State22khzTo16khz *)state2_,
@@ -799,7 +763,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp_mem = (int32_t*)malloc(496 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 480)
+            for (size_t i = 0; i < lengthIn; i += 480)
             {
                 WebRtcSpl_Resample48khzTo16khz(samplesIn + i, samplesOut + i / 3,
                                                (WebRtcSpl_State48khzTo16khz *)state1_,
@@ -837,7 +801,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             tmp_mem = (int32_t*)malloc(496 * sizeof(int32_t));
             tmp = (int16_t*)malloc((sizeof(int16_t) * lengthIn) / 3);
 
-            for (int i = 0; i < lengthIn; i += 480)
+            for (size_t i = 0; i < lengthIn; i += 480)
             {
                 WebRtcSpl_Resample48khzTo16khz(samplesIn + i, tmp + i / 3,
                                                (WebRtcSpl_State48khzTo16khz *)state1_,
@@ -863,7 +827,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             tmp = (int16_t*) malloc((sizeof(int16_t) * lengthIn) / 3);
             tmp_2 = (int16_t*) malloc((sizeof(int16_t) * lengthIn) / 6);
             // 12:4
-            for (int i = 0; i < lengthIn; i += 480) {
+            for (size_t i = 0; i < lengthIn; i += 480) {
               // WebRtcSpl_Resample48khzTo16khz() takes a block of 480 samples
               // as input and outputs a resampled block of 160 samples. The
               // data is now actually in 96 kHz sampling rate, despite the
@@ -876,8 +840,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             outLen = lengthIn / 3;
             free(tmp_mem);
             // 4:2
-            WebRtcSpl_DownsampleBy2(tmp, outLen, tmp_2,
-                                    (int32_t*) state2_);
+            WebRtcSpl_DownsampleBy2(tmp, outLen, tmp_2, (int32_t*) state2_);
             outLen = outLen / 2;
             free(tmp);
             // 2:1
@@ -904,7 +867,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
                 return -1;
             }
             tmp_mem = (int32_t*)malloc(496 * sizeof(int32_t));
-            for (int i = 0; i < lengthIn; i += 480)
+            for (size_t i = 0; i < lengthIn; i += 480)
             {
                 WebRtcSpl_Resample48khzTo16khz(tmp + i, samplesOut + i / 3,
                                                (WebRtcSpl_State48khzTo16khz *)state2_,
@@ -928,7 +891,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             tmp_mem = (int32_t*)malloc(126 * sizeof(int32_t));
             tmp = (int16_t*)malloc((lengthIn * 4) / 11 * sizeof(int16_t));
 
-            for (int i = 0; i < lengthIn; i += 220)
+            for (size_t i = 0; i < lengthIn; i += 220)
             {
                 WebRtcSpl_Resample22khzTo8khz(samplesIn + i, tmp + (i * 4) / 11,
                                               (WebRtcSpl_State22khzTo8khz *)state1_,
@@ -936,7 +899,8 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             lengthIn = (lengthIn * 4) / 11;
 
-            WebRtcSpl_DownsampleBy2(tmp, lengthIn, samplesOut, (int32_t*)state2_);
+            WebRtcSpl_DownsampleBy2(tmp, lengthIn, samplesOut,
+                                    (int32_t*)state2_);
             outLen = lengthIn / 2;
 
             free(tmp_mem);
@@ -955,7 +919,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp_mem = (int32_t*)malloc(126 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 220)
+            for (size_t i = 0; i < lengthIn; i += 220)
             {
                 WebRtcSpl_Resample22khzTo8khz(samplesIn + i, samplesOut + (i * 4) / 11,
                                               (WebRtcSpl_State22khzTo8khz *)state1_,
@@ -977,7 +941,7 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
             }
             tmp_mem = (int32_t*)malloc(104 * sizeof(int32_t));
 
-            for (int i = 0; i < lengthIn; i += 220)
+            for (size_t i = 0; i < lengthIn; i += 220)
             {
                 WebRtcSpl_Resample22khzTo16khz(samplesIn + i, samplesOut + (i * 8) / 11,
                                                (WebRtcSpl_State22khzTo16khz *)state1_,
@@ -990,95 +954,6 @@ int Resampler::Push(const int16_t * samplesIn, int lengthIn, int16_t* samplesOut
 
     }
     return 0;
-}
-
-// Asynchronous resampling, input
-int Resampler::Insert(int16_t * samplesIn, int lengthIn)
-{
-    if (my_type_ != kResamplerAsynchronous)
-    {
-        return -1;
-    }
-    int sizeNeeded, tenMsblock;
-
-    // Determine need for size of outBuffer
-    sizeNeeded = out_buffer_size_ + ((lengthIn + in_buffer_size_) * my_out_frequency_khz_)
-            / my_in_frequency_khz_;
-    if (sizeNeeded > out_buffer_size_max_)
-    {
-        // Round the value upwards to complete 10 ms blocks
-        tenMsblock = my_out_frequency_khz_ * 10;
-        sizeNeeded = (sizeNeeded / tenMsblock + 1) * tenMsblock;
-        out_buffer_ = (int16_t*)realloc(out_buffer_, sizeNeeded * sizeof(int16_t));
-        out_buffer_size_max_ = sizeNeeded;
-    }
-
-    // If we need to use inBuffer, make sure all input data fits there.
-
-    tenMsblock = my_in_frequency_khz_ * 10;
-    if (in_buffer_size_ || (lengthIn % tenMsblock))
-    {
-        // Check if input buffer size is enough
-        if ((in_buffer_size_ + lengthIn) > in_buffer_size_max_)
-        {
-            // Round the value upwards to complete 10 ms blocks
-            sizeNeeded = ((in_buffer_size_ + lengthIn) / tenMsblock + 1) * tenMsblock;
-            in_buffer_ = (int16_t*)realloc(in_buffer_,
-                                           sizeNeeded * sizeof(int16_t));
-            in_buffer_size_max_ = sizeNeeded;
-        }
-        // Copy in data to input buffer
-        memcpy(in_buffer_ + in_buffer_size_, samplesIn, lengthIn * sizeof(int16_t));
-
-        // Resample all available 10 ms blocks
-        int lenOut;
-        int dataLenToResample = (in_buffer_size_ / tenMsblock) * tenMsblock;
-        Push(in_buffer_, dataLenToResample, out_buffer_ + out_buffer_size_,
-             out_buffer_size_max_ - out_buffer_size_, lenOut);
-        out_buffer_size_ += lenOut;
-
-        // Save the rest
-        memmove(in_buffer_, in_buffer_ + dataLenToResample,
-                (in_buffer_size_ - dataLenToResample) * sizeof(int16_t));
-        in_buffer_size_ -= dataLenToResample;
-    } else
-    {
-        // Just resample
-        int lenOut;
-        Push(in_buffer_, lengthIn, out_buffer_ + out_buffer_size_,
-             out_buffer_size_max_ - out_buffer_size_, lenOut);
-        out_buffer_size_ += lenOut;
-    }
-
-    return 0;
-}
-
-// Asynchronous resampling output, remaining samples are buffered
-int Resampler::Pull(int16_t* samplesOut, int desiredLen, int &outLen)
-{
-    if (my_type_ != kResamplerAsynchronous)
-    {
-        return -1;
-    }
-
-    // Check that we have enough data
-    if (desiredLen <= out_buffer_size_)
-    {
-        // Give out the date
-        memcpy(samplesOut, out_buffer_, desiredLen * sizeof(int32_t));
-
-        // Shuffle down remaining
-        memmove(out_buffer_, out_buffer_ + desiredLen,
-                (out_buffer_size_ - desiredLen) * sizeof(int16_t));
-
-        // Update remaining size
-        out_buffer_size_ -= desiredLen;
-
-        return 0;
-    } else
-    {
-        return -1;
-    }
 }
 
 }  // namespace webrtc

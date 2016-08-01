@@ -13,6 +13,7 @@
 
 #include <list>
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 
@@ -23,7 +24,7 @@
 #include "webrtc/base/socketaddress.h"
 
 namespace rtc {
-class ByteBuffer;
+class ByteBufferWriter;
 class PacketSocketFactory;
 class Thread;
 }
@@ -125,7 +126,7 @@ class TurnServerAllocation : public rtc::MessageHandler,
   TurnServer* server_;
   rtc::Thread* thread_;
   TurnServerConnection conn_;
-  rtc::scoped_ptr<rtc::AsyncPacketSocket> external_socket_;
+  std::unique_ptr<rtc::AsyncPacketSocket> external_socket_;
   std::string key_;
   std::string transaction_id_;
   std::string username_;
@@ -143,6 +144,7 @@ class TurnAuthInterface {
   // Return true if the given username and realm are valid, or false if not.
   virtual bool GetKey(const std::string& username, const std::string& realm,
                       std::string* key) = 0;
+  virtual ~TurnAuthInterface() = default;
 };
 
 // An interface enables Turn Server to control redirection behavior.
@@ -159,7 +161,8 @@ class TurnRedirectInterface {
 // Not yet wired up: TCP support.
 class TurnServer : public sigslot::has_slots<> {
  public:
-  typedef std::map<TurnServerConnection, TurnServerAllocation*> AllocationMap;
+  typedef std::map<TurnServerConnection, std::unique_ptr<TurnServerAllocation>>
+      AllocationMap;
 
   explicit TurnServer(rtc::Thread* thread);
   ~TurnServer();
@@ -183,6 +186,15 @@ class TurnServer : public sigslot::has_slots<> {
 
   void set_enable_otu_nonce(bool enable) { enable_otu_nonce_ = enable; }
 
+  // If set to true, reject CreatePermission requests to RFC1918 addresses.
+  void set_reject_private_addresses(bool filter) {
+    reject_private_addresses_ = filter;
+  }
+
+  void set_enable_permission_checks(bool enable) {
+    enable_permission_checks_ = enable;
+  }
+
   // Starts listening for packets from internal clients.
   void AddInternalSocket(rtc::AsyncPacketSocket* socket,
                          ProtocolType proto);
@@ -194,8 +206,14 @@ class TurnServer : public sigslot::has_slots<> {
   // Specifies the factory to use for creating external sockets.
   void SetExternalSocketFactory(rtc::PacketSocketFactory* factory,
                                 const rtc::SocketAddress& address);
+  // For testing only.
+  std::string SetTimestampForNextNonce(int64_t timestamp) {
+    ts_for_next_nonce_ = timestamp;
+    return GenerateNonce(timestamp);
+  }
 
  private:
+  std::string GenerateNonce(int64_t now) const;
   void OnInternalPacket(rtc::AsyncPacketSocket* socket, const char* data,
                         size_t size, const rtc::SocketAddress& address,
                         const rtc::PacketTime& packet_time);
@@ -216,7 +234,6 @@ class TurnServer : public sigslot::has_slots<> {
   bool CheckAuthorization(TurnServerConnection* conn, const StunMessage* msg,
                           const char* data, size_t size,
                           const std::string& key);
-  std::string GenerateNonce() const;
   bool ValidateNonce(const std::string& nonce) const;
 
   TurnServerAllocation* FindAllocation(TurnServerConnection* conn);
@@ -236,7 +253,7 @@ class TurnServer : public sigslot::has_slots<> {
                                             const rtc::SocketAddress& addr);
 
   void SendStun(TurnServerConnection* conn, StunMessage* msg);
-  void Send(TurnServerConnection* conn, const rtc::ByteBuffer& buf);
+  void Send(TurnServerConnection* conn, const rtc::ByteBufferWriter& buf);
 
   void OnAllocationDestroyed(TurnServerAllocation* allocation);
   void DestroyInternalSocket(rtc::AsyncPacketSocket* socket);
@@ -255,14 +272,20 @@ class TurnServer : public sigslot::has_slots<> {
   // otu - one-time-use. Server will respond with 438 if it's
   // sees the same nonce in next transaction.
   bool enable_otu_nonce_;
+  bool reject_private_addresses_ = false;
+  // Check for permission when receiving an external packet.
+  bool enable_permission_checks_ = true;
 
   InternalSocketMap server_sockets_;
   ServerSocketMap server_listen_sockets_;
-  rtc::scoped_ptr<rtc::PacketSocketFactory>
-      external_socket_factory_;
+  std::unique_ptr<rtc::PacketSocketFactory> external_socket_factory_;
   rtc::SocketAddress external_addr_;
 
   AllocationMap allocations_;
+
+  // For testing only. If this is non-zero, the next NONCE will be generated
+  // from this value, and it will be reset to 0 after generating the NONCE.
+  int64_t ts_for_next_nonce_ = 0;
 
   friend class TurnServerAllocation;
 };

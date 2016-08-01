@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		430D871D1986054F009E763A /* channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BB1986054F009E763A /* channel.cc */; };
 		430D871E1986054F009E763A /* channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BD1986054F009E763A /* channel_manager.cc */; };
-		430D871F1986054F009E763A /* dtmf_inband.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BF1986054F009E763A /* dtmf_inband.cc */; };
-		430D87201986054F009E763A /* dtmf_inband_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86C11986054F009E763A /* dtmf_inband_queue.cc */; };
 		430D87211986054F009E763A /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D61986054F009E763A /* level_indicator.cc */; };
 		430D87221986054F009E763A /* monitor_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D81986054F009E763A /* monitor_module.cc */; };
 		430D87231986054F009E763A /* network_predictor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DA1986054F009E763A /* network_predictor.cc */; };
@@ -22,7 +20,6 @@
 		430D87291986054F009E763A /* voe_audio_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87001986054F009E763A /* voe_audio_processing_impl.cc */; };
 		430D872A1986054F009E763A /* voe_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87031986054F009E763A /* voe_base_impl.cc */; };
 		430D872B1986054F009E763A /* voe_codec_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87051986054F009E763A /* voe_codec_impl.cc */; };
-		430D872C1986054F009E763A /* voe_dtmf_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87071986054F009E763A /* voe_dtmf_impl.cc */; };
 		430D872D1986054F009E763A /* voe_external_media_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87091986054F009E763A /* voe_external_media_impl.cc */; };
 		430D872E1986054F009E763A /* voe_file_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D870B1986054F009E763A /* voe_file_impl.cc */; };
 		430D872F1986054F009E763A /* voe_hardware_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D870D1986054F009E763A /* voe_hardware_impl.cc */; };
@@ -34,7 +31,6 @@
 		430D87351986054F009E763A /* voice_engine_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D871B1986054F009E763A /* voice_engine_impl.cc */; };
 		432B2FCB19CAB14D001267A7 /* output_mixer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DC1986054F009E763A /* output_mixer.cc */; };
 		432B2FCC19CAB14D001267A7 /* shared_data.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DE1986054F009E763A /* shared_data.cc */; };
-		432B2FCD19CAB14D001267A7 /* dtmf_inband.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BF1986054F009E763A /* dtmf_inband.cc */; };
 		432B2FCE19CAB14D001267A7 /* voe_network_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87111986054F009E763A /* voe_network_impl.cc */; };
 		432B2FCF19CAB14D001267A7 /* channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BB1986054F009E763A /* channel.cc */; };
 		432B2FD019CAB14D001267A7 /* voe_video_sync_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87151986054F009E763A /* voe_video_sync_impl.cc */; };
@@ -46,11 +42,9 @@
 		432B2FD619CAB14D001267A7 /* statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86E01986054F009E763A /* statistics.cc */; };
 		432B2FD719CAB14D001267A7 /* network_predictor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DA1986054F009E763A /* network_predictor.cc */; };
 		432B2FD819CAB14D001267A7 /* monitor_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D81986054F009E763A /* monitor_module.cc */; };
-		432B2FD919CAB14D001267A7 /* voe_dtmf_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87071986054F009E763A /* voe_dtmf_impl.cc */; };
 		432B2FDA19CAB14D001267A7 /* voe_neteq_stats_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D870F1986054F009E763A /* voe_neteq_stats_impl.cc */; };
 		432B2FDB19CAB14D001267A7 /* voe_audio_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87001986054F009E763A /* voe_audio_processing_impl.cc */; };
 		432B2FDC19CAB14D001267A7 /* voe_volume_control_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87171986054F009E763A /* voe_volume_control_impl.cc */; };
-		432B2FDD19CAB14D001267A7 /* dtmf_inband_queue.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86C11986054F009E763A /* dtmf_inband_queue.cc */; };
 		432B2FDE19CAB14D001267A7 /* voe_rtp_rtcp_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87131986054F009E763A /* voe_rtp_rtcp_impl.cc */; };
 		432B2FDF19CAB14D001267A7 /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D61986054F009E763A /* level_indicator.cc */; };
 		432B2FE019CAB14D001267A7 /* utility.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86FE1986054F009E763A /* utility.cc */; };
@@ -86,10 +80,6 @@
 		430D86BC1986054F009E763A /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		430D86BD1986054F009E763A /* channel_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_manager.cc; sourceTree = "<group>"; };
 		430D86BE1986054F009E763A /* channel_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel_manager.h; sourceTree = "<group>"; };
-		430D86BF1986054F009E763A /* dtmf_inband.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_inband.cc; sourceTree = "<group>"; };
-		430D86C01986054F009E763A /* dtmf_inband.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_inband.h; sourceTree = "<group>"; };
-		430D86C11986054F009E763A /* dtmf_inband_queue.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtmf_inband_queue.cc; sourceTree = "<group>"; };
-		430D86C21986054F009E763A /* dtmf_inband_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtmf_inband_queue.h; sourceTree = "<group>"; };
 		430D86C91986054F009E763A /* voe_audio_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_audio_processing.h; sourceTree = "<group>"; };
 		430D86CA1986054F009E763A /* voe_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_base.h; sourceTree = "<group>"; };
 		430D86CB1986054F009E763A /* voe_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_codec.h; sourceTree = "<group>"; };
@@ -126,8 +116,6 @@
 		430D87041986054F009E763A /* voe_base_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_base_impl.h; sourceTree = "<group>"; };
 		430D87051986054F009E763A /* voe_codec_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_codec_impl.cc; sourceTree = "<group>"; };
 		430D87061986054F009E763A /* voe_codec_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_codec_impl.h; sourceTree = "<group>"; };
-		430D87071986054F009E763A /* voe_dtmf_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_dtmf_impl.cc; sourceTree = "<group>"; };
-		430D87081986054F009E763A /* voe_dtmf_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_dtmf_impl.h; sourceTree = "<group>"; };
 		430D87091986054F009E763A /* voe_external_media_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_external_media_impl.cc; sourceTree = "<group>"; };
 		430D870A1986054F009E763A /* voe_external_media_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_external_media_impl.h; sourceTree = "<group>"; };
 		430D870B1986054F009E763A /* voe_file_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_file_impl.cc; sourceTree = "<group>"; };
@@ -173,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				430D868C1986051C009E763A /* voice_engine */,
-				430D86891986051C009E763A /* Frameworks */,
 				430D86881986051C009E763A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -185,13 +172,6 @@
 				432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		430D86891986051C009E763A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		430D868C1986051C009E763A /* voice_engine */ = {
@@ -210,10 +190,6 @@
 				430D86BC1986054F009E763A /* channel.h */,
 				430D86BD1986054F009E763A /* channel_manager.cc */,
 				430D86BE1986054F009E763A /* channel_manager.h */,
-				430D86BF1986054F009E763A /* dtmf_inband.cc */,
-				430D86C01986054F009E763A /* dtmf_inband.h */,
-				430D86C11986054F009E763A /* dtmf_inband_queue.cc */,
-				430D86C21986054F009E763A /* dtmf_inband_queue.h */,
 				430D86D61986054F009E763A /* level_indicator.cc */,
 				430D86D71986054F009E763A /* level_indicator.h */,
 				430D86D81986054F009E763A /* monitor_module.cc */,
@@ -237,8 +213,6 @@
 				430D87041986054F009E763A /* voe_base_impl.h */,
 				430D87051986054F009E763A /* voe_codec_impl.cc */,
 				430D87061986054F009E763A /* voe_codec_impl.h */,
-				430D87071986054F009E763A /* voe_dtmf_impl.cc */,
-				430D87081986054F009E763A /* voe_dtmf_impl.h */,
 				430D87091986054F009E763A /* voe_external_media_impl.cc */,
 				430D870A1986054F009E763A /* voe_external_media_impl.h */,
 				430D870B1986054F009E763A /* voe_file_impl.cc */,
@@ -355,7 +329,6 @@
 			files = (
 				430D87241986054F009E763A /* output_mixer.cc in Sources */,
 				430D87251986054F009E763A /* shared_data.cc in Sources */,
-				430D871F1986054F009E763A /* dtmf_inband.cc in Sources */,
 				430D87311986054F009E763A /* voe_network_impl.cc in Sources */,
 				430D871D1986054F009E763A /* channel.cc in Sources */,
 				430D87331986054F009E763A /* voe_video_sync_impl.cc in Sources */,
@@ -367,11 +340,9 @@
 				430D87261986054F009E763A /* statistics.cc in Sources */,
 				430D87231986054F009E763A /* network_predictor.cc in Sources */,
 				430D87221986054F009E763A /* monitor_module.cc in Sources */,
-				430D872C1986054F009E763A /* voe_dtmf_impl.cc in Sources */,
 				430D87301986054F009E763A /* voe_neteq_stats_impl.cc in Sources */,
 				430D87291986054F009E763A /* voe_audio_processing_impl.cc in Sources */,
 				430D87341986054F009E763A /* voe_volume_control_impl.cc in Sources */,
-				430D87201986054F009E763A /* dtmf_inband_queue.cc in Sources */,
 				430D87321986054F009E763A /* voe_rtp_rtcp_impl.cc in Sources */,
 				430D87211986054F009E763A /* level_indicator.cc in Sources */,
 				430D87281986054F009E763A /* utility.cc in Sources */,
@@ -387,7 +358,6 @@
 			files = (
 				432B2FCB19CAB14D001267A7 /* output_mixer.cc in Sources */,
 				432B2FCC19CAB14D001267A7 /* shared_data.cc in Sources */,
-				432B2FCD19CAB14D001267A7 /* dtmf_inband.cc in Sources */,
 				432B2FCE19CAB14D001267A7 /* voe_network_impl.cc in Sources */,
 				432B2FCF19CAB14D001267A7 /* channel.cc in Sources */,
 				432B2FD019CAB14D001267A7 /* voe_video_sync_impl.cc in Sources */,
@@ -399,11 +369,9 @@
 				432B2FD619CAB14D001267A7 /* statistics.cc in Sources */,
 				432B2FD719CAB14D001267A7 /* network_predictor.cc in Sources */,
 				432B2FD819CAB14D001267A7 /* monitor_module.cc in Sources */,
-				432B2FD919CAB14D001267A7 /* voe_dtmf_impl.cc in Sources */,
 				432B2FDA19CAB14D001267A7 /* voe_neteq_stats_impl.cc in Sources */,
 				432B2FDB19CAB14D001267A7 /* voe_audio_processing_impl.cc in Sources */,
 				432B2FDC19CAB14D001267A7 /* voe_volume_control_impl.cc in Sources */,
-				432B2FDD19CAB14D001267A7 /* dtmf_inband_queue.cc in Sources */,
 				432B2FDE19CAB14D001267A7 /* voe_rtp_rtcp_impl.cc in Sources */,
 				432B2FDF19CAB14D001267A7 /* level_indicator.cc in Sources */,
 				432B2FE019CAB14D001267A7 /* utility.cc in Sources */,

@@ -10,6 +10,7 @@
 
 #include <assert.h>
 
+#include "webrtc/base/arraysize.h"
 #include "webrtc/base/pathutils.h"
 #include "webrtc/base/fileutils.h"
 #include "webrtc/base/stringutils.h"
@@ -132,7 +133,7 @@ bool DirectoryIterator::OlderThan(int seconds) const {
 #else
   file_modify_time = stat_.st_mtime;
 #endif
-  return TimeDiff(time(NULL), file_modify_time) >= seconds;
+  return time(NULL) - file_modify_time >= seconds;
 }
 
 FilesystemInterface* Filesystem::default_filesystem_ = NULL;
@@ -146,6 +147,10 @@ FilesystemInterface *Filesystem::EnsureDefaultFilesystem() {
 #endif
   }
   return default_filesystem_;
+}
+
+DirectoryIterator* FilesystemInterface::IterateDirectory() {
+  return new DirectoryIterator();
 }
 
 bool FilesystemInterface::CopyFolder(const Pathname &old_path,
@@ -208,6 +213,10 @@ bool FilesystemInterface::DeleteFolderContents(const Pathname &folder) {
   return success;
 }
 
+bool FilesystemInterface::DeleteFolderAndContents(const Pathname& folder) {
+  return DeleteFolderContents(folder) && DeleteEmptyFolder(folder);
+}
+
 bool FilesystemInterface::CleanAppTempFolder() {
   Pathname path;
   if (!GetAppTempFolder(&path))
@@ -265,8 +274,8 @@ bool CreateUniqueFile(Pathname& path, bool create_empty) {
     }
     version += 1;
     char version_base[MAX_PATH];
-    sprintfn(version_base, ARRAY_SIZE(version_base), "%s-%u",
-             basename.c_str(), version);
+    sprintfn(version_base, arraysize(version_base), "%s-%u", basename.c_str(),
+             version);
     path.SetBasename(version_base);
   }
   return true;

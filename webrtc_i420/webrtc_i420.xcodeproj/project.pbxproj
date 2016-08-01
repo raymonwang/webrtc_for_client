@@ -7,18 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43F1EEE91D477D9100AEAEC2 /* i420.h in Headers */ = {isa = PBXBuildFile; fileRef = 43F1EEE41D477D9100AEAEC2 /* i420.h */; };
-		43F1EEEA1D477D9100AEAEC2 /* i420.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43F1EEE61D477D9100AEAEC2 /* i420.cc */; };
-		43F1EEEE1D477DEE00AEAEC2 /* i420.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43F1EEE61D477D9100AEAEC2 /* i420.cc */; };
-		43F1EEF11D477DEE00AEAEC2 /* i420.h in Headers */ = {isa = PBXBuildFile; fileRef = 43F1EEE41D477D9100AEAEC2 /* i420.h */; };
+		438775781D4F40E200E6F9E9 /* i420.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775741D4F40E200E6F9E9 /* i420.cc */; };
+		438775791D4F40E200E6F9E9 /* i420.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775741D4F40E200E6F9E9 /* i420.cc */; };
+		4387757A1D4F40E200E6F9E9 /* i420.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775771D4F40E200E6F9E9 /* i420.h */; };
+		4387757B1D4F40E200E6F9E9 /* i420.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775771D4F40E200E6F9E9 /* i420.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		438775741D4F40E200E6F9E9 /* i420.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i420.cc; sourceTree = "<group>"; };
+		438775751D4F40E200E6F9E9 /* i420.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = i420.gypi; sourceTree = "<group>"; };
+		438775771D4F40E200E6F9E9 /* i420.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i420.h; sourceTree = "<group>"; };
 		43F1EE7A1D477D5D00AEAEC2 /* libwebrtc_i420.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_i420.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43F1EEE41D477D9100AEAEC2 /* i420.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = i420.h; sourceTree = "<group>"; };
-		43F1EEE61D477D9100AEAEC2 /* i420.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = i420.cc; sourceTree = "<group>"; };
-		43F1EEE71D477D9100AEAEC2 /* i420.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = i420.gypi; sourceTree = "<group>"; };
-		43F1EEE81D477D9100AEAEC2 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		43F1EEF51D477DEE00AEAEC2 /* libwebrtc_i420_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_i420_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -40,6 +39,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		438775761D4F40E200E6F9E9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				438775771D4F40E200E6F9E9 /* i420.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		43F1EE711D477D5D00AEAEC2 = {
 			isa = PBXGroup;
 			children = (
@@ -60,37 +67,12 @@
 		43F1EEE01D477D9100AEAEC2 /* i420 */ = {
 			isa = PBXGroup;
 			children = (
-				43F1EEE21D477D9100AEAEC2 /* main */,
+				438775741D4F40E200E6F9E9 /* i420.cc */,
+				438775751D4F40E200E6F9E9 /* i420.gypi */,
+				438775761D4F40E200E6F9E9 /* include */,
 			);
 			name = i420;
 			path = ../webRTCAPP/Classes/webrtc/modules/video_coding/codecs/i420;
-			sourceTree = "<group>";
-		};
-		43F1EEE21D477D9100AEAEC2 /* main */ = {
-			isa = PBXGroup;
-			children = (
-				43F1EEE31D477D9100AEAEC2 /* interface */,
-				43F1EEE51D477D9100AEAEC2 /* source */,
-			);
-			path = main;
-			sourceTree = "<group>";
-		};
-		43F1EEE31D477D9100AEAEC2 /* interface */ = {
-			isa = PBXGroup;
-			children = (
-				43F1EEE41D477D9100AEAEC2 /* i420.h */,
-			);
-			path = interface;
-			sourceTree = "<group>";
-		};
-		43F1EEE51D477D9100AEAEC2 /* source */ = {
-			isa = PBXGroup;
-			children = (
-				43F1EEE61D477D9100AEAEC2 /* i420.cc */,
-				43F1EEE71D477D9100AEAEC2 /* i420.gypi */,
-				43F1EEE81D477D9100AEAEC2 /* OWNERS */,
-			);
-			path = source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,7 +82,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43F1EEE91D477D9100AEAEC2 /* i420.h in Headers */,
+				4387757A1D4F40E200E6F9E9 /* i420.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +90,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43F1EEF11D477DEE00AEAEC2 /* i420.h in Headers */,
+				4387757B1D4F40E200E6F9E9 /* i420.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43F1EEEA1D477D9100AEAEC2 /* i420.cc in Sources */,
+				438775781D4F40E200E6F9E9 /* i420.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43F1EEEE1D477DEE00AEAEC2 /* i420.cc in Sources */,
+				438775791D4F40E200E6F9E9 /* i420.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

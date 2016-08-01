@@ -27,7 +27,7 @@ namespace cricket {
 const int MAX_LIFETIME = 15 * 60 * 1000;
 
 // The number of bytes in each of the usernames we use.
-const uint32 USERNAME_LENGTH = 16;
+const uint32_t USERNAME_LENGTH = 16;
 
 // Calls SendTo on the given socket and logs any bad results.
 void Send(rtc::AsyncPacketSocket* socket, const char* bytes, size_t size,
@@ -46,7 +46,7 @@ void Send(rtc::AsyncPacketSocket* socket, const char* bytes, size_t size,
 void SendStun(const StunMessage& msg,
               rtc::AsyncPacketSocket* socket,
               const rtc::SocketAddress& addr) {
-  rtc::ByteBuffer buf;
+  rtc::ByteBufferWriter buf;
   msg.Write(&buf);
   Send(socket, buf.Data(), buf.Length(), addr);
 }
@@ -249,7 +249,7 @@ void RelayServer::OnExternalPacket(
   // The first packet should always be a STUN / TURN packet.  If it isn't, then
   // we should just ignore this packet.
   RelayMessage msg;
-  rtc::ByteBuffer buf(bytes, size);
+  rtc::ByteBufferReader buf(bytes, size);
   if (!msg.Read(&buf)) {
     LOG(LS_WARNING) << "Dropping packet: first packet not STUN";
     return;
@@ -263,8 +263,8 @@ void RelayServer::OnExternalPacket(
     return;
   }
 
-  uint32 length = rtc::_min(static_cast<uint32>(username_attr->length()),
-                                  USERNAME_LENGTH);
+  uint32_t length =
+      std::min(static_cast<uint32_t>(username_attr->length()), USERNAME_LENGTH);
   std::string username(username_attr->bytes(), length);
   // TODO: Check the HMAC.
 
@@ -298,7 +298,7 @@ bool RelayServer::HandleStun(
     StunMessage* msg) {
 
   // Parse this into a stun message. Eat the message if this fails.
-  rtc::ByteBuffer buf(bytes, size);
+  rtc::ByteBufferReader buf(bytes, size);
   if (!msg->Read(&buf)) {
     return false;
   }
@@ -355,11 +355,12 @@ void RelayServer::HandleStunAllocate(
     //       else-branch will then disappear.
 
     // Compute the appropriate lifetime for this binding.
-    uint32 lifetime = MAX_LIFETIME;
+    int lifetime = MAX_LIFETIME;
     const StunUInt32Attribute* lifetime_attr =
         request.GetUInt32(STUN_ATTR_LIFETIME);
     if (lifetime_attr)
-      lifetime = rtc::_min(lifetime, lifetime_attr->value() * 1000);
+      lifetime =
+          std::min(lifetime, static_cast<int>(lifetime_attr->value() * 1000));
 
     binding = new RelayServerBinding(this, username, "0", lifetime);
     binding->SignalTimeout.connect(this, &RelayServer::OnTimeout);
@@ -530,7 +531,7 @@ void RelayServer::RemoveBinding(RelayServerBinding* binding) {
 
 void RelayServer::OnMessage(rtc::Message *pmsg) {
 #if ENABLE_DEBUG
-  static const uint32 kMessageAcceptConnection = 1;
+  static const uint32_t kMessageAcceptConnection = 1;
   ASSERT(pmsg->message_id == kMessageAcceptConnection);
 #endif
   rtc::MessageData* data = pmsg->pdata;
@@ -616,7 +617,7 @@ void RelayServerConnection::Send(
   StunByteStringAttribute* data_attr =
       StunAttribute::CreateByteString(STUN_ATTR_DATA);
   ASSERT(size <= 65536);
-  data_attr->CopyBytes(data, uint16(size));
+  data_attr->CopyBytes(data, uint16_t(size));
   msg.AddAttribute(data_attr);
 
   SendStun(msg);
@@ -648,13 +649,16 @@ void RelayServerConnection::Unlock() {
 }
 
 // IDs used for posted messages:
-const uint32 MSG_LIFETIME_TIMER = 1;
+const uint32_t MSG_LIFETIME_TIMER = 1;
 
-RelayServerBinding::RelayServerBinding(
-    RelayServer* server, const std::string& username,
-    const std::string& password, uint32 lifetime)
-  : server_(server), username_(username), password_(password),
-    lifetime_(lifetime) {
+RelayServerBinding::RelayServerBinding(RelayServer* server,
+                                       const std::string& username,
+                                       const std::string& password,
+                                       int lifetime)
+    : server_(server),
+      username_(username),
+      password_(password),
+      lifetime_(lifetime) {
   // For now, every connection uses the standard magic cookie value.
   magic_cookie_.append(
       reinterpret_cast<const char*>(TURN_MAGIC_COOKIE_VALUE),
@@ -664,7 +668,8 @@ RelayServerBinding::RelayServerBinding(
   NoteUsed();
 
   // Set the first timeout check.
-  server_->thread()->PostDelayed(lifetime_, this, MSG_LIFETIME_TIMER);
+  server_->thread()->PostDelayed(RTC_FROM_HERE, lifetime_, this,
+                                 MSG_LIFETIME_TIMER);
 }
 
 RelayServerBinding::~RelayServerBinding() {
@@ -690,7 +695,7 @@ void RelayServerBinding::AddExternalConnection(RelayServerConnection* conn) {
 }
 
 void RelayServerBinding::NoteUsed() {
-  last_used_ = rtc::Time();
+  last_used_ = rtc::TimeMillis();
 }
 
 bool RelayServerBinding::HasMagicCookie(const char* bytes, size_t size) const {
@@ -731,11 +736,12 @@ void RelayServerBinding::OnMessage(rtc::Message *pmsg) {
 
     // If the lifetime timeout has been exceeded, then send a signal.
     // Otherwise, just keep waiting.
-    if (rtc::Time() >= last_used_ + lifetime_) {
+    if (rtc::TimeMillis() >= last_used_ + lifetime_) {
       LOG(LS_INFO) << "Expiring binding " << username_;
       SignalTimeout(this);
     } else {
-      server_->thread()->PostDelayed(lifetime_, this, MSG_LIFETIME_TIMER);
+      server_->thread()->PostDelayed(RTC_FROM_HERE, lifetime_, this,
+                                     MSG_LIFETIME_TIMER);
     }
 
   } else {

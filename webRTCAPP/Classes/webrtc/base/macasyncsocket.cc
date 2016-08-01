@@ -112,7 +112,7 @@ int MacAsyncSocket::Connect(const SocketAddress& addr) {
     SetError(EALREADY);
     return SOCKET_ERROR;
   }
-  if (addr.IsUnresolved()) {
+  if (addr.IsUnresolvedIP()) {
     LOG(LS_VERBOSE) << "Resolving addr in MacAsyncSocket::Connect";
     resolver_ = new AsyncResolver();
     resolver_->SignalWorkDone.connect(this,
@@ -188,7 +188,10 @@ int MacAsyncSocket::SendTo(const void* buffer, size_t length,
 }
 
 // Read data received from the remote end we're connected to.
-int MacAsyncSocket::Recv(void* buffer, size_t length) {
+int MacAsyncSocket::Recv(void* buffer, size_t length, int64_t* timestamp) {
+  if (timestamp) {
+    *timestamp = -1;
+  }
   int received = ::recv(native_socket_, reinterpret_cast<char*>(buffer),
                         length, 0);
   if (received == SOCKET_ERROR) error_ = errno;
@@ -199,8 +202,13 @@ int MacAsyncSocket::Recv(void* buffer, size_t length) {
 }
 
 // Read data received from any remote party
-int MacAsyncSocket::RecvFrom(void* buffer, size_t length,
-                             SocketAddress* out_addr) {
+int MacAsyncSocket::RecvFrom(void* buffer,
+                             size_t length,
+                             SocketAddress* out_addr,
+                             int64_t* timestamp) {
+  if (timestamp) {
+    *timestamp = -1;
+  }
   sockaddr_storage saddr;
   socklen_t addr_len = sizeof(saddr);
   int received = ::recvfrom(native_socket_, reinterpret_cast<char*>(buffer),
@@ -276,7 +284,7 @@ int MacAsyncSocket::Close() {
   return 0;
 }
 
-int MacAsyncSocket::EstimateMTU(uint16* mtu) {
+int MacAsyncSocket::EstimateMTU(uint16_t* mtu) {
   ASSERT(false && "NYI");
   return -1;
 }

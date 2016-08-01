@@ -11,7 +11,7 @@
 #include "webrtc/modules/desktop_capture/cropping_window_capturer.h"
 
 #include "webrtc/modules/desktop_capture/cropped_desktop_frame.h"
-#include "webrtc/system_wrappers/interface/logging.h"
+#include "webrtc/system_wrappers/include/logging.h"
 
 namespace webrtc {
 
@@ -29,6 +29,11 @@ CroppingWindowCapturer::~CroppingWindowCapturer() {}
 void CroppingWindowCapturer::Start(DesktopCapturer::Callback* callback) {
   callback_ = callback;
   window_capturer_->Start(callback);
+}
+
+void CroppingWindowCapturer::SetSharedMemoryFactory(
+    std::unique_ptr<SharedMemoryFactory> shared_memory_factory) {
+  window_capturer_->SetSharedMemoryFactory(std::move(shared_memory_factory));
 }
 
 void CroppingWindowCapturer::Capture(const DesktopRegion& region) {
@@ -69,35 +74,31 @@ bool CroppingWindowCapturer::BringSelectedWindowToFront() {
   return window_capturer_->BringSelectedWindowToFront();
 }
 
-SharedMemory* CroppingWindowCapturer::CreateSharedMemory(size_t size) {
-  return callback_->CreateSharedMemory(size);
-}
-
-void CroppingWindowCapturer::OnCaptureCompleted(DesktopFrame* frame) {
-  scoped_ptr<DesktopFrame> screen_frame(frame);
-
+void CroppingWindowCapturer::OnCaptureResult(
+    DesktopCapturer::Result result,
+    std::unique_ptr<DesktopFrame> screen_frame) {
   if (!ShouldUseScreenCapturer()) {
     LOG(LS_INFO) << "Window no longer on top when ScreenCapturer finishes";
     window_capturer_->Capture(DesktopRegion());
     return;
   }
 
-  if (!frame) {
+  if (result != Result::SUCCESS) {
     LOG(LS_WARNING) << "ScreenCapturer failed to capture a frame";
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(result, nullptr);
     return;
   }
 
   DesktopRect window_rect = GetWindowRectInVirtualScreen();
   if (window_rect.is_empty()) {
     LOG(LS_WARNING) << "Window rect is empty";
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
     return;
   }
 
-  scoped_ptr<DesktopFrame> window_frame(
-      CreateCroppedDesktopFrame(screen_frame.release(), window_rect));
-  callback_->OnCaptureCompleted(window_frame.release());
+  callback_->OnCaptureResult(
+      Result::SUCCESS,
+      CreateCroppedDesktopFrame(std::move(screen_frame), window_rect));
 }
 
 #if !defined(WEBRTC_WIN)

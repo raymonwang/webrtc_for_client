@@ -8,12 +8,12 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/voice_engine/include/voe_codec.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/modules/audio_device/include/fake_audio_device.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/test/testsupport/gtest_disable.h"
 #include "webrtc/voice_engine/include/voe_base.h"
 #include "webrtc/voice_engine/include/voe_hardware.h"
 #include "webrtc/voice_engine/voice_engine_defines.h"
@@ -30,8 +30,7 @@ class VoECodecTest : public ::testing::Test {
         voe_codec_(VoECodec::GetInterface(voe_)),
         channel_(-1),
         adm_(new FakeAudioDeviceModule),
-        red_payload_type_(-1) {
-  }
+        red_payload_type_(-1) {}
 
   ~VoECodecTest() {}
 
@@ -62,18 +61,19 @@ class VoECodecTest : public ::testing::Test {
     // Find primary and secondary codecs.
     int num_codecs = voe_codec_->NumOfCodecs();
     int n = 0;
-    while (n < num_codecs && (!primary_found || !valid_secondary_found ||
-        !invalid_secondary_found || red_payload_type_ < 0)) {
+    while (n < num_codecs &&
+           (!primary_found || !valid_secondary_found ||
+            !invalid_secondary_found || red_payload_type_ < 0)) {
       EXPECT_EQ(0, voe_codec_->GetCodec(n, my_codec));
       if (!STR_CASE_CMP(my_codec.plname, "isac") && my_codec.plfreq == 16000) {
         memcpy(&valid_secondary_, &my_codec, sizeof(my_codec));
         valid_secondary_found = true;
       } else if (!STR_CASE_CMP(my_codec.plname, "isac") &&
-          my_codec.plfreq == 32000) {
+                 my_codec.plfreq == 32000) {
         memcpy(&invalid_secondary_, &my_codec, sizeof(my_codec));
         invalid_secondary_found = true;
       } else if (!STR_CASE_CMP(my_codec.plname, "L16") &&
-          my_codec.plfreq == 16000) {
+                 my_codec.plfreq == 16000) {
         memcpy(&primary_, &my_codec, sizeof(my_codec));
         primary_found = true;
       } else if (!STR_CASE_CMP(my_codec.plname, "RED")) {
@@ -94,7 +94,7 @@ class VoECodecTest : public ::testing::Test {
   int channel_;
   CodecInst primary_;
   CodecInst valid_secondary_;
-  scoped_ptr<FakeAudioDeviceModule> adm_;
+  std::unique_ptr<FakeAudioDeviceModule> adm_;
 
   // A codec which is not valid to be registered as secondary codec.
   CodecInst invalid_secondary_;

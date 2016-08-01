@@ -11,15 +11,20 @@
 #ifndef WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_RECEIVER_HELP_H_
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_RECEIVER_HELP_H_
 
+#include <list>
+#include <memory>
+#include <vector>
 
 #include "webrtc/base/constructormagic.h"
-#include "webrtc/modules/rtp_rtcp/interface/rtp_rtcp_defines.h"  // RTCPReportBlock
+#include "webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h"  // RTCPReportBlock
 #include "webrtc/modules/rtp_rtcp/source/rtcp_utility.h"
 #include "webrtc/modules/rtp_rtcp/source/tmmbr_help.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 #include "webrtc/typedefs.h"
 
 namespace webrtc {
+namespace rtcp {
+class TransportFeedback;
+}
 namespace RTCPHelp
 {
 
@@ -82,10 +87,12 @@ public:
 
     uint32_t xr_originator_ssrc;
     bool xr_dlrr_item;
-    RTCPVoIPMetric*  VoIPMetric;
+    std::unique_ptr<RTCPVoIPMetric>  VoIPMetric;
+
+    std::unique_ptr<rtcp::TransportFeedback> transport_feedback_;
 
 private:
-    DISALLOW_COPY_AND_ASSIGN(RTCPPacketInformation);
+    RTC_DISALLOW_COPY_AND_ASSIGN(RTCPPacketInformation);
 };
 
 class RTCPReceiveInformation

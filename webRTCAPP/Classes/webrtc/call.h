@@ -14,14 +14,27 @@
 #include <vector>
 
 #include "webrtc/common_types.h"
+#include "webrtc/audio_receive_stream.h"
+#include "webrtc/audio_send_stream.h"
+#include "webrtc/audio_state.h"
+#include "webrtc/base/networkroute.h"
+#include "webrtc/base/platform_file.h"
+#include "webrtc/base/socket.h"
 #include "webrtc/video_receive_stream.h"
 #include "webrtc/video_send_stream.h"
 
 namespace webrtc {
 
-class VoiceEngine;
+class AudioProcessing;
 
 const char* Version();
+
+enum class MediaType {
+  ANY,
+  AUDIO,
+  VIDEO,
+  DATA
+};
 
 class PacketReceiver {
  public:
@@ -31,8 +44,10 @@ class PacketReceiver {
     DELIVERY_PACKET_ERROR,
   };
 
-  virtual DeliveryStatus DeliverPacket(const uint8_t* packet,
-                                       size_t length) = 0;
+  virtual DeliveryStatus DeliverPacket(MediaType media_type,
+                                       const uint8_t* packet,
+                                       size_t length,
+                                       const PacketTime& packet_time) = 0;
 
  protected:
   virtual ~PacketReceiver() {}
@@ -56,72 +71,52 @@ class LoadObserver {
 // etc.
 class Call {
  public:
-  enum NetworkState {
-    kNetworkUp,
-    kNetworkDown,
-  };
   struct Config {
-    explicit Config(newapi::Transport* send_transport)
-        : webrtc_config(NULL),
-          send_transport(send_transport),
-          voice_engine(NULL),
-          overuse_callback(NULL) {}
-
     static const int kDefaultStartBitrateBps;
-
-    webrtc::Config* webrtc_config;
-
-    newapi::Transport* send_transport;
-
-    // VoiceEngine used for audio/video synchronization for this Call.
-    VoiceEngine* voice_engine;
-
-    // Callback for overuse and normal usage based on the jitter of incoming
-    // captured frames. 'NULL' disables the callback.
-    LoadObserver* overuse_callback;
 
     // Bitrate config used until valid bitrate estimates are calculated. Also
     // used to cap total bitrate used.
-    // Note: This is currently set only for video and is per-stream rather of
-    // for the entire link.
-    // TODO(pbos): Set start bitrate for entire Call.
     struct BitrateConfig {
-      BitrateConfig()
-          : min_bitrate_bps(0),
-            start_bitrate_bps(kDefaultStartBitrateBps),
-            max_bitrate_bps(-1) {}
-      int min_bitrate_bps;
-      int start_bitrate_bps;
-      int max_bitrate_bps;
-    } stream_bitrates;
+      int min_bitrate_bps = 0;
+      int start_bitrate_bps = kDefaultStartBitrateBps;
+      int max_bitrate_bps = -1;
+    } bitrate_config;
+
+    // AudioState which is possibly shared between multiple calls.
+    // TODO(solenberg): Change this to a shared_ptr once we can use C++11.
+    rtc::scoped_refptr<AudioState> audio_state;
+
+    // Audio Processing Module to be used in this call.
+    // TODO(solenberg): Change this to a shared_ptr once we can use C++11.
+    AudioProcessing* audio_processing = nullptr;
   };
 
   struct Stats {
-    Stats()
-        : send_bandwidth_bps(0),
-          recv_bandwidth_bps(0),
-          pacer_delay_ms(0),
-          rtt_ms(-1) {}
-
-    int send_bandwidth_bps;
-    int recv_bandwidth_bps;
-    int64_t pacer_delay_ms;
-    int64_t rtt_ms;
+    int send_bandwidth_bps = 0;       // Estimated available send bandwidth.
+    int max_padding_bitrate_bps = 0;  // Cumulative configured max padding.
+    int recv_bandwidth_bps = 0;       // Estimated available receive bandwidth.
+    int64_t pacer_delay_ms = 0;
+    int64_t rtt_ms = -1;
   };
 
   static Call* Create(const Call::Config& config);
 
-  static Call* Create(const Call::Config& config,
-                      const webrtc::Config& webrtc_config);
+  virtual AudioSendStream* CreateAudioSendStream(
+      const AudioSendStream::Config& config) = 0;
+  virtual void DestroyAudioSendStream(AudioSendStream* send_stream) = 0;
+
+  virtual AudioReceiveStream* CreateAudioReceiveStream(
+      const AudioReceiveStream::Config& config) = 0;
+  virtual void DestroyAudioReceiveStream(
+      AudioReceiveStream* receive_stream) = 0;
 
   virtual VideoSendStream* CreateVideoSendStream(
       const VideoSendStream::Config& config,
       const VideoEncoderConfig& encoder_config) = 0;
-
   virtual void DestroyVideoSendStream(VideoSendStream* send_stream) = 0;
 
   virtual VideoReceiveStream* CreateVideoReceiveStream(
-      const VideoReceiveStream::Config& config) = 0;
+      VideoReceiveStream::Config configuration) = 0;
   virtual void DestroyVideoReceiveStream(
       VideoReceiveStream* receive_stream) = 0;
 
@@ -141,10 +136,26 @@ class Call {
   // implemented.
   virtual void SetBitrateConfig(
       const Config::BitrateConfig& bitrate_config) = 0;
-  virtual void SignalNetworkState(NetworkState state) = 0;
+
+  // TODO(skvlad): When the unbundled case with multiple streams for the same
+  // media type going over different networks is supported, track the state
+  // for each stream separately. Right now it's global per media type.
+  virtual void SignalChannelNetworkState(MediaType media,
+                                         NetworkState state) = 0;
+
+  virtual void OnNetworkRouteChanged(
+      const std::string& transport_name,
+      const rtc::NetworkRoute& network_route) = 0;
+
+  virtual void OnSentPacket(const rtc::SentPacket& sent_packet) = 0;
+
+  virtual bool StartEventLog(rtc::PlatformFile log_file,
+                             int64_t max_size_bytes) = 0;
+  virtual void StopEventLog() = 0;
 
   virtual ~Call() {}
 };
+
 }  // namespace webrtc
 
 #endif  // WEBRTC_CALL_H_

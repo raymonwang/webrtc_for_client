@@ -9,16 +9,15 @@
  */
 
 #include <time.h>
-
-#include "webrtc/base/httpcommon-inl.h"
-
+#include <algorithm>
+#include <memory>
 #include "webrtc/base/asyncsocket.h"
 #include "webrtc/base/common.h"
 #include "webrtc/base/diskcache.h"
 #include "webrtc/base/httpclient.h"
+#include "webrtc/base/httpcommon-inl.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/pathutils.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/socketstream.h"
 #include "webrtc/base/stringencode.h"
 #include "webrtc/base/stringutils.h"
@@ -119,7 +118,7 @@ HttpCacheState HttpGetCacheState(const HttpTransaction& t) {
   if (t.response.hasHeader(HH_AGE, &s_temp)
       && HttpStringToUInt(s_temp, (&i_temp))) {
     u_temp = static_cast<time_t>(i_temp);
-    corrected_received_age = stdmax(apparent_age, u_temp);
+    corrected_received_age = std::max(apparent_age, u_temp);
   }
 
   time_t response_delay = response_time - request_time;
@@ -467,7 +466,8 @@ bool HttpClient::BeginCacheFile() {
     return false;
   }
 
-  scoped_ptr<StreamInterface> stream(cache_->WriteResource(id, kCacheBody));
+  std::unique_ptr<StreamInterface> stream(
+      cache_->WriteResource(id, kCacheBody));
   if (!stream) {
     LOG_F(LS_ERROR) << "Couldn't open body cache";
     return false;
@@ -486,7 +486,8 @@ bool HttpClient::BeginCacheFile() {
 }
 
 HttpError HttpClient::WriteCacheHeaders(const std::string& id) {
-  scoped_ptr<StreamInterface> stream(cache_->WriteResource(id, kCacheHeader));
+  std::unique_ptr<StreamInterface> stream(
+      cache_->WriteResource(id, kCacheHeader));
   if (!stream) {
     LOG_F(LS_ERROR) << "Couldn't open header cache";
     return HE_CACHE;
@@ -540,6 +541,7 @@ bool HttpClient::CheckCache() {
         return false;
       }
       // Couldn't validate, fall through.
+      FALLTHROUGH();
     case HCS_NONE:
       // Cache content is not useable.  Issue a regular request.
       response().clear(false);
@@ -563,7 +565,8 @@ bool HttpClient::CheckCache() {
 }
 
 HttpError HttpClient::ReadCacheHeaders(const std::string& id, bool override) {
-  scoped_ptr<StreamInterface> stream(cache_->ReadResource(id, kCacheHeader));
+  std::unique_ptr<StreamInterface> stream(
+      cache_->ReadResource(id, kCacheHeader));
   if (!stream) {
     return HE_CACHE;
   }
@@ -586,7 +589,7 @@ HttpError HttpClient::ReadCacheBody(const std::string& id) {
   HttpError error = HE_NONE;
 
   size_t data_size;
-  scoped_ptr<StreamInterface> stream(cache_->ReadResource(id, kCacheBody));
+  std::unique_ptr<StreamInterface> stream(cache_->ReadResource(id, kCacheBody));
   if (!stream || !stream->GetAvailable(&data_size)) {
     LOG_F(LS_ERROR) << "Unavailable cache body";
     error = HE_CACHE;
@@ -599,7 +602,7 @@ HttpError HttpClient::ReadCacheBody(const std::string& id) {
       && response().document) {
     // Allocate on heap to not explode the stack.
     const int array_size = 1024 * 64;
-    scoped_ptr<char[]> buffer(new char[array_size]);
+    std::unique_ptr<char[]> buffer(new char[array_size]);
     StreamResult result = Flow(stream.get(), buffer.get(), array_size,
                                response().document.get());
     if (SR_SUCCESS != result) {

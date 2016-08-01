@@ -15,6 +15,7 @@
       'target_name': 'webrtc_vp8',
       'type': 'static_library',
       'dependencies': [
+        '<(webrtc_root)/common.gyp:webrtc_common',
         '<(webrtc_root)/common_video/common_video.gyp:common_video',
         '<(webrtc_root)/modules/video_coding/utility/video_coding_utility.gyp:video_coding_utility',
         '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers',
@@ -22,7 +23,7 @@
       'conditions': [
         ['build_libvpx==1', {
           'dependencies': [
-            '<(DEPTH)/third_party/libvpx/libvpx.gyp:libvpx',
+            '<(libvpx_dir)/libvpx.gyp:libvpx',
           ],
         }],
       ],
@@ -39,17 +40,12 @@
         'simulcast_encoder_adapter.cc',
         'simulcast_encoder_adapter.h',
         'temporal_layers.h',
-        'vp8_factory.cc',
-        'vp8_factory.h',
         'vp8_impl.cc',
         'vp8_impl.h',
       ],
       # Disable warnings to enable Win64 build, issue 1323.
       'msvs_disabled_warnings': [
         4267,  # size_t to int truncation.
-      ],
-      'include_dirs': [
-        '<(libyuv_dir)/include',
       ],
     },
   ], # targets

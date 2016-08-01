@@ -14,6 +14,7 @@
 #include <string.h>
 
 #include "webrtc/base/common.h"
+#include "webrtc/base/constructormagic.h"
 
 namespace rtc {
 
@@ -61,7 +62,7 @@ class LateBindingSymbolTable {
   DllHandle handle_;
   bool undefined_symbols_;
 
-  DISALLOW_COPY_AND_ASSIGN(LateBindingSymbolTable);
+  RTC_DISALLOW_COPY_AND_ASSIGN(LateBindingSymbolTable);
 };
 
 }  // namespace rtc

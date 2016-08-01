@@ -11,43 +11,37 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_LEVEL_ESTIMATOR_IMPL_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_LEVEL_ESTIMATOR_IMPL_H_
 
+#include <memory>
+
+#include "webrtc/base/constructormagic.h"
+#include "webrtc/base/criticalsection.h"
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
-#include "webrtc/modules/audio_processing/processing_component.h"
-#include "webrtc/modules/audio_processing/rms_level.h"
 
 namespace webrtc {
 
 class AudioBuffer;
-class CriticalSectionWrapper;
+class RMSLevel;
 
-class LevelEstimatorImpl : public LevelEstimator,
-                           public ProcessingComponent {
+class LevelEstimatorImpl : public LevelEstimator {
  public:
-  LevelEstimatorImpl(const AudioProcessing* apm,
-                     CriticalSectionWrapper* crit);
-  virtual ~LevelEstimatorImpl();
+  explicit LevelEstimatorImpl(rtc::CriticalSection* crit);
+  ~LevelEstimatorImpl() override;
 
-  int ProcessStream(AudioBuffer* audio);
+  // TODO(peah): Fold into ctor, once public API is removed.
+  void Initialize();
+  void ProcessStream(AudioBuffer* audio);
 
   // LevelEstimator implementation.
-  virtual bool is_enabled() const OVERRIDE;
+  int Enable(bool enable) override;
+  bool is_enabled() const override;
+  int RMS() override;
 
  private:
-  // LevelEstimator implementation.
-  virtual int Enable(bool enable) OVERRIDE;
-  virtual int RMS() OVERRIDE;
-
-  // ProcessingComponent implementation.
-  virtual void* CreateHandle() const OVERRIDE;
-  virtual int InitializeHandle(void* handle) const OVERRIDE;
-  virtual int ConfigureHandle(void* handle) const OVERRIDE;
-  virtual void DestroyHandle(void* handle) const OVERRIDE;
-  virtual int num_handles_required() const OVERRIDE;
-  virtual int GetHandleError(void* handle) const OVERRIDE;
-
-  CriticalSectionWrapper* crit_;
+  rtc::CriticalSection* const crit_ = nullptr;
+  bool enabled_ GUARDED_BY(crit_) = false;
+  std::unique_ptr<RMSLevel> rms_ GUARDED_BY(crit_);
+  RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(LevelEstimatorImpl);
 };
-
 }  // namespace webrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_LEVEL_ESTIMATOR_IMPL_H_

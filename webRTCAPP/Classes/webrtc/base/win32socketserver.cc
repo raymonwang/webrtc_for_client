@@ -9,12 +9,15 @@
  */
 
 #include "webrtc/base/win32socketserver.h"
+
+#include <algorithm>
+#include <ws2tcpip.h>  // NOLINT
+
 #include "webrtc/base/byteorder.h"
 #include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/base/winping.h"
 #include "webrtc/base/win32window.h"
-#include <ws2tcpip.h>  // NOLINT
+#include "webrtc/base/winping.h"
 
 namespace rtc {
 
@@ -25,26 +28,26 @@ namespace rtc {
 // TODO: Move this to a common place where PhysicalSocketServer can
 // share it.
 // Standard MTUs
-static const uint16 PACKET_MAXIMUMS[] = {
-  65535,    // Theoretical maximum, Hyperchannel
-  32000,    // Nothing
-  17914,    // 16Mb IBM Token Ring
-  8166,     // IEEE 802.4
-  // 4464   // IEEE 802.5 (4Mb max)
-  4352,     // FDDI
-  // 2048,  // Wideband Network
-  2002,     // IEEE 802.5 (4Mb recommended)
-  // 1536,  // Expermental Ethernet Networks
-  // 1500,  // Ethernet, Point-to-Point (default)
-  1492,     // IEEE 802.3
-  1006,     // SLIP, ARPANET
-  // 576,   // X.25 Networks
-  // 544,   // DEC IP Portal
-  // 512,   // NETBIOS
-  508,      // IEEE 802/Source-Rt Bridge, ARCNET
-  296,      // Point-to-Point (low delay)
-  68,       // Official minimum
-  0,        // End of list marker
+static const uint16_t PACKET_MAXIMUMS[] = {
+    65535,  // Theoretical maximum, Hyperchannel
+    32000,  // Nothing
+    17914,  // 16Mb IBM Token Ring
+    8166,   // IEEE 802.4
+    // 4464   // IEEE 802.5 (4Mb max)
+    4352,   // FDDI
+    // 2048,  // Wideband Network
+    2002,   // IEEE 802.5 (4Mb recommended)
+    // 1536,  // Expermental Ethernet Networks
+    // 1500,  // Ethernet, Point-to-Point (default)
+    1492,   // IEEE 802.3
+    1006,   // SLIP, ARPANET
+    // 576,   // X.25 Networks
+    // 544,   // DEC IP Portal
+    // 512,   // NETBIOS
+    508,    // IEEE 802/Source-Rt Bridge, ARCNET
+    296,    // Point-to-Point (low delay)
+    68,     // Official minimum
+    0,      // End of list marker
 };
 
 static const int IP_HEADER_SIZE = 20u;
@@ -52,7 +55,7 @@ static const int ICMP_HEADER_SIZE = 8u;
 static const int ICMP_PING_TIMEOUT_MILLIS = 10000u;
 
 // TODO: Enable for production builds also? Use FormatMessage?
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 LPCSTR WSAErrorToString(int error, LPCSTR *description_result) {
   LPCSTR string = "Unspecified";
   LPCSTR description = "Unspecified description";
@@ -140,7 +143,7 @@ void ReportWSAError(LPCSTR context, int error, const SocketAddress& address) {}
 
 struct Win32Socket::DnsLookup {
   HANDLE handle;
-  uint16 port;
+  uint16_t port;
   char buffer[MAXGETHOSTSTRUCT];
 };
 
@@ -435,7 +438,10 @@ int Win32Socket::SendTo(const void* buffer, size_t length,
   return sent;
 }
 
-int Win32Socket::Recv(void* buffer, size_t length) {
+int Win32Socket::Recv(void* buffer, size_t length, int64_t* timestamp) {
+  if (timestamp) {
+    *timestamp = -1;
+  }
   int received = ::recv(socket_, static_cast<char*>(buffer),
                         static_cast<int>(length), 0);
   UpdateLastError();
@@ -444,8 +450,13 @@ int Win32Socket::Recv(void* buffer, size_t length) {
   return received;
 }
 
-int Win32Socket::RecvFrom(void* buffer, size_t length,
-                          SocketAddress* out_addr) {
+int Win32Socket::RecvFrom(void* buffer,
+                          size_t length,
+                          SocketAddress* out_addr,
+                          int64_t* timestamp) {
+  if (timestamp) {
+    *timestamp = -1;
+  }
   sockaddr_storage saddr;
   socklen_t addr_len = sizeof(saddr);
   int received = ::recvfrom(socket_, static_cast<char*>(buffer),
@@ -509,9 +520,9 @@ int Win32Socket::Close() {
   return err;
 }
 
-int Win32Socket::EstimateMTU(uint16* mtu) {
+int Win32Socket::EstimateMTU(uint16_t* mtu) {
   SocketAddress addr = GetRemoteAddress();
-  if (addr.IsAny()) {
+  if (addr.IsAnyIP()) {
     error_ = ENOTCONN;
     return -1;
   }
@@ -523,7 +534,7 @@ int Win32Socket::EstimateMTU(uint16* mtu) {
   }
 
   for (int level = 0; PACKET_MAXIMUMS[level + 1] > 0; ++level) {
-    int32 size = PACKET_MAXIMUMS[level] - IP_HEADER_SIZE - ICMP_HEADER_SIZE;
+    int32_t size = PACKET_MAXIMUMS[level] - IP_HEADER_SIZE - ICMP_HEADER_SIZE;
     WinPing::PingResult result = ping.Ping(addr.ipaddr(), size,
                                            ICMP_PING_TIMEOUT_MILLIS, 1, false);
     if (result == WinPing::PING_FAIL) {
@@ -623,8 +634,8 @@ void Win32Socket::OnSocketNotify(SOCKET socket, int event, int error) {
     case FD_CONNECT:
       if (error != ERROR_SUCCESS) {
         ReportWSAError("WSAAsync:connect notify", error, addr_);
-#ifdef _DEBUG
-        int32 duration = TimeSince(connect_time_);
+#if !defined(NDEBUG)
+        int64_t duration = TimeSince(connect_time_);
         LOG(LS_INFO) << "WSAAsync:connect error (" << duration
                      << " ms), faking close";
 #endif
@@ -636,8 +647,8 @@ void Win32Socket::OnSocketNotify(SOCKET socket, int event, int error) {
         // though the connect event never did occur.
         SignalCloseEvent(this, error);
       } else {
-#ifdef _DEBUG
-        int32 duration = TimeSince(connect_time_);
+#if !defined(NDEBUG)
+        int64_t duration = TimeSince(connect_time_);
         LOG(LS_INFO) << "WSAAsync:connect (" << duration << " ms)";
 #endif
         state_ = CS_CONNECTED;
@@ -676,10 +687,10 @@ void Win32Socket::OnDnsNotify(HANDLE task, int error) {
   if (!dns_ || dns_->handle != task)
     return;
 
-  uint32 ip = 0;
+  uint32_t ip = 0;
   if (error == 0) {
     hostent* pHost = reinterpret_cast<hostent*>(dns_->buffer);
-    uint32 net_ip = *reinterpret_cast<uint32*>(pHost->h_addr_list[0]);
+    uint32_t net_ip = *reinterpret_cast<uint32_t*>(pHost->h_addr_list[0]);
     ip = NetworkToHost32(net_ip);
   }
 
@@ -759,7 +770,7 @@ bool Win32SocketServer::Wait(int cms, bool process_io) {
   if (process_io) {
     // Spin the Win32 message pump at least once, and as long as requested.
     // This is the Thread::ProcessMessages case.
-    uint32 start = Time();
+    uint32_t start = Time();
     do {
       MSG msg;
       SetTimer(wnd_.handle(), 0, cms, NULL);
@@ -821,7 +832,8 @@ void Win32SocketServer::Pump() {
   // We use max(1, ...) to make sure we try to dispatch at least once, since
   // this allow us to process "sent" messages, not included in the size() count.
   Message msg;
-  for (size_t max_messages_to_process = _max<size_t>(1, message_queue_->size());
+  for (size_t max_messages_to_process =
+           std::max<size_t>(1, message_queue_->size());
        max_messages_to_process > 0 && message_queue_->Get(&msg, 0, false);
        --max_messages_to_process) {
     message_queue_->Dispatch(&msg);

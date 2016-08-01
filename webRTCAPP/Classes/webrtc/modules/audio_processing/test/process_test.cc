@@ -16,14 +16,16 @@
 #endif
 
 #include <algorithm>
+#include <memory>
 
+#include "webrtc/base/format_macros.h"
+#include "webrtc/base/timeutils.h"
 #include "webrtc/common.h"
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
+#include "webrtc/modules/audio_processing/test/protobuf_utils.h"
 #include "webrtc/modules/audio_processing/test/test_utils.h"
-#include "webrtc/modules/interface/module_common_types.h"
-#include "webrtc/system_wrappers/interface/cpu_features_wrapper.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/system_wrappers/interface/tick_util.h"
+#include "webrtc/modules/include/module_common_types.h"
+#include "webrtc/system_wrappers/include/cpu_features_wrapper.h"
 #include "webrtc/test/testsupport/fileutils.h"
 #include "webrtc/test/testsupport/perf_test.h"
 #ifdef WEBRTC_ANDROID_PLATFORM_BUILD
@@ -31,7 +33,7 @@
 #include "external/webrtc/webrtc/modules/audio_processing/debug.pb.h"
 #else
 #include "testing/gtest/include/gtest/gtest.h"
-#include "webrtc/audio_processing/debug.pb.h"
+#include "webrtc/modules/audio_processing/debug.pb.h"
 #endif
 
 namespace webrtc {
@@ -79,6 +81,8 @@ void usage() {
   printf("  --aec_suppression_level LEVEL  [0 - 2]\n");
   printf("  --extended_filter\n");
   printf("  --no_reported_delay\n");
+  printf("  --aec3\n");
+  printf("  --refined_adaptive_filter\n");
   printf("\n  -aecm    Echo control mobile\n");
   printf("  --aecm_echo_path_in_file FILE\n");
   printf("  --aecm_echo_path_out_file FILE\n");
@@ -104,6 +108,7 @@ void usage() {
   printf("\n  -expns   Experimental noise suppression\n");
   printf("\n Level metrics (enabled by default)\n");
   printf("  --no_level_metrics\n");
+  printf("  --level_control\n");
   printf("\n");
   printf("Modifiers:\n");
   printf("  --noasm            Disable SSE optimization.\n");
@@ -144,7 +149,7 @@ void void_main(int argc, char* argv[]) {
     printf("Try `process_test --help' for more information.\n\n");
   }
 
-  scoped_ptr<AudioProcessing> apm(AudioProcessing::Create());
+  std::unique_ptr<AudioProcessing> apm(AudioProcessing::Create());
   ASSERT_TRUE(apm.get() != NULL);
 
   const char* pb_filename = NULL;
@@ -158,9 +163,9 @@ void void_main(int argc, char* argv[]) {
 
   int32_t sample_rate_hz = 16000;
 
-  int num_capture_input_channels = 1;
-  int num_capture_output_channels = 1;
-  int num_render_channels = 1;
+  size_t num_capture_input_channels = 1;
+  size_t num_capture_output_channels = 1;
+  size_t num_render_channels = 1;
 
   int samples_per_channel = sample_rate_hz / 100;
 
@@ -171,6 +176,7 @@ void void_main(int argc, char* argv[]) {
   bool raw_output = false;
   int extra_delay_ms = 0;
   int override_delay_ms = 0;
+  Config config;
 
   ASSERT_EQ(apm->kNoError, apm->level_estimator()->Enable(true));
   for (int i = 1; i < argc; i++) {
@@ -205,14 +211,14 @@ void void_main(int argc, char* argv[]) {
     } else if (strcmp(argv[i], "-ch") == 0) {
       i++;
       ASSERT_LT(i + 1, argc) << "Specify number of channels after -ch";
-      ASSERT_EQ(1, sscanf(argv[i], "%d", &num_capture_input_channels));
+      ASSERT_EQ(1, sscanf(argv[i], "%" PRIuS, &num_capture_input_channels));
       i++;
-      ASSERT_EQ(1, sscanf(argv[i], "%d", &num_capture_output_channels));
+      ASSERT_EQ(1, sscanf(argv[i], "%" PRIuS, &num_capture_output_channels));
 
     } else if (strcmp(argv[i], "-rch") == 0) {
       i++;
       ASSERT_LT(i, argc) << "Specify number of channels after -rch";
-      ASSERT_EQ(1, sscanf(argv[i], "%d", &num_render_channels));
+      ASSERT_EQ(1, sscanf(argv[i], "%" PRIuS, &num_render_channels));
 
     } else if (strcmp(argv[i], "-aec") == 0) {
       ASSERT_EQ(apm->kNoError, apm->echo_cancellation()->Enable(true));
@@ -255,15 +261,23 @@ void void_main(int argc, char* argv[]) {
                     static_cast<webrtc::EchoCancellation::SuppressionLevel>(
                         suppression_level)));
 
+    } else if (strcmp(argv[i], "--level_control") == 0) {
+      config.Set<LevelControl>(new LevelControl(true));
+
     } else if (strcmp(argv[i], "--extended_filter") == 0) {
-      Config config;
-      config.Set<DelayCorrection>(new DelayCorrection(true));
-      apm->SetExtraOptions(config);
+      config.Set<ExtendedFilter>(new ExtendedFilter(true));
 
     } else if (strcmp(argv[i], "--no_reported_delay") == 0) {
-      Config config;
-      config.Set<ReportedDelay>(new ReportedDelay(false));
-      apm->SetExtraOptions(config);
+      config.Set<DelayAgnostic>(new DelayAgnostic(true));
+
+    } else if (strcmp(argv[i], "--delay_agnostic") == 0) {
+      config.Set<DelayAgnostic>(new DelayAgnostic(true));
+
+    } else if (strcmp(argv[i], "--aec3") == 0) {
+      config.Set<EchoCanceller3>(new EchoCanceller3(true));
+
+    } else if (strcmp(argv[i], "--refined_adaptive_filter") == 0) {
+      config.Set<RefinedAdaptiveFilter>(new RefinedAdaptiveFilter(true));
 
     } else if (strcmp(argv[i], "-aecm") == 0) {
       ASSERT_EQ(apm->kNoError, apm->echo_control_mobile()->Enable(true));
@@ -402,9 +416,7 @@ void void_main(int argc, char* argv[]) {
       vad_out_filename = argv[i];
 
     } else if (strcmp(argv[i], "-expns") == 0) {
-      Config config;
       config.Set<ExperimentalNs>(new ExperimentalNs(true));
-      apm->SetExtraOptions(config);
 
     } else if (strcmp(argv[i], "--noasm") == 0) {
       WebRtc_GetCPUInfo = WebRtc_GetCPUInfoNoASM;
@@ -435,21 +447,23 @@ void void_main(int argc, char* argv[]) {
     } else if (strcmp(argv[i], "--debug_file") == 0) {
       i++;
       ASSERT_LT(i, argc) << "Specify filename after --debug_file";
-      ASSERT_EQ(apm->kNoError, apm->StartDebugRecording(argv[i]));
+      ASSERT_EQ(apm->kNoError, apm->StartDebugRecording(argv[i], -1));
     } else {
       FAIL() << "Unrecognized argument " << argv[i];
     }
   }
+  apm->SetExtraOptions(config);
+
   // If we're reading a protobuf file, ensure a simulation hasn't also
   // been requested (which makes no sense...)
   ASSERT_FALSE(pb_filename && simulating);
 
   if (verbose) {
     printf("Sample rate: %d Hz\n", sample_rate_hz);
-    printf("Primary channels: %d (in), %d (out)\n",
+    printf("Primary channels: %" PRIuS " (in), %" PRIuS " (out)\n",
            num_capture_input_channels,
            num_capture_output_channels);
-    printf("Reverse channels: %d \n", num_render_channels);
+    printf("Reverse channels: %" PRIuS "\n", num_render_channels);
   }
 
   const std::string out_path = webrtc::test::OutputPath();
@@ -489,8 +503,8 @@ void void_main(int argc, char* argv[]) {
   FILE* aecm_echo_path_in_file = NULL;
   FILE* aecm_echo_path_out_file = NULL;
 
-  scoped_ptr<WavWriter> output_wav_file;
-  scoped_ptr<RawFile> output_raw_file;
+  std::unique_ptr<WavWriter> output_wav_file;
+  std::unique_ptr<RawFile> output_raw_file;
 
   if (pb_filename) {
     pb_file = OpenFile(pb_filename, "rb");
@@ -532,7 +546,7 @@ void void_main(int argc, char* argv[]) {
 
     const size_t path_size =
         apm->echo_control_mobile()->echo_path_size_bytes();
-    scoped_ptr<char[]> echo_path(new char[path_size]);
+    std::unique_ptr<char[]> echo_path(new char[path_size]);
     ASSERT_EQ(path_size, fread(echo_path.get(),
                                sizeof(char),
                                path_size,
@@ -552,7 +566,7 @@ void void_main(int argc, char* argv[]) {
   int reverse_count = 0;
   int primary_count = 0;
   int near_read_bytes = 0;
-  TickInterval acc_ticks;
+  int64_t acc_nanos = 0;
 
   AudioFrame far_frame;
   AudioFrame near_frame;
@@ -563,8 +577,8 @@ void void_main(int argc, char* argv[]) {
   int8_t stream_has_voice = 0;
   float ns_speech_prob = 0.0f;
 
-  TickTime t0 = TickTime::Now();
-  TickTime t1 = t0;
+  int64_t t0 = rtc::TimeNanos();
+  int64_t t1 = t0;
   int64_t max_time_us = 0;
   int64_t max_time_reverse_us = 0;
   int64_t min_time_us = 1e6;
@@ -574,8 +588,8 @@ void void_main(int argc, char* argv[]) {
   //            but for now we want to share the variables.
   if (pb_file) {
     Event event_msg;
-    scoped_ptr<ChannelBuffer<float> > reverse_cb;
-    scoped_ptr<ChannelBuffer<float> > primary_cb;
+    std::unique_ptr<ChannelBuffer<float> > reverse_cb;
+    std::unique_ptr<ChannelBuffer<float> > primary_cb;
     int output_sample_rate = 32000;
     AudioProcessing::ChannelLayout output_layout = AudioProcessing::kMono;
     while (ReadMessageFromFile(pb_file, &event_msg)) {
@@ -600,14 +614,18 @@ void void_main(int argc, char* argv[]) {
         if (msg.has_output_sample_rate()) {
           output_sample_rate = msg.output_sample_rate();
         }
-        output_layout = LayoutFromChannels(msg.num_output_channels());
-        ASSERT_EQ(kNoErr, apm->Initialize(
-                              msg.sample_rate(),
-                              output_sample_rate,
-                              reverse_sample_rate,
-                              LayoutFromChannels(msg.num_input_channels()),
-                              output_layout,
-                              LayoutFromChannels(msg.num_reverse_channels())));
+        output_layout =
+            LayoutFromChannels(static_cast<size_t>(msg.num_output_channels()));
+        ASSERT_EQ(kNoErr,
+                  apm->Initialize(
+                      msg.sample_rate(),
+                      output_sample_rate,
+                      reverse_sample_rate,
+                      LayoutFromChannels(
+                          static_cast<size_t>(msg.num_input_channels())),
+                      output_layout,
+                      LayoutFromChannels(
+                          static_cast<size_t>(msg.num_reverse_channels()))));
 
         samples_per_channel = msg.sample_rate() / 100;
         far_frame.sample_rate_hz_ = reverse_sample_rate;
@@ -635,11 +653,11 @@ void void_main(int argc, char* argv[]) {
         }
 
         if (!raw_output) {
-          // The WAV file needs to be reset every time, because it cant change
-          // it's sample rate or number of channels.
-          output_wav_file.reset(new WavWriter(out_filename + ".wav",
-                                              output_sample_rate,
-                                              msg.num_output_channels()));
+          // The WAV file needs to be reset every time, because it can't change
+          // its sample rate or number of channels.
+          output_wav_file.reset(new WavWriter(
+              out_filename + ".wav", output_sample_rate,
+              static_cast<size_t>(msg.num_output_channels())));
         }
 
       } else if (event_msg.type() == Event::REVERSE_STREAM) {
@@ -654,17 +672,20 @@ void void_main(int argc, char* argv[]) {
           memcpy(far_frame.data_, msg.data().data(), msg.data().size());
         } else {
           for (int i = 0; i < msg.channel_size(); ++i) {
-            reverse_cb->CopyFrom(msg.channel(i).data(), i);
+            memcpy(reverse_cb->channels()[i],
+                   msg.channel(i).data(),
+                   reverse_cb->num_frames() *
+                       sizeof(reverse_cb->channels()[i][0]));
           }
         }
 
         if (perf_testing) {
-          t0 = TickTime::Now();
+          t0 = rtc::TimeNanos();
         }
 
         if (msg.has_data()) {
           ASSERT_EQ(apm->kNoError,
-                    apm->AnalyzeReverseStream(&far_frame));
+                    apm->ProcessReverseStream(&far_frame));
         } else {
           ASSERT_EQ(apm->kNoError,
                     apm->AnalyzeReverseStream(
@@ -675,14 +696,15 @@ void void_main(int argc, char* argv[]) {
         }
 
         if (perf_testing) {
-          t1 = TickTime::Now();
-          TickInterval tick_diff = t1 - t0;
-          acc_ticks += tick_diff;
-          if (tick_diff.Microseconds() > max_time_reverse_us) {
-            max_time_reverse_us = tick_diff.Microseconds();
+          t1 = rtc::TimeNanos();
+          int64_t diff_nanos = t1 - t0;
+          acc_nanos += diff_nanos;
+          int64_t diff_us = diff_nanos / rtc::kNumNanosecsPerMicrosec;
+          if (diff_us > max_time_reverse_us) {
+            max_time_reverse_us = diff_us;
           }
-          if (tick_diff.Microseconds() < min_time_reverse_us) {
-            min_time_reverse_us = tick_diff.Microseconds();
+          if (diff_us < min_time_reverse_us) {
+            min_time_reverse_us = diff_us;
           }
         }
 
@@ -690,9 +712,6 @@ void void_main(int argc, char* argv[]) {
         ASSERT_TRUE(event_msg.has_stream());
         const Stream msg = event_msg.stream();
         primary_count++;
-
-        // ProcessStream could have changed this for the output frame.
-        near_frame.num_channels_ = apm->num_input_channels();
 
         ASSERT_TRUE(msg.has_input_data() ^ (msg.input_channel_size() > 0));
         if (msg.has_input_data()) {
@@ -704,7 +723,10 @@ void void_main(int argc, char* argv[]) {
           near_read_bytes += msg.input_data().size();
         } else {
           for (int i = 0; i < msg.input_channel_size(); ++i) {
-            primary_cb->CopyFrom(msg.input_channel(i).data(), i);
+            memcpy(primary_cb->channels()[i],
+                   msg.input_channel(i).data(),
+                   primary_cb->num_frames() *
+                       sizeof(primary_cb->channels()[i][0]));
             near_read_bytes += msg.input_channel(i).size();
           }
         }
@@ -717,7 +739,7 @@ void void_main(int argc, char* argv[]) {
         }
 
         if (perf_testing) {
-          t0 = TickTime::Now();
+          t0 = rtc::TimeNanos();
         }
 
         ASSERT_EQ(apm->kNoError,
@@ -775,14 +797,15 @@ void void_main(int argc, char* argv[]) {
         }
 
         if (perf_testing) {
-          t1 = TickTime::Now();
-          TickInterval tick_diff = t1 - t0;
-          acc_ticks += tick_diff;
-          if (tick_diff.Microseconds() > max_time_us) {
-            max_time_us = tick_diff.Microseconds();
+          t1 = rtc::TimeNanos();
+          int64_t diff_nanos = t1 - t0;
+          acc_nanos += diff_nanos;
+          int64_t diff_us = diff_nanos / rtc::kNumNanosecsPerMicrosec;
+          if (diff_us > max_time_us) {
+            max_time_us = diff_us;
           }
-          if (tick_diff.Microseconds() < min_time_us) {
-            min_time_us = tick_diff.Microseconds();
+          if (diff_us < min_time_us) {
+            min_time_us = diff_us;
           }
         }
 
@@ -828,11 +851,7 @@ void void_main(int argc, char* argv[]) {
         if (far_file == NULL) {
           event = kCaptureEvent;
         } else {
-          if (event == kRenderEvent) {
-            event = kCaptureEvent;
-          } else {
-            event = kRenderEvent;
-          }
+          event = (event == kCaptureEvent) ? kRenderEvent : kCaptureEvent;
         }
       } else {
         read_count = fread(&event, sizeof(event), 1, event_file);
@@ -902,28 +921,29 @@ void void_main(int argc, char* argv[]) {
             // not reaching end-of-file.
             EXPECT_EQ(0, fseek(near_file, read_count * sizeof(int16_t),
                       SEEK_CUR));
-            break; // This is expected.
+            break;  // This is expected.
           }
         } else {
           ASSERT_EQ(size, read_count);
         }
 
         if (perf_testing) {
-          t0 = TickTime::Now();
+          t0 = rtc::TimeNanos();
         }
 
         ASSERT_EQ(apm->kNoError,
-                  apm->AnalyzeReverseStream(&far_frame));
+                  apm->ProcessReverseStream(&far_frame));
 
         if (perf_testing) {
-          t1 = TickTime::Now();
-          TickInterval tick_diff = t1 - t0;
-          acc_ticks += tick_diff;
-          if (tick_diff.Microseconds() > max_time_reverse_us) {
-            max_time_reverse_us = tick_diff.Microseconds();
+          t1 = rtc::TimeNanos();
+          int64_t diff_nanos = t1 - t0;
+          acc_nanos += diff_nanos;
+          int64_t diff_us = diff_nanos / rtc::kNumNanosecsPerMicrosec;
+          if (diff_us > max_time_reverse_us) {
+            max_time_reverse_us = diff_us;
           }
-          if (tick_diff.Microseconds() < min_time_reverse_us) {
-            min_time_reverse_us = tick_diff.Microseconds();
+          if (diff_us < min_time_reverse_us) {
+            min_time_reverse_us = diff_us;
           }
         }
 
@@ -945,7 +965,7 @@ void void_main(int argc, char* argv[]) {
         }
         if (simulating) {
           if (read_count != size) {
-            break; // This is expected.
+            break;  // This is expected.
           }
 
           delay_ms = 0;
@@ -966,7 +986,7 @@ void void_main(int argc, char* argv[]) {
         }
 
         if (perf_testing) {
-          t0 = TickTime::Now();
+          t0 = rtc::TimeNanos();
         }
 
         const int capture_level_in = capture_level;
@@ -1014,14 +1034,15 @@ void void_main(int argc, char* argv[]) {
         }
 
         if (perf_testing) {
-          t1 = TickTime::Now();
-          TickInterval tick_diff = t1 - t0;
-          acc_ticks += tick_diff;
-          if (tick_diff.Microseconds() > max_time_us) {
-            max_time_us = tick_diff.Microseconds();
+          t1 = rtc::TimeNanos();
+          int64_t diff_nanos = t1 - t0;
+          acc_nanos += diff_nanos;
+          int64_t diff_us = diff_nanos / rtc::kNumNanosecsPerMicrosec;
+          if (diff_us > max_time_us) {
+            max_time_us = diff_us;
           }
-          if (tick_diff.Microseconds() < min_time_us) {
-            min_time_us = tick_diff.Microseconds();
+          if (diff_us < min_time_us) {
+            min_time_us = diff_us;
           }
         }
 
@@ -1037,18 +1058,19 @@ void void_main(int argc, char* argv[]) {
                      size,
                      output_wav_file.get(),
                      output_raw_file.get());
-      }
-      else {
+      } else {
         FAIL() << "Event " << event << " is unrecognized";
       }
     }
   }
-  printf("100%% complete\r");
+  if (progress) {
+    printf("100%% complete\r");
+  }
 
   if (aecm_echo_path_out_file != NULL) {
     const size_t path_size =
         apm->echo_control_mobile()->echo_path_size_bytes();
-    scoped_ptr<char[]> echo_path(new char[path_size]);
+    std::unique_ptr<char[]> echo_path(new char[path_size]);
     apm->echo_control_mobile()->GetEchoPath(echo_path.get(), path_size);
     ASSERT_EQ(path_size, fwrite(echo_path.get(),
                                 sizeof(char),
@@ -1081,10 +1103,13 @@ void void_main(int argc, char* argv[]) {
     if (apm->echo_cancellation()->is_delay_logging_enabled()) {
       int median = 0;
       int std = 0;
-      apm->echo_cancellation()->GetDelayMetrics(&median, &std);
+      float fraction_poor_delays = 0;
+      apm->echo_cancellation()->GetDelayMetrics(&median, &std,
+                                                &fraction_poor_delays);
       printf("\n--Delay metrics--\n");
       printf("Median:             %3d\n", median);
       printf("Standard deviation: %3d\n", std);
+      printf("Poor delay values:  %3.1f%%\n", fraction_poor_delays * 100);
     }
   }
 
@@ -1110,7 +1135,7 @@ void void_main(int argc, char* argv[]) {
 
   if (perf_testing) {
     if (primary_count > 0) {
-      int64_t exec_time = acc_ticks.Milliseconds();
+      int64_t exec_time = acc_nanos / rtc::kNumNanosecsPerMillisec;
       printf("\nTotal time: %.3f s, file time: %.2f s\n",
         exec_time * 0.001, primary_count * 0.01);
       printf("Time per frame: %.3f ms (average), %.3f ms (max),"
@@ -1130,8 +1155,7 @@ void void_main(int argc, char* argv[]) {
 }  // namespace
 }  // namespace webrtc
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
   webrtc::void_main(argc, argv);
 
   // Optional, but removes memory leak noise from Valgrind.

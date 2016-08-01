@@ -45,9 +45,9 @@
 #endif
 
 #include "webrtc/common_types.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/rw_lock_wrapper.h"
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/system_wrappers/include/rw_lock_wrapper.h"
+#include "webrtc/system_wrappers/include/trace.h"
 #include "webrtc/test/channel_transport/udp_socket_manager_wrapper.h"
 #include "webrtc/typedefs.h"
 
@@ -68,12 +68,12 @@ namespace test {
 
 class SocketFactory : public UdpTransportImpl::SocketFactoryInterface {
  public:
-  virtual UdpSocketWrapper* CreateSocket(const int32_t id,
+  UdpSocketWrapper* CreateSocket(const int32_t id,
                                  UdpSocketManager* mgr,
                                  CallbackObj obj,
                                  IncomingSocketCallback cb,
                                  bool ipV6Enable,
-                                 bool disableGQOS) OVERRIDE {
+                                 bool disableGQOS) override {
     return UdpSocketWrapper::CreateSocket(id, mgr, obj, cb, ipV6Enable,
                                           disableGQOS);
   }
@@ -1931,21 +1931,20 @@ int32_t UdpTransportImpl::SendRTCPPacketTo(const int8_t* data,
     return -1;
 }
 
-int UdpTransportImpl::SendPacket(int /*channel*/,
-                                 const void* data,
-                                 size_t length)
-{
+bool UdpTransportImpl::SendRtp(const uint8_t* data,
+                               size_t length,
+                               const PacketOptions& packet_options) {
     WEBRTC_TRACE(kTraceStream, kTraceTransport, _id, "%s", __FUNCTION__);
 
     CriticalSectionScoped cs(_crit);
 
     if(_destIP[0] == 0)
     {
-        return -1;
+        return false;
     }
     if(_destPort == 0)
     {
-        return -1;
+        return false;
     }
 
     // Create socket if it hasn't been set up already.
@@ -1983,35 +1982,32 @@ int UdpTransportImpl::SendPacket(int /*channel*/,
                          "SendPacket() failed to bind RTP socket");
             _lastError = retVal;
             CloseReceiveSockets();
-            return -1;
+            return false;
         }
     }
 
     if(_ptrSendRtpSocket)
     {
         return _ptrSendRtpSocket->SendTo((const int8_t*)data, length,
-                                         _remoteRTPAddr);
+                                         _remoteRTPAddr) >= 0;
 
     } else if(_ptrRtpSocket)
     {
         return _ptrRtpSocket->SendTo((const int8_t*)data, length,
-                                     _remoteRTPAddr);
+                                     _remoteRTPAddr) >= 0;
     }
-    return -1;
+    return false;
 }
 
-int UdpTransportImpl::SendRTCPPacket(int /*channel*/, const void* data,
-                                     size_t length)
-{
-
+bool UdpTransportImpl::SendRtcp(const uint8_t* data, size_t length) {
     CriticalSectionScoped cs(_crit);
     if(_destIP[0] == 0)
     {
-        return -1;
+        return false;
     }
     if(_destPortRTCP == 0)
     {
-        return -1;
+        return false;
     }
 
     // Create socket if it hasn't been set up already.
@@ -2047,22 +2043,22 @@ int UdpTransportImpl::SendRTCPPacket(int /*channel*/, const void* data,
         {
             _lastError = retVal;
             WEBRTC_TRACE(kTraceError, kTraceTransport, _id,
-                         "SendRTCPPacket() failed to bind RTCP socket");
+                         "SendRtcp() failed to bind RTCP socket");
             CloseReceiveSockets();
-            return -1;
+            return false;
         }
     }
 
     if(_ptrSendRtcpSocket)
     {
         return _ptrSendRtcpSocket->SendTo((const int8_t*)data, length,
-                                          _remoteRTCPAddr);
+                                          _remoteRTCPAddr) >= 0;
     } else if(_ptrRtcpSocket)
     {
         return _ptrRtcpSocket->SendTo((const int8_t*)data, length,
-                                      _remoteRTCPAddr);
+                                      _remoteRTCPAddr) >= 0;
     }
-    return -1;
+    return false;
 }
 
 int32_t UdpTransportImpl::SetSendIP(const char* ipaddr)
@@ -2926,6 +2922,10 @@ bool UdpTransport::IsIpAddressValid(const char* ipadr, const bool ipV6)
                 // Store index of dots and count number of dots.
                 iDotPos[nDots++] = i;
             }
+            else if (isdigit(ipadr[i]) == 0)
+            {
+                return false;
+            }
         }
 
         bool allUnder256 = false;
@@ -2946,7 +2946,7 @@ bool UdpTransport::IsIpAddressValid(const char* ipadr, const bool ipV6)
                 memset(nr,0,4);
                 strncpy(nr,&ipadr[0],iDotPos[0]);
                 int32_t num = atoi(nr);
-                if (num > 255)
+                if (num > 255 || num < 0)
                 {
                     break;
                 }
@@ -2960,7 +2960,7 @@ bool UdpTransport::IsIpAddressValid(const char* ipadr, const bool ipV6)
                 memset(nr,0,4);
                 strncpy(nr,&ipadr[iDotPos[0]+1], iDotPos[1] - iDotPos[0] - 1);
                 int32_t num = atoi(nr);
-                if (num > 255)
+                if (num > 255 || num < 0)
                     break;
             } else {
                 break;
@@ -2970,20 +2970,27 @@ bool UdpTransport::IsIpAddressValid(const char* ipadr, const bool ipV6)
             {
                 char nr[4];
                 memset(nr,0,4);
-                strncpy(nr,&ipadr[iDotPos[1]+1], iDotPos[1] - iDotPos[0] - 1);
+                strncpy(nr,&ipadr[iDotPos[1]+1], iDotPos[2] - iDotPos[1] - 1);
                 int32_t num = atoi(nr);
-                if (num > 255)
+                if (num > 255 || num < 0)
                     break;
+            } else {
+                break;
+            }
 
+            if (len - iDotPos[2] <= 4)
+            {
+                char nr[4];
                 memset(nr,0,4);
                 strncpy(nr,&ipadr[iDotPos[2]+1], len - iDotPos[2] -1);
-                num = atoi(nr);
-                if (num > 255)
+                int32_t num = atoi(nr);
+                if (num > 255 || num < 0)
                     break;
                 else
                     allUnder256 = true;
-            } else
+            } else {
                 break;
+            }
         } while(false);
 
         if (nDots != 3 || !allUnder256)

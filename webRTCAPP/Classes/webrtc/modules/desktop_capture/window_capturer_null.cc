@@ -12,6 +12,7 @@
 
 #include <assert.h>
 
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/modules/desktop_capture/desktop_frame.h"
 
 namespace webrtc {
@@ -24,26 +25,22 @@ class WindowCapturerNull : public WindowCapturer {
   virtual ~WindowCapturerNull();
 
   // WindowCapturer interface.
-  virtual bool GetWindowList(WindowList* windows) OVERRIDE;
-  virtual bool SelectWindow(WindowId id) OVERRIDE;
-  virtual bool BringSelectedWindowToFront() OVERRIDE;
+  bool GetWindowList(WindowList* windows) override;
+  bool SelectWindow(WindowId id) override;
+  bool BringSelectedWindowToFront() override;
 
   // DesktopCapturer interface.
-  virtual void Start(Callback* callback) OVERRIDE;
-  virtual void Capture(const DesktopRegion& region) OVERRIDE;
+  void Start(Callback* callback) override;
+  void Capture(const DesktopRegion& region) override;
 
  private:
-  Callback* callback_;
+  Callback* callback_ = nullptr;
 
-  DISALLOW_COPY_AND_ASSIGN(WindowCapturerNull);
+  RTC_DISALLOW_COPY_AND_ASSIGN(WindowCapturerNull);
 };
 
-WindowCapturerNull::WindowCapturerNull()
-    : callback_(NULL) {
-}
-
-WindowCapturerNull::~WindowCapturerNull() {
-}
+WindowCapturerNull::WindowCapturerNull() {}
+WindowCapturerNull::~WindowCapturerNull() {}
 
 bool WindowCapturerNull::GetWindowList(WindowList* windows) {
   // Not implemented yet.
@@ -69,7 +66,7 @@ void WindowCapturerNull::Start(Callback* callback) {
 
 void WindowCapturerNull::Capture(const DesktopRegion& region) {
   // Not implemented yet.
-  callback_->OnCaptureCompleted(NULL);
+  callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
 }
 
 }  // namespace

@@ -128,21 +128,12 @@ namespace sigslot {
 			;
 		}
 
-		virtual ~single_threaded()
-		{
-			;
-		}
+                virtual ~single_threaded() {}
 
-		virtual void lock()
-		{
-			;
-		}
+                virtual void lock() {}
 
-		virtual void unlock()
-		{
-			;
-		}
-	};
+                virtual void unlock() {}
+        };
 
 #ifdef _SIGSLOT_HAS_WIN32_THREADS
 	// The multi threading policies only get compiled in if they are enabled.
@@ -226,32 +217,13 @@ namespace sigslot {
 	class multi_threaded_global
 	{
 	public:
-		multi_threaded_global()
-		{
-			pthread_mutex_init(get_mutex(), NULL);
-		}
+         multi_threaded_global();
+         multi_threaded_global(const multi_threaded_global&);
+         virtual ~multi_threaded_global();
+         virtual void lock();
+         virtual void unlock();
 
-		multi_threaded_global(const multi_threaded_global&)
-		{
-			;
-		}
-
-		virtual ~multi_threaded_global()
-		{
-			;
-		}
-
-		virtual void lock()
-		{
-			pthread_mutex_lock(get_mutex());
-		}
-
-		virtual void unlock()
-		{
-			pthread_mutex_unlock(get_mutex());
-		}
-
-	private:
+        private:
 		pthread_mutex_t* get_mutex()
 		{
 			static pthread_mutex_t g_mutex;
@@ -262,32 +234,13 @@ namespace sigslot {
 	class multi_threaded_local
 	{
 	public:
-		multi_threaded_local()
-		{
-			pthread_mutex_init(&m_mutex, NULL);
-		}
+         multi_threaded_local();
+         multi_threaded_local(const multi_threaded_local&);
+         virtual ~multi_threaded_local();
+         virtual void lock();
+         virtual void unlock();
 
-		multi_threaded_local(const multi_threaded_local&)
-		{
-			pthread_mutex_init(&m_mutex, NULL);
-		}
-
-		virtual ~multi_threaded_local()
-		{
-			pthread_mutex_destroy(&m_mutex);
-		}
-
-		virtual void lock()
-		{
-			pthread_mutex_lock(&m_mutex);
-		}
-
-		virtual void unlock()
-		{
-			pthread_mutex_unlock(&m_mutex);
-		}
-
-	private:
+        private:
 		pthread_mutex_t m_mutex;
 	};
 #endif // _SIGSLOT_HAS_POSIX_THREADS
@@ -579,7 +532,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -733,7 +686,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -872,7 +825,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -1010,7 +963,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -1148,7 +1101,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -1288,7 +1241,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -1428,7 +1381,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -1568,7 +1521,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);
@@ -1709,7 +1662,7 @@ namespace sigslot {
 			m_connected_slots.erase(m_connected_slots.begin(), m_connected_slots.end());
 		}
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 			bool connected(has_slots_interface* pclass)
 		{
 			lock_block<mt_policy> lock(this);

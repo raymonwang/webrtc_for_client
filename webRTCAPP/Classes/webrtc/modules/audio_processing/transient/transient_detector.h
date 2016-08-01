@@ -12,10 +12,10 @@
 #define WEBRTC_MODULES_AUDIO_PROCESSING_TRANSIENT_TRANSIENT_DETECTOR_H_
 
 #include <deque>
+#include <memory>
 
 #include "webrtc/modules/audio_processing/transient/moving_moments.h"
 #include "webrtc/modules/audio_processing/transient/wpd_tree.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 
 namespace webrtc {
 
@@ -55,14 +55,14 @@ class TransientDetector {
 
   size_t samples_per_chunk_;
 
-  scoped_ptr<WPDTree> wpd_tree_;
+  std::unique_ptr<WPDTree> wpd_tree_;
   size_t tree_leaves_data_length_;
 
   // A MovingMoments object is needed for each leaf in the WPD tree.
-  scoped_ptr<MovingMoments> moving_moments_[kLeaves];
+  std::unique_ptr<MovingMoments> moving_moments_[kLeaves];
 
-  scoped_ptr<float[]> first_moments_;
-  scoped_ptr<float[]> second_moments_;
+  std::unique_ptr<float[]> first_moments_;
+  std::unique_ptr<float[]> second_moments_;
 
   // Stores the last calculated moments from the previous detection.
   float last_first_moment_[kLeaves];

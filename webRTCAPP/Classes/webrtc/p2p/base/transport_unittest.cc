@@ -8,15 +8,14 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/base/fakesslidentity.h"
 #include "webrtc/base/gunit.h"
 #include "webrtc/base/network.h"
-#include "webrtc/base/thread.h"
-#include "webrtc/p2p/base/fakesession.h"
+#include "webrtc/p2p/base/faketransportcontroller.h"
 #include "webrtc/p2p/base/p2ptransport.h"
 
-using cricket::Candidate;
-using cricket::Candidates;
 using cricket::Transport;
 using cricket::FakeTransport;
 using cricket::TransportChannel;
@@ -35,17 +34,7 @@ class TransportTest : public testing::Test,
                       public sigslot::has_slots<> {
  public:
   TransportTest()
-      : thread_(rtc::Thread::Current()),
-        transport_(new FakeTransport(
-            thread_, thread_, "test content name", NULL)),
-        channel_(NULL),
-        connecting_signalled_(false),
-        completed_(false),
-        failed_(false) {
-    transport_->SignalConnecting.connect(this, &TransportTest::OnConnecting);
-    transport_->SignalCompleted.connect(this, &TransportTest::OnCompleted);
-    transport_->SignalFailed.connect(this, &TransportTest::OnFailed);
-  }
+      : transport_(new FakeTransport("test content name")), channel_(NULL) {}
   ~TransportTest() {
     transport_->DestroyAllChannels();
   }
@@ -63,43 +52,9 @@ class TransportTest : public testing::Test,
   }
 
  protected:
-  void OnConnecting(Transport* transport) {
-    connecting_signalled_ = true;
-  }
-  void OnCompleted(Transport* transport) {
-    completed_ = true;
-  }
-  void OnFailed(Transport* transport) {
-    failed_ = true;
-  }
-
-  rtc::Thread* thread_;
-  rtc::scoped_ptr<FakeTransport> transport_;
+  std::unique_ptr<FakeTransport> transport_;
   FakeTransportChannel* channel_;
-  bool connecting_signalled_;
-  bool completed_;
-  bool failed_;
 };
-
-// Test that calling ConnectChannels triggers an OnConnecting signal.
-TEST_F(TransportTest, TestConnectChannelsDoesSignal) {
-  EXPECT_TRUE(SetupChannel());
-  transport_->ConnectChannels();
-  EXPECT_FALSE(connecting_signalled_);
-
-  EXPECT_TRUE_WAIT(connecting_signalled_, 100);
-}
-
-// Test that DestroyAllChannels kills any pending OnConnecting signals.
-TEST_F(TransportTest, TestDestroyAllClearsPosts) {
-  EXPECT_TRUE(transport_->CreateChannel(1) != NULL);
-
-  transport_->ConnectChannels();
-  transport_->DestroyAllChannels();
-
-  thread_->ProcessMessages(0);
-  EXPECT_FALSE(connecting_signalled_);
-}
 
 // This test verifies channels are created with proper ICE
 // role, tiebreaker and remote ice mode and credentials after offer and
@@ -107,8 +62,7 @@ TEST_F(TransportTest, TestDestroyAllClearsPosts) {
 TEST_F(TransportTest, TestChannelIceParameters) {
   transport_->SetIceRole(cricket::ICEROLE_CONTROLLING);
   transport_->SetIceTiebreaker(99U);
-  cricket::TransportDescription local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription local_desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(local_desc,
                                                        cricket::CA_OFFER,
                                                        NULL));
@@ -119,8 +73,7 @@ TEST_F(TransportTest, TestChannelIceParameters) {
   EXPECT_EQ(kIceUfrag1, channel_->ice_ufrag());
   EXPECT_EQ(kIcePwd1, channel_->ice_pwd());
 
-  cricket::TransportDescription remote_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription remote_desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetRemoteTransportDescription(remote_desc,
                                                         cricket::CA_ANSWER,
                                                         NULL));
@@ -144,14 +97,18 @@ TEST_F(TransportTest, TestIceCredentialsChanged) {
   EXPECT_FALSE(cricket::IceCredentialsChanged("u1", "p1", "u1", "p1"));
 }
 
-// This test verifies that the callee's ICE role changes from controlled to
-// controlling when the callee triggers an ICE restart.
+// This test verifies that the callee's ICE role remains the same when the
+// callee triggers an ICE restart.
+//
+// RFC5245 currently says that the role *should* change on an ICE restart,
+// but this rule was intended for an ICE restart that occurs when an endpoint
+// is changing to ICE lite (which we already handle). See discussion here:
+// https://mailarchive.ietf.org/arch/msg/ice/C0_QRCTNcwtvUF12y28jQicPR10
 TEST_F(TransportTest, TestIceControlledToControllingOnIceRestart) {
   EXPECT_TRUE(SetupChannel());
   transport_->SetIceRole(cricket::ICEROLE_CONTROLLED);
 
-  cricket::TransportDescription desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetRemoteTransportDescription(desc,
                                                         cricket::CA_OFFER,
                                                         NULL));
@@ -160,23 +117,26 @@ TEST_F(TransportTest, TestIceControlledToControllingOnIceRestart) {
                                                        NULL));
   EXPECT_EQ(cricket::ICEROLE_CONTROLLED, transport_->ice_role());
 
-  cricket::TransportDescription new_local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag2, kIcePwd2);
+  cricket::TransportDescription new_local_desc(kIceUfrag2, kIcePwd2);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(new_local_desc,
                                                        cricket::CA_OFFER,
                                                        NULL));
-  EXPECT_EQ(cricket::ICEROLE_CONTROLLING, transport_->ice_role());
-  EXPECT_EQ(cricket::ICEROLE_CONTROLLING, channel_->GetIceRole());
+  EXPECT_EQ(cricket::ICEROLE_CONTROLLED, transport_->ice_role());
+  EXPECT_EQ(cricket::ICEROLE_CONTROLLED, channel_->GetIceRole());
 }
 
-// This test verifies that the caller's ICE role changes from controlling to
-// controlled when the callee triggers an ICE restart.
+// This test verifies that the caller's ICE role remains the same when the
+// callee triggers an ICE restart.
+//
+// RFC5245 currently says that the role *should* change on an ICE restart,
+// but this rule was intended for an ICE restart that occurs when an endpoint
+// is changing to ICE lite (which we already handle). See discussion here:
+// https://mailarchive.ietf.org/arch/msg/ice/C0_QRCTNcwtvUF12y28jQicPR10
 TEST_F(TransportTest, TestIceControllingToControlledOnIceRestart) {
   EXPECT_TRUE(SetupChannel());
   transport_->SetIceRole(cricket::ICEROLE_CONTROLLING);
 
-  cricket::TransportDescription desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(desc,
                                                        cricket::CA_OFFER,
                                                        NULL));
@@ -185,13 +145,12 @@ TEST_F(TransportTest, TestIceControllingToControlledOnIceRestart) {
                                                         NULL));
   EXPECT_EQ(cricket::ICEROLE_CONTROLLING, transport_->ice_role());
 
-  cricket::TransportDescription new_local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag2, kIcePwd2);
+  cricket::TransportDescription new_local_desc(kIceUfrag2, kIcePwd2);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(new_local_desc,
                                                        cricket::CA_ANSWER,
                                                        NULL));
-  EXPECT_EQ(cricket::ICEROLE_CONTROLLED, transport_->ice_role());
-  EXPECT_EQ(cricket::ICEROLE_CONTROLLED, channel_->GetIceRole());
+  EXPECT_EQ(cricket::ICEROLE_CONTROLLING, transport_->ice_role());
+  EXPECT_EQ(cricket::ICEROLE_CONTROLLING, channel_->GetIceRole());
 }
 
 // This test verifies that the caller's ICE role is still controlling after the
@@ -200,24 +159,21 @@ TEST_F(TransportTest, TestIceControllingOnIceRestartIfRemoteIsIceLite) {
   EXPECT_TRUE(SetupChannel());
   transport_->SetIceRole(cricket::ICEROLE_CONTROLLING);
 
-  cricket::TransportDescription desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(desc,
                                                        cricket::CA_OFFER,
                                                        NULL));
 
   cricket::TransportDescription remote_desc(
-      cricket::NS_JINGLE_ICE_UDP, std::vector<std::string>(),
-      kIceUfrag1, kIcePwd1, cricket::ICEMODE_LITE,
-      cricket::CONNECTIONROLE_NONE, NULL, cricket::Candidates());
+      std::vector<std::string>(), kIceUfrag1, kIcePwd1, cricket::ICEMODE_LITE,
+      cricket::CONNECTIONROLE_NONE, NULL);
   ASSERT_TRUE(transport_->SetRemoteTransportDescription(remote_desc,
                                                         cricket::CA_ANSWER,
                                                         NULL));
 
   EXPECT_EQ(cricket::ICEROLE_CONTROLLING, transport_->ice_role());
 
-  cricket::TransportDescription new_local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag2, kIcePwd2);
+  cricket::TransportDescription new_local_desc(kIceUfrag2, kIcePwd2);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(new_local_desc,
                                                        cricket::CA_ANSWER,
                                                        NULL));
@@ -225,55 +181,16 @@ TEST_F(TransportTest, TestIceControllingOnIceRestartIfRemoteIsIceLite) {
   EXPECT_EQ(cricket::ICEROLE_CONTROLLING, channel_->GetIceRole());
 }
 
-// This test verifies that the Completed and Failed states can be reached.
-TEST_F(TransportTest, TestChannelCompletedAndFailed) {
-  transport_->SetIceRole(cricket::ICEROLE_CONTROLLING);
-  cricket::TransportDescription local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
-  ASSERT_TRUE(transport_->SetLocalTransportDescription(local_desc,
-                                                       cricket::CA_OFFER,
-                                                       NULL));
-  EXPECT_TRUE(SetupChannel());
-
-  cricket::TransportDescription remote_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
-  ASSERT_TRUE(transport_->SetRemoteTransportDescription(remote_desc,
-                                                        cricket::CA_ANSWER,
-                                                        NULL));
-
-  channel_->SetConnectionCount(2);
-  channel_->SignalCandidatesAllocationDone(channel_);
-  channel_->SetWritable(true);
-  EXPECT_TRUE_WAIT(transport_->all_channels_writable(), 100);
-  // ICE is not yet completed because there is still more than one connection.
-  EXPECT_FALSE(completed_);
-  EXPECT_FALSE(failed_);
-
-  // When the connection count drops to 1, SignalCompleted should be emitted,
-  // and completed() should be true.
-  channel_->SetConnectionCount(1);
-  EXPECT_TRUE_WAIT(completed_, 100);
-  completed_ = false;
-
-  // When the connection count drops to 0, SignalFailed should be emitted, and
-  // completed() should be false.
-  channel_->SetConnectionCount(0);
-  EXPECT_TRUE_WAIT(failed_, 100);
-  EXPECT_FALSE(completed_);
-}
-
 // Tests channel role is reversed after receiving ice-lite from remote.
 TEST_F(TransportTest, TestSetRemoteIceLiteInOffer) {
   transport_->SetIceRole(cricket::ICEROLE_CONTROLLED);
   cricket::TransportDescription remote_desc(
-      cricket::NS_JINGLE_ICE_UDP, std::vector<std::string>(),
-      kIceUfrag1, kIcePwd1, cricket::ICEMODE_LITE,
-      cricket::CONNECTIONROLE_ACTPASS, NULL, cricket::Candidates());
+      std::vector<std::string>(), kIceUfrag1, kIcePwd1, cricket::ICEMODE_LITE,
+      cricket::CONNECTIONROLE_ACTPASS, NULL);
   ASSERT_TRUE(transport_->SetRemoteTransportDescription(remote_desc,
                                                         cricket::CA_OFFER,
                                                         NULL));
-  cricket::TransportDescription local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription local_desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(local_desc,
                                                        cricket::CA_ANSWER,
                                                        NULL));
@@ -286,8 +203,7 @@ TEST_F(TransportTest, TestSetRemoteIceLiteInOffer) {
 // Tests ice-lite in remote answer.
 TEST_F(TransportTest, TestSetRemoteIceLiteInAnswer) {
   transport_->SetIceRole(cricket::ICEROLE_CONTROLLING);
-  cricket::TransportDescription local_desc(
-      cricket::NS_JINGLE_ICE_UDP, kIceUfrag1, kIcePwd1);
+  cricket::TransportDescription local_desc(kIceUfrag1, kIcePwd1);
   ASSERT_TRUE(transport_->SetLocalTransportDescription(local_desc,
                                                        cricket::CA_OFFER,
                                                        NULL));
@@ -297,9 +213,8 @@ TEST_F(TransportTest, TestSetRemoteIceLiteInAnswer) {
   // Channels will be created in ICEFULL_MODE.
   EXPECT_EQ(cricket::ICEMODE_FULL, channel_->remote_ice_mode());
   cricket::TransportDescription remote_desc(
-      cricket::NS_JINGLE_ICE_UDP, std::vector<std::string>(),
-      kIceUfrag1, kIcePwd1, cricket::ICEMODE_LITE,
-      cricket::CONNECTIONROLE_NONE, NULL, cricket::Candidates());
+      std::vector<std::string>(), kIceUfrag1, kIcePwd1, cricket::ICEMODE_LITE,
+      cricket::CONNECTIONROLE_NONE, NULL);
   ASSERT_TRUE(transport_->SetRemoteTransportDescription(remote_desc,
                                                         cricket::CA_ANSWER,
                                                         NULL));
@@ -316,8 +231,193 @@ TEST_F(TransportTest, TestGetStats) {
   // Note that this tests the behavior of a FakeTransportChannel.
   ASSERT_EQ(1U, stats.channel_stats.size());
   EXPECT_EQ(1, stats.channel_stats[0].component);
-  transport_->ConnectChannels();
+  // Set local transport description for FakeTransport before connecting.
+  TransportDescription faketransport_desc(
+      std::vector<std::string>(),
+      rtc::CreateRandomString(cricket::ICE_UFRAG_LENGTH),
+      rtc::CreateRandomString(cricket::ICE_PWD_LENGTH), cricket::ICEMODE_FULL,
+      cricket::CONNECTIONROLE_NONE, nullptr);
+  transport_->SetLocalTransportDescription(faketransport_desc,
+                                           cricket::CA_OFFER, nullptr);
   EXPECT_TRUE(transport_->GetStats(&stats));
   ASSERT_EQ(1U, stats.channel_stats.size());
   EXPECT_EQ(1, stats.channel_stats[0].component);
+}
+
+// Tests that VerifyCertificateFingerprint only returns true when the
+// certificate matches the fingerprint.
+TEST_F(TransportTest, TestVerifyCertificateFingerprint) {
+  std::string error_desc;
+  EXPECT_FALSE(
+      transport_->VerifyCertificateFingerprint(nullptr, nullptr, &error_desc));
+  rtc::KeyType key_types[] = {rtc::KT_RSA, rtc::KT_ECDSA};
+
+  for (auto& key_type : key_types) {
+    rtc::scoped_refptr<rtc::RTCCertificate> certificate =
+        rtc::RTCCertificate::Create(std::unique_ptr<rtc::SSLIdentity>(
+            rtc::SSLIdentity::Generate("testing", key_type)));
+    ASSERT_NE(nullptr, certificate);
+
+    std::string digest_algorithm;
+    ASSERT_TRUE(certificate->ssl_certificate().GetSignatureDigestAlgorithm(
+        &digest_algorithm));
+    ASSERT_FALSE(digest_algorithm.empty());
+    std::unique_ptr<rtc::SSLFingerprint> good_fingerprint(
+        rtc::SSLFingerprint::Create(digest_algorithm, certificate->identity()));
+    ASSERT_NE(nullptr, good_fingerprint);
+
+    EXPECT_TRUE(transport_->VerifyCertificateFingerprint(
+        certificate.get(), good_fingerprint.get(), &error_desc));
+    EXPECT_FALSE(transport_->VerifyCertificateFingerprint(
+        certificate.get(), nullptr, &error_desc));
+    EXPECT_FALSE(transport_->VerifyCertificateFingerprint(
+        nullptr, good_fingerprint.get(), &error_desc));
+
+    rtc::SSLFingerprint bad_fingerprint = *good_fingerprint;
+    bad_fingerprint.digest.AppendData("0", 1);
+    EXPECT_FALSE(transport_->VerifyCertificateFingerprint(
+        certificate.get(), &bad_fingerprint, &error_desc));
+  }
+}
+
+// Tests that NegotiateRole sets the SSL role correctly.
+TEST_F(TransportTest, TestNegotiateRole) {
+  TransportDescription local_desc(kIceUfrag1, kIcePwd1);
+  TransportDescription remote_desc(kIceUfrag2, kIcePwd2);
+
+  struct NegotiateRoleParams {
+    cricket::ConnectionRole local_role;
+    cricket::ConnectionRole remote_role;
+    cricket::ContentAction local_action;
+    cricket::ContentAction remote_action;
+  };
+
+  rtc::SSLRole ssl_role;
+  std::string error_desc;
+
+  // Parameters which set the SSL role to SSL_CLIENT.
+  NegotiateRoleParams valid_client_params[] = {
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_OFFER, cricket::CA_PRANSWER}};
+
+  for (auto& param : valid_client_params) {
+    local_desc.connection_role = param.local_role;
+    remote_desc.connection_role = param.remote_role;
+
+    ASSERT_TRUE(transport_->SetRemoteTransportDescription(
+        remote_desc, param.remote_action, nullptr));
+    ASSERT_TRUE(transport_->SetLocalTransportDescription(
+        local_desc, param.local_action, nullptr));
+    EXPECT_TRUE(
+        transport_->NegotiateRole(param.local_action, &ssl_role, &error_desc));
+    EXPECT_EQ(rtc::SSL_CLIENT, ssl_role);
+  }
+
+  // Parameters which set the SSL role to SSL_SERVER.
+  NegotiateRoleParams valid_server_params[] = {
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_OFFER, cricket::CA_PRANSWER}};
+
+  for (auto& param : valid_server_params) {
+    local_desc.connection_role = param.local_role;
+    remote_desc.connection_role = param.remote_role;
+
+    ASSERT_TRUE(transport_->SetRemoteTransportDescription(
+        remote_desc, param.remote_action, nullptr));
+    ASSERT_TRUE(transport_->SetLocalTransportDescription(
+        local_desc, param.local_action, nullptr));
+    EXPECT_TRUE(
+        transport_->NegotiateRole(param.local_action, &ssl_role, &error_desc));
+    EXPECT_EQ(rtc::SSL_SERVER, ssl_role);
+  }
+
+  // Invalid parameters due to both peers having a duplicate role.
+  NegotiateRoleParams duplicate_params[] = {
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_OFFER, cricket::CA_PRANSWER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_OFFER, cricket::CA_PRANSWER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_OFFER, cricket::CA_PRANSWER}};
+
+  for (auto& param : duplicate_params) {
+    local_desc.connection_role = param.local_role;
+    remote_desc.connection_role = param.remote_role;
+
+    ASSERT_TRUE(transport_->SetRemoteTransportDescription(
+        remote_desc, param.remote_action, nullptr));
+    ASSERT_TRUE(transport_->SetLocalTransportDescription(
+        local_desc, param.local_action, nullptr));
+    EXPECT_FALSE(
+        transport_->NegotiateRole(param.local_action, &ssl_role, &error_desc));
+  }
+
+  // Invalid parameters due to the offerer not using ACTPASS.
+  NegotiateRoleParams offerer_without_actpass_params[] = {
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_ANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTPASS, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_PRANSWER, cricket::CA_OFFER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_OFFER, cricket::CA_ANSWER},
+      {cricket::CONNECTIONROLE_ACTIVE, cricket::CONNECTIONROLE_PASSIVE,
+       cricket::CA_OFFER, cricket::CA_PRANSWER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTIVE,
+       cricket::CA_OFFER, cricket::CA_PRANSWER},
+      {cricket::CONNECTIONROLE_PASSIVE, cricket::CONNECTIONROLE_ACTPASS,
+       cricket::CA_OFFER, cricket::CA_PRANSWER}};
+
+  for (auto& param : offerer_without_actpass_params) {
+    local_desc.connection_role = param.local_role;
+    remote_desc.connection_role = param.remote_role;
+
+    ASSERT_TRUE(transport_->SetRemoteTransportDescription(
+        remote_desc, param.remote_action, nullptr));
+    ASSERT_TRUE(transport_->SetLocalTransportDescription(
+        local_desc, param.local_action, nullptr));
+    EXPECT_FALSE(
+        transport_->NegotiateRole(param.local_action, &ssl_role, &error_desc));
+  }
 }

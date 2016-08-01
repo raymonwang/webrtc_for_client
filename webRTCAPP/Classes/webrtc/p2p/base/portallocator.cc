@@ -8,9 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include "webrtc/base/checks.h"
 #include "webrtc/p2p/base/portallocator.h"
-
-#include "webrtc/p2p/base/portallocatorsessionproxy.h"
 
 namespace cricket {
 
@@ -18,75 +17,93 @@ PortAllocatorSession::PortAllocatorSession(const std::string& content_name,
                                            int component,
                                            const std::string& ice_ufrag,
                                            const std::string& ice_pwd,
-                                           uint32 flags)
-    : content_name_(content_name),
-      component_(component),
-      flags_(flags),
+                                           uint32_t flags)
+    : flags_(flags),
       generation_(0),
-      // If PORTALLOCATOR_ENABLE_SHARED_UFRAG flag is not enabled, ignore the
-      // incoming ufrag and pwd, which will cause each Port to generate one
-      // by itself.
-      username_(flags_ & PORTALLOCATOR_ENABLE_SHARED_UFRAG ? ice_ufrag : ""),
-      password_(flags_ & PORTALLOCATOR_ENABLE_SHARED_UFRAG ? ice_pwd : "") {
+      content_name_(content_name),
+      component_(component),
+      ice_ufrag_(ice_ufrag),
+      ice_pwd_(ice_pwd) {
+  // Pooled sessions are allowed to be created with empty content name,
+  // component, ufrag and password.
+  RTC_DCHECK(ice_ufrag.empty() == ice_pwd.empty());
 }
 
-PortAllocator::~PortAllocator() {
-  for (SessionMuxerMap::iterator iter = muxers_.begin();
-       iter != muxers_.end(); ++iter) {
-    delete iter->second;
+void PortAllocator::SetConfiguration(
+    const ServerAddresses& stun_servers,
+    const std::vector<RelayServerConfig>& turn_servers,
+    int candidate_pool_size,
+    bool prune_turn_ports) {
+  bool ice_servers_changed =
+      (stun_servers != stun_servers_ || turn_servers != turn_servers_);
+  stun_servers_ = stun_servers;
+  turn_servers_ = turn_servers;
+  prune_turn_ports_ = prune_turn_ports;
+
+  // If ICE servers changed, throw away any existing pooled sessions and create
+  // new ones.
+  if (ice_servers_changed) {
+    pooled_sessions_.clear();
+    allocated_pooled_session_count_ = 0;
   }
+
+  // If |size| is less than the number of allocated sessions, get rid of the
+  // extras.
+  while (allocated_pooled_session_count_ > candidate_pool_size &&
+         !pooled_sessions_.empty()) {
+    pooled_sessions_.front().reset(nullptr);
+    pooled_sessions_.pop_front();
+    --allocated_pooled_session_count_;
+  }
+  // If |size| is greater than the number of allocated sessions, create new
+  // sessions.
+  while (allocated_pooled_session_count_ < candidate_pool_size) {
+    PortAllocatorSession* pooled_session = CreateSessionInternal("", 0, "", "");
+    pooled_session->StartGettingPorts();
+    pooled_sessions_.push_back(
+        std::unique_ptr<PortAllocatorSession>(pooled_session));
+    ++allocated_pooled_session_count_;
+  }
+  target_pooled_session_count_ = candidate_pool_size;
 }
 
-PortAllocatorSession* PortAllocator::CreateSession(
+std::unique_ptr<PortAllocatorSession> PortAllocator::CreateSession(
     const std::string& sid,
     const std::string& content_name,
     int component,
     const std::string& ice_ufrag,
     const std::string& ice_pwd) {
-  if (flags_ & PORTALLOCATOR_ENABLE_BUNDLE) {
-    // If we just use |sid| as key in identifying PortAllocatorSessionMuxer,
-    // ICE restart will not result in different candidates, as |sid| will
-    // be same. To yield different candiates we are using combination of
-    // |ice_ufrag| and |ice_pwd|.
-    // Ideally |ice_ufrag| and |ice_pwd| should change together, but
-    // there can be instances where only ice_pwd will be changed.
-    std::string key_str = ice_ufrag + ":" + ice_pwd;
-    PortAllocatorSessionMuxer* muxer = GetSessionMuxer(key_str);
-    if (!muxer) {
-      PortAllocatorSession* session_impl = CreateSessionInternal(
-          content_name, component, ice_ufrag, ice_pwd);
-      // Create PortAllocatorSessionMuxer object for |session_impl|.
-      muxer = new PortAllocatorSessionMuxer(session_impl);
-      muxer->SignalDestroyed.connect(
-          this, &PortAllocator::OnSessionMuxerDestroyed);
-      // Add PortAllocatorSession to the map.
-      muxers_[key_str] = muxer;
-    }
-    PortAllocatorSessionProxy* proxy =
-        new PortAllocatorSessionProxy(content_name, component, flags_);
-    muxer->RegisterSessionProxy(proxy);
-    return proxy;
-  }
-  return CreateSessionInternal(content_name, component, ice_ufrag, ice_pwd);
+  auto session = std::unique_ptr<PortAllocatorSession>(
+      CreateSessionInternal(content_name, component, ice_ufrag, ice_pwd));
+  session->SetCandidateFilter(candidate_filter());
+  return session;
 }
 
-PortAllocatorSessionMuxer* PortAllocator::GetSessionMuxer(
-    const std::string& key) const {
-  SessionMuxerMap::const_iterator iter = muxers_.find(key);
-  if (iter != muxers_.end())
-    return iter->second;
-  return NULL;
+std::unique_ptr<PortAllocatorSession> PortAllocator::TakePooledSession(
+    const std::string& content_name,
+    int component,
+    const std::string& ice_ufrag,
+    const std::string& ice_pwd) {
+  RTC_DCHECK(!ice_ufrag.empty());
+  RTC_DCHECK(!ice_pwd.empty());
+  if (pooled_sessions_.empty()) {
+    return nullptr;
+  }
+  std::unique_ptr<PortAllocatorSession> ret =
+      std::move(pooled_sessions_.front());
+  ret->SetIceParameters(content_name, component, ice_ufrag, ice_pwd);
+  // According to JSEP, a pooled session should filter candidates only after
+  // it's taken out of the pool.
+  ret->SetCandidateFilter(candidate_filter());
+  pooled_sessions_.pop_front();
+  return ret;
 }
 
-void PortAllocator::OnSessionMuxerDestroyed(
-    PortAllocatorSessionMuxer* session) {
-  SessionMuxerMap::iterator iter;
-  for (iter = muxers_.begin(); iter != muxers_.end(); ++iter) {
-    if (iter->second == session)
-      break;
+const PortAllocatorSession* PortAllocator::GetPooledSession() const {
+  if (pooled_sessions_.empty()) {
+    return nullptr;
   }
-  if (iter != muxers_.end())
-    muxers_.erase(iter);
+  return pooled_sessions_.front().get();
 }
 
 }  // namespace cricket

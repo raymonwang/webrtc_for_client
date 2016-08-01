@@ -20,8 +20,7 @@
 //v4l includes
 #include <linux/videodev2.h>
 
-#include "webrtc/system_wrappers/interface/ref_count.h"
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc/system_wrappers/include/trace.h"
 
 
 namespace webrtc
@@ -31,14 +30,7 @@ namespace videocapturemodule
 VideoCaptureModule::DeviceInfo*
 VideoCaptureImpl::CreateDeviceInfo(const int32_t id)
 {
-    videocapturemodule::DeviceInfoLinux *deviceInfo =
-                    new videocapturemodule::DeviceInfoLinux(id);
-    if (!deviceInfo)
-    {
-        deviceInfo = NULL;
-    }
-
-    return deviceInfo;
+    return new videocapturemodule::DeviceInfoLinux(id);
 }
 
 DeviceInfoLinux::DeviceInfoLinux(const int32_t id)
@@ -257,11 +249,12 @@ int32_t DeviceInfoLinux::FillCapabilities(int fd)
     video_fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     video_fmt.fmt.pix.sizeimage = 0;
 
-    int totalFmts = 3;
+    int totalFmts = 4;
     unsigned int videoFormats[] = {
         V4L2_PIX_FMT_MJPEG,
         V4L2_PIX_FMT_YUV420,
-        V4L2_PIX_FMT_YUYV };
+        V4L2_PIX_FMT_YUYV,
+        V4L2_PIX_FMT_UYVY };
 
     int sizes = 13;
     unsigned int size[][2] = { { 128, 96 }, { 160, 120 }, { 176, 144 },
@@ -299,6 +292,10 @@ int32_t DeviceInfoLinux::FillCapabilities(int fd)
                     else if (videoFormats[fmts] == V4L2_PIX_FMT_MJPEG)
                     {
                         cap.rawType = kVideoMJPEG;
+                    }
+                    else if (videoFormats[fmts] == V4L2_PIX_FMT_UYVY)
+                    {
+                        cap.rawType = kVideoUYVY;
                     }
 
                     // get fps of current camera mode

@@ -11,7 +11,7 @@
 #ifndef WEBRTC_TEST_CHANNEL_TRANSPORT_UDP_SOCKET_MANAGER_WRAPPER_H_
 #define WEBRTC_TEST_CHANNEL_TRANSPORT_UDP_SOCKET_MANAGER_WRAPPER_H_
 
-#include "webrtc/system_wrappers/interface/static_instance.h"
+#include "webrtc/system_wrappers/include/static_instance.h"
 #include "webrtc/typedefs.h"
 
 namespace webrtc {
@@ -29,8 +29,6 @@ public:
     // Initializes the socket manager. Returns true if the manager wasn't
     // already initialized.
     virtual bool Init(int32_t id, uint8_t& numOfWorkThreads) = 0;
-
-    virtual int32_t ChangeUniqueId(const int32_t id) = 0;
 
     // Start listening to sockets that have been registered via the
     // AddSocket(..) API.

@@ -16,6 +16,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/modules/audio_coding/neteq/mock/mock_decoder_database.h"
 #include "webrtc/modules/audio_coding/neteq/packet.h"
+#include "webrtc/modules/audio_coding/neteq/tick_timer.h"
 
 using ::testing::Return;
 using ::testing::_;
@@ -80,13 +81,15 @@ struct PacketsToInsert {
 // Start of test definitions.
 
 TEST(PacketBuffer, CreateAndDestroy) {
-  PacketBuffer* buffer = new PacketBuffer(10);  // 10 packets.
+  TickTimer tick_timer;
+  PacketBuffer* buffer = new PacketBuffer(10, &tick_timer);  // 10 packets.
   EXPECT_TRUE(buffer->Empty());
   delete buffer;
 }
 
 TEST(PacketBuffer, InsertPacket) {
-  PacketBuffer buffer(10);  // 10 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(10, &tick_timer);  // 10 packets.
   PacketGenerator gen(17u, 4711u, 0, 10);
 
   const int payload_len = 100;
@@ -97,7 +100,7 @@ TEST(PacketBuffer, InsertPacket) {
   EXPECT_EQ(PacketBuffer::kOK, buffer.NextTimestamp(&next_ts));
   EXPECT_EQ(4711u, next_ts);
   EXPECT_FALSE(buffer.Empty());
-  EXPECT_EQ(1, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(1u, buffer.NumPacketsInBuffer());
   const RTPHeader* hdr = buffer.NextRtpHeader();
   EXPECT_EQ(&(packet->header), hdr);  // Compare pointer addresses.
 
@@ -107,7 +110,8 @@ TEST(PacketBuffer, InsertPacket) {
 
 // Test to flush buffer.
 TEST(PacketBuffer, FlushBuffer) {
-  PacketBuffer buffer(10);  // 10 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(10, &tick_timer);  // 10 packets.
   PacketGenerator gen(0, 0, 0, 10);
   const int payload_len = 10;
 
@@ -116,18 +120,19 @@ TEST(PacketBuffer, FlushBuffer) {
     Packet* packet = gen.NextPacket(payload_len);
     EXPECT_EQ(PacketBuffer::kOK, buffer.InsertPacket(packet));
   }
-  EXPECT_EQ(10, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(10u, buffer.NumPacketsInBuffer());
   EXPECT_FALSE(buffer.Empty());
 
   buffer.Flush();
   // Buffer should delete the payloads itself.
-  EXPECT_EQ(0, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(0u, buffer.NumPacketsInBuffer());
   EXPECT_TRUE(buffer.Empty());
 }
 
 // Test to fill the buffer over the limits, and verify that it flushes.
 TEST(PacketBuffer, OverfillBuffer) {
-  PacketBuffer buffer(10);  // 10 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(10, &tick_timer);  // 10 packets.
   PacketGenerator gen(0, 0, 0, 10);
 
   // Insert 10 small packets; should be ok.
@@ -137,7 +142,7 @@ TEST(PacketBuffer, OverfillBuffer) {
     Packet* packet = gen.NextPacket(payload_len);
     EXPECT_EQ(PacketBuffer::kOK, buffer.InsertPacket(packet));
   }
-  EXPECT_EQ(10, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(10u, buffer.NumPacketsInBuffer());
   uint32_t next_ts;
   EXPECT_EQ(PacketBuffer::kOK, buffer.NextTimestamp(&next_ts));
   EXPECT_EQ(0u, next_ts);  // Expect first inserted packet to be first in line.
@@ -145,7 +150,7 @@ TEST(PacketBuffer, OverfillBuffer) {
   // Insert 11th packet; should flush the buffer and insert it after flushing.
   Packet* packet = gen.NextPacket(payload_len);
   EXPECT_EQ(PacketBuffer::kFlushed, buffer.InsertPacket(packet));
-  EXPECT_EQ(1, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(1u, buffer.NumPacketsInBuffer());
   EXPECT_EQ(PacketBuffer::kOK, buffer.NextTimestamp(&next_ts));
   // Expect last inserted packet to be first in line.
   EXPECT_EQ(packet->header.timestamp, next_ts);
@@ -156,7 +161,8 @@ TEST(PacketBuffer, OverfillBuffer) {
 
 // Test inserting a list of packets.
 TEST(PacketBuffer, InsertPacketList) {
-  PacketBuffer buffer(10);  // 10 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(10, &tick_timer);  // 10 packets.
   PacketGenerator gen(0, 0, 0, 10);
   PacketList list;
   const int payload_len = 10;
@@ -179,7 +185,7 @@ TEST(PacketBuffer, InsertPacketList) {
                                                        &current_pt,
                                                        &current_cng_pt));
   EXPECT_TRUE(list.empty());  // The PacketBuffer should have depleted the list.
-  EXPECT_EQ(10, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(10u, buffer.NumPacketsInBuffer());
   EXPECT_EQ(0, current_pt);  // Current payload type changed to 0.
   EXPECT_EQ(0xFF, current_cng_pt);  // CNG payload type not changed.
 
@@ -192,7 +198,8 @@ TEST(PacketBuffer, InsertPacketList) {
 // Expecting the buffer to flush.
 // TODO(hlundin): Remove this test when legacy operation is no longer needed.
 TEST(PacketBuffer, InsertPacketListChangePayloadType) {
-  PacketBuffer buffer(10);  // 10 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(10, &tick_timer);  // 10 packets.
   PacketGenerator gen(0, 0, 0, 10);
   PacketList list;
   const int payload_len = 10;
@@ -220,7 +227,7 @@ TEST(PacketBuffer, InsertPacketListChangePayloadType) {
                                                             &current_pt,
                                                             &current_cng_pt));
   EXPECT_TRUE(list.empty());  // The PacketBuffer should have depleted the list.
-  EXPECT_EQ(1, buffer.NumPacketsInBuffer());  // Only the last packet.
+  EXPECT_EQ(1u, buffer.NumPacketsInBuffer());  // Only the last packet.
   EXPECT_EQ(1, current_pt);  // Current payload type changed to 0.
   EXPECT_EQ(0xFF, current_cng_pt);  // CNG payload type not changed.
 
@@ -230,7 +237,8 @@ TEST(PacketBuffer, InsertPacketListChangePayloadType) {
 }
 
 TEST(PacketBuffer, ExtractOrderRedundancy) {
-  PacketBuffer buffer(100);  // 100 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(100, &tick_timer);  // 100 packets.
   const int kPackets = 18;
   const int kFrameSize = 10;
   const int kPayloadLength = 10;
@@ -256,7 +264,7 @@ TEST(PacketBuffer, ExtractOrderRedundancy) {
     {0x0006, 0x0000001E, 1, false, -1},
   };
 
-  const int kExpectPacketsInBuffer = 9;
+  const size_t kExpectPacketsInBuffer = 9;
 
   std::vector<Packet*> expect_order(kExpectPacketsInBuffer);
 
@@ -277,10 +285,10 @@ TEST(PacketBuffer, ExtractOrderRedundancy) {
 
   EXPECT_EQ(kExpectPacketsInBuffer, buffer.NumPacketsInBuffer());
 
-  int drop_count;
-  for (int i = 0; i < kExpectPacketsInBuffer; ++i) {
+  size_t drop_count;
+  for (size_t i = 0; i < kExpectPacketsInBuffer; ++i) {
     Packet* packet = buffer.GetNextPacket(&drop_count);
-    EXPECT_EQ(0, drop_count);
+    EXPECT_EQ(0u, drop_count);
     EXPECT_EQ(packet, expect_order[i]);  // Compare pointer addresses.
     delete[] packet->payload;
     delete packet;
@@ -289,7 +297,8 @@ TEST(PacketBuffer, ExtractOrderRedundancy) {
 }
 
 TEST(PacketBuffer, DiscardPackets) {
-  PacketBuffer buffer(100);  // 100 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(100, &tick_timer);  // 100 packets.
   const uint16_t start_seq_no = 17;
   const uint32_t start_ts = 4711;
   const uint32_t ts_increment = 10;
@@ -302,7 +311,7 @@ TEST(PacketBuffer, DiscardPackets) {
     Packet* packet = gen.NextPacket(payload_len);
     buffer.InsertPacket(packet);
   }
-  EXPECT_EQ(10, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(10u, buffer.NumPacketsInBuffer());
 
   // Discard them one by one and make sure that the right packets are at the
   // front of the buffer.
@@ -318,7 +327,8 @@ TEST(PacketBuffer, DiscardPackets) {
 }
 
 TEST(PacketBuffer, Reordering) {
-  PacketBuffer buffer(100);  // 100 packets.
+  TickTimer tick_timer;
+  PacketBuffer buffer(100, &tick_timer);  // 100 packets.
   const uint16_t start_seq_no = 17;
   const uint32_t start_ts = 4711;
   const uint32_t ts_increment = 10;
@@ -350,7 +360,7 @@ TEST(PacketBuffer, Reordering) {
                                                        decoder_database,
                                                        &current_pt,
                                                        &current_cng_pt));
-  EXPECT_EQ(10, buffer.NumPacketsInBuffer());
+  EXPECT_EQ(10u, buffer.NumPacketsInBuffer());
 
   // Extract them and make sure that come out in the right order.
   uint32_t current_ts = start_ts;
@@ -373,8 +383,9 @@ TEST(PacketBuffer, Failures) {
   const uint32_t ts_increment = 10;
   int payload_len = 100;
   PacketGenerator gen(start_seq_no, start_ts, 0, ts_increment);
+  TickTimer tick_timer;
 
-  PacketBuffer* buffer = new PacketBuffer(100);  // 100 packets.
+  PacketBuffer* buffer = new PacketBuffer(100, &tick_timer);  // 100 packets.
   Packet* packet = NULL;
   EXPECT_EQ(PacketBuffer::kInvalidPacket, buffer->InsertPacket(packet));
   packet = gen.NextPacket(payload_len);
@@ -404,7 +415,7 @@ TEST(PacketBuffer, Failures) {
   // Insert packet list of three packets, where the second packet has an invalid
   // payload.  Expect first packet to be inserted, and the remaining two to be
   // discarded.
-  buffer = new PacketBuffer(100);  // 100 packets.
+  buffer = new PacketBuffer(100, &tick_timer);  // 100 packets.
   PacketList list;
   list.push_back(gen.NextPacket(payload_len));  // Valid packet.
   packet = gen.NextPacket(payload_len);
@@ -425,7 +436,7 @@ TEST(PacketBuffer, Failures) {
                                      &current_pt,
                                      &current_cng_pt));
   EXPECT_TRUE(list.empty());  // The PacketBuffer should have depleted the list.
-  EXPECT_EQ(1, buffer->NumPacketsInBuffer());
+  EXPECT_EQ(1u, buffer->NumPacketsInBuffer());
   delete buffer;
   EXPECT_CALL(decoder_database, Die());  // Called when object is deleted.
 }
@@ -531,9 +542,14 @@ void TestIsObsoleteTimestamp(uint32_t limit_timestamp) {
   // 1 sample ahead is not old.
   EXPECT_FALSE(PacketBuffer::IsObsoleteTimestamp(
       limit_timestamp + 1, limit_timestamp, kZeroHorizon));
-  // 2^31 samples ahead is not old.
+  // If |t1-t2|=2^31 and t1>t2, t2 is older than t1 but not the opposite.
+  uint32_t other_timestamp = limit_timestamp + (1 << 31);
+  uint32_t lowest_timestamp = std::min(limit_timestamp, other_timestamp);
+  uint32_t highest_timestamp = std::max(limit_timestamp, other_timestamp);
+  EXPECT_TRUE(PacketBuffer::IsObsoleteTimestamp(
+      lowest_timestamp, highest_timestamp, kZeroHorizon));
   EXPECT_FALSE(PacketBuffer::IsObsoleteTimestamp(
-      limit_timestamp + (1 << 31), limit_timestamp, kZeroHorizon));
+      highest_timestamp, lowest_timestamp, kZeroHorizon));
 
   // Fixed horizon at 10 samples.
   static const uint32_t kHorizon = 10;

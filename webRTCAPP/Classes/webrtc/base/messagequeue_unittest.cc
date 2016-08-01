@@ -16,12 +16,12 @@
 #include "webrtc/base/thread.h"
 #include "webrtc/base/timeutils.h"
 #include "webrtc/base/nullsocketserver.h"
-#include "webrtc/test/testsupport/gtest_disable.h"
 
 using namespace rtc;
 
 class MessageQueueTest: public testing::Test, public MessageQueue {
  public:
+  MessageQueueTest() : MessageQueue(SocketServer::CreateDefault(), true) {}
   bool IsLocked_Worker() {
     if (!crit_.TryEnter()) {
       return true;
@@ -35,7 +35,7 @@ class MessageQueueTest: public testing::Test, public MessageQueue {
     Thread worker;
     worker.Start();
     return worker.Invoke<bool>(
-        rtc::Bind(&MessageQueueTest::IsLocked_Worker, this));
+        RTC_FROM_HERE, rtc::Bind(&MessageQueueTest::IsLocked_Worker, this));
   }
 };
 
@@ -54,12 +54,12 @@ struct DeletedLockChecker {
 static void DelayedPostsWithIdenticalTimesAreProcessedInFifoOrder(
     MessageQueue* q) {
   EXPECT_TRUE(q != NULL);
-  TimeStamp now = Time();
-  q->PostAt(now, NULL, 3);
-  q->PostAt(now - 2, NULL, 0);
-  q->PostAt(now - 1, NULL, 1);
-  q->PostAt(now, NULL, 4);
-  q->PostAt(now - 1, NULL, 2);
+  int64_t now = TimeMillis();
+  q->PostAt(RTC_FROM_HERE, now, NULL, 3);
+  q->PostAt(RTC_FROM_HERE, now - 2, NULL, 0);
+  q->PostAt(RTC_FROM_HERE, now - 1, NULL, 1);
+  q->PostAt(RTC_FROM_HERE, now, NULL, 4);
+  q->PostAt(RTC_FROM_HERE, now - 1, NULL, 2);
 
   Message msg;
   for (size_t i=0; i<5; ++i) {
@@ -73,10 +73,11 @@ static void DelayedPostsWithIdenticalTimesAreProcessedInFifoOrder(
 
 TEST_F(MessageQueueTest,
        DelayedPostsWithIdenticalTimesAreProcessedInFifoOrder) {
-  MessageQueue q;
+  MessageQueue q(SocketServer::CreateDefault(), true);
   DelayedPostsWithIdenticalTimesAreProcessedInFifoOrder(&q);
+
   NullSocketServer nullss;
-  MessageQueue q_nullss(&nullss);
+  MessageQueue q_nullss(&nullss, true);
   DelayedPostsWithIdenticalTimesAreProcessedInFifoOrder(&q_nullss);
 }
 
@@ -108,7 +109,7 @@ TEST_F(MessageQueueTest, DiposeHandlerWithPostedMessagePending) {
   // First, post a dispose.
   Dispose(handler);
   // Now, post a message, which should *not* be returned by Get().
-  Post(handler, 1);
+  Post(RTC_FROM_HERE, handler, 1);
   Message msg;
   EXPECT_FALSE(Get(&msg, 0));
   EXPECT_TRUE(deleted);

@@ -8,11 +8,13 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <algorithm>
 #include <list>
 
 #include "testing/gtest/include/gtest/gtest.h"
+#include "webrtc/base/random.h"
+#include "webrtc/modules/rtp_rtcp/source/byte_io.h"
 #include "webrtc/modules/rtp_rtcp/source/forward_error_correction.h"
-#include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
 
 using webrtc::ForwardErrorCorrection;
 
@@ -25,9 +27,9 @@ const uint8_t kTransportOverhead = 28;
 // Maximum number of media packets used in the FEC (RFC 5109).
 const uint8_t kMaxNumberMediaPackets = ForwardErrorCorrection::kMaxMediaPackets;
 
-typedef std::list<ForwardErrorCorrection::Packet*> PacketList;
-typedef std::list<ForwardErrorCorrection::ReceivedPacket*> ReceivedPacketList;
-typedef std::list<ForwardErrorCorrection::RecoveredPacket*> RecoveredPacketList;
+using PacketList = ForwardErrorCorrection::PacketList;
+using ReceivedPacketList = ForwardErrorCorrection::ReceivedPacketList;
+using RecoveredPacketList = ForwardErrorCorrection::RecoveredPacketList;
 
 template <typename T> void ClearList(std::list<T*>* my_list) {
   T* packet = NULL;
@@ -41,8 +43,12 @@ template <typename T> void ClearList(std::list<T*>* my_list) {
 class RtpFecTest : public ::testing::Test {
  protected:
   RtpFecTest()
-      : fec_(new ForwardErrorCorrection()), ssrc_(rand()), fec_seq_num_(0) {}
+      : random_(0xfec133700742),
+        fec_(new ForwardErrorCorrection()),
+        ssrc_(random_.Rand<uint32_t>()),
+        fec_seq_num_(0) {}
 
+  webrtc::Random random_;
   ForwardErrorCorrection* fec_;
   int ssrc_;
   uint16_t fec_seq_num_;
@@ -94,7 +100,7 @@ TEST_F(RtpFecTest, FecRecoveryNoLoss) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -106,7 +112,7 @@ TEST_F(RtpFecTest, FecRecoveryNoLoss) {
   memset(fec_loss_mask_, 0, sizeof(fec_loss_mask_));
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // No packets lost, expect complete recovery.
@@ -121,7 +127,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -135,7 +141,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss) {
   NetworkReceivedPackets();
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // One packet lost, one FEC packet, expect complete recovery.
   EXPECT_TRUE(IsRecoveryComplete());
@@ -148,7 +154,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // 2 packets lost, one FEC packet, cannot get complete recovery.
@@ -171,7 +177,7 @@ TEST_F(RtpFecTest, FecRecoveryWithSeqNumGapTwoFrames) {
   // Construct media packets for first frame, starting at sequence number 0.
   fec_seq_num_ = ConstructMediaPacketsSeqNum(2, 0);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
   // Expect 1 FEC packet.
@@ -195,7 +201,7 @@ TEST_F(RtpFecTest, FecRecoveryWithSeqNumGapTwoFrames) {
   ReceivedPackets(media_packet_list_, media_loss_mask_, false);
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // Expect that no decoding is done to get missing packet (seq#0) of second
   // frame, using old FEC packet (seq#2) from first (old) frame. So number of
@@ -217,7 +223,7 @@ TEST_F(RtpFecTest, FecRecoveryWithSeqNumGapOneFrameRecovery) {
   //  #65534(media) #65535(media) #0(media) #1(FEC).
   fec_seq_num_ = ConstructMediaPacketsSeqNum(3, 65534);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -233,7 +239,7 @@ TEST_F(RtpFecTest, FecRecoveryWithSeqNumGapOneFrameRecovery) {
   ReceivedPackets(fec_packet_list_, fec_loss_mask_, true);
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // Expect 3 media packets in recovered list, and complete recovery.
   // Wrap-around won't remove FEC packet, as it follows the wrap.
@@ -259,7 +265,7 @@ TEST_F(RtpFecTest, FecRecoveryWithSeqNumGapOneFrameNoRecovery) {
   // #65532(media) #65533(media) #65534(media) #65535(FEC) #0(FEC).
   fec_seq_num_ = ConstructMediaPacketsSeqNum(3, 65532);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -275,7 +281,7 @@ TEST_F(RtpFecTest, FecRecoveryWithSeqNumGapOneFrameNoRecovery) {
   ReceivedPackets(fec_packet_list_, fec_loss_mask_, true);
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // The two FEC packets are received and should allow for complete recovery,
   // but because of the wrap the second FEC packet will be discarded, and only
@@ -298,7 +304,7 @@ TEST_F(RtpFecTest, FecRecoveryWithFecOutOfOrder) {
   //  #0(media) #1(media) #2(media) #3(FEC).
   fec_seq_num_ = ConstructMediaPacketsSeqNum(3, 0);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -315,7 +321,7 @@ TEST_F(RtpFecTest, FecRecoveryWithFecOutOfOrder) {
   ReceivedPackets(media_packet_list_, media_loss_mask_, false);
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // Expect 3 media packets in recovered list, and complete recovery.
   EXPECT_EQ(3, static_cast<int>(recovered_packet_list_.size()));
@@ -344,7 +350,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percRandomMask) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskRandom, &fec_packet_list_));
 
@@ -361,7 +367,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percRandomMask) {
   NetworkReceivedPackets();
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // With media packet#1 and FEC packets #1, #2, #3, expect complete recovery.
   EXPECT_TRUE(IsRecoveryComplete());
@@ -376,7 +382,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percRandomMask) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Cannot get complete recovery for this loss configuration with random mask.
@@ -404,7 +410,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percBurstyMask) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -420,7 +426,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percBurstyMask) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Expect complete recovery for consecutive packet loss <= 50%.
@@ -436,7 +442,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percBurstyMask) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Expect complete recovery for consecutive packet loss <= 50%.
@@ -452,7 +458,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percBurstyMask) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Cannot get complete recovery for this loss configuration.
@@ -467,7 +473,7 @@ TEST_F(RtpFecTest, FecRecoveryNoLossUep) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -480,7 +486,7 @@ TEST_F(RtpFecTest, FecRecoveryNoLossUep) {
   NetworkReceivedPackets();
 
   EXPECT_EQ(0,
-            fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_));
+            fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_));
 
   // No packets lost, expect complete recovery.
   EXPECT_TRUE(IsRecoveryComplete());
@@ -494,7 +500,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLossUep) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -507,7 +513,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLossUep) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // One packet lost, one FEC packet, expect complete recovery.
@@ -521,7 +527,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLossUep) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // 2 packets lost, one FEC packet, cannot get complete recovery.
@@ -547,7 +553,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percUepRandomMask) {
 
   fec_seq_num_ = ConstructMediaPackets(kNumMediaPackets);
 
-  EXPECT_EQ(0, fec_->GenerateFEC(media_packet_list_, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(media_packet_list_, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskRandom, &fec_packet_list_));
 
@@ -563,7 +569,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percUepRandomMask) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // With media packet#3 and FEC packets #0, #1, #3, expect complete recovery.
@@ -580,7 +586,7 @@ TEST_F(RtpFecTest, FecRecoveryWithLoss50percUepRandomMask) {
   media_loss_mask_[3] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Cannot get complete recovery for this loss configuration.
@@ -599,12 +605,12 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePackets) {
   // This list should have every other packet removed.
   PacketList protected_media_packets;
   int i = 0;
-  for (PacketList::iterator it = media_packet_list_.begin();
-       it != media_packet_list_.end(); ++it, ++i) {
+  for (auto it = media_packet_list_.begin(); it != media_packet_list_.end();
+       ++it, ++i) {
     if (i % 2 == 0) protected_media_packets.push_back(*it);
   }
 
-  EXPECT_EQ(0, fec_->GenerateFEC(protected_media_packets, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(protected_media_packets, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -617,7 +623,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePackets) {
   media_loss_mask_[2] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // One packet lost, one FEC packet, expect complete recovery.
@@ -630,7 +636,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePackets) {
   media_loss_mask_[1] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Unprotected packet lost. Recovery not possible.
@@ -644,7 +650,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePackets) {
   media_loss_mask_[2] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // 2 protected packets lost, one FEC packet, cannot get complete recovery.
@@ -663,15 +669,15 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsExtension) {
   // This list should have every other packet removed.
   PacketList protected_media_packets;
   int i = 0;
-  for (PacketList::iterator it = media_packet_list_.begin();
-       it != media_packet_list_.end(); ++it, ++i) {
+  for (auto it = media_packet_list_.begin(); it != media_packet_list_.end();
+       ++it, ++i) {
     if (i % 2 == 0) protected_media_packets.push_back(*it);
   }
 
   // Zero column insertion will have to extend the size of the packet
   // mask since the number of actual packets are 21, while the number
   // of protected packets are 11.
-  EXPECT_EQ(0, fec_->GenerateFEC(protected_media_packets, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(protected_media_packets, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -684,7 +690,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsExtension) {
   media_loss_mask_[kNumMediaPackets - 1] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // One packet lost, one FEC packet, expect complete recovery.
@@ -697,7 +703,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsExtension) {
   media_loss_mask_[kNumMediaPackets - 2] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Unprotected packet lost. Recovery not possible.
@@ -715,7 +721,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsExtension) {
   media_loss_mask_[kNumMediaPackets - 1] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // 5 protected packets lost, one FEC packet, cannot get complete recovery.
@@ -734,15 +740,15 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsWrap) {
   // This list should have every other packet removed.
   PacketList protected_media_packets;
   int i = 0;
-  for (PacketList::iterator it = media_packet_list_.begin();
-       it != media_packet_list_.end(); ++it, ++i) {
+  for (auto it = media_packet_list_.begin(); it != media_packet_list_.end();
+       ++it, ++i) {
     if (i % 2 == 0) protected_media_packets.push_back(*it);
   }
 
   // Zero column insertion will have to extend the size of the packet
   // mask since the number of actual packets are 21, while the number
   // of protected packets are 11.
-  EXPECT_EQ(0, fec_->GenerateFEC(protected_media_packets, kProtectionFactor,
+  EXPECT_EQ(0, fec_->GenerateFec(protected_media_packets, kProtectionFactor,
                                  kNumImportantPackets, kUseUnequalProtection,
                                  webrtc::kFecMaskBursty, &fec_packet_list_));
 
@@ -755,7 +761,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsWrap) {
   media_loss_mask_[kNumMediaPackets - 1] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // One packet lost, one FEC packet, expect complete recovery.
@@ -768,7 +774,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsWrap) {
   media_loss_mask_[kNumMediaPackets - 2] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // Unprotected packet lost. Recovery not possible.
@@ -786,7 +792,7 @@ TEST_F(RtpFecTest, FecRecoveryNonConsecutivePacketsWrap) {
   media_loss_mask_[kNumMediaPackets - 1] = 1;
   NetworkReceivedPackets();
 
-  EXPECT_EQ(0, fec_->DecodeFEC(&received_packet_list_,
+  EXPECT_EQ(0, fec_->DecodeFec(&received_packet_list_,
                                &recovered_packet_list_));
 
   // 5 protected packets lost, one FEC packet, cannot get complete recovery.
@@ -806,36 +812,27 @@ void RtpFecTest::FreeRecoveredPacketList() {
 }
 
 bool RtpFecTest::IsRecoveryComplete() {
-  // Check that the number of media and recovered packets are equal.
-  if (media_packet_list_.size() != recovered_packet_list_.size()) {
+  // We must have equally many recovered packets as original packets.
+  if (recovered_packet_list_.size() != media_packet_list_.size()) {
     return false;
   }
 
-  ForwardErrorCorrection::Packet* media_packet;
-  ForwardErrorCorrection::RecoveredPacket* recovered_packet;
-
-  bool recovery = true;
-
-  PacketList::iterator media_packet_list_item = media_packet_list_.begin();
-  RecoveredPacketList::iterator recovered_packet_list_item =
-      recovered_packet_list_.begin();
-  while (media_packet_list_item != media_packet_list_.end()) {
-    if (recovered_packet_list_item == recovered_packet_list_.end()) {
+  // All recovered packets must be identical to the corresponding
+  // original packets.
+  auto cmp = [](ForwardErrorCorrection::Packet* media_packet,
+                ForwardErrorCorrection::RecoveredPacket* recovered_packet) {
+    if (media_packet->length != recovered_packet->pkt->length) {
       return false;
     }
-    media_packet = *media_packet_list_item;
-    recovered_packet = *recovered_packet_list_item;
-    if (recovered_packet->pkt->length != media_packet->length) {
-      return false;
-    }
-    if (memcmp(recovered_packet->pkt->data, media_packet->data,
+    if (memcmp(media_packet->data,
+               recovered_packet->pkt->data,
                media_packet->length) != 0) {
       return false;
     }
-    media_packet_list_item++;
-    recovered_packet_list_item++;
-  }
-  return recovery;
+    return true;
+  };
+  return std::equal(media_packet_list_.cbegin(), media_packet_list_.cend(),
+                    recovered_packet_list_.cbegin(), cmp);
 }
 
 void RtpFecTest::NetworkReceivedPackets() {
@@ -846,18 +843,13 @@ void RtpFecTest::NetworkReceivedPackets() {
 
 void RtpFecTest::ReceivedPackets(const PacketList& packet_list, int* loss_mask,
                                  bool is_fec) {
-  ForwardErrorCorrection::Packet* packet;
-  ForwardErrorCorrection::ReceivedPacket* received_packet;
   int seq_num = fec_seq_num_;
   int packet_idx = 0;
 
-  PacketList::const_iterator packet_list_item = packet_list.begin();
-
-  while (packet_list_item != packet_list.end()) {
-    packet = *packet_list_item;
+  for (const auto* packet : packet_list) {
     if (loss_mask[packet_idx] == 0) {
-      received_packet = new ForwardErrorCorrection::ReceivedPacket;
-      received_packet->pkt = new ForwardErrorCorrection::Packet;
+      auto received_packet = new ForwardErrorCorrection::ReceivedPacket();
+      received_packet->pkt = new ForwardErrorCorrection::Packet();
       received_packet_list_.push_back(received_packet);
       received_packet->pkt->length = packet->length;
       memcpy(received_packet->pkt->data, packet->data, packet->length);
@@ -866,7 +858,7 @@ void RtpFecTest::ReceivedPackets(const PacketList& packet_list, int* loss_mask,
         // For media packets, the sequence number and marker bit is
         // obtained from RTP header. These were set in ConstructMediaPackets().
         received_packet->seq_num =
-            webrtc::RtpUtility::BufferToUWord16(&packet->data[2]);
+            webrtc::ByteReader<uint16_t>::ReadBigEndian(&packet->data[2]);
       } else {
         // The sequence number, marker bit, and ssrc number are defined in the
         // RTP header of the FEC packet, which is not constructed in this test.
@@ -879,7 +871,6 @@ void RtpFecTest::ReceivedPackets(const PacketList& packet_list, int* loss_mask,
       }
     }
     packet_idx++;
-    packet_list_item++;
     // Sequence number of FEC packets are defined as increment by 1 from
     // last media packet in frame.
     if (is_fec) seq_num++;
@@ -888,25 +879,23 @@ void RtpFecTest::ReceivedPackets(const PacketList& packet_list, int* loss_mask,
 
 int RtpFecTest::ConstructMediaPacketsSeqNum(int num_media_packets,
                                             int start_seq_num) {
-  assert(num_media_packets > 0);
+  RTC_DCHECK_GT(num_media_packets, 0);
   ForwardErrorCorrection::Packet* media_packet = NULL;
   int sequence_number = start_seq_num;
-  int time_stamp = rand();
+  int time_stamp = random_.Rand<int>();
 
   for (int i = 0; i < num_media_packets; ++i) {
-    media_packet = new ForwardErrorCorrection::Packet;
+    media_packet = new ForwardErrorCorrection::Packet();
     media_packet_list_.push_back(media_packet);
-    media_packet->length = static_cast<size_t>(
-        (static_cast<float>(rand()) / RAND_MAX) *
-        (IP_PACKET_SIZE - kRtpHeaderSize - kTransportOverhead -
-         ForwardErrorCorrection::PacketOverhead()));
+    const uint32_t kMinPacketSize = kRtpHeaderSize;
+    const uint32_t kMaxPacketSize = IP_PACKET_SIZE - kRtpHeaderSize -
+                                    kTransportOverhead -
+                                    ForwardErrorCorrection::PacketOverhead();
+    media_packet->length = random_.Rand(kMinPacketSize, kMaxPacketSize);
 
-    if (media_packet->length < kRtpHeaderSize) {
-      media_packet->length = kRtpHeaderSize;
-    }
     // Generate random values for the first 2 bytes
-    media_packet->data[0] = static_cast<uint8_t>(rand() % 256);
-    media_packet->data[1] = static_cast<uint8_t>(rand() % 256);
+    media_packet->data[0] = random_.Rand<uint8_t>();
+    media_packet->data[1] = random_.Rand<uint8_t>();
 
     // The first two bits are assumed to be 10 by the FEC encoder.
     // In fact the FEC decoder will set the two first bits to 10 regardless of
@@ -921,24 +910,24 @@ int RtpFecTest::ConstructMediaPacketsSeqNum(int num_media_packets,
     // Only push one (fake) frame to the FEC.
     media_packet->data[1] &= 0x7f;
 
-    webrtc::RtpUtility::AssignUWord16ToBuffer(&media_packet->data[2],
-                                              sequence_number);
-    webrtc::RtpUtility::AssignUWord32ToBuffer(&media_packet->data[4],
-                                              time_stamp);
-    webrtc::RtpUtility::AssignUWord32ToBuffer(&media_packet->data[8], ssrc_);
+    webrtc::ByteWriter<uint16_t>::WriteBigEndian(&media_packet->data[2],
+                                                 sequence_number);
+    webrtc::ByteWriter<uint32_t>::WriteBigEndian(&media_packet->data[4],
+                                                 time_stamp);
+    webrtc::ByteWriter<uint32_t>::WriteBigEndian(&media_packet->data[8], ssrc_);
 
     // Generate random values for payload.
     for (size_t j = 12; j < media_packet->length; ++j) {
-      media_packet->data[j] = static_cast<uint8_t>(rand() % 256);
+      media_packet->data[j] = random_.Rand<uint8_t>();
     }
     sequence_number++;
   }
   // Last packet, set marker bit.
-  assert(media_packet != NULL);
+  RTC_DCHECK(media_packet);
   media_packet->data[1] |= 0x80;
   return sequence_number;
 }
 
 int RtpFecTest::ConstructMediaPackets(int num_media_packets) {
-  return ConstructMediaPacketsSeqNum(num_media_packets, rand());
+  return ConstructMediaPacketsSeqNum(num_media_packets, random_.Rand<int>());
 }

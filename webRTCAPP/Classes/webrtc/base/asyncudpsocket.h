@@ -11,8 +11,9 @@
 #ifndef WEBRTC_BASE_ASYNCUDPSOCKET_H_
 #define WEBRTC_BASE_ASYNCUDPSOCKET_H_
 
+#include <memory>
+
 #include "webrtc/base/asyncpacketsocket.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/socketfactory.h"
 
 namespace rtc {
@@ -31,21 +32,24 @@ class AsyncUDPSocket : public AsyncPacketSocket {
   static AsyncUDPSocket* Create(SocketFactory* factory,
                                 const SocketAddress& bind_address);
   explicit AsyncUDPSocket(AsyncSocket* socket);
-  virtual ~AsyncUDPSocket();
+  ~AsyncUDPSocket() override;
 
-  virtual SocketAddress GetLocalAddress() const;
-  virtual SocketAddress GetRemoteAddress() const;
-  virtual int Send(const void *pv, size_t cb,
-                   const rtc::PacketOptions& options);
-  virtual int SendTo(const void *pv, size_t cb, const SocketAddress& addr,
-                     const rtc::PacketOptions& options);
-  virtual int Close();
+  SocketAddress GetLocalAddress() const override;
+  SocketAddress GetRemoteAddress() const override;
+  int Send(const void* pv,
+           size_t cb,
+           const rtc::PacketOptions& options) override;
+  int SendTo(const void* pv,
+             size_t cb,
+             const SocketAddress& addr,
+             const rtc::PacketOptions& options) override;
+  int Close() override;
 
-  virtual State GetState() const;
-  virtual int GetOption(Socket::Option opt, int* value);
-  virtual int SetOption(Socket::Option opt, int value);
-  virtual int GetError() const;
-  virtual void SetError(int error);
+  State GetState() const override;
+  int GetOption(Socket::Option opt, int* value) override;
+  int SetOption(Socket::Option opt, int value) override;
+  int GetError() const override;
+  void SetError(int error) override;
 
  private:
   // Called when the underlying socket is ready to be read from.
@@ -53,7 +57,7 @@ class AsyncUDPSocket : public AsyncPacketSocket {
   // Called when the underlying socket is ready to send.
   void OnWriteEvent(AsyncSocket* socket);
 
-  scoped_ptr<AsyncSocket> socket_;
+  std::unique_ptr<AsyncSocket> socket_;
   char* buf_;
   size_t size_;
 };

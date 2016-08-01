@@ -21,9 +21,10 @@
 
 #include <shlwapi.h>
 
+#include <memory>
+
 #include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/base/scoped_ptr.h"
 
 namespace rtc {
 
@@ -100,22 +101,22 @@ HRESULT RegKey::SetValue(const wchar_t* full_key_name,
 
 HRESULT RegKey::SetValue(const wchar_t* full_key_name,
                          const wchar_t* value_name,
-                         const uint8* value,
+                         const uint8_t* value,
                          DWORD byte_count) {
   ASSERT(full_key_name != NULL);
 
   return SetValueStaticHelper(full_key_name, value_name, REG_BINARY,
-                              const_cast<uint8*>(value), byte_count);
+                              const_cast<uint8_t*>(value), byte_count);
 }
 
 HRESULT RegKey::SetValueMultiSZ(const wchar_t* full_key_name,
                                 const wchar_t* value_name,
-                                const uint8* value,
+                                const uint8_t* value,
                                 DWORD byte_count) {
   ASSERT(full_key_name != NULL);
 
   return SetValueStaticHelper(full_key_name, value_name, REG_MULTI_SZ,
-                              const_cast<uint8*>(value), byte_count);
+                              const_cast<uint8_t*>(value), byte_count);
 }
 
 HRESULT RegKey::GetValue(const wchar_t* full_key_name,
@@ -143,9 +144,10 @@ HRESULT RegKey::GetValue(const wchar_t* full_key_name,
   ASSERT(full_key_name != NULL);
 
   DWORD byte_count = 0;
-  scoped_ptr<byte[]> buffer;
+  byte* buffer_raw = nullptr;
   HRESULT hr = GetValueStaticHelper(full_key_name, value_name,
-                                    REG_BINARY, buffer.accept(), &byte_count);
+                                    REG_BINARY, &buffer_raw, &byte_count);
+  std::unique_ptr<byte[]> buffer(buffer_raw);
   if (SUCCEEDED(hr)) {
     ASSERT(byte_count == sizeof(*value));
     if (byte_count == sizeof(*value)) {
@@ -162,9 +164,10 @@ HRESULT RegKey::GetValue(const wchar_t* full_key_name,
   ASSERT(full_key_name != NULL);
 
   DWORD byte_count = 0;
-  scoped_ptr<byte[]> buffer;
+  byte* buffer_raw = nullptr;
   HRESULT hr = GetValueStaticHelper(full_key_name, value_name,
-                                    REG_BINARY, buffer.accept(), &byte_count);
+                                    REG_BINARY, &buffer_raw, &byte_count);
+  std::unique_ptr<byte[]> buffer(buffer_raw);
   if (SUCCEEDED(hr)) {
     ASSERT(byte_count == sizeof(*value));
     if (byte_count == sizeof(*value)) {
@@ -189,8 +192,9 @@ HRESULT RegKey::GetValue(const wchar_t* full_key_name,
   ASSERT(full_key_name != NULL);
   ASSERT(value != NULL);
 
-  scoped_ptr<wchar_t[]> buffer;
-  HRESULT hr = RegKey::GetValue(full_key_name, value_name, buffer.accept());
+  wchar_t* buffer_raw = nullptr;
+  HRESULT hr = RegKey::GetValue(full_key_name, value_name, &buffer_raw);
+  std::unique_ptr<wchar_t[]> buffer(buffer_raw);
   if (SUCCEEDED(hr)) {
     value->assign(buffer.get());
   }
@@ -208,7 +212,7 @@ HRESULT RegKey::GetValue(const wchar_t* full_key_name,
 
 HRESULT RegKey::GetValue(const wchar_t* full_key_name,
                          const wchar_t* value_name,
-                         uint8** value,
+                         uint8_t** value,
                          DWORD* byte_count) {
   ASSERT(full_key_name != NULL);
   ASSERT(value != NULL);
@@ -407,11 +411,11 @@ HRESULT RegKey::SetValueStaticHelper(const wchar_t* full_key_name,
           hr = key.SetValue(value_name, static_cast<const wchar_t*>(value));
           break;
         case REG_BINARY:
-          hr = key.SetValue(value_name, static_cast<const uint8*>(value),
+          hr = key.SetValue(value_name, static_cast<const uint8_t*>(value),
                             byte_count);
           break;
         case REG_MULTI_SZ:
-          hr = key.SetValue(value_name, static_cast<const uint8*>(value),
+          hr = key.SetValue(value_name, static_cast<const uint8_t*>(value),
                             byte_count, type);
           break;
         default:
@@ -461,7 +465,7 @@ HRESULT RegKey::GetValueStaticHelper(const wchar_t* full_key_name,
                                             std::vector<std::wstring>*>(value));
           break;
         case REG_BINARY:
-          hr = key.GetValue(value_name, reinterpret_cast<uint8**>(value),
+          hr = key.GetValue(value_name, reinterpret_cast<uint8_t**>(value),
                             byte_count);
           break;
         default:
@@ -482,7 +486,7 @@ HRESULT RegKey::GetValueStaticHelper(const wchar_t* full_key_name,
 // GET helper
 HRESULT RegKey::GetValueHelper(const wchar_t* value_name,
                                DWORD* type,
-                               uint8** value,
+                               uint8_t** value,
                                DWORD* byte_count) const {
   ASSERT(byte_count != NULL);
   ASSERT(value != NULL);
@@ -608,7 +612,7 @@ HRESULT RegKey::GetValue(const wchar_t* value_name, std::wstring* value) const {
 }
 
 // convert REG_MULTI_SZ bytes to string array
-HRESULT RegKey::MultiSZBytesToStringArray(const uint8* buffer,
+HRESULT RegKey::MultiSZBytesToStringArray(const uint8_t* buffer,
                                           DWORD byte_count,
                                           std::vector<std::wstring>* value) {
   ASSERT(buffer != NULL);
@@ -640,7 +644,7 @@ HRESULT RegKey::GetValue(const wchar_t* value_name,
 
   DWORD byte_count = 0;
   DWORD type = 0;
-  uint8* buffer = 0;
+  uint8_t* buffer = 0;
 
   // first get the size of the buffer
   HRESULT hr = GetValueHelper(value_name, &type, &buffer, &byte_count);
@@ -655,7 +659,7 @@ HRESULT RegKey::GetValue(const wchar_t* value_name,
 
 // Binary data Get
 HRESULT RegKey::GetValue(const wchar_t* value_name,
-                         uint8** value,
+                         uint8_t** value,
                          DWORD* byte_count) const {
   ASSERT(byte_count != NULL);
   ASSERT(value != NULL);
@@ -668,9 +672,9 @@ HRESULT RegKey::GetValue(const wchar_t* value_name,
 
 // Raw data get
 HRESULT RegKey::GetValue(const wchar_t* value_name,
-                         uint8** value,
+                         uint8_t** value,
                          DWORD* byte_count,
-                         DWORD*type) const {
+                         DWORD* type) const {
   ASSERT(type != NULL);
   ASSERT(byte_count != NULL);
   ASSERT(value != NULL);
@@ -682,9 +686,9 @@ HRESULT RegKey::GetValue(const wchar_t* value_name,
 HRESULT RegKey::SetValue(const wchar_t* value_name, DWORD value) const {
   ASSERT(h_key_ != NULL);
 
-  LONG res = ::RegSetValueEx(h_key_, value_name, NULL, REG_DWORD,
-                             reinterpret_cast<const uint8*>(&value),
-                             sizeof(DWORD));
+  LONG res =
+      ::RegSetValueEx(h_key_, value_name, NULL, REG_DWORD,
+                      reinterpret_cast<const uint8_t*>(&value), sizeof(DWORD));
   return HRESULT_FROM_WIN32(res);
 }
 
@@ -693,7 +697,7 @@ HRESULT RegKey::SetValue(const wchar_t* value_name, DWORD64 value) const {
   ASSERT(h_key_ != NULL);
 
   LONG res = ::RegSetValueEx(h_key_, value_name, NULL, REG_QWORD,
-                             reinterpret_cast<const uint8*>(&value),
+                             reinterpret_cast<const uint8_t*>(&value),
                              sizeof(DWORD64));
   return HRESULT_FROM_WIN32(res);
 }
@@ -705,14 +709,14 @@ HRESULT RegKey::SetValue(const wchar_t* value_name,
   ASSERT(h_key_ != NULL);
 
   LONG res = ::RegSetValueEx(h_key_, value_name, NULL, REG_SZ,
-                             reinterpret_cast<const uint8*>(value),
+                             reinterpret_cast<const uint8_t*>(value),
                              (lstrlen(value) + 1) * sizeof(wchar_t));
   return HRESULT_FROM_WIN32(res);
 }
 
 // Binary data set
 HRESULT RegKey::SetValue(const wchar_t* value_name,
-                         const uint8* value,
+                         const uint8_t* value,
                          DWORD byte_count) const {
   ASSERT(h_key_ != NULL);
 
@@ -728,7 +732,7 @@ HRESULT RegKey::SetValue(const wchar_t* value_name,
 
 // Raw data set
 HRESULT RegKey::SetValue(const wchar_t* value_name,
-                         const uint8* value,
+                         const uint8_t* value,
                          DWORD byte_count,
                          DWORD type) const {
   ASSERT(value != NULL);
@@ -964,7 +968,7 @@ std::wstring RegKey::GetParentKeyInfo(std::wstring* key_name) {
 }
 
 // get the number of values for this key
-uint32 RegKey::GetValueCount() {
+uint32_t RegKey::GetValueCount() {
   DWORD num_values = 0;
 
   if (ERROR_SUCCESS != ::RegQueryInfoKey(
@@ -1007,7 +1011,7 @@ HRESULT RegKey::GetValueNameAt(int index, std::wstring* value_name,
   return HRESULT_FROM_WIN32(res);
 }
 
-uint32 RegKey::GetSubkeyCount() {
+uint32_t RegKey::GetSubkeyCount() {
   // number of values for key
   DWORD num_subkeys = 0;
 

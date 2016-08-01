@@ -11,10 +11,11 @@
 #ifndef WEBRTC_BASE_TASKPARENT_H__
 #define WEBRTC_BASE_TASKPARENT_H__
 
+#include <memory>
 #include <set>
 
 #include "webrtc/base/basictypes.h"
-#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/constructormagic.h"
 
 namespace rtc {
 
@@ -25,14 +26,14 @@ class TaskParent {
  public:
   TaskParent(Task *derived_instance, TaskParent *parent);
   explicit TaskParent(TaskRunner *derived_instance);
-  virtual ~TaskParent() { }
+  virtual ~TaskParent();
 
   TaskParent *GetParent() { return parent_; }
   TaskRunner *GetRunner() { return runner_; }
 
   bool AllChildrenDone();
   bool AnyChildError();
-#ifdef _DEBUG
+#if !defined(NDEBUG)
   bool IsChildTask(Task *task);
 #endif
 
@@ -52,8 +53,8 @@ class TaskParent {
   TaskRunner *runner_;
   bool child_error_;
   typedef std::set<Task *> ChildSet;
-  scoped_ptr<ChildSet> children_;
-  DISALLOW_EVIL_CONSTRUCTORS(TaskParent);
+  std::unique_ptr<ChildSet> children_;
+  RTC_DISALLOW_COPY_AND_ASSIGN(TaskParent);
 };
 
 

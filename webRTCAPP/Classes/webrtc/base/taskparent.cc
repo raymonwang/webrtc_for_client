@@ -12,6 +12,7 @@
 
 #include "webrtc/base/taskparent.h"
 
+#include "webrtc/base/common.h"
 #include "webrtc/base/task.h"
 #include "webrtc/base/taskrunner.h"
 
@@ -33,6 +34,8 @@ TaskParent::TaskParent(TaskRunner *derived_instance)
   Initialize();
 }
 
+TaskParent::~TaskParent() = default;
+
 // Does common initialization of member variables
 void TaskParent::Initialize() {
   children_.reset(new ChildSet());
@@ -43,7 +46,7 @@ void TaskParent::AddChild(Task *child) {
   children_->insert(child);
 }
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
 bool TaskParent::IsChildTask(Task *task) {
   ASSERT(task != NULL);
   return task->parent_ == this && children_->find(task) != children_->end();
@@ -66,7 +69,7 @@ bool TaskParent::AnyChildError() {
 
 void TaskParent::AbortAllChildren() {
   if (children_->size() > 0) {
-#ifdef _DEBUG
+#if !defined(NDEBUG)
     runner_->IncrementAbortCount();
 #endif
 
@@ -75,7 +78,7 @@ void TaskParent::AbortAllChildren() {
       (*it)->Abort(true);  // Note we do not wake
     }
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
     runner_->DecrementAbortCount();
 #endif
   }

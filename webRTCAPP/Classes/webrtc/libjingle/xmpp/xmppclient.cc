@@ -15,7 +15,6 @@
 #include "webrtc/libjingle/xmpp/prexmppauth.h"
 #include "webrtc/libjingle/xmpp/saslplainmechanism.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/sigslot.h"
 #include "webrtc/base/stringutils.h"
 #include "xmpptask.h"
@@ -48,9 +47,9 @@ public:
   XmppClient* const client_;
 
   // the two main objects
-  rtc::scoped_ptr<AsyncSocket> socket_;
-  rtc::scoped_ptr<XmppEngine> engine_;
-  rtc::scoped_ptr<PreXmppAuth> pre_auth_;
+  std::unique_ptr<AsyncSocket> socket_;
+  std::unique_ptr<XmppEngine> engine_;
+  std::unique_ptr<PreXmppAuth> pre_auth_;
   rtc::CryptString pass_;
   std::string auth_mechanism_;
   std::string auth_token_;
@@ -362,7 +361,7 @@ void XmppClient::Private::OnSocketRead() {
     if (bytes_read == 0)
       return;
 
-//#ifdef _DEBUG
+//#if !defined(NDEBUG)
     client_->SignalLogInput(bytes, static_cast<int>(bytes_read));
 //#endif
 
@@ -386,7 +385,7 @@ void XmppClient::Private::OnStateChange(int state) {
 }
 
 void XmppClient::Private::WriteOutput(const char* bytes, size_t len) {
-//#ifdef _DEBUG
+//#if !defined(NDEBUG)
   client_->SignalLogOutput(bytes, static_cast<int>(len));
 //#endif
 

@@ -10,16 +10,17 @@
 
 #include "webrtc/libjingle/xmpp/pingtask.h"
 
+#include <memory>
+
 #include "webrtc/libjingle/xmpp/constants.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/base/scoped_ptr.h"
 
 namespace buzz {
 
 PingTask::PingTask(buzz::XmppTaskParentInterface* parent,
                    rtc::MessageQueue* message_queue,
-                   uint32 ping_period_millis,
-                   uint32 ping_timeout_millis)
+                   uint32_t ping_period_millis,
+                   uint32_t ping_timeout_millis)
     : buzz::XmppTask(parent, buzz::XmppEngine::HL_SINGLE),
       message_queue_(message_queue),
       ping_period_millis_(ping_period_millis),
@@ -56,7 +57,7 @@ int PingTask::ProcessStart() {
     ping_response_deadline_ = 0;
   }
 
-  uint32 now = rtc::Time();
+  int64_t now = rtc::TimeMillis();
 
   // If the ping timed out, signal.
   if (ping_response_deadline_ != 0 && now >= ping_response_deadline_) {
@@ -66,7 +67,7 @@ int PingTask::ProcessStart() {
 
   // Send a ping if it's time.
   if (now >= next_ping_time_) {
-    rtc::scoped_ptr<buzz::XmlElement> stanza(
+    std::unique_ptr<buzz::XmlElement> stanza(
         MakeIq(buzz::STR_GET, Jid(STR_EMPTY), task_id()));
     stanza->AddElement(new buzz::XmlElement(QN_PING));
     SendStanza(stanza.get());
@@ -76,8 +77,8 @@ int PingTask::ProcessStart() {
 
     // Wake ourselves up when it's time to send another ping or when the ping
     // times out (so we can fire a signal).
-    message_queue_->PostDelayed(ping_timeout_millis_, this);
-    message_queue_->PostDelayed(ping_period_millis_, this);
+    message_queue_->PostDelayed(RTC_FROM_HERE, ping_timeout_millis_, this);
+    message_queue_->PostDelayed(RTC_FROM_HERE, ping_period_millis_, this);
   }
 
   return STATE_BLOCKED;

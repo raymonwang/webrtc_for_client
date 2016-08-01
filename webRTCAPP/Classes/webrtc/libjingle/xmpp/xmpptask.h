@@ -12,8 +12,11 @@
 #define WEBRTC_LIBJINGLE_XMPP_XMPPTASK_H_
 
 #include <deque>
+#include <memory>
 #include <string>
+
 #include "webrtc/libjingle/xmpp/xmppengine.h"
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/base/sigslot.h"
 #include "webrtc/base/task.h"
 #include "webrtc/base/taskparent.h"
@@ -67,7 +70,7 @@ class XmppClientInterface {
   virtual void RemoveXmppTask(XmppTask* task) = 0;
   sigslot::signal0<> SignalDisconnected;
 
-  DISALLOW_EVIL_CONSTRUCTORS(XmppClientInterface);
+  RTC_DISALLOW_COPY_AND_ASSIGN(XmppClientInterface);
 };
 
 // XmppTaskParentInterface is the interface require for any parent of
@@ -86,7 +89,7 @@ class XmppTaskParentInterface : public rtc::Task {
 
   virtual XmppClientInterface* GetClient() = 0;
 
-  DISALLOW_EVIL_CONSTRUCTORS(XmppTaskParentInterface);
+  RTC_DISALLOW_COPY_AND_ASSIGN(XmppTaskParentInterface);
 };
 
 class XmppTaskBase : public XmppTaskParentInterface {
@@ -104,7 +107,7 @@ class XmppTaskBase : public XmppTaskParentInterface {
  protected:
   XmppTaskParentInterface* parent_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(XmppTaskBase);
+  RTC_DISALLOW_COPY_AND_ASSIGN(XmppTaskBase);
 };
 
 class XmppTask : public XmppTaskBase,
@@ -119,7 +122,7 @@ class XmppTask : public XmppTaskBase,
   std::string task_id() const { return id_; }
   void set_task_id(std::string id) { id_ = id; }
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
   void set_debug_force_timeout(const bool f) { debug_force_timeout_ = f; }
 #endif
 
@@ -159,10 +162,10 @@ private:
 
   bool stopped_;
   std::deque<XmlElement*> stanza_queue_;
-  rtc::scoped_ptr<XmlElement> next_stanza_;
+  std::unique_ptr<XmlElement> next_stanza_;
   std::string id_;
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
   bool debug_force_timeout_;
 #endif
 };

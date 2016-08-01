@@ -8,10 +8,11 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/base/autodetectproxy.h"
 #include "webrtc/base/httpcommon.h"
 #include "webrtc/base/httpcommon-inl.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/socketadapters.h"
 #include "webrtc/base/ssladapter.h"
 #include "webrtc/base/sslsocketfactory.h"
@@ -31,11 +32,11 @@ class ProxySocketAdapter : public AsyncSocketAdapter {
       : AsyncSocketAdapter(NULL), factory_(factory), family_(family),
         type_(type), detect_(NULL) {
   }
-  virtual ~ProxySocketAdapter() {
+  ~ProxySocketAdapter() override {
     Close();
   }
 
-  virtual int Connect(const SocketAddress& addr) {
+  int Connect(const SocketAddress& addr) override {
     ASSERT(NULL == detect_);
     ASSERT(NULL == socket_);
     remote_ = addr;
@@ -51,13 +52,13 @@ class ProxySocketAdapter : public AsyncSocketAdapter {
     detect_->Start();
     return SOCKET_ERROR;
   }
-  virtual int GetError() const {
+  int GetError() const override {
     if (socket_) {
       return socket_->GetError();
     }
     return detect_ ? EWOULDBLOCK : EADDRNOTAVAIL;
   }
-  virtual int Close() {
+  int Close() override {
     if (socket_) {
       return socket_->Close();
     }
@@ -67,7 +68,7 @@ class ProxySocketAdapter : public AsyncSocketAdapter {
     }
     return 0;
   }
-  virtual ConnState GetState() const {
+  ConnState GetState() const override {
     if (socket_) {
       return socket_->GetState();
     }
@@ -98,6 +99,19 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // SslSocketFactory
 ///////////////////////////////////////////////////////////////////////////////
+
+SslSocketFactory::SslSocketFactory(SocketFactory* factory,
+                                   const std::string& user_agent)
+    : factory_(factory),
+      agent_(user_agent),
+      autodetect_proxy_(true),
+      force_connect_(false),
+      logging_level_(LS_VERBOSE),
+      binary_mode_(false),
+      ignore_bad_cert_(false) {
+}
+
+SslSocketFactory::~SslSocketFactory() = default;
 
 Socket* SslSocketFactory::CreateSocket(int type) {
   return CreateSocket(AF_INET, type);
@@ -154,7 +168,7 @@ AsyncSocket* SslSocketFactory::CreateProxySocket(const ProxyInfo& proxy,
   }
 
   if (!hostname_.empty()) {
-    rtc::scoped_ptr<SSLAdapter> ssl_adapter(SSLAdapter::Create(socket));
+    std::unique_ptr<SSLAdapter> ssl_adapter(SSLAdapter::Create(socket));
     if (!ssl_adapter) {
       LOG_F(LS_ERROR) << "SSL unavailable";
       delete socket;

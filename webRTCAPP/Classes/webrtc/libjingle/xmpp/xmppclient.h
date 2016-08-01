@@ -11,12 +11,13 @@
 #ifndef WEBRTC_LIBJINGLE_XMPP_XMPPCLIENT_H_
 #define WEBRTC_LIBJINGLE_XMPP_XMPPCLIENT_H_
 
+#include <memory>
 #include <string>
+
 #include "webrtc/libjingle/xmpp/asyncsocket.h"
 #include "webrtc/libjingle/xmpp/xmppclientsettings.h"
 #include "webrtc/libjingle/xmpp/xmppengine.h"
 #include "webrtc/libjingle/xmpp/xmpptask.h"
-#include "webrtc/base/basicdefs.h"
 #include "webrtc/base/sigslot.h"
 #include "webrtc/base/task.h"
 
@@ -137,7 +138,7 @@ public:
 
   class Private;
   friend class Private;
-  rtc::scoped_ptr<Private> d_;
+  std::unique_ptr<Private> d_;
 
   bool delivering_signal_;
   bool valid_;

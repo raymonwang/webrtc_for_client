@@ -17,15 +17,12 @@
 #include <list>
 #include <map>
 
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/thread_wrapper.h"
+#include "webrtc/base/platform_thread.h"
+#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
 #include "webrtc/test/channel_transport/udp_socket_manager_wrapper.h"
 #include "webrtc/test/channel_transport/udp_socket_wrapper.h"
 
 namespace webrtc {
-
-class ConditionVariableWrapper;
-
 namespace test {
 
 class UdpSocketPosix;
@@ -38,15 +35,14 @@ public:
     UdpSocketManagerPosix();
     virtual ~UdpSocketManagerPosix();
 
-    virtual bool Init(int32_t id, uint8_t& numOfWorkThreads) OVERRIDE;
+    bool Init(int32_t id, uint8_t& numOfWorkThreads) override;
 
-    virtual int32_t ChangeUniqueId(const int32_t id) OVERRIDE;
+    bool Start() override;
+    bool Stop() override;
 
-    virtual bool Start() OVERRIDE;
-    virtual bool Stop() OVERRIDE;
+    bool AddSocket(UdpSocketWrapper* s) override;
+    bool RemoveSocket(UdpSocketWrapper* s) override;
 
-    virtual bool AddSocket(UdpSocketWrapper* s) OVERRIDE;
-    virtual bool RemoveSocket(UdpSocketWrapper* s) OVERRIDE;
 private:
     int32_t _id;
     CriticalSectionWrapper* _critSect;
@@ -69,14 +65,14 @@ public:
     virtual bool RemoveSocket(UdpSocketWrapper* s);
 
 protected:
-    static bool Run(ThreadObj obj);
+    static bool Run(void* obj);
     bool Process();
     void UpdateSocketMap();
 
 private:
     typedef std::list<UdpSocketWrapper*> SocketList;
     typedef std::list<SOCKET> FdList;
-    ThreadWrapper* _thread;
+    rtc::PlatformThread _thread;
     CriticalSectionWrapper* _critSectList;
 
     fd_set _readFds;

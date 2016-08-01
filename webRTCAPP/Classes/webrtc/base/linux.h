@@ -14,9 +14,9 @@
 #if defined(WEBRTC_LINUX)
 #include <string>
 #include <map>
+#include <memory>
 #include <vector>
 
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/stream.h"
 
 namespace rtc {
@@ -51,7 +51,7 @@ class ConfigParser {
   virtual bool ParseLine(std::string* key, std::string* value);
 
  private:
-  scoped_ptr<StreamInterface> instream_;
+  std::unique_ptr<StreamInterface> instream_;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -103,11 +103,6 @@ class ProcCpuInfo {
  private:
   ConfigParser::MapVector sections_;
 };
-
-#if !defined(WEBRTC_CHROMIUM_BUILD)
-// Builds a string containing the info from lsb_release on a single line.
-std::string ReadLinuxLsbRelease();
-#endif
 
 // Returns the output of "uname".
 std::string ReadLinuxUname();

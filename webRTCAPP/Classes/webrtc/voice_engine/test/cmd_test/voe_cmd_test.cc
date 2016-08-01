@@ -15,20 +15,20 @@
 #include <unistd.h>
 #endif
 
+#include <memory>
 #include <vector>
 
 #include "gflags/gflags.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "webrtc/base/format_macros.h"
 #include "webrtc/engine_configurations.h"
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/test/channel_transport/include/channel_transport.h"
+#include "webrtc/test/channel_transport/channel_transport.h"
 #include "webrtc/test/testsupport/fileutils.h"
 #include "webrtc/test/testsupport/trace_to_stderr.h"
 #include "webrtc/voice_engine/include/voe_audio_processing.h"
 #include "webrtc/voice_engine/include/voe_base.h"
 #include "webrtc/voice_engine/include/voe_codec.h"
-#include "webrtc/voice_engine/include/voe_dtmf.h"
 #include "webrtc/voice_engine/include/voe_errors.h"
 #include "webrtc/voice_engine/include/voe_external_media.h"
 #include "webrtc/voice_engine/include/voe_file.h"
@@ -55,7 +55,6 @@ VoiceEngine* m_voe = NULL;
 VoEBase* base1 = NULL;
 VoECodec* codec = NULL;
 VoEVolumeControl* volume = NULL;
-VoEDtmf* dtmf = NULL;
 VoERTP_RTCP* rtp_rtcp = NULL;
 VoEAudioProcessing* apm = NULL;
 VoENetwork* netw = NULL;
@@ -112,8 +111,8 @@ void PrintCodecs(bool opus_stereo) {
     int res = codec->GetCodec(i, codec_params);
     VALIDATE;
     SetStereoIfOpus(opus_stereo, &codec_params);
-    printf("%2d. %3d  %s/%d/%d \n", i, codec_params.pltype, codec_params.plname,
-           codec_params.plfreq, codec_params.channels);
+    printf("%2d. %3d  %s/%d/%" PRIuS " \n", i, codec_params.pltype,
+           codec_params.plname, codec_params.plfreq, codec_params.channels);
   }
 }
 
@@ -129,7 +128,6 @@ int main(int argc, char** argv) {
   codec = VoECodec::GetInterface(m_voe);
   apm = VoEAudioProcessing::GetInterface(m_voe);
   volume = VoEVolumeControl::GetInterface(m_voe);
-  dtmf = VoEDtmf::GetInterface(m_voe);
   rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
   netw = VoENetwork::GetInterface(m_voe);
   file = VoEFile::GetInterface(m_voe);
@@ -140,7 +138,7 @@ int main(int argc, char** argv) {
 
   MyObserver my_observer;
 
-  scoped_ptr<test::TraceToStderr> trace_to_stderr;
+  std::unique_ptr<test::TraceToStderr> trace_to_stderr;
   if (!FLAGS_use_log_file) {
     trace_to_stderr.reset(new test::TraceToStderr);
   } else {
@@ -188,9 +186,6 @@ int main(int argc, char** argv) {
   if (volume)
     volume->Release();
 
-  if (dtmf)
-    dtmf->Release();
-
   if (rtp_rtcp)
     rtp_rtcp->Release();
 
@@ -232,7 +227,9 @@ void RunTest(std::string out_path) {
   bool typing_detection = false;
   bool muted = false;
   bool opus_stereo = false;
+  bool opus_dtx = false;
   bool experimental_ns_enabled = false;
+  bool debug_recording_started = false;
 
 #if defined(WEBRTC_ANDROID)
   std::string resource_path = "/sdcard/";
@@ -258,7 +255,7 @@ void RunTest(std::string out_path) {
     fflush(NULL);
   }
 
-  scoped_ptr<VoiceChannelTransport> voice_channel_transport(
+  VoiceChannelTransport* voice_channel_transport(
       new VoiceChannelTransport(netw, chan));
 
   char ip[64];
@@ -446,8 +443,10 @@ void RunTest(std::string out_path) {
       printf("%i. Toggle Opus stereo (Opus must be selected again to apply "
              "the setting) \n", option_index++);
       printf("%i. Set Opus maximum playback rate \n", option_index++);
+      printf("%i. Toggle Opus DTX \n", option_index++);
       printf("%i. Set bit rate (only take effect on codecs that allow the "
              "change) \n", option_index++);
+      printf("%i. Toggle AECdump recording \n", option_index++);
 
       printf("Select action or %i to stop the call: ", option_index);
       int option_selection;
@@ -457,9 +456,14 @@ void RunTest(std::string out_path) {
       if (option_selection < option_index) {
         res = codec->GetCodec(option_selection, cinst);
         VALIDATE;
-        SetStereoIfOpus(opus_stereo, &cinst);
-        printf("Set primary codec\n");
-        res = codec->SetSendCodec(chan, cinst);
+        if (strcmp(cinst.plname, "red") == 0) {
+          printf("Enabling RED\n");
+          res = rtp_rtcp->SetREDStatus(chan, true, cinst.pltype);
+        } else {
+          SetStereoIfOpus(opus_stereo, &cinst);
+          printf("Set primary codec\n");
+          res = codec->SetSendCodec(chan, cinst);
+        }
         VALIDATE;
       } else if (option_selection == option_index++) {
         enable_cng = !enable_cng;
@@ -767,15 +771,35 @@ void RunTest(std::string out_path) {
         res = codec->SetOpusMaxPlaybackRate(chan, max_playback_rate);
         VALIDATE;
       } else if (option_selection == option_index++) {
+        opus_dtx = !opus_dtx;
+        res = codec->SetOpusDtx(chan, opus_dtx);
+        VALIDATE;
+        printf("Opus DTX %s.\n", opus_dtx ? "enabled" : "disabled");
+      } else if (option_selection == option_index++) {
         res = codec->GetSendCodec(chan, cinst);
         VALIDATE;
         printf("Current bit rate is %i bps, set to: ", cinst.rate);
-        ASSERT_EQ(1, scanf("%i", &cinst.rate));
-        res = codec->SetSendCodec(chan, cinst);
+        int new_bitrate_bps;
+        ASSERT_EQ(1, scanf("%i", &new_bitrate_bps));
+        res = codec->SetBitRate(chan, new_bitrate_bps);
         VALIDATE;
+      } else if (option_selection == option_index++) {
+        const char* kDebugFileName = "audio.aecdump";
+        if (debug_recording_started) {
+          apm->StopDebugRecording();
+          printf("Debug recording named %s stopped\n", kDebugFileName);
+        } else {
+          apm->StartDebugRecording(kDebugFileName);
+          printf("Debug recording named %s started\n", kDebugFileName);
+        }
+        debug_recording_started = !debug_recording_started;
       } else {
         break;
       }
+    }
+
+    if (debug_recording_started) {
+      apm->StopDebugRecording();
     }
 
     if (send) {
@@ -816,6 +840,9 @@ void RunTest(std::string out_path) {
     newcall = (end_option == 1);
     // Call loop
   }
+
+  // Transports should be deleted before channel deletion.
+  delete voice_channel_transport;
   for (int i = 0; i < kMaxNumChannels; ++i) {
     delete voice_channel_transports[i];
     voice_channel_transports[i] = NULL;
@@ -826,7 +853,7 @@ void RunTest(std::string out_path) {
   VALIDATE;
 
   for (int i = 0; i < kMaxNumChannels; ++i) {
-    channels[i] = base1->DeleteChannel(channels[i]);
+    res = base1->DeleteChannel(channels[i]);
     VALIDATE;
   }
 }

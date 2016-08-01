@@ -39,13 +39,6 @@ bool SignalThread::SetName(const std::string& name, const void* obj) {
   return worker_.SetName(name, obj);
 }
 
-bool SignalThread::SetPriority(ThreadPriority priority) {
-  EnterExit ee(this);
-  ASSERT(main_->IsCurrent());
-  ASSERT(kInit == state_);
-  return worker_.SetPriority(priority);
-}
-
 void SignalThread::Start() {
   EnterExit ee(this);
   ASSERT(main_->IsCurrent());
@@ -131,12 +124,20 @@ void SignalThread::OnMessage(Message *msg) {
   }
 }
 
+SignalThread::Worker::~Worker() {
+  Stop();
+}
+
+void SignalThread::Worker::Run() {
+  parent_->Run();
+}
+
 void SignalThread::Run() {
   DoWork();
   {
     EnterExit ee(this);
     if (main_) {
-      main_->Post(this, ST_MSG_WORKER_DONE);
+      main_->Post(RTC_FROM_HERE, this, ST_MSG_WORKER_DONE);
     }
   }
 }

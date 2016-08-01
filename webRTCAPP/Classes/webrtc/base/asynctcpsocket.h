@@ -11,8 +11,11 @@
 #ifndef WEBRTC_BASE_ASYNCTCPSOCKET_H_
 #define WEBRTC_BASE_ASYNCTCPSOCKET_H_
 
+#include <memory>
+
 #include "webrtc/base/asyncpacketsocket.h"
-#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/buffer.h"
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/base/socketfactory.h"
 
 namespace rtc {
@@ -23,26 +26,28 @@ namespace rtc {
 class AsyncTCPSocketBase : public AsyncPacketSocket {
  public:
   AsyncTCPSocketBase(AsyncSocket* socket, bool listen, size_t max_packet_size);
-  virtual ~AsyncTCPSocketBase();
+  ~AsyncTCPSocketBase() override;
 
   // Pure virtual methods to send and recv data.
-  virtual int Send(const void *pv, size_t cb,
-                   const rtc::PacketOptions& options) = 0;
+  int Send(const void *pv, size_t cb,
+                   const rtc::PacketOptions& options) override = 0;
   virtual void ProcessInput(char* data, size_t* len) = 0;
   // Signals incoming connection.
   virtual void HandleIncomingConnection(AsyncSocket* socket) = 0;
 
-  virtual SocketAddress GetLocalAddress() const;
-  virtual SocketAddress GetRemoteAddress() const;
-  virtual int SendTo(const void *pv, size_t cb, const SocketAddress& addr,
-                     const rtc::PacketOptions& options);
-  virtual int Close();
+  SocketAddress GetLocalAddress() const override;
+  SocketAddress GetRemoteAddress() const override;
+  int SendTo(const void* pv,
+             size_t cb,
+             const SocketAddress& addr,
+             const rtc::PacketOptions& options) override;
+  int Close() override;
 
-  virtual State GetState() const;
-  virtual int GetOption(Socket::Option opt, int* value);
-  virtual int SetOption(Socket::Option opt, int value);
-  virtual int GetError() const;
-  virtual void SetError(int error);
+  State GetState() const override;
+  int GetOption(Socket::Option opt, int* value) override;
+  int SetOption(Socket::Option opt, int value) override;
+  int GetError() const override;
+  void SetError(int error) override;
 
  protected:
   // Binds and connects |socket| and creates AsyncTCPSocket for
@@ -57,8 +62,8 @@ class AsyncTCPSocketBase : public AsyncPacketSocket {
   void AppendToOutBuffer(const void* pv, size_t cb);
 
   // Helper methods for |outpos_|.
-  bool IsOutBufferEmpty() const { return outpos_ == 0; }
-  void ClearOutBuffer() { outpos_ = 0; }
+  bool IsOutBufferEmpty() const { return outbuf_.size() == 0; }
+  void ClearOutBuffer() { outbuf_.Clear(); }
 
  private:
   // Called by the underlying socket
@@ -67,12 +72,14 @@ class AsyncTCPSocketBase : public AsyncPacketSocket {
   void OnWriteEvent(AsyncSocket* socket);
   void OnCloseEvent(AsyncSocket* socket, int error);
 
-  scoped_ptr<AsyncSocket> socket_;
+  std::unique_ptr<AsyncSocket> socket_;
   bool listen_;
-  char* inbuf_, * outbuf_;
-  size_t insize_, inpos_, outsize_, outpos_;
+  Buffer inbuf_;
+  Buffer outbuf_;
+  size_t max_insize_;
+  size_t max_outsize_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(AsyncTCPSocketBase);
+  RTC_DISALLOW_COPY_AND_ASSIGN(AsyncTCPSocketBase);
 };
 
 class AsyncTCPSocket : public AsyncTCPSocketBase {
@@ -84,15 +91,16 @@ class AsyncTCPSocket : public AsyncTCPSocketBase {
                                 const SocketAddress& bind_address,
                                 const SocketAddress& remote_address);
   AsyncTCPSocket(AsyncSocket* socket, bool listen);
-  virtual ~AsyncTCPSocket() {}
+  ~AsyncTCPSocket() override {}
 
-  virtual int Send(const void* pv, size_t cb,
-                   const rtc::PacketOptions& options);
-  virtual void ProcessInput(char* data, size_t* len);
-  virtual void HandleIncomingConnection(AsyncSocket* socket);
+  int Send(const void* pv,
+           size_t cb,
+           const rtc::PacketOptions& options) override;
+  void ProcessInput(char* data, size_t* len) override;
+  void HandleIncomingConnection(AsyncSocket* socket) override;
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(AsyncTCPSocket);
+  RTC_DISALLOW_COPY_AND_ASSIGN(AsyncTCPSocket);
 };
 
 }  // namespace rtc

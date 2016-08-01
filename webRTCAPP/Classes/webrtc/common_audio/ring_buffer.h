@@ -20,9 +20,18 @@ extern "C" {
 
 #include <stddef.h>  // size_t
 
-typedef struct RingBuffer RingBuffer;
+enum Wrap { SAME_WRAP, DIFF_WRAP };
 
-// Returns NULL on failure.
+typedef struct RingBuffer {
+  size_t read_pos;
+  size_t write_pos;
+  size_t element_count;
+  size_t element_size;
+  enum Wrap rw_wrap;
+  char* data;
+} RingBuffer;
+
+// Creates and initializes the buffer. Returns NULL on failure.
 RingBuffer* WebRtc_CreateBuffer(size_t element_count, size_t element_size);
 void WebRtc_InitBuffer(RingBuffer* handle);
 void WebRtc_FreeBuffer(void* handle);

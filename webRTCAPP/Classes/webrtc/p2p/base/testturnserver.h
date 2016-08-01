@@ -49,10 +49,11 @@ class TestTurnRedirector : public TurnRedirectInterface {
 class TestTurnServer : public TurnAuthInterface {
  public:
   TestTurnServer(rtc::Thread* thread,
-                 const rtc::SocketAddress& udp_int_addr,
-                 const rtc::SocketAddress& udp_ext_addr)
+                 const rtc::SocketAddress& int_addr,
+                 const rtc::SocketAddress& udp_ext_addr,
+                 ProtocolType int_protocol = PROTO_UDP)
       : server_(thread) {
-    AddInternalSocket(udp_int_addr, cricket::PROTO_UDP);
+    AddInternalSocket(int_addr, int_protocol);
     server_.SetExternalSocketFactory(new rtc::BasicPacketSocketFactory(),
         udp_ext_addr);
     server_.set_realm(kTestRealm);
@@ -68,6 +69,10 @@ class TestTurnServer : public TurnAuthInterface {
 
   void set_redirect_hook(TurnRedirectInterface* redirect_hook) {
     server_.set_redirect_hook(redirect_hook);
+  }
+
+  void set_enable_permission_checks(bool enable) {
+    server_.set_enable_permission_checks(enable);
   }
 
   void AddInternalSocket(const rtc::SocketAddress& int_addr,
@@ -94,7 +99,7 @@ class TestTurnServer : public TurnAuthInterface {
     for (TurnServer::AllocationMap::const_iterator it = map.begin();
         it != map.end(); ++it) {
       if (src == it->first.src()) {
-        return it->second;
+        return it->second.get();
       }
     }
     return NULL;

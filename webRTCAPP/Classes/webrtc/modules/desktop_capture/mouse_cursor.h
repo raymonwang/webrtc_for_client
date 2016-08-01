@@ -11,9 +11,10 @@
 #ifndef WEBRTC_MODULES_DESKTOP_CAPTURE_MOUSE_CURSOR_H_
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_MOUSE_CURSOR_H_
 
+#include <memory>
+
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/modules/desktop_capture/desktop_geometry.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 
 namespace webrtc {
 
@@ -37,10 +38,10 @@ class MouseCursor {
   const DesktopVector& hotspot() const { return hotspot_; }
 
  private:
-  scoped_ptr<DesktopFrame> image_;
+  std::unique_ptr<DesktopFrame> image_;
   DesktopVector hotspot_;
 
-  DISALLOW_COPY_AND_ASSIGN(MouseCursor);
+  RTC_DISALLOW_COPY_AND_ASSIGN(MouseCursor);
 };
 
 }  // namespace webrtc

@@ -11,47 +11,46 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_NOISE_SUPPRESSION_IMPL_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_NOISE_SUPPRESSION_IMPL_H_
 
+#include <memory>
+#include <vector>
+
+#include "webrtc/base/constructormagic.h"
+#include "webrtc/base/criticalsection.h"
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
-#include "webrtc/modules/audio_processing/processing_component.h"
 
 namespace webrtc {
 
 class AudioBuffer;
-class CriticalSectionWrapper;
 
-class NoiseSuppressionImpl : public NoiseSuppression,
-                             public ProcessingComponent {
+class NoiseSuppressionImpl : public NoiseSuppression {
  public:
-  NoiseSuppressionImpl(const AudioProcessing* apm,
-                       CriticalSectionWrapper* crit);
-  virtual ~NoiseSuppressionImpl();
+  explicit NoiseSuppressionImpl(rtc::CriticalSection* crit);
+  ~NoiseSuppressionImpl() override;
 
-  int AnalyzeCaptureAudio(AudioBuffer* audio);
-  int ProcessCaptureAudio(AudioBuffer* audio);
+  // TODO(peah): Fold into ctor, once public API is removed.
+  void Initialize(size_t channels, int sample_rate_hz);
+  void AnalyzeCaptureAudio(AudioBuffer* audio);
+  void ProcessCaptureAudio(AudioBuffer* audio);
 
   // NoiseSuppression implementation.
-  virtual bool is_enabled() const OVERRIDE;
-  virtual float speech_probability() const OVERRIDE;
+  int Enable(bool enable) override;
+  bool is_enabled() const override;
+  int set_level(Level level) override;
+  Level level() const override;
+  float speech_probability() const override;
+  std::vector<float> NoiseEstimate() override;
+  static size_t num_noise_bins();
 
  private:
-  // NoiseSuppression implementation.
-  virtual int Enable(bool enable) OVERRIDE;
-  virtual int set_level(Level level) OVERRIDE;
-  virtual Level level() const OVERRIDE;
-
-  // ProcessingComponent implementation.
-  virtual void* CreateHandle() const OVERRIDE;
-  virtual int InitializeHandle(void* handle) const OVERRIDE;
-  virtual int ConfigureHandle(void* handle) const OVERRIDE;
-  virtual void DestroyHandle(void* handle) const OVERRIDE;
-  virtual int num_handles_required() const OVERRIDE;
-  virtual int GetHandleError(void* handle) const OVERRIDE;
-
-  const AudioProcessing* apm_;
-  CriticalSectionWrapper* crit_;
-  Level level_;
+  class Suppressor;
+  rtc::CriticalSection* const crit_;
+  bool enabled_ GUARDED_BY(crit_) = false;
+  Level level_ GUARDED_BY(crit_) = kModerate;
+  size_t channels_ GUARDED_BY(crit_) = 0;
+  int sample_rate_hz_ GUARDED_BY(crit_) = 0;
+  std::vector<std::unique_ptr<Suppressor>> suppressors_ GUARDED_BY(crit_);
+  RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(NoiseSuppressionImpl);
 };
-
 }  // namespace webrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_NOISE_SUPPRESSION_IMPL_H_

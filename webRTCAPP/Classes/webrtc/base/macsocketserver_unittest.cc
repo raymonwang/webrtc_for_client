@@ -8,8 +8,9 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/base/gunit.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/socket_unittest.h"
 #include "webrtc/base/thread.h"
 #include "webrtc/base/macsocketserver.h"
@@ -35,7 +36,7 @@ class WakeThread : public Thread {
 // Test that MacCFSocketServer::Wait works as expected.
 TEST(MacCFSocketServerTest, TestWait) {
   MacCFSocketServer server;
-  uint32 start = Time();
+  uint32_t start = Time();
   server.Wait(1000, true);
   EXPECT_GE(TimeSince(start), 1000);
 }
@@ -44,7 +45,7 @@ TEST(MacCFSocketServerTest, TestWait) {
 TEST(MacCFSocketServerTest, TestWakeup) {
   MacCFSocketServer server;
   WakeThread thread(&server);
-  uint32 start = Time();
+  uint32_t start = Time();
   thread.Start();
   server.Wait(10000, true);
   EXPECT_LT(TimeSince(start), 10000);
@@ -53,7 +54,7 @@ TEST(MacCFSocketServerTest, TestWakeup) {
 // Test that MacCarbonSocketServer::Wait works as expected.
 TEST(MacCarbonSocketServerTest, TestWait) {
   MacCarbonSocketServer server;
-  uint32 start = Time();
+  uint32_t start = Time();
   server.Wait(1000, true);
   EXPECT_GE(TimeSince(start), 1000);
 }
@@ -62,7 +63,7 @@ TEST(MacCarbonSocketServerTest, TestWait) {
 TEST(MacCarbonSocketServerTest, TestWakeup) {
   MacCarbonSocketServer server;
   WakeThread thread(&server);
-  uint32 start = Time();
+  uint32_t start = Time();
   thread.Start();
   server.Wait(10000, true);
   EXPECT_LT(TimeSince(start), 10000);
@@ -71,7 +72,7 @@ TEST(MacCarbonSocketServerTest, TestWakeup) {
 // Test that MacCarbonAppSocketServer::Wait works as expected.
 TEST(MacCarbonAppSocketServerTest, TestWait) {
   MacCarbonAppSocketServer server;
-  uint32 start = Time();
+  uint32_t start = Time();
   server.Wait(1000, true);
   EXPECT_GE(TimeSince(start), 1000);
 }
@@ -80,7 +81,7 @@ TEST(MacCarbonAppSocketServerTest, TestWait) {
 TEST(MacCarbonAppSocketServerTest, TestWakeup) {
   MacCarbonAppSocketServer server;
   WakeThread thread(&server);
-  uint32 start = Time();
+  uint32_t start = Time();
   thread.Start();
   server.Wait(10000, true);
   EXPECT_LT(TimeSince(start), 10000);
@@ -98,7 +99,7 @@ class MacAsyncSocketTest : public SocketTest {
   virtual MacBaseSocketServer* CreateSocketServer() {
     return new MacCFSocketServer();
   };
-  rtc::scoped_ptr<MacBaseSocketServer> server_;
+  std::unique_ptr<MacBaseSocketServer> server_;
   SocketServerScope scope_;
 };
 
@@ -123,7 +124,8 @@ TEST_F(MacAsyncSocketTest, DISABLED_TestConnectFailIPv4) {
   SocketTest::TestConnectFailIPv4();
 }
 
-TEST_F(MacAsyncSocketTest, TestConnectFailIPv6) {
+// Flaky. See webrtc:4738.
+TEST_F(MacAsyncSocketTest, DISABLED_TestConnectFailIPv6) {
   SocketTest::TestConnectFailIPv6();
 }
 

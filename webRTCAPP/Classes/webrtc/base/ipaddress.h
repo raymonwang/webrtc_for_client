@@ -62,7 +62,7 @@ class IPAddress {
     u_.ip6 = ip6;
   }
 
-  explicit IPAddress(uint32 ip_in_host_byte_order) : family_(AF_INET) {
+  explicit IPAddress(uint32_t ip_in_host_byte_order) : family_(AF_INET) {
     memset(&u_, 0, sizeof(u_));
     u_.ip4.s_addr = HostToNetwork32(ip_in_host_byte_order);
   }
@@ -107,9 +107,10 @@ class IPAddress {
   IPAddress AsIPv6Address() const;
 
   // For socketaddress' benefit. Returns the IP in host byte order.
-  uint32 v4AddressAsHostOrderInteger() const;
+  uint32_t v4AddressAsHostOrderInteger() const;
 
-  static void set_strip_sensitive(bool enable);
+  // Whether this is an unspecified IP address.
+  bool IsNil() const;
 
  private:
   int family_;
@@ -117,8 +118,6 @@ class IPAddress {
     in_addr ip4;
     in6_addr ip6;
   } u_;
-
-  static bool strip_sensitive_;
 };
 
 // IP class which could represent IPv6 address flags which is only
@@ -162,6 +161,8 @@ size_t HashIP(const IPAddress& ip);
 // These are only really applicable for IPv6 addresses.
 bool IPIs6Bone(const IPAddress& ip);
 bool IPIs6To4(const IPAddress& ip);
+bool IPIsLinkLocal(const IPAddress& ip);
+bool IPIsMacBased(const IPAddress& ip);
 bool IPIsSiteLocal(const IPAddress& ip);
 bool IPIsTeredo(const IPAddress& ip);
 bool IPIsULA(const IPAddress& ip);
@@ -173,6 +174,9 @@ int IPAddressPrecedence(const IPAddress& ip);
 
 // Returns 'ip' truncated to be 'length' bits long.
 IPAddress TruncateIP(const IPAddress& ip, int length);
+
+IPAddress GetLoopbackIP(int family);
+IPAddress GetAnyIP(int family);
 
 // Returns the number of contiguously set bits, counting from the MSB in network
 // byte order, in this IPAddress. Bits after the first 0 encountered are not

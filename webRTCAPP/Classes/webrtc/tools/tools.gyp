@@ -15,10 +15,10 @@
       'target_name': 'video_quality_analysis',
       'type': 'static_library',
       'dependencies': [
-        '<(DEPTH)/third_party/libyuv/libyuv.gyp:libyuv',
+        '<(webrtc_root)/common_video/common_video.gyp:common_video',
       ],
       'export_dependent_settings': [
-        '<(DEPTH)/third_party/libyuv/libyuv.gyp:libyuv',
+        '<(webrtc_root)/common_video/common_video.gyp:common_video',
       ],
       'sources': [
         'frame_analyzer/video_quality_analysis.h',
@@ -51,8 +51,8 @@
       'target_name': 'rgba_to_i420_converter',
       'type': 'executable',
       'dependencies': [
+        '<(webrtc_root)/common_video/common_video.gyp:common_video',
         '<(webrtc_root)/tools/internal_tools.gyp:command_line_parser',
-        '<(DEPTH)/third_party/libyuv/libyuv.gyp:libyuv',
       ],
       'sources': [
         'converter/converter.h',
@@ -99,19 +99,40 @@
     }, # force_mic_volume_max
   ],
   'conditions': [
+    ['enable_protobuf==1 and include_tests==1', {
+      # TODO(terelius): This tool requires the include_test condition to
+      # prevent build errors when gflags isn't found in downstream projects.
+      # There should be a cleaner way to do this. The tool is not test related.
+      'targets': [
+        {
+          # This target should only be built if enable_protobuf is set
+          'target_name': 'event_log_visualizer',
+          'type': 'executable',
+          'dependencies': [
+            '<(webrtc_root)/webrtc.gyp:rtc_event_log_parser',
+            '<(webrtc_root)/modules/modules.gyp:rtp_rtcp',
+            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:metrics_default',
+            '<(DEPTH)/third_party/gflags/gflags.gyp:gflags',
+          ],
+          'sources': [
+            'event_log_visualizer/analyzer.cc',
+            'event_log_visualizer/analyzer.h',
+            'event_log_visualizer/generate_timeseries.cc',
+            'event_log_visualizer/plot_base.h',
+            'event_log_visualizer/plot_python.cc',
+            'event_log_visualizer/plot_python.h',
+          ],
+        },
+      ],
+    }],
     ['include_tests==1', {
       'targets' : [
         {
-          'target_name': 'agc_manager',
+          'target_name': 'agc_test_utils',
           'type': 'static_library',
-          'dependencies': [
-            '<(webrtc_root)/common_audio/common_audio.gyp:common_audio',
-            '<(webrtc_root)/modules/modules.gyp:audio_processing',
-            '<(webrtc_root)/voice_engine/voice_engine.gyp:voice_engine',
-          ],
           'sources': [
-            '<(webrtc_root)/modules/audio_processing/agc/test/agc_manager.cc',
-            '<(webrtc_root)/modules/audio_processing/agc/test/agc_manager.h',
+            'agc/test_utils.cc',
+            'agc/test_utils.h',
           ],
         },
         {
@@ -123,38 +144,22 @@
             '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers_default',
             '<(webrtc_root)/test/test.gyp:channel_transport',
             '<(webrtc_root)/test/test.gyp:test_support',
-            'agc_manager',
+            '<(webrtc_root)/voice_engine/voice_engine.gyp:voice_engine',
           ],
           'sources': [
-            '<(webrtc_root)/modules/audio_processing/agc/test/agc_harness.cc',
+            'agc/agc_harness.cc',
           ],
         },  # agc_harness
-        {
-          'target_name': 'agc_proc',
-          'type': 'executable',
-          'dependencies': [
-            '<(DEPTH)/testing/gmock.gyp:gmock',
-            '<(DEPTH)/testing/gtest.gyp:gtest',
-            '<(DEPTH)/third_party/gflags/gflags.gyp:gflags',
-            '<(webrtc_root)/test/test.gyp:test_support',
-            '<(webrtc_root)/system_wrappers/system_wrappers.gyp:system_wrappers_default',
-            'agc_manager',
-          ],
-          'sources': [
-            '<(webrtc_root)/modules/audio_processing/agc/test/agc_test.cc',
-            '<(webrtc_root)/modules/audio_processing/agc/test/test_utils.cc',
-          ],
-        },  # agc_proc
         {
           'target_name': 'activity_metric',
           'type': 'executable',
           'dependencies': [
             '<(DEPTH)/testing/gtest.gyp:gtest',
             '<(DEPTH)/third_party/gflags/gflags.gyp:gflags',
-            'agc_manager',
+            '<(webrtc_root)/modules/modules.gyp:audio_processing',
           ],
           'sources': [
-            '<(webrtc_root)/modules/audio_processing/agc/test/activity_metric.cc',
+            'agc/activity_metric.cc',
           ],
         },  # activity_metric
         {
@@ -198,6 +203,26 @@
             }],
           ],
         }, # tools_unittests
+        {
+          'target_name': 'rtp_analyzer',
+          'type': 'none',
+          'variables': {
+            'copy_output_dir%': '<(PRODUCT_DIR)',
+          },
+          'copies': [
+            {
+              'destination': '<(copy_output_dir)/',
+              'files': [
+                'py_event_log_analyzer/misc.py',
+                'py_event_log_analyzer/pb_parse.py',
+                'py_event_log_analyzer/rtp_analyzer.py',
+                'py_event_log_analyzer/rtp_analyzer.sh',
+              ]
+            },
+          ],
+          'dependencies': [ '<(webrtc_root)/webrtc.gyp:rtc_event_log_proto' ],
+          'process_outputs_as_sources': 1,
+        }, # rtp_analyzer
       ], # targets
       'conditions': [
         ['OS=="android"', {
@@ -206,9 +231,30 @@
               'target_name': 'tools_unittests_apk_target',
               'type': 'none',
               'dependencies': [
-                '<(apk_tests_path):tools_unittests_apk',
+                '<(android_tests_path):tools_unittests_apk',
               ],
             },
+          ],
+          'conditions': [
+            ['test_isolation_mode != "noop"',
+              {
+                'targets': [
+                  {
+                    'target_name': 'tools_unittests_apk_run',
+                    'type': 'none',
+                    'dependencies': [
+                      '<(android_tests_path):tools_unittests_apk',
+                    ],
+                    'includes': [
+                      '../build/isolate.gypi',
+                    ],
+                    'sources': [
+                      'tools_unittests_apk.isolate',
+                    ],
+                  },
+                ],
+              },
+            ],
           ],
         }],
         ['test_isolation_mode != "noop"', {

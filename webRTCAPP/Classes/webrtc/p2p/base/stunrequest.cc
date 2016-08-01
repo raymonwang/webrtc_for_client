@@ -10,13 +10,17 @@
 
 #include "webrtc/p2p/base/stunrequest.h"
 
+#include <algorithm>
+#include <memory>
+
 #include "webrtc/base/common.h"
 #include "webrtc/base/helpers.h"
 #include "webrtc/base/logging.h"
+#include "webrtc/base/stringencode.h"
 
 namespace cricket {
 
-const uint32 MSG_STUN_SEND = 1;
+const uint32_t MSG_STUN_SEND = 1;
 
 const int MAX_SENDS = 9;
 const int DELAY_UNIT = 100;  // 100 milliseconds
@@ -45,10 +49,30 @@ void StunRequestManager::SendDelayed(StunRequest* request, int delay) {
   request->Construct();
   requests_[request->id()] = request;
   if (delay > 0) {
-    thread_->PostDelayed(delay, request, MSG_STUN_SEND, NULL);
+    thread_->PostDelayed(RTC_FROM_HERE, delay, request, MSG_STUN_SEND, NULL);
   } else {
-    thread_->Send(request, MSG_STUN_SEND, NULL);
+    thread_->Send(RTC_FROM_HERE, request, MSG_STUN_SEND, NULL);
   }
+}
+
+void StunRequestManager::Flush(int msg_type) {
+  for (const auto kv : requests_) {
+    StunRequest* request = kv.second;
+    if (msg_type == kAllRequests || msg_type == request->type()) {
+      thread_->Clear(request, MSG_STUN_SEND);
+      thread_->Send(RTC_FROM_HERE, request, MSG_STUN_SEND, NULL);
+    }
+  }
+}
+
+bool StunRequestManager::HasRequest(int msg_type) {
+  for (const auto kv : requests_) {
+    StunRequest* request = kv.second;
+    if (msg_type == kAllRequests || msg_type == request->type()) {
+      return true;
+    }
+  }
+  return false;
 }
 
 void StunRequestManager::Remove(StunRequest* request) {
@@ -66,7 +90,7 @@ void StunRequestManager::Clear() {
   for (RequestMap::iterator i = requests_.begin(); i != requests_.end(); ++i)
     requests.push_back(i->second);
 
-  for (uint32 i = 0; i < requests.size(); ++i) {
+  for (uint32_t i = 0; i < requests.size(); ++i) {
     // StunRequest destructor calls Remove() which deletes requests
     // from |requests_|.
     delete requests[i];
@@ -75,8 +99,11 @@ void StunRequestManager::Clear() {
 
 bool StunRequestManager::CheckResponse(StunMessage* msg) {
   RequestMap::iterator iter = requests_.find(msg->transaction_id());
-  if (iter == requests_.end())
+  if (iter == requests_.end()) {
+    // TODO(pthatcher): Log unknown responses without being too spammy
+    // in the logs.
     return false;
+  }
 
   StunRequest* request = iter->second;
   if (msg->type() == GetStunSuccessResponseType(request->type())) {
@@ -105,15 +132,20 @@ bool StunRequestManager::CheckResponse(const char* data, size_t size) {
   id.append(data + kStunTransactionIdOffset, kStunTransactionIdLength);
 
   RequestMap::iterator iter = requests_.find(id);
-  if (iter == requests_.end())
+  if (iter == requests_.end()) {
+    // TODO(pthatcher): Log unknown responses without being too spammy
+    // in the logs.
     return false;
+  }
 
   // Parse the STUN message and continue processing as usual.
 
-  rtc::ByteBuffer buf(data, size);
-  rtc::scoped_ptr<StunMessage> response(iter->second->msg_->CreateNew());
-  if (!response->Read(&buf))
+  rtc::ByteBufferReader buf(data, size);
+  std::unique_ptr<StunMessage> response(iter->second->msg_->CreateNew());
+  if (!response->Read(&buf)) {
+    LOG(LS_WARNING) << "Failed to read STUN response " << rtc::hex_encode(id);
     return false;
+  }
 
   return CheckResponse(response.get());
 }
@@ -161,8 +193,8 @@ const StunMessage* StunRequest::msg() const {
   return msg_;
 }
 
-uint32 StunRequest::Elapsed() const {
-  return rtc::TimeSince(tstamp_);
+int StunRequest::Elapsed() const {
+  return static_cast<int>(rtc::TimeMillis() - tstamp_);
 }
 
 
@@ -181,22 +213,31 @@ void StunRequest::OnMessage(rtc::Message* pmsg) {
     return;
   }
 
-  tstamp_ = rtc::Time();
+  tstamp_ = rtc::TimeMillis();
 
-  rtc::ByteBuffer buf;
+  rtc::ByteBufferWriter buf;
   msg_->Write(&buf);
   manager_->SignalSendPacket(buf.Data(), buf.Length(), this);
 
-  int delay = GetNextDelay();
-  manager_->thread_->PostDelayed(delay, this, MSG_STUN_SEND, NULL);
+  OnSent();
+  manager_->thread_->PostDelayed(RTC_FROM_HERE, resend_delay(), this,
+                                 MSG_STUN_SEND, NULL);
 }
 
-int StunRequest::GetNextDelay() {
-  int delay = DELAY_UNIT * rtc::_min(1 << count_, DELAY_MAX_FACTOR);
+void StunRequest::OnSent() {
   count_ += 1;
-  if (count_ == MAX_SENDS)
+  if (count_ == MAX_SENDS) {
     timeout_ = true;
-  return delay;
+  }
+  LOG(LS_VERBOSE) << "Sent STUN request " << count_
+                  << "; resend delay = " << resend_delay();
+}
+
+int StunRequest::resend_delay() {
+  if (count_ == 0) {
+    return 0;
+  }
+  return DELAY_UNIT * std::min(1 << (count_-1), DELAY_MAX_FACTOR);
 }
 
 }  // namespace cricket

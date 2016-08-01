@@ -19,14 +19,16 @@
 #include <security.h>
 #endif
 
-#include "webrtc/base/httpcommon-inl.h"
+#include <algorithm>
 
+#include "webrtc/base/arraysize.h"
 #include "webrtc/base/base64.h"
 #include "webrtc/base/common.h"
 #include "webrtc/base/cryptstring.h"
+#include "webrtc/base/httpcommon-inl.h"
 #include "webrtc/base/httpcommon.h"
+#include "webrtc/base/messagedigest.h"
 #include "webrtc/base/socketaddress.h"
-#include "webrtc/base/stringdigest.h"
 #include "webrtc/base/stringencode.h"
 #include "webrtc/base/stringutils.h"
 
@@ -148,12 +150,12 @@ bool FromString(HttpHeader& header, const std::string& str) {
   return Enum<HttpHeader>::Parse(header, str);
 }
 
-bool HttpCodeHasBody(uint32 code) {
+bool HttpCodeHasBody(uint32_t code) {
   return !HttpCodeIsInformational(code)
          && (code != HC_NO_CONTENT) && (code != HC_NOT_MODIFIED);
 }
 
-bool HttpCodeIsCacheable(uint32 code) {
+bool HttpCodeIsCacheable(uint32_t code) {
   switch (code) {
   case HC_OK:
   case HC_NON_AUTHORITATIVE:
@@ -376,7 +378,7 @@ bool HttpDateToSeconds(const std::string& date, time_t* seconds) {
     gmt = non_gmt + ((zone[0] == '+') ? offset : -offset);
   } else {
     size_t zindex;
-    if (!find_string(zindex, zone, kTimeZones, ARRAY_SIZE(kTimeZones))) {
+    if (!find_string(zindex, zone, kTimeZones, arraysize(kTimeZones))) {
       return false;
     }
     gmt = non_gmt + kTimeZoneOffsets[zindex] * 60 * 60;
@@ -386,6 +388,10 @@ bool HttpDateToSeconds(const std::string& date, time_t* seconds) {
   tm *tm_for_timezone = localtime(&gmt);
   *seconds = gmt + tm_for_timezone->tm_gmtoff;
 #else
+#if _MSC_VER >= 1900
+  long timezone = 0;
+  _get_timezone(&timezone);
+#endif
   *seconds = gmt - timezone;
 #endif
   return true;
@@ -399,6 +405,11 @@ std::string HttpAddress(const SocketAddress& address, bool secure) {
 //////////////////////////////////////////////////////////////////////
 // HttpData
 //////////////////////////////////////////////////////////////////////
+
+HttpData::HttpData() : version(HVER_1_1) {
+}
+
+HttpData::~HttpData() = default;
 
 void
 HttpData::clear(bool release_document) {
@@ -589,32 +600,29 @@ HttpResponseData::copy(const HttpResponseData& src) {
   HttpData::copy(src);
 }
 
-void
-HttpResponseData::set_success(uint32 scode) {
+void HttpResponseData::set_success(uint32_t scode) {
   this->scode = scode;
   message.clear();
   setHeader(HH_CONTENT_LENGTH, "0", false);
 }
 
-void
-HttpResponseData::set_success(const std::string& content_type,
-                              StreamInterface* document,
-                              uint32 scode) {
+void HttpResponseData::set_success(const std::string& content_type,
+                                   StreamInterface* document,
+                                   uint32_t scode) {
   this->scode = scode;
   message.erase(message.begin(), message.end());
   setContent(content_type, document);
 }
 
-void
-HttpResponseData::set_redirect(const std::string& location, uint32 scode) {
+void HttpResponseData::set_redirect(const std::string& location,
+                                    uint32_t scode) {
   this->scode = scode;
   message.clear();
   setHeader(HH_LOCATION, location);
   setHeader(HH_CONTENT_LENGTH, "0", false);
 }
 
-void
-HttpResponseData::set_error(uint32 scode) {
+void HttpResponseData::set_error(uint32_t scode) {
   this->scode = scode;
   message.clear();
   setHeader(HH_CONTENT_LENGTH, "0", false);
@@ -901,7 +909,7 @@ HttpAuthResult HttpAuthenticate(
     bool specify_credentials = !username.empty();
     size_t steps = 0;
 
-    //uint32 now = Time();
+    // uint32_t now = Time();
 
     NegotiateAuthContext * neg = static_cast<NegotiateAuthContext *>(context);
     if (neg) {
@@ -954,26 +962,26 @@ HttpAuthResult HttpAuthenticate(
         std::string::size_type pos = username.find('\\');
         if (pos == std::string::npos) {
           auth_id.UserLength = static_cast<unsigned long>(
-            _min(sizeof(userbuf) - 1, username.size()));
+              std::min(sizeof(userbuf) - 1, username.size()));
           memcpy(userbuf, username.c_str(), auth_id.UserLength);
           userbuf[auth_id.UserLength] = 0;
           auth_id.DomainLength = 0;
           domainbuf[auth_id.DomainLength] = 0;
           auth_id.PasswordLength = static_cast<unsigned long>(
-            _min(sizeof(passbuf) - 1, password.GetLength()));
+              std::min(sizeof(passbuf) - 1, password.GetLength()));
           memcpy(passbuf, sensitive, auth_id.PasswordLength);
           passbuf[auth_id.PasswordLength] = 0;
         } else {
           auth_id.UserLength = static_cast<unsigned long>(
-            _min(sizeof(userbuf) - 1, username.size() - pos - 1));
+              std::min(sizeof(userbuf) - 1, username.size() - pos - 1));
           memcpy(userbuf, username.c_str() + pos + 1, auth_id.UserLength);
           userbuf[auth_id.UserLength] = 0;
-          auth_id.DomainLength = static_cast<unsigned long>(
-            _min(sizeof(domainbuf) - 1, pos));
+          auth_id.DomainLength =
+              static_cast<unsigned long>(std::min(sizeof(domainbuf) - 1, pos));
           memcpy(domainbuf, username.c_str(), auth_id.DomainLength);
           domainbuf[auth_id.DomainLength] = 0;
           auth_id.PasswordLength = static_cast<unsigned long>(
-            _min(sizeof(passbuf) - 1, password.GetLength()));
+              std::min(sizeof(passbuf) - 1, password.GetLength()));
           memcpy(passbuf, sensitive, auth_id.PasswordLength);
           passbuf[auth_id.PasswordLength] = 0;
         }

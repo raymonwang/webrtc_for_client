@@ -11,17 +11,19 @@
 #ifndef WEBRTC_VOICE_ENGINE_CHANNEL_MANAGER_H
 #define WEBRTC_VOICE_ENGINE_CHANNEL_MANAGER_H
 
+#include <memory>
 #include <vector>
 
 #include "webrtc/base/constructormagic.h"
-#include "webrtc/system_wrappers/interface/atomic32.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/scoped_ref_ptr.h"
+#include "webrtc/system_wrappers/include/atomic32.h"
 #include "webrtc/typedefs.h"
 
 namespace webrtc {
 
 class Config;
+class AudioDecoderFactory;
 
 namespace voe {
 
@@ -52,15 +54,16 @@ class ChannelOwner {
 
   ChannelOwner& operator=(const ChannelOwner& other);
 
-  Channel* channel() { return channel_ref_->channel.get(); }
+  Channel* channel() const { return channel_ref_->channel.get(); }
   bool IsValid() { return channel_ref_->channel.get() != NULL; }
+  int use_count() const { return channel_ref_->ref_count.Value(); }
  private:
   // Shared instance of a Channel. Copying ChannelOwners increase the reference
   // count and destroying ChannelOwners decrease references. Channels are
   // deleted when no references to them are held.
   struct ChannelRef {
     ChannelRef(Channel* channel);
-    const scoped_ptr<Channel> channel;
+    const std::unique_ptr<Channel> channel;
     Atomic32 ref_count;
   };
 
@@ -89,7 +92,7 @@ class ChannelManager {
     size_t iterator_pos_;
     std::vector<ChannelOwner> channels_;
 
-    DISALLOW_COPY_AND_ASSIGN(Iterator);
+    RTC_DISALLOW_COPY_AND_ASSIGN(Iterator);
   };
 
   // CreateChannel will always return a valid ChannelOwner instance. The channel
@@ -99,6 +102,11 @@ class ChannelManager {
   // CreateChannel(const Config& external_config) is called.
   ChannelOwner CreateChannel();
   ChannelOwner CreateChannel(const Config& external_config);
+  ChannelOwner CreateChannel(
+      const rtc::scoped_refptr<AudioDecoderFactory>& decoder_factory);
+  ChannelOwner CreateChannel(
+      const Config& external_config,
+      const rtc::scoped_refptr<AudioDecoderFactory>& decoder_factory);
 
   // ChannelOwner.channel() will be NULL if channel_id is invalid or no longer
   // exists. This should be checked with ChannelOwner::IsValid().
@@ -112,18 +120,20 @@ class ChannelManager {
 
  private:
   // Create a channel given a configuration, |config|.
-  ChannelOwner CreateChannelInternal(const Config& config);
+  ChannelOwner CreateChannelInternal(
+      const Config& config,
+      const rtc::scoped_refptr<AudioDecoderFactory>& decoder_factory);
 
   uint32_t instance_id_;
 
   Atomic32 last_channel_id_;
 
-  scoped_ptr<CriticalSectionWrapper> lock_;
+  rtc::CriticalSection lock_;
   std::vector<ChannelOwner> channels_;
 
   const Config& config_;
 
-  DISALLOW_COPY_AND_ASSIGN(ChannelManager);
+  RTC_DISALLOW_COPY_AND_ASSIGN(ChannelManager);
 };
 }  // namespace voe
 }  // namespace webrtc

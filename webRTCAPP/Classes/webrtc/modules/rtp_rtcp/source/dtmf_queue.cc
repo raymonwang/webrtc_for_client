@@ -10,21 +10,19 @@
 
 #include "webrtc/modules/rtp_rtcp/source/dtmf_queue.h"
 
-#include <string.h>  //memset
+#include <string.h>
 
 namespace webrtc {
-DTMFqueue::DTMFqueue()
-    : dtmf_critsect_(CriticalSectionWrapper::CreateCriticalSection()),
-      next_empty_index_(0) {
+DTMFqueue::DTMFqueue() : next_empty_index_(0) {
   memset(dtmf_key_, 0, sizeof(dtmf_key_));
   memset(dtmf_length, 0, sizeof(dtmf_length));
   memset(dtmf_level_, 0, sizeof(dtmf_level_));
 }
 
-DTMFqueue::~DTMFqueue() { delete dtmf_critsect_; }
+DTMFqueue::~DTMFqueue() {}
 
 int32_t DTMFqueue::AddDTMF(uint8_t key, uint16_t len, uint8_t level) {
-  CriticalSectionScoped lock(dtmf_critsect_);
+  rtc::CritScope lock(&dtmf_critsect_);
 
   if (next_empty_index_ >= DTMF_OUTBAND_MAX) {
     return -1;
@@ -38,11 +36,10 @@ int32_t DTMFqueue::AddDTMF(uint8_t key, uint16_t len, uint8_t level) {
 }
 
 int8_t DTMFqueue::NextDTMF(uint8_t* dtmf_key, uint16_t* len, uint8_t* level) {
-  CriticalSectionScoped lock(dtmf_critsect_);
-
-  if (!PendingDTMF()) {
+  rtc::CritScope lock(&dtmf_critsect_);
+  if (next_empty_index_ == 0)
     return -1;
-  }
+
   *dtmf_key = dtmf_key_[0];
   *len = dtmf_length[0];
   *level = dtmf_level_[0];
@@ -58,7 +55,13 @@ int8_t DTMFqueue::NextDTMF(uint8_t* dtmf_key, uint16_t* len, uint8_t* level) {
   return 0;
 }
 
-bool DTMFqueue::PendingDTMF() { return (next_empty_index_ > 0); }
+bool DTMFqueue::PendingDTMF() {
+  rtc::CritScope lock(&dtmf_critsect_);
+  return next_empty_index_ > 0;
+}
 
-void DTMFqueue::ResetDTMF() { next_empty_index_ = 0; }
+void DTMFqueue::ResetDTMF() {
+  rtc::CritScope lock(&dtmf_critsect_);
+  next_empty_index_ = 0;
+}
 }  // namespace webrtc

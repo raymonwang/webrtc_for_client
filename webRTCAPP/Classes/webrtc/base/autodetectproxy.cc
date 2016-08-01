@@ -32,6 +32,12 @@ AutoDetectProxy::AutoDetectProxy(const std::string& user_agent)
     : agent_(user_agent), resolver_(NULL), socket_(NULL), next_(0) {
 }
 
+bool AutoDetectProxy::GetProxyForUrl(const char* agent,
+                                     const char* url,
+                                     rtc::ProxyInfo* proxy) {
+  return GetProxySettingsForUrl(agent, url, proxy, true);
+}
+
 AutoDetectProxy::~AutoDetectProxy() {
   if (resolver_) {
     resolver_->Destroy(false);
@@ -55,7 +61,7 @@ void AutoDetectProxy::DoWork() {
     LOG(LS_INFO) << "AutoDetectProxy initiating proxy classification";
     Next();
     // Process I/O until Stop()
-    Thread::Current()->ProcessMessages(kForever);
+    Thread::Current()->ProcessMessages(Thread::kForever);
     // Clean up the autodetect socket, from the thread that created it
     delete socket_;
   }
@@ -69,7 +75,7 @@ void AutoDetectProxy::OnMessage(Message *msg) {
     // If we can't resolve the proxy, skip straight to failure.
     Complete(PROXY_UNKNOWN);
   } else if (MSG_TIMEOUT == msg->message_id) {
-    OnCloseEvent(socket_, ETIMEDOUT);
+    OnTimeout();
   } else {
     // This must be the ST_MSG_WORKER_DONE message that deletes the
     // AutoDetectProxy object. We have observed crashes within this stack that
@@ -96,7 +102,7 @@ void AutoDetectProxy::OnMessage(Message *msg) {
 
     IPAddress address_ip = proxy().address.ipaddr();
 
-    uint16 address_port = proxy().address.port();
+    uint16_t address_port = proxy().address.port();
 
     char autoconfig_url[kSavedStringLimit];
     SaveStringToStack(autoconfig_url,
@@ -132,14 +138,14 @@ void AutoDetectProxy::OnResolveResult(AsyncResolverInterface* resolver) {
                     << resolver_->address();
     proxy_.address = resolver_->address();
     if (!DoConnect()) {
-      Thread::Current()->Post(this, MSG_TIMEOUT);
+      Thread::Current()->Post(RTC_FROM_HERE, this, MSG_TIMEOUT);
     }
   } else {
     LOG(LS_INFO) << "Failed to resolve " << resolver_->address();
     resolver_->Destroy(false);
     resolver_ = NULL;
     proxy_.address = SocketAddress();
-    Thread::Current()->Post(this, MSG_UNRESOLVABLE);
+    Thread::Current()->Post(RTC_FROM_HERE, this, MSG_UNRESOLVABLE);
   }
 }
 
@@ -170,11 +176,11 @@ void AutoDetectProxy::Next() {
     resolver_->Start(proxy_.address);
   } else {
     if (!DoConnect()) {
-      Thread::Current()->Post(this, MSG_TIMEOUT);
+      Thread::Current()->Post(RTC_FROM_HERE, this, MSG_TIMEOUT);
       return;
     }
   }
-  Thread::Current()->PostDelayed(timeout, this, MSG_TIMEOUT);
+  Thread::Current()->PostDelayed(RTC_FROM_HERE, timeout, this, MSG_TIMEOUT);
 }
 
 bool AutoDetectProxy::DoConnect() {
@@ -241,7 +247,7 @@ void AutoDetectProxy::OnConnectEvent(AsyncSocket * socket) {
 
 void AutoDetectProxy::OnReadEvent(AsyncSocket * socket) {
   char data[257];
-  int len = socket_->Recv(data, 256);
+  int len = socket_->Recv(data, 256, nullptr);
   if (len > 0) {
     data[len] = 0;
     LOG(LS_VERBOSE) << "AutoDetectProxy read " << len << " bytes";
@@ -269,6 +275,19 @@ void AutoDetectProxy::OnReadEvent(AsyncSocket * socket) {
       return;
   }
 
+  ++next_;
+  Next();
+}
+
+void AutoDetectProxy::OnTimeout() {
+  LOG(LS_VERBOSE) << "Timed out waiting for AsyncResolver.";
+  // If a resolver timed out we shouldn't try to use it again since it may be
+  // in the middle of resolving the last address.
+  if (resolver_) {
+    resolver_->SignalDone.disconnect(this);
+    resolver_->Destroy(false);
+    resolver_ = nullptr;
+  }
   ++next_;
   Next();
 }

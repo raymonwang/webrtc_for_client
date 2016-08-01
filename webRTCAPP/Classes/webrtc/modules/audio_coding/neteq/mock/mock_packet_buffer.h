@@ -19,8 +19,8 @@ namespace webrtc {
 
 class MockPacketBuffer : public PacketBuffer {
  public:
-  MockPacketBuffer(size_t max_number_of_packets)
-      : PacketBuffer(max_number_of_packets) {}
+  MockPacketBuffer(size_t max_number_of_packets, const TickTimer* tick_timer)
+      : PacketBuffer(max_number_of_packets, tick_timer) {}
   virtual ~MockPacketBuffer() { Die(); }
   MOCK_METHOD0(Die, void());
   MOCK_METHOD0(Flush,
@@ -41,7 +41,7 @@ class MockPacketBuffer : public PacketBuffer {
   MOCK_CONST_METHOD0(NextRtpHeader,
       const RTPHeader*());
   MOCK_METHOD1(GetNextPacket,
-      Packet*(int* discard_count));
+      Packet*(size_t* discard_count));
   MOCK_METHOD0(DiscardNextPacket,
       int());
   MOCK_METHOD2(DiscardOldPackets,
@@ -49,7 +49,7 @@ class MockPacketBuffer : public PacketBuffer {
   MOCK_METHOD1(DiscardAllOldPackets,
       int(uint32_t timestamp_limit));
   MOCK_CONST_METHOD0(NumPacketsInBuffer,
-      int());
+      size_t());
   MOCK_METHOD1(IncrementWaitingTimes,
       void(int));
   MOCK_CONST_METHOD0(current_memory_bytes,

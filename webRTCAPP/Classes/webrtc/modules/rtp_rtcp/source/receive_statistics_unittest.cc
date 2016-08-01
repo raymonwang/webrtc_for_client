@@ -8,11 +8,12 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "webrtc/modules/rtp_rtcp/interface/receive_statistics.h"
-#include "webrtc/system_wrappers/interface/clock.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
+#include "webrtc/modules/rtp_rtcp/include/receive_statistics.h"
+#include "webrtc/system_wrappers/include/clock.h"
 
 namespace webrtc {
 
@@ -36,7 +37,7 @@ class ReceiveStatisticsTest : public ::testing::Test {
 
  protected:
   SimulatedClock clock_;
-  scoped_ptr<ReceiveStatistics> receive_statistics_;
+  std::unique_ptr<ReceiveStatistics> receive_statistics_;
   RTPHeader header1_;
   RTPHeader header2_;
 };
@@ -143,12 +144,6 @@ TEST_F(ReceiveStatisticsTest, GetReceiveStreamDataCounters) {
   EXPECT_GT(counters.first_packet_time_ms, -1);
   EXPECT_EQ(1u, counters.transmitted.packets);
 
-  statistician->ResetStatistics();
-  // GetReceiveStreamDataCounters includes reset counter values.
-  statistician->GetReceiveStreamDataCounters(&counters);
-  EXPECT_GT(counters.first_packet_time_ms, -1);
-  EXPECT_EQ(1u, counters.transmitted.packets);
-
   receive_statistics_->IncomingPacket(header1_, kPacketSize1, false);
   statistician->GetReceiveStreamDataCounters(&counters);
   EXPECT_GT(counters.first_packet_time_ms, -1);
@@ -162,14 +157,14 @@ TEST_F(ReceiveStatisticsTest, RtcpCallbacks) {
         : RtcpStatisticsCallback(), num_calls_(0), ssrc_(0), stats_() {}
     virtual ~TestCallback() {}
 
-    virtual void StatisticsUpdated(const RtcpStatistics& statistics,
-                                   uint32_t ssrc) {
+    void StatisticsUpdated(const RtcpStatistics& statistics,
+                           uint32_t ssrc) override {
       ssrc_ = ssrc;
       stats_ = statistics;
       ++num_calls_;
     }
 
-    virtual void CNameChanged(const char* cname, uint32_t ssrc) OVERRIDE {}
+    void CNameChanged(const char* cname, uint32_t ssrc) override {}
 
     uint32_t num_calls_;
     uint32_t ssrc_;
@@ -257,26 +252,22 @@ class RtpTestCallback : public StreamDataCountersCallback {
     ++num_calls_;
   }
 
+  void MatchPacketCounter(const RtpPacketCounter& expected,
+                          const RtpPacketCounter& actual) {
+    EXPECT_EQ(expected.payload_bytes, actual.payload_bytes);
+    EXPECT_EQ(expected.header_bytes, actual.header_bytes);
+    EXPECT_EQ(expected.padding_bytes, actual.padding_bytes);
+    EXPECT_EQ(expected.packets, actual.packets);
+  }
+
   void Matches(uint32_t num_calls,
                uint32_t ssrc,
                const StreamDataCounters& expected) {
     EXPECT_EQ(num_calls, num_calls_);
     EXPECT_EQ(ssrc, ssrc_);
-    EXPECT_EQ(expected.transmitted.payload_bytes,
-              stats_.transmitted.payload_bytes);
-    EXPECT_EQ(expected.transmitted.header_bytes,
-              stats_.transmitted.header_bytes);
-    EXPECT_EQ(expected.transmitted.padding_bytes,
-              stats_.transmitted.padding_bytes);
-    EXPECT_EQ(expected.transmitted.packets, stats_.transmitted.packets);
-    EXPECT_EQ(expected.retransmitted.payload_bytes,
-              stats_.retransmitted.payload_bytes);
-    EXPECT_EQ(expected.retransmitted.header_bytes,
-              stats_.retransmitted.header_bytes);
-    EXPECT_EQ(expected.retransmitted.padding_bytes,
-              stats_.retransmitted.padding_bytes);
-    EXPECT_EQ(expected.retransmitted.packets, stats_.retransmitted.packets);
-    EXPECT_EQ(expected.fec.packets, stats_.fec.packets);
+    MatchPacketCounter(expected.transmitted, stats_.transmitted);
+    MatchPacketCounter(expected.retransmitted, stats_.retransmitted);
+    MatchPacketCounter(expected.fec, stats_.fec);
   }
 
   uint32_t num_calls_;
@@ -336,13 +327,16 @@ TEST_F(ReceiveStatisticsTest, RtpCallbacks) {
   header1_.paddingLength = 0;
   ++header1_.sequenceNumber;
   clock_.AdvanceTimeMilliseconds(5);
-  // One recovered packet.
+  // One FEC packet.
   receive_statistics_->IncomingPacket(
       header1_, kPacketSize1 + kHeaderLength, false);
-  receive_statistics_->FecPacketReceived(kSsrc1);
+  receive_statistics_->FecPacketReceived(header1_,
+                                         kPacketSize1 + kHeaderLength);
   expected.transmitted.payload_bytes = kPacketSize1 * 4;
   expected.transmitted.header_bytes = kHeaderLength * 4;
   expected.transmitted.packets = 4;
+  expected.fec.payload_bytes = kPacketSize1;
+  expected.fec.header_bytes = kHeaderLength;
   expected.fec.packets = 1;
   callback.Matches(5, kSsrc1, expected);
 
@@ -361,12 +355,13 @@ TEST_F(ReceiveStatisticsTest, RtpCallbacksFecFirst) {
   receive_statistics_->RegisterRtpStatisticsCallback(&callback);
 
   const uint32_t kHeaderLength = 20;
+  header1_.headerLength = kHeaderLength;
 
   // If first packet is FEC, ignore it.
-  receive_statistics_->FecPacketReceived(kSsrc1);
+  receive_statistics_->FecPacketReceived(header1_,
+                                         kPacketSize1 + kHeaderLength);
   EXPECT_EQ(0u, callback.num_calls_);
 
-  header1_.headerLength = kHeaderLength;
   receive_statistics_->IncomingPacket(
       header1_, kPacketSize1 + kHeaderLength, false);
   StreamDataCounters expected;
@@ -377,7 +372,10 @@ TEST_F(ReceiveStatisticsTest, RtpCallbacksFecFirst) {
   expected.fec.packets = 0;
   callback.Matches(1, kSsrc1, expected);
 
-  receive_statistics_->FecPacketReceived(kSsrc1);
+  receive_statistics_->FecPacketReceived(header1_,
+                                         kPacketSize1 + kHeaderLength);
+  expected.fec.payload_bytes = kPacketSize1;
+  expected.fec.header_bytes = kHeaderLength;
   expected.fec.packets = 1;
   callback.Matches(2, kSsrc1, expected);
 }

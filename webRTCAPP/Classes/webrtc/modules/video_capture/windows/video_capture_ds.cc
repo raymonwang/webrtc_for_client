@@ -13,8 +13,8 @@
 #include "webrtc/modules/video_capture/video_capture_config.h"
 #include "webrtc/modules/video_capture/windows/help_functions_ds.h"
 #include "webrtc/modules/video_capture/windows/sink_filter_ds.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/system_wrappers/include/trace.h"
 
 #include <Dvdmedia.h> // VIDEOINFOHEADER2
 
@@ -395,7 +395,7 @@ HRESULT VideoCaptureDS::ConnectDVCamera()
     hr = _graphBuilder->ConnectDirect(_outputDvPin, _inputSendPin, NULL);
     if (hr != S_OK)
     {
-        if (hr == 0x80070004)
+        if (hr == HRESULT_FROM_WIN32(ERROR_TOO_MANY_OPEN_FILES))
         {
             WEBRTC_TRACE(webrtc::kTraceError, webrtc::kTraceVideoCapture, _id,
                          "Failed to connect the capture device, busy");

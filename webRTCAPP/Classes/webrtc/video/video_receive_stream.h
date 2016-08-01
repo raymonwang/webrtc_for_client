@@ -11,79 +11,98 @@
 #ifndef WEBRTC_VIDEO_VIDEO_RECEIVE_STREAM_H_
 #define WEBRTC_VIDEO_VIDEO_RECEIVE_STREAM_H_
 
+#include <memory>
 #include <vector>
 
 #include "webrtc/call.h"
+#include "webrtc/call/transport_adapter.h"
+#include "webrtc/common_video/include/incoming_video_stream.h"
 #include "webrtc/common_video/libyuv/include/webrtc_libyuv.h"
-#include "webrtc/modules/video_render/include/video_render_defines.h"
-#include "webrtc/system_wrappers/interface/clock.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/video/encoded_frame_callback_adapter.h"
+#include "webrtc/modules/video_coding/video_coding_impl.h"
+#include "webrtc/system_wrappers/include/clock.h"
 #include "webrtc/video/receive_statistics_proxy.h"
-#include "webrtc/video/transport_adapter.h"
-#include "webrtc/video_engine/include/vie_render.h"
+#include "webrtc/video/rtp_stream_receiver.h"
+#include "webrtc/video/video_stream_decoder.h"
 #include "webrtc/video_receive_stream.h"
 
 namespace webrtc {
 
-class VideoEngine;
-class ViEBase;
-class ViECodec;
-class ViEExternalCodec;
-class ViEImageProcess;
-class ViENetwork;
-class ViERender;
-class ViERTP_RTCP;
+class CallStats;
+class CongestionController;
+class IvfFileWriter;
+class ProcessThread;
 class VoiceEngine;
+class VieRemb;
 
 namespace internal {
 
 class VideoReceiveStream : public webrtc::VideoReceiveStream,
-                           public I420FrameCallback,
-                           public VideoRenderCallback {
+                           public rtc::VideoSinkInterface<VideoFrame>,
+                           public EncodedImageCallback,
+                           public NackSender,
+                           public KeyFrameRequestSender {
  public:
-  VideoReceiveStream(webrtc::VideoEngine* video_engine,
-                     const VideoReceiveStream::Config& config,
-                     newapi::Transport* transport,
+  VideoReceiveStream(int num_cpu_cores,
+                     CongestionController* congestion_controller,
+                     VideoReceiveStream::Config config,
                      webrtc::VoiceEngine* voice_engine,
-                     int base_channel);
-  virtual ~VideoReceiveStream();
+                     ProcessThread* process_thread,
+                     CallStats* call_stats,
+                     VieRemb* remb);
+  ~VideoReceiveStream() override;
 
-  virtual void Start() OVERRIDE;
-  virtual void Stop() OVERRIDE;
-  virtual Stats GetStats() const OVERRIDE;
+  void SignalNetworkState(NetworkState state);
+  bool DeliverRtcp(const uint8_t* packet, size_t length);
+  bool DeliverRtp(const uint8_t* packet,
+                  size_t length,
+                  const PacketTime& packet_time);
 
-  // Overrides I420FrameCallback.
-  virtual void FrameCallback(I420VideoFrame* video_frame) OVERRIDE;
+  // webrtc::VideoReceiveStream implementation.
+  void Start() override;
+  void Stop() override;
 
-  // Overrides VideoRenderCallback.
-  virtual int32_t RenderFrame(const uint32_t stream_id,
-                              I420VideoFrame& video_frame) OVERRIDE;
+  webrtc::VideoReceiveStream::Stats GetStats() const override;
 
-  void SignalNetworkState(Call::NetworkState state);
+  // Overrides rtc::VideoSinkInterface<VideoFrame>.
+  void OnFrame(const VideoFrame& video_frame) override;
 
-  virtual bool DeliverRtcp(const uint8_t* packet, size_t length);
-  virtual bool DeliverRtp(const uint8_t* packet, size_t length);
+  // Overrides EncodedImageCallback.
+  int32_t Encoded(const EncodedImage& encoded_image,
+                  const CodecSpecificInfo* codec_specific_info,
+                  const RTPFragmentationHeader* fragmentation) override;
+
+  const Config& config() const { return config_; }
+
+  void SetSyncChannel(VoiceEngine* voice_engine, int audio_channel_id);
+
+  // Implements NackSender.
+  void SendNack(const std::vector<uint16_t>& sequence_numbers) override;
+
+  // Implements KeyFrameRequestSender.
+  void RequestKeyFrame() override;
 
  private:
-  void SetRtcpMode(newapi::RtcpMode mode);
+  static bool DecodeThreadFunction(void* ptr);
+  void Decode();
 
   TransportAdapter transport_adapter_;
-  EncodedFrameCallbackAdapter encoded_frame_proxy_;
   const VideoReceiveStream::Config config_;
+  ProcessThread* const process_thread_;
   Clock* const clock_;
 
-  ViEBase* video_engine_base_;
-  ViECodec* codec_;
-  ViEExternalCodec* external_codec_;
-  ViENetwork* network_;
-  ViERender* render_;
-  ViERTP_RTCP* rtp_rtcp_;
-  ViEImageProcess* image_process_;
+  rtc::PlatformThread decode_thread_;
 
-  scoped_ptr<ReceiveStatisticsProxy> stats_proxy_;
+  CongestionController* const congestion_controller_;
+  CallStats* const call_stats_;
 
-  int channel_;
+  vcm::VideoReceiver video_receiver_;
+  std::unique_ptr<rtc::VideoSinkInterface<VideoFrame>> incoming_video_stream_;
+  ReceiveStatisticsProxy stats_proxy_;
+  RtpStreamReceiver rtp_stream_receiver_;
+  std::unique_ptr<VideoStreamDecoder> video_stream_decoder_;
+  ViESyncModule vie_sync_;
+
+  std::unique_ptr<IvfFileWriter> ivf_writer_;
 };
 }  // namespace internal
 }  // namespace webrtc

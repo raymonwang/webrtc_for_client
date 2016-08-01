@@ -27,10 +27,7 @@
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif  // HAVE_CONFIG_H
-
+#include "webrtc/base/arraysize.h"
 #include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/openssl.h"
@@ -38,6 +35,8 @@
 #include "webrtc/base/sslroots.h"
 #include "webrtc/base/stringutils.h"
 #include "webrtc/base/thread.h"
+
+#ifndef OPENSSL_IS_BORINGSSL
 
 // TODO: Use a nicer abstraction for mutex.
 
@@ -63,6 +62,8 @@ struct CRYPTO_dynlock_value {
   MUTEX_TYPE mutex;
 };
 
+#endif  // #ifndef OPENSSL_IS_BORINGSSL
+
 //////////////////////////////////////////////////////////////////////
 // SocketBIO
 //////////////////////////////////////////////////////////////////////
@@ -74,7 +75,8 @@ static long socket_ctrl(BIO* h, int cmd, long arg1, void* arg2);
 static int socket_new(BIO* h);
 static int socket_free(BIO* data);
 
-static const BIO_METHOD methods_socket = {
+// TODO(davidben): This should be const once BoringSSL is assumed.
+static BIO_METHOD methods_socket = {
   BIO_TYPE_BIO,
   "socket",
   socket_write,
@@ -87,7 +89,7 @@ static const BIO_METHOD methods_socket = {
   NULL,
 };
 
-static const BIO_METHOD* BIO_s_socket2() { return(&methods_socket); }
+static BIO_METHOD* BIO_s_socket2() { return(&methods_socket); }
 
 static BIO* BIO_new_socket(rtc::AsyncSocket* socket) {
   BIO* ret = BIO_new(BIO_s_socket2());
@@ -117,7 +119,7 @@ static int socket_read(BIO* b, char* out, int outl) {
     return -1;
   rtc::AsyncSocket* socket = static_cast<rtc::AsyncSocket*>(b->ptr);
   BIO_clear_retry_flags(b);
-  int result = socket->Recv(out, outl);
+  int result = socket->Recv(out, outl, nullptr);
   if (result > 0) {
     return result;
   } else if (result == 0) {
@@ -171,6 +173,8 @@ static long socket_ctrl(BIO* b, int cmd, long num, void* ptr) {
 
 namespace rtc {
 
+#ifndef OPENSSL_IS_BORINGSSL
+
 // This array will store all of the mutexes available to OpenSSL.
 static MUTEX_TYPE* mutex_buf = NULL;
 
@@ -212,6 +216,8 @@ static void dyn_destroy_function(CRYPTO_dynlock_value* l,
   delete l;
 }
 
+#endif  // #ifndef OPENSSL_IS_BORINGSSL
+
 VerificationCallback OpenSSLAdapter::custom_verify_callback_ = NULL;
 
 bool OpenSSLAdapter::InitializeSSL(VerificationCallback callback) {
@@ -229,6 +235,9 @@ bool OpenSSLAdapter::InitializeSSL(VerificationCallback callback) {
 }
 
 bool OpenSSLAdapter::InitializeSSLThread() {
+  // BoringSSL is doing the locking internally, so the callbacks are not used
+  // in this case (and are no-ops anyways).
+#ifndef OPENSSL_IS_BORINGSSL
   mutex_buf = new MUTEX_TYPE[CRYPTO_num_locks()];
   if (!mutex_buf)
     return false;
@@ -242,10 +251,12 @@ bool OpenSSLAdapter::InitializeSSLThread() {
   CRYPTO_set_dynlock_create_callback(dyn_create_function);
   CRYPTO_set_dynlock_lock_callback(dyn_lock_function);
   CRYPTO_set_dynlock_destroy_callback(dyn_destroy_function);
+#endif  // #ifndef OPENSSL_IS_BORINGSSL
   return true;
 }
 
 bool OpenSSLAdapter::CleanupSSL() {
+#ifndef OPENSSL_IS_BORINGSSL
   if (!mutex_buf)
     return false;
   CRYPTO_set_id_callback(NULL);
@@ -257,6 +268,7 @@ bool OpenSSLAdapter::CleanupSSL() {
     MUTEX_CLEANUP(mutex_buf[i]);
   delete [] mutex_buf;
   mutex_buf = NULL;
+#endif  // #ifndef OPENSSL_IS_BORINGSSL
   return true;
 }
 
@@ -320,7 +332,7 @@ OpenSSLAdapter::BeginSSL() {
     goto ssl_error;
   }
 
-  bio = BIO_new_socket(static_cast<AsyncSocketAdapter*>(socket_));
+  bio = BIO_new_socket(socket_);
   if (!bio) {
     err = -1;
     goto ssl_error;
@@ -392,7 +404,8 @@ OpenSSLAdapter::ContinueSSL() {
     if (DTLSv1_get_timeout(ssl_, &timeout)) {
       int delay = timeout.tv_sec * 1000 + timeout.tv_usec/1000;
 
-      Thread::Current()->PostDelayed(delay, this, MSG_TIMEOUT, 0);
+      Thread::Current()->PostDelayed(RTC_FROM_HERE, delay, this, MSG_TIMEOUT,
+                                     0);
     }
     break;
 
@@ -512,13 +525,12 @@ OpenSSLAdapter::SendTo(const void* pv, size_t cb, const SocketAddress& addr) {
   return SOCKET_ERROR;
 }
 
-int
-OpenSSLAdapter::Recv(void* pv, size_t cb) {
+int OpenSSLAdapter::Recv(void* pv, size_t cb, int64_t* timestamp) {
   //LOG(LS_INFO) << "OpenSSLAdapter::Recv(" << cb << ")";
   switch (state_) {
 
   case SSL_NONE:
-    return AsyncSocketAdapter::Recv(pv, cb);
+    return AsyncSocketAdapter::Recv(pv, cb, timestamp);
 
   case SSL_WAIT:
   case SSL_CONNECTING:
@@ -567,10 +579,12 @@ OpenSSLAdapter::Recv(void* pv, size_t cb) {
   return SOCKET_ERROR;
 }
 
-int
-OpenSSLAdapter::RecvFrom(void* pv, size_t cb, SocketAddress* paddr) {
+int OpenSSLAdapter::RecvFrom(void* pv,
+                             size_t cb,
+                             SocketAddress* paddr,
+                             int64_t* timestamp) {
   if (socket_->GetState() == Socket::CS_CONNECTED) {
-    int ret = Recv(pv, cb);
+    int ret = Recv(pv, cb, timestamp);
 
     *paddr = GetRemoteAddress();
 
@@ -820,7 +834,7 @@ bool OpenSSLAdapter::SSLPostConnectionCheck(SSL* ssl, const char* host) {
   return ok;
 }
 
-#if _DEBUG
+#if !defined(NDEBUG)
 
 // We only use this for tracing and so it is only needed in debug mode
 
@@ -849,11 +863,11 @@ OpenSSLAdapter::SSLInfoCallback(const SSL* s, int where, int ret) {
   }
 }
 
-#endif  // _DEBUG
+#endif
 
 int
 OpenSSLAdapter::SSLVerifyCallback(int ok, X509_STORE_CTX* store) {
-#if _DEBUG
+#if !defined(NDEBUG)
   if (!ok) {
     char data[256];
     X509* cert = X509_STORE_CTX_get_current_cert(store);
@@ -900,7 +914,7 @@ OpenSSLAdapter::SSLVerifyCallback(int ok, X509_STORE_CTX* store) {
 bool OpenSSLAdapter::ConfigureTrustedRootCertificates(SSL_CTX* ctx) {
   // Add the root cert that we care about to the SSL context
   int count_of_added_certs = 0;
-  for (int i = 0; i < ARRAY_SIZE(kSSLCertCertificateList); i++) {
+  for (size_t i = 0; i < arraysize(kSSLCertCertificateList); i++) {
     const unsigned char* cert_buffer = kSSLCertCertificateList[i];
     size_t cert_buffer_len = kSSLCertCertificateSizeList[i];
     X509* cert = d2i_X509(NULL, &cert_buffer,
@@ -934,7 +948,7 @@ OpenSSLAdapter::SetupSSLContext() {
     return NULL;
   }
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
   SSL_CTX_set_info_callback(ctx, SSLInfoCallback);
 #endif
 

@@ -10,34 +10,42 @@
 
 #include "webrtc/video/video_receive_stream.h"
 
-#include <assert.h>
 #include <stdlib.h>
 
+#include <set>
 #include <string>
 
+#include "webrtc/base/checks.h"
+#include "webrtc/base/logging.h"
 #include "webrtc/common_video/libyuv/include/webrtc_libyuv.h"
-#include "webrtc/system_wrappers/interface/clock.h"
-#include "webrtc/system_wrappers/interface/logging.h"
+#include "webrtc/modules/congestion_controller/include/congestion_controller.h"
+#include "webrtc/modules/utility/include/process_thread.h"
+#include "webrtc/modules/video_coding/include/video_coding.h"
+#include "webrtc/modules/video_coding/utility/ivf_file_writer.h"
+#include "webrtc/system_wrappers/include/clock.h"
+#include "webrtc/video/call_stats.h"
 #include "webrtc/video/receive_statistics_proxy.h"
-#include "webrtc/video_encoder.h"
-#include "webrtc/video_engine/include/vie_base.h"
-#include "webrtc/video_engine/include/vie_capture.h"
-#include "webrtc/video_engine/include/vie_codec.h"
-#include "webrtc/video_engine/include/vie_external_codec.h"
-#include "webrtc/video_engine/include/vie_image_process.h"
-#include "webrtc/video_engine/include/vie_network.h"
-#include "webrtc/video_engine/include/vie_render.h"
-#include "webrtc/video_engine/include/vie_rtp_rtcp.h"
 #include "webrtc/video_receive_stream.h"
 
 namespace webrtc {
+
+static const bool kEnableFrameRecording = false;
+
+static bool UseSendSideBwe(const VideoReceiveStream::Config& config) {
+  if (!config.rtp.transport_cc)
+    return false;
+  for (const auto& extension : config.rtp.extensions) {
+    if (extension.uri == RtpExtension::kTransportSequenceNumberUri)
+      return true;
+  }
+  return false;
+}
+
 std::string VideoReceiveStream::Decoder::ToString() const {
   std::stringstream ss;
-  ss << "{decoder: " << (decoder != NULL ? "(VideoDecoder)" : "NULL");
+  ss << "{decoder: " << (decoder ? "(VideoDecoder)" : "nullptr");
   ss << ", payload_type: " << payload_type;
   ss << ", payload_name: " << payload_name;
-  ss << ", is_renderer: " << (is_renderer ? "yes" : "no");
-  ss << ", expected_delay_ms: " << expected_delay_ms;
   ss << '}';
 
   return ss.str();
@@ -53,13 +61,14 @@ std::string VideoReceiveStream::Config::ToString() const {
   }
   ss << ']';
   ss << ", rtp: " << rtp.ToString();
-  ss << ", renderer: " << (renderer != NULL ? "(renderer)" : "NULL");
+  ss << ", renderer: " << (renderer ? "(renderer)" : "nullptr");
   ss << ", render_delay_ms: " << render_delay_ms;
-  ss << ", audio_channel_id: " << audio_channel_id;
+  if (!sync_group.empty())
+    ss << ", sync_group: " << sync_group;
   ss << ", pre_decode_callback: "
-     << (pre_decode_callback != NULL ? "(EncodedFrameObserver)" : "NULL");
+     << (pre_decode_callback ? "(EncodedFrameObserver)" : "nullptr");
   ss << ", pre_render_callback: "
-     << (pre_render_callback != NULL ? "(I420FrameCallback)" : "NULL");
+     << (pre_render_callback ? "(I420FrameCallback)" : "nullptr");
   ss << ", target_delay_ms: " << target_delay_ms;
   ss << '}';
 
@@ -70,14 +79,15 @@ std::string VideoReceiveStream::Config::Rtp::ToString() const {
   std::stringstream ss;
   ss << "{remote_ssrc: " << remote_ssrc;
   ss << ", local_ssrc: " << local_ssrc;
-  ss << ", rtcp_mode: " << (rtcp_mode == newapi::kRtcpCompound
-                                ? "kRtcpCompound"
-                                : "kRtcpReducedSize");
+  ss << ", rtcp_mode: "
+     << (rtcp_mode == RtcpMode::kCompound ? "RtcpMode::kCompound"
+                                          : "RtcpMode::kReducedSize");
   ss << ", rtcp_xr: ";
   ss << "{receiver_reference_time_report: "
      << (rtcp_xr.receiver_reference_time_report ? "on" : "off");
   ss << '}';
   ss << ", remb: " << (remb ? "on" : "off");
+  ss << ", transport_cc: " << (transport_cc ? "on" : "off");
   ss << ", nack: {rtp_history_ms: " << nack.rtp_history_ms << '}';
   ss << ", fec: " << fec.ToString();
   ss << ", rtx: {";
@@ -99,16 +109,17 @@ std::string VideoReceiveStream::Config::Rtp::ToString() const {
   return ss.str();
 }
 
-namespace internal {
 namespace {
 VideoCodec CreateDecoderVideoCodec(const VideoReceiveStream::Decoder& decoder) {
   VideoCodec codec;
   memset(&codec, 0, sizeof(codec));
 
   codec.plType = decoder.payload_type;
-  strcpy(codec.plName, decoder.payload_name.c_str());
+  strncpy(codec.plName, decoder.payload_name.c_str(), sizeof(codec.plName));
   if (decoder.payload_name == "VP8") {
     codec.codecType = kVideoCodecVP8;
+  } else if (decoder.payload_name == "VP9") {
+    codec.codecType = kVideoCodecVP9;
   } else if (decoder.payload_name == "H264") {
     codec.codecType = kVideoCodecH264;
   } else {
@@ -117,6 +128,8 @@ VideoCodec CreateDecoderVideoCodec(const VideoReceiveStream::Decoder& decoder) {
 
   if (codec.codecType == kVideoCodecVP8) {
     codec.codecSpecific.VP8 = VideoEncoder::GetDefaultVp8Settings();
+  } else if (codec.codecType == kVideoCodecVP9) {
+    codec.codecSpecific.VP9 = VideoEncoder::GetDefaultVp9Settings();
   } else if (codec.codecType == kVideoCodecH264) {
     codec.codecSpecific.H264 = VideoEncoder::GetDefaultH264Settings();
   }
@@ -130,248 +143,229 @@ VideoCodec CreateDecoderVideoCodec(const VideoReceiveStream::Decoder& decoder) {
 }
 }  // namespace
 
-VideoReceiveStream::VideoReceiveStream(webrtc::VideoEngine* video_engine,
-                                       const VideoReceiveStream::Config& config,
-                                       newapi::Transport* transport,
-                                       webrtc::VoiceEngine* voice_engine,
-                                       int base_channel)
-    : transport_adapter_(transport),
-      encoded_frame_proxy_(config.pre_decode_callback),
-      config_(config),
+namespace internal {
+
+VideoReceiveStream::VideoReceiveStream(
+    int num_cpu_cores,
+    CongestionController* congestion_controller,
+    VideoReceiveStream::Config config,
+    webrtc::VoiceEngine* voice_engine,
+    ProcessThread* process_thread,
+    CallStats* call_stats,
+    VieRemb* remb)
+    : transport_adapter_(config.rtcp_send_transport),
+      config_(std::move(config)),
+      process_thread_(process_thread),
       clock_(Clock::GetRealTimeClock()),
-      channel_(-1) {
-  video_engine_base_ = ViEBase::GetInterface(video_engine);
-  video_engine_base_->CreateReceiveChannel(channel_, base_channel);
-  assert(channel_ != -1);
+      decode_thread_(DecodeThreadFunction, this, "DecodingThread"),
+      congestion_controller_(congestion_controller),
+      call_stats_(call_stats),
+      video_receiver_(clock_, nullptr, this, this, this),
+      stats_proxy_(&config_, clock_),
+      rtp_stream_receiver_(&video_receiver_,
+                           congestion_controller_->GetRemoteBitrateEstimator(
+                               UseSendSideBwe(config_)),
+                           &transport_adapter_,
+                           call_stats_->rtcp_rtt_stats(),
+                           congestion_controller_->pacer(),
+                           congestion_controller_->packet_router(),
+                           remb,
+                           &config_,
+                           &stats_proxy_,
+                           process_thread_),
+      vie_sync_(&video_receiver_) {
+  LOG(LS_INFO) << "VideoReceiveStream: " << config_.ToString();
 
-  rtp_rtcp_ = ViERTP_RTCP::GetInterface(video_engine);
-  assert(rtp_rtcp_ != NULL);
+  RTC_DCHECK(process_thread_);
+  RTC_DCHECK(congestion_controller_);
+  RTC_DCHECK(call_stats_);
 
-  // TODO(pbos): This is not fine grained enough...
-  rtp_rtcp_->SetNACKStatus(channel_, config_.rtp.nack.rtp_history_ms > 0);
-  rtp_rtcp_->SetKeyFrameRequestMethod(channel_, kViEKeyFrameRequestPliRtcp);
-  SetRtcpMode(config_.rtp.rtcp_mode);
-
-  assert(config_.rtp.remote_ssrc != 0);
-  // TODO(pbos): What's an appropriate local_ssrc for receive-only streams?
-  assert(config_.rtp.local_ssrc != 0);
-  assert(config_.rtp.remote_ssrc != config_.rtp.local_ssrc);
-
-  rtp_rtcp_->SetLocalSSRC(channel_, config_.rtp.local_ssrc);
-  // TODO(pbos): Support multiple RTX, per video payload.
-  Config::Rtp::RtxMap::const_iterator it = config_.rtp.rtx.begin();
-  if (it != config_.rtp.rtx.end()) {
-    assert(it->second.ssrc != 0);
-    assert(it->second.payload_type != 0);
-
-    rtp_rtcp_->SetRemoteSSRCType(channel_, kViEStreamTypeRtx, it->second.ssrc);
-    rtp_rtcp_->SetRtxReceivePayloadType(channel_, it->second.payload_type);
-  }
-
-  rtp_rtcp_->SetRembStatus(channel_, false, config_.rtp.remb);
-
-  for (size_t i = 0; i < config_.rtp.extensions.size(); ++i) {
-    const std::string& extension = config_.rtp.extensions[i].name;
-    int id = config_.rtp.extensions[i].id;
-    if (extension == RtpExtension::kTOffset) {
-      if (rtp_rtcp_->SetReceiveTimestampOffsetStatus(channel_, true, id) != 0)
-        abort();
-    } else if (extension == RtpExtension::kAbsSendTime) {
-      if (rtp_rtcp_->SetReceiveAbsoluteSendTimeStatus(channel_, true, id) != 0)
-        abort();
-    } else {
-      abort();  // Unsupported extension.
-    }
-  }
-
-  network_ = ViENetwork::GetInterface(video_engine);
-  assert(network_ != NULL);
-
-  network_->RegisterSendTransport(channel_, transport_adapter_);
-
-  codec_ = ViECodec::GetInterface(video_engine);
-
-  if (config_.rtp.fec.ulpfec_payload_type != -1) {
-    // ULPFEC without RED doesn't make sense.
-    assert(config_.rtp.fec.red_payload_type != -1);
-    VideoCodec codec;
-    memset(&codec, 0, sizeof(codec));
-    codec.codecType = kVideoCodecULPFEC;
-    strcpy(codec.plName, "ulpfec");
-    codec.plType = config_.rtp.fec.ulpfec_payload_type;
-    if (codec_->SetReceiveCodec(channel_, codec) != 0) {
-      LOG(LS_ERROR) << "Could not set ULPFEC codec. This shouldn't happen.";
-      abort();
-    }
-  }
-  if (config_.rtp.fec.red_payload_type != -1) {
-    VideoCodec codec;
-    memset(&codec, 0, sizeof(codec));
-    codec.codecType = kVideoCodecRED;
-    strcpy(codec.plName, "red");
-    codec.plType = config_.rtp.fec.red_payload_type;
-    if (codec_->SetReceiveCodec(channel_, codec) != 0) {
-      LOG(LS_ERROR) << "Could not set RED codec. This shouldn't happen.";
-      abort();
-    }
-  }
-
-  stats_proxy_.reset(
-      new ReceiveStatisticsProxy(config_.rtp.local_ssrc, clock_));
-
-  if (rtp_rtcp_->RegisterReceiveChannelRtcpStatisticsCallback(
-          channel_, stats_proxy_.get()) != 0) {
-    abort();
-  }
-
-  if (rtp_rtcp_->RegisterReceiveChannelRtpStatisticsCallback(
-          channel_, stats_proxy_.get()) != 0) {
-    abort();
-  }
-
-  if (codec_->RegisterDecoderObserver(channel_, *stats_proxy_) != 0) {
-    abort();
-  }
-
-  video_engine_base_->RegisterReceiveStatisticsProxy(channel_,
-                                                     stats_proxy_.get());
-
-  external_codec_ = ViEExternalCodec::GetInterface(video_engine);
-  assert(!config_.decoders.empty());
-  for (size_t i = 0; i < config_.decoders.size(); ++i) {
-    const Decoder& decoder = config_.decoders[i];
-    if (external_codec_->RegisterExternalReceiveCodec(
-            channel_, decoder.payload_type, decoder.decoder,
-            decoder.is_renderer, decoder.expected_delay_ms) != 0) {
-      // TODO(pbos): Abort gracefully? Can this be a runtime error?
-      abort();
-    }
+  RTC_DCHECK(!config_.decoders.empty());
+  std::set<int> decoder_payload_types;
+  for (const Decoder& decoder : config_.decoders) {
+    RTC_CHECK(decoder.decoder);
+    RTC_CHECK(decoder_payload_types.find(decoder.payload_type) ==
+              decoder_payload_types.end())
+        << "Duplicate payload type (" << decoder.payload_type
+        << ") for different decoders.";
+    decoder_payload_types.insert(decoder.payload_type);
+    video_receiver_.RegisterExternalDecoder(decoder.decoder,
+                                            decoder.payload_type);
 
     VideoCodec codec = CreateDecoderVideoCodec(decoder);
-
-    if (codec_->SetReceiveCodec(channel_, codec) != 0) {
-      // TODO(pbos): Abort gracefully, this can be a runtime error.
-      //             Factor out to an Init() method.
-      abort();
-    }
+    RTC_CHECK(rtp_stream_receiver_.SetReceiveCodec(codec));
+    RTC_CHECK_EQ(VCM_OK, video_receiver_.RegisterReceiveCodec(
+                             &codec, num_cpu_cores, false));
   }
 
-  render_ = ViERender::GetInterface(video_engine);
-  assert(render_ != NULL);
+  video_receiver_.SetRenderDelay(config.render_delay_ms);
 
-  render_->AddRenderCallback(channel_, this);
-
-  if (voice_engine && config_.audio_channel_id != -1) {
-    video_engine_base_->SetVoiceEngine(voice_engine);
-    video_engine_base_->ConnectAudioChannel(channel_, config_.audio_channel_id);
-  }
-
-  image_process_ = ViEImageProcess::GetInterface(video_engine);
-  if (config.pre_decode_callback) {
-    image_process_->RegisterPreDecodeImageCallback(channel_,
-                                                   &encoded_frame_proxy_);
-  }
-  image_process_->RegisterPreRenderCallback(channel_, this);
-
-  if (config.rtp.rtcp_xr.receiver_reference_time_report) {
-    rtp_rtcp_->SetRtcpXrRrtrStatus(channel_, true);
-  }
+  process_thread_->RegisterModule(&video_receiver_);
+  process_thread_->RegisterModule(&vie_sync_);
 }
 
 VideoReceiveStream::~VideoReceiveStream() {
-  image_process_->DeRegisterPreRenderCallback(channel_);
-  image_process_->DeRegisterPreDecodeCallback(channel_);
+  LOG(LS_INFO) << "~VideoReceiveStream: " << config_.ToString();
+  Stop();
 
-  render_->RemoveRenderer(channel_);
+  process_thread_->DeRegisterModule(&vie_sync_);
+  process_thread_->DeRegisterModule(&video_receiver_);
 
-  for (size_t i = 0; i < config_.decoders.size(); ++i) {
-    external_codec_->DeRegisterExternalReceiveCodec(
-        channel_, config_.decoders[i].payload_type);
-  }
+  // Deregister external decoders so they are no longer running during
+  // destruction. This effectively stops the VCM since the decoder thread is
+  // stopped, the VCM is deregistered and no asynchronous decoder threads are
+  // running.
+  for (const Decoder& decoder : config_.decoders)
+    video_receiver_.RegisterExternalDecoder(nullptr, decoder.payload_type);
 
-  network_->DeregisterSendTransport(channel_);
+  congestion_controller_->GetRemoteBitrateEstimator(UseSendSideBwe(config_))
+      ->RemoveStream(rtp_stream_receiver_.GetRemoteSsrc());
+}
 
-  video_engine_base_->SetVoiceEngine(NULL);
-  image_process_->Release();
-  external_codec_->Release();
-  codec_->DeregisterDecoderObserver(channel_);
-  rtp_rtcp_->DeregisterReceiveChannelRtpStatisticsCallback(channel_,
-                                                           stats_proxy_.get());
-  rtp_rtcp_->DeregisterReceiveChannelRtcpStatisticsCallback(channel_,
-                                                            stats_proxy_.get());
-  codec_->Release();
-  network_->Release();
-  render_->Release();
-  rtp_rtcp_->Release();
-  video_engine_base_->DeleteChannel(channel_);
-  video_engine_base_->Release();
+void VideoReceiveStream::SignalNetworkState(NetworkState state) {
+  rtp_stream_receiver_.SignalNetworkState(state);
+}
+
+
+bool VideoReceiveStream::DeliverRtcp(const uint8_t* packet, size_t length) {
+  return rtp_stream_receiver_.DeliverRtcp(packet, length);
+}
+
+bool VideoReceiveStream::DeliverRtp(const uint8_t* packet,
+                                    size_t length,
+                                    const PacketTime& packet_time) {
+  return rtp_stream_receiver_.DeliverRtp(packet, length, packet_time);
 }
 
 void VideoReceiveStream::Start() {
+  if (decode_thread_.IsRunning())
+    return;
   transport_adapter_.Enable();
-  if (render_->StartRender(channel_) != 0)
-    abort();
-  if (video_engine_base_->StartReceive(channel_) != 0)
-    abort();
+  rtc::VideoSinkInterface<VideoFrame>* renderer = nullptr;
+  if (config_.renderer) {
+    if (config_.disable_prerenderer_smoothing) {
+      renderer = this;
+    } else {
+      incoming_video_stream_.reset(
+          new IncomingVideoStream(config_.render_delay_ms, this));
+      renderer = incoming_video_stream_.get();
+    }
+  }
+
+  video_stream_decoder_.reset(new VideoStreamDecoder(
+      &video_receiver_, &rtp_stream_receiver_, &rtp_stream_receiver_,
+      rtp_stream_receiver_.IsRetransmissionsEnabled(),
+      rtp_stream_receiver_.IsFecEnabled(), &stats_proxy_, renderer,
+      config_.pre_render_callback));
+  // Register the channel to receive stats updates.
+  call_stats_->RegisterStatsObserver(video_stream_decoder_.get());
+  // Start the decode thread
+  decode_thread_.Start();
+  decode_thread_.SetPriority(rtc::kHighestPriority);
+  rtp_stream_receiver_.StartReceive();
 }
 
 void VideoReceiveStream::Stop() {
-  if (render_->StopRender(channel_) != 0)
-    abort();
-  if (video_engine_base_->StopReceive(channel_) != 0)
-    abort();
+  rtp_stream_receiver_.StopReceive();
+  // TriggerDecoderShutdown will release any waiting decoder thread and make it
+  // stop immediately, instead of waiting for a timeout. Needs to be called
+  // before joining the decoder thread thread.
+  video_receiver_.TriggerDecoderShutdown();
+  decode_thread_.Stop();
+  call_stats_->DeregisterStatsObserver(video_stream_decoder_.get());
+  video_stream_decoder_.reset();
+  incoming_video_stream_.reset();
   transport_adapter_.Disable();
 }
 
+void VideoReceiveStream::SetSyncChannel(VoiceEngine* voice_engine,
+                                        int audio_channel_id) {
+  if (voice_engine && audio_channel_id != -1) {
+    VoEVideoSync* voe_sync_interface = VoEVideoSync::GetInterface(voice_engine);
+    vie_sync_.ConfigureSync(audio_channel_id, voe_sync_interface,
+                            rtp_stream_receiver_.rtp_rtcp(),
+                            rtp_stream_receiver_.GetRtpReceiver());
+    voe_sync_interface->Release();
+  } else {
+    vie_sync_.ConfigureSync(-1, nullptr, rtp_stream_receiver_.rtp_rtcp(),
+                            rtp_stream_receiver_.GetRtpReceiver());
+  }
+}
+
 VideoReceiveStream::Stats VideoReceiveStream::GetStats() const {
-  return stats_proxy_->GetStats();
+  return stats_proxy_.GetStats();
 }
 
-bool VideoReceiveStream::DeliverRtcp(const uint8_t* packet, size_t length) {
-  return network_->ReceivedRTCPPacket(channel_, packet, length) == 0;
+// TODO(tommi): This method grabs a lock 6 times.
+void VideoReceiveStream::OnFrame(const VideoFrame& video_frame) {
+  // TODO(tommi): OnDecodedFrame grabs a lock, incidentally the same lock
+  // that OnSyncOffsetUpdated() and OnRenderedFrame() below grab.
+  stats_proxy_.OnDecodedFrame();
+
+  int64_t sync_offset_ms;
+  // TODO(tommi): GetStreamSyncOffsetInMs grabs three locks.  One inside the
+  // function itself, another in GetChannel() and a third in
+  // GetPlayoutTimestamp.  Seems excessive.  Anyhow, I'm assuming the function
+  // succeeds most of the time, which leads to grabbing a fourth lock.
+  if (vie_sync_.GetStreamSyncOffsetInMs(video_frame, &sync_offset_ms)) {
+    // TODO(tommi): OnSyncOffsetUpdated grabs a lock.
+    stats_proxy_.OnSyncOffsetUpdated(sync_offset_ms);
+  }
+
+  // config_.renderer must never be null if we're getting this callback.
+  config_.renderer->OnFrame(video_frame);
+
+  // TODO(tommi): OnRenderFrame grabs a lock too.
+  stats_proxy_.OnRenderedFrame(video_frame.width(), video_frame.height());
 }
 
-bool VideoReceiveStream::DeliverRtp(const uint8_t* packet, size_t length) {
-  return network_->ReceivedRTPPacket(channel_, packet, length, PacketTime()) ==
-      0;
-}
-
-void VideoReceiveStream::FrameCallback(I420VideoFrame* video_frame) {
-  stats_proxy_->OnDecodedFrame();
-
-  if (config_.pre_render_callback)
-    config_.pre_render_callback->FrameCallback(video_frame);
-}
-
-int32_t VideoReceiveStream::RenderFrame(const uint32_t stream_id,
-                                        I420VideoFrame& video_frame) {
-  if (config_.renderer != NULL)
-    config_.renderer->RenderFrame(
-        video_frame,
-        video_frame.render_time_ms() - clock_->TimeInMilliseconds());
-
-  stats_proxy_->OnRenderedFrame();
+// TODO(asapersson): Consider moving callback from video_encoder.h or
+// creating a different callback.
+int32_t VideoReceiveStream::Encoded(
+    const EncodedImage& encoded_image,
+    const CodecSpecificInfo* codec_specific_info,
+    const RTPFragmentationHeader* fragmentation) {
+  stats_proxy_.OnPreDecode(encoded_image, codec_specific_info);
+  if (config_.pre_decode_callback) {
+    config_.pre_decode_callback->EncodedFrameCallback(
+        EncodedFrame(encoded_image._buffer, encoded_image._length,
+                     encoded_image._frameType));
+  }
+  if (kEnableFrameRecording) {
+    if (!ivf_writer_.get()) {
+      RTC_DCHECK(codec_specific_info);
+      std::ostringstream oss;
+      oss << "receive_bitstream_ssrc_" << config_.rtp.remote_ssrc << ".ivf";
+      ivf_writer_ =
+          IvfFileWriter::Open(oss.str(), codec_specific_info->codecType);
+    }
+    if (ivf_writer_.get()) {
+      bool ok = ivf_writer_->WriteFrame(encoded_image);
+      RTC_DCHECK(ok);
+    }
+  }
 
   return 0;
 }
 
-void VideoReceiveStream::SignalNetworkState(Call::NetworkState state) {
-  if (state == Call::kNetworkUp)
-    SetRtcpMode(config_.rtp.rtcp_mode);
-  network_->SetNetworkTransmissionState(channel_, state == Call::kNetworkUp);
-  if (state == Call::kNetworkDown)
-    rtp_rtcp_->SetRTCPStatus(channel_, kRtcpNone);
+bool VideoReceiveStream::DecodeThreadFunction(void* ptr) {
+  static_cast<VideoReceiveStream*>(ptr)->Decode();
+  return true;
 }
 
-void VideoReceiveStream::SetRtcpMode(newapi::RtcpMode mode) {
-  switch (mode) {
-    case newapi::kRtcpCompound:
-      rtp_rtcp_->SetRTCPStatus(channel_, kRtcpCompound_RFC4585);
-      break;
-    case newapi::kRtcpReducedSize:
-      rtp_rtcp_->SetRTCPStatus(channel_, kRtcpNonCompound_RFC5506);
-      break;
-  }
+void VideoReceiveStream::Decode() {
+  static const int kMaxDecodeWaitTimeMs = 50;
+  video_receiver_.Decode(kMaxDecodeWaitTimeMs);
 }
+
+void VideoReceiveStream::SendNack(
+    const std::vector<uint16_t>& sequence_numbers) {
+  rtp_stream_receiver_.RequestPacketRetransmit(sequence_numbers);
+}
+
+void VideoReceiveStream::RequestKeyFrame() {
+  rtp_stream_receiver_.RequestKeyFrame();
+}
+
 }  // namespace internal
 }  // namespace webrtc

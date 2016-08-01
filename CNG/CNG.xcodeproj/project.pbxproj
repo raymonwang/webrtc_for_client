@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D8E26198620F7009E763A /* cng_helpfuns.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E20198620F7009E763A /* cng_helpfuns.c */; };
-		430D8E27198620F7009E763A /* webrtc_cng.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E25198620F7009E763A /* webrtc_cng.c */; };
-		43E04BB21D26263100B39549 /* cng_helpfuns.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E20198620F7009E763A /* cng_helpfuns.c */; };
-		43E04BB31D26263100B39549 /* webrtc_cng.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8E25198620F7009E763A /* webrtc_cng.c */; };
+		43C0C5E61D4F06A80058AC82 /* audio_encoder_cng.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5E21D4F06A80058AC82 /* audio_encoder_cng.cc */; };
+		43C0C5E71D4F06A80058AC82 /* audio_encoder_cng.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5E21D4F06A80058AC82 /* audio_encoder_cng.cc */; };
+		43C0C5E81D4F06A80058AC82 /* webrtc_cng.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5E41D4F06A80058AC82 /* webrtc_cng.cc */; };
+		43C0C5E91D4F06A80058AC82 /* webrtc_cng.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5E41D4F06A80058AC82 /* webrtc_cng.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,13 +36,12 @@
 
 /* Begin PBXFileReference section */
 		430D8DEB198620D8009E763A /* libCNG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCNG.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8E1E198620F7009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D8E1F198620F7009E763A /* cng.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cng.gypi; sourceTree = "<group>"; };
-		430D8E20198620F7009E763A /* cng_helpfuns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cng_helpfuns.c; sourceTree = "<group>"; };
-		430D8E21198620F7009E763A /* cng_helpfuns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cng_helpfuns.h; sourceTree = "<group>"; };
-		430D8E23198620F7009E763A /* webrtc_cng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtc_cng.h; sourceTree = "<group>"; };
 		430D8E24198620F7009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
-		430D8E25198620F7009E763A /* webrtc_cng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = webrtc_cng.c; sourceTree = "<group>"; };
+		43C0C5E21D4F06A80058AC82 /* audio_encoder_cng.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_cng.cc; sourceTree = "<group>"; };
+		43C0C5E31D4F06A80058AC82 /* audio_encoder_cng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_encoder_cng.h; sourceTree = "<group>"; };
+		43C0C5E41D4F06A80058AC82 /* webrtc_cng.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtc_cng.cc; sourceTree = "<group>"; };
+		43C0C5E51D4F06A80058AC82 /* webrtc_cng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtc_cng.h; sourceTree = "<group>"; };
 		43E04BB91D26263100B39549 /* libCNG_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCNG_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,24 +91,15 @@
 		430D8E1D198620F7009E763A /* cng */ = {
 			isa = PBXGroup;
 			children = (
-				430D8E1E198620F7009E763A /* Android.mk */,
+				43C0C5E21D4F06A80058AC82 /* audio_encoder_cng.cc */,
+				43C0C5E31D4F06A80058AC82 /* audio_encoder_cng.h */,
+				43C0C5E41D4F06A80058AC82 /* webrtc_cng.cc */,
+				43C0C5E51D4F06A80058AC82 /* webrtc_cng.h */,
 				430D8E1F198620F7009E763A /* cng.gypi */,
-				430D8E20198620F7009E763A /* cng_helpfuns.c */,
-				430D8E21198620F7009E763A /* cng_helpfuns.h */,
-				430D8E22198620F7009E763A /* include */,
 				430D8E24198620F7009E763A /* OWNERS */,
-				430D8E25198620F7009E763A /* webrtc_cng.c */,
 			);
 			name = cng;
 			path = ../../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/cng;
-			sourceTree = "<group>";
-		};
-		430D8E22198620F7009E763A /* include */ = {
-			isa = PBXGroup;
-			children = (
-				430D8E23198620F7009E763A /* webrtc_cng.h */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,8 +171,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D8E26198620F7009E763A /* cng_helpfuns.c in Sources */,
-				430D8E27198620F7009E763A /* webrtc_cng.c in Sources */,
+				43C0C5E61D4F06A80058AC82 /* audio_encoder_cng.cc in Sources */,
+				43C0C5E81D4F06A80058AC82 /* webrtc_cng.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,8 +180,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43E04BB21D26263100B39549 /* cng_helpfuns.c in Sources */,
-				43E04BB31D26263100B39549 /* webrtc_cng.c in Sources */,
+				43C0C5E71D4F06A80058AC82 /* audio_encoder_cng.cc in Sources */,
+				43C0C5E91D4F06A80058AC82 /* webrtc_cng.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

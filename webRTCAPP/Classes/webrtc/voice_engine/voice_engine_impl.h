@@ -11,8 +11,10 @@
 #ifndef WEBRTC_VOICE_ENGINE_VOICE_ENGINE_IMPL_H
 #define WEBRTC_VOICE_ENGINE_VOICE_ENGINE_IMPL_H
 
+#include <memory>
+
 #include "webrtc/engine_configurations.h"
-#include "webrtc/system_wrappers/interface/atomic32.h"
+#include "webrtc/system_wrappers/include/atomic32.h"
 #include "webrtc/voice_engine/voe_base_impl.h"
 
 #ifdef WEBRTC_VOICE_ENGINE_AUDIO_PROCESSING_API
@@ -20,9 +22,6 @@
 #endif
 #ifdef WEBRTC_VOICE_ENGINE_CODEC_API
 #include "webrtc/voice_engine/voe_codec_impl.h"
-#endif
-#ifdef WEBRTC_VOICE_ENGINE_DTMF_API
-#include "webrtc/voice_engine/voe_dtmf_impl.h"
 #endif
 #ifdef WEBRTC_VOICE_ENGINE_EXTERNAL_MEDIA_API
 #include "webrtc/voice_engine/voe_external_media_impl.h"
@@ -47,8 +46,10 @@
 #include "webrtc/voice_engine/voe_volume_control_impl.h"
 #endif
 
-namespace webrtc
-{
+namespace webrtc {
+namespace voe {
+class ChannelProxy;
+}  // namespace voe
 
 class VoiceEngineImpl : public voe::SharedData,  // Must be the first base class
                         public VoiceEngine,
@@ -57,9 +58,6 @@ class VoiceEngineImpl : public voe::SharedData,  // Must be the first base class
 #endif
 #ifdef WEBRTC_VOICE_ENGINE_CODEC_API
                         public VoECodecImpl,
-#endif
-#ifdef WEBRTC_VOICE_ENGINE_DTMF_API
-                        public VoEDtmfImpl,
 #endif
 #ifdef WEBRTC_VOICE_ENGINE_EXTERNAL_MEDIA_API
                         public VoEExternalMediaImpl,
@@ -83,19 +81,15 @@ class VoiceEngineImpl : public voe::SharedData,  // Must be the first base class
 #ifdef WEBRTC_VOICE_ENGINE_VOLUME_CONTROL_API
                         public VoEVolumeControlImpl,
 #endif
-                        public VoEBaseImpl
-{
-public:
-    VoiceEngineImpl(const Config* config, bool owns_config) :
-        SharedData(*config),
+                        public VoEBaseImpl {
+ public:
+  VoiceEngineImpl(const Config* config, bool owns_config)
+      : SharedData(*config),
 #ifdef WEBRTC_VOICE_ENGINE_AUDIO_PROCESSING_API
         VoEAudioProcessingImpl(this),
 #endif
 #ifdef WEBRTC_VOICE_ENGINE_CODEC_API
         VoECodecImpl(this),
-#endif
-#ifdef WEBRTC_VOICE_ENGINE_DTMF_API
-        VoEDtmfImpl(this),
 #endif
 #ifdef WEBRTC_VOICE_ENGINE_EXTERNAL_MEDIA_API
         VoEExternalMediaImpl(this),
@@ -121,24 +115,27 @@ public:
 #endif
         VoEBaseImpl(this),
         _ref_count(0),
-        own_config_(owns_config ? config : NULL)
-    {
-    }
-    virtual ~VoiceEngineImpl()
-    {
-        assert(_ref_count.Value() == 0);
-    }
+        own_config_(owns_config ? config : NULL) {
+  }
+  ~VoiceEngineImpl() override { assert(_ref_count.Value() == 0); }
 
-    int AddRef();
+  int AddRef();
 
-    // This implements the Release() method for all the inherited interfaces.
-    virtual int Release();
+  // This implements the Release() method for all the inherited interfaces.
+  int Release() override;
 
-private:
-    Atomic32 _ref_count;
-    scoped_ptr<const Config> own_config_;
+  // Backdoor to access a voe::Channel object without a channel ID. This is only
+  // to be used while refactoring the VoE API!
+  virtual std::unique_ptr<voe::ChannelProxy> GetChannelProxy(int channel_id);
+
+ // This is *protected* so that FakeVoiceEngine can inherit from the class and
+ // manipulate the reference count. See: fake_voice_engine.h.
+ protected:
+  Atomic32 _ref_count;
+ private:
+  std::unique_ptr<const Config> own_config_;
 };
 
 }  // namespace webrtc
 
-#endif // WEBRTC_VOICE_ENGINE_VOICE_ENGINE_IMPL_H
+#endif  // WEBRTC_VOICE_ENGINE_VOICE_ENGINE_IMPL_H

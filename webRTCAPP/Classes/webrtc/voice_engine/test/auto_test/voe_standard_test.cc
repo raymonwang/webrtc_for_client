@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "webrtc/engine_configurations.h"
-#include "webrtc/system_wrappers/interface/event_wrapper.h"
+#include "webrtc/system_wrappers/include/event_wrapper.h"
 #include "webrtc/voice_engine/include/voe_neteq_stats.h"
 #include "webrtc/voice_engine/test/auto_test/automated_mode.h"
 #include "webrtc/voice_engine/test/auto_test/voe_cpu_test.h"
@@ -42,8 +42,6 @@ void SubAPIManager::DisplayStatus() const {
     TEST_LOG("  Base\n");
   if (_codec)
     TEST_LOG("  Codec\n");
-  if (_dtmf)
-    TEST_LOG("  Dtmf\n");
   if (_externalMedia)
     TEST_LOG("  ExternalMedia\n");
   if (_file)
@@ -68,8 +66,6 @@ void SubAPIManager::DisplayStatus() const {
     TEST_LOG("  Base\n");
   if (!_codec)
     TEST_LOG("  Codec\n");
-  if (!_dtmf)
-    TEST_LOG("  Dtmf\n");
   if (!_externalMedia)
     TEST_LOG("  ExternamMedia\n");
   if (!_file)
@@ -96,7 +92,6 @@ VoETestManager::VoETestManager()
       voice_engine_(NULL),
       voe_base_(0),
       voe_codec_(0),
-      voe_dtmf_(0),
       voe_xmedia_(0),
       voe_file_(0),
       voe_hardware_(0),
@@ -117,14 +112,6 @@ bool VoETestManager::Init() {
   if (initialized_)
     return true;
 
-  if (VoiceEngine::SetTraceFile(NULL) != -1) {
-    // should not be possible to call a Trace method before the VoE is
-    // created
-    TEST_LOG("\nError at line: %i (VoiceEngine::SetTraceFile()"
-      "should fail)!\n", __LINE__);
-    return false;
-  }
-
   voice_engine_ = VoiceEngine::Create();
   if (!voice_engine_) {
     TEST_LOG("Failed to create VoiceEngine\n");
@@ -139,7 +126,6 @@ void VoETestManager::GetInterfaces() {
     voe_base_ = VoEBase::GetInterface(voice_engine_);
     voe_codec_ = VoECodec::GetInterface(voice_engine_);
     voe_volume_control_ = VoEVolumeControl::GetInterface(voice_engine_);
-    voe_dtmf_ = VoEDtmf::GetInterface(voice_engine_);
     voe_rtp_rtcp_ = VoERTP_RTCP::GetInterface(voice_engine_);
     voe_apm_ = VoEAudioProcessing::GetInterface(voice_engine_);
     voe_network_ = VoENetwork::GetInterface(voice_engine_);
@@ -183,10 +169,6 @@ int VoETestManager::ReleaseInterfaces() {
     voe_volume_control_->Release();
     voe_volume_control_ = NULL;
   }
-  if (voe_dtmf_) {
-    voe_dtmf_->Release();
-    voe_dtmf_ = NULL;
-  }
   if (voe_rtp_rtcp_) {
     voe_rtp_rtcp_->Release();
     voe_rtp_rtcp_ = NULL;
@@ -228,11 +210,6 @@ int VoETestManager::ReleaseInterfaces() {
   if (false == VoiceEngine::Delete(voice_engine_)) {
     TEST_LOG("\n\nVoiceEngine::Delete() failed. \n");
     releaseOK = false;
-  }
-
-  if (VoiceEngine::SetTraceFile(NULL) != -1) {
-    TEST_LOG("\nError at line: %i (VoiceEngine::SetTraceFile()"
-      "should fail)!\n", __LINE__);
   }
 
   return (releaseOK == true) ? 0 : -1;

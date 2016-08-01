@@ -8,122 +8,94 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_BASE_CRITICALSECTION_H__
-#define WEBRTC_BASE_CRITICALSECTION_H__
+#ifndef WEBRTC_BASE_CRITICALSECTION_H_
+#define WEBRTC_BASE_CRITICALSECTION_H_
 
+#include "webrtc/base/atomicops.h"
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/base/thread_annotations.h"
+#include "webrtc/base/platform_thread_types.h"
 
 #if defined(WEBRTC_WIN)
-#include "webrtc/base/win32.h"
-#endif
+// Include winsock2.h before including <windows.h> to maintain consistency with
+// win32.h.  We can't include win32.h directly here since it pulls in
+// headers such as basictypes.h which causes problems in Chromium where webrtc
+// exists as two separate projects, webrtc and libjingle.
+#include <winsock2.h>
+#include <windows.h>
+#include <sal.h>  // must come after windows headers.
+#endif  // defined(WEBRTC_WIN)
 
 #if defined(WEBRTC_POSIX)
 #include <pthread.h>
 #endif
 
-#ifdef _DEBUG
-#define CS_TRACK_OWNER 1
-#endif  // _DEBUG
+// See notes in the 'Performance' unit test for the effects of this flag.
+#define USE_NATIVE_MUTEX_ON_MAC 0
 
-#if CS_TRACK_OWNER
-#define TRACK_OWNER(x) x
-#else  // !CS_TRACK_OWNER
-#define TRACK_OWNER(x)
-#endif  // !CS_TRACK_OWNER
+#if defined(WEBRTC_MAC) && !USE_NATIVE_MUTEX_ON_MAC
+#include <dispatch/dispatch.h>
+#endif
+
+#if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON))
+#define CS_DEBUG_CHECKS 1
+#endif
+
+#if CS_DEBUG_CHECKS
+#define CS_DEBUG_CODE(x) x
+#else  // !CS_DEBUG_CHECKS
+#define CS_DEBUG_CODE(x)
+#endif  // !CS_DEBUG_CHECKS
 
 namespace rtc {
 
+// Locking methods (Enter, TryEnter, Leave)are const to permit protecting
+// members inside a const context without requiring mutable CriticalSections
+// everywhere.
+class LOCKABLE CriticalSection {
+ public:
+  CriticalSection();
+  ~CriticalSection();
+
+  void Enter() const EXCLUSIVE_LOCK_FUNCTION();
+  bool TryEnter() const EXCLUSIVE_TRYLOCK_FUNCTION(true);
+  void Leave() const UNLOCK_FUNCTION();
+
+ private:
+  // Use only for RTC_DCHECKing.
+  bool CurrentThreadIsOwner() const;
+
 #if defined(WEBRTC_WIN)
-class LOCKABLE CriticalSection {
- public:
-  CriticalSection() {
-    InitializeCriticalSection(&crit_);
-    // Windows docs say 0 is not a valid thread id
-    TRACK_OWNER(thread_ = 0);
-  }
-  ~CriticalSection() {
-    DeleteCriticalSection(&crit_);
-  }
-  void Enter() EXCLUSIVE_LOCK_FUNCTION() {
-    EnterCriticalSection(&crit_);
-    TRACK_OWNER(thread_ = GetCurrentThreadId());
-  }
-  bool TryEnter() EXCLUSIVE_TRYLOCK_FUNCTION(true) {
-    if (TryEnterCriticalSection(&crit_) != FALSE) {
-      TRACK_OWNER(thread_ = GetCurrentThreadId());
-      return true;
-    }
-    return false;
-  }
-  void Leave() UNLOCK_FUNCTION() {
-    TRACK_OWNER(thread_ = 0);
-    LeaveCriticalSection(&crit_);
-  }
-
-#if CS_TRACK_OWNER
-  bool CurrentThreadIsOwner() const { return thread_ == GetCurrentThreadId(); }
-#endif  // CS_TRACK_OWNER
-
- private:
-  CRITICAL_SECTION crit_;
-  TRACK_OWNER(DWORD thread_);  // The section's owning thread id
+  mutable CRITICAL_SECTION crit_;
+#elif defined(WEBRTC_POSIX)
+#if defined(WEBRTC_MAC) && !USE_NATIVE_MUTEX_ON_MAC
+  // Number of times the lock has been locked + number of threads waiting.
+  // TODO(tommi): We could use this number and subtract the recursion count
+  // to find places where we have multiple threads contending on the same lock.
+  mutable volatile int lock_queue_;
+  // |recursion_| represents the recursion count + 1 for the thread that owns
+  // the lock. Only modified by the thread that owns the lock.
+  mutable int recursion_;
+  // Used to signal a single waiting thread when the lock becomes available.
+  mutable dispatch_semaphore_t semaphore_;
+  // The thread that currently holds the lock. Required to handle recursion.
+  mutable PlatformThreadRef owning_thread_;
+#else
+  mutable pthread_mutex_t mutex_;
+#endif
+  CS_DEBUG_CODE(mutable PlatformThreadRef thread_);
+  CS_DEBUG_CODE(mutable int recursion_count_);
+#endif
 };
-#endif // WEBRTC_WIN 
-
-#if defined(WEBRTC_POSIX)
-class LOCKABLE CriticalSection {
- public:
-  CriticalSection() {
-    pthread_mutexattr_t mutex_attribute;
-    pthread_mutexattr_init(&mutex_attribute);
-    pthread_mutexattr_settype(&mutex_attribute, PTHREAD_MUTEX_RECURSIVE);
-    pthread_mutex_init(&mutex_, &mutex_attribute);
-    pthread_mutexattr_destroy(&mutex_attribute);
-    TRACK_OWNER(thread_ = 0);
-  }
-  ~CriticalSection() {
-    pthread_mutex_destroy(&mutex_);
-  }
-  void Enter() EXCLUSIVE_LOCK_FUNCTION() {
-    pthread_mutex_lock(&mutex_);
-    TRACK_OWNER(thread_ = pthread_self());
-  }
-  bool TryEnter() EXCLUSIVE_TRYLOCK_FUNCTION(true) {
-    if (pthread_mutex_trylock(&mutex_) == 0) {
-      TRACK_OWNER(thread_ = pthread_self());
-      return true;
-    }
-    return false;
-  }
-  void Leave() UNLOCK_FUNCTION() {
-    TRACK_OWNER(thread_ = 0);
-    pthread_mutex_unlock(&mutex_);
-  }
-
-#if CS_TRACK_OWNER
-  bool CurrentThreadIsOwner() const { return pthread_equal(thread_, pthread_self()); }
-#endif  // CS_TRACK_OWNER
-
- private:
-  pthread_mutex_t mutex_;
-  TRACK_OWNER(pthread_t thread_);
-};
-#endif // WEBRTC_POSIX
 
 // CritScope, for serializing execution through a scope.
 class SCOPED_LOCKABLE CritScope {
  public:
-  explicit CritScope(CriticalSection *pcrit) EXCLUSIVE_LOCK_FUNCTION(pcrit) {
-    pcrit_ = pcrit;
-    pcrit_->Enter();
-  }
-  ~CritScope() UNLOCK_FUNCTION() {
-    pcrit_->Leave();
-  }
+  explicit CritScope(const CriticalSection* cs) EXCLUSIVE_LOCK_FUNCTION(cs);
+  ~CritScope() UNLOCK_FUNCTION();
  private:
-  CriticalSection *pcrit_;
-  DISALLOW_COPY_AND_ASSIGN(CritScope);
+  const CriticalSection* const cs_;
+  RTC_DISALLOW_COPY_AND_ASSIGN(CritScope);
 };
 
 // Tries to lock a critical section on construction via
@@ -135,46 +107,46 @@ class SCOPED_LOCKABLE CritScope {
 // lock was taken. If you're not calling locked(), you're doing it wrong!
 class TryCritScope {
  public:
-  explicit TryCritScope(CriticalSection *pcrit) {
-    pcrit_ = pcrit;
-    locked_ = pcrit_->TryEnter();
-  }
-  ~TryCritScope() {
-    if (locked_) {
-      pcrit_->Leave();
-    }
-  }
-  bool locked() const {
-    return locked_;
-  }
+  explicit TryCritScope(const CriticalSection* cs);
+  ~TryCritScope();
+#if defined(WEBRTC_WIN)
+  _Check_return_ bool locked() const;
+#else
+  bool locked() const __attribute__ ((__warn_unused_result__));
+#endif
  private:
-  CriticalSection *pcrit_;
-  bool locked_;
-  DISALLOW_COPY_AND_ASSIGN(TryCritScope);
+  const CriticalSection* const cs_;
+  const bool locked_;
+  CS_DEBUG_CODE(mutable bool lock_was_called_);
+  RTC_DISALLOW_COPY_AND_ASSIGN(TryCritScope);
 };
 
-// TODO: Move this to atomicops.h, which can't be done easily because of
-// complex compile rules.
-class AtomicOps {
+// A POD lock used to protect global variables. Do NOT use for other purposes.
+// No custom constructor or private data member should be added.
+class LOCKABLE GlobalLockPod {
  public:
-#if defined(WEBRTC_WIN)
-  // Assumes sizeof(int) == sizeof(LONG), which it is on Win32 and Win64.
-  static int Increment(int* i) {
-    return ::InterlockedIncrement(reinterpret_cast<LONG*>(i));
-  }
-  static int Decrement(int* i) {
-    return ::InterlockedDecrement(reinterpret_cast<LONG*>(i));
-  }
-#else
-  static int Increment(int* i) {
-    return __sync_add_and_fetch(i, 1);
-  }
-  static int Decrement(int* i) {
-    return __sync_sub_and_fetch(i, 1);
-  }
-#endif
+  void Lock() EXCLUSIVE_LOCK_FUNCTION();
+
+  void Unlock() UNLOCK_FUNCTION();
+
+  volatile int lock_acquired;
+};
+
+class GlobalLock : public GlobalLockPod {
+ public:
+  GlobalLock();
+};
+
+// GlobalLockScope, for serializing execution through a scope.
+class SCOPED_LOCKABLE GlobalLockScope {
+ public:
+  explicit GlobalLockScope(GlobalLockPod* lock) EXCLUSIVE_LOCK_FUNCTION(lock);
+  ~GlobalLockScope() UNLOCK_FUNCTION();
+ private:
+  GlobalLockPod* const lock_;
+  RTC_DISALLOW_COPY_AND_ASSIGN(GlobalLockScope);
 };
 
 } // namespace rtc
 
-#endif // WEBRTC_BASE_CRITICALSECTION_H__
+#endif // WEBRTC_BASE_CRITICALSECTION_H_

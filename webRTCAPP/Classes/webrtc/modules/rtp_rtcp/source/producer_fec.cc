@@ -10,6 +10,7 @@
 
 #include "webrtc/modules/rtp_rtcp/source/producer_fec.h"
 
+#include "webrtc/modules/rtp_rtcp/source/byte_io.h"
 #include "webrtc/modules/rtp_rtcp/source/forward_error_correction.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
 
@@ -17,11 +18,11 @@ namespace webrtc {
 
 enum { kREDForFECHeaderLength = 1 };
 // This controls the maximum amount of excess overhead (actual - target)
-// allowed in order to trigger GenerateFEC(), before |params_.max_fec_frames|
+// allowed in order to trigger GenerateFec(), before |params_.max_fec_frames|
 // is reached. Overhead here is defined as relative to number of media packets.
 enum { kMaxExcessOverhead = 50 };  // Q8.
 // This is the minimum number of media packets required (above some protection
-// level) in order to trigger GenerateFEC(), before |params_.max_fec_frames| is
+// level) in order to trigger GenerateFec(), before |params_.max_fec_frames| is
 // reached.
 enum { kMinimumMediaPackets = 4 };
 // Threshold on the received FEC protection level, above which we enforce at
@@ -30,11 +31,6 @@ enum { kMinimumMediaPackets = 4 };
 enum { kHighProtectionThreshold = 80 };  // Corresponds to ~30 overhead, range
 // is 0 to 255, where 255 corresponds to 100% overhead (relative to number of
 // media packets).
-
-struct RtpPacket {
-  uint16_t rtpHeaderLength;
-  ForwardErrorCorrection::Packet* pkt;
-};
 
 RedPacket::RedPacket(size_t length)
     : data_(new uint8_t[length]),
@@ -55,13 +51,14 @@ void RedPacket::CreateHeader(const uint8_t* rtp_header, size_t header_length,
   data_[1] += red_pl_type;
   // Add RED header
   // f-bit always 0
-  data_[header_length] = pl_type;
+  data_[header_length] = static_cast<uint8_t>(pl_type);
   header_length_ = header_length + kREDForFECHeaderLength;
 }
 
 void RedPacket::SetSeqNum(int seq_num) {
   assert(seq_num >= 0 && seq_num < (1<<16));
-  RtpUtility::AssignUWord16ToBuffer(&data_[2], seq_num);
+
+  ByteWriter<uint16_t>::WriteBigEndian(&data_[2], seq_num);
 }
 
 void RedPacket::AssignPayload(const uint8_t* payload, size_t length) {
@@ -86,7 +83,6 @@ ProducerFec::ProducerFec(ForwardErrorCorrection* fec)
       media_packets_fec_(),
       fec_packets_(),
       num_frames_(0),
-      incomplete_frame_(false),
       num_first_partition_(0),
       minimum_media_packets_fec_(1),
       params_(),
@@ -123,9 +119,8 @@ RedPacket* ProducerFec::BuildRedPacket(const uint8_t* data_buffer,
                                        size_t payload_length,
                                        size_t rtp_header_length,
                                        int red_pl_type) {
-  RedPacket* red_packet = new RedPacket(payload_length +
-                                        kREDForFECHeaderLength +
-                                        rtp_header_length);
+  RedPacket* red_packet = new RedPacket(
+      payload_length + kREDForFECHeaderLength + rtp_header_length);
   int pl_type = data_buffer[1] & 0x7f;
   red_packet->CreateHeader(data_buffer, rtp_header_length,
                            red_pl_type, pl_type);
@@ -140,34 +135,34 @@ int ProducerFec::AddRtpPacketAndGenerateFec(const uint8_t* data_buffer,
   if (media_packets_fec_.empty()) {
     params_ = new_params_;
   }
-  incomplete_frame_ = true;
+  bool complete_frame = false;
   const bool marker_bit = (data_buffer[1] & kRtpMarkerBitMask) ? true : false;
   if (media_packets_fec_.size() < ForwardErrorCorrection::kMaxMediaPackets) {
     // Generic FEC can only protect up to kMaxMediaPackets packets.
-    ForwardErrorCorrection::Packet* packet = new ForwardErrorCorrection::Packet;
+    ForwardErrorCorrection::Packet* packet =
+        new ForwardErrorCorrection::Packet();
     packet->length = payload_length + rtp_header_length;
     memcpy(packet->data, data_buffer, packet->length);
     media_packets_fec_.push_back(packet);
   }
   if (marker_bit) {
     ++num_frames_;
-    incomplete_frame_ = false;
+    complete_frame = true;
   }
   // Produce FEC over at most |params_.max_fec_frames| frames, or as soon as:
   // (1) the excess overhead (actual overhead - requested/target overhead) is
   // less than |kMaxExcessOverhead|, and
   // (2) at least |minimum_media_packets_fec_| media packets is reached.
-  if (!incomplete_frame_ &&
+  if (complete_frame &&
       (num_frames_ == params_.max_fec_frames ||
           (ExcessOverheadBelowMax() && MinimumMediaPacketsReached()))) {
     assert(num_first_partition_ <=
            static_cast<int>(ForwardErrorCorrection::kMaxMediaPackets));
-    int ret = fec_->GenerateFEC(media_packets_fec_,
-                                params_.fec_rate,
-                                num_first_partition_,
-                                params_.use_uep_protection,
-                                params_.fec_mask_type,
-                                &fec_packets_);
+    // TODO(pbos): Consider whether unequal protection should be enabled or not,
+    // it is currently always disabled.
+    int ret = fec_->GenerateFec(media_packets_fec_, params_.fec_rate,
+                                num_first_partition_, false,
+                                params_.fec_mask_type, &fec_packets_);
     if (fec_packets_.empty()) {
       num_frames_ = 0;
       DeletePackets();
@@ -204,37 +199,43 @@ bool ProducerFec::MinimumMediaPacketsReached() {
 }
 
 bool ProducerFec::FecAvailable() const {
-  return (fec_packets_.size() > 0);
+  return !fec_packets_.empty();
 }
 
-RedPacket* ProducerFec::GetFecPacket(int red_pl_type,
-                                     int fec_pl_type,
-                                     uint16_t seq_num,
-                                     size_t rtp_header_length) {
-  if (fec_packets_.empty())
-    return NULL;
-  // Build FEC packet. The FEC packets in |fec_packets_| doesn't
-  // have RTP headers, so we're reusing the header from the last
-  // media packet.
-  ForwardErrorCorrection::Packet* packet_to_send = fec_packets_.front();
-  ForwardErrorCorrection::Packet* last_media_packet = media_packets_fec_.back();
-  RedPacket* return_packet = new RedPacket(packet_to_send->length +
-                                           kREDForFECHeaderLength +
-                                           rtp_header_length);
-  return_packet->CreateHeader(last_media_packet->data,
-                              rtp_header_length,
-                              red_pl_type,
-                              fec_pl_type);
-  return_packet->SetSeqNum(seq_num);
-  return_packet->ClearMarkerBit();
-  return_packet->AssignPayload(packet_to_send->data, packet_to_send->length);
-  fec_packets_.pop_front();
-  if (fec_packets_.empty()) {
-    // Done with all the FEC packets. Reset for next run.
-    DeletePackets();
-    num_frames_ = 0;
+size_t ProducerFec::NumAvailableFecPackets() const {
+  return fec_packets_.size();
+}
+
+std::vector<RedPacket*> ProducerFec::GetFecPackets(int red_pl_type,
+                                                   int fec_pl_type,
+                                                   uint16_t first_seq_num,
+                                                   size_t rtp_header_length) {
+  std::vector<RedPacket*> fec_packets;
+  fec_packets.reserve(fec_packets_.size());
+  uint16_t sequence_number = first_seq_num;
+  while (!fec_packets_.empty()) {
+    // Build FEC packet. The FEC packets in |fec_packets_| doesn't
+    // have RTP headers, so we're reusing the header from the last
+    // media packet.
+    ForwardErrorCorrection::Packet* packet_to_send = fec_packets_.front();
+    ForwardErrorCorrection::Packet* last_media_packet =
+        media_packets_fec_.back();
+
+    RedPacket* red_packet = new RedPacket(
+        packet_to_send->length + kREDForFECHeaderLength + rtp_header_length);
+    red_packet->CreateHeader(last_media_packet->data, rtp_header_length,
+                             red_pl_type, fec_pl_type);
+    red_packet->SetSeqNum(sequence_number++);
+    red_packet->ClearMarkerBit();
+    red_packet->AssignPayload(packet_to_send->data, packet_to_send->length);
+
+    fec_packets.push_back(red_packet);
+
+    fec_packets_.pop_front();
   }
-  return return_packet;
+  DeletePackets();
+  num_frames_ = 0;
+  return fec_packets;
 }
 
 int ProducerFec::Overhead() const {

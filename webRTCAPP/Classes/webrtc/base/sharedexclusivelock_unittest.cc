@@ -8,20 +8,30 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/base/common.h"
 #include "webrtc/base/gunit.h"
 #include "webrtc/base/messagehandler.h"
 #include "webrtc/base/messagequeue.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/sharedexclusivelock.h"
 #include "webrtc/base/thread.h"
 #include "webrtc/base/timeutils.h"
-#include "webrtc/test/testsupport/gtest_disable.h"
+
+#if defined(MEMORY_SANITIZER)
+// Flaky under MemorySanitizer, see
+// https://bugs.chromium.org/p/webrtc/issues/detail?id=5824
+#define MAYBE_TestSharedExclusive DISABLED_TestSharedExclusive
+#define MAYBE_TestExclusiveExclusive DISABLED_TestExclusiveExclusive
+#else
+#define MAYBE_TestSharedExclusive TestSharedExclusive
+#define MAYBE_TestExclusiveExclusive TestExclusiveExclusive
+#endif
 
 namespace rtc {
 
-static const uint32 kMsgRead = 0;
-static const uint32 kMsgWrite = 0;
+static const uint32_t kMsgRead = 0;
+static const uint32_t kMsgWrite = 0;
 static const int kNoWaitThresholdInMs = 10;
 static const int kWaitThresholdInMs = 80;
 static const int kProcessTimeInMs = 100;
@@ -40,12 +50,12 @@ class SharedExclusiveTask : public MessageHandler {
     worker_thread_->Start();
   }
 
-  int waiting_time_in_ms() const { return waiting_time_in_ms_; }
+  int64_t waiting_time_in_ms() const { return waiting_time_in_ms_; }
 
  protected:
-  scoped_ptr<Thread> worker_thread_;
+  std::unique_ptr<Thread> worker_thread_;
   SharedExclusiveLock* shared_exclusive_lock_;
-  int waiting_time_in_ms_;
+  int64_t waiting_time_in_ms_;
   int* value_;
   bool* done_;
 };
@@ -57,7 +67,8 @@ class ReadTask : public SharedExclusiveTask {
   }
 
   void PostRead(int* value) {
-    worker_thread_->Post(this, kMsgRead, new TypedMessageData<int*>(value));
+    worker_thread_->Post(RTC_FROM_HERE, this, kMsgRead,
+                         new TypedMessageData<int*>(value));
   }
 
  private:
@@ -69,10 +80,10 @@ class ReadTask : public SharedExclusiveTask {
     TypedMessageData<int*>* message_data =
         static_cast<TypedMessageData<int*>*>(message->pdata);
 
-    uint32 start_time = Time();
+    int64_t start_time = TimeMillis();
     {
       SharedScope ss(shared_exclusive_lock_);
-      waiting_time_in_ms_ = TimeDiff(Time(), start_time);
+      waiting_time_in_ms_ = TimeDiff(TimeMillis(), start_time);
 
       Thread::SleepMs(kProcessTimeInMs);
       *message_data->data() = *value_;
@@ -90,7 +101,8 @@ class WriteTask : public SharedExclusiveTask {
   }
 
   void PostWrite(int value) {
-    worker_thread_->Post(this, kMsgWrite, new TypedMessageData<int>(value));
+    worker_thread_->Post(RTC_FROM_HERE, this, kMsgWrite,
+                         new TypedMessageData<int>(value));
   }
 
  private:
@@ -102,10 +114,10 @@ class WriteTask : public SharedExclusiveTask {
     TypedMessageData<int>* message_data =
         static_cast<TypedMessageData<int>*>(message->pdata);
 
-    uint32 start_time = Time();
+    int64_t start_time = TimeMillis();
     {
       ExclusiveScope es(shared_exclusive_lock_);
-      waiting_time_in_ms_ = TimeDiff(Time(), start_time);
+      waiting_time_in_ms_ = TimeDiff(TimeMillis(), start_time);
 
       Thread::SleepMs(kProcessTimeInMs);
       *value_ = message_data->data();
@@ -128,7 +140,7 @@ class SharedExclusiveLockTest
   }
 
  protected:
-  scoped_ptr<SharedExclusiveLock> shared_exclusive_lock_;
+  std::unique_ptr<SharedExclusiveLock> shared_exclusive_lock_;
   int value_;
 };
 
@@ -158,7 +170,7 @@ TEST_F(SharedExclusiveLockTest, TestSharedShared) {
   EXPECT_LE(reader1.waiting_time_in_ms(), kNoWaitThresholdInMs);
 }
 
-TEST_F(SharedExclusiveLockTest, TestSharedExclusive) {
+TEST_F(SharedExclusiveLockTest, MAYBE_TestSharedExclusive) {
   bool done;
   WriteTask writer(shared_exclusive_lock_.get(), &value_, &done);
 
@@ -197,7 +209,7 @@ TEST_F(SharedExclusiveLockTest, TestExclusiveShared) {
   EXPECT_GE(reader.waiting_time_in_ms(), kWaitThresholdInMs);
 }
 
-TEST_F(SharedExclusiveLockTest, TestExclusiveExclusive) {
+TEST_F(SharedExclusiveLockTest, MAYBE_TestExclusiveExclusive) {
   bool done;
   WriteTask writer(shared_exclusive_lock_.get(), &value_, &done);
 

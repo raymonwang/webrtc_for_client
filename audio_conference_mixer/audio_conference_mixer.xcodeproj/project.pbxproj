@@ -7,51 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D9025198627A2009E763A /* audio_conference_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9015198627A2009E763A /* audio_conference_mixer.h */; };
-		430D9026198627A2009E763A /* audio_conference_mixer_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9016198627A2009E763A /* audio_conference_mixer_defines.h */; };
 		430D9027198627A2009E763A /* audio_conference_mixer_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901A198627A2009E763A /* audio_conference_mixer_impl.cc */; };
 		430D9028198627A2009E763A /* audio_conference_mixer_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901B198627A2009E763A /* audio_conference_mixer_impl.h */; };
 		430D9029198627A2009E763A /* audio_frame_manipulator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901C198627A2009E763A /* audio_frame_manipulator.cc */; };
 		430D902A198627A2009E763A /* audio_frame_manipulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901D198627A2009E763A /* audio_frame_manipulator.h */; };
-		430D902B198627A2009E763A /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901E198627A2009E763A /* level_indicator.cc */; };
-		430D902C198627A2009E763A /* level_indicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901F198627A2009E763A /* level_indicator.h */; };
 		430D902D198627A2009E763A /* memory_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9020198627A2009E763A /* memory_pool.h */; };
 		430D902E198627A2009E763A /* memory_pool_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9021198627A2009E763A /* memory_pool_posix.h */; };
 		430D902F198627A2009E763A /* memory_pool_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9022198627A2009E763A /* memory_pool_win.h */; };
 		430D9030198627A2009E763A /* time_scheduler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9023198627A2009E763A /* time_scheduler.cc */; };
 		430D9031198627A2009E763A /* time_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9024198627A2009E763A /* time_scheduler.h */; };
+		43C0C6CF1D4F0E570058AC82 /* audio_conference_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6CD1D4F0E570058AC82 /* audio_conference_mixer.h */; };
+		43C0C6D01D4F0E570058AC82 /* audio_conference_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6CD1D4F0E570058AC82 /* audio_conference_mixer.h */; };
+		43C0C6D11D4F0E570058AC82 /* audio_conference_mixer_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6CE1D4F0E570058AC82 /* audio_conference_mixer_defines.h */; };
+		43C0C6D21D4F0E570058AC82 /* audio_conference_mixer_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6CE1D4F0E570058AC82 /* audio_conference_mixer_defines.h */; };
 		43E04C941D2629E600B39549 /* audio_conference_mixer_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901A198627A2009E763A /* audio_conference_mixer_impl.cc */; };
 		43E04C951D2629E600B39549 /* audio_frame_manipulator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901C198627A2009E763A /* audio_frame_manipulator.cc */; };
 		43E04C961D2629E600B39549 /* time_scheduler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9023198627A2009E763A /* time_scheduler.cc */; };
-		43E04C971D2629E600B39549 /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D901E198627A2009E763A /* level_indicator.cc */; };
-		43E04C9A1D2629E600B39549 /* audio_conference_mixer_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9016198627A2009E763A /* audio_conference_mixer_defines.h */; };
 		43E04C9B1D2629E600B39549 /* memory_pool_posix.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9021198627A2009E763A /* memory_pool_posix.h */; };
 		43E04C9C1D2629E600B39549 /* audio_conference_mixer_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901B198627A2009E763A /* audio_conference_mixer_impl.h */; };
 		43E04C9D1D2629E600B39549 /* audio_frame_manipulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901D198627A2009E763A /* audio_frame_manipulator.h */; };
-		43E04C9E1D2629E600B39549 /* audio_conference_mixer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9015198627A2009E763A /* audio_conference_mixer.h */; };
 		43E04C9F1D2629E600B39549 /* time_scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9024198627A2009E763A /* time_scheduler.h */; };
-		43E04CA01D2629E600B39549 /* level_indicator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D901F198627A2009E763A /* level_indicator.h */; };
 		43E04CA11D2629E600B39549 /* memory_pool_win.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9022198627A2009E763A /* memory_pool_win.h */; };
 		43E04CA21D2629E600B39549 /* memory_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9020198627A2009E763A /* memory_pool.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		430D900619862790009E763A /* libaudio_conference_mixer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_conference_mixer.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D9015198627A2009E763A /* audio_conference_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_conference_mixer.h; sourceTree = "<group>"; };
-		430D9016198627A2009E763A /* audio_conference_mixer_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_conference_mixer_defines.h; sourceTree = "<group>"; };
-		430D9018198627A2009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		430D9019198627A2009E763A /* audio_conference_mixer.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = audio_conference_mixer.gypi; sourceTree = "<group>"; };
 		430D901A198627A2009E763A /* audio_conference_mixer_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_conference_mixer_impl.cc; sourceTree = "<group>"; };
 		430D901B198627A2009E763A /* audio_conference_mixer_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_conference_mixer_impl.h; sourceTree = "<group>"; };
 		430D901C198627A2009E763A /* audio_frame_manipulator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_frame_manipulator.cc; sourceTree = "<group>"; };
 		430D901D198627A2009E763A /* audio_frame_manipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_manipulator.h; sourceTree = "<group>"; };
-		430D901E198627A2009E763A /* level_indicator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = level_indicator.cc; sourceTree = "<group>"; };
-		430D901F198627A2009E763A /* level_indicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level_indicator.h; sourceTree = "<group>"; };
 		430D9020198627A2009E763A /* memory_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_pool.h; sourceTree = "<group>"; };
 		430D9021198627A2009E763A /* memory_pool_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_pool_posix.h; sourceTree = "<group>"; };
 		430D9022198627A2009E763A /* memory_pool_win.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_pool_win.h; sourceTree = "<group>"; };
 		430D9023198627A2009E763A /* time_scheduler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = time_scheduler.cc; sourceTree = "<group>"; };
 		430D9024198627A2009E763A /* time_scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_scheduler.h; sourceTree = "<group>"; };
+		43C0C6CD1D4F0E570058AC82 /* audio_conference_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_conference_mixer.h; sourceTree = "<group>"; };
+		43C0C6CE1D4F0E570058AC82 /* audio_conference_mixer_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_conference_mixer_defines.h; sourceTree = "<group>"; };
 		43E04CA61D2629E600B39549 /* libaudio_conference_mixer_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_conference_mixer_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -93,33 +85,20 @@
 		430D9013198627A2009E763A /* audio_conference_mixer */ = {
 			isa = PBXGroup;
 			children = (
-				430D9014198627A2009E763A /* interface */,
+				43C0C6CC1D4F0E570058AC82 /* include */,
 				430D9017198627A2009E763A /* source */,
 			);
 			name = audio_conference_mixer;
 			path = ../webRTCAPP/Classes/webrtc/modules/audio_conference_mixer;
 			sourceTree = "<group>";
 		};
-		430D9014198627A2009E763A /* interface */ = {
-			isa = PBXGroup;
-			children = (
-				430D9015198627A2009E763A /* audio_conference_mixer.h */,
-				430D9016198627A2009E763A /* audio_conference_mixer_defines.h */,
-			);
-			path = interface;
-			sourceTree = "<group>";
-		};
 		430D9017198627A2009E763A /* source */ = {
 			isa = PBXGroup;
 			children = (
-				430D9018198627A2009E763A /* Android.mk */,
-				430D9019198627A2009E763A /* audio_conference_mixer.gypi */,
 				430D901A198627A2009E763A /* audio_conference_mixer_impl.cc */,
 				430D901B198627A2009E763A /* audio_conference_mixer_impl.h */,
 				430D901C198627A2009E763A /* audio_frame_manipulator.cc */,
 				430D901D198627A2009E763A /* audio_frame_manipulator.h */,
-				430D901E198627A2009E763A /* level_indicator.cc */,
-				430D901F198627A2009E763A /* level_indicator.h */,
 				430D9020198627A2009E763A /* memory_pool.h */,
 				430D9021198627A2009E763A /* memory_pool_posix.h */,
 				430D9022198627A2009E763A /* memory_pool_win.h */,
@@ -129,6 +108,15 @@
 			path = source;
 			sourceTree = "<group>";
 		};
+		43C0C6CC1D4F0E570058AC82 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43C0C6CD1D4F0E570058AC82 /* audio_conference_mixer.h */,
+				43C0C6CE1D4F0E570058AC82 /* audio_conference_mixer_defines.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -136,13 +124,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D9026198627A2009E763A /* audio_conference_mixer_defines.h in Headers */,
 				430D902E198627A2009E763A /* memory_pool_posix.h in Headers */,
 				430D9028198627A2009E763A /* audio_conference_mixer_impl.h in Headers */,
+				43C0C6D11D4F0E570058AC82 /* audio_conference_mixer_defines.h in Headers */,
 				430D902A198627A2009E763A /* audio_frame_manipulator.h in Headers */,
-				430D9025198627A2009E763A /* audio_conference_mixer.h in Headers */,
+				43C0C6CF1D4F0E570058AC82 /* audio_conference_mixer.h in Headers */,
 				430D9031198627A2009E763A /* time_scheduler.h in Headers */,
-				430D902C198627A2009E763A /* level_indicator.h in Headers */,
 				430D902F198627A2009E763A /* memory_pool_win.h in Headers */,
 				430D902D198627A2009E763A /* memory_pool.h in Headers */,
 			);
@@ -152,13 +139,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43E04C9A1D2629E600B39549 /* audio_conference_mixer_defines.h in Headers */,
 				43E04C9B1D2629E600B39549 /* memory_pool_posix.h in Headers */,
 				43E04C9C1D2629E600B39549 /* audio_conference_mixer_impl.h in Headers */,
+				43C0C6D21D4F0E570058AC82 /* audio_conference_mixer_defines.h in Headers */,
 				43E04C9D1D2629E600B39549 /* audio_frame_manipulator.h in Headers */,
-				43E04C9E1D2629E600B39549 /* audio_conference_mixer.h in Headers */,
+				43C0C6D01D4F0E570058AC82 /* audio_conference_mixer.h in Headers */,
 				43E04C9F1D2629E600B39549 /* time_scheduler.h in Headers */,
-				43E04CA01D2629E600B39549 /* level_indicator.h in Headers */,
 				43E04CA11D2629E600B39549 /* memory_pool_win.h in Headers */,
 				43E04CA21D2629E600B39549 /* memory_pool.h in Headers */,
 			);
@@ -236,7 +222,6 @@
 				430D9027198627A2009E763A /* audio_conference_mixer_impl.cc in Sources */,
 				430D9029198627A2009E763A /* audio_frame_manipulator.cc in Sources */,
 				430D9030198627A2009E763A /* time_scheduler.cc in Sources */,
-				430D902B198627A2009E763A /* level_indicator.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +232,6 @@
 				43E04C941D2629E600B39549 /* audio_conference_mixer_impl.cc in Sources */,
 				43E04C951D2629E600B39549 /* audio_frame_manipulator.cc in Sources */,
 				43E04C961D2629E600B39549 /* time_scheduler.cc in Sources */,
-				43E04C971D2629E600B39549 /* level_indicator.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,6 +63,10 @@
 		432B2DE319CA85F5001267A7 /* intialize.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4D19861C5B009E763A /* intialize.c */; };
 		432B2DE419CA85F5001267A7 /* filterbank_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C4A19861C5B009E763A /* filterbank_tables.c */; };
 		432B2DE519CA85F5001267A7 /* arith_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8C3719861C5B009E763A /* arith_routines.c */; };
+		43C0C61A1D4F08F60058AC82 /* audio_decoder_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6171D4F08F60058AC82 /* audio_decoder_isac.cc */; };
+		43C0C61B1D4F08F60058AC82 /* audio_decoder_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6171D4F08F60058AC82 /* audio_decoder_isac.cc */; };
+		43C0C61C1D4F08F60058AC82 /* audio_encoder_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6181D4F08F60058AC82 /* audio_encoder_isac.cc */; };
+		43C0C61D1D4F08F60058AC82 /* audio_encoder_isac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6181D4F08F60058AC82 /* audio_encoder_isac.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -88,8 +92,6 @@
 
 /* Begin PBXFileReference section */
 		430D8B9D19861C2D009E763A /* libiSAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8C3419861C5B009E763A /* isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isac.h; sourceTree = "<group>"; };
-		430D8C3619861C5B009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D8C3719861C5B009E763A /* arith_routines.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = arith_routines.c; sourceTree = "<group>"; };
 		430D8C3819861C5B009E763A /* arith_routines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arith_routines.h; sourceTree = "<group>"; };
 		430D8C3919861C5B009E763A /* arith_routines_hist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = arith_routines_hist.c; sourceTree = "<group>"; };
@@ -114,7 +116,6 @@
 		430D8C4C19861C5B009E763A /* filterbanks.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filterbanks.c; sourceTree = "<group>"; };
 		430D8C4D19861C5B009E763A /* intialize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = intialize.c; sourceTree = "<group>"; };
 		430D8C4E19861C5B009E763A /* isac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = isac.c; sourceTree = "<group>"; };
-		430D8C4F19861C5B009E763A /* isac.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = isac.gypi; sourceTree = "<group>"; };
 		430D8C5119861C5B009E763A /* lattice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lattice.c; sourceTree = "<group>"; };
 		430D8C5219861C5B009E763A /* lpc_analysis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpc_analysis.c; sourceTree = "<group>"; };
 		430D8C5319861C5B009E763A /* lpc_analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpc_analysis.h; sourceTree = "<group>"; };
@@ -141,6 +142,12 @@
 		430D8C6819861C5B009E763A /* structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = structs.h; sourceTree = "<group>"; };
 		430D8C6919861C5B009E763A /* transform.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = transform.c; sourceTree = "<group>"; };
 		432B2DEC19CA85F5001267A7 /* libiSAC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiSAC_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43C0C6141D4F08DA0058AC82 /* audio_decoder_isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder_isac.h; sourceTree = "<group>"; };
+		43C0C6151D4F08DA0058AC82 /* audio_encoder_isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_encoder_isac.h; sourceTree = "<group>"; };
+		43C0C6161D4F08DA0058AC82 /* isac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isac.h; sourceTree = "<group>"; };
+		43C0C6171D4F08F60058AC82 /* audio_decoder_isac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder_isac.cc; sourceTree = "<group>"; };
+		43C0C6181D4F08F60058AC82 /* audio_encoder_isac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_isac.cc; sourceTree = "<group>"; };
+		43C0C6191D4F08F60058AC82 /* isac_float_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = isac_float_type.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,24 +205,18 @@
 		430D8C3219861C5B009E763A /* main */ = {
 			isa = PBXGroup;
 			children = (
-				430D8C3319861C5B009E763A /* interface */,
+				43C0C6131D4F08DA0058AC82 /* include */,
 				430D8C3519861C5B009E763A /* source */,
 			);
 			path = main;
 			sourceTree = "<group>";
 		};
-		430D8C3319861C5B009E763A /* interface */ = {
-			isa = PBXGroup;
-			children = (
-				430D8C3419861C5B009E763A /* isac.h */,
-			);
-			path = interface;
-			sourceTree = "<group>";
-		};
 		430D8C3519861C5B009E763A /* source */ = {
 			isa = PBXGroup;
 			children = (
-				430D8C3619861C5B009E763A /* Android.mk */,
+				43C0C6171D4F08F60058AC82 /* audio_decoder_isac.cc */,
+				43C0C6181D4F08F60058AC82 /* audio_encoder_isac.cc */,
+				43C0C6191D4F08F60058AC82 /* isac_float_type.h */,
 				430D8C3719861C5B009E763A /* arith_routines.c */,
 				430D8C3819861C5B009E763A /* arith_routines.h */,
 				430D8C3919861C5B009E763A /* arith_routines_hist.c */,
@@ -240,7 +241,6 @@
 				430D8C4C19861C5B009E763A /* filterbanks.c */,
 				430D8C4D19861C5B009E763A /* intialize.c */,
 				430D8C4E19861C5B009E763A /* isac.c */,
-				430D8C4F19861C5B009E763A /* isac.gypi */,
 				430D8C5119861C5B009E763A /* lattice.c */,
 				430D8C5219861C5B009E763A /* lpc_analysis.c */,
 				430D8C5319861C5B009E763A /* lpc_analysis.h */,
@@ -268,6 +268,16 @@
 				430D8C6919861C5B009E763A /* transform.c */,
 			);
 			path = source;
+			sourceTree = "<group>";
+		};
+		43C0C6131D4F08DA0058AC82 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43C0C6141D4F08DA0058AC82 /* audio_decoder_isac.h */,
+				43C0C6151D4F08DA0058AC82 /* audio_encoder_isac.h */,
+				43C0C6161D4F08DA0058AC82 /* isac.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -346,6 +356,7 @@
 				430D8CBD19861C5B009E763A /* pitch_estimator.c in Sources */,
 				430D8CAB19861C5B009E763A /* decode.c in Sources */,
 				430D8CB719861C5B009E763A /* lattice.c in Sources */,
+				43C0C61C1D4F08F60058AC82 /* audio_encoder_isac.cc in Sources */,
 				430D8CBB19861C5B009E763A /* lpc_shape_swb16_tables.c in Sources */,
 				430D8CAD19861C5B009E763A /* encode.c in Sources */,
 				430D8CBA19861C5B009E763A /* lpc_shape_swb12_tables.c in Sources */,
@@ -364,6 +375,7 @@
 				430D8CBF19861C5B009E763A /* pitch_gain_tables.c in Sources */,
 				430D8CB019861C5B009E763A /* fft.c in Sources */,
 				430D8CB119861C5B009E763A /* filter_functions.c in Sources */,
+				43C0C61A1D4F08F60058AC82 /* audio_decoder_isac.cc in Sources */,
 				430D8CB419861C5B009E763A /* intialize.c in Sources */,
 				430D8CB219861C5B009E763A /* filterbank_tables.c in Sources */,
 				430D8CA619861C5B009E763A /* arith_routines.c in Sources */,
@@ -381,6 +393,7 @@
 				432B2DCE19CA85F5001267A7 /* pitch_estimator.c in Sources */,
 				432B2DCF19CA85F5001267A7 /* decode.c in Sources */,
 				432B2DD019CA85F5001267A7 /* lattice.c in Sources */,
+				43C0C61D1D4F08F60058AC82 /* audio_encoder_isac.cc in Sources */,
 				432B2DD119CA85F5001267A7 /* lpc_shape_swb16_tables.c in Sources */,
 				432B2DD219CA85F5001267A7 /* encode.c in Sources */,
 				432B2DD319CA85F5001267A7 /* lpc_shape_swb12_tables.c in Sources */,
@@ -399,6 +412,7 @@
 				432B2DE019CA85F5001267A7 /* pitch_gain_tables.c in Sources */,
 				432B2DE119CA85F5001267A7 /* fft.c in Sources */,
 				432B2DE219CA85F5001267A7 /* filter_functions.c in Sources */,
+				43C0C61B1D4F08F60058AC82 /* audio_decoder_isac.cc in Sources */,
 				432B2DE319CA85F5001267A7 /* intialize.c in Sources */,
 				432B2DE419CA85F5001267A7 /* filterbank_tables.c in Sources */,
 				432B2DE519CA85F5001267A7 /* arith_routines.c in Sources */,

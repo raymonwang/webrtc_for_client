@@ -12,6 +12,7 @@
 #define WEBRTC_LIBJINGLE_XMPP_PUBSUBSTATECLIENT_H_
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -20,7 +21,7 @@
 #include "webrtc/libjingle/xmpp/constants.h"
 #include "webrtc/libjingle/xmpp/jid.h"
 #include "webrtc/libjingle/xmpp/pubsubclient.h"
-#include "webrtc/base/scoped_ptr.h"
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/base/sigslot.h"
 #include "webrtc/base/sigslotrepeater.h"
 
@@ -256,14 +257,14 @@ class PubSubStateClient : public sigslot::has_slots<> {
   PubSubClient* client_;
   const QName state_name_;
   C default_state_;
-  rtc::scoped_ptr<PubSubStateKeySerializer> key_serializer_;
-  rtc::scoped_ptr<PubSubStateSerializer<C> > state_serializer_;
+  std::unique_ptr<PubSubStateKeySerializer> key_serializer_;
+  std::unique_ptr<PubSubStateSerializer<C> > state_serializer_;
   // key => state
   std::map<std::string, C> state_by_key_;
   // itemid => StateItemInfo
   std::map<std::string, StateItemInfo> info_by_itemid_;
 
-  DISALLOW_COPY_AND_ASSIGN(PubSubStateClient);
+  RTC_DISALLOW_COPY_AND_ASSIGN(PubSubStateClient);
 };
 }  // namespace buzz
 

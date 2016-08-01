@@ -11,210 +11,217 @@
 #ifndef WEBRTC_VIDEO_FRAME_H_
 #define WEBRTC_VIDEO_FRAME_H_
 
-#include <assert.h>
-
-#include "webrtc/common_video/plane.h"
-// TODO(pbos): Remove scoped_refptr include (and AddRef/Release if they're not
-// used).
-#include "webrtc/system_wrappers/interface/scoped_refptr.h"
+#include "webrtc/base/scoped_ref_ptr.h"
+#include "webrtc/common_types.h"
+#include "webrtc/common_video/include/video_frame_buffer.h"
+#include "webrtc/common_video/rotation.h"
 #include "webrtc/typedefs.h"
 
 namespace webrtc {
 
-enum PlaneType {
-  kYPlane = 0,
-  kUPlane = 1,
-  kVPlane = 2,
-  kNumOfPlanes = 3
-};
-
-class I420VideoFrame {
+// TODO(nisse): This class duplicates cricket::VideoFrame. There's
+// ongoing work to merge the classes. See
+// https://bugs.chromium.org/p/webrtc/issues/detail?id=5682.
+class VideoFrame {
  public:
-  I420VideoFrame();
-  virtual ~I420VideoFrame();
-  // Infrastructure for refCount implementation.
-  // Implements dummy functions for reference counting so that non reference
-  // counted instantiation can be done. These functions should not be called
-  // when creating the frame with new I420VideoFrame().
-  // Note: do not pass a I420VideoFrame created with new I420VideoFrame() or
-  // equivalent to a scoped_refptr or memory leak will occur.
-  virtual int32_t AddRef() {
-    assert(false);
-    return -1;
-  }
-  virtual int32_t Release() {
-    assert(false);
-    return -1;
-  }
+  // TODO(nisse): Deprecated. Using the default constructor violates the
+  // reasonable assumption that video_frame_buffer() returns a valid buffer.
+  VideoFrame();
+
+  // Preferred constructor.
+  VideoFrame(const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer,
+             uint32_t timestamp,
+             int64_t render_time_ms,
+             VideoRotation rotation);
 
   // CreateEmptyFrame: Sets frame dimensions and allocates buffers based
   // on set dimensions - height and plane stride.
   // If required size is bigger than the allocated one, new buffers of adequate
   // size will be allocated.
-  // Return value: 0 on success, -1 on error.
-  virtual int CreateEmptyFrame(int width,
-                               int height,
-                               int stride_y,
-                               int stride_u,
-                               int stride_v);
+
+  // TODO(nisse): Deprecated. Should be deleted in the cricket::VideoFrame and
+  // webrtc::VideoFrame merge. If you need to write into the frame, create a
+  // VideoFrameBuffer of the desired size, e.g, using I420Buffer::Create and
+  // write to that. And if you need to wrap it into a VideoFrame, pass it to the
+  // constructor.
+  void CreateEmptyFrame(int width,
+                        int height,
+                        int stride_y,
+                        int stride_u,
+                        int stride_v);
 
   // CreateFrame: Sets the frame's members and buffers. If required size is
   // bigger than allocated one, new buffers of adequate size will be allocated.
-  // Return value: 0 on success, -1 on error.
-  virtual int CreateFrame(int size_y,
-                          const uint8_t* buffer_y,
-                          int size_u,
-                          const uint8_t* buffer_u,
-                          int size_v,
-                          const uint8_t* buffer_v,
-                          int width,
-                          int height,
-                          int stride_y,
-                          int stride_u,
-                          int stride_v);
 
-  // Copy frame: If required size is bigger than allocated one, new buffers of
-  // adequate size will be allocated.
-  // Return value: 0 on success, -1 on error.
-  virtual int CopyFrame(const I420VideoFrame& videoFrame);
+  // TODO(nisse): Deprecated. Should be deleted in the cricket::VideoFrame and
+  // webrtc::VideoFrame merge. Instead, create a VideoFrameBuffer and pass to
+  // the constructor. E.g, use I420Buffer::Copy(WrappedI420Buffer(...)).
+  void CreateFrame(const uint8_t* buffer_y,
+                   const uint8_t* buffer_u,
+                   const uint8_t* buffer_v,
+                   int width,
+                   int height,
+                   int stride_y,
+                   int stride_u,
+                   int stride_v,
+                   VideoRotation rotation);
 
-  // Make a copy of |this|. The caller owns the returned frame.
-  // Return value: a new frame on success, NULL on error.
-  virtual I420VideoFrame* CloneFrame() const;
+  // CreateFrame: Sets the frame's members and buffers. If required size is
+  // bigger than allocated one, new buffers of adequate size will be allocated.
+  // |buffer| must be a packed I420 buffer.
 
-  // Swap Frame.
-  virtual void SwapFrame(I420VideoFrame* videoFrame);
+  // TODO(nisse): Deprecated, see above method for advice.
+  void CreateFrame(const uint8_t* buffer,
+                  int width,
+                  int height,
+                  VideoRotation rotation);
 
-  // Get pointer to buffer per plane.
-  virtual uint8_t* buffer(PlaneType type);
-  // Overloading with const.
-  virtual const uint8_t* buffer(PlaneType type) const;
+  // Deep copy frame: If required size is bigger than allocated one, new
+  // buffers of adequate size will be allocated.
+  // TODO(nisse): Should be deleted in the cricket::VideoFrame and
+  // webrtc::VideoFrame merge. Instead, use I420Buffer::Copy to make a copy of
+  // the pixel data, and use the constructor to wrap it into a VideoFrame.
+  void CopyFrame(const VideoFrame& videoFrame);
+
+  // Creates a shallow copy of |videoFrame|, i.e, the this object will retain a
+  // reference to the video buffer also retained by |videoFrame|.
+  // TODO(nisse): Deprecated. Should be deleted in the cricket::VideoFrame and
+  // webrtc::VideoFrame merge. Instead, pass video_frame_buffer() and timestamps
+  // to the constructor.
+  void ShallowCopy(const VideoFrame& videoFrame);
 
   // Get allocated size per plane.
-  virtual int allocated_size(PlaneType type) const;
 
-  // Get allocated stride per plane.
-  virtual int stride(PlaneType type) const;
-
-  // Set frame width.
-  virtual int set_width(int width);
-
-  // Set frame height.
-  virtual int set_height(int height);
+  // TODO(nisse): Deprecated. Should be deleted in the cricket::VideoFrame and
+  // webrtc::VideoFrame merge. When used with memset, consider using
+  // libyuv::I420Rect instead.
+  int allocated_size(PlaneType type) const;
 
   // Get frame width.
-  virtual int width() const { return width_; }
+  int width() const;
 
   // Get frame height.
-  virtual int height() const { return height_; }
+  int height() const;
+
+  // TODO(nisse): After the cricket::VideoFrame and webrtc::VideoFrame
+  // merge, we'll have methods timestamp_us and set_timestamp_us, all
+  // other frame timestamps will likely be deprecated.
 
   // Set frame timestamp (90kHz).
-  virtual void set_timestamp(uint32_t timestamp) { timestamp_ = timestamp; }
+  void set_timestamp(uint32_t timestamp) { timestamp_ = timestamp; }
 
   // Get frame timestamp (90kHz).
-  virtual uint32_t timestamp() const { return timestamp_; }
+  uint32_t timestamp() const { return timestamp_; }
 
-  // Set capture ntp time in miliseconds.
-  virtual void set_ntp_time_ms(int64_t ntp_time_ms) {
+  // Set capture ntp time in milliseconds.
+  void set_ntp_time_ms(int64_t ntp_time_ms) {
     ntp_time_ms_ = ntp_time_ms;
   }
 
-  // Get capture ntp time in miliseconds.
-  virtual int64_t ntp_time_ms() const { return ntp_time_ms_; }
+  // Get capture ntp time in milliseconds.
+  int64_t ntp_time_ms() const { return ntp_time_ms_; }
 
-  // Set render time in miliseconds.
-  virtual void set_render_time_ms(int64_t render_time_ms) {
+  // Naming convention for Coordination of Video Orientation. Please see
+  // http://www.etsi.org/deliver/etsi_ts/126100_126199/126114/12.07.00_60/ts_126114v120700p.pdf
+  //
+  // "pending rotation" or "pending" = a frame that has a VideoRotation > 0.
+  //
+  // "not pending" = a frame that has a VideoRotation == 0.
+  //
+  // "apply rotation" = modify a frame from being "pending" to being "not
+  //                    pending" rotation (a no-op for "unrotated").
+  //
+  VideoRotation rotation() const { return rotation_; }
+  void set_rotation(VideoRotation rotation) {
+    rotation_ = rotation;
+  }
+
+  // Set render time in milliseconds.
+  void set_render_time_ms(int64_t render_time_ms) {
     render_time_ms_ = render_time_ms;
   }
 
-  // Get render time in miliseconds.
-  virtual int64_t render_time_ms() const { return render_time_ms_; }
+  // Get render time in milliseconds.
+  int64_t render_time_ms() const { return render_time_ms_; }
 
-  // Return true if underlying plane buffers are of zero size, false if not.
-  virtual bool IsZeroSize() const;
+  // Return true if and only if video_frame_buffer() is null. Which is possible
+  // only if the object was default-constructed.
+  // TODO(nisse): Deprecated. Should be deleted in the cricket::VideoFrame and
+  // webrtc::VideoFrame merge. The intention is that video_frame_buffer() never
+  // should return nullptr. To handle potentially uninitialized or non-existent
+  // frames, consider using rtc::Optional. Otherwise, IsZeroSize() can be
+  // replaced by video_frame_buffer() == nullptr.
+  bool IsZeroSize() const;
 
-  // Reset underlying plane buffers sizes to 0. This function doesn't
-  // clear memory.
-  virtual void ResetSize();
+  // Return the underlying buffer. Never nullptr for a properly
+  // initialized VideoFrame.
+  // Creating a new reference breaks the HasOneRef and IsMutable
+  // logic. So return a const ref to our reference.
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& video_frame_buffer()
+      const;
 
-  // Return the handle of the underlying video frame. This is used when the
-  // frame is backed by a texture. The object should be destroyed when it is no
-  // longer in use, so the underlying resource can be freed.
-  virtual void* native_handle() const;
-
- protected:
-  // Verifies legality of parameters.
-  // Return value: 0 on success, -1 on error.
-  virtual int CheckDimensions(int width,
-                              int height,
-                              int stride_y,
-                              int stride_u,
-                              int stride_v);
+  // Return true if the frame is stored in a texture.
+  bool is_texture() {
+    return video_frame_buffer() &&
+           video_frame_buffer()->native_handle() != nullptr;
+  }
 
  private:
-  // Get the pointer to a specific plane.
-  const Plane* GetPlane(PlaneType type) const;
-  // Overloading with non-const.
-  Plane* GetPlane(PlaneType type);
-
-  Plane y_plane_;
-  Plane u_plane_;
-  Plane v_plane_;
-  int width_;
-  int height_;
+  // An opaque reference counted handle that stores the pixel data.
+  rtc::scoped_refptr<webrtc::VideoFrameBuffer> video_frame_buffer_;
   uint32_t timestamp_;
   int64_t ntp_time_ms_;
   int64_t render_time_ms_;
+  VideoRotation rotation_;
 };
 
-enum VideoFrameType {
-  kKeyFrame = 0,
-  kDeltaFrame = 1,
-  kGoldenFrame = 2,
-  kAltRefFrame = 3,
-  kSkipFrame = 4
-};
 
 // TODO(pbos): Rename EncodedFrame and reformat this class' members.
 class EncodedImage {
  public:
-  EncodedImage()
-      : _encodedWidth(0),
-        _encodedHeight(0),
-        _timeStamp(0),
-        capture_time_ms_(0),
-        _frameType(kDeltaFrame),
-        _buffer(NULL),
-        _length(0),
-        _size(0),
-        _completeFrame(false) {}
+  static const size_t kBufferPaddingBytesH264;
+
+  // Some decoders require encoded image buffers to be padded with a small
+  // number of additional bytes (due to over-reading byte readers).
+  static size_t GetBufferPaddingBytes(VideoCodecType codec_type);
+
+  EncodedImage() : EncodedImage(nullptr, 0, 0) {}
 
   EncodedImage(uint8_t* buffer, size_t length, size_t size)
-      : _encodedWidth(0),
-        _encodedHeight(0),
-        _timeStamp(0),
-        ntp_time_ms_(0),
-        capture_time_ms_(0),
-        _frameType(kDeltaFrame),
-        _buffer(buffer),
-        _length(length),
-        _size(size),
-        _completeFrame(false) {}
+      : _buffer(buffer), _length(length), _size(size) {}
 
-  uint32_t _encodedWidth;
-  uint32_t _encodedHeight;
-  uint32_t _timeStamp;
+  struct AdaptReason {
+    AdaptReason()
+        : quality_resolution_downscales(-1),
+          bw_resolutions_disabled(-1) {}
+
+    int quality_resolution_downscales;  // Number of times this frame is down
+                                        // scaled in resolution due to quality.
+                                        // Or -1 if information is not provided.
+    int bw_resolutions_disabled;  // Number of resolutions that are not sent
+                                  // due to bandwidth for this frame.
+                                  // Or -1 if information is not provided.
+  };
+  uint32_t _encodedWidth = 0;
+  uint32_t _encodedHeight = 0;
+  uint32_t _timeStamp = 0;
   // NTP time of the capture time in local timebase in milliseconds.
-  int64_t ntp_time_ms_;
-  int64_t capture_time_ms_;
-  // TODO(pbos): Use webrtc::FrameType directly (and remove VideoFrameType).
-  VideoFrameType _frameType;
+  int64_t ntp_time_ms_ = 0;
+  int64_t capture_time_ms_ = 0;
+  FrameType _frameType = kVideoFrameDelta;
   uint8_t* _buffer;
   size_t _length;
   size_t _size;
-  bool _completeFrame;
+  VideoRotation rotation_ = kVideoRotation_0;
+  bool _completeFrame = false;
+  AdaptReason adapt_reason_;
+  int qp_ = -1;  // Quantizer value.
+
+  // When an application indicates non-zero values here, it is taken as an
+  // indication that all future frames will be constrained with those limits
+  // until the application indicates a change again.
+  PlayoutDelay playout_delay_ = {-1, -1};
 };
 
 }  // namespace webrtc
 #endif  // WEBRTC_VIDEO_FRAME_H_
-

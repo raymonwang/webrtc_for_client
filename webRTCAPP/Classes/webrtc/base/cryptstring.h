@@ -13,11 +13,11 @@
 
 #include <string.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "webrtc/base/linked_ptr.h"
-#include "webrtc/base/scoped_ptr.h"
 
 namespace rtc {
 
@@ -33,27 +33,22 @@ public:
 
 class EmptyCryptStringImpl : public CryptStringImpl {
 public:
-  virtual ~EmptyCryptStringImpl() {}
-  virtual size_t GetLength() const { return 0; }
-  virtual void CopyTo(char * dest, bool nullterminate) const {
-    if (nullterminate) {
-      *dest = '\0';
-    }
-  }
-  virtual std::string UrlEncode() const { return ""; }
-  virtual CryptStringImpl * Copy() const { return new EmptyCryptStringImpl(); }
-  virtual void CopyRawTo(std::vector<unsigned char> * dest) const {
-    dest->clear();
-  }
+  ~EmptyCryptStringImpl() override {}
+  size_t GetLength() const override;
+  void CopyTo(char* dest, bool nullterminate) const override;
+  std::string UrlEncode() const override;
+  CryptStringImpl* Copy() const override;
+  void CopyRawTo(std::vector<unsigned char>* dest) const override;
 };
 
 class CryptString {
-public:
-  CryptString() : impl_(new EmptyCryptStringImpl()) {}
+ public:
+  CryptString();
   size_t GetLength() const { return impl_->GetLength(); }
   void CopyTo(char * dest, bool nullterminate) const { impl_->CopyTo(dest, nullterminate); }
-  CryptString(const CryptString & other) : impl_(other.impl_->Copy()) {}
-  explicit CryptString(const CryptStringImpl & impl) : impl_(impl.Copy()) {}
+  CryptString(const CryptString& other);
+  explicit CryptString(const CryptStringImpl& impl);
+  ~CryptString();
   CryptString & operator=(const CryptString & other) {
     if (this != &other) {
       impl_.reset(other.impl_->Copy());
@@ -65,9 +60,9 @@ public:
   void CopyRawTo(std::vector<unsigned char> * dest) const {
     return impl_->CopyRawTo(dest);
   }
-  
-private:
-  scoped_ptr<const CryptStringImpl> impl_;
+
+ private:
+  std::unique_ptr<const CryptStringImpl> impl_;
 };
 
 
@@ -158,22 +153,13 @@ class InsecureCryptStringImpl : public CryptStringImpl {
   std::string& password() { return password_; }
   const std::string& password() const { return password_; }
 
-  virtual ~InsecureCryptStringImpl() {}
-  virtual size_t GetLength() const { return password_.size(); }
-  virtual void CopyTo(char * dest, bool nullterminate) const {
-    memcpy(dest, password_.data(), password_.size());
-    if (nullterminate) dest[password_.size()] = 0;
-  }
-  virtual std::string UrlEncode() const { return password_; }
-  virtual CryptStringImpl * Copy() const {
-    InsecureCryptStringImpl * copy = new InsecureCryptStringImpl;
-    copy->password() = password_;
-    return copy;
-  }
-  virtual void CopyRawTo(std::vector<unsigned char> * dest) const {
-    dest->resize(password_.size());
-    memcpy(&dest->front(), password_.data(), password_.size());
-  }
+  ~InsecureCryptStringImpl() override = default;
+  size_t GetLength() const override;
+  void CopyTo(char* dest, bool nullterminate) const override;
+  std::string UrlEncode() const override;
+  CryptStringImpl* Copy() const override;
+  void CopyRawTo(std::vector<unsigned char>* dest) const override;
+
  private:
   std::string password_;
 };

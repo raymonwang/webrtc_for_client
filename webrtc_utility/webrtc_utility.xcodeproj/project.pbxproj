@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43998B8F19863340003C5793 /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7419863340003C5793 /* audio_frame_operations.h */; };
-		43998B9019863340003C5793 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7519863340003C5793 /* file_player.h */; };
-		43998B9119863340003C5793 /* file_recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7619863340003C5793 /* file_recorder.h */; };
-		43998B9219863340003C5793 /* mock_process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7819863340003C5793 /* mock_process_thread.h */; };
-		43998B9319863340003C5793 /* process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7919863340003C5793 /* process_thread.h */; };
-		43998B9419863340003C5793 /* rtp_dump.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7A19863340003C5793 /* rtp_dump.h */; };
+		434122741D4F3426003D3A39 /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226B1D4F3426003D3A39 /* audio_frame_operations.h */; };
+		434122751D4F3426003D3A39 /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226B1D4F3426003D3A39 /* audio_frame_operations.h */; };
+		434122761D4F3426003D3A39 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226C1D4F3426003D3A39 /* file_player.h */; };
+		434122771D4F3426003D3A39 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226C1D4F3426003D3A39 /* file_player.h */; };
+		434122781D4F3426003D3A39 /* file_recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226D1D4F3426003D3A39 /* file_recorder.h */; };
+		434122791D4F3426003D3A39 /* file_recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226D1D4F3426003D3A39 /* file_recorder.h */; };
+		4341227A1D4F3426003D3A39 /* helpers_android.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226E1D4F3426003D3A39 /* helpers_android.h */; };
+		4341227B1D4F3426003D3A39 /* helpers_android.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226E1D4F3426003D3A39 /* helpers_android.h */; };
+		4341227C1D4F3426003D3A39 /* helpers_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226F1D4F3426003D3A39 /* helpers_ios.h */; };
+		4341227D1D4F3426003D3A39 /* helpers_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341226F1D4F3426003D3A39 /* helpers_ios.h */; };
+		4341227E1D4F3426003D3A39 /* jvm_android.h in Headers */ = {isa = PBXBuildFile; fileRef = 434122701D4F3426003D3A39 /* jvm_android.h */; };
+		4341227F1D4F3426003D3A39 /* jvm_android.h in Headers */ = {isa = PBXBuildFile; fileRef = 434122701D4F3426003D3A39 /* jvm_android.h */; };
+		434122801D4F3426003D3A39 /* mock_process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 434122721D4F3426003D3A39 /* mock_process_thread.h */; };
+		434122811D4F3426003D3A39 /* mock_process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 434122721D4F3426003D3A39 /* mock_process_thread.h */; };
+		434122821D4F3426003D3A39 /* process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 434122731D4F3426003D3A39 /* process_thread.h */; };
+		434122831D4F3426003D3A39 /* process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 434122731D4F3426003D3A39 /* process_thread.h */; };
+		434122851D4F3440003D3A39 /* helpers_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 434122841D4F3440003D3A39 /* helpers_ios.mm */; };
+		434122861D4F3440003D3A39 /* helpers_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 434122841D4F3440003D3A39 /* helpers_ios.mm */; };
 		43998B9519863340003C5793 /* audio_frame_operations.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B7D19863340003C5793 /* audio_frame_operations.cc */; };
 		43998B9619863340003C5793 /* coder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B7E19863340003C5793 /* coder.cc */; };
 		43998B9719863340003C5793 /* coder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7F19863340003C5793 /* coder.h */; };
@@ -27,31 +39,23 @@
 		43E04D921D262DD200B39549 /* process_thread_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8619863340003C5793 /* process_thread_impl.cc */; };
 		43E04D941D262DD200B39549 /* coder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B7E19863340003C5793 /* coder.cc */; };
 		43E04D951D262DD200B39549 /* file_recorder_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B8219863340003C5793 /* file_recorder_impl.cc */; };
-		43E04D981D262DD200B39549 /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7419863340003C5793 /* audio_frame_operations.h */; };
 		43E04D991D262DD200B39549 /* coder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7F19863340003C5793 /* coder.h */; };
-		43E04D9A1D262DD200B39549 /* file_recorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7619863340003C5793 /* file_recorder.h */; };
 		43E04D9B1D262DD200B39549 /* process_thread_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8719863340003C5793 /* process_thread_impl.h */; };
 		43E04D9C1D262DD200B39549 /* file_recorder_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8319863340003C5793 /* file_recorder_impl.h */; };
-		43E04D9E1D262DD200B39549 /* process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7919863340003C5793 /* process_thread.h */; };
-		43E04D9F1D262DD200B39549 /* rtp_dump.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7A19863340003C5793 /* rtp_dump.h */; };
 		43E04DA21D262DD200B39549 /* file_player_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B8119863340003C5793 /* file_player_impl.h */; };
-		43E04DA31D262DD200B39549 /* mock_process_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7819863340003C5793 /* mock_process_thread.h */; };
-		43E04DA51D262DD200B39549 /* file_player.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B7519863340003C5793 /* file_player.h */; };
-		43FDB0BF1D477F98004DD0EA /* rtp_dump_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */; };
-		43FDB0C01D477F98004DD0EA /* rtp_dump_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */; };
-		43FDB30A1D48A631004DD0EA /* rtp_dump_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */; };
-		43FDB30B1D48A631004DD0EA /* rtp_dump_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4341226B1D4F3426003D3A39 /* audio_frame_operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_operations.h; sourceTree = "<group>"; };
+		4341226C1D4F3426003D3A39 /* file_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_player.h; sourceTree = "<group>"; };
+		4341226D1D4F3426003D3A39 /* file_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_recorder.h; sourceTree = "<group>"; };
+		4341226E1D4F3426003D3A39 /* helpers_android.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers_android.h; sourceTree = "<group>"; };
+		4341226F1D4F3426003D3A39 /* helpers_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers_ios.h; sourceTree = "<group>"; };
+		434122701D4F3426003D3A39 /* jvm_android.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jvm_android.h; sourceTree = "<group>"; };
+		434122721D4F3426003D3A39 /* mock_process_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_process_thread.h; sourceTree = "<group>"; };
+		434122731D4F3426003D3A39 /* process_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_thread.h; sourceTree = "<group>"; };
+		434122841D4F3440003D3A39 /* helpers_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = helpers_ios.mm; sourceTree = "<group>"; };
 		43998B651986332A003C5793 /* libwebrtc_utility.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_utility.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43998B7419863340003C5793 /* audio_frame_operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_operations.h; sourceTree = "<group>"; };
-		43998B7519863340003C5793 /* file_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_player.h; sourceTree = "<group>"; };
-		43998B7619863340003C5793 /* file_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_recorder.h; sourceTree = "<group>"; };
-		43998B7819863340003C5793 /* mock_process_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_process_thread.h; sourceTree = "<group>"; };
-		43998B7919863340003C5793 /* process_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_thread.h; sourceTree = "<group>"; };
-		43998B7A19863340003C5793 /* rtp_dump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_dump.h; sourceTree = "<group>"; };
-		43998B7C19863340003C5793 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		43998B7D19863340003C5793 /* audio_frame_operations.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_frame_operations.cc; sourceTree = "<group>"; };
 		43998B7E19863340003C5793 /* coder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coder.cc; sourceTree = "<group>"; };
 		43998B7F19863340003C5793 /* coder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coder.h; sourceTree = "<group>"; };
@@ -62,8 +66,6 @@
 		43998B8619863340003C5793 /* process_thread_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = process_thread_impl.cc; sourceTree = "<group>"; };
 		43998B8719863340003C5793 /* process_thread_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = process_thread_impl.h; sourceTree = "<group>"; };
 		43E04DA91D262DD200B39549 /* libwebrtc_utility_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_utility_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_dump_impl.cc; sourceTree = "<group>"; };
-		43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_dump_impl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4341226A1D4F3426003D3A39 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4341226B1D4F3426003D3A39 /* audio_frame_operations.h */,
+				4341226C1D4F3426003D3A39 /* file_player.h */,
+				4341226D1D4F3426003D3A39 /* file_recorder.h */,
+				4341226E1D4F3426003D3A39 /* helpers_android.h */,
+				4341226F1D4F3426003D3A39 /* helpers_ios.h */,
+				434122701D4F3426003D3A39 /* jvm_android.h */,
+				434122711D4F3426003D3A39 /* mock */,
+				434122731D4F3426003D3A39 /* process_thread.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		434122711D4F3426003D3A39 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				434122721D4F3426003D3A39 /* mock_process_thread.h */,
+			);
+			path = mock;
+			sourceTree = "<group>";
+		};
 		43998B5C1986332A003C5793 = {
 			isa = PBXGroup;
 			children = (
@@ -104,41 +129,18 @@
 		43998B7219863340003C5793 /* utility */ = {
 			isa = PBXGroup;
 			children = (
-				43998B7319863340003C5793 /* interface */,
+				4341226A1D4F3426003D3A39 /* include */,
 				43998B7B19863340003C5793 /* source */,
 			);
 			name = utility;
 			path = ../webRTCAPP/Classes/webrtc/modules/utility;
 			sourceTree = "<group>";
 		};
-		43998B7319863340003C5793 /* interface */ = {
-			isa = PBXGroup;
-			children = (
-				43998B7419863340003C5793 /* audio_frame_operations.h */,
-				43998B7519863340003C5793 /* file_player.h */,
-				43998B7619863340003C5793 /* file_recorder.h */,
-				43998B7719863340003C5793 /* mock */,
-				43998B7919863340003C5793 /* process_thread.h */,
-				43998B7A19863340003C5793 /* rtp_dump.h */,
-			);
-			path = interface;
-			sourceTree = "<group>";
-		};
-		43998B7719863340003C5793 /* mock */ = {
-			isa = PBXGroup;
-			children = (
-				43998B7819863340003C5793 /* mock_process_thread.h */,
-			);
-			path = mock;
-			sourceTree = "<group>";
-		};
 		43998B7B19863340003C5793 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				43998B7C19863340003C5793 /* Android.mk */,
+				434122841D4F3440003D3A39 /* helpers_ios.mm */,
 				43998B7D19863340003C5793 /* audio_frame_operations.cc */,
-				43FDB0BD1D477F98004DD0EA /* rtp_dump_impl.cc */,
-				43FDB0BE1D477F98004DD0EA /* rtp_dump_impl.h */,
 				43998B7E19863340003C5793 /* coder.cc */,
 				43998B7F19863340003C5793 /* coder.h */,
 				43998B8019863340003C5793 /* file_player_impl.cc */,
@@ -158,17 +160,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43998B8F19863340003C5793 /* audio_frame_operations.h in Headers */,
+				4341227C1D4F3426003D3A39 /* helpers_ios.h in Headers */,
 				43998B9719863340003C5793 /* coder.h in Headers */,
-				43FDB0C01D477F98004DD0EA /* rtp_dump_impl.h in Headers */,
-				43998B9119863340003C5793 /* file_recorder.h in Headers */,
+				434122761D4F3426003D3A39 /* file_player.h in Headers */,
+				434122781D4F3426003D3A39 /* file_recorder.h in Headers */,
+				4341227A1D4F3426003D3A39 /* helpers_android.h in Headers */,
+				434122801D4F3426003D3A39 /* mock_process_thread.h in Headers */,
 				43998B9F19863340003C5793 /* process_thread_impl.h in Headers */,
+				434122741D4F3426003D3A39 /* audio_frame_operations.h in Headers */,
+				434122821D4F3426003D3A39 /* process_thread.h in Headers */,
 				43998B9B19863340003C5793 /* file_recorder_impl.h in Headers */,
-				43998B9319863340003C5793 /* process_thread.h in Headers */,
-				43998B9419863340003C5793 /* rtp_dump.h in Headers */,
+				4341227E1D4F3426003D3A39 /* jvm_android.h in Headers */,
 				43998B9919863340003C5793 /* file_player_impl.h in Headers */,
-				43998B9219863340003C5793 /* mock_process_thread.h in Headers */,
-				43998B9019863340003C5793 /* file_player.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,17 +179,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43E04D981D262DD200B39549 /* audio_frame_operations.h in Headers */,
+				4341227D1D4F3426003D3A39 /* helpers_ios.h in Headers */,
 				43E04D991D262DD200B39549 /* coder.h in Headers */,
-				43FDB30B1D48A631004DD0EA /* rtp_dump_impl.h in Headers */,
-				43E04D9A1D262DD200B39549 /* file_recorder.h in Headers */,
+				434122771D4F3426003D3A39 /* file_player.h in Headers */,
+				434122791D4F3426003D3A39 /* file_recorder.h in Headers */,
+				4341227B1D4F3426003D3A39 /* helpers_android.h in Headers */,
+				434122811D4F3426003D3A39 /* mock_process_thread.h in Headers */,
 				43E04D9B1D262DD200B39549 /* process_thread_impl.h in Headers */,
+				434122751D4F3426003D3A39 /* audio_frame_operations.h in Headers */,
+				434122831D4F3426003D3A39 /* process_thread.h in Headers */,
 				43E04D9C1D262DD200B39549 /* file_recorder_impl.h in Headers */,
-				43E04D9E1D262DD200B39549 /* process_thread.h in Headers */,
-				43E04D9F1D262DD200B39549 /* rtp_dump.h in Headers */,
+				4341227F1D4F3426003D3A39 /* jvm_android.h in Headers */,
 				43E04DA21D262DD200B39549 /* file_player_impl.h in Headers */,
-				43E04DA31D262DD200B39549 /* mock_process_thread.h in Headers */,
-				43E04DA51D262DD200B39549 /* file_player.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,10 +265,10 @@
 			files = (
 				43998B9819863340003C5793 /* file_player_impl.cc in Sources */,
 				43998B9519863340003C5793 /* audio_frame_operations.cc in Sources */,
-				43FDB0BF1D477F98004DD0EA /* rtp_dump_impl.cc in Sources */,
 				43998B9E19863340003C5793 /* process_thread_impl.cc in Sources */,
 				43998B9619863340003C5793 /* coder.cc in Sources */,
 				43998B9A19863340003C5793 /* file_recorder_impl.cc in Sources */,
+				434122851D4F3440003D3A39 /* helpers_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,10 +278,10 @@
 			files = (
 				43E04D8E1D262DD200B39549 /* file_player_impl.cc in Sources */,
 				43E04D8F1D262DD200B39549 /* audio_frame_operations.cc in Sources */,
-				43FDB30A1D48A631004DD0EA /* rtp_dump_impl.cc in Sources */,
 				43E04D921D262DD200B39549 /* process_thread_impl.cc in Sources */,
 				43E04D941D262DD200B39549 /* coder.cc in Sources */,
 				43E04D951D262DD200B39549 /* file_recorder_impl.cc in Sources */,
+				434122861D4F3440003D3A39 /* helpers_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

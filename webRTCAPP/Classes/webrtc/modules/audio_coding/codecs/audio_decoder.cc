@@ -13,19 +13,49 @@
 #include <assert.h>
 
 #include "webrtc/base/checks.h"
+#include "webrtc/base/trace_event.h"
 
 namespace webrtc {
 
-int AudioDecoder::DecodeRedundant(const uint8_t* encoded,
-                                  size_t encoded_len,
-                                  int16_t* decoded,
-                                  SpeechType* speech_type) {
-  return Decode(encoded, encoded_len, decoded, speech_type);
+int AudioDecoder::Decode(const uint8_t* encoded, size_t encoded_len,
+                         int sample_rate_hz, size_t max_decoded_bytes,
+                         int16_t* decoded, SpeechType* speech_type) {
+  TRACE_EVENT0("webrtc", "AudioDecoder::Decode");
+  int duration = PacketDuration(encoded, encoded_len);
+  if (duration >= 0 &&
+      duration * Channels() * sizeof(int16_t) > max_decoded_bytes) {
+    return -1;
+  }
+  return DecodeInternal(encoded, encoded_len, sample_rate_hz, decoded,
+                        speech_type);
+}
+
+int AudioDecoder::DecodeRedundant(const uint8_t* encoded, size_t encoded_len,
+                                  int sample_rate_hz, size_t max_decoded_bytes,
+                                  int16_t* decoded, SpeechType* speech_type) {
+  TRACE_EVENT0("webrtc", "AudioDecoder::DecodeRedundant");
+  int duration = PacketDurationRedundant(encoded, encoded_len);
+  if (duration >= 0 &&
+      duration * Channels() * sizeof(int16_t) > max_decoded_bytes) {
+    return -1;
+  }
+  return DecodeRedundantInternal(encoded, encoded_len, sample_rate_hz, decoded,
+                                 speech_type);
+}
+
+int AudioDecoder::DecodeRedundantInternal(const uint8_t* encoded,
+                                          size_t encoded_len,
+                                          int sample_rate_hz, int16_t* decoded,
+                                          SpeechType* speech_type) {
+  return DecodeInternal(encoded, encoded_len, sample_rate_hz, decoded,
+                        speech_type);
 }
 
 bool AudioDecoder::HasDecodePlc() const { return false; }
 
-int AudioDecoder::DecodePlc(int num_frames, int16_t* decoded) { return -1; }
+size_t AudioDecoder::DecodePlc(size_t num_frames, int16_t* decoded) {
+  return 0;
+}
 
 int AudioDecoder::IncomingPacket(const uint8_t* payload,
                                  size_t payload_len,
@@ -37,7 +67,8 @@ int AudioDecoder::IncomingPacket(const uint8_t* payload,
 
 int AudioDecoder::ErrorCode() { return 0; }
 
-int AudioDecoder::PacketDuration(const uint8_t* encoded, size_t encoded_len) {
+int AudioDecoder::PacketDuration(const uint8_t* encoded,
+                                 size_t encoded_len) const {
   return kNotImplemented;
 }
 
@@ -49,11 +80,6 @@ int AudioDecoder::PacketDurationRedundant(const uint8_t* encoded,
 bool AudioDecoder::PacketHasFec(const uint8_t* encoded,
                                 size_t encoded_len) const {
   return false;
-}
-
-CNG_dec_inst* AudioDecoder::CngDecoderInstance() {
-  FATAL() << "Not a CNG decoder";
-  return NULL;
 }
 
 AudioDecoder::SpeechType AudioDecoder::ConvertSpeechType(int16_t type) {

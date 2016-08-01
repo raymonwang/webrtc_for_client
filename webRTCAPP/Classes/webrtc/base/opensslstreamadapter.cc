@@ -8,10 +8,6 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif  // HAVE_CONFIG_H
-
 #if HAVE_OPENSSL_SSL_H
 
 #include "webrtc/base/opensslstreamadapter.h"
@@ -20,8 +16,13 @@
 #include <openssl/crypto.h>
 #include <openssl/err.h>
 #include <openssl/rand.h>
+#include <openssl/tls1.h>
 #include <openssl/x509v3.h>
+#ifndef OPENSSL_IS_BORINGSSL
+#include <openssl/dtls1.h>
+#endif
 
+#include <memory>
 #include <vector>
 
 #include "webrtc/base/common.h"
@@ -33,6 +34,7 @@
 #include "webrtc/base/openssldigest.h"
 #include "webrtc/base/opensslidentity.h"
 #include "webrtc/base/stringutils.h"
+#include "webrtc/base/timeutils.h"
 #include "webrtc/base/thread.h"
 
 namespace rtc {
@@ -42,19 +44,119 @@ namespace rtc {
 #endif
 
 #ifdef HAVE_DTLS_SRTP
-// SRTP cipher suite table
+// SRTP cipher suite table. |internal_name| is used to construct a
+// colon-separated profile strings which is needed by
+// SSL_CTX_set_tlsext_use_srtp().
 struct SrtpCipherMapEntry {
-  const char* external_name;
   const char* internal_name;
+  const int id;
 };
 
 // This isn't elegant, but it's better than an external reference
 static SrtpCipherMapEntry SrtpCipherMap[] = {
-  {"AES_CM_128_HMAC_SHA1_80", "SRTP_AES128_CM_SHA1_80"},
-  {"AES_CM_128_HMAC_SHA1_32", "SRTP_AES128_CM_SHA1_32"},
-  {NULL, NULL}
-};
+    {"SRTP_AES128_CM_SHA1_80", SRTP_AES128_CM_SHA1_80},
+    {"SRTP_AES128_CM_SHA1_32", SRTP_AES128_CM_SHA1_32},
+    {nullptr, 0}};
 #endif
+
+#ifdef OPENSSL_IS_BORINGSSL
+static void TimeCallback(const SSL* ssl, struct timeval* out_clock) {
+  uint64_t time = TimeNanos();
+  out_clock->tv_sec = time / kNumNanosecsPerSec;
+  out_clock->tv_usec = time / kNumNanosecsPerMicrosec;
+}
+#else  // #ifdef OPENSSL_IS_BORINGSSL
+
+// Cipher name table. Maps internal OpenSSL cipher ids to the RFC name.
+struct SslCipherMapEntry {
+  uint32_t openssl_id;
+  const char* rfc_name;
+};
+
+#define DEFINE_CIPHER_ENTRY_SSL3(name)  {SSL3_CK_##name, "TLS_"#name}
+#define DEFINE_CIPHER_ENTRY_TLS1(name)  {TLS1_CK_##name, "TLS_"#name}
+
+// There currently is no method available to get a RFC-compliant name for a
+// cipher suite from BoringSSL, so we need to define the mapping manually here.
+// This should go away once BoringSSL supports "SSL_CIPHER_standard_name"
+// (as available in OpenSSL if compiled with tracing enabled) or a similar
+// method.
+static const SslCipherMapEntry kSslCipherMap[] = {
+  // TLS v1.0 ciphersuites from RFC2246.
+  DEFINE_CIPHER_ENTRY_SSL3(RSA_RC4_128_SHA),
+  {SSL3_CK_RSA_DES_192_CBC3_SHA,
+      "TLS_RSA_WITH_3DES_EDE_CBC_SHA"},
+
+  // AES ciphersuites from RFC3268.
+  {TLS1_CK_RSA_WITH_AES_128_SHA,
+      "TLS_RSA_WITH_AES_128_CBC_SHA"},
+  {TLS1_CK_DHE_RSA_WITH_AES_128_SHA,
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA"},
+  {TLS1_CK_RSA_WITH_AES_256_SHA,
+      "TLS_RSA_WITH_AES_256_CBC_SHA"},
+  {TLS1_CK_DHE_RSA_WITH_AES_256_SHA,
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA"},
+
+  // ECC ciphersuites from RFC4492.
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_ECDSA_WITH_RC4_128_SHA),
+  {TLS1_CK_ECDHE_ECDSA_WITH_DES_192_CBC3_SHA,
+      "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA"},
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_ECDSA_WITH_AES_128_CBC_SHA),
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_ECDSA_WITH_AES_256_CBC_SHA),
+
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_RSA_WITH_RC4_128_SHA),
+  {TLS1_CK_ECDHE_RSA_WITH_DES_192_CBC3_SHA,
+      "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"},
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_RSA_WITH_AES_128_CBC_SHA),
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_RSA_WITH_AES_256_CBC_SHA),
+
+  // TLS v1.2 ciphersuites.
+  {TLS1_CK_RSA_WITH_AES_128_SHA256,
+      "TLS_RSA_WITH_AES_128_CBC_SHA256"},
+  {TLS1_CK_RSA_WITH_AES_256_SHA256,
+      "TLS_RSA_WITH_AES_256_CBC_SHA256"},
+  {TLS1_CK_DHE_RSA_WITH_AES_128_SHA256,
+      "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256"},
+  {TLS1_CK_DHE_RSA_WITH_AES_256_SHA256,
+      "TLS_DHE_RSA_WITH_AES_256_CBC_SHA256"},
+
+  // TLS v1.2 GCM ciphersuites from RFC5288.
+  DEFINE_CIPHER_ENTRY_TLS1(RSA_WITH_AES_128_GCM_SHA256),
+  DEFINE_CIPHER_ENTRY_TLS1(RSA_WITH_AES_256_GCM_SHA384),
+  DEFINE_CIPHER_ENTRY_TLS1(DHE_RSA_WITH_AES_128_GCM_SHA256),
+  DEFINE_CIPHER_ENTRY_TLS1(DHE_RSA_WITH_AES_256_GCM_SHA384),
+  DEFINE_CIPHER_ENTRY_TLS1(DH_RSA_WITH_AES_128_GCM_SHA256),
+  DEFINE_CIPHER_ENTRY_TLS1(DH_RSA_WITH_AES_256_GCM_SHA384),
+
+  // ECDH HMAC based ciphersuites from RFC5289.
+  {TLS1_CK_ECDHE_ECDSA_WITH_AES_128_SHA256,
+      "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"},
+  {TLS1_CK_ECDHE_ECDSA_WITH_AES_256_SHA384,
+      "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384"},
+  {TLS1_CK_ECDHE_RSA_WITH_AES_128_SHA256,
+      "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"},
+  {TLS1_CK_ECDHE_RSA_WITH_AES_256_SHA384,
+      "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384"},
+
+  // ECDH GCM based ciphersuites from RFC5289.
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_ECDSA_WITH_AES_128_GCM_SHA256),
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_ECDSA_WITH_AES_256_GCM_SHA384),
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_RSA_WITH_AES_128_GCM_SHA256),
+  DEFINE_CIPHER_ENTRY_TLS1(ECDHE_RSA_WITH_AES_256_GCM_SHA384),
+
+  {0, NULL}
+};
+#endif  // #ifndef OPENSSL_IS_BORINGSSL
+
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 4309)
+#pragma warning(disable : 4310)
+#endif  // defined(_MSC_VER)
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif  // defined(_MSC_VER)
 
 //////////////////////////////////////////////////////////////////////
 // StreamBIO
@@ -67,7 +169,8 @@ static long stream_ctrl(BIO* h, int cmd, long arg1, void* arg2);
 static int stream_new(BIO* h);
 static int stream_free(BIO* data);
 
-static const BIO_METHOD methods_stream = {
+// TODO(davidben): This should be const once BoringSSL is assumed.
+static BIO_METHOD methods_stream = {
   BIO_TYPE_BIO,
   "stream",
   stream_write,
@@ -80,7 +183,7 @@ static const BIO_METHOD methods_stream = {
   NULL,
 };
 
-static const BIO_METHOD* BIO_s_stream() { return(&methods_stream); }
+static BIO_METHOD* BIO_s_stream() { return(&methods_stream); }
 
 static BIO* BIO_new_stream(StreamInterface* stream) {
   BIO* ret = BIO_new(BIO_s_stream());
@@ -158,6 +261,12 @@ static long stream_ctrl(BIO* b, int cmd, long num, void* ptr) {
       return 0;
     case BIO_CTRL_FLUSH:
       return 1;
+    case BIO_CTRL_DGRAM_QUERY_MTU:
+      // openssl defaults to mtu=256 unless we return something here.
+      // The handshake doesn't actually need to send packets above 1k,
+      // so this seems like a sensible value that should work in most cases.
+      // Webrtc uses the same value for video packets.
+      return 1200;
     default:
       return 0;
   }
@@ -171,11 +280,13 @@ OpenSSLStreamAdapter::OpenSSLStreamAdapter(StreamInterface* stream)
     : SSLStreamAdapter(stream),
       state_(SSL_NONE),
       role_(SSL_CLIENT),
-      ssl_read_needs_write_(false), ssl_write_needs_read_(false),
-      ssl_(NULL), ssl_ctx_(NULL),
+      ssl_read_needs_write_(false),
+      ssl_write_needs_read_(false),
+      ssl_(NULL),
+      ssl_ctx_(NULL),
       custom_verification_succeeded_(false),
-      ssl_mode_(SSL_MODE_TLS) {
-}
+      ssl_mode_(SSL_MODE_TLS),
+      ssl_max_version_(SSL_PROTOCOL_TLS_12) {}
 
 OpenSSLStreamAdapter::~OpenSSLStreamAdapter() {
   Cleanup();
@@ -190,12 +301,11 @@ void OpenSSLStreamAdapter::SetServerRole(SSLRole role) {
   role_ = role;
 }
 
-bool OpenSSLStreamAdapter::GetPeerCertificate(SSLCertificate** cert) const {
-  if (!peer_certificate_)
-    return false;
-
-  *cert = peer_certificate_->GetReference();
-  return true;
+std::unique_ptr<SSLCertificate> OpenSSLStreamAdapter::GetPeerCertificate()
+    const {
+  return peer_certificate_ ? std::unique_ptr<SSLCertificate>(
+                                 peer_certificate_->GetReference())
+                           : nullptr;
 }
 
 bool OpenSSLStreamAdapter::SetPeerCertificateDigest(const std::string
@@ -221,19 +331,74 @@ bool OpenSSLStreamAdapter::SetPeerCertificateDigest(const std::string
   return true;
 }
 
+std::string OpenSSLStreamAdapter::SslCipherSuiteToName(int cipher_suite) {
+#ifdef OPENSSL_IS_BORINGSSL
+  const SSL_CIPHER* ssl_cipher = SSL_get_cipher_by_value(cipher_suite);
+  if (!ssl_cipher) {
+    return std::string();
+  }
+  char* cipher_name = SSL_CIPHER_get_rfc_name(ssl_cipher);
+  std::string rfc_name = std::string(cipher_name);
+  OPENSSL_free(cipher_name);
+  return rfc_name;
+#else
+  for (const SslCipherMapEntry* entry = kSslCipherMap; entry->rfc_name;
+       ++entry) {
+    if (cipher_suite == static_cast<int>(entry->openssl_id)) {
+      return entry->rfc_name;
+    }
+  }
+  return std::string();
+#endif
+}
+
+bool OpenSSLStreamAdapter::GetSslCipherSuite(int* cipher_suite) {
+  if (state_ != SSL_CONNECTED)
+    return false;
+
+  const SSL_CIPHER* current_cipher = SSL_get_current_cipher(ssl_);
+  if (current_cipher == NULL) {
+    return false;
+  }
+
+  *cipher_suite = static_cast<uint16_t>(SSL_CIPHER_get_id(current_cipher));
+  return true;
+}
+
+int OpenSSLStreamAdapter::GetSslVersion() const {
+  if (state_ != SSL_CONNECTED)
+    return -1;
+
+  int ssl_version = SSL_version(ssl_);
+  if (ssl_mode_ == SSL_MODE_DTLS) {
+    if (ssl_version == DTLS1_VERSION)
+      return SSL_PROTOCOL_DTLS_10;
+    else if (ssl_version == DTLS1_2_VERSION)
+      return SSL_PROTOCOL_DTLS_12;
+  } else {
+    if (ssl_version == TLS1_VERSION)
+      return SSL_PROTOCOL_TLS_10;
+    else if (ssl_version == TLS1_1_VERSION)
+      return SSL_PROTOCOL_TLS_11;
+    else if (ssl_version == TLS1_2_VERSION)
+      return SSL_PROTOCOL_TLS_12;
+  }
+
+  return -1;
+}
+
 // Key Extractor interface
 bool OpenSSLStreamAdapter::ExportKeyingMaterial(const std::string& label,
-                                                const uint8* context,
+                                                const uint8_t* context,
                                                 size_t context_len,
                                                 bool use_context,
-                                                uint8* result,
+                                                uint8_t* result,
                                                 size_t result_len) {
 #ifdef HAVE_DTLS_SRTP
   int i;
 
-  i = SSL_export_keying_material(ssl_, result, result_len,
-                                 label.c_str(), label.length(),
-                                 const_cast<uint8 *>(context),
+  i = SSL_export_keying_material(ssl_, result, result_len, label.c_str(),
+                                 label.length(), const_cast<uint8_t*>(context),
                                  context_len, use_context);
 
   if (i != 1)
@@ -245,20 +410,20 @@ bool OpenSSLStreamAdapter::ExportKeyingMaterial(const std::string& label,
 #endif
 }
 
-bool OpenSSLStreamAdapter::SetDtlsSrtpCiphers(
-    const std::vector<std::string>& ciphers) {
+bool OpenSSLStreamAdapter::SetDtlsSrtpCryptoSuites(
+    const std::vector<int>& ciphers) {
 #ifdef HAVE_DTLS_SRTP
   std::string internal_ciphers;
 
   if (state_ != SSL_NONE)
     return false;
 
-  for (std::vector<std::string>::const_iterator cipher = ciphers.begin();
+  for (std::vector<int>::const_iterator cipher = ciphers.begin();
        cipher != ciphers.end(); ++cipher) {
     bool found = false;
-    for (SrtpCipherMapEntry *entry = SrtpCipherMap; entry->internal_name;
+    for (SrtpCipherMapEntry* entry = SrtpCipherMap; entry->internal_name;
          ++entry) {
-      if (*cipher == entry->external_name) {
+      if (*cipher == entry->id) {
         found = true;
         if (!internal_ciphers.empty())
           internal_ciphers += ":";
@@ -283,7 +448,7 @@ bool OpenSSLStreamAdapter::SetDtlsSrtpCiphers(
 #endif
 }
 
-bool OpenSSLStreamAdapter::GetDtlsSrtpCipher(std::string* cipher) {
+bool OpenSSLStreamAdapter::GetDtlsSrtpCryptoSuite(int* crypto_suite) {
 #ifdef HAVE_DTLS_SRTP
   ASSERT(state_ == SSL_CONNECTED);
   if (state_ != SSL_CONNECTED)
@@ -295,17 +460,9 @@ bool OpenSSLStreamAdapter::GetDtlsSrtpCipher(std::string* cipher) {
   if (!srtp_profile)
     return false;
 
-  for (SrtpCipherMapEntry *entry = SrtpCipherMap;
-       entry->internal_name; ++entry) {
-    if (!strcmp(entry->internal_name, srtp_profile->name)) {
-      *cipher = entry->external_name;
-      return true;
-    }
-  }
-
-  ASSERT(false);  // This should never happen
-
-  return false;
+  *crypto_suite = srtp_profile->id;
+  ASSERT(!SrtpCryptoSuiteToName(*crypto_suite).empty());
+  return true;
 #else
   return false;
 #endif
@@ -326,6 +483,11 @@ int OpenSSLStreamAdapter::StartSSLWithPeer() {
 void OpenSSLStreamAdapter::SetMode(SSLMode mode) {
   ASSERT(state_ == SSL_NONE);
   ssl_mode_ = mode;
+}
+
+void OpenSSLStreamAdapter::SetMaxProtocolVersion(SSLProtocolVersion version) {
+  ASSERT(ssl_ctx_ == NULL);
+  ssl_max_version_ = version;
 }
 
 //
@@ -457,6 +619,10 @@ StreamResult OpenSSLStreamAdapter::Read(void* data, size_t data_len,
       return SR_BLOCK;
     case SSL_ERROR_ZERO_RETURN:
       LOG(LS_VERBOSE) << " -- remote side closed";
+      // When we're closed at SSL layer, also close the stream level which
+      // performs necessary clean up. Otherwise, a new incoming packet after
+      // this could overflow the stream buffer.
+      this->stream()->Close();
       return SR_EOS;
       break;
     default:
@@ -612,19 +778,35 @@ int OpenSSLStreamAdapter::BeginSSL() {
   SSL_set_app_data(ssl_, this);
 
   SSL_set_bio(ssl_, bio, bio);  // the SSL object owns the bio now.
+  if (ssl_mode_ == SSL_MODE_DTLS) {
+#ifdef OPENSSL_IS_BORINGSSL
+    // Change the initial retransmission timer from 1 second to 50ms.
+    // This will likely result in some spurious retransmissions, but
+    // it's useful for ensuring a timely handshake when there's packet
+    // loss.
+    DTLSv1_set_initial_timeout_duration(ssl_, 50);
+#else
+    // Enable read-ahead for DTLS so whole packets are read from internal BIO
+    // before parsing. This is done internally by BoringSSL for DTLS.
+    SSL_set_read_ahead(ssl_, 1);
+#endif
+  }
 
   SSL_set_mode(ssl_, SSL_MODE_ENABLE_PARTIAL_WRITE |
                SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER);
 
-  // Specify an ECDH group for ECDHE ciphers, otherwise they cannot be
-  // negotiated when acting as the server. Use NIST's P-256 which is commonly
-  // supported.
+#if !defined(OPENSSL_IS_BORINGSSL)
+  // Specify an ECDH group for ECDHE ciphers, otherwise OpenSSL cannot
+  // negotiate them when acting as the server. Use NIST's P-256 which is
+  // commonly supported. BoringSSL doesn't need explicit configuration and has
+  // a reasonable default set.
   EC_KEY* ecdh = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
   if (ecdh == NULL)
     return -1;
   SSL_set_options(ssl_, SSL_OP_SINGLE_ECDH_USE);
   SSL_set_tmp_ecdh(ssl_, ecdh);
   EC_KEY_free(ecdh);
+#endif
 
   // Do the connect
   return ContinueSSL();
@@ -659,7 +841,8 @@ int OpenSSLStreamAdapter::ContinueSSL() {
         if (DTLSv1_get_timeout(ssl_, &timeout)) {
           int delay = timeout.tv_sec * 1000 + timeout.tv_usec/1000;
 
-          Thread::Current()->PostDelayed(delay, this, MSG_TIMEOUT, 0);
+          Thread::Current()->PostDelayed(RTC_FROM_HERE, delay, this,
+                                         MSG_TIMEOUT, 0);
         }
       }
       break;
@@ -731,22 +914,102 @@ void OpenSSLStreamAdapter::OnMessage(Message* msg) {
 SSL_CTX* OpenSSLStreamAdapter::SetupSSLContext() {
   SSL_CTX *ctx = NULL;
 
-  if (role_ == SSL_CLIENT) {
+#ifdef OPENSSL_IS_BORINGSSL
     ctx = SSL_CTX_new(ssl_mode_ == SSL_MODE_DTLS ?
-        DTLSv1_client_method() : TLSv1_client_method());
-  } else {
-    ctx = SSL_CTX_new(ssl_mode_ == SSL_MODE_DTLS ?
-        DTLSv1_server_method() : TLSv1_server_method());
+        DTLS_method() : TLS_method());
+    // Version limiting for BoringSSL will be done below.
+#else
+  const SSL_METHOD* method;
+  switch (ssl_max_version_) {
+    case SSL_PROTOCOL_TLS_10:
+    case SSL_PROTOCOL_TLS_11:
+      // OpenSSL doesn't support setting min/max versions, so we always use
+      // (D)TLS 1.0 if a max. version below the max. available is requested.
+      if (ssl_mode_ == SSL_MODE_DTLS) {
+        if (role_ == SSL_CLIENT) {
+          method = DTLSv1_client_method();
+        } else {
+          method = DTLSv1_server_method();
+        }
+      } else {
+        if (role_ == SSL_CLIENT) {
+          method = TLSv1_client_method();
+        } else {
+          method = TLSv1_server_method();
+        }
+      }
+      break;
+    case SSL_PROTOCOL_TLS_12:
+    default:
+      if (ssl_mode_ == SSL_MODE_DTLS) {
+#if (OPENSSL_VERSION_NUMBER >= 0x10002000L)
+        // DTLS 1.2 only available starting from OpenSSL 1.0.2
+        if (role_ == SSL_CLIENT) {
+          method = DTLS_client_method();
+        } else {
+          method = DTLS_server_method();
+        }
+#else
+        if (role_ == SSL_CLIENT) {
+          method = DTLSv1_client_method();
+        } else {
+          method = DTLSv1_server_method();
+        }
+#endif
+      } else {
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+        // New API only available starting from OpenSSL 1.1.0
+        if (role_ == SSL_CLIENT) {
+          method = TLS_client_method();
+        } else {
+          method = TLS_server_method();
+        }
+#else
+        if (role_ == SSL_CLIENT) {
+          method = SSLv23_client_method();
+        } else {
+          method = SSLv23_server_method();
+        }
+#endif
+      }
+      break;
   }
+  ctx = SSL_CTX_new(method);
+#endif  // OPENSSL_IS_BORINGSSL
+
   if (ctx == NULL)
     return NULL;
+
+#ifdef OPENSSL_IS_BORINGSSL
+  SSL_CTX_set_min_version(ctx, ssl_mode_ == SSL_MODE_DTLS ?
+      DTLS1_VERSION : TLS1_VERSION);
+  switch (ssl_max_version_) {
+    case SSL_PROTOCOL_TLS_10:
+      SSL_CTX_set_max_version(ctx, ssl_mode_ == SSL_MODE_DTLS ?
+          DTLS1_VERSION : TLS1_VERSION);
+      break;
+    case SSL_PROTOCOL_TLS_11:
+      SSL_CTX_set_max_version(ctx, ssl_mode_ == SSL_MODE_DTLS ?
+          DTLS1_VERSION : TLS1_1_VERSION);
+      break;
+    case SSL_PROTOCOL_TLS_12:
+    default:
+      SSL_CTX_set_max_version(ctx, ssl_mode_ == SSL_MODE_DTLS ?
+          DTLS1_2_VERSION : TLS1_2_VERSION);
+      break;
+  }
+  // Set a time callback for BoringSSL because:
+  // 1. Our time function is more accurate (doesn't just use gettimeofday).
+  // 2. This allows us to inject a fake clock for testing.
+  SSL_CTX_set_current_time_cb(ctx, &TimeCallback);
+#endif
 
   if (identity_ && !identity_->ConfigureIdentity(ctx)) {
     SSL_CTX_free(ctx);
     return NULL;
   }
 
-#ifdef _DEBUG
+#if !defined(NDEBUG)
   SSL_CTX_set_info_callback(ctx, OpenSSLAdapter::SSLInfoCallback);
 #endif
 
@@ -760,7 +1023,12 @@ SSL_CTX* OpenSSLStreamAdapter::SetupSSLContext() {
 
   SSL_CTX_set_verify(ctx, mode, SSLVerifyCallback);
   SSL_CTX_set_verify_depth(ctx, 4);
-  SSL_CTX_set_cipher_list(ctx, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
+  // Select list of available ciphers. Note that !SHA256 and !SHA384 only
+  // remove HMAC-SHA256 and HMAC-SHA384 cipher suites, not GCM cipher suites
+  // with SHA256 or SHA384 as the handshake hash.
+  // This matches the list of SSLClientSocketOpenSSL in Chromium.
+  SSL_CTX_set_cipher_list(ctx,
+      "DEFAULT:!NULL:!aNULL:!SHA256:!SHA384:!aECDH:!AESGCM+AES256:!aPSK");
 
 #ifdef HAVE_DTLS_SRTP
   if (!srtp_ciphers_.empty()) {
@@ -792,7 +1060,7 @@ int OpenSSLStreamAdapter::SSLVerifyCallback(int ok, X509_STORE_CTX* store) {
   // the digest.
   //
   // TODO(jiayl): Verify the chain is a proper chain and report the chain to
-  // |stream->peer_certificate_|, like what NSS does.
+  // |stream->peer_certificate_|.
   if (depth > 0) {
     LOG(LS_INFO) << "Ignored chained certificate at depth " << depth;
     return 1;
@@ -874,6 +1142,85 @@ bool OpenSSLStreamAdapter::HaveExporter() {
 #else
   return false;
 #endif
+}
+
+bool OpenSSLStreamAdapter::IsBoringSsl() {
+#ifdef OPENSSL_IS_BORINGSSL
+  return true;
+#else
+  return false;
+#endif
+}
+
+#define CDEF(X) \
+  { static_cast<uint16_t>(TLS1_CK_##X & 0xffff), "TLS_" #X }
+
+struct cipher_list {
+  uint16_t cipher;
+  const char* cipher_str;
+};
+
+// TODO(torbjorng): Perhaps add more cipher suites to these lists.
+static const cipher_list OK_RSA_ciphers[] = {
+  CDEF(ECDHE_RSA_WITH_AES_128_CBC_SHA),
+  CDEF(ECDHE_RSA_WITH_AES_256_CBC_SHA),
+  CDEF(ECDHE_RSA_WITH_AES_128_GCM_SHA256),
+#ifdef TLS1_CK_ECDHE_RSA_WITH_AES_256_GCM_SHA256
+  CDEF(ECDHE_RSA_WITH_AES_256_GCM_SHA256),
+#endif
+#ifdef TLS1_CK_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+  CDEF(ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256),
+#endif
+};
+
+static const cipher_list OK_ECDSA_ciphers[] = {
+  CDEF(ECDHE_ECDSA_WITH_AES_128_CBC_SHA),
+  CDEF(ECDHE_ECDSA_WITH_AES_256_CBC_SHA),
+  CDEF(ECDHE_ECDSA_WITH_AES_128_GCM_SHA256),
+#ifdef TLS1_CK_ECDHE_ECDSA_WITH_AES_256_GCM_SHA256
+  CDEF(ECDHE_ECDSA_WITH_AES_256_GCM_SHA256),
+#endif
+#ifdef TLS1_CK_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+  CDEF(ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256),
+#endif
+};
+#undef CDEF
+
+bool OpenSSLStreamAdapter::IsAcceptableCipher(int cipher, KeyType key_type) {
+  if (key_type == KT_RSA) {
+    for (const cipher_list& c : OK_RSA_ciphers) {
+      if (cipher == c.cipher)
+        return true;
+    }
+  }
+
+  if (key_type == KT_ECDSA) {
+    for (const cipher_list& c : OK_ECDSA_ciphers) {
+      if (cipher == c.cipher)
+        return true;
+    }
+  }
+
+  return false;
+}
+
+bool OpenSSLStreamAdapter::IsAcceptableCipher(const std::string& cipher,
+                                              KeyType key_type) {
+  if (key_type == KT_RSA) {
+    for (const cipher_list& c : OK_RSA_ciphers) {
+      if (cipher == c.cipher_str)
+        return true;
+    }
+  }
+
+  if (key_type == KT_ECDSA) {
+    for (const cipher_list& c : OK_ECDSA_ciphers) {
+      if (cipher == c.cipher_str)
+        return true;
+    }
+  }
+
+  return false;
 }
 
 }  // namespace rtc

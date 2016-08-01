@@ -31,9 +31,10 @@ class PredictivePacketManipulator : public PacketManipulatorImpl {
   // FIFO queue so they will be returned in the same order they were added.
   // Result parameter must be 0.0 to 1.0.
   void AddRandomResult(double result);
+
  protected:
   // Returns a uniformly distributed random value between 0.0 and 1.0
-  virtual double RandomUniform() OVERRIDE;
+  double RandomUniform() override;
 
  private:
   std::queue<double> random_results_;

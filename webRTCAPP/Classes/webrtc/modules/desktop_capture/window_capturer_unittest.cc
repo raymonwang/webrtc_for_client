@@ -8,40 +8,37 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/modules/desktop_capture/window_capturer.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/modules/desktop_capture/desktop_capture_options.h"
 #include "webrtc/modules/desktop_capture/desktop_frame.h"
 #include "webrtc/modules/desktop_capture/desktop_region.h"
-#include "webrtc/system_wrappers/interface/logging.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
+#include "webrtc/system_wrappers/include/logging.h"
 
 namespace webrtc {
 
 class WindowCapturerTest : public testing::Test,
                            public DesktopCapturer::Callback {
  public:
-  void SetUp() OVERRIDE {
+  void SetUp() override {
     capturer_.reset(
         WindowCapturer::Create(DesktopCaptureOptions::CreateDefault()));
   }
 
-  void TearDown() OVERRIDE {
-  }
+  void TearDown() override {}
 
   // DesktopCapturer::Callback interface
-  virtual SharedMemory* CreateSharedMemory(size_t size) OVERRIDE {
-    return NULL;
-  }
-
-  virtual void OnCaptureCompleted(DesktopFrame* frame) OVERRIDE {
-    frame_.reset(frame);
+  void OnCaptureResult(DesktopCapturer::Result result,
+                       std::unique_ptr<DesktopFrame> frame) override {
+    frame_ = std::move(frame);
   }
 
  protected:
-  scoped_ptr<WindowCapturer> capturer_;
-  scoped_ptr<DesktopFrame> frame_;
+  std::unique_ptr<WindowCapturer> capturer_;
+  std::unique_ptr<DesktopFrame> frame_;
 };
 
 // Verify that we can enumerate windows.
@@ -80,8 +77,8 @@ TEST_F(WindowCapturerTest, Capture) {
     if (!frame_.get()) {
       WindowCapturer::WindowList new_list;
       EXPECT_TRUE(capturer_->GetWindowList(&new_list));
-      for (WindowCapturer::WindowList::iterator new_list_it = windows.begin();
-           new_list_it != windows.end(); ++new_list_it) {
+      for (WindowCapturer::WindowList::iterator new_list_it = new_list.begin();
+           new_list_it != new_list.end(); ++new_list_it) {
         EXPECT_FALSE(it->id == new_list_it->id);
       }
       continue;

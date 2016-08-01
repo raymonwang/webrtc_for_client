@@ -8,49 +8,71 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#if HAVE_CONFIG_H
-#include "config.h"
-#endif  // HAVE_CONFIG_H
-
 #include "webrtc/base/sslstreamadapter.h"
 #include "webrtc/base/sslconfig.h"
 
-#if SSL_USE_SCHANNEL
-
-// SChannel support for DTLS and peer-to-peer mode are not
-// done.
-#elif SSL_USE_OPENSSL  // && !SSL_USE_SCHANNEL
+#if SSL_USE_OPENSSL
 
 #include "webrtc/base/opensslstreamadapter.h"
 
-#elif SSL_USE_NSS      // && !SSL_USE_SCHANNEL && !SSL_USE_OPENSSL
-
-#include "webrtc/base/nssstreamadapter.h"
-
-#endif  // !SSL_USE_OPENSSL && !SSL_USE_SCHANNEL && !SSL_USE_NSS
+#endif  // SSL_USE_OPENSSL
 
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace rtc {
 
-SSLStreamAdapter* SSLStreamAdapter::Create(StreamInterface* stream) {
-#if SSL_USE_SCHANNEL
-  return NULL;
-#elif SSL_USE_OPENSSL  // !SSL_USE_SCHANNEL
-  return new OpenSSLStreamAdapter(stream);
-#elif SSL_USE_NSS     //  !SSL_USE_SCHANNEL && !SSL_USE_OPENSSL
-  return new NSSStreamAdapter(stream);
-#else  // !SSL_USE_SCHANNEL && !SSL_USE_OPENSSL && !SSL_USE_NSS
-  return NULL;
-#endif
+// TODO(guoweis): Move this to SDP layer and use int form internally.
+// webrtc:5043.
+const char CS_AES_CM_128_HMAC_SHA1_80[] = "AES_CM_128_HMAC_SHA1_80";
+const char CS_AES_CM_128_HMAC_SHA1_32[] = "AES_CM_128_HMAC_SHA1_32";
+
+std::string SrtpCryptoSuiteToName(int crypto_suite) {
+  if (crypto_suite == SRTP_AES128_CM_SHA1_32)
+    return CS_AES_CM_128_HMAC_SHA1_32;
+  if (crypto_suite == SRTP_AES128_CM_SHA1_80)
+    return CS_AES_CM_128_HMAC_SHA1_80;
+  return std::string();
 }
 
-// Note: this matches the logic above with SCHANNEL dominating
-#if SSL_USE_SCHANNEL
-bool SSLStreamAdapter::HaveDtls() { return false; }
-bool SSLStreamAdapter::HaveDtlsSrtp() { return false; }
-bool SSLStreamAdapter::HaveExporter() { return false; }
-#elif SSL_USE_OPENSSL
+int SrtpCryptoSuiteFromName(const std::string& crypto_suite) {
+  if (crypto_suite == CS_AES_CM_128_HMAC_SHA1_32)
+    return SRTP_AES128_CM_SHA1_32;
+  if (crypto_suite == CS_AES_CM_128_HMAC_SHA1_80)
+    return SRTP_AES128_CM_SHA1_80;
+  return SRTP_INVALID_CRYPTO_SUITE;
+}
+
+SSLStreamAdapter* SSLStreamAdapter::Create(StreamInterface* stream) {
+#if SSL_USE_OPENSSL
+  return new OpenSSLStreamAdapter(stream);
+#else  // !SSL_USE_OPENSSL
+  return NULL;
+#endif  // SSL_USE_OPENSSL
+}
+
+bool SSLStreamAdapter::GetSslCipherSuite(int* cipher_suite) {
+  return false;
+}
+
+bool SSLStreamAdapter::ExportKeyingMaterial(const std::string& label,
+                                            const uint8_t* context,
+                                            size_t context_len,
+                                            bool use_context,
+                                            uint8_t* result,
+                                            size_t result_len) {
+  return false;  // Default is unsupported
+}
+
+bool SSLStreamAdapter::SetDtlsSrtpCryptoSuites(
+    const std::vector<int>& crypto_suites) {
+  return false;
+}
+
+bool SSLStreamAdapter::GetDtlsSrtpCryptoSuite(int* crypto_suite) {
+  return false;
+}
+
+#if SSL_USE_OPENSSL
 bool SSLStreamAdapter::HaveDtls() {
   return OpenSSLStreamAdapter::HaveDtls();
 }
@@ -60,17 +82,20 @@ bool SSLStreamAdapter::HaveDtlsSrtp() {
 bool SSLStreamAdapter::HaveExporter() {
   return OpenSSLStreamAdapter::HaveExporter();
 }
-#elif SSL_USE_NSS
-bool SSLStreamAdapter::HaveDtls() {
-  return NSSStreamAdapter::HaveDtls();
+bool SSLStreamAdapter::IsBoringSsl() {
+  return OpenSSLStreamAdapter::IsBoringSsl();
 }
-bool SSLStreamAdapter::HaveDtlsSrtp() {
-  return NSSStreamAdapter::HaveDtlsSrtp();
+bool SSLStreamAdapter::IsAcceptableCipher(int cipher, KeyType key_type) {
+  return OpenSSLStreamAdapter::IsAcceptableCipher(cipher, key_type);
 }
-bool SSLStreamAdapter::HaveExporter() {
-  return NSSStreamAdapter::HaveExporter();
+bool SSLStreamAdapter::IsAcceptableCipher(const std::string& cipher,
+                                          KeyType key_type) {
+  return OpenSSLStreamAdapter::IsAcceptableCipher(cipher, key_type);
 }
-#endif  // !SSL_USE_SCHANNEL && !SSL_USE_OPENSSL && !SSL_USE_NSS
+std::string SSLStreamAdapter::SslCipherSuiteToName(int cipher_suite) {
+  return OpenSSLStreamAdapter::SslCipherSuiteToName(cipher_suite);
+}
+#endif  // SSL_USE_OPENSSL
 
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -9,7 +9,6 @@
  */
 
 #include "webrtc/base/gunit.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/thread.h"
 #include "webrtc/base/maccocoasocketserver.h"
 
@@ -32,7 +31,7 @@ class WakeThread : public Thread {
 // Test that MacCocoaSocketServer::Wait works as expected.
 TEST(MacCocoaSocketServer, TestWait) {
   MacCocoaSocketServer server;
-  uint32 start = Time();
+  uint32_t start = Time();
   server.Wait(1000, true);
   EXPECT_GE(TimeSince(start), 1000);
 }
@@ -41,7 +40,7 @@ TEST(MacCocoaSocketServer, TestWait) {
 TEST(MacCocoaSocketServer, TestWakeup) {
   MacCFSocketServer server;
   WakeThread thread(&server);
-  uint32 start = Time();
+  uint32_t start = Time();
   thread.Start();
   server.Wait(10000, true);
   EXPECT_LT(TimeSince(start), 10000);

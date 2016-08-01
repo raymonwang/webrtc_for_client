@@ -17,7 +17,7 @@ namespace rtc {
 ScopedAutoreleasePool::ScopedAutoreleasePool() {
   pool_ = [[NSAutoreleasePool alloc] init];
 }
-
+∫
 ScopedAutoreleasePool::~ScopedAutoreleasePool() {
   [pool_ drain];
 }

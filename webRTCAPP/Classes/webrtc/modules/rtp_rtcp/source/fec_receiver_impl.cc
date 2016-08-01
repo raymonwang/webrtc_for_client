@@ -10,13 +10,12 @@
 
 #include "webrtc/modules/rtp_rtcp/source/fec_receiver_impl.h"
 
-#include <assert.h>
+#include <memory>
 
+#include "webrtc/base/checks.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/modules/rtp_rtcp/source/byte_io.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_receiver_video.h"
-#include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/logging.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 
 // RFC 5109
 namespace webrtc {
@@ -26,8 +25,7 @@ FecReceiver* FecReceiver::Create(RtpData* callback) {
 }
 
 FecReceiverImpl::FecReceiverImpl(RtpData* callback)
-    : crit_sect_(CriticalSectionWrapper::CreateCriticalSection()),
-      recovered_packet_callback_(callback),
+    : recovered_packet_callback_(callback),
       fec_(new ForwardErrorCorrection()) {}
 
 FecReceiverImpl::~FecReceiverImpl() {
@@ -42,7 +40,7 @@ FecReceiverImpl::~FecReceiverImpl() {
 }
 
 FecPacketCounter FecReceiverImpl::GetPacketCounter() const {
-  CriticalSectionScoped cs(crit_sect_.get());
+  rtc::CritScope cs(&crit_sect_);
   return packet_counter_;
 }
 
@@ -77,16 +75,21 @@ FecPacketCounter FecReceiverImpl::GetPacketCounter() const {
 int32_t FecReceiverImpl::AddReceivedRedPacket(
     const RTPHeader& header, const uint8_t* incoming_rtp_packet,
     size_t packet_length, uint8_t ulpfec_payload_type) {
-  CriticalSectionScoped cs(crit_sect_.get());
+  rtc::CritScope cs(&crit_sect_);
   uint8_t REDHeaderLength = 1;
   size_t payload_data_length = packet_length - header.headerLength;
+
+  if (payload_data_length == 0) {
+    LOG(LS_WARNING) << "Corrupt/truncated FEC packet.";
+    return -1;
+  }
 
   // Add to list without RED header, aka a virtual RTP packet
   // we remove the RED header
 
-  ForwardErrorCorrection::ReceivedPacket* received_packet =
-      new ForwardErrorCorrection::ReceivedPacket;
-  received_packet->pkt = new ForwardErrorCorrection::Packet;
+  std::unique_ptr<ForwardErrorCorrection::ReceivedPacket> received_packet(
+      new ForwardErrorCorrection::ReceivedPacket());
+  received_packet->pkt = new ForwardErrorCorrection::Packet();
 
   // get payload type from RED header
   uint8_t payload_type =
@@ -99,16 +102,18 @@ int32_t FecReceiverImpl::AddReceivedRedPacket(
   if (incoming_rtp_packet[header.headerLength] & 0x80) {
     // f bit set in RED header
     REDHeaderLength = 4;
+    if (payload_data_length < REDHeaderLength + 1u) {
+      LOG(LS_WARNING) << "Corrupt/truncated FEC packet.";
+      return -1;
+    }
+
     uint16_t timestamp_offset =
         (incoming_rtp_packet[header.headerLength + 1]) << 8;
     timestamp_offset +=
         incoming_rtp_packet[header.headerLength + 2];
     timestamp_offset = timestamp_offset >> 2;
     if (timestamp_offset != 0) {
-      // |timestampOffset| should be 0. However, it's possible this is the first
-      // location a corrupt payload can be caught, so don't assert.
       LOG(LS_WARNING) << "Corrupt payload found.";
-      delete received_packet;
       return -1;
     }
 
@@ -118,21 +123,20 @@ int32_t FecReceiverImpl::AddReceivedRedPacket(
 
     // check next RED header
     if (incoming_rtp_packet[header.headerLength + 4] & 0x80) {
-      // more than 2 blocks in packet not supported
-      delete received_packet;
-      assert(false);
+      LOG(LS_WARNING) << "More than 2 blocks in packet not supported.";
       return -1;
     }
-    if (blockLength > payload_data_length - REDHeaderLength) {
-      // block length longer than packet
-      delete received_packet;
-      assert(false);
+    // Check that the packet is long enough to contain data in the following
+    // block.
+    if (blockLength > payload_data_length - (REDHeaderLength + 1)) {
+      LOG(LS_WARNING) << "Block length longer than packet.";
       return -1;
     }
   }
   ++packet_counter_.num_packets;
 
-  ForwardErrorCorrection::ReceivedPacket* second_received_packet = NULL;
+  std::unique_ptr<ForwardErrorCorrection::ReceivedPacket>
+      second_received_packet;
   if (blockLength > 0) {
     // handle block length, split into 2 packets
     REDHeaderLength = 5;
@@ -154,8 +158,8 @@ int32_t FecReceiverImpl::AddReceivedRedPacket(
 
     received_packet->pkt->length = blockLength;
 
-    second_received_packet = new ForwardErrorCorrection::ReceivedPacket;
-    second_received_packet->pkt = new ForwardErrorCorrection::Packet;
+    second_received_packet.reset(new ForwardErrorCorrection::ReceivedPacket());
+    second_received_packet->pkt = new ForwardErrorCorrection::Packet();
 
     second_received_packet->is_fec = true;
     second_received_packet->seq_num = header.sequenceNumber;
@@ -179,7 +183,7 @@ int32_t FecReceiverImpl::AddReceivedRedPacket(
         payload_data_length - REDHeaderLength);
     received_packet->pkt->length = payload_data_length - REDHeaderLength;
     received_packet->ssrc =
-        RtpUtility::BufferToUWord32(&incoming_rtp_packet[8]);
+        ByteReader<uint32_t>::ReadBigEndian(&incoming_rtp_packet[8]);
 
   } else {
     // copy the RTP header
@@ -202,55 +206,53 @@ int32_t FecReceiverImpl::AddReceivedRedPacket(
   }
 
   if (received_packet->pkt->length == 0) {
-    delete second_received_packet;
-    delete received_packet;
     return 0;
   }
 
-  received_packet_list_.push_back(received_packet);
+  received_packet_list_.push_back(received_packet.release());
   if (second_received_packet) {
-    received_packet_list_.push_back(second_received_packet);
+    received_packet_list_.push_back(second_received_packet.release());
   }
   return 0;
 }
 
 int32_t FecReceiverImpl::ProcessReceivedFec() {
-  crit_sect_->Enter();
+  crit_sect_.Enter();
   if (!received_packet_list_.empty()) {
     // Send received media packet to VCM.
     if (!received_packet_list_.front()->is_fec) {
       ForwardErrorCorrection::Packet* packet =
           received_packet_list_.front()->pkt;
-      crit_sect_->Leave();
+      crit_sect_.Leave();
       if (!recovered_packet_callback_->OnRecoveredPacket(packet->data,
                                                          packet->length)) {
         return -1;
       }
-      crit_sect_->Enter();
+      crit_sect_.Enter();
     }
-    if (fec_->DecodeFEC(&received_packet_list_, &recovered_packet_list_) != 0) {
-      crit_sect_->Leave();
+    if (fec_->DecodeFec(&received_packet_list_, &recovered_packet_list_) != 0) {
+      crit_sect_.Leave();
       return -1;
     }
-    assert(received_packet_list_.empty());
+    RTC_DCHECK(received_packet_list_.empty());
   }
   // Send any recovered media packets to VCM.
-  ForwardErrorCorrection::RecoveredPacketList::iterator it =
-      recovered_packet_list_.begin();
-  for (; it != recovered_packet_list_.end(); ++it) {
-    if ((*it)->returned)  // Already sent to the VCM and the jitter buffer.
+  for(auto* recovered_packet : recovered_packet_list_) {
+    if (recovered_packet->returned) {
+      // Already sent to the VCM and the jitter buffer.
       continue;
-    ForwardErrorCorrection::Packet* packet = (*it)->pkt;
+    }
+    ForwardErrorCorrection::Packet* packet = recovered_packet->pkt;
     ++packet_counter_.num_recovered_packets;
-    crit_sect_->Leave();
+    crit_sect_.Leave();
     if (!recovered_packet_callback_->OnRecoveredPacket(packet->data,
                                                        packet->length)) {
       return -1;
     }
-    crit_sect_->Enter();
-    (*it)->returned = true;
+    crit_sect_.Enter();
+    recovered_packet->returned = true;
   }
-  crit_sect_->Leave();
+  crit_sect_.Leave();
   return 0;
 }
 

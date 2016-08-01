@@ -11,91 +11,178 @@
 #ifndef WEBRTC_VIDEO_SEND_STATISTICS_PROXY_H_
 #define WEBRTC_VIDEO_SEND_STATISTICS_PROXY_H_
 
+#include <map>
+#include <memory>
 #include <string>
 
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/exp_filter.h"
+#include "webrtc/base/ratetracker.h"
 #include "webrtc/base/thread_annotations.h"
 #include "webrtc/common_types.h"
-#include "webrtc/modules/video_coding/codecs/interface/video_codec_interface.h"
-#include "webrtc/system_wrappers/interface/clock.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
-#include "webrtc/video_engine/include/vie_capture.h"
-#include "webrtc/video_engine/include/vie_codec.h"
+#include "webrtc/modules/video_coding/include/video_codec_interface.h"
+#include "webrtc/modules/video_coding/include/video_coding_defines.h"
+#include "webrtc/system_wrappers/include/clock.h"
+#include "webrtc/video/overuse_frame_detector.h"
+#include "webrtc/video/report_block_stats.h"
+#include "webrtc/video/vie_encoder.h"
 #include "webrtc/video_send_stream.h"
 
 namespace webrtc {
 
-class CriticalSectionWrapper;
-
-class SendStatisticsProxy : public RtcpStatisticsCallback,
+class SendStatisticsProxy : public CpuOveruseMetricsObserver,
+                            public RtcpStatisticsCallback,
+                            public RtcpPacketTypeCounterObserver,
                             public StreamDataCountersCallback,
                             public BitrateStatisticsObserver,
                             public FrameCountObserver,
-                            public ViEEncoderObserver,
-                            public ViECaptureObserver,
                             public SendSideDelayObserver {
  public:
   static const int kStatsTimeoutMs;
 
-  SendStatisticsProxy(Clock* clock, const VideoSendStream::Config& config);
+  SendStatisticsProxy(Clock* clock,
+                      const VideoSendStream::Config& config,
+                      VideoEncoderConfig::ContentType content_type);
   virtual ~SendStatisticsProxy();
 
   VideoSendStream::Stats GetStats();
 
   virtual void OnSendEncodedImage(const EncodedImage& encoded_image,
-                                  const RTPVideoHeader* rtp_video_header);
+                                  const CodecSpecificInfo* codec_info);
+  // Used to update incoming frame rate.
+  void OnIncomingFrame(int width, int height);
+
+  void OnEncoderStatsUpdate(uint32_t framerate,
+                            uint32_t bitrate,
+                            const std::string& encoder_name);
+  void OnSuspendChange(bool is_suspended);
+  void OnInactiveSsrc(uint32_t ssrc);
+
+  // Used to indicate change in content type, which may require a change in
+  // how stats are collected.
+  void SetContentType(VideoEncoderConfig::ContentType content_type);
+
+  // Used to update the encoder target rate.
+  void OnSetEncoderTargetRate(uint32_t bitrate_bps);
+
+  // Implements CpuOveruseMetricsObserver.
+  void OnEncodedFrameTimeMeasured(int encode_time_ms,
+                                  const CpuOveruseMetrics& metrics) override;
+
+  int GetSendFrameRate() const;
 
  protected:
   // From RtcpStatisticsCallback.
-  virtual void StatisticsUpdated(const RtcpStatistics& statistics,
-                                 uint32_t ssrc) OVERRIDE;
-  virtual void CNameChanged(const char *cname, uint32_t ssrc) OVERRIDE;
+  void StatisticsUpdated(const RtcpStatistics& statistics,
+                         uint32_t ssrc) override;
+  void CNameChanged(const char* cname, uint32_t ssrc) override;
+  // From RtcpPacketTypeCounterObserver.
+  void RtcpPacketTypesCounterUpdated(
+      uint32_t ssrc,
+      const RtcpPacketTypeCounter& packet_counter) override;
   // From StreamDataCountersCallback.
-  virtual void DataCountersUpdated(const StreamDataCounters& counters,
-                                   uint32_t ssrc) OVERRIDE;
+  void DataCountersUpdated(const StreamDataCounters& counters,
+                           uint32_t ssrc) override;
 
   // From BitrateStatisticsObserver.
-  virtual void Notify(const BitrateStatistics& total_stats,
-                      const BitrateStatistics& retransmit_stats,
-                      uint32_t ssrc) OVERRIDE;
+  void Notify(uint32_t total_bitrate_bps,
+              uint32_t retransmit_bitrate_bps,
+              uint32_t ssrc) override;
 
   // From FrameCountObserver.
-  virtual void FrameCountUpdated(const FrameCounts& frame_counts,
-                                 uint32_t ssrc) OVERRIDE;
+  void FrameCountUpdated(const FrameCounts& frame_counts,
+                         uint32_t ssrc) override;
 
-  // From ViEEncoderObserver.
-  virtual void OutgoingRate(const int video_channel,
-                            const unsigned int framerate,
-                            const unsigned int bitrate) OVERRIDE;
-
-  virtual void SuspendChange(int video_channel, bool is_suspended) OVERRIDE;
-
-  // From ViECaptureObserver.
-  virtual void BrightnessAlarm(const int capture_id,
-                               const Brightness brightness) OVERRIDE {}
-
-  virtual void CapturedFrameRate(const int capture_id,
-                                 const unsigned char frame_rate) OVERRIDE;
-
-  virtual void NoPictureAlarm(const int capture_id,
-                              const CaptureAlarm alarm) OVERRIDE {}
-
-  virtual void SendSideDelayUpdated(int avg_delay_ms,
-                                    int max_delay_ms,
-                                    uint32_t ssrc) OVERRIDE;
+  void SendSideDelayUpdated(int avg_delay_ms,
+                            int max_delay_ms,
+                            uint32_t ssrc) override;
 
  private:
+  class SampleCounter {
+   public:
+    SampleCounter() : sum(0), num_samples(0) {}
+    ~SampleCounter() {}
+    void Add(int sample);
+    int Avg(int min_required_samples) const;
+
+   private:
+    int sum;
+    int num_samples;
+  };
+  class BoolSampleCounter {
+   public:
+    BoolSampleCounter() : sum(0), num_samples(0) {}
+    ~BoolSampleCounter() {}
+    void Add(bool sample);
+    int Percent(int min_required_samples) const;
+    int Permille(int min_required_samples) const;
+
+   private:
+    int Fraction(int min_required_samples, float multiplier) const;
+    int sum;
+    int num_samples;
+  };
   struct StatsUpdateTimes {
-    StatsUpdateTimes() : resolution_update_ms(0) {}
+    StatsUpdateTimes() : resolution_update_ms(0), bitrate_update_ms(0) {}
     int64_t resolution_update_ms;
+    int64_t bitrate_update_ms;
+  };
+  struct QpCounters {
+    SampleCounter vp8;  // QP range: 0-127
+    SampleCounter vp9;  // QP range: 0-255
   };
   void PurgeOldStats() EXCLUSIVE_LOCKS_REQUIRED(crit_);
-  SsrcStats* GetStatsEntry(uint32_t ssrc) EXCLUSIVE_LOCKS_REQUIRED(crit_);
+  VideoSendStream::StreamStats* GetStatsEntry(uint32_t ssrc)
+      EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
   Clock* const clock_;
   const VideoSendStream::Config config_;
-  scoped_ptr<CriticalSectionWrapper> crit_;
+  rtc::CriticalSection crit_;
+  VideoEncoderConfig::ContentType content_type_ GUARDED_BY(crit_);
   VideoSendStream::Stats stats_ GUARDED_BY(crit_);
+  uint32_t last_sent_frame_timestamp_ GUARDED_BY(crit_);
   std::map<uint32_t, StatsUpdateTimes> update_times_ GUARDED_BY(crit_);
+  rtc::ExpFilter encode_time_ GUARDED_BY(crit_);
+
+  // Contains stats used for UMA histograms. These stats will be reset if
+  // content type changes between real-time video and screenshare, since these
+  // will be reported separately.
+  struct UmaSamplesContainer {
+    UmaSamplesContainer(const char* prefix,
+                        const VideoSendStream::Stats& start_stats,
+                        Clock* clock);
+    ~UmaSamplesContainer();
+
+    void UpdateHistograms(const VideoSendStream::Config& config,
+                          const VideoSendStream::Stats& current_stats);
+
+    const std::string uma_prefix_;
+    Clock* const clock_;
+    int max_sent_width_per_timestamp_;
+    int max_sent_height_per_timestamp_;
+    SampleCounter input_width_counter_;
+    SampleCounter input_height_counter_;
+    SampleCounter sent_width_counter_;
+    SampleCounter sent_height_counter_;
+    SampleCounter encode_time_counter_;
+    BoolSampleCounter key_frame_counter_;
+    BoolSampleCounter quality_limited_frame_counter_;
+    SampleCounter quality_downscales_counter_;
+    BoolSampleCounter bw_limited_frame_counter_;
+    SampleCounter bw_resolutions_disabled_counter_;
+    SampleCounter delay_counter_;
+    SampleCounter max_delay_counter_;
+    rtc::RateTracker input_frame_rate_tracker_;
+    rtc::RateTracker sent_frame_rate_tracker_;
+    int64_t first_rtcp_stats_time_ms_;
+    int64_t first_rtp_stats_time_ms_;
+    ReportBlockStats report_block_stats_;
+    const VideoSendStream::Stats start_stats_;
+    std::map<int, QpCounters>
+        qp_counters_;  // QP counters mapped by spatial idx.
+  };
+
+  std::unique_ptr<UmaSamplesContainer> uma_container_ GUARDED_BY(crit_);
 };
 
 }  // namespace webrtc

@@ -101,7 +101,8 @@ DBusHandlerResult DBusSigFilter::DBusCallback(DBusConnection *dbus_conn,
 // Posts a message to caller thread.
 DBusHandlerResult DBusSigFilter::Callback(DBusMessage *message) {
   if (caller_thread_) {
-    caller_thread_->Post(this, DSM_SIGNAL, new DBusSigMessageData(message));
+    caller_thread_->Post(RTC_FROM_HERE, this, DSM_SIGNAL,
+                         new DBusSigMessageData(message));
   }
   // Don't "eat" the message here. Let it pop up.
   return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
@@ -344,7 +345,11 @@ bool DBusMonitor::AddFilter(DBusSigFilter *filter) {
 bool DBusMonitor::StartMonitoring() {
   if (!monitoring_thread_) {
     g_type_init();
+    // g_thread_init API is deprecated since glib 2.31.0, see release note:
+    // http://mail.gnome.org/archives/gnome-announce-list/2011-October/msg00041.html
+#if !GLIB_CHECK_VERSION(2, 31, 0)
     g_thread_init(NULL);
+#endif
     GetSymbols()->dbus_g_thread_init()();
 
     GMainContext *context = g_main_context_new();

@@ -10,55 +10,37 @@
 
 #include "webrtc/common_audio/real_fourier.h"
 
-#include <cstdlib>
-
-#include "third_party/openmax_dl/dl/sp/api/omxSP.h"
 #include "webrtc/base/checks.h"
+#include "webrtc/common_audio/real_fourier_ooura.h"
+#include "webrtc/common_audio/real_fourier_openmax.h"
+#include "webrtc/common_audio/signal_processing/include/signal_processing_library.h"
 
 namespace webrtc {
 
 using std::complex;
 
-// The omx implementation uses this macro to check order validity.
-const int RealFourier::kMaxFftOrder = TWIDDLE_TABLE_ORDER;
-const int RealFourier::kFftBufferAlignment = 32;
+const size_t RealFourier::kFftBufferAlignment = 32;
 
-RealFourier::RealFourier(int fft_order)
-    : order_(fft_order),
-      omx_spec_(nullptr) {
-  CHECK_GE(order_, 1);
-  CHECK_LE(order_, kMaxFftOrder);
-
-  OMX_INT buffer_size;
-  OMXResult r;
-
-  r = omxSP_FFTGetBufSize_R_F32(order_, &buffer_size);
-  CHECK_EQ(r, OMX_Sts_NoErr);
-
-  omx_spec_ = malloc(buffer_size);
-  DCHECK(omx_spec_);
-
-  r = omxSP_FFTInit_R_F32(omx_spec_, order_);
-  CHECK_EQ(r, OMX_Sts_NoErr);
+std::unique_ptr<RealFourier> RealFourier::Create(int fft_order) {
+#if defined(RTC_USE_OPENMAX_DL)
+  return std::unique_ptr<RealFourier>(new RealFourierOpenmax(fft_order));
+#else
+  return std::unique_ptr<RealFourier>(new RealFourierOoura(fft_order));
+#endif
 }
 
-RealFourier::~RealFourier() {
-  free(omx_spec_);
+int RealFourier::FftOrder(size_t length) {
+  RTC_CHECK_GT(length, 0U);
+  return WebRtcSpl_GetSizeInBits(static_cast<uint32_t>(length - 1));
 }
 
-int RealFourier::FftOrder(int length) {
-  for (int order = 0; order <= kMaxFftOrder; order++) {
-    if ((1 << order) >= length) {
-      return order;
-    }
-  }
-  return -1;
+size_t RealFourier::FftLength(int order) {
+  RTC_CHECK_GE(order, 0);
+  return static_cast<size_t>(1 << order);
 }
 
-int RealFourier::ComplexLength(int order) {
-  CHECK_LE(order, kMaxFftOrder);
-  CHECK_GT(order, 0);
-  return (1 << order) / 2 + 1;
+size_t RealFourier::ComplexLength(int order) {
+  return FftLength(order) / 2 + 1;
 }
 
 RealFourier::fft_real_scoper RealFourier::AllocRealBuffer(int count) {
@@ -69,19 +51,6 @@ RealFourier::fft_real_scoper RealFourier::AllocRealBuffer(int count) {
 RealFourier::fft_cplx_scoper RealFourier::AllocCplxBuffer(int count) {
   return fft_cplx_scoper(static_cast<complex<float>*>(
       AlignedMalloc(sizeof(complex<float>) * count, kFftBufferAlignment)));
-}
-
-void RealFourier::Forward(const float* src, complex<float>* dest) const {
-  OMXResult r;
-  r = omxSP_FFTFwd_RToCCS_F32(src, reinterpret_cast<OMX_F32*>(dest), omx_spec_);
-  CHECK_EQ(r, OMX_Sts_NoErr);
-}
-
-void RealFourier::Inverse(const complex<float>* src, float* dest) const {
-  OMXResult r;
-  r = omxSP_FFTInv_CCSToR_F32(reinterpret_cast<const OMX_F32*>(src), dest,
-                              omx_spec_);
-  CHECK_EQ(r, OMX_Sts_NoErr);
 }
 
 }  // namespace webrtc

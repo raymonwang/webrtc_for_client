@@ -8,26 +8,35 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/video_capture/include/video_capture_factory.h"
+#include "webrtc/modules/video_capture/video_capture_factory.h"
 
 #include "webrtc/modules/video_capture/video_capture_impl.h"
 
-namespace webrtc
-{
+namespace webrtc {
 
-VideoCaptureModule* VideoCaptureFactory::Create(const int32_t id,
+rtc::scoped_refptr<VideoCaptureModule> VideoCaptureFactory::Create(
+    const int32_t id,
     const char* deviceUniqueIdUTF8) {
+#if defined(ANDROID)
+  return nullptr;
+#else
   return videocapturemodule::VideoCaptureImpl::Create(id, deviceUniqueIdUTF8);
+#endif
 }
 
-VideoCaptureModule* VideoCaptureFactory::Create(const int32_t id,
+rtc::scoped_refptr<VideoCaptureModule> VideoCaptureFactory::Create(
+    const int32_t id,
     VideoCaptureExternal*& externalCapture) {
   return videocapturemodule::VideoCaptureImpl::Create(id, externalCapture);
 }
 
 VideoCaptureModule::DeviceInfo* VideoCaptureFactory::CreateDeviceInfo(
     const int32_t id) {
+#if defined(ANDROID)
+  return nullptr;
+#else
   return videocapturemodule::VideoCaptureImpl::CreateDeviceInfo(id);
+#endif
 }
 
 }  // namespace webrtc

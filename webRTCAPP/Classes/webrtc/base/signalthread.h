@@ -45,9 +45,6 @@ class SignalThread
   // Context: Main Thread.  Call before Start to change the worker's name.
   bool SetName(const std::string& name, const void* obj);
 
-  // Context: Main Thread.  Call before Start to change the worker's priority.
-  bool SetPriority(ThreadPriority priority);
-
   // Context: Main Thread.  Call to begin the worker thread.
   void Start();
 
@@ -69,7 +66,7 @@ class SignalThread
   enum { ST_MSG_WORKER_DONE, ST_MSG_FIRST_AVAILABLE };
 
  protected:
-  virtual ~SignalThread();
+  ~SignalThread() override;
 
   Thread* worker() { return &worker_; }
 
@@ -92,7 +89,7 @@ class SignalThread
 
   // Context: Any Thread.  If subclass overrides, be sure to call the base
   // implementation.  Do not use (message_id < ST_MSG_FIRST_AVAILABLE)
-  virtual void OnMessage(Message *msg);
+  void OnMessage(Message* msg) override;
 
  private:
   enum State {
@@ -106,13 +103,13 @@ class SignalThread
   class Worker : public Thread {
    public:
     explicit Worker(SignalThread* parent) : parent_(parent) {}
-    virtual ~Worker() { Stop(); }
-    virtual void Run() { parent_->Run(); }
+    ~Worker() override;
+    void Run() override;
 
    private:
     SignalThread* parent_;
 
-    DISALLOW_IMPLICIT_CONSTRUCTORS(Worker);
+    RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(Worker);
   };
 
   class SCOPED_LOCKABLE EnterExit {
@@ -135,7 +132,7 @@ class SignalThread
    private:
     SignalThread* t_;
 
-    DISALLOW_IMPLICIT_CONSTRUCTORS(EnterExit);
+    RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(EnterExit);
   };
 
   void Run();
@@ -147,7 +144,7 @@ class SignalThread
   State state_;
   int refcount_;
 
-  DISALLOW_COPY_AND_ASSIGN(SignalThread);
+  RTC_DISALLOW_COPY_AND_ASSIGN(SignalThread);
 };
 
 ///////////////////////////////////////////////////////////////////////////////

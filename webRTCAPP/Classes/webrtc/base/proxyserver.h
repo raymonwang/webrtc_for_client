@@ -12,7 +12,9 @@
 #define WEBRTC_BASE_PROXYSERVER_H_
 
 #include <list>
+#include <memory>
 #include "webrtc/base/asyncsocket.h"
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/base/socketadapters.h"
 #include "webrtc/base/socketaddress.h"
 #include "webrtc/base/stream.h"
@@ -31,6 +33,7 @@ class SocketFactory;
 class ProxyBinding : public sigslot::has_slots<> {
  public:
   ProxyBinding(AsyncProxyServerSocket* in_socket, AsyncSocket* out_socket);
+  ~ProxyBinding() override;
   sigslot::signal1<ProxyBinding*> SignalDestroyed;
 
  private:
@@ -49,19 +52,22 @@ class ProxyBinding : public sigslot::has_slots<> {
   void Destroy();
 
   static const int kBufferSize = 4096;
-  scoped_ptr<AsyncProxyServerSocket> int_socket_;
-  scoped_ptr<AsyncSocket> ext_socket_;
+  std::unique_ptr<AsyncProxyServerSocket> int_socket_;
+  std::unique_ptr<AsyncSocket> ext_socket_;
   bool connected_;
   FifoBuffer out_buffer_;
   FifoBuffer in_buffer_;
-  DISALLOW_EVIL_CONSTRUCTORS(ProxyBinding);
+  RTC_DISALLOW_COPY_AND_ASSIGN(ProxyBinding);
 };
 
 class ProxyServer : public sigslot::has_slots<> {
  public:
   ProxyServer(SocketFactory* int_factory, const SocketAddress& int_addr,
               SocketFactory* ext_factory, const SocketAddress& ext_ip);
-  virtual ~ProxyServer();
+  ~ProxyServer() override;
+
+  // Returns the address to which the proxy server is bound
+  SocketAddress GetServerAddress();
 
  protected:
   void OnAcceptEvent(AsyncSocket* socket);
@@ -72,9 +78,9 @@ class ProxyServer : public sigslot::has_slots<> {
   typedef std::list<ProxyBinding*> BindingList;
   SocketFactory* ext_factory_;
   SocketAddress ext_ip_;
-  scoped_ptr<AsyncSocket> server_socket_;
+  std::unique_ptr<AsyncSocket> server_socket_;
   BindingList bindings_;
-  DISALLOW_EVIL_CONSTRUCTORS(ProxyServer);
+  RTC_DISALLOW_COPY_AND_ASSIGN(ProxyServer);
 };
 
 // SocksProxyServer is a simple extension of ProxyServer to implement SOCKS.
@@ -85,10 +91,8 @@ class SocksProxyServer : public ProxyServer {
       : ProxyServer(int_factory, int_addr, ext_factory, ext_ip) {
   }
  protected:
-  AsyncProxyServerSocket* WrapSocket(AsyncSocket* socket) {
-    return new AsyncSocksProxyServerSocket(socket);
-  }
-  DISALLOW_EVIL_CONSTRUCTORS(SocksProxyServer);
+  AsyncProxyServerSocket* WrapSocket(AsyncSocket* socket) override;
+  RTC_DISALLOW_COPY_AND_ASSIGN(SocksProxyServer);
 };
 
 }  // namespace rtc

@@ -14,10 +14,10 @@
 #include <winsock2.h>
 #include <list>
 
-#include "webrtc/system_wrappers/interface/atomic32.h"
-#include "webrtc/system_wrappers/interface/critical_section_wrapper.h"
-#include "webrtc/system_wrappers/interface/event_wrapper.h"
-#include "webrtc/system_wrappers/interface/thread_wrapper.h"
+#include "webrtc/system_wrappers/include/atomic32.h"
+#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/system_wrappers/include/event_wrapper.h"
+#include "webrtc/base/platform_thread.h"
 #include "webrtc/test/channel_transport/udp_socket2_win.h"
 #include "webrtc/test/channel_transport/udp_socket_manager_wrapper.h"
 #include "webrtc/test/channel_transport/udp_transport.h"
@@ -47,7 +47,7 @@ struct PerIoContext {
     int fromLen;
     // Should be set to true if the I/O context was passed to the system by
     // a thread not controlled by the socket implementation.
-    bool ioInitiatedByThreadWrapper;
+    bool ioInitiatedByPlatformThread;
     // TODO (hellner): Not used. Delete it.
     PerIoContext* pNextFree;
 };
@@ -100,13 +100,12 @@ public:
     virtual bool Start();
     virtual bool Stop();
     virtual int32_t Init();
-    virtual void SetNotAlive();
 protected:
-    static bool Run(ThreadObj obj);
+    static bool Run(void* obj);
     bool Process();
 private:
     HANDLE _ioCompletionHandle;
-    ThreadWrapper*_pThread;
+    rtc::PlatformThread _pThread;
     static int32_t _numOfWorkers;
     int32_t _workerNumber;
     volatile bool _stop;
@@ -120,7 +119,6 @@ public:
     virtual ~UdpSocket2ManagerWindows();
 
     virtual bool Init(int32_t id, uint8_t& numOfWorkThreads);
-    virtual int32_t ChangeUniqueId(const int32_t id);
 
     virtual bool Start();
     virtual bool Stop();
