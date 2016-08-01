@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4387795B1D4F522400E6F9E9 /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031EA1D4EF0C300BB9828 /* timeutils.cc */; };
 		43A032211D4EF0C300BB9828 /* asyncfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0303B1D4EF0C100BB9828 /* asyncfile.cc */; };
 		43A032221D4EF0C300BB9828 /* asyncfile.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0303B1D4EF0C100BB9828 /* asyncfile.cc */; };
 		43A032231D4EF0C300BB9828 /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0303E1D4EF0C100BB9828 /* asyncinvoker.cc */; };
@@ -1159,6 +1160,7 @@
 				43A032591D4EF0C300BB9828 /* checks.cc in Sources */,
 				43A0334B1D4EF0C400BB9828 /* rate_statistics.cc in Sources */,
 				43A0333F1D4EF0C400BB9828 /* race_checker.cc in Sources */,
+				4387795B1D4F522400E6F9E9 /* timeutils.cc in Sources */,
 				43A032A11D4EF0C300BB9828 /* ifaddrs_converter.cc in Sources */,
 				43A0330B1D4EF0C300BB9828 /* networkmonitor.cc in Sources */,
 				43A0324B1D4EF0C300BB9828 /* buffer.cc in Sources */,
@@ -1428,6 +1430,7 @@
 					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
 					SSL_USE_OPENSSL,
 					WEBRTC_BUILD_LIBEVENT,
@@ -1479,6 +1482,7 @@
 					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
 					SSL_USE_OPENSSL,
 					WEBRTC_BUILD_LIBEVENT,
@@ -1528,11 +1532,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_IOS,
 					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
-					SSL_USE_NSS,
-					HAVE_NSS_SSL_H,
-					SSL_USE_NSS_RNG,
+					SSL_USE_OPENSSL,
+					WEBRTC_BUILD_LIBEVENT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1581,11 +1585,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_IOS,
 					WEBRTC_MAC,
 					FEATURE_ENABLE_SSL,
-					SSL_USE_NSS,
-					HAVE_NSS_SSL_H,
-					SSL_USE_NSS_RNG,
+					SSL_USE_OPENSSL,
+					WEBRTC_BUILD_LIBEVENT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

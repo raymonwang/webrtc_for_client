@@ -99,6 +99,8 @@
 		432B2E7F19CA9696001267A7 /* auto_corr_to_refl_coef.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095CDC1994F0E700012AD8 /* auto_corr_to_refl_coef.c */; };
 		432B2E8019CA9696001267A7 /* spl_sqrt.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095D0E1994F0E700012AD8 /* spl_sqrt.c */; };
 		432B302C19CAB970001267A7 /* sinc_resampler_sse.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095CD61994F0E600012AD8 /* sinc_resampler_sse.cc */; };
+		4387795E1D4F52F400E6F9E9 /* audio_ring_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387795C1D4F52F400E6F9E9 /* audio_ring_buffer.cc */; };
+		4387795F1D4F52F400E6F9E9 /* audio_ring_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387795C1D4F52F400E6F9E9 /* audio_ring_buffer.cc */; };
 		43C696F81D222E8600427D35 /* audio_converter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696F41D222E8600427D35 /* audio_converter.cc */; };
 		43C696F91D222E8600427D35 /* blocker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696F61D222E8600427D35 /* blocker.cc */; };
 		43C696FB1D222ED700427D35 /* vad.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696FA1D222ED700427D35 /* vad.cc */; };
@@ -227,6 +229,8 @@
 		430D87F3198608F8009E763A /* libcommon_audio.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		430D87FA198608F8009E763A /* common_audio-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "common_audio-Prefix.pch"; sourceTree = "<group>"; };
 		432B2E8719CA9696001267A7 /* libcommon_audio_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcommon_audio_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4387795C1D4F52F400E6F9E9 /* audio_ring_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_ring_buffer.cc; sourceTree = "<group>"; };
+		4387795D1D4F52F400E6F9E9 /* audio_ring_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_ring_buffer.h; sourceTree = "<group>"; };
 		43C696F41D222E8600427D35 /* audio_converter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_converter.cc; sourceTree = "<group>"; };
 		43C696F51D222E8600427D35 /* audio_converter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_converter.h; sourceTree = "<group>"; };
 		43C696F61D222E8600427D35 /* blocker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blocker.cc; sourceTree = "<group>"; };
@@ -261,6 +265,8 @@
 		43095CB71994F0E600012AD8 /* common_audio */ = {
 			isa = PBXGroup;
 			children = (
+				4387795C1D4F52F400E6F9E9 /* audio_ring_buffer.cc */,
+				4387795D1D4F52F400E6F9E9 /* audio_ring_buffer.h */,
 				43C69CE41D2292F400427D35 /* wav_file.cc */,
 				43C69CE51D2292F400427D35 /* wav_file.h */,
 				43C69CE61D2292F400427D35 /* wav_header.cc */,
@@ -577,6 +583,7 @@
 				43095D631994F0E700012AD8 /* resample_fractional.c in Sources */,
 				43095D561994F0E700012AD8 /* lpc_to_refl_coef.c in Sources */,
 				43095D4E1994F0E700012AD8 /* filter_ar_fast_q12.c in Sources */,
+				4387795E1D4F52F400E6F9E9 /* audio_ring_buffer.cc in Sources */,
 				43095D3C1994F0E700012AD8 /* auto_corr_to_refl_coef.c in Sources */,
 				43095D661994F0E700012AD8 /* spl_sqrt.c in Sources */,
 			);
@@ -632,6 +639,7 @@
 				432B2E7A19CA9696001267A7 /* push_resampler.cc in Sources */,
 				432B2E7B19CA9696001267A7 /* cross_correlation.c in Sources */,
 				432B2E7C19CA9696001267A7 /* resample_fractional.c in Sources */,
+				4387795F1D4F52F400E6F9E9 /* audio_ring_buffer.cc in Sources */,
 				432B2E7D19CA9696001267A7 /* lpc_to_refl_coef.c in Sources */,
 				432B2E7E19CA9696001267A7 /* filter_ar_fast_q12.c in Sources */,
 				432B2E7F19CA9696001267A7 /* auto_corr_to_refl_coef.c in Sources */,

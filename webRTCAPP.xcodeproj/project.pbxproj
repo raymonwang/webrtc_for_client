@@ -77,7 +77,6 @@
 		4381BEF51D470A71000656B1 /* libopus_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C4E1D20CDE000427D35 /* libopus_osx.a */; };
 		4381BEF61D470A71000656B1 /* libwebrtc_opus_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288A8B1D38DABE0044E4F5 /* libwebrtc_opus_osx.a */; };
 		4381BEFF1D470B1F000656B1 /* FakeClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4381BD6C1D4704B8000656B1 /* FakeClass.cpp */; };
-		4381BF001D470B3C000656B1 /* libvideo_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288AF11D38DE670044E4F5 /* libvideo_engine.a */; };
 		4381BF011D470BC8000656B1 /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288A971D38DACC0044E4F5 /* libcommon_video.a */; };
 		4381BF021D470BD3000656B1 /* libwebrtc_video_coding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288C711D38DFE30044E4F5 /* libwebrtc_video_coding.a */; };
 		4381BF041D470BE2000656B1 /* libvideo_processing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288E211D38E3CE0044E4F5 /* libvideo_processing.a */; };
@@ -87,7 +86,6 @@
 		4381BF171D470C33000656B1 /* libcommon_video_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288ADA1D38DCAC0044E4F5 /* libcommon_video_osx.a */; };
 		4381BF181D470C33000656B1 /* libvideo_capture_module_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288F5E1D38ED120044E4F5 /* libvideo_capture_module_osx.a */; };
 		4381BF191D470C33000656B1 /* libvideo_coding_utility_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288E1E1D38E3CE0044E4F5 /* libvideo_coding_utility_osx.a */; };
-		4381BF1A1D470C33000656B1 /* libvideo_engine_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288DD01D38E2480044E4F5 /* libvideo_engine_osx.a */; };
 		4381BF1B1D470C33000656B1 /* libvideo_processing_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288E9D1D38E8DE0044E4F5 /* libvideo_processing_osx.a */; };
 		4381BF1D1D470C33000656B1 /* libwebrtc_video_coding_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288DD31D38E2480044E4F5 /* libwebrtc_video_coding_osx.a */; };
 		4381BFF51D471428000656B1 /* libbitrate_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B20198631DA003C5793 /* libbitrate_controller.a */; };
@@ -458,26 +456,12 @@
 			remoteGlobalIDString = 43288AD61D38DC300044E4F5;
 			remoteInfo = common_video_osx;
 		};
-		43288AF01D38DE670044E4F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 43288AEC1D38DE660044E4F5 /* video_engine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43288AE51D38DE660044E4F5;
-			remoteInfo = video_engine;
-		};
 		43288C701D38DFE30044E4F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43288C6C1D38DFE20044E4F5 /* webrtc_video_coding.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 43288C651D38DFE20044E4F5;
 			remoteInfo = webrtc_video_coding;
-		};
-		43288DCF1D38E2480044E4F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 43288AEC1D38DE660044E4F5 /* video_engine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43288CC11D38DFF00044E4F5;
-			remoteInfo = video_engine_osx;
 		};
 		43288DD21D38E2480044E4F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -909,7 +893,6 @@
 		4328848319809D1C0000F16A /* relayserver.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = relayserver.xcodeproj; path = relayserver/relayserver.xcodeproj; sourceTree = "<group>"; };
 		4328870C1980FFFD0000F16A /* RtcSameple.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RtcSameple.xcodeproj; path = RtcSameple/RtcSameple.xcodeproj; sourceTree = "<group>"; };
 		43288A921D38DACC0044E4F5 /* common_video.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = common_video.xcodeproj; path = common_video/common_video.xcodeproj; sourceTree = "<group>"; };
-		43288AEC1D38DE660044E4F5 /* video_engine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_engine.xcodeproj; path = video_engine/video_engine.xcodeproj; sourceTree = "<group>"; };
 		43288C6C1D38DFE20044E4F5 /* webrtc_video_coding.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_video_coding.xcodeproj; path = webrtc_video_coding/webrtc_video_coding.xcodeproj; sourceTree = "<group>"; };
 		43288DE51D38E2D20044E4F5 /* video_coding_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_coding_utility.xcodeproj; path = video_coding_utility/video_coding_utility.xcodeproj; sourceTree = "<group>"; };
 		43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_processing.xcodeproj; path = video_processing/video_processing.xcodeproj; sourceTree = "<group>"; };
@@ -1157,7 +1140,6 @@
 				4381BF041D470BE2000656B1 /* libvideo_processing.a in Frameworks */,
 				4381BF021D470BD3000656B1 /* libwebrtc_video_coding.a in Frameworks */,
 				4381BF011D470BC8000656B1 /* libcommon_video.a in Frameworks */,
-				4381BF001D470B3C000656B1 /* libvideo_engine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1173,7 +1155,6 @@
 				4381BF171D470C33000656B1 /* libcommon_video_osx.a in Frameworks */,
 				4381BF181D470C33000656B1 /* libvideo_capture_module_osx.a in Frameworks */,
 				4381BF191D470C33000656B1 /* libvideo_coding_utility_osx.a in Frameworks */,
-				4381BF1A1D470C33000656B1 /* libvideo_engine_osx.a in Frameworks */,
 				4381BF1B1D470C33000656B1 /* libvideo_processing_osx.a in Frameworks */,
 				4381BF1D1D470C33000656B1 /* libwebrtc_video_coding_osx.a in Frameworks */,
 			);
@@ -1509,7 +1490,6 @@
 				43288E951D38E8DD0044E4F5 /* video_capture_module.xcodeproj */,
 				43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */,
 				43288DD41D38E2710044E4F5 /* Codes */,
-				43288AEC1D38DE660044E4F5 /* video_engine.xcodeproj */,
 				43288DE51D38E2D20044E4F5 /* video_coding_utility.xcodeproj */,
 				43288A921D38DACC0044E4F5 /* common_video.xcodeproj */,
 				43288C6C1D38DFE20044E4F5 /* webrtc_video_coding.xcodeproj */,
@@ -1542,15 +1522,6 @@
 				430D904319862876009E763A /* audio_device.xcodeproj */,
 			);
 			name = Voice;
-			sourceTree = "<group>";
-		};
-		43288AED1D38DE660044E4F5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				43288AF11D38DE670044E4F5 /* libvideo_engine.a */,
-				43288DD01D38E2480044E4F5 /* libvideo_engine_osx.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		43288C6D1D38DFE20044E4F5 /* Products */ = {
@@ -2577,10 +2548,6 @@
 					ProjectRef = 43288DE51D38E2D20044E4F5 /* video_coding_utility.xcodeproj */;
 				},
 				{
-					ProductGroup = 43288AED1D38DE660044E4F5 /* Products */;
-					ProjectRef = 43288AEC1D38DE660044E4F5 /* video_engine.xcodeproj */;
-				},
-				{
 					ProductGroup = 43288E1A1D38E3CD0044E4F5 /* Products */;
 					ProjectRef = 43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */;
 				},
@@ -2912,25 +2879,11 @@
 			remoteRef = 43288AD91D38DCAC0044E4F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		43288AF11D38DE670044E4F5 /* libvideo_engine.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libvideo_engine.a;
-			remoteRef = 43288AF01D38DE670044E4F5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		43288C711D38DFE30044E4F5 /* libwebrtc_video_coding.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libwebrtc_video_coding.a;
 			remoteRef = 43288C701D38DFE30044E4F5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43288DD01D38E2480044E4F5 /* libvideo_engine_osx.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libvideo_engine_osx.a;
-			remoteRef = 43288DCF1D38E2480044E4F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43288DD31D38E2480044E4F5 /* libwebrtc_video_coding_osx.a */ = {
