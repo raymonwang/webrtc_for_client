@@ -12,8 +12,13 @@
       'target_name': 'webrtc_common',
       'type': 'static_library',
       'sources': [
+        'audio_sink.h',
+        'common_types.cc',
+        'common_types.h',
         'config.h',
         'config.cc',
+        'engine_configurations.h',
+        'typedefs.h',
       ],
     },
   ],

@@ -1,0 +1,297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43E041C41D50412B009FDAE6 /* audio_receive_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E041B51D50412B009FDAE6 /* audio_receive_stream.cc */; };
+		43E041C51D50412B009FDAE6 /* audio_receive_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E041B61D50412B009FDAE6 /* audio_receive_stream.h */; };
+		43E041C71D50412B009FDAE6 /* audio_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E041B81D50412B009FDAE6 /* audio_send_stream.cc */; };
+		43E041C81D50412B009FDAE6 /* audio_send_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E041B91D50412B009FDAE6 /* audio_send_stream.h */; };
+		43E041CA1D50412B009FDAE6 /* audio_state.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E041BB1D50412B009FDAE6 /* audio_state.cc */; };
+		43E041CB1D50412B009FDAE6 /* audio_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E041BC1D50412B009FDAE6 /* audio_state.h */; };
+		43E041CD1D50412B009FDAE6 /* conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E041BF1D50412B009FDAE6 /* conversion.h */; };
+		43E041CE1D50412B009FDAE6 /* scoped_voe_interface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E041C21D50412B009FDAE6 /* scoped_voe_interface.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43E041A71D50410B009FDAE6 /* libwebrtc_audio.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43E041B51D50412B009FDAE6 /* audio_receive_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_receive_stream.cc; sourceTree = "<group>"; };
+		43E041B61D50412B009FDAE6 /* audio_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_receive_stream.h; sourceTree = "<group>"; };
+		43E041B81D50412B009FDAE6 /* audio_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_send_stream.cc; sourceTree = "<group>"; };
+		43E041B91D50412B009FDAE6 /* audio_send_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_send_stream.h; sourceTree = "<group>"; };
+		43E041BB1D50412B009FDAE6 /* audio_state.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_state.cc; sourceTree = "<group>"; };
+		43E041BC1D50412B009FDAE6 /* audio_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_state.h; sourceTree = "<group>"; };
+		43E041BE1D50412B009FDAE6 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
+		43E041BF1D50412B009FDAE6 /* conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conversion.h; sourceTree = "<group>"; };
+		43E041C01D50412B009FDAE6 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
+		43E041C11D50412B009FDAE6 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43E041C21D50412B009FDAE6 /* scoped_voe_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_voe_interface.h; sourceTree = "<group>"; };
+		43E041C31D50412B009FDAE6 /* webrtc_audio.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webrtc_audio.gypi; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43E041A41D50410B009FDAE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43E0419E1D50410B009FDAE6 = {
+			isa = PBXGroup;
+			children = (
+				43E041B41D50412B009FDAE6 /* audio */,
+				43E041A81D50410B009FDAE6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43E041A81D50410B009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E041A71D50410B009FDAE6 /* libwebrtc_audio.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E041B41D50412B009FDAE6 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				43E041B51D50412B009FDAE6 /* audio_receive_stream.cc */,
+				43E041B61D50412B009FDAE6 /* audio_receive_stream.h */,
+				43E041B81D50412B009FDAE6 /* audio_send_stream.cc */,
+				43E041B91D50412B009FDAE6 /* audio_send_stream.h */,
+				43E041BB1D50412B009FDAE6 /* audio_state.cc */,
+				43E041BC1D50412B009FDAE6 /* audio_state.h */,
+				43E041BE1D50412B009FDAE6 /* BUILD.gn */,
+				43E041BF1D50412B009FDAE6 /* conversion.h */,
+				43E041C01D50412B009FDAE6 /* DEPS */,
+				43E041C11D50412B009FDAE6 /* OWNERS */,
+				43E041C21D50412B009FDAE6 /* scoped_voe_interface.h */,
+				43E041C31D50412B009FDAE6 /* webrtc_audio.gypi */,
+			);
+			name = audio;
+			path = ../webRTCAPP/Classes/webrtc/audio;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43E041A51D50410B009FDAE6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E041CE1D50412B009FDAE6 /* scoped_voe_interface.h in Headers */,
+				43E041CD1D50412B009FDAE6 /* conversion.h in Headers */,
+				43E041CB1D50412B009FDAE6 /* audio_state.h in Headers */,
+				43E041C51D50412B009FDAE6 /* audio_receive_stream.h in Headers */,
+				43E041C81D50412B009FDAE6 /* audio_send_stream.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43E041A61D50410B009FDAE6 /* webrtc_audio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E041AB1D50410B009FDAE6 /* Build configuration list for PBXNativeTarget "webrtc_audio" */;
+			buildPhases = (
+				43E041A31D50410B009FDAE6 /* Sources */,
+				43E041A41D50410B009FDAE6 /* Frameworks */,
+				43E041A51D50410B009FDAE6 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = webrtc_audio;
+			productName = webrtc_audio;
+			productReference = 43E041A71D50410B009FDAE6 /* libwebrtc_audio.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43E0419F1D50410B009FDAE6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangxin;
+				TargetAttributes = {
+					43E041A61D50410B009FDAE6 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 43E041A21D50410B009FDAE6 /* Build configuration list for PBXProject "webrtc_audio" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43E0419E1D50410B009FDAE6;
+			productRefGroup = 43E041A81D50410B009FDAE6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43E041A61D50410B009FDAE6 /* webrtc_audio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43E041A31D50410B009FDAE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E041C71D50412B009FDAE6 /* audio_send_stream.cc in Sources */,
+				43E041CA1D50412B009FDAE6 /* audio_state.cc in Sources */,
+				43E041C41D50412B009FDAE6 /* audio_receive_stream.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43E041A91D50410B009FDAE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43E041AA1D50410B009FDAE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43E041AC1D50410B009FDAE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43E041AD1D50410B009FDAE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43E041A21D50410B009FDAE6 /* Build configuration list for PBXProject "webrtc_audio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E041A91D50410B009FDAE6 /* Debug */,
+				43E041AA1D50410B009FDAE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E041AB1D50410B009FDAE6 /* Build configuration list for PBXNativeTarget "webrtc_audio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E041AC1D50410B009FDAE6 /* Debug */,
+				43E041AD1D50410B009FDAE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43E0419F1D50410B009FDAE6 /* Project object */;
+}

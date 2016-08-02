@@ -757,6 +757,48 @@
 			remoteGlobalIDString = 43C69BE51D2280DE00427D35;
 			remoteInfo = webrtc_vp8;
 		};
+		43E040561D50374B009FDAE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43E040061D50374A009FDAE6 /* webrtc_common.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43E03FFF1D50374A009FDAE6;
+			remoteInfo = webrtc_common;
+		};
+		43E040841D503AB0009FDAE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43E040801D503AAF009FDAE6 /* rtc_event_log.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43E040791D503AAF009FDAE6;
+			remoteInfo = rtc_event_log;
+		};
+		43E040A21D503BEE009FDAE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43E0409E1D503BED009FDAE6 /* congestion_controller.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43E040971D503BED009FDAE6;
+			remoteInfo = congestion_controller;
+		};
+		43E040D11D503E75009FDAE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43E040CD1D503E74009FDAE6 /* webrtc_call.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43E040C61D503E74009FDAE6;
+			remoteInfo = webrtc_call;
+		};
+		43E041201D503FCD009FDAE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43E0411C1D503FCC009FDAE6 /* webrtc_video.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43E041151D503FCC009FDAE6;
+			remoteInfo = webrtc_video;
+		};
+		43E041B21D50410C009FDAE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43E041AE1D50410B009FDAE6 /* webrtc_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43E041A71D50410B009FDAE6;
+			remoteInfo = webrtc_audio;
+		};
 		43F179361D1D5988001817B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 430D909019862952009E763A /* audio_processing.xcodeproj */;
@@ -1026,6 +1068,12 @@
 		43E03A701D2372A900B39549 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		43E03A721D2372DD00B39549 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		43E03A741D237A2A00B39549 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
+		43E040061D50374A009FDAE6 /* webrtc_common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_common.xcodeproj; path = webrtc_common/webrtc_common.xcodeproj; sourceTree = "<group>"; };
+		43E040801D503AAF009FDAE6 /* rtc_event_log.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_event_log.xcodeproj; path = rtc_event_log/rtc_event_log.xcodeproj; sourceTree = "<group>"; };
+		43E0409E1D503BED009FDAE6 /* congestion_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = congestion_controller.xcodeproj; path = congestion_controller/congestion_controller.xcodeproj; sourceTree = "<group>"; };
+		43E040CD1D503E74009FDAE6 /* webrtc_call.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_call.xcodeproj; path = webrtc_call/webrtc_call.xcodeproj; sourceTree = "<group>"; };
+		43E0411C1D503FCC009FDAE6 /* webrtc_video.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_video.xcodeproj; path = webrtc_video/webrtc_video.xcodeproj; sourceTree = "<group>"; };
+		43E041AE1D50410B009FDAE6 /* webrtc_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_audio.xcodeproj; path = webrtc_audio/webrtc_audio.xcodeproj; sourceTree = "<group>"; };
 		43ECEE8F197CA80B00E9267B /* webRTCAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webRTCAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43ECEE92197CA80B00E9267B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		43ECEE94197CA80B00E9267B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1989,9 +2037,63 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		43E040071D50374A009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E040571D50374B009FDAE6 /* libwebrtc_common.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E040811D503AAF009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E040851D503AB0009FDAE6 /* librtc_event_log.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E0409F1D503BED009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E040A31D503BEE009FDAE6 /* libcongestion_controller.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E040CE1D503E74009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E040D21D503E75009FDAE6 /* libwebrtc_call.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E0411D1D503FCC009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E041211D503FCD009FDAE6 /* libwebrtc_video.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E041AF1D50410B009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E041B31D50410C009FDAE6 /* libwebrtc_audio.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		43ECEE86197CA80B00E9267B = {
 			isa = PBXGroup;
 			children = (
+				43E041AE1D50410B009FDAE6 /* webrtc_audio.xcodeproj */,
+				43E0411C1D503FCC009FDAE6 /* webrtc_video.xcodeproj */,
+				43E040CD1D503E74009FDAE6 /* webrtc_call.xcodeproj */,
+				43E0409E1D503BED009FDAE6 /* congestion_controller.xcodeproj */,
+				43E040801D503AAF009FDAE6 /* rtc_event_log.xcodeproj */,
+				43E040061D50374A009FDAE6 /* webrtc_common.xcodeproj */,
 				43F1EDE11D477C3000AEAEC2 /* engine_configurations.h */,
 				4381BD6B1D470474000656B1 /* Test */,
 				43819DA11D4621C2000656B1 /* thirdpart */,
@@ -2412,6 +2514,10 @@
 					ProjectRef = 43288A921D38DACC0044E4F5 /* common_video.xcodeproj */;
 				},
 				{
+					ProductGroup = 43E0409F1D503BED009FDAE6 /* Products */;
+					ProjectRef = 43E0409E1D503BED009FDAE6 /* congestion_controller.xcodeproj */;
+				},
+				{
 					ProductGroup = 43AD7EF11990934E006EAB38 /* Products */;
 					ProjectRef = 43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */;
 				},
@@ -2512,6 +2618,10 @@
 					ProjectRef = 4328848319809D1C0000F16A /* relayserver.xcodeproj */;
 				},
 				{
+					ProductGroup = 43E040811D503AAF009FDAE6 /* Products */;
+					ProjectRef = 43E040801D503AAF009FDAE6 /* rtc_event_log.xcodeproj */;
+				},
+				{
 					ProductGroup = 43C697871D22568300427D35 /* Products */;
 					ProjectRef = 43C697861D22568300427D35 /* rtc_p2p.xcodeproj */;
 				},
@@ -2560,8 +2670,20 @@
 					ProjectRef = 4381A01B1D462CDC000656B1 /* vpx.xcodeproj */;
 				},
 				{
+					ProductGroup = 43E041AF1D50410B009FDAE6 /* Products */;
+					ProjectRef = 43E041AE1D50410B009FDAE6 /* webrtc_audio.xcodeproj */;
+				},
+				{
 					ProductGroup = 430D834E1985E422009E763A /* Products */;
 					ProjectRef = 430D834D1985E422009E763A /* webrtc_base.xcodeproj */;
+				},
+				{
+					ProductGroup = 43E040CE1D503E74009FDAE6 /* Products */;
+					ProjectRef = 43E040CD1D503E74009FDAE6 /* webrtc_call.xcodeproj */;
+				},
+				{
+					ProductGroup = 43E040071D50374A009FDAE6 /* Products */;
+					ProjectRef = 43E040061D50374A009FDAE6 /* webrtc_common.xcodeproj */;
 				},
 				{
 					ProductGroup = 43F1EE821D477D5D00AEAEC2 /* Products */;
@@ -2574,6 +2696,10 @@
 				{
 					ProductGroup = 43998B6D1986332A003C5793 /* Products */;
 					ProjectRef = 43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */;
+				},
+				{
+					ProductGroup = 43E0411D1D503FCC009FDAE6 /* Products */;
+					ProjectRef = 43E0411C1D503FCC009FDAE6 /* webrtc_video.xcodeproj */;
 				},
 				{
 					ProductGroup = 43288C6D1D38DFE20044E4F5 /* Products */;
@@ -3171,6 +3297,48 @@
 			fileType = archive.ar;
 			path = libwebrtc_vp8.a;
 			remoteRef = 43C69BF01D22811B00427D35 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43E040571D50374B009FDAE6 /* libwebrtc_common.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_common.a;
+			remoteRef = 43E040561D50374B009FDAE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43E040851D503AB0009FDAE6 /* librtc_event_log.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = librtc_event_log.a;
+			remoteRef = 43E040841D503AB0009FDAE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43E040A31D503BEE009FDAE6 /* libcongestion_controller.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcongestion_controller.a;
+			remoteRef = 43E040A21D503BEE009FDAE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43E040D21D503E75009FDAE6 /* libwebrtc_call.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_call.a;
+			remoteRef = 43E040D11D503E75009FDAE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43E041211D503FCD009FDAE6 /* libwebrtc_video.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_video.a;
+			remoteRef = 43E041201D503FCD009FDAE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43E041B31D50410C009FDAE6 /* libwebrtc_audio.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_audio.a;
+			remoteRef = 43E041B21D50410C009FDAE6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43F179371D1D5988001817B4 /* libaudio_processing_osx.a */ = {
