@@ -5,20 +5,49 @@
 {
   'variables': {
     'conditions': [
-      ['target_arch=="arm" or target_arch=="armv7" or target_arch=="arm64"', {
+      ['target_arch=="arm" or target_arch=="arm64"', {
         'use_opus_fixed_point%': 1,
       }, {
         'use_opus_fixed_point%': 0,
       }],
-      ['target_arch=="arm" or target_arch=="armv7"', {
+      ['target_arch=="arm"', {
         'use_opus_arm_optimization%': 1,
       }, {
         'use_opus_arm_optimization%': 0,
       }],
-      ['target_arch=="arm"', {
+      ['target_arch=="arm" and (OS=="win" or OS=="android" or OS=="linux")', {
+        # Based on the conditions in celt/arm/armcpu.c:
+        # defined(_MSC_VER) || defined(__linux__).
         'use_opus_rtcd%': 1,
       }, {
         'use_opus_rtcd%': 0,
+      }],
+    ],
+  },
+  'target_defaults': {
+    'target_conditions': [
+      ['_type=="executable"', {
+        # All of the executable targets depend on 'opus'. Unfortunately the
+        # 'dependencies' block cannot be inherited via 'target_defaults'.
+        'include_dirs': [
+          'src/celt',
+          'src/silk',
+        ],
+        'conditions': [
+          ['OS == "win"', {
+            'defines': [
+              'inline=__inline',
+            ],
+          }],
+          ['OS=="android"', {
+            'libraries': [
+              '-llog',
+            ],
+          }],
+          ['clang==1', {
+            'cflags': [ '-Wno-absolute-value' ],
+          }]
+        ],
       }],
     ],
   },
@@ -30,6 +59,12 @@
         'OPUS_BUILD',
         'OPUS_EXPORT=',
       ],
+      'variables': {
+        'clang_warning_flags': [
+          # TODO(thakis): Remove once silk/macros.h has been fixed
+          '-Wno-expansion-to-defined',
+        ],
+      },
       'include_dirs': [
         'src/celt',
         'src/include',
@@ -40,7 +75,12 @@
           'src/include',
         ],
       },
-      'includes': ['opus_srcs.gypi', ],
+      'includes': [
+        'opus_srcs.gypi',
+        # Disable LTO due to ELF section name out of range
+        # crbug.com/422251
+        '../../build/android/disable_gcc_lto.gypi',
+      ],
       'sources': ['<@(opus_common_sources)'],
       'conditions': [
         ['OS!="win"', {
@@ -70,8 +110,15 @@
               '-Wno-#pragma-messages',
             ],
           },
+          'link_settings': {
+            # This appears in the OS!="android" section because all Android
+            # targets already link libm (in common.gypi), and it's important
+            # that it appears after libc++ on the link command line.
+            # https://code.google.com/p/android-developer-preview/issues/detail?id=3193
+            'libraries': [ '-lm' ],
+          },
         }],
-        ['os_posix==1 and (target_arch=="arm" or target_arch=="armv7" or target_arch=="arm64")', {
+        ['os_posix==1 and (target_arch=="arm" or target_arch=="arm64")', {
           'cflags!': ['-Os'],
           'cflags': ['-O3'],
         }],
@@ -84,6 +131,11 @@
           'defines': [
             'FIXED_POINT',
           ],
+          'direct_dependent_settings': {
+            'defines': [
+              'OPUS_FIXED_POINT',
+            ],
+          },
           'include_dirs': [
             'src/silk/fixed',
           ],
@@ -104,11 +156,14 @@
                     'OPUS_ARM_MAY_HAVE_EDSP',
                     'OPUS_ARM_MAY_HAVE_MEDIA',
                     'OPUS_ARM_MAY_HAVE_NEON',
+                    'OPUS_ARM_MAY_HAVE_NEON_INTR',
                     'OPUS_HAVE_RTCD',
                   ],
                   'includes': [
                     'opus_srcs_rtcd.gypi',
                   ],
+                  'cflags!': [ '-mfpu=vfpv3-d16' ],
+                  'cflags': [ '-mfpu=neon' ],
                 }],
               ],
             }],
@@ -117,32 +172,78 @@
       ],
     },  # target opus
     {
+      'target_name': 'opus_compare',
+      'type': 'executable',
+      'dependencies': [
+        'opus'
+      ],
+      'sources': [
+        'src/src/opus_compare.c',
+      ],
+    },  # target opus_compare
+    {
       'target_name': 'opus_demo',
       'type': 'executable',
       'dependencies': [
         'opus'
       ],
-      'conditions': [
-        ['OS == "win"', {
-          'defines': [
-            'inline=__inline',
-          ],
-        }],
-        ['OS=="android"', {
-          'link_settings': {
-            'libraries': [
-              '-llog',
-            ],
-          },
-        }]
-      ],
       'sources': [
         'src/src/opus_demo.c',
       ],
-      'include_dirs': [
-        'src/celt',
-        'src/silk',
-      ],
     },  # target opus_demo
+    {
+      'target_name': 'test_opus_api',
+      'type': 'executable',
+      'dependencies': [
+        'opus'
+      ],
+      'sources': [
+        'src/tests/test_opus_api.c',
+      ],
+    },  # target test_opus_api
+    {
+      'target_name': 'test_opus_encode',
+      'type': 'executable',
+      'dependencies': [
+        'opus'
+      ],
+      'sources': [
+        'src/tests/test_opus_encode.c',
+      ],
+    },  # target test_opus_encode
+    {
+      'target_name': 'test_opus_decode',
+      'type': 'executable',
+      'dependencies': [
+        'opus'
+      ],
+      'sources': [
+        'src/tests/test_opus_decode.c',
+      ],
+      # test_opus_decode passes a null pointer to opus_decode() for an argument
+      # marked as requiring a non-null value by the nonnull function attribute,
+      # and expects opus_decode() to fail. Disable the -Wnonnull option to avoid
+      # a compilation error if -Werror is specified.
+      'conditions': [
+        ['os_posix==1 and OS!="mac" and OS!="ios"', {
+          'cflags': ['-Wno-nonnull'],
+        }],
+        ['OS=="mac" or OS=="ios"', {
+          'xcode_settings': {
+            'WARNING_CFLAGS': ['-Wno-nonnull'],
+          },
+        }],
+      ],
+    },  # target test_opus_decode
+    {
+      'target_name': 'test_opus_padding',
+      'type': 'executable',
+      'dependencies': [
+        'opus'
+      ],
+      'sources': [
+        'src/tests/test_opus_padding.c',
+      ],
+    },  # target test_opus_padding
   ]
 }

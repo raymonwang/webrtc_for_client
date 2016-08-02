@@ -3,9 +3,6 @@
 # found in the LICENSE file.
 
 {
-  'variables': {
-    'werror': '',
-  },
   'includes': [
     '../../native_client/build/untrusted.gypi',
   ],
@@ -19,9 +16,6 @@
         'build_newlib': 0,
         'build_pnacl_newlib': 1,
       },
-      'dependencies': [
-        '<(DEPTH)/native_client/tools.gyp:prep_toolchain',
-      ],
       'defines': [
         'OPUS_BUILD',
         'OPUS_EXPORT=',
@@ -39,6 +33,11 @@
       'sources': [
         '<@(opus_common_sources)',
         '<@(opus_float_sources)',
+      ],
+      # Suppress a warning given by opus_decoder.c that tells us
+      # optimizations are turned off.
+      'cflags': [
+        '-Wno-#pragma-messages',
       ],
     },  # end of target 'opus_nacl'
   ],

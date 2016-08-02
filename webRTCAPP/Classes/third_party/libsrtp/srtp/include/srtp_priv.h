@@ -45,10 +45,20 @@
 #ifndef SRTP_PRIV_H
 #define SRTP_PRIV_H
 
+#include "config.h"
 #include "srtp.h"
 #include "rdbx.h"
 #include "rdb.h"
 #include "integers.h"
+#include "crypto.h"
+#include "cipher.h"
+#include "auth.h"
+#include "aes.h"
+#include "key.h"
+#include "crypto_kernel.h"
+
+#define SRTP_VER_STRING	    PACKAGE_STRING
+#define SRTP_VERSION        PACKAGE_VERSION
 
 /*
  * an srtp_hdr_t represents the srtp header
@@ -88,7 +98,7 @@ typedef struct {
   unsigned char x:1;	/* header extension flag  */
   unsigned char cc:4;	/* CSRC count             */
   unsigned char m:1;	/* marker bit             */
-  unsigned pt:7;	/* payload type           */
+  unsigned char pt:7;	/* payload type           */
   uint16_t seq;		/* sequence number        */
   uint32_t ts;		/* timestamp              */
   uint32_t ssrc;	/* synchronization source */
@@ -209,6 +219,7 @@ typedef enum direction_t {
 typedef struct srtp_stream_ctx_t {
   uint32_t   ssrc;
   cipher_t  *rtp_cipher;
+  cipher_t  *rtp_xtn_hdr_cipher;
   auth_t    *rtp_auth;
   rdbx_t     rtp_rdbx;
   sec_serv_t rtp_services;
@@ -220,6 +231,10 @@ typedef struct srtp_stream_ctx_t {
   direction_t direction;
   int        allow_repeat_tx;
   ekt_stream_t ekt; 
+  uint8_t    salt[SRTP_AEAD_SALT_LEN];   /* used with GCM mode for SRTP */
+  uint8_t    c_salt[SRTP_AEAD_SALT_LEN]; /* used with GCM mode for SRTCP */
+  int       *enc_xtn_hdr;
+  int        enc_xtn_hdr_count;
   struct srtp_stream_ctx_t *next;   /* linked list of streams */
 } srtp_stream_ctx_t;
 
@@ -231,6 +246,7 @@ typedef struct srtp_stream_ctx_t {
 typedef struct srtp_ctx_t {
   srtp_stream_ctx_t *stream_list;     /* linked list of streams            */
   srtp_stream_ctx_t *stream_template; /* act as template for other streams */
+  void *user_data;                    /* user custom data */
 } srtp_ctx_t;
 
 
