@@ -27,59 +27,67 @@
 
 #import "RTCI420Frame.h"
 
-#include "talk/media/base/videoframe.h"
-#include "webrtc/base/scoped_ptr.h"
+#include <memory>
+
+#include "webrtc/media/base/videoframe.h"
 
 @implementation RTCI420Frame {
-  rtc::scoped_ptr<cricket::VideoFrame> _videoFrame;
+  std::unique_ptr<cricket::VideoFrame> _videoFrame;
 }
 
 - (NSUInteger)width {
-  return _videoFrame->GetWidth();
+  return _videoFrame->width();
 }
 
 - (NSUInteger)height {
-  return _videoFrame->GetHeight();
+  return _videoFrame->height();
 }
 
+// TODO(nisse): chromaWidth and chromaHeight are used only in
+// RTCOpenGLVideoRenderer.mm. Update, and then delete these
+// properties.
 - (NSUInteger)chromaWidth {
-  return _videoFrame->GetChromaWidth();
+  return (self.width + 1) / 2;
 }
 
 - (NSUInteger)chromaHeight {
-  return _videoFrame->GetChromaHeight();
-}
-
-- (NSUInteger)chromaSize {
-  return _videoFrame->GetChromaSize();
+  return (self.height + 1) / 2;
 }
 
 - (const uint8_t*)yPlane {
-  return _videoFrame->GetYPlane();
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer =
+      _videoFrame->video_frame_buffer();
+  return buffer ? buffer->DataY() : nullptr;
 }
 
 - (const uint8_t*)uPlane {
-  return _videoFrame->GetUPlane();
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer =
+      _videoFrame->video_frame_buffer();
+  return buffer ? buffer->DataU() : nullptr;
 }
 
 - (const uint8_t*)vPlane {
-  return _videoFrame->GetVPlane();
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer =
+      _videoFrame->video_frame_buffer();
+  return buffer ? buffer->DataV() : nullptr;
 }
 
 - (NSInteger)yPitch {
-  return _videoFrame->GetYPitch();
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer =
+      _videoFrame->video_frame_buffer();
+  return buffer ? buffer->StrideY() : 0;
 }
 
 - (NSInteger)uPitch {
-  return _videoFrame->GetUPitch();
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer =
+      _videoFrame->video_frame_buffer();
+  return buffer ? buffer->StrideU() : 0;
 }
 
 - (NSInteger)vPitch {
-  return _videoFrame->GetVPitch();
-}
-
-- (BOOL)makeExclusive {
-  return _videoFrame->MakeExclusive();
+  const rtc::scoped_refptr<webrtc::VideoFrameBuffer>& buffer =
+      _videoFrame->video_frame_buffer();
+  return buffer ? buffer->StrideV() : 0;
 }
 
 @end

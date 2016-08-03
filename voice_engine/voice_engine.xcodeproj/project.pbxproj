@@ -51,6 +51,8 @@
 		432B2FE119CAB14D001267A7 /* channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BD1986054F009E763A /* channel_manager.cc */; };
 		432B2FE219CAB14D001267A7 /* voe_hardware_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D870D1986054F009E763A /* voe_hardware_impl.cc */; };
 		432B2FE319CAB14D001267A7 /* voe_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87031986054F009E763A /* voe_base_impl.cc */; };
+		4394AE1B1D51958600E27530 /* channel_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4394AE191D51958600E27530 /* channel_proxy.cc */; };
+		4394AE1C1D51958600E27530 /* channel_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4394AE191D51958600E27530 /* channel_proxy.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -137,6 +139,8 @@
 		430D871B1986054F009E763A /* voice_engine_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_engine_impl.cc; sourceTree = "<group>"; };
 		430D871C1986054F009E763A /* voice_engine_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_impl.h; sourceTree = "<group>"; };
 		432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoice_engine_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4394AE191D51958600E27530 /* channel_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_proxy.cc; sourceTree = "<group>"; };
+		4394AE1A1D51958600E27530 /* channel_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel_proxy.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +189,8 @@
 		430D86B91986054F009E763A /* voice_engine */ = {
 			isa = PBXGroup;
 			children = (
+				4394AE191D51958600E27530 /* channel_proxy.cc */,
+				4394AE1A1D51958600E27530 /* channel_proxy.h */,
 				430D86C31986054F009E763A /* include */,
 				430D86BB1986054F009E763A /* channel.cc */,
 				430D86BC1986054F009E763A /* channel.h */,
@@ -341,6 +347,7 @@
 				430D87231986054F009E763A /* network_predictor.cc in Sources */,
 				430D87221986054F009E763A /* monitor_module.cc in Sources */,
 				430D87301986054F009E763A /* voe_neteq_stats_impl.cc in Sources */,
+				4394AE1B1D51958600E27530 /* channel_proxy.cc in Sources */,
 				430D87291986054F009E763A /* voe_audio_processing_impl.cc in Sources */,
 				430D87341986054F009E763A /* voe_volume_control_impl.cc in Sources */,
 				430D87321986054F009E763A /* voe_rtp_rtcp_impl.cc in Sources */,
@@ -370,6 +377,7 @@
 				432B2FD719CAB14D001267A7 /* network_predictor.cc in Sources */,
 				432B2FD819CAB14D001267A7 /* monitor_module.cc in Sources */,
 				432B2FDA19CAB14D001267A7 /* voe_neteq_stats_impl.cc in Sources */,
+				4394AE1C1D51958600E27530 /* channel_proxy.cc in Sources */,
 				432B2FDB19CAB14D001267A7 /* voe_audio_processing_impl.cc in Sources */,
 				432B2FDC19CAB14D001267A7 /* voe_volume_control_impl.cc in Sources */,
 				432B2FDE19CAB14D001267A7 /* voe_rtp_rtcp_impl.cc in Sources */,
@@ -466,6 +474,7 @@
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_NEON,
 					WEBRTC_VOICE_ENGINE_TYPING_DETECTION,
+					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -496,6 +505,7 @@
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_NEON,
 					WEBRTC_VOICE_ENGINE_TYPING_DETECTION,
+					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

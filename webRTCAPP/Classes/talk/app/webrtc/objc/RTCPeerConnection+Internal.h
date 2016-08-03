@@ -29,15 +29,20 @@
 
 #import "RTCPeerConnectionDelegate.h"
 
-#include "talk/app/webrtc/peerconnectioninterface.h"
+#include "webrtc/api/peerconnectioninterface.h"
 
 @interface RTCPeerConnection (Internal)
 
 @property(nonatomic, assign, readonly)
     rtc::scoped_refptr<webrtc::PeerConnectionInterface> peerConnection;
 
-- (instancetype)initWithFactory:(webrtc::PeerConnectionFactoryInterface*)factory
-     iceServers:(const webrtc::PeerConnectionInterface::IceServers&)iceServers
-    constraints:(const webrtc::MediaConstraintsInterface*)constraints;
+- (instancetype)initWithFactory:(webrtc::PeerConnectionFactoryInterface *)factory
+                     iceServers:(const webrtc::PeerConnectionInterface::IceServers &)iceServers
+                    constraints:(const webrtc::MediaConstraintsInterface *)constraints;
+
+- (instancetype)initWithFactory:(webrtc::PeerConnectionFactoryInterface *)factory
+                         config:(const webrtc::PeerConnectionInterface::RTCConfiguration &)config
+                    constraints:(const webrtc::MediaConstraintsInterface *)constraints
+                       delegate:(id<RTCPeerConnectionDelegate>)delegate;
 
 @end

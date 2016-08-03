@@ -18,7 +18,7 @@
 #import "SRWebSocket.h"
 
 #if TARGET_OS_IPHONE
-#define HAS_ICU
+//#define HAS_ICU
 #endif
 
 #ifdef HAS_ICU

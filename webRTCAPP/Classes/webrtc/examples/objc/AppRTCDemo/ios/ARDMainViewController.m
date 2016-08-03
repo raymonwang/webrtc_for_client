@@ -162,7 +162,7 @@
   RTCAudioSession *session = [RTCAudioSession sharedInstance];
   [session lockForConfiguration];
   BOOL hasSucceeded = NO;
-  NSError *error = nil;
+  NSError *error;
   if (session.isActive) {
     hasSucceeded = [session setConfiguration:configuration error:&error];
   } else {
