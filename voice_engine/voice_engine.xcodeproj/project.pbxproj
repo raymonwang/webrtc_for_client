@@ -85,7 +85,6 @@
 		430D86C91986054F009E763A /* voe_audio_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_audio_processing.h; sourceTree = "<group>"; };
 		430D86CA1986054F009E763A /* voe_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_base.h; sourceTree = "<group>"; };
 		430D86CB1986054F009E763A /* voe_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_codec.h; sourceTree = "<group>"; };
-		430D86CC1986054F009E763A /* voe_dtmf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_dtmf.h; sourceTree = "<group>"; };
 		430D86CD1986054F009E763A /* voe_errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_errors.h; sourceTree = "<group>"; };
 		430D86CE1986054F009E763A /* voe_external_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_external_media.h; sourceTree = "<group>"; };
 		430D86CF1986054F009E763A /* voe_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_file.h; sourceTree = "<group>"; };
@@ -250,7 +249,6 @@
 				430D86C91986054F009E763A /* voe_audio_processing.h */,
 				430D86CA1986054F009E763A /* voe_base.h */,
 				430D86CB1986054F009E763A /* voe_codec.h */,
-				430D86CC1986054F009E763A /* voe_dtmf.h */,
 				430D86CD1986054F009E763A /* voe_errors.h */,
 				430D86CE1986054F009E763A /* voe_external_media.h */,
 				430D86CF1986054F009E763A /* voe_file.h */,
