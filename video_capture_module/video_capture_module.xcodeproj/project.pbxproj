@@ -11,8 +11,6 @@
 		43288EF41D38E9320044E4F5 /* device_info_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EAD1D38E9320044E4F5 /* device_info_impl.h */; };
 		43288EF51D38E9320044E4F5 /* ensure_initialized.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EAE1D38E9320044E4F5 /* ensure_initialized.cc */; };
 		43288EF61D38E9320044E4F5 /* ensure_initialized.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EAF1D38E9320044E4F5 /* ensure_initialized.h */; };
-		43288EF71D38E9320044E4F5 /* device_info_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EB11D38E9320044E4F5 /* device_info_external.cc */; };
-		43288EF81D38E9320044E4F5 /* video_capture_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EB21D38E9320044E4F5 /* video_capture_external.cc */; };
 		43288EF91D38E9320044E4F5 /* mock_video_capture.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EB51D38E9320044E4F5 /* mock_video_capture.h */; };
 		43288EFA1D38E9320044E4F5 /* video_capture.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EB61D38E9320044E4F5 /* video_capture.h */; };
 		43288EFB1D38E9320044E4F5 /* video_capture_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EB71D38E9320044E4F5 /* video_capture_defines.h */; };
@@ -31,9 +29,7 @@
 		43288F181D38E9320044E4F5 /* video_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */; };
 		43288F191D38E9320044E4F5 /* video_capture_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EDC1D38E9320044E4F5 /* video_capture_impl.h */; };
 		43288F1A1D38E9320044E4F5 /* video_capture_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EDD1D38E9320044E4F5 /* video_capture_internal.h */; };
-		43288F2A1D38EB680044E4F5 /* video_capture_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EB21D38E9320044E4F5 /* video_capture_external.cc */; };
 		43288F2B1D38EB680044E4F5 /* video_capture_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */; };
-		43288F2C1D38EB680044E4F5 /* device_info_external.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EB11D38E9320044E4F5 /* device_info_external.cc */; };
 		43288F2D1D38EB680044E4F5 /* video_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */; };
 		43288F311D38EB680044E4F5 /* ensure_initialized.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EAE1D38E9320044E4F5 /* ensure_initialized.cc */; };
 		43288F331D38EB680044E4F5 /* device_info_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EAC1D38E9320044E4F5 /* device_info_impl.cc */; };
@@ -337,9 +333,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43288EF81D38E9320044E4F5 /* video_capture_external.cc in Sources */,
 				43288F171D38E9320044E4F5 /* video_capture_factory.cc in Sources */,
-				43288EF71D38E9320044E4F5 /* device_info_external.cc in Sources */,
 				43288F181D38E9320044E4F5 /* video_capture_impl.cc in Sources */,
 				43288F041D38E9320044E4F5 /* video_capture_ios.mm in Sources */,
 				43288F001D38E9320044E4F5 /* device_info_ios_objc.mm in Sources */,
@@ -354,10 +348,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43288F2A1D38EB680044E4F5 /* video_capture_external.cc in Sources */,
 				43288F2B1D38EB680044E4F5 /* video_capture_factory.cc in Sources */,
 				43288F481D38EC3B0044E4F5 /* video_capture_mac.mm in Sources */,
-				43288F2C1D38EB680044E4F5 /* device_info_external.cc in Sources */,
 				43288F2D1D38EB680044E4F5 /* video_capture_impl.cc in Sources */,
 				43288F311D38EB680044E4F5 /* ensure_initialized.cc in Sources */,
 				43288F331D38EB680044E4F5 /* device_info_impl.cc in Sources */,
@@ -527,6 +519,7 @@
 				43288E941D38E8DD0044E4F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		43288F441D38EB680044E4F5 /* Build configuration list for PBXNativeTarget "video_capture_module_osx" */ = {
 			isa = XCConfigurationList;
