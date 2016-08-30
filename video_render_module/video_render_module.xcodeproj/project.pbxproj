@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43288FBE1D38ED2F0044E4F5 /* video_render_external_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288F761D38ED2F0044E4F5 /* video_render_external_impl.cc */; };
 		43288FBF1D38ED2F0044E4F5 /* video_render_external_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288F771D38ED2F0044E4F5 /* video_render_external_impl.h */; };
 		43288FC01D38ED2F0044E4F5 /* i_video_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288F781D38ED2F0044E4F5 /* i_video_render.h */; };
 		43288FC11D38ED2F0044E4F5 /* video_render.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288F7A1D38ED2F0044E4F5 /* video_render.h */; };
@@ -16,12 +15,10 @@
 		43288FC41D38ED2F0044E4F5 /* incoming_video_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288F7D1D38ED2F0044E4F5 /* incoming_video_stream.h */; };
 		43288FE51D38ED2F0044E4F5 /* video_render_frames.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288FA61D38ED2F0044E4F5 /* video_render_frames.cc */; };
 		43288FE61D38ED2F0044E4F5 /* video_render_frames.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288FA71D38ED2F0044E4F5 /* video_render_frames.h */; };
-		43288FE71D38ED2F0044E4F5 /* video_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288FA81D38ED2F0044E4F5 /* video_render_impl.cc */; };
 		43288FE81D38ED2F0044E4F5 /* video_render_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288FA91D38ED2F0044E4F5 /* video_render_impl.h */; };
 		43288FE91D38ED2F0044E4F5 /* video_render_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288FAA1D38ED2F0044E4F5 /* video_render_internal.h */; };
 		43288FEA1D38ED2F0044E4F5 /* video_render_internal_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288FAB1D38ED2F0044E4F5 /* video_render_internal_impl.cc */; };
 		43819A431D45FFD3000656B1 /* video_render_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288FA81D38ED2F0044E4F5 /* video_render_impl.cc */; };
-		43819A441D45FFD3000656B1 /* video_render_external_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288F761D38ED2F0044E4F5 /* video_render_external_impl.cc */; };
 		43819A471D45FFD3000656B1 /* video_render_frames.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288FA61D38ED2F0044E4F5 /* video_render_frames.cc */; };
 		43819A481D45FFD3000656B1 /* video_render_internal_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288FAB1D38ED2F0044E4F5 /* video_render_internal_impl.cc */; };
 		43819A4B1D45FFD3000656B1 /* incoming_video_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288F7C1D38ED2F0044E4F5 /* incoming_video_stream.cc */; };
@@ -55,6 +52,8 @@
 		43819A721D4600D5000656B1 /* video_render_mac_cocoa_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43288F9A1D38ED2F0044E4F5 /* video_render_mac_cocoa_impl.mm */; };
 		43819A731D4600D5000656B1 /* video_render_nsopengl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288F9B1D38ED2F0044E4F5 /* video_render_nsopengl.h */; };
 		43819A741D4600D5000656B1 /* video_render_nsopengl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43288F9C1D38ED2F0044E4F5 /* video_render_nsopengl.mm */; };
+		43C797FD1D741DBF0015B393 /* video_render_external_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288F761D38ED2F0044E4F5 /* video_render_external_impl.cc */; };
+		43C797FE1D741DBF0015B393 /* video_render_external_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288F761D38ED2F0044E4F5 /* video_render_external_impl.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,12 +145,13 @@
 			children = (
 				43288F741D38ED2F0044E4F5 /* BUILD.gn */,
 				43288F751D38ED2F0044E4F5 /* external */,
-				43288F781D38ED2F0044E4F5 /* i_video_render.h */,
 				43288F791D38ED2F0044E4F5 /* include */,
-				43288F7C1D38ED2F0044E4F5 /* incoming_video_stream.cc */,
-				43288F7D1D38ED2F0044E4F5 /* incoming_video_stream.h */,
 				43288F7E1D38ED2F0044E4F5 /* ios */,
 				43288F901D38ED2F0044E4F5 /* mac */,
+				43288FAD1D38ED2F0044E4F5 /* windows */,
+				43288F781D38ED2F0044E4F5 /* i_video_render.h */,
+				43288F7C1D38ED2F0044E4F5 /* incoming_video_stream.cc */,
+				43288F7D1D38ED2F0044E4F5 /* incoming_video_stream.h */,
 				43288F9D1D38ED2F0044E4F5 /* OWNERS */,
 				43288FA51D38ED2F0044E4F5 /* video_render.gypi */,
 				43288FA61D38ED2F0044E4F5 /* video_render_frames.cc */,
@@ -161,7 +161,6 @@
 				43288FAA1D38ED2F0044E4F5 /* video_render_internal.h */,
 				43288FAB1D38ED2F0044E4F5 /* video_render_internal_impl.cc */,
 				43288FAC1D38ED2F0044E4F5 /* video_render_tests.isolate */,
-				43288FAD1D38ED2F0044E4F5 /* windows */,
 			);
 			name = video_render;
 			path = ../webRTCAPP/Classes/webrtc/modules/video_render;
@@ -352,12 +351,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				43819A601D4600CE000656B1 /* open_gles20.mm in Sources */,
-				43288FE71D38ED2F0044E4F5 /* video_render_impl.cc in Sources */,
 				43819A661D4600CE000656B1 /* video_render_ios_impl.mm in Sources */,
-				43288FBE1D38ED2F0044E4F5 /* video_render_external_impl.cc in Sources */,
 				43288FE51D38ED2F0044E4F5 /* video_render_frames.cc in Sources */,
 				43288FEA1D38ED2F0044E4F5 /* video_render_internal_impl.cc in Sources */,
 				43819A621D4600CE000656B1 /* video_render_ios_channel.mm in Sources */,
+				43C797FD1D741DBF0015B393 /* video_render_external_impl.cc in Sources */,
 				43819A641D4600CE000656B1 /* video_render_ios_gles20.mm in Sources */,
 				43819A681D4600CE000656B1 /* video_render_ios_view.mm in Sources */,
 				43288FC31D38ED2F0044E4F5 /* incoming_video_stream.cc in Sources */,
@@ -372,12 +370,12 @@
 				43819A721D4600D5000656B1 /* video_render_mac_cocoa_impl.mm in Sources */,
 				43819A6C1D4600D5000656B1 /* cocoa_render_view.mm in Sources */,
 				43819A431D45FFD3000656B1 /* video_render_impl.cc in Sources */,
-				43819A441D45FFD3000656B1 /* video_render_external_impl.cc in Sources */,
 				43819A6A1D4600D5000656B1 /* cocoa_full_screen_window.mm in Sources */,
 				43819A471D45FFD3000656B1 /* video_render_frames.cc in Sources */,
 				43819A741D4600D5000656B1 /* video_render_nsopengl.mm in Sources */,
 				43819A6F1D4600D5000656B1 /* video_render_mac_carbon_impl.cc in Sources */,
 				43819A481D45FFD3000656B1 /* video_render_internal_impl.cc in Sources */,
+				43C797FE1D741DBF0015B393 /* video_render_external_impl.cc in Sources */,
 				43819A4B1D45FFD3000656B1 /* incoming_video_stream.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,6 +468,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_IOS,
+				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -482,6 +484,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_IOS,
+				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
