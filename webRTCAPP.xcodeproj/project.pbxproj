@@ -28,6 +28,7 @@
 		4318D56A197E65EA00D5CADB /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D568197E65EA00D5CADB /* libvpx.a */; };
 		4318D56C197E668F00D5CADB /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D56B197E668F00D5CADB /* libyuv.a */; };
 		4318D576197E725500D5CADB /* APPRTCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4318D575197E725500D5CADB /* APPRTCViewController.xib */; };
+		435132831D758FFB003C2017 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4318D568197E65EA00D5CADB /* libvpx.a */; };
 		4381BCC91D470191000656B1 /* libvoice_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D86B61986051E009E763A /* libvoice_engine.a */; };
 		4381BCCA1D47020B000656B1 /* libwebrtc_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D835D1985E422009E763A /* libwebrtc_base.a */; };
 		4381BCCB1D470213000656B1 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D876F19860740009E763A /* libsystem_wrappers.a */; };
@@ -119,7 +120,6 @@
 		43AD80E51990A942006EAB38 /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7A641990809F006EAB38 /* libnss_static.a */; };
 		43AD80E61990A95B006EAB38 /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7EF51990934E006EAB38 /* libcrnspr.a */; };
 		43AD80E71990A97D006EAB38 /* libcrnssckbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD807C1990A57A006EAB38 /* libcrnssckbi.a */; };
-		43C3ABA71D49BECB0017C373 /* libvpx_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C3ABA61D49BECB0017C373 /* libvpx_arm64.a */; };
 		43C67C4F1D20CDEF00427D35 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C4C1D20CDE000427D35 /* libopus.a */; };
 		43C67C561D20CF3D00427D35 /* libwebrtc_opus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C551D20CF2600427D35 /* libwebrtc_opus.a */; };
 		43C67C581D20D30400427D35 /* libiSACFix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430959EF1994DE3E00012AD8 /* libiSACFix.a */; };
@@ -181,7 +181,6 @@
 		43ECEE97197CA80B00E9267B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ECEE96197CA80B00E9267B /* UIKit.framework */; };
 		43ECEE9D197CA80B00E9267B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43ECEE9B197CA80B00E9267B /* InfoPlist.strings */; };
 		43ECEEAB197CA80B00E9267B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43ECEEAA197CA80B00E9267B /* Images.xcassets */; };
-		43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4381A06A1D462CDD000656B1 /* libvpx.a */; };
 		43FDB02B1D477E9B004DD0EA /* libwebrtc_i420_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43FDB02A1D477E9B004DD0EA /* libwebrtc_i420_osx.a */; };
 		43FDB2371D489A56004DD0EA /* libwebrtc_i420.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43F1EED51D477D5E00AEAEC2 /* libwebrtc_i420.a */; };
 /* End PBXBuildFile section */
@@ -551,26 +550,12 @@
 			remoteGlobalIDString = 43819CA21D461613000656B1;
 			remoteInfo = yuv;
 		};
-		4381A0691D462CDD000656B1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4381A01B1D462CDC000656B1 /* vpx.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4381A0141D462CDC000656B1;
-			remoteInfo = vpx;
-		};
 		4381A0761D462CDD000656B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43819CA91D461613000656B1 /* yuv.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 43819EBE1D462312000656B1;
 			remoteInfo = yuv_osx;
-		};
-		4381BCBB1D47017C000656B1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4381A01B1D462CDC000656B1 /* vpx.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4381A6F21D4635E6000656B1;
-			remoteInfo = vpx_osx;
 		};
 		4381C05A1D4714F5000656B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -711,13 +696,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 43AD80D51990A826006EAB38;
 			remoteInfo = crnss;
-		};
-		43C3ABA51D49BECB0017C373 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4381A01B1D462CDC000656B1 /* vpx.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 43C3ABA01D49BD0A0017C373;
-			remoteInfo = vpx_arm64;
 		};
 		43C67C4B1D20CDE000427D35 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -932,7 +910,6 @@
 		43288E951D38E8DD0044E4F5 /* video_capture_module.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_capture_module.xcodeproj; path = video_capture_module/video_capture_module.xcodeproj; sourceTree = "<group>"; };
 		43288F591D38ED110044E4F5 /* video_render_module.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = video_render_module.xcodeproj; path = video_render_module/video_render_module.xcodeproj; sourceTree = "<group>"; };
 		43819CA91D461613000656B1 /* yuv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yuv.xcodeproj; path = yuv/yuv.xcodeproj; sourceTree = "<group>"; };
-		4381A01B1D462CDC000656B1 /* vpx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = vpx.xcodeproj; path = vpx/vpx.xcodeproj; sourceTree = "<group>"; };
 		4381BC6C1D47017C000656B1 /* librtc_voice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_voice.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4381BD6C1D4704B8000656B1 /* FakeClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FakeClass.cpp; path = webRTCAPP/Classes/Test/FakeClass.cpp; sourceTree = "<group>"; };
 		4381BD6D1D4704B8000656B1 /* FakeClass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FakeClass.hpp; path = webRTCAPP/Classes/Test/FakeClass.hpp; sourceTree = "<group>"; };
@@ -1160,9 +1137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43C3ABA71D49BECB0017C373 /* libvpx_arm64.a in Frameworks */,
 				43FDB2371D489A56004DD0EA /* libwebrtc_i420.a in Frameworks */,
-				43F1D7161D47689C00AEAEC2 /* libvpx.a in Frameworks */,
 				4381C0901D472076000656B1 /* libwebrtc_vp9.a in Frameworks */,
 				4381C08F1D47206F000656B1 /* libwebrtc_vp8.a in Frameworks */,
 				4381C07E1D471745000656B1 /* libyuv.a in Frameworks */,
@@ -1172,6 +1147,7 @@
 				4381BF061D470BF3000656B1 /* libvideo_capture_module.a in Frameworks */,
 				4381BF051D470BE9000656B1 /* libvideo_coding_utility.a in Frameworks */,
 				4381BF041D470BE2000656B1 /* libvideo_processing.a in Frameworks */,
+				435132831D758FFB003C2017 /* libvpx.a in Frameworks */,
 				4381BF031D470BDD000656B1 /* libvideo_render_module.a in Frameworks */,
 				4381BF021D470BD3000656B1 /* libwebrtc_video_coding.a in Frameworks */,
 				4381BF011D470BC8000656B1 /* libcommon_video.a in Frameworks */,
@@ -1640,20 +1616,9 @@
 		43819DA11D4621C2000656B1 /* thirdpart */ = {
 			isa = PBXGroup;
 			children = (
-				4381A01B1D462CDC000656B1 /* vpx.xcodeproj */,
 				43819CA91D461613000656B1 /* yuv.xcodeproj */,
 			);
 			name = thirdpart;
-			sourceTree = "<group>";
-		};
-		4381A01C1D462CDC000656B1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4381A06A1D462CDD000656B1 /* libvpx.a */,
-				43C3ABA61D49BECB0017C373 /* libvpx_arm64.a */,
-				4381BCBC1D47017C000656B1 /* libvpx_osx.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		4381BD6B1D470474000656B1 /* Test */ = {
@@ -2622,10 +2587,6 @@
 					ProjectRef = 430D86B01986051D009E763A /* voice_engine.xcodeproj */;
 				},
 				{
-					ProductGroup = 4381A01C1D462CDC000656B1 /* Products */;
-					ProjectRef = 4381A01B1D462CDC000656B1 /* vpx.xcodeproj */;
-				},
-				{
 					ProductGroup = 430D834E1985E422009E763A /* Products */;
 					ProjectRef = 430D834D1985E422009E763A /* webrtc_base.xcodeproj */;
 				},
@@ -3036,25 +2997,11 @@
 			remoteRef = 43819D021D461614000656B1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		4381A06A1D462CDD000656B1 /* libvpx.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libvpx.a;
-			remoteRef = 4381A0691D462CDD000656B1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		4381A0771D462CDD000656B1 /* libyuv_osx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libyuv_osx.a;
 			remoteRef = 4381A0761D462CDD000656B1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4381BCBC1D47017C000656B1 /* libvpx_osx.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libvpx_osx.a;
-			remoteRef = 4381BCBB1D47017C000656B1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4381C05B1D4714F5000656B1 /* libpaced_sender_osx.a */ = {
@@ -3195,13 +3142,6 @@
 			fileType = archive.ar;
 			path = libcrnss.a;
 			remoteRef = 43AD80E01990A827006EAB38 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		43C3ABA61D49BECB0017C373 /* libvpx_arm64.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libvpx_arm64.a;
-			remoteRef = 43C3ABA51D49BECB0017C373 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43C67C4C1D20CDE000427D35 /* libopus.a */ = {
@@ -3539,6 +3479,10 @@
 				ENABLE_TESTABILITY = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_NO_COMMON_BLOCKS = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/webRTCAPP/libs",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
@@ -3558,6 +3502,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXECUTABLE_PREFIX = lib;
 				GCC_NO_COMMON_BLOCKS = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/webRTCAPP/libs",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

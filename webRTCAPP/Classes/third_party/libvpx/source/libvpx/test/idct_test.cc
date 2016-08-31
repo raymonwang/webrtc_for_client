@@ -10,17 +10,18 @@
 
 #include "./vpx_config.h"
 #include "./vp8_rtcd.h"
-#include "test/clear_system_state.h"
-#include "test/register_state_check.h"
+
 #include "third_party/googletest/src/include/gtest/gtest.h"
 
+#include "test/clear_system_state.h"
+#include "test/register_state_check.h"
 #include "vpx/vpx_integer.h"
 
-typedef void (*idct_fn_t)(int16_t *input, unsigned char *pred_ptr,
-                          int pred_stride, unsigned char *dst_ptr,
-                          int dst_stride);
+typedef void (*IdctFunc)(int16_t *input, unsigned char *pred_ptr,
+                         int pred_stride, unsigned char *dst_ptr,
+                         int dst_stride);
 namespace {
-class IDCTTest : public ::testing::TestWithParam<idct_fn_t> {
+class IDCTTest : public ::testing::TestWithParam<IdctFunc> {
  protected:
   virtual void SetUp() {
     int i;
@@ -33,7 +34,7 @@ class IDCTTest : public ::testing::TestWithParam<idct_fn_t> {
 
   virtual void TearDown() { libvpx_test::ClearSystemState(); }
 
-  idct_fn_t UUT;
+  IdctFunc UUT;
   int16_t input[16];
   unsigned char output[256];
   unsigned char predict[256];
@@ -112,5 +113,9 @@ INSTANTIATE_TEST_CASE_P(C, IDCTTest, ::testing::Values(vp8_short_idct4x4llm_c));
 #if HAVE_MMX
 INSTANTIATE_TEST_CASE_P(MMX, IDCTTest,
                         ::testing::Values(vp8_short_idct4x4llm_mmx));
+#endif
+#if HAVE_MSA
+INSTANTIATE_TEST_CASE_P(MSA, IDCTTest,
+                        ::testing::Values(vp8_short_idct4x4llm_msa));
 #endif
 }

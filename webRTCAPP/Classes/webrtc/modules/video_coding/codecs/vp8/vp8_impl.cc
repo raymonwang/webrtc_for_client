@@ -174,7 +174,7 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
   // Creating a wrapper to the image - setting image data to NULL. Actual
   // pointer will be set in encode. Setting align to 1, as it is meaningless
   // (actual memory is not allocated).
-  raw_ = vpx_img_wrap(NULL, IMG_FMT_I420, codec_.width, codec_.height,
+  raw_ = vpx_img_wrap(NULL, VPX_IMG_FMT_I420, codec_.width, codec_.height,
                       1, NULL);
   // populate encoder configuration with default values
   if (vpx_codec_enc_config_default(vpx_codec_vp8_cx(), config_, 0)) {
@@ -346,9 +346,9 @@ int VP8EncoderImpl::Encode(const I420VideoFrame& input_image,
   }
   // Image in vpx_image_t format.
   // Input image is const. VP8's raw image is not defined as const.
-  raw_->planes[PLANE_Y] = const_cast<uint8_t*>(input_image.buffer(kYPlane));
-  raw_->planes[PLANE_U] = const_cast<uint8_t*>(input_image.buffer(kUPlane));
-  raw_->planes[PLANE_V] = const_cast<uint8_t*>(input_image.buffer(kVPlane));
+  raw_->planes[VPX_PLANE_Y] = const_cast<uint8_t*>(input_image.buffer(kYPlane));
+  raw_->planes[VPX_PLANE_U] = const_cast<uint8_t*>(input_image.buffer(kUPlane));
+  raw_->planes[VPX_PLANE_V] = const_cast<uint8_t*>(input_image.buffer(kVPlane));
   // TODO(mikhal): Stride should be set in initialization.
   raw_->stride[VPX_PLANE_Y] = input_image.stride(kYPlane);
   raw_->stride[VPX_PLANE_U] = input_image.stride(kUPlane);

@@ -41,7 +41,13 @@ class DxDataIterator {
 class Decoder {
  public:
   Decoder(vpx_codec_dec_cfg_t cfg, unsigned long deadline)
-      : cfg_(cfg), deadline_(deadline), init_done_(false) {
+      : cfg_(cfg), flags_(0), deadline_(deadline), init_done_(false) {
+    memset(&decoder_, 0, sizeof(decoder_));
+  }
+
+  Decoder(vpx_codec_dec_cfg_t cfg, const vpx_codec_flags_t flag,
+          unsigned long deadline)  // NOLINT
+      : cfg_(cfg), flags_(flag), deadline_(deadline), init_done_(false) {
     memset(&decoder_, 0, sizeof(decoder_));
   }
 
@@ -66,15 +72,19 @@ class Decoder {
   }
 
   void Control(int ctrl_id, int arg) {
-    InitOnce();
-    const vpx_codec_err_t res = vpx_codec_control_(&decoder_, ctrl_id, arg);
-    ASSERT_EQ(VPX_CODEC_OK, res) << DecodeError();
+    Control(ctrl_id, arg, VPX_CODEC_OK);
   }
 
   void Control(int ctrl_id, const void *arg) {
     InitOnce();
     const vpx_codec_err_t res = vpx_codec_control_(&decoder_, ctrl_id, arg);
     ASSERT_EQ(VPX_CODEC_OK, res) << DecodeError();
+  }
+
+  void Control(int ctrl_id, int arg, vpx_codec_err_t expected_value) {
+    InitOnce();
+    const vpx_codec_err_t res = vpx_codec_control_(&decoder_, ctrl_id, arg);
+    ASSERT_EQ(expected_value, res) << DecodeError();
   }
 
   const char* DecodeError() {
@@ -91,8 +101,14 @@ class Decoder {
         &decoder_, cb_get, cb_release, user_priv);
   }
 
-  const char* GetDecoderName() {
+  const char* GetDecoderName() const {
     return vpx_codec_iface_name(CodecInterface());
+  }
+
+  bool IsVP8() const;
+
+  vpx_codec_ctx_t * GetDecoder() {
+    return &decoder_;
   }
 
  protected:
@@ -102,7 +118,7 @@ class Decoder {
     if (!init_done_) {
       const vpx_codec_err_t res = vpx_codec_dec_init(&decoder_,
                                                      CodecInterface(),
-                                                     &cfg_, 0);
+                                                     &cfg_, flags_);
       ASSERT_EQ(VPX_CODEC_OK, res) << DecodeError();
       init_done_ = true;
     }
@@ -110,6 +126,7 @@ class Decoder {
 
   vpx_codec_ctx_t     decoder_;
   vpx_codec_dec_cfg_t cfg_;
+  vpx_codec_flags_t   flags_;
   unsigned int        deadline_;
   bool                init_done_;
 };
@@ -122,28 +139,41 @@ class DecoderTest {
   virtual void RunLoop(CompressedVideoSource *video,
                        const vpx_codec_dec_cfg_t &dec_cfg);
 
+  virtual void set_cfg(const vpx_codec_dec_cfg_t &dec_cfg);
+  virtual void set_flags(const vpx_codec_flags_t flags);
+
   // Hook to be called before decompressing every frame.
-  virtual void PreDecodeFrameHook(const CompressedVideoSource& video,
-                                  Decoder *decoder) {}
+  virtual void PreDecodeFrameHook(const CompressedVideoSource& /*video*/,
+                                  Decoder* /*decoder*/) {}
 
   // Hook to be called to handle decode result. Return true to continue.
   virtual bool HandleDecodeResult(const vpx_codec_err_t res_dec,
-                                  const CompressedVideoSource& /* video */,
+                                  const CompressedVideoSource& /*video*/,
                                   Decoder *decoder) {
     EXPECT_EQ(VPX_CODEC_OK, res_dec) << decoder->DecodeError();
     return VPX_CODEC_OK == res_dec;
   }
 
   // Hook to be called on every decompressed frame.
-  virtual void DecompressedFrameHook(const vpx_image_t& img,
-                                     const unsigned int frame_number) {}
+  virtual void DecompressedFrameHook(const vpx_image_t& /*img*/,
+                                     const unsigned int /*frame_number*/) {}
+
+  // Hook to be called on peek result
+  virtual void HandlePeekResult(Decoder* const decoder,
+                                CompressedVideoSource *video,
+                                const vpx_codec_err_t res_peek);
 
  protected:
-  explicit DecoderTest(const CodecFactory *codec) : codec_(codec) {}
+  explicit DecoderTest(const CodecFactory *codec)
+      : codec_(codec),
+        cfg_(),
+        flags_(0) {}
 
   virtual ~DecoderTest() {}
 
   const CodecFactory *codec_;
+  vpx_codec_dec_cfg_t cfg_;
+  vpx_codec_flags_t   flags_;
 };
 
 }  // namespace libvpx_test

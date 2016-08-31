@@ -13,12 +13,13 @@
 #include <string.h>
 
 #include "third_party/googletest/src/include/gtest/gtest.h"
+
+#include "./vp9_rtcd.h"
+#include "./vpx_dsp_rtcd.h"
 #include "test/acm_random.h"
 #include "test/clear_system_state.h"
 #include "test/register_state_check.h"
 #include "test/util.h"
-
-#include "./vp9_rtcd.h"
 #include "vp9/common/vp9_blockd.h"
 #include "vp9/common/vp9_scan.h"
 #include "vpx/vpx_integer.h"
@@ -26,14 +27,14 @@
 using libvpx_test::ACMRandom;
 
 namespace {
-typedef void (*fwd_txfm_t)(const int16_t *in, int16_t *out, int stride);
-typedef void (*inv_txfm_t)(const int16_t *in, uint8_t *out, int stride);
-typedef std::tr1::tuple<fwd_txfm_t,
-                        inv_txfm_t,
-                        inv_txfm_t,
-                        TX_SIZE, int> partial_itxfm_param_t;
+typedef void (*FwdTxfmFunc)(const int16_t *in, tran_low_t *out, int stride);
+typedef void (*InvTxfmFunc)(const tran_low_t *in, uint8_t *out, int stride);
+typedef std::tr1::tuple<FwdTxfmFunc,
+                        InvTxfmFunc,
+                        InvTxfmFunc,
+                        TX_SIZE, int> PartialInvTxfmParam;
 const int kMaxNumCoeffs = 1024;
-class PartialIDctTest : public ::testing::TestWithParam<partial_itxfm_param_t> {
+class PartialIDctTest : public ::testing::TestWithParam<PartialInvTxfmParam> {
  public:
   virtual ~PartialIDctTest() {}
   virtual void SetUp() {
@@ -49,9 +50,9 @@ class PartialIDctTest : public ::testing::TestWithParam<partial_itxfm_param_t> {
  protected:
   int last_nonzero_;
   TX_SIZE tx_size_;
-  fwd_txfm_t ftxfm_;
-  inv_txfm_t full_itxfm_;
-  inv_txfm_t partial_itxfm_;
+  FwdTxfmFunc ftxfm_;
+  InvTxfmFunc full_itxfm_;
+  InvTxfmFunc partial_itxfm_;
 };
 
 TEST_P(PartialIDctTest, RunQuantCheck) {
@@ -74,16 +75,16 @@ TEST_P(PartialIDctTest, RunQuantCheck) {
       FAIL() << "Wrong Size!";
       break;
   }
-  DECLARE_ALIGNED_ARRAY(16, int16_t, test_coef_block1, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, int16_t, test_coef_block2, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, uint8_t, dst1, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, uint8_t, dst2, kMaxNumCoeffs);
+  DECLARE_ALIGNED(16, tran_low_t, test_coef_block1[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, tran_low_t, test_coef_block2[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, uint8_t, dst1[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, uint8_t, dst2[kMaxNumCoeffs]);
 
   const int count_test_block = 1000;
   const int block_size = size * size;
 
-  DECLARE_ALIGNED_ARRAY(16, int16_t, input_extreme_block, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, int16_t, output_ref_block, kMaxNumCoeffs);
+  DECLARE_ALIGNED(16, int16_t, input_extreme_block[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, tran_low_t, output_ref_block[kMaxNumCoeffs]);
 
   int max_error = 0;
   for (int i = 0; i < count_test_block; ++i) {
@@ -153,10 +154,10 @@ TEST_P(PartialIDctTest, ResultsMatch) {
       FAIL() << "Wrong Size!";
       break;
   }
-  DECLARE_ALIGNED_ARRAY(16, int16_t, test_coef_block1, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, int16_t, test_coef_block2, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, uint8_t, dst1, kMaxNumCoeffs);
-  DECLARE_ALIGNED_ARRAY(16, uint8_t, dst2, kMaxNumCoeffs);
+  DECLARE_ALIGNED(16, tran_low_t, test_coef_block1[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, tran_low_t, test_coef_block2[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, uint8_t, dst1[kMaxNumCoeffs]);
+  DECLARE_ALIGNED(16, uint8_t, dst2[kMaxNumCoeffs]);
   const int count_test_block = 1000;
   const int max_coeff = 32766 / 4;
   const int block_size = size * size;
@@ -201,115 +202,142 @@ using std::tr1::make_tuple;
 INSTANTIATE_TEST_CASE_P(
     C, PartialIDctTest,
     ::testing::Values(
-        make_tuple(&vp9_fdct32x32_c,
-                   &vp9_idct32x32_1024_add_c,
-                   &vp9_idct32x32_34_add_c,
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_34_add_c,
                    TX_32X32, 34),
-        make_tuple(&vp9_fdct32x32_c,
-                   &vp9_idct32x32_1024_add_c,
-                   &vp9_idct32x32_1_add_c,
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_1_add_c,
                    TX_32X32, 1),
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_10_add_c,
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_10_add_c,
                    TX_16X16, 10),
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_1_add_c,
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_1_add_c,
                    TX_16X16, 1),
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_12_add_c,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_12_add_c,
                    TX_8X8, 12),
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_1_add_c,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_1_add_c,
                    TX_8X8, 1),
-        make_tuple(&vp9_fdct4x4_c,
-                   &vp9_idct4x4_16_add_c,
-                   &vp9_idct4x4_1_add_c,
+        make_tuple(&vpx_fdct4x4_c,
+                   &vpx_idct4x4_16_add_c,
+                   &vpx_idct4x4_1_add_c,
                    TX_4X4, 1)));
-#if HAVE_NEON_ASM
+
+#if HAVE_NEON && !CONFIG_VP9_HIGHBITDEPTH && !CONFIG_EMULATE_HARDWARE
 INSTANTIATE_TEST_CASE_P(
     NEON, PartialIDctTest,
     ::testing::Values(
-        make_tuple(&vp9_fdct32x32_c,
-                   &vp9_idct32x32_1024_add_c,
-                   &vp9_idct32x32_1_add_neon,
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_1_add_neon,
                    TX_32X32, 1),
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_10_add_neon,
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_10_add_neon,
                    TX_16X16, 10),
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_1_add_neon,
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_1_add_neon,
                    TX_16X16, 1),
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_12_add_neon,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_12_add_neon,
                    TX_8X8, 12),
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_1_add_neon,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_1_add_neon,
                    TX_8X8, 1),
-        make_tuple(&vp9_fdct4x4_c,
-                   &vp9_idct4x4_16_add_c,
-                   &vp9_idct4x4_1_add_neon,
+        make_tuple(&vpx_fdct4x4_c,
+                   &vpx_idct4x4_16_add_c,
+                   &vpx_idct4x4_1_add_neon,
                    TX_4X4, 1)));
-#endif
+#endif  // HAVE_NEON && !CONFIG_VP9_HIGHBITDEPTH && !CONFIG_EMULATE_HARDWARE
 
-#if HAVE_SSE2
+#if HAVE_SSE2 && !CONFIG_VP9_HIGHBITDEPTH && !CONFIG_EMULATE_HARDWARE
 INSTANTIATE_TEST_CASE_P(
     SSE2, PartialIDctTest,
     ::testing::Values(
-        make_tuple(&vp9_fdct32x32_c,
-                   &vp9_idct32x32_1024_add_c,
-                   &vp9_idct32x32_34_add_sse2,
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_34_add_sse2,
                    TX_32X32, 34),
-        make_tuple(&vp9_fdct32x32_c,
-                   &vp9_idct32x32_1024_add_c,
-                   &vp9_idct32x32_1_add_sse2,
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_1_add_sse2,
                    TX_32X32, 1),
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_10_add_sse2,
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_10_add_sse2,
                    TX_16X16, 10),
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_1_add_sse2,
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_1_add_sse2,
                    TX_16X16, 1),
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_12_add_sse2,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_12_add_sse2,
                    TX_8X8, 12),
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_1_add_sse2,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_1_add_sse2,
                    TX_8X8, 1),
-        make_tuple(&vp9_fdct4x4_c,
-                   &vp9_idct4x4_16_add_c,
-                   &vp9_idct4x4_1_add_sse2,
+        make_tuple(&vpx_fdct4x4_c,
+                   &vpx_idct4x4_16_add_c,
+                   &vpx_idct4x4_1_add_sse2,
                    TX_4X4, 1)));
 #endif
 
-#if HAVE_SSSE3 && ARCH_X86_64
+#if HAVE_SSSE3 && CONFIG_USE_X86INC && ARCH_X86_64 && \
+    !CONFIG_VP9_HIGHBITDEPTH && !CONFIG_EMULATE_HARDWARE
 INSTANTIATE_TEST_CASE_P(
     SSSE3_64, PartialIDctTest,
     ::testing::Values(
-        make_tuple(&vp9_fdct8x8_c,
-                   &vp9_idct8x8_64_add_c,
-                   &vp9_idct8x8_12_add_ssse3,
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_12_add_ssse3,
                    TX_8X8, 12)));
 #endif
 
-#if HAVE_SSSE3
+#if HAVE_MSA && !CONFIG_VP9_HIGHBITDEPTH && !CONFIG_EMULATE_HARDWARE
 INSTANTIATE_TEST_CASE_P(
-    SSSE3, PartialIDctTest,
+    MSA, PartialIDctTest,
     ::testing::Values(
-        make_tuple(&vp9_fdct16x16_c,
-                   &vp9_idct16x16_256_add_c,
-                   &vp9_idct16x16_10_add_ssse3,
-                   TX_16X16, 10)));
-#endif
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_34_add_msa,
+                   TX_32X32, 34),
+        make_tuple(&vpx_fdct32x32_c,
+                   &vpx_idct32x32_1024_add_c,
+                   &vpx_idct32x32_1_add_msa,
+                   TX_32X32, 1),
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_10_add_msa,
+                   TX_16X16, 10),
+        make_tuple(&vpx_fdct16x16_c,
+                   &vpx_idct16x16_256_add_c,
+                   &vpx_idct16x16_1_add_msa,
+                   TX_16X16, 1),
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_12_add_msa,
+                   TX_8X8, 10),
+        make_tuple(&vpx_fdct8x8_c,
+                   &vpx_idct8x8_64_add_c,
+                   &vpx_idct8x8_1_add_msa,
+                   TX_8X8, 1),
+        make_tuple(&vpx_fdct4x4_c,
+                   &vpx_idct4x4_16_add_c,
+                   &vpx_idct4x4_1_add_msa,
+                   TX_4X4, 1)));
+#endif  // HAVE_MSA && !CONFIG_VP9_HIGHBITDEPTH && !CONFIG_EMULATE_HARDWARE
+
 }  // namespace

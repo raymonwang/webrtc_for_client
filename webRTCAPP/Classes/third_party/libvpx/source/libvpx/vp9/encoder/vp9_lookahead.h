@@ -14,7 +14,7 @@
 #include "vpx_scale/yv12config.h"
 #include "vpx/vpx_integer.h"
 
-#ifdef CONFIG_SPATIAL_SVC
+#if CONFIG_SPATIAL_SVC
 #include "vpx/vp8cx.h"
 #include "vpx/vpx_encoder.h"
 #endif
@@ -30,20 +30,16 @@ struct lookahead_entry {
   int64_t             ts_start;
   int64_t             ts_end;
   unsigned int        flags;
-
-#ifdef CONFIG_SPATIAL_SVC
-  vpx_svc_parameters_t svc_params[VPX_SS_MAX_LAYERS];
-#endif
 };
 
 // The max of past frames we want to keep in the queue.
 #define MAX_PRE_FRAMES 1
 
 struct lookahead_ctx {
-  unsigned int max_sz;         /* Absolute size of the queue */
-  unsigned int sz;             /* Number of buffers currently in the queue */
-  unsigned int read_idx;       /* Read index */
-  unsigned int write_idx;      /* Write index */
+  int max_sz;                  /* Absolute size of the queue */
+  int sz;                      /* Number of buffers currently in the queue */
+  int read_idx;                /* Read index */
+  int write_idx;               /* Write index */
   struct lookahead_entry *buf; /* Buffer list */
 };
 
@@ -56,6 +52,9 @@ struct lookahead_ctx *vp9_lookahead_init(unsigned int width,
                                          unsigned int height,
                                          unsigned int subsampling_x,
                                          unsigned int subsampling_y,
+#if CONFIG_VP9_HIGHBITDEPTH
+                                         int use_highbitdepth,
+#endif
                                          unsigned int depth);
 
 
@@ -80,7 +79,11 @@ void vp9_lookahead_destroy(struct lookahead_ctx *ctx);
  * \param[in] active_map  Map that specifies which macroblock is active
  */
 int vp9_lookahead_push(struct lookahead_ctx *ctx, YV12_BUFFER_CONFIG *src,
-                       int64_t ts_start, int64_t ts_end, unsigned int flags);
+                       int64_t ts_start, int64_t ts_end,
+#if CONFIG_VP9_HIGHBITDEPTH
+                       int use_highbitdepth,
+#endif
+                       unsigned int flags);
 
 
 /**\brief Get the next source buffer to encode
