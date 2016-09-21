@@ -655,6 +655,13 @@
 			remoteGlobalIDString = 43998B651986332A003C5793;
 			remoteInfo = webrtc_utility;
 		};
+		43A4BA4A1D923E700063DC77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43A4BA461D923E6F0063DC77 /* webrtc_video.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43A4BA3F1D923E6F0063DC77;
+			remoteInfo = webrtc_video;
+		};
 		43AD795E19907938006EAB38 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43AD795219907938006EAB38 /* expat.xcodeproj */;
@@ -928,6 +935,18 @@
 		43998B1B198631D9003C5793 /* bitrate_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = bitrate_controller.xcodeproj; path = bitrate_controller/bitrate_controller.xcodeproj; sourceTree = "<group>"; };
 		43998B401986327B003C5793 /* media_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = media_file.xcodeproj; path = media_file/media_file.xcodeproj; sourceTree = "<group>"; };
 		43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility.xcodeproj; path = webrtc_utility/webrtc_utility.xcodeproj; sourceTree = "<group>"; };
+		43A4B9D21D923B070063DC77 /* frame_callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = frame_callback.h; path = webRTCAPP/Classes/webrtc/frame_callback.h; sourceTree = "<group>"; };
+		43A4BA2C1D923B1F0063DC77 /* video_send_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_send_stream.h; path = webRTCAPP/Classes/webrtc/video_send_stream.h; sourceTree = "<group>"; };
+		43A4BA2D1D923C590063DC77 /* call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = call.h; path = webRTCAPP/Classes/webrtc/call.h; sourceTree = "<group>"; };
+		43A4BA2E1D923C590063DC77 /* common_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common_types.h; path = webRTCAPP/Classes/webrtc/common_types.h; sourceTree = "<group>"; };
+		43A4BA2F1D923C590063DC77 /* experiments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = experiments.h; path = webRTCAPP/Classes/webrtc/experiments.h; sourceTree = "<group>"; };
+		43A4BA301D923C590063DC77 /* transport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = transport.h; path = webRTCAPP/Classes/webrtc/transport.h; sourceTree = "<group>"; };
+		43A4BA311D923C590063DC77 /* video_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_decoder.h; path = webRTCAPP/Classes/webrtc/video_decoder.h; sourceTree = "<group>"; };
+		43A4BA321D923C590063DC77 /* video_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_encoder.h; path = webRTCAPP/Classes/webrtc/video_encoder.h; sourceTree = "<group>"; };
+		43A4BA331D923C590063DC77 /* video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_frame.h; path = webRTCAPP/Classes/webrtc/video_frame.h; sourceTree = "<group>"; };
+		43A4BA341D923C590063DC77 /* video_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_receive_stream.h; path = webRTCAPP/Classes/webrtc/video_receive_stream.h; sourceTree = "<group>"; };
+		43A4BA351D923C590063DC77 /* video_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_renderer.h; path = webRTCAPP/Classes/webrtc/video_renderer.h; sourceTree = "<group>"; };
+		43A4BA461D923E6F0063DC77 /* webrtc_video.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_video.xcodeproj; path = webrtc_video/webrtc_video.xcodeproj; sourceTree = "<group>"; };
 		43AD795219907938006EAB38 /* expat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = expat.xcodeproj; path = expat/expat.xcodeproj; sourceTree = "<group>"; };
 		43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite_regexp.xcodeproj; path = sqlite_regexp/sqlite_regexp.xcodeproj; sourceTree = "<group>"; };
 		43AD7A461990809F006EAB38 /* nss_static.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = nss_static.xcodeproj; path = nss_static/nss_static.xcodeproj; sourceTree = "<group>"; };
@@ -1501,6 +1520,7 @@
 		43288A301D38DABE0044E4F5 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				43A4BA461D923E6F0063DC77 /* webrtc_video.xcodeproj */,
 				43288F591D38ED110044E4F5 /* video_render_module.xcodeproj */,
 				43288E951D38E8DD0044E4F5 /* video_capture_module.xcodeproj */,
 				43288E191D38E3CD0044E4F5 /* video_processing.xcodeproj */,
@@ -1738,6 +1758,14 @@
 			children = (
 				43998B711986332B003C5793 /* libwebrtc_utility.a */,
 				43288A8F1D38DABE0044E4F5 /* libwebrtc_utility_osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43A4BA471D923E6F0063DC77 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43A4BA4B1D923E700063DC77 /* libwebrtc_video.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2016,6 +2044,17 @@
 			isa = PBXGroup;
 			children = (
 				43F1EDE11D477C3000AEAEC2 /* engine_configurations.h */,
+				43A4B9D21D923B070063DC77 /* frame_callback.h */,
+				43A4BA2C1D923B1F0063DC77 /* video_send_stream.h */,
+				43A4BA2D1D923C590063DC77 /* call.h */,
+				43A4BA2E1D923C590063DC77 /* common_types.h */,
+				43A4BA2F1D923C590063DC77 /* experiments.h */,
+				43A4BA301D923C590063DC77 /* transport.h */,
+				43A4BA311D923C590063DC77 /* video_decoder.h */,
+				43A4BA321D923C590063DC77 /* video_encoder.h */,
+				43A4BA331D923C590063DC77 /* video_frame.h */,
+				43A4BA341D923C590063DC77 /* video_receive_stream.h */,
+				43A4BA351D923C590063DC77 /* video_renderer.h */,
 				4381BD6B1D470474000656B1 /* Test */,
 				43819DA11D4621C2000656B1 /* thirdpart */,
 				43288AD71D38DCAC0044E4F5 /* Voice */,
@@ -2603,6 +2642,10 @@
 					ProjectRef = 43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */;
 				},
 				{
+					ProductGroup = 43A4BA471D923E6F0063DC77 /* Products */;
+					ProjectRef = 43A4BA461D923E6F0063DC77 /* webrtc_video.xcodeproj */;
+				},
+				{
 					ProductGroup = 43288C6D1D38DFE20044E4F5 /* Products */;
 					ProjectRef = 43288C6C1D38DFE20044E4F5 /* webrtc_video_coding.xcodeproj */;
 				},
@@ -3100,6 +3143,13 @@
 			fileType = archive.ar;
 			path = libwebrtc_utility.a;
 			remoteRef = 43998B701986332B003C5793 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43A4BA4B1D923E700063DC77 /* libwebrtc_video.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebrtc_video.a;
+			remoteRef = 43A4BA4A1D923E700063DC77 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43AD795F19907938006EAB38 /* libexpat.a */ = {
