@@ -11,9 +11,6 @@
 #define TEST_VIDEO_SOURCE_H_
 
 #if defined(_WIN32)
-#undef NOMINMAX
-#define NOMINMAX
-#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
 #include <cstdio>
@@ -51,7 +48,7 @@ static std::string GetDataPath() {
 #undef TO_STRING
 #undef STRINGIFY
 
-inline FILE *OpenTestDataFile(const std::string& file_name) {
+static FILE *OpenTestDataFile(const std::string& file_name) {
   const std::string path_to_source = GetDataPath() + "/" + file_name;
   return fopen(path_to_source.c_str(), "rb");
 }
@@ -137,13 +134,8 @@ class VideoSource {
 
 class DummyVideoSource : public VideoSource {
  public:
-  DummyVideoSource()
-      : img_(NULL),
-        limit_(100),
-        width_(80),
-        height_(64),
-        format_(VPX_IMG_FMT_I420) {
-    ReallocImage();
+  DummyVideoSource() : img_(NULL), limit_(100), width_(0), height_(0) {
+    SetSize(80, 64);
   }
 
   virtual ~DummyVideoSource() { vpx_img_free(img_); }
@@ -182,27 +174,16 @@ class DummyVideoSource : public VideoSource {
 
   void SetSize(unsigned int width, unsigned int height) {
     if (width != width_ || height != height_) {
+      vpx_img_free(img_);
+      img_ = vpx_img_alloc(NULL, VPX_IMG_FMT_I420, width, height, 32);
+      raw_sz_ = ((img_->w + 31) & ~31) * img_->h * 3 / 2;
       width_ = width;
       height_ = height;
-      ReallocImage();
-    }
-  }
-
-  void SetImageFormat(vpx_img_fmt_t format) {
-    if (format_ != format) {
-      format_ = format;
-      ReallocImage();
     }
   }
 
  protected:
   virtual void FillFrame() { if (img_) memset(img_->img_data, 0, raw_sz_); }
-
-  void ReallocImage() {
-    vpx_img_free(img_);
-    img_ = vpx_img_alloc(NULL, format_, width_, height_, 32);
-    raw_sz_ = ((img_->w + 31) & ~31) * img_->h * img_->bps / 8;
-  }
 
   vpx_image_t *img_;
   size_t       raw_sz_;
@@ -210,7 +191,6 @@ class DummyVideoSource : public VideoSource {
   unsigned int frame_;
   unsigned int width_;
   unsigned int height_;
-  vpx_img_fmt_t format_;
 };
 
 

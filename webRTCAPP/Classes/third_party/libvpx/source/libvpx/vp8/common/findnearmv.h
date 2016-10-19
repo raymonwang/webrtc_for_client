@@ -12,7 +12,6 @@
 #ifndef VP8_COMMON_FINDNEARMV_H_
 #define VP8_COMMON_FINDNEARMV_H_
 
-#include "./vpx_config.h"
 #include "mv.h"
 #include "blockd.h"
 #include "modecont.h"
@@ -23,8 +22,8 @@ extern "C" {
 #endif
 
 
-static INLINE void mv_bias(int refmb_ref_frame_sign_bias, int refframe,
-                           int_mv *mvp, const int *ref_frame_sign_bias)
+static void mv_bias(int refmb_ref_frame_sign_bias, int refframe, int_mv *mvp,
+                    const int *ref_frame_sign_bias)
 {
     if (refmb_ref_frame_sign_bias != ref_frame_sign_bias[refframe])
     {
@@ -35,7 +34,7 @@ static INLINE void mv_bias(int refmb_ref_frame_sign_bias, int refframe,
 
 #define LEFT_TOP_MARGIN (16 << 3)
 #define RIGHT_BOTTOM_MARGIN (16 << 3)
-static INLINE void vp8_clamp_mv2(int_mv *mv, const MACROBLOCKD *xd)
+static void vp8_clamp_mv2(int_mv *mv, const MACROBLOCKD *xd)
 {
     if (mv->as_mv.col < (xd->mb_to_left_edge - LEFT_TOP_MARGIN))
         mv->as_mv.col = xd->mb_to_left_edge - LEFT_TOP_MARGIN;
@@ -48,9 +47,8 @@ static INLINE void vp8_clamp_mv2(int_mv *mv, const MACROBLOCKD *xd)
         mv->as_mv.row = xd->mb_to_bottom_edge + RIGHT_BOTTOM_MARGIN;
 }
 
-static INLINE void vp8_clamp_mv(int_mv *mv, int mb_to_left_edge,
-                                int mb_to_right_edge, int mb_to_top_edge,
-                                int mb_to_bottom_edge)
+static void vp8_clamp_mv(int_mv *mv, int mb_to_left_edge, int mb_to_right_edge,
+                         int mb_to_top_edge, int mb_to_bottom_edge)
 {
     mv->as_mv.col = (mv->as_mv.col < mb_to_left_edge) ?
         mb_to_left_edge : mv->as_mv.col;
@@ -61,10 +59,9 @@ static INLINE void vp8_clamp_mv(int_mv *mv, int mb_to_left_edge,
     mv->as_mv.row = (mv->as_mv.row > mb_to_bottom_edge) ?
         mb_to_bottom_edge : mv->as_mv.row;
 }
-static INLINE unsigned int vp8_check_mv_bounds(int_mv *mv, int mb_to_left_edge,
-                                               int mb_to_right_edge,
-                                               int mb_to_top_edge,
-                                               int mb_to_bottom_edge)
+static unsigned int vp8_check_mv_bounds(int_mv *mv, int mb_to_left_edge,
+                                int mb_to_right_edge, int mb_to_top_edge,
+                                int mb_to_bottom_edge)
 {
     unsigned int need_to_clamp;
     need_to_clamp = (mv->as_mv.col < mb_to_left_edge);
@@ -104,7 +101,7 @@ vp8_prob *vp8_mv_ref_probs(
 extern const unsigned char vp8_mbsplit_offset[4][16];
 
 
-static INLINE uint32_t left_block_mv(const MODE_INFO *cur_mb, int b)
+static int left_block_mv(const MODE_INFO *cur_mb, int b)
 {
     if (!(b & 3))
     {
@@ -119,8 +116,7 @@ static INLINE uint32_t left_block_mv(const MODE_INFO *cur_mb, int b)
     return (cur_mb->bmi + b - 1)->mv.as_int;
 }
 
-static INLINE uint32_t above_block_mv(const MODE_INFO *cur_mb, int b,
-                                      int mi_stride)
+static int above_block_mv(const MODE_INFO *cur_mb, int b, int mi_stride)
 {
     if (!(b >> 2))
     {
@@ -134,7 +130,7 @@ static INLINE uint32_t above_block_mv(const MODE_INFO *cur_mb, int b,
 
     return (cur_mb->bmi + (b - 4))->mv.as_int;
 }
-static INLINE B_PREDICTION_MODE left_block_mode(const MODE_INFO *cur_mb, int b)
+static B_PREDICTION_MODE left_block_mode(const MODE_INFO *cur_mb, int b)
 {
     if (!(b & 3))
     {
@@ -160,8 +156,7 @@ static INLINE B_PREDICTION_MODE left_block_mode(const MODE_INFO *cur_mb, int b)
     return (cur_mb->bmi + b - 1)->as_mode;
 }
 
-static INLINE B_PREDICTION_MODE above_block_mode(const MODE_INFO *cur_mb, int b,
-                                                 int mi_stride)
+static B_PREDICTION_MODE above_block_mode(const MODE_INFO *cur_mb, int b, int mi_stride)
 {
     if (!(b >> 2))
     {

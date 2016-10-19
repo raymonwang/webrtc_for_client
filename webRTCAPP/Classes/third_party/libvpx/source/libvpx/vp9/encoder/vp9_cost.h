@@ -11,34 +11,30 @@
 #ifndef VP9_ENCODER_VP9_COST_H_
 #define VP9_ENCODER_VP9_COST_H_
 
-#include "vpx_dsp/prob.h"
-#include "vpx/vpx_integer.h"
+#include "vp9/common/vp9_prob.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern const uint16_t vp9_prob_cost[256];
-
-// The factor to scale from cost in bits to cost in vp9_prob_cost units.
-#define VP9_PROB_COST_SHIFT 9
+extern const unsigned int vp9_prob_cost[256];
 
 #define vp9_cost_zero(prob) (vp9_prob_cost[prob])
 
-#define vp9_cost_one(prob) vp9_cost_zero(256 - (prob))
+#define vp9_cost_one(prob) vp9_cost_zero(vp9_complement(prob))
 
-#define vp9_cost_bit(prob, bit) vp9_cost_zero((bit) ? 256 - (prob) \
+#define vp9_cost_bit(prob, bit) vp9_cost_zero((bit) ? vp9_complement(prob) \
                                                     : (prob))
 
 static INLINE unsigned int cost_branch256(const unsigned int ct[2],
-                                          vpx_prob p) {
+                                          vp9_prob p) {
   return ct[0] * vp9_cost_zero(p) + ct[1] * vp9_cost_one(p);
 }
 
-static INLINE int treed_cost(vpx_tree tree, const vpx_prob *probs,
+static INLINE int treed_cost(vp9_tree tree, const vp9_prob *probs,
                              int bits, int len) {
   int cost = 0;
-  vpx_tree_index i = 0;
+  vp9_tree_index i = 0;
 
   do {
     const int bit = (bits >> --len) & 1;
@@ -49,8 +45,8 @@ static INLINE int treed_cost(vpx_tree tree, const vpx_prob *probs,
   return cost;
 }
 
-void vp9_cost_tokens(int *costs, const vpx_prob *probs, vpx_tree tree);
-void vp9_cost_tokens_skip(int *costs, const vpx_prob *probs, vpx_tree tree);
+void vp9_cost_tokens(int *costs, const vp9_prob *probs, vp9_tree tree);
+void vp9_cost_tokens_skip(int *costs, const vp9_prob *probs, vp9_tree tree);
 
 #ifdef __cplusplus
 }  // extern "C"

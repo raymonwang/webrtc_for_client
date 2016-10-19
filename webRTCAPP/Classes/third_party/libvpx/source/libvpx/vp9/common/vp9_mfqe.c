@@ -9,9 +9,8 @@
  */
 
 #include "./vpx_config.h"
-#include "./vp9_rtcd.h"
-#include "./vpx_dsp_rtcd.h"
 #include "./vpx_scale_rtcd.h"
+#include "./vp9_rtcd.h"
 
 #include "vp9/common/vp9_onyxc_int.h"
 #include "vp9/common/vp9_postproc.h"
@@ -36,26 +35,14 @@ static void filter_by_weight(const uint8_t *src, int src_stride,
   }
 }
 
-void vp9_filter_by_weight8x8_c(const uint8_t *src, int src_stride,
-                               uint8_t *dst, int dst_stride, int src_weight) {
-  filter_by_weight(src, src_stride, dst, dst_stride, 8, src_weight);
-}
-
-void vp9_filter_by_weight16x16_c(const uint8_t *src, int src_stride,
-                                 uint8_t *dst, int dst_stride,
-                                 int src_weight) {
-  filter_by_weight(src, src_stride, dst, dst_stride, 16, src_weight);
-}
-
 static void filter_by_weight32x32(const uint8_t *src, int src_stride,
                                   uint8_t *dst, int dst_stride, int weight) {
-  vp9_filter_by_weight16x16(src, src_stride, dst, dst_stride, weight);
-  vp9_filter_by_weight16x16(src + 16, src_stride, dst + 16, dst_stride,
-                            weight);
-  vp9_filter_by_weight16x16(src + src_stride * 16, src_stride,
-                            dst + dst_stride * 16, dst_stride, weight);
-  vp9_filter_by_weight16x16(src + src_stride * 16 + 16, src_stride,
-                            dst + dst_stride * 16 + 16, dst_stride, weight);
+  filter_by_weight(src, src_stride, dst, dst_stride, 16, weight);
+  filter_by_weight(src + 16, src_stride, dst + 16, dst_stride, 16, weight);
+  filter_by_weight(src + src_stride * 16, src_stride, dst + dst_stride * 16,
+                   dst_stride, 16, weight);
+  filter_by_weight(src + src_stride * 16 + 16, src_stride,
+                   dst + dst_stride * 16 + 16, dst_stride, 16, weight);
 }
 
 static void filter_by_weight64x64(const uint8_t *src, int src_stride,
@@ -75,13 +62,13 @@ static void apply_ifactor(const uint8_t *y, int y_stride, uint8_t *yd,
                           int uvd_stride, BLOCK_SIZE block_size,
                           int weight) {
   if (block_size == BLOCK_16X16) {
-    vp9_filter_by_weight16x16(y, y_stride, yd, yd_stride, weight);
-    vp9_filter_by_weight8x8(u, uv_stride, ud, uvd_stride, weight);
-    vp9_filter_by_weight8x8(v, uv_stride, vd, uvd_stride, weight);
+    filter_by_weight(y, y_stride, yd, yd_stride, 16, weight);
+    filter_by_weight(u, uv_stride, ud, uvd_stride, 8, weight);
+    filter_by_weight(v, uv_stride, vd, uvd_stride, 8, weight);
   } else if (block_size == BLOCK_32X32) {
     filter_by_weight32x32(y, y_stride, yd, yd_stride, weight);
-    vp9_filter_by_weight16x16(u, uv_stride, ud, uvd_stride, weight);
-    vp9_filter_by_weight16x16(v, uv_stride, vd, uvd_stride, weight);
+    filter_by_weight(u, uv_stride, ud, uvd_stride, 16, weight);
+    filter_by_weight(v, uv_stride, vd, uvd_stride, 16, weight);
   } else if (block_size == BLOCK_64X64) {
     filter_by_weight64x64(y, y_stride, yd, yd_stride, weight);
     filter_by_weight32x32(u, uv_stride, ud, uvd_stride, weight);
@@ -120,8 +107,8 @@ static void copy_mem32x32(const uint8_t *src, int src_stride,
                 dst + dst_stride * 16 + 16, dst_stride);
 }
 
-static void copy_mem64x64(const uint8_t *src, int src_stride,
-                          uint8_t *dst, int dst_stride) {
+void copy_mem64x64(const uint8_t *src, int src_stride,
+                   uint8_t *dst, int dst_stride) {
   copy_mem32x32(src, src_stride, dst, dst_stride);
   copy_mem32x32(src + 32, src_stride, dst + 32, dst_stride);
   copy_mem32x32(src + src_stride * 32, src_stride,
@@ -171,14 +158,14 @@ static void mfqe_block(BLOCK_SIZE bs, const uint8_t *y, const uint8_t *u,
   get_thr(bs, qdiff, &sad_thr, &vdiff_thr);
 
   if (bs == BLOCK_16X16) {
-    vdiff = (vpx_variance16x16(y, y_stride, yd, yd_stride, &sse) + 128) >> 8;
-    sad = (vpx_sad16x16(y, y_stride, yd, yd_stride) + 128) >> 8;
+    vdiff = (vp9_variance16x16(y, y_stride, yd, yd_stride, &sse) + 128) >> 8;
+    sad = (vp9_sad16x16(y, y_stride, yd, yd_stride) + 128) >> 8;
   } else if (bs == BLOCK_32X32) {
-    vdiff = (vpx_variance32x32(y, y_stride, yd, yd_stride, &sse) + 512) >> 10;
-    sad = (vpx_sad32x32(y, y_stride, yd, yd_stride) + 512) >> 10;
+    vdiff = (vp9_variance32x32(y, y_stride, yd, yd_stride, &sse) + 512) >> 10;
+    sad = (vp9_sad32x32(y, y_stride, yd, yd_stride) + 512) >> 10;
   } else /* if (bs == BLOCK_64X64) */ {
-    vdiff = (vpx_variance64x64(y, y_stride, yd, yd_stride, &sse) + 2048) >> 12;
-    sad = (vpx_sad64x64(y, y_stride, yd, yd_stride) + 2048) >> 12;
+    vdiff = (vp9_variance64x64(y, y_stride, yd, yd_stride, &sse) + 2048) >> 12;
+    sad = (vp9_sad64x64(y, y_stride, yd, yd_stride) + 2048) >> 12;
   }
 
   // vdiff > sad * 3 means vdiff should not be too small, otherwise,
@@ -203,12 +190,12 @@ static void mfqe_block(BLOCK_SIZE bs, const uint8_t *y, const uint8_t *u,
 static int mfqe_decision(MODE_INFO *mi, BLOCK_SIZE cur_bs) {
   // Check the motion in current block(for inter frame),
   // or check the motion in the correlated block in last frame (for keyframe).
-  const int mv_len_square = mi->mv[0].as_mv.row *
-                            mi->mv[0].as_mv.row +
-                            mi->mv[0].as_mv.col *
-                            mi->mv[0].as_mv.col;
+  const int mv_len_square = mi->mbmi.mv[0].as_mv.row *
+                            mi->mbmi.mv[0].as_mv.row +
+                            mi->mbmi.mv[0].as_mv.col *
+                            mi->mbmi.mv[0].as_mv.col;
   const int mv_threshold = 100;
-  return mi->mode >= NEARESTMV &&  // Not an intra block
+  return mi->mbmi.mode >= NEARESTMV &&  // Not an intra block
          cur_bs >= BLOCK_16X16 &&
          mv_len_square <= mv_threshold;
 }
@@ -220,7 +207,7 @@ static void mfqe_partition(VP9_COMMON *cm, MODE_INFO *mi, BLOCK_SIZE bs,
                            uint8_t *yd, uint8_t *ud, uint8_t *vd,
                            int yd_stride, int uvd_stride) {
   int mi_offset, y_offset, uv_offset;
-  const BLOCK_SIZE cur_bs = mi->sb_type;
+  const BLOCK_SIZE cur_bs = mi->mbmi.sb_type;
   const int qdiff = cm->base_qindex - cm->postproc_state.last_base_qindex;
   const int bsl = b_width_log2_lookup[bs];
   PARTITION_TYPE partition = partition_lookup[bsl][cur_bs];

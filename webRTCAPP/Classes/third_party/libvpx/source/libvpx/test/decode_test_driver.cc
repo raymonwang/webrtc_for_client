@@ -7,11 +7,9 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
-#include "third_party/googletest/src/include/gtest/gtest.h"
-
 #include "test/codec_factory.h"
 #include "test/decode_test_driver.h"
+#include "third_party/googletest/src/include/gtest/gtest.h"
 #include "test/register_state_check.h"
 #include "test/video_source.h"
 
@@ -67,7 +65,7 @@ void DecoderTest::HandlePeekResult(Decoder *const decoder,
 
 void DecoderTest::RunLoop(CompressedVideoSource *video,
                           const vpx_codec_dec_cfg_t &dec_cfg) {
-  Decoder* const decoder = codec_->CreateDecoder(dec_cfg, flags_, 0);
+  Decoder* const decoder = codec_->CreateDecoder(dec_cfg, 0);
   ASSERT_TRUE(decoder != NULL);
   bool end_of_file = false;
 

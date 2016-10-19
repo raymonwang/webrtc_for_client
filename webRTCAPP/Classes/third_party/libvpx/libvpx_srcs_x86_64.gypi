@@ -1,5 +1,5 @@
 # This file is generated. Do not edit.
-# Copyright (c) 2013 The Chromium Authors. All rights reserved.
+# Copyright (c) 2014 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
@@ -222,7 +222,6 @@
     '<(libvpx_source)/vp9/common/x86/vp9_intrapred_sse2.asm',
     '<(libvpx_source)/vp9/common/x86/vp9_intrapred_ssse3.asm',
     '<(libvpx_source)/vp9/common/x86/vp9_loopfilter_mmx.asm',
-    '<(libvpx_source)/vp9/common/x86/vp9_postproc_x86.h',
     '<(libvpx_source)/vp9/common/x86/vp9_subpixel_8t_sse2.asm',
     '<(libvpx_source)/vp9/common/x86/vp9_subpixel_8t_ssse3.asm',
     '<(libvpx_source)/vp9/common/x86/vp9_subpixel_bilinear_sse2.asm',
@@ -249,6 +248,7 @@
     '<(libvpx_source)/vp9/encoder/vp9_aq_cyclicrefresh.h',
     '<(libvpx_source)/vp9/encoder/vp9_aq_variance.c',
     '<(libvpx_source)/vp9/encoder/vp9_aq_variance.h',
+    '<(libvpx_source)/vp9/encoder/vp9_avg.c',
     '<(libvpx_source)/vp9/encoder/vp9_bitstream.c',
     '<(libvpx_source)/vp9/encoder/vp9_bitstream.h',
     '<(libvpx_source)/vp9/encoder/vp9_block.h',
@@ -257,6 +257,7 @@
     '<(libvpx_source)/vp9/encoder/vp9_cost.c',
     '<(libvpx_source)/vp9/encoder/vp9_cost.h',
     '<(libvpx_source)/vp9/encoder/vp9_dct.c',
+    '<(libvpx_source)/vp9/encoder/vp9_dct.h',
     '<(libvpx_source)/vp9/encoder/vp9_encodeframe.c',
     '<(libvpx_source)/vp9/encoder/vp9_encodeframe.h',
     '<(libvpx_source)/vp9/encoder/vp9_encodemb.c',
@@ -265,6 +266,8 @@
     '<(libvpx_source)/vp9/encoder/vp9_encodemv.h',
     '<(libvpx_source)/vp9/encoder/vp9_encoder.c',
     '<(libvpx_source)/vp9/encoder/vp9_encoder.h',
+    '<(libvpx_source)/vp9/encoder/vp9_ethread.c',
+    '<(libvpx_source)/vp9/encoder/vp9_ethread.h',
     '<(libvpx_source)/vp9/encoder/vp9_extend.c',
     '<(libvpx_source)/vp9/encoder/vp9_extend.h',
     '<(libvpx_source)/vp9/encoder/vp9_firstpass.c',
@@ -311,11 +314,11 @@
     '<(libvpx_source)/vp9/encoder/vp9_writer.c',
     '<(libvpx_source)/vp9/encoder/vp9_writer.h',
     '<(libvpx_source)/vp9/encoder/x86/vp9_dct_mmx.asm',
+    '<(libvpx_source)/vp9/encoder/x86/vp9_dct_sse2.h',
     '<(libvpx_source)/vp9/encoder/x86/vp9_dct_ssse3_x86_64.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_error_sse2.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_quantize_ssse3_x86_64.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_sad4d_sse2.asm',
-    '<(libvpx_source)/vp9/encoder/x86/vp9_sad_mmx.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_sad_sse2.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_sad_sse3.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_sad_sse4.asm',
@@ -324,8 +327,6 @@
     '<(libvpx_source)/vp9/encoder/x86/vp9_subpel_variance.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_subtract_sse2.asm',
     '<(libvpx_source)/vp9/encoder/x86/vp9_temporal_filter_apply_sse2.asm',
-    '<(libvpx_source)/vp9/encoder/x86/vp9_variance_impl_mmx.asm',
-    '<(libvpx_source)/vp9/encoder/x86/vp9_variance_impl_sse2.asm',
     '<(libvpx_source)/vp9/vp9_cx_iface.c',
     '<(libvpx_source)/vp9/vp9_dx_iface.c',
     '<(libvpx_source)/vp9/vp9_iface_common.h',

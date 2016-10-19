@@ -18,9 +18,9 @@
 #include "treewriter.h"
 #include "tokenize.h"
 #include "vp8/common/onyxc_int.h"
-#include "vpx_dsp/variance.h"
+#include "vp8/common/variance.h"
 #include "encodemb.h"
-#include "vp8/encoder/quantize.h"
+#include "quantize.h"
 #include "vp8/common/entropy.h"
 #include "vp8/common/threading.h"
 #include "vpx_ports/mem.h"
@@ -371,7 +371,7 @@ typedef struct VP8_COMP
     double key_frame_rate_correction_factor;
     double gf_rate_correction_factor;
 
-    int frames_since_golden;
+    unsigned int frames_since_golden;
     /* Count down till next GF */
     int frames_till_gf_update_due;
 
@@ -526,16 +526,13 @@ typedef struct VP8_COMP
     // Measure of average squared difference between source and denoised signal.
     int mse_source_denoised;
 
-    int force_maxqp;
-
 #if CONFIG_MULTITHREAD
     /* multithread data */
-    pthread_mutex_t *pmutex;
-    pthread_mutex_t mt_mutex;           /* mutex for b_multi_threaded */
     int * mt_current_mb_col;
     int mt_sync_range;
     int b_multi_threaded;
     int encoding_thread_count;
+    int b_lpf_running;
 
     pthread_t *h_encoding_thread;
     pthread_t h_filter_thread;
@@ -668,9 +665,6 @@ typedef struct VP8_COMP
 
     int droppable;
 
-    int initial_width;
-    int initial_height;
-
 #if CONFIG_TEMPORAL_DENOISING
     VP8_DENOISER denoiser;
 #endif
@@ -716,13 +710,6 @@ typedef struct VP8_COMP
         [PREV_COEF_CONTEXTS][MAX_ENTROPY_TOKENS];
     } rd_costs;
 } VP8_COMP;
-
-void vp8_initialize_enc(void);
-
-void vp8_alloc_compressor_data(VP8_COMP *cpi);
-int vp8_reverse_trans(int x);
-void vp8_new_framerate(VP8_COMP *cpi, double framerate);
-void vp8_loopfilter_frame(VP8_COMP *cpi, VP8_COMMON *cm);
 
 void vp8_pack_bitstream(VP8_COMP *cpi, unsigned char *dest,
                         unsigned char *dest_end, unsigned long *size);

@@ -8,16 +8,43 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "third_party/googletest/src/include/gtest/gtest.h"
-
 #include "test/codec_factory.h"
 #include "test/encode_test_driver.h"
-#include "test/util.h"
 #include "test/y4m_video_source.h"
-#include "vp9/vp9_dx_iface.h"
+#include "test/yuv_video_source.h"
+#include "test/util.h"
+#include "third_party/googletest/src/include/gtest/gtest.h"
+#include "vp9/decoder/vp9_decoder.h"
+
+typedef vpx_codec_stream_info_t vp9_stream_info_t;
+struct vpx_codec_alg_priv {
+  vpx_codec_priv_t        base;
+  vpx_codec_dec_cfg_t     cfg;
+  vp9_stream_info_t       si;
+  struct VP9Decoder      *pbi;
+  int                     postproc_cfg_set;
+  vp8_postproc_cfg_t      postproc_cfg;
+  vpx_decrypt_cb          decrypt_cb;
+  void                   *decrypt_state;
+  vpx_image_t             img;
+  int                     img_avail;
+  int                     flushed;
+  int                     invert_tile_order;
+  int                     frame_parallel_decode;
+
+  // External frame buffer info to save for VP9 common.
+  void *ext_priv;  // Private data associated with the external frame buffers.
+  vpx_get_frame_buffer_cb_fn_t get_ext_fb_cb;
+  vpx_release_frame_buffer_cb_fn_t release_ext_fb_cb;
+};
+
+static vpx_codec_alg_priv_t *get_alg_priv(vpx_codec_ctx_t *ctx) {
+  return (vpx_codec_alg_priv_t *)ctx->priv;
+}
 
 namespace {
 
+const unsigned int kFramerate = 50;
 const int kCpuUsed = 2;
 
 struct EncodePerfTestVideo {
@@ -29,7 +56,7 @@ struct EncodePerfTestVideo {
 };
 
 const EncodePerfTestVideo kVP9EncodePerfTestVectors[] = {
-  {"niklas_1280_720_30.y4m", 1280, 720, 600, 10},
+    {"niklas_1280_720_30.yuv", 1280, 720, 600, 10},
 };
 
 struct EncodeParameters {
@@ -38,29 +65,36 @@ struct EncodeParameters {
   int32_t lossless;
   int32_t error_resilient;
   int32_t frame_parallel;
-  vpx_color_range_t color_range;
-  vpx_color_space_t cs;
-  int render_size[2];
   // TODO(JBB): quantizers / bitrate
 };
 
 const EncodeParameters kVP9EncodeParameterSet[] = {
-  {0, 0, 0, 1, 0, VPX_CR_STUDIO_RANGE, VPX_CS_BT_601, { 0, 0 }},
-  {0, 0, 0, 0, 0, VPX_CR_FULL_RANGE, VPX_CS_BT_709, { 0, 0 }},
-  {0, 0, 1, 0, 0, VPX_CR_FULL_RANGE, VPX_CS_BT_2020, { 0, 0 }},
-  {0, 2, 0, 0, 1, VPX_CR_STUDIO_RANGE, VPX_CS_UNKNOWN, { 640, 480 }},
-  // TODO(JBB): Test profiles (requires more work).
+    {0, 0, 0, 1, 0},
+    {0, 0, 0, 0, 0},
+    {0, 0, 1, 0, 0},
+    {0, 2, 0, 0, 1},
+    // TODO(JBB): Test profiles (requires more work).
 };
 
-class VpxEncoderParmsGetToDecoder
+int is_extension_y4m(const char *filename) {
+  const char *dot = strrchr(filename, '.');
+  if (!dot || dot == filename)
+    return 0;
+  else
+    return !strcmp(dot, ".y4m");
+}
+
+class Vp9EncoderParmsGetToDecoder
     : public ::libvpx_test::EncoderTest,
-      public ::libvpx_test::CodecTestWith2Params<EncodeParameters,
+      public ::libvpx_test::CodecTestWith2Params<EncodeParameters, \
                                                  EncodePerfTestVideo> {
  protected:
-  VpxEncoderParmsGetToDecoder()
-      : EncoderTest(GET_PARAM(0)), encode_parms(GET_PARAM(1)) {}
+  Vp9EncoderParmsGetToDecoder()
+      : EncoderTest(GET_PARAM(0)),
+        encode_parms(GET_PARAM(1)) {
+  }
 
-  virtual ~VpxEncoderParmsGetToDecoder() {}
+  virtual ~Vp9EncoderParmsGetToDecoder() {}
 
   virtual void SetUp() {
     InitializeConfig();
@@ -75,8 +109,6 @@ class VpxEncoderParmsGetToDecoder
   virtual void PreEncodeFrameHook(::libvpx_test::VideoSource *video,
                                   ::libvpx_test::Encoder *encoder) {
     if (video->frame() == 1) {
-      encoder->Control(VP9E_SET_COLOR_SPACE, encode_parms.cs);
-      encoder->Control(VP9E_SET_COLOR_RANGE, encode_parms.color_range);
       encoder->Control(VP9E_SET_LOSSLESS, encode_parms.lossless);
       encoder->Control(VP9E_SET_FRAME_PARALLEL_DECODING,
                        encode_parms.frame_parallel);
@@ -87,44 +119,37 @@ class VpxEncoderParmsGetToDecoder
       encoder->Control(VP8E_SET_ARNR_MAXFRAMES, 7);
       encoder->Control(VP8E_SET_ARNR_STRENGTH, 5);
       encoder->Control(VP8E_SET_ARNR_TYPE, 3);
-      if (encode_parms.render_size[0] > 0 && encode_parms.render_size[1] > 0)
-        encoder->Control(VP9E_SET_RENDER_SIZE, encode_parms.render_size);
     }
   }
 
   virtual bool HandleDecodeResult(const vpx_codec_err_t res_dec,
-                                  const libvpx_test::VideoSource & /*video*/,
+                                  const libvpx_test::VideoSource& video,
                                   libvpx_test::Decoder *decoder) {
-    vpx_codec_ctx_t *const vp9_decoder = decoder->GetDecoder();
-    vpx_codec_alg_priv_t *const priv =
-        reinterpret_cast<vpx_codec_alg_priv_t *>(vp9_decoder->priv);
-    FrameWorkerData *const worker_data =
-        reinterpret_cast<FrameWorkerData *>(priv->frame_workers[0].data1);
-    VP9_COMMON *const common = &worker_data->pbi->common;
+    vpx_codec_ctx_t* vp9_decoder = decoder->GetDecoder();
+    vpx_codec_alg_priv_t* priv =
+        (vpx_codec_alg_priv_t*) get_alg_priv(vp9_decoder);
+
+    VP9Decoder* pbi = priv->pbi;
+    VP9_COMMON* common = &pbi->common;
 
     if (encode_parms.lossless) {
-      EXPECT_EQ(0, common->base_qindex);
-      EXPECT_EQ(0, common->y_dc_delta_q);
-      EXPECT_EQ(0, common->uv_dc_delta_q);
-      EXPECT_EQ(0, common->uv_ac_delta_q);
-      EXPECT_EQ(ONLY_4X4, common->tx_mode);
+      EXPECT_EQ(common->base_qindex, 0);
+      EXPECT_EQ(common->y_dc_delta_q, 0);
+      EXPECT_EQ(common->uv_dc_delta_q, 0);
+      EXPECT_EQ(common->uv_ac_delta_q, 0);
+      EXPECT_EQ(common->tx_mode, ONLY_4X4);
     }
-    EXPECT_EQ(encode_parms.error_resilient, common->error_resilient_mode);
+    EXPECT_EQ(common->error_resilient_mode, encode_parms.error_resilient);
     if (encode_parms.error_resilient) {
-      EXPECT_EQ(1, common->frame_parallel_decoding_mode);
-      EXPECT_EQ(0, common->use_prev_frame_mvs);
+      EXPECT_EQ(common->frame_parallel_decoding_mode, 1);
+      EXPECT_EQ(common->use_prev_frame_mvs, 0);
     } else {
-      EXPECT_EQ(encode_parms.frame_parallel,
-                common->frame_parallel_decoding_mode);
+      EXPECT_EQ(common->frame_parallel_decoding_mode,
+                encode_parms.frame_parallel);
     }
-    EXPECT_EQ(encode_parms.color_range, common->color_range);
-    EXPECT_EQ(encode_parms.cs, common->color_space);
-    if (encode_parms.render_size[0] > 0 && encode_parms.render_size[1] > 0) {
-      EXPECT_EQ(encode_parms.render_size[0], common->render_width);
-      EXPECT_EQ(encode_parms.render_size[1], common->render_height);
-    }
-    EXPECT_EQ(encode_parms.tile_cols, common->log2_tile_cols);
-    EXPECT_EQ(encode_parms.tile_rows, common->log2_tile_rows);
+
+    EXPECT_EQ(common->log2_tile_cols, encode_parms.tile_cols);
+    EXPECT_EQ(common->log2_tile_rows, encode_parms.tile_rows);
 
     EXPECT_EQ(VPX_CODEC_OK, res_dec) << decoder->DecodeError();
     return VPX_CODEC_OK == res_dec;
@@ -136,18 +161,29 @@ class VpxEncoderParmsGetToDecoder
   EncodeParameters encode_parms;
 };
 
-TEST_P(VpxEncoderParmsGetToDecoder, BitstreamParms) {
+TEST_P(Vp9EncoderParmsGetToDecoder, BitstreamParms) {
   init_flags_ = VPX_CODEC_USE_PSNR;
 
-  libvpx_test::VideoSource *const video =
-      new libvpx_test::Y4mVideoSource(test_video_.name, 0, test_video_.frames);
-  ASSERT_TRUE(video != NULL);
+  libvpx_test::VideoSource *video;
+  if (is_extension_y4m(test_video_.name)) {
+    video = new libvpx_test::Y4mVideoSource(test_video_.name,
+                                            0, test_video_.frames);
+  } else {
+    video = new libvpx_test::YUVVideoSource(test_video_.name,
+                                            VPX_IMG_FMT_I420,
+                                            test_video_.width,
+                                            test_video_.height,
+                                            kFramerate, 1, 0,
+                                            test_video_.frames);
+  }
 
   ASSERT_NO_FATAL_FAILURE(RunLoop(video));
-  delete video;
+  delete(video);
 }
 
-VP9_INSTANTIATE_TEST_CASE(VpxEncoderParmsGetToDecoder,
-                          ::testing::ValuesIn(kVP9EncodeParameterSet),
-                          ::testing::ValuesIn(kVP9EncodePerfTestVectors));
+VP9_INSTANTIATE_TEST_CASE(
+    Vp9EncoderParmsGetToDecoder,
+    ::testing::ValuesIn(kVP9EncodeParameterSet),
+    ::testing::ValuesIn(kVP9EncodePerfTestVectors));
+
 }  // namespace

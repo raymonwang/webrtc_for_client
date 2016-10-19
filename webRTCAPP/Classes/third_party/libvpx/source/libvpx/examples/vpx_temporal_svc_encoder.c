@@ -19,16 +19,16 @@
 #include <string.h>
 
 #include "./vpx_config.h"
-#include "../vpx_ports/vpx_timer.h"
+#include "vpx_ports/vpx_timer.h"
 #include "vpx/vp8cx.h"
 #include "vpx/vpx_encoder.h"
 
-#include "../tools_common.h"
-#include "../video_writer.h"
+#include "./tools_common.h"
+#include "./video_writer.h"
 
 static const char *exec_name;
 
-void usage_exit(void) {
+void usage_exit() {
   exit(EXIT_FAILURE);
 }
 
@@ -41,7 +41,7 @@ enum denoiserState {
   kDenoiserOnAdaptive
 };
 
-static int mode_to_num_layers[13] = {1, 2, 2, 3, 3, 3, 3, 5, 2, 3, 3, 3, 3};
+static int mode_to_num_layers[12] = {1, 2, 2, 3, 3, 3, 3, 5, 2, 3, 3, 3};
 
 // For rate control encoding stats.
 struct RateControlMetrics {
@@ -70,7 +70,6 @@ struct RateControlMetrics {
   int window_size;
   // Number of window measurements.
   int window_count;
-  int layer_target_bitrate[VPX_MAX_LAYERS];
 };
 
 // Note: these rate control metrics assume only 1 key frame in the
@@ -86,13 +85,13 @@ static void set_rate_control_metrics(struct RateControlMetrics *rc,
   // per-frame-bandwidth, for the rate control encoding stats below.
   const double framerate = cfg->g_timebase.den / cfg->g_timebase.num;
   rc->layer_framerate[0] = framerate / cfg->ts_rate_decimator[0];
-  rc->layer_pfb[0] = 1000.0 * rc->layer_target_bitrate[0] /
+  rc->layer_pfb[0] = 1000.0 * cfg->ts_target_bitrate[0] /
       rc->layer_framerate[0];
   for (i = 0; i < cfg->ts_number_layers; ++i) {
     if (i > 0) {
       rc->layer_framerate[i] = framerate / cfg->ts_rate_decimator[i];
       rc->layer_pfb[i] = 1000.0 *
-          (rc->layer_target_bitrate[i] - rc->layer_target_bitrate[i - 1]) /
+          (cfg->ts_target_bitrate[i] - cfg->ts_target_bitrate[i - 1]) /
           (rc->layer_framerate[i] - rc->layer_framerate[i - 1]);
     }
     rc->layer_input_frames[i] = 0;
@@ -129,7 +128,7 @@ static void printout_rate_control_summary(struct RateControlMetrics *rc,
     rc->layer_avg_rate_mismatch[i] = 100.0 * rc->layer_avg_rate_mismatch[i] /
         rc->layer_enc_frames[i];
     printf("For layer#: %d \n", i);
-    printf("Bitrate (target vs actual): %d %f \n", rc->layer_target_bitrate[i],
+    printf("Bitrate (target vs actual): %d %f \n", cfg->ts_target_bitrate[i],
            rc->layer_encoding_bitrate[i]);
     printf("Average frame size (target vs actual): %f %f \n", rc->layer_pfb[i],
            rc->layer_avg_frame_size[i]);
@@ -432,32 +431,7 @@ static void set_temporal_layer_pattern(int layering_mode,
       layer_flags[7] = layer_flags[3];
       break;
     }
-    case 11: {
-      // 3-layers structure with one reference frame.
-      // This works same as temporal_layering_mode 3.
-      // This was added to compare with vp9_spatial_svc_encoder.
-
-      // 3-layers, 4-frame period.
-      int ids[4] = {0, 2, 1, 2};
-      cfg->ts_periodicity = 4;
-      *flag_periodicity = 4;
-      cfg->ts_number_layers = 3;
-      cfg->ts_rate_decimator[0] = 4;
-      cfg->ts_rate_decimator[1] = 2;
-      cfg->ts_rate_decimator[2] = 1;
-      memcpy(cfg->ts_layer_id, ids, sizeof(ids));
-      // 0=L, 1=GF, 2=ARF, Intra-layer prediction disabled.
-      layer_flags[0] = VP8_EFLAG_NO_REF_GF | VP8_EFLAG_NO_REF_ARF |
-          VP8_EFLAG_NO_UPD_GF | VP8_EFLAG_NO_UPD_ARF;
-      layer_flags[2] = VP8_EFLAG_NO_REF_GF | VP8_EFLAG_NO_REF_ARF |
-          VP8_EFLAG_NO_UPD_ARF | VP8_EFLAG_NO_UPD_LAST;
-      layer_flags[1] = VP8_EFLAG_NO_REF_GF | VP8_EFLAG_NO_REF_ARF |
-          VP8_EFLAG_NO_UPD_LAST | VP8_EFLAG_NO_UPD_GF;
-      layer_flags[3] = VP8_EFLAG_NO_REF_LAST | VP8_EFLAG_NO_REF_ARF |
-          VP8_EFLAG_NO_UPD_LAST | VP8_EFLAG_NO_UPD_GF;
-      break;
-    }
-    case 12:
+    case 11:
     default: {
       // 3-layers structure as in case 10, but no sync/refresh points for
       // layer 1 and 2.
@@ -507,11 +481,7 @@ int main(int argc, char **argv) {
   int layering_mode = 0;
   int layer_flags[VPX_TS_MAX_PERIODICITY] = {0};
   int flag_periodicity = 1;
-#if VPX_ENCODER_ABI_VERSION > (4 + VPX_CODEC_ABI_VERSION)
   vpx_svc_layer_id_t layer_id = {0, 0};
-#else
-  vpx_svc_layer_id_t layer_id = {0};
-#endif
   const VpxInterface *encoder = NULL;
   FILE *infile = NULL;
   struct RateControlMetrics rc;
@@ -555,7 +525,7 @@ int main(int argc, char **argv) {
   }
 
   layering_mode = strtol(argv[10], NULL, 0);
-  if (layering_mode < 0 || layering_mode > 13) {
+  if (layering_mode < 0 || layering_mode > 12) {
     die("Invalid layering mode (0..12) %s", argv[10]);
   }
 
@@ -623,31 +593,20 @@ int main(int argc, char **argv) {
   for (i = min_args_base;
        (int)i < min_args_base + mode_to_num_layers[layering_mode];
        ++i) {
-    rc.layer_target_bitrate[i - 11] = strtol(argv[i], NULL, 0);
-    if (strncmp(encoder->name, "vp8", 3) == 0)
-      cfg.ts_target_bitrate[i - 11] = rc.layer_target_bitrate[i - 11];
-    else if (strncmp(encoder->name, "vp9", 3) == 0)
-      cfg.layer_target_bitrate[i - 11] = rc.layer_target_bitrate[i - 11];
+    cfg.ts_target_bitrate[i - 11] = strtol(argv[i], NULL, 0);
   }
 
   // Real time parameters.
   cfg.rc_dropframe_thresh = strtol(argv[9], NULL, 0);
   cfg.rc_end_usage = VPX_CBR;
+  cfg.rc_resize_allowed = 0;
   cfg.rc_min_quantizer = 2;
   cfg.rc_max_quantizer = 56;
-  if (strncmp(encoder->name, "vp9", 3) == 0)
-    cfg.rc_max_quantizer = 52;
   cfg.rc_undershoot_pct = 50;
   cfg.rc_overshoot_pct = 50;
   cfg.rc_buf_initial_sz = 500;
   cfg.rc_buf_optimal_sz = 600;
   cfg.rc_buf_sz = 1000;
-
-  // Disable dynamic resizing by default.
-  cfg.rc_resize_allowed = 0;
-
-  // Use 1 thread as default.
-  cfg.g_threads = 1;
 
   // Enable error resilient mode.
   cfg.g_error_resilient = 1;
@@ -657,8 +616,6 @@ int main(int argc, char **argv) {
   // Disable automatic keyframe placement.
   cfg.kf_min_dist = cfg.kf_max_dist = 3000;
 
-  cfg.temporal_layering_mode = VP9E_TEMPORAL_LAYERING_MODE_BYPASS;
-
   set_temporal_layer_pattern(layering_mode,
                              &cfg,
                              layer_flags,
@@ -667,8 +624,8 @@ int main(int argc, char **argv) {
   set_rate_control_metrics(&rc, &cfg);
 
   // Target bandwidth for the whole stream.
-  // Set to layer_target_bitrate for highest layer (total bitrate).
-  cfg.rc_target_bitrate = rc.layer_target_bitrate[cfg.ts_number_layers - 1];
+  // Set to ts_target_bitrate for highest layer (total bitrate).
+  cfg.rc_target_bitrate = cfg.ts_target_bitrate[cfg.ts_number_layers - 1];
 
   // Open input file.
   if (!(infile = fopen(argv[1], "rb"))) {
@@ -708,30 +665,20 @@ int main(int argc, char **argv) {
 
   if (strncmp(encoder->name, "vp8", 3) == 0) {
     vpx_codec_control(&codec, VP8E_SET_CPUUSED, -speed);
-    vpx_codec_control(&codec, VP8E_SET_NOISE_SENSITIVITY, kDenoiserOff);
-    vpx_codec_control(&codec, VP8E_SET_STATIC_THRESHOLD, 1);
+    vpx_codec_control(&codec, VP8E_SET_NOISE_SENSITIVITY, kDenoiserOnYOnly);
   } else if (strncmp(encoder->name, "vp9", 3) == 0) {
-    vpx_svc_extra_cfg_t svc_params;
-    vpx_codec_control(&codec, VP8E_SET_CPUUSED, speed);
-    vpx_codec_control(&codec, VP9E_SET_AQ_MODE, 3);
-    vpx_codec_control(&codec, VP9E_SET_FRAME_PERIODIC_BOOST, 0);
-    vpx_codec_control(&codec, VP9E_SET_NOISE_SENSITIVITY, kDenoiserOff);
-    vpx_codec_control(&codec, VP8E_SET_STATIC_THRESHOLD, 1);
-    vpx_codec_control(&codec, VP9E_SET_TUNE_CONTENT, 0);
-    vpx_codec_control(&codec, VP9E_SET_TILE_COLUMNS, (cfg.g_threads >> 1));
-    if (vpx_codec_control(&codec, VP9E_SET_SVC, layering_mode > 0 ? 1: 0))
-      die_codec(&codec, "Failed to set SVC");
-    for (i = 0; i < cfg.ts_number_layers; ++i) {
-      svc_params.max_quantizers[i] = cfg.rc_max_quantizer;
-      svc_params.min_quantizers[i] = cfg.rc_min_quantizer;
+      vpx_codec_control(&codec, VP8E_SET_CPUUSED, speed);
+      vpx_codec_control(&codec, VP9E_SET_AQ_MODE, 3);
+      vpx_codec_control(&codec, VP9E_SET_FRAME_PERIODIC_BOOST, 0);
+      vpx_codec_control(&codec, VP9E_SET_NOISE_SENSITIVITY, 0);
+      if (vpx_codec_control(&codec, VP9E_SET_SVC, layering_mode > 0 ? 1: 0)) {
+        die_codec(&codec, "Failed to set SVC");
     }
-    svc_params.scaling_factor_num[0] = cfg.g_h;
-    svc_params.scaling_factor_den[0] = cfg.g_h;
-    vpx_codec_control(&codec, VP9E_SET_SVC_PARAMETERS, &svc_params);
   }
   if (strncmp(encoder->name, "vp8", 3) == 0) {
     vpx_codec_control(&codec, VP8E_SET_SCREEN_CONTENT_MODE, 0);
   }
+  vpx_codec_control(&codec, VP8E_SET_STATIC_THRESHOLD, 1);
   vpx_codec_control(&codec, VP8E_SET_TOKEN_PARTITIONS, 1);
   // This controls the maximum target size of the key frame.
   // For generating smaller key frames, use a smaller max_intra_size_pct
@@ -747,10 +694,8 @@ int main(int argc, char **argv) {
     struct vpx_usec_timer timer;
     vpx_codec_iter_t iter = NULL;
     const vpx_codec_cx_pkt_t *pkt;
-#if VPX_ENCODER_ABI_VERSION > (4 + VPX_CODEC_ABI_VERSION)
     // Update the temporal layer_id. No spatial layers in this test.
     layer_id.spatial_layer_id = 0;
-#endif
     layer_id.temporal_layer_id =
         cfg.ts_layer_id[frame_cnt % cfg.ts_periodicity];
     if (strncmp(encoder->name, "vp9", 3) == 0) {
@@ -760,8 +705,6 @@ int main(int argc, char **argv) {
                         layer_id.temporal_layer_id);
     }
     flags = layer_flags[frame_cnt % flag_periodicity];
-    if (layering_mode == 0)
-      flags = 0;
     frame_avail = vpx_img_read(&raw, infile);
     if (frame_avail)
       ++rc.layer_input_frames[layer_id.temporal_layer_id];

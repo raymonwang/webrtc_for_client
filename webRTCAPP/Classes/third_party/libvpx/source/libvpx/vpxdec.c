@@ -75,8 +75,6 @@ static const arg_def_t outputfile = ARG_DEF(
     "o", "output", 1, "Output file name pattern (see below)");
 static const arg_def_t threadsarg = ARG_DEF(
     "t", "threads", 1, "Max threads to use");
-static const arg_def_t frameparallelarg = ARG_DEF(
-    NULL, "frame-parallel", 0, "Frame parallel decode");
 static const arg_def_t verbosearg = ARG_DEF(
     "v", "verbose", 0, "Show version string");
 static const arg_def_t error_concealment = ARG_DEF(
@@ -89,7 +87,7 @@ static const arg_def_t fb_arg = ARG_DEF(
     NULL, "frame-buffers", 1, "Number of frame buffers to use");
 static const arg_def_t md5arg = ARG_DEF(
     NULL, "md5", 0, "Compute the MD5 sum of the decoded frame");
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
 static const arg_def_t outbitdeptharg = ARG_DEF(
     NULL, "output-bit-depth", 1, "Output bit-depth for decoded frames");
 #endif
@@ -97,34 +95,33 @@ static const arg_def_t outbitdeptharg = ARG_DEF(
 static const arg_def_t *all_args[] = {
   &codecarg, &use_yv12, &use_i420, &flipuvarg, &rawvideo, &noblitarg,
   &progressarg, &limitarg, &skiparg, &postprocarg, &summaryarg, &outputfile,
-  &threadsarg, &frameparallelarg, &verbosearg, &scalearg, &fb_arg,
+  &threadsarg, &verbosearg, &scalearg, &fb_arg,
   &md5arg, &error_concealment, &continuearg,
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
   &outbitdeptharg,
 #endif
   NULL
 };
 
 #if CONFIG_VP8_DECODER
-static const arg_def_t addnoise_level = ARG_DEF(
-    NULL, "noise-level", 1, "Enable VP8 postproc add noise");
-static const arg_def_t deblock = ARG_DEF(
-    NULL, "deblock", 0, "Enable VP8 deblocking");
-static const arg_def_t demacroblock_level = ARG_DEF(
-    NULL, "demacroblock-level", 1, "Enable VP8 demacroblocking, w/ level");
-static const arg_def_t pp_debug_info = ARG_DEF(
-    NULL, "pp-debug-info", 1, "Enable VP8 visible debug info");
-static const arg_def_t pp_disp_ref_frame = ARG_DEF(
-    NULL, "pp-dbg-ref-frame", 1,
-    "Display only selected reference frame per macro block");
-static const arg_def_t pp_disp_mb_modes = ARG_DEF(
-    NULL, "pp-dbg-mb-modes", 1, "Display only selected macro block modes");
-static const arg_def_t pp_disp_b_modes = ARG_DEF(
-    NULL, "pp-dbg-b-modes", 1, "Display only selected block modes");
-static const arg_def_t pp_disp_mvs = ARG_DEF(
-    NULL, "pp-dbg-mvs", 1, "Draw only selected motion vectors");
-static const arg_def_t mfqe = ARG_DEF(
-    NULL, "mfqe", 0, "Enable multiframe quality enhancement");
+static const arg_def_t addnoise_level = ARG_DEF(NULL, "noise-level", 1,
+                                                "Enable VP8 postproc add noise");
+static const arg_def_t deblock = ARG_DEF(NULL, "deblock", 0,
+                                         "Enable VP8 deblocking");
+static const arg_def_t demacroblock_level = ARG_DEF(NULL, "demacroblock-level", 1,
+                                                    "Enable VP8 demacroblocking, w/ level");
+static const arg_def_t pp_debug_info = ARG_DEF(NULL, "pp-debug-info", 1,
+                                               "Enable VP8 visible debug info");
+static const arg_def_t pp_disp_ref_frame = ARG_DEF(NULL, "pp-dbg-ref-frame", 1,
+                                                   "Display only selected reference frame per macro block");
+static const arg_def_t pp_disp_mb_modes = ARG_DEF(NULL, "pp-dbg-mb-modes", 1,
+                                                  "Display only selected macro block modes");
+static const arg_def_t pp_disp_b_modes = ARG_DEF(NULL, "pp-dbg-b-modes", 1,
+                                                 "Display only selected block modes");
+static const arg_def_t pp_disp_mvs = ARG_DEF(NULL, "pp-dbg-mvs", 1,
+                                             "Draw only selected motion vectors");
+static const arg_def_t mfqe = ARG_DEF(NULL, "mfqe", 0,
+                                      "Enable multiframe quality enhancement");
 
 static const arg_def_t *vp8_pp_args[] = {
   &addnoise_level, &deblock, &demacroblock_level, &pp_debug_info,
@@ -136,7 +133,7 @@ static const arg_def_t *vp8_pp_args[] = {
 #if CONFIG_LIBYUV
 static INLINE int libyuv_scale(vpx_image_t *src, vpx_image_t *dst,
                                   FilterModeEnum mode) {
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
   if (src->fmt == VPX_IMG_FMT_I42016) {
     assert(dst->fmt == VPX_IMG_FMT_I42016);
     return I420Scale_16((uint16_t*)src->planes[VPX_PLANE_Y],
@@ -170,7 +167,7 @@ static INLINE int libyuv_scale(vpx_image_t *src, vpx_image_t *dst,
 }
 #endif
 
-void usage_exit(void) {
+void usage_exit() {
   int i;
 
   fprintf(stderr, "Usage: %s <options> filename\n\n"
@@ -257,7 +254,8 @@ static int read_frame(struct VpxDecInputContext *input, uint8_t **buf,
   switch (input->vpx_input_ctx->file_type) {
 #if CONFIG_WEBM_IO
     case FILE_TYPE_WEBM:
-      return webm_read_frame(input->webm_ctx, buf, bytes_in_buffer);
+      return webm_read_frame(input->webm_ctx,
+                             buf, bytes_in_buffer, buffer_size);
 #endif
     case FILE_TYPE_RAW:
       return raw_read_frame(input->vpx_input_ctx->file,
@@ -292,7 +290,7 @@ static void update_image_md5(const vpx_image_t *img, const int planes[3],
 static void write_image_file(const vpx_image_t *img, const int planes[3],
                              FILE *file) {
   int i, y;
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
   const int bytes_per_sample = ((img->fmt & VPX_IMG_FMT_HIGHBITDEPTH) ? 2 : 1);
 #else
   const int bytes_per_sample = 1;
@@ -312,7 +310,7 @@ static void write_image_file(const vpx_image_t *img, const int planes[3],
   }
 }
 
-static int file_is_raw(struct VpxInputContext *input) {
+int file_is_raw(struct VpxInputContext *input) {
   uint8_t buf[32];
   int is_raw = 0;
   vpx_codec_stream_info_t si;
@@ -343,7 +341,7 @@ static int file_is_raw(struct VpxInputContext *input) {
   return is_raw;
 }
 
-static void show_progress(int frame_in, int frame_out, uint64_t dx_time) {
+void show_progress(int frame_in, int frame_out, uint64_t dx_time) {
   fprintf(stderr,
           "%d decoded frames/%d showed frames in %"PRId64" us (%.2f fps)\r",
           frame_in, frame_out, dx_time,
@@ -365,8 +363,8 @@ struct ExternalFrameBufferList {
 // Application private data passed into the set function. |min_size| is the
 // minimum size in bytes needed to decode the next frame. |fb| pointer to the
 // frame buffer.
-static int get_vp9_frame_buffer(void *cb_priv, size_t min_size,
-                                vpx_codec_frame_buffer_t *fb) {
+int get_vp9_frame_buffer(void *cb_priv, size_t min_size,
+                         vpx_codec_frame_buffer_t *fb) {
   int i;
   struct ExternalFrameBufferList *const ext_fb_list =
       (struct ExternalFrameBufferList *)cb_priv;
@@ -403,8 +401,8 @@ static int get_vp9_frame_buffer(void *cb_priv, size_t min_size,
 // Callback used by libvpx when there are no references to the frame buffer.
 // |cb_priv| user private data passed into the set function. |fb| pointer
 // to the frame buffer.
-static int release_vp9_frame_buffer(void *cb_priv,
-                                    vpx_codec_frame_buffer_t *fb) {
+int release_vp9_frame_buffer(void *cb_priv,
+                             vpx_codec_frame_buffer_t *fb) {
   struct ExternalFrameBuffer *const ext_fb =
       (struct ExternalFrameBuffer *)fb->priv;
   (void)cb_priv;
@@ -412,9 +410,9 @@ static int release_vp9_frame_buffer(void *cb_priv,
   return 0;
 }
 
-static void generate_filename(const char *pattern, char *out, size_t q_len,
-                              unsigned int d_w, unsigned int d_h,
-                              unsigned int frame_in) {
+void generate_filename(const char *pattern, char *out, size_t q_len,
+                       unsigned int d_w, unsigned int d_h,
+                       unsigned int frame_in) {
   const char *p = pattern;
   char *q = out;
 
@@ -521,12 +519,12 @@ static FILE *open_outfile(const char *name) {
   } else {
     FILE *file = fopen(name, "wb");
     if (!file)
-      fatal("Failed to open output file '%s'", name);
+      fatal("Failed to output file %s", name);
     return file;
   }
 }
 
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
 static int img_shifted_realloc_required(const vpx_image_t *img,
                                         const vpx_image_t *shifted,
                                         vpx_img_fmt_t required_fmt) {
@@ -536,7 +534,7 @@ static int img_shifted_realloc_required(const vpx_image_t *img,
 }
 #endif
 
-static int main_loop(int argc, const char **argv_) {
+int main_loop(int argc, const char **argv_) {
   vpx_codec_ctx_t       decoder;
   char                  *fn = NULL;
   int                    i;
@@ -544,7 +542,7 @@ static int main_loop(int argc, const char **argv_) {
   size_t                 bytes_in_buffer = 0, buffer_size = 0;
   FILE                  *infile;
   int                    frame_in = 0, frame_out = 0, flipuv = 0, noblit = 0;
-  int                    do_md5 = 0, progress = 0, frame_parallel = 0;
+  int                    do_md5 = 0, progress = 0;
   int                    stop_after = 0, postproc = 0, summary = 0, quiet = 1;
   int                    arg_skip = 0;
   int                    ec_enabled = 0;
@@ -560,8 +558,8 @@ static int main_loop(int argc, const char **argv_) {
   int                     opt_yv12 = 0;
   int                     opt_i420 = 0;
   vpx_codec_dec_cfg_t     cfg = {0, 0, 0};
-#if CONFIG_VP9_HIGHBITDEPTH
-  unsigned int            output_bit_depth = 0;
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
+  int                     output_bit_depth = 0;
 #endif
 #if CONFIG_VP8_DECODER
   vp8_postproc_cfg_t      vp8_pp_cfg = {0};
@@ -574,10 +572,10 @@ static int main_loop(int argc, const char **argv_) {
   int                     dec_flags = 0;
   int                     do_scale = 0;
   vpx_image_t             *scaled_img = NULL;
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
   vpx_image_t             *img_shifted = NULL;
 #endif
-  int                     frame_avail, got_data, flush_decoder = 0;
+  int                     frame_avail, got_data;
   int                     num_external_frame_buffers = 0;
   struct ExternalFrameBufferList ext_fb_list = {0, NULL};
 
@@ -617,6 +615,9 @@ static int main_loop(int argc, const char **argv_) {
       use_y4m = 0;
       flipuv = 1;
       opt_yv12 = 1;
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
+      output_bit_depth = 8;  // For yv12 8-bit depth output is assumed
+#endif
     } else if (arg_match(&arg, &use_i420, argi)) {
       use_y4m = 0;
       flipuv = 0;
@@ -641,10 +642,6 @@ static int main_loop(int argc, const char **argv_) {
       summary = 1;
     else if (arg_match(&arg, &threadsarg, argi))
       cfg.threads = arg_parse_uint(&arg);
-#if CONFIG_VP9_DECODER
-    else if (arg_match(&arg, &frameparallelarg, argi))
-      frame_parallel = 1;
-#endif
     else if (arg_match(&arg, &verbosearg, argi))
       quiet = 0;
     else if (arg_match(&arg, &scalearg, argi))
@@ -653,7 +650,7 @@ static int main_loop(int argc, const char **argv_) {
       num_external_frame_buffers = arg_parse_uint(&arg);
     else if (arg_match(&arg, &continuearg, argi))
       keep_going = 1;
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
     else if (arg_match(&arg, &outbitdeptharg, argi)) {
       output_bit_depth = arg_parse_uint(&arg);
     }
@@ -721,15 +718,15 @@ static int main_loop(int argc, const char **argv_) {
   /* Handle non-option arguments */
   fn = argv[0];
 
-  if (!fn) {
-    free(argv);
+  if (!fn)
     usage_exit();
-  }
+
   /* Open file */
   infile = strcmp(fn, "-") ? fopen(fn, "rb") : set_binary_mode(stdin);
 
   if (!infile) {
-    fatal("Failed to open input file '%s'", strcmp(fn, "-") ? fn : "stdin");
+    fprintf(stderr, "Failed to open file '%s'", strcmp(fn, "-") ? fn : "stdin");
+    return EXIT_FAILURE;
   }
 #if CONFIG_OS_SUPPORT
   /* Make sure we don't dump to the terminal, unless forced to with -o - */
@@ -797,8 +794,7 @@ static int main_loop(int argc, const char **argv_) {
     interface = get_vpx_decoder_by_index(0);
 
   dec_flags = (postproc ? VPX_CODEC_USE_POSTPROC : 0) |
-              (ec_enabled ? VPX_CODEC_USE_ERROR_CONCEALMENT : 0) |
-              (frame_parallel ? VPX_CODEC_USE_FRAME_THREADING : 0);
+              (ec_enabled ? VPX_CODEC_USE_ERROR_CONCEALMENT : 0);
   if (vpx_codec_dec_init(&decoder, interface->codec_interface(),
                          &cfg, dec_flags)) {
     fprintf(stderr, "Failed to initialize decoder: %s\n",
@@ -810,42 +806,34 @@ static int main_loop(int argc, const char **argv_) {
     fprintf(stderr, "%s\n", decoder.name);
 
 #if CONFIG_VP8_DECODER
+
   if (vp8_pp_cfg.post_proc_flag
       && vpx_codec_control(&decoder, VP8_SET_POSTPROC, &vp8_pp_cfg)) {
-    fprintf(stderr, "Failed to configure postproc: %s\n",
-            vpx_codec_error(&decoder));
+    fprintf(stderr, "Failed to configure postproc: %s\n", vpx_codec_error(&decoder));
     return EXIT_FAILURE;
   }
 
   if (vp8_dbg_color_ref_frame
-      && vpx_codec_control(&decoder, VP8_SET_DBG_COLOR_REF_FRAME,
-                           vp8_dbg_color_ref_frame)) {
-    fprintf(stderr, "Failed to configure reference block visualizer: %s\n",
-            vpx_codec_error(&decoder));
+      && vpx_codec_control(&decoder, VP8_SET_DBG_COLOR_REF_FRAME, vp8_dbg_color_ref_frame)) {
+    fprintf(stderr, "Failed to configure reference block visualizer: %s\n", vpx_codec_error(&decoder));
     return EXIT_FAILURE;
   }
 
   if (vp8_dbg_color_mb_modes
-      && vpx_codec_control(&decoder, VP8_SET_DBG_COLOR_MB_MODES,
-                           vp8_dbg_color_mb_modes)) {
-    fprintf(stderr, "Failed to configure macro block visualizer: %s\n",
-            vpx_codec_error(&decoder));
+      && vpx_codec_control(&decoder, VP8_SET_DBG_COLOR_MB_MODES, vp8_dbg_color_mb_modes)) {
+    fprintf(stderr, "Failed to configure macro block visualizer: %s\n", vpx_codec_error(&decoder));
     return EXIT_FAILURE;
   }
 
   if (vp8_dbg_color_b_modes
-      && vpx_codec_control(&decoder, VP8_SET_DBG_COLOR_B_MODES,
-                           vp8_dbg_color_b_modes)) {
-    fprintf(stderr, "Failed to configure block visualizer: %s\n",
-            vpx_codec_error(&decoder));
+      && vpx_codec_control(&decoder, VP8_SET_DBG_COLOR_B_MODES, vp8_dbg_color_b_modes)) {
+    fprintf(stderr, "Failed to configure block visualizer: %s\n", vpx_codec_error(&decoder));
     return EXIT_FAILURE;
   }
 
   if (vp8_dbg_display_mv
-      && vpx_codec_control(&decoder, VP8_SET_DBG_DISPLAY_MV,
-                           vp8_dbg_display_mv)) {
-    fprintf(stderr, "Failed to configure motion vector visualizer: %s\n",
-            vpx_codec_error(&decoder));
+      && vpx_codec_control(&decoder, VP8_SET_DBG_DISPLAY_MV, vp8_dbg_display_mv)) {
+    fprintf(stderr, "Failed to configure motion vector visualizer: %s\n", vpx_codec_error(&decoder));
     return EXIT_FAILURE;
   }
 #endif
@@ -880,7 +868,7 @@ static int main_loop(int argc, const char **argv_) {
     vpx_codec_iter_t  iter = NULL;
     vpx_image_t    *img;
     struct vpx_usec_timer timer;
-    int                   corrupted = 0;
+    int                   corrupted;
 
     frame_avail = 0;
     if (!stop_after || frame_in < stop_after) {
@@ -904,21 +892,10 @@ static int main_loop(int argc, const char **argv_) {
 
         vpx_usec_timer_mark(&timer);
         dx_time += vpx_usec_timer_elapsed(&timer);
-      } else {
-        flush_decoder = 1;
       }
-    } else {
-      flush_decoder = 1;
     }
 
     vpx_usec_timer_start(&timer);
-
-    if (flush_decoder) {
-      // Flush the decoder in frame parallel decode.
-      if (vpx_codec_decode(&decoder, NULL, 0, NULL, 0)) {
-        warn("Failed to flush decoder: %s", vpx_codec_error(&decoder));
-      }
-    }
 
     got_data = 0;
     if ((img = vpx_codec_get_frame(&decoder, &iter))) {
@@ -929,8 +906,7 @@ static int main_loop(int argc, const char **argv_) {
     vpx_usec_timer_mark(&timer);
     dx_time += (unsigned int)vpx_usec_timer_elapsed(&timer);
 
-    if (!frame_parallel &&
-        vpx_codec_control(&decoder, VP8D_GET_FRAME_CORRUPTED, &corrupted)) {
+    if (vpx_codec_control(&decoder, VP8D_GET_FRAME_CORRUPTED, &corrupted)) {
       warn("Failed VP8_GET_FRAME_CORRUPTED: %s", vpx_codec_error(&decoder));
       if (!keep_going)
         goto fail;
@@ -952,22 +928,22 @@ static int main_loop(int argc, const char **argv_) {
           // these is set to 0, use the display size set in the first frame
           // header. If that is unavailable, use the raw decoded size of the
           // first decoded frame.
-          int render_width = vpx_input_ctx.width;
-          int render_height = vpx_input_ctx.height;
-          if (!render_width || !render_height) {
-            int render_size[2];
+          int display_width = vpx_input_ctx.width;
+          int display_height = vpx_input_ctx.height;
+          if (!display_width || !display_height) {
+            int display_size[2];
             if (vpx_codec_control(&decoder, VP9D_GET_DISPLAY_SIZE,
-                                  render_size)) {
+                                  display_size)) {
               // As last resort use size of first frame as display size.
-              render_width = img->d_w;
-              render_height = img->d_h;
+              display_width = img->d_w;
+              display_height = img->d_h;
             } else {
-              render_width = render_size[0];
-              render_height = render_size[1];
+              display_width = display_size[0];
+              display_height = display_size[1];
             }
           }
-          scaled_img = vpx_img_alloc(NULL, img->fmt, render_width,
-                                     render_height, 16);
+          scaled_img = vpx_img_alloc(NULL, img->fmt, display_width,
+                                     display_height, 16);
           scaled_img->bit_depth = img->bit_depth;
         }
 
@@ -984,13 +960,13 @@ static int main_loop(int argc, const char **argv_) {
 #endif
         }
       }
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
       // Default to codec bit depth if output bit depth not set
-      if (!output_bit_depth && single_file && !do_md5) {
+      if (!output_bit_depth) {
         output_bit_depth = img->bit_depth;
       }
       // Shift up or down if necessary
-      if (output_bit_depth != 0 && output_bit_depth != img->bit_depth) {
+      if (output_bit_depth != img->bit_depth) {
         const vpx_img_fmt_t shifted_fmt = output_bit_depth == 8 ?
             img->fmt ^ (img->fmt & VPX_IMG_FMT_HIGHBITDEPTH) :
             img->fmt | VPX_IMG_FMT_HIGHBITDEPTH;
@@ -1085,6 +1061,9 @@ static int main_loop(int argc, const char **argv_) {
         }
       }
     }
+
+    if (stop_after && frame_in >= stop_after)
+      break;
   }
 
   if (summary || progress) {
@@ -1121,7 +1100,7 @@ fail:
     free(buf);
 
   if (scaled_img) vpx_img_free(scaled_img);
-#if CONFIG_VP9_HIGHBITDEPTH
+#if CONFIG_VP9 && CONFIG_VP9_HIGHBITDEPTH
   if (img_shifted) vpx_img_free(img_shifted);
 #endif
 

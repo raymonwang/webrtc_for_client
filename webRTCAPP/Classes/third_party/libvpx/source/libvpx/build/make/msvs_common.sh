@@ -39,12 +39,11 @@ fix_path() {
 }
 
 # Corrects the paths in file_list in one pass for efficiency.
-# $1 is the name of the array to be modified.
 fix_file_list() {
-    declare -n array_ref=$1
-    files=$(fix_path "${array_ref[@]}")
+    # TODO(jzern): this could be more generic and take the array as a param.
+    files=$(fix_path "${file_list[@]}")
     local IFS=$'\n'
-    array_ref=($files)
+    file_list=($files)
 }
 
 generate_uuid() {

@@ -13,13 +13,13 @@
 #include <string>
 
 #include "third_party/googletest/src/include/gtest/gtest.h"
-
-#include "./vpx_config.h"
-#include "./vpx_dsp_rtcd.h"
 #include "test/acm_random.h"
 #include "test/clear_system_state.h"
 #include "test/register_state_check.h"
 #include "test/util.h"
+
+#include "./vpx_config.h"
+#include "./vp9_rtcd.h"
 #include "vp9/common/vp9_entropy.h"
 #include "vp9/common/vp9_loopfilter.h"
 #include "vpx/vpx_integer.h"
@@ -37,14 +37,15 @@ const int number_of_iterations = 10000;
 #if CONFIG_VP9_HIGHBITDEPTH
 typedef void (*loop_op_t)(uint16_t *s, int p, const uint8_t *blimit,
                           const uint8_t *limit, const uint8_t *thresh,
-                          int bd);
+                          int count, int bd);
 typedef void (*dual_loop_op_t)(uint16_t *s, int p, const uint8_t *blimit0,
                                const uint8_t *limit0, const uint8_t *thresh0,
                                const uint8_t *blimit1, const uint8_t *limit1,
                                const uint8_t *thresh1, int bd);
 #else
 typedef void (*loop_op_t)(uint8_t *s, int p, const uint8_t *blimit,
-                          const uint8_t *limit, const uint8_t *thresh);
+                          const uint8_t *limit, const uint8_t *thresh,
+                          int count);
 typedef void (*dual_loop_op_t)(uint8_t *s, int p, const uint8_t *blimit0,
                                const uint8_t *limit0, const uint8_t *thresh0,
                                const uint8_t *blimit1, const uint8_t *limit1,
@@ -53,6 +54,88 @@ typedef void (*dual_loop_op_t)(uint8_t *s, int p, const uint8_t *blimit0,
 
 typedef std::tr1::tuple<loop_op_t, loop_op_t, int> loop8_param_t;
 typedef std::tr1::tuple<dual_loop_op_t, dual_loop_op_t, int> dualloop8_param_t;
+
+#if HAVE_SSE2
+#if CONFIG_VP9_HIGHBITDEPTH
+void wrapper_vertical_16_sse2(uint16_t *s, int p, const uint8_t *blimit,
+                              const uint8_t *limit, const uint8_t *thresh,
+                              int count, int bd) {
+  vp9_highbd_lpf_vertical_16_sse2(s, p, blimit, limit, thresh, bd);
+}
+
+void wrapper_vertical_16_c(uint16_t *s, int p, const uint8_t *blimit,
+                           const uint8_t *limit, const uint8_t *thresh,
+                           int count, int bd) {
+  vp9_highbd_lpf_vertical_16_c(s, p, blimit, limit, thresh, bd);
+}
+
+void wrapper_vertical_16_dual_sse2(uint16_t *s, int p, const uint8_t *blimit,
+                                   const uint8_t *limit, const uint8_t *thresh,
+                                   int count, int bd) {
+  vp9_highbd_lpf_vertical_16_dual_sse2(s, p, blimit, limit, thresh, bd);
+}
+
+void wrapper_vertical_16_dual_c(uint16_t *s, int p, const uint8_t *blimit,
+                                const uint8_t *limit, const uint8_t *thresh,
+                                int count, int bd) {
+  vp9_highbd_lpf_vertical_16_dual_c(s, p, blimit, limit, thresh, bd);
+}
+#else
+void wrapper_vertical_16_sse2(uint8_t *s, int p, const uint8_t *blimit,
+                              const uint8_t *limit, const uint8_t *thresh,
+                              int count) {
+  vp9_lpf_vertical_16_sse2(s, p, blimit, limit, thresh);
+}
+
+void wrapper_vertical_16_c(uint8_t *s, int p, const uint8_t *blimit,
+                           const uint8_t *limit, const uint8_t *thresh,
+                           int count) {
+  vp9_lpf_vertical_16_c(s, p, blimit, limit, thresh);
+}
+
+void wrapper_vertical_16_dual_sse2(uint8_t *s, int p, const uint8_t *blimit,
+                                   const uint8_t *limit, const uint8_t *thresh,
+                                   int count) {
+  vp9_lpf_vertical_16_dual_sse2(s, p, blimit, limit, thresh);
+}
+
+void wrapper_vertical_16_dual_c(uint8_t *s, int p, const uint8_t *blimit,
+                                const uint8_t *limit, const uint8_t *thresh,
+                                int count) {
+  vp9_lpf_vertical_16_dual_c(s, p, blimit, limit, thresh);
+}
+#endif  // CONFIG_VP9_HIGHBITDEPTH
+#endif  // HAVE_SSE2
+
+#if HAVE_NEON_ASM
+#if CONFIG_VP9_HIGHBITDEPTH
+// No neon high bitdepth functions.
+#else
+void wrapper_vertical_16_neon(uint8_t *s, int p, const uint8_t *blimit,
+                              const uint8_t *limit, const uint8_t *thresh,
+                              int count) {
+  vp9_lpf_vertical_16_neon(s, p, blimit, limit, thresh);
+}
+
+void wrapper_vertical_16_c(uint8_t *s, int p, const uint8_t *blimit,
+                           const uint8_t *limit, const uint8_t *thresh,
+                           int count) {
+  vp9_lpf_vertical_16_c(s, p, blimit, limit, thresh);
+}
+
+void wrapper_vertical_16_dual_neon(uint8_t *s, int p, const uint8_t *blimit,
+                                   const uint8_t *limit, const uint8_t *thresh,
+                                   int count) {
+  vp9_lpf_vertical_16_dual_neon(s, p, blimit, limit, thresh);
+}
+
+void wrapper_vertical_16_dual_c(uint8_t *s, int p, const uint8_t *blimit,
+                                const uint8_t *limit, const uint8_t *thresh,
+                                int count) {
+  vp9_lpf_vertical_16_dual_c(s, p, blimit, limit, thresh);
+}
+#endif  // CONFIG_VP9_HIGHBITDEPTH
+#endif  // HAVE_NEON_ASM
 
 class Loop8Test6Param : public ::testing::TestWithParam<loop8_param_t> {
  public:
@@ -97,11 +180,11 @@ TEST_P(Loop8Test6Param, OperationCheck) {
   const int count_test_block = number_of_iterations;
 #if CONFIG_VP9_HIGHBITDEPTH
   int32_t bd = bit_depth_;
-  DECLARE_ALIGNED(16, uint16_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(16, uint16_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, ref_s, kNumCoeffs);
 #else
-  DECLARE_ALIGNED(8, uint8_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(8, uint8_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(8, uint8_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(8, uint8_t, ref_s, kNumCoeffs);
 #endif  // CONFIG_VP9_HIGHBITDEPTH
   int err_count_total = 0;
   int first_failure = -1;
@@ -123,6 +206,7 @@ TEST_P(Loop8Test6Param, OperationCheck) {
         tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp
     };
     int32_t p = kNumCoeffs/32;
+    int count = 1;
 
     uint16_t tmp_s[kNumCoeffs];
     int j = 0;
@@ -154,13 +238,13 @@ TEST_P(Loop8Test6Param, OperationCheck) {
       ref_s[j] = s[j];
     }
 #if CONFIG_VP9_HIGHBITDEPTH
-    ref_loopfilter_op_(ref_s + 8 + p * 8, p, blimit, limit, thresh, bd);
+    ref_loopfilter_op_(ref_s + 8 + p * 8, p, blimit, limit, thresh, count, bd);
     ASM_REGISTER_STATE_CHECK(
-        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh, bd));
+        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh, count, bd));
 #else
-    ref_loopfilter_op_(ref_s+8+p*8, p, blimit, limit, thresh);
+    ref_loopfilter_op_(ref_s+8+p*8, p, blimit, limit, thresh, count);
     ASM_REGISTER_STATE_CHECK(
-        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh));
+        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh, count));
 #endif  // CONFIG_VP9_HIGHBITDEPTH
 
     for (int j = 0; j < kNumCoeffs; ++j) {
@@ -182,11 +266,11 @@ TEST_P(Loop8Test6Param, ValueCheck) {
   const int count_test_block = number_of_iterations;
 #if CONFIG_VP9_HIGHBITDEPTH
   const int32_t bd = bit_depth_;
-  DECLARE_ALIGNED(16, uint16_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(16, uint16_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, ref_s, kNumCoeffs);
 #else
-  DECLARE_ALIGNED(8, uint8_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(8, uint8_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(8, uint8_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(8, uint8_t, ref_s, kNumCoeffs);
 #endif  // CONFIG_VP9_HIGHBITDEPTH
   int err_count_total = 0;
   int first_failure = -1;
@@ -195,8 +279,8 @@ TEST_P(Loop8Test6Param, ValueCheck) {
   // function of sharpness_lvl and the loopfilter lvl as:
   // block_inside_limit = lvl >> ((sharpness_lvl > 0) + (sharpness_lvl > 4));
   // ...
-  // memset(lfi->lfthr[lvl].mblim, (2 * (lvl + 2) + block_inside_limit),
-  //        SIMD_WIDTH);
+  // vpx_memset(lfi->lfthr[lvl].mblim, (2 * (lvl + 2) + block_inside_limit),
+  //            SIMD_WIDTH);
   // This means that the largest value for mblim will occur when sharpness_lvl
   // is equal to 0, and lvl is equal to its greatest value (MAX_LOOP_FILTER).
   // In this case block_inside_limit will be equal to MAX_LOOP_FILTER and
@@ -221,18 +305,19 @@ TEST_P(Loop8Test6Param, ValueCheck) {
         tmp, tmp, tmp, tmp, tmp, tmp, tmp, tmp
     };
     int32_t p = kNumCoeffs / 32;
+    int count = 1;
     for (int j = 0; j < kNumCoeffs; ++j) {
       s[j] = rnd.Rand16() & mask_;
       ref_s[j] = s[j];
     }
 #if CONFIG_VP9_HIGHBITDEPTH
-    ref_loopfilter_op_(ref_s + 8 + p * 8, p, blimit, limit, thresh, bd);
+    ref_loopfilter_op_(ref_s + 8 + p * 8, p, blimit, limit, thresh, count, bd);
     ASM_REGISTER_STATE_CHECK(
-        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh, bd));
+        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh, count, bd));
 #else
-    ref_loopfilter_op_(ref_s+8+p*8, p, blimit, limit, thresh);
+    ref_loopfilter_op_(ref_s+8+p*8, p, blimit, limit, thresh, count);
     ASM_REGISTER_STATE_CHECK(
-        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh));
+        loopfilter_op_(s + 8 + p * 8, p, blimit, limit, thresh, count));
 #endif  // CONFIG_VP9_HIGHBITDEPTH
     for (int j = 0; j < kNumCoeffs; ++j) {
       err_count += ref_s[j] != s[j];
@@ -253,11 +338,11 @@ TEST_P(Loop8Test9Param, OperationCheck) {
   const int count_test_block = number_of_iterations;
 #if CONFIG_VP9_HIGHBITDEPTH
   const int32_t bd = bit_depth_;
-  DECLARE_ALIGNED(16, uint16_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(16, uint16_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, ref_s, kNumCoeffs);
 #else
-  DECLARE_ALIGNED(8,  uint8_t,  s[kNumCoeffs]);
-  DECLARE_ALIGNED(8,  uint8_t,  ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(8,  uint8_t,  s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(8,  uint8_t,  ref_s, kNumCoeffs);
 #endif  // CONFIG_VP9_HIGHBITDEPTH
   int err_count_total = 0;
   int first_failure = -1;
@@ -355,11 +440,11 @@ TEST_P(Loop8Test9Param, ValueCheck) {
   ACMRandom rnd(ACMRandom::DeterministicSeed());
   const int count_test_block = number_of_iterations;
 #if CONFIG_VP9_HIGHBITDEPTH
-  DECLARE_ALIGNED(16, uint16_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(16, uint16_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(16, uint16_t, ref_s, kNumCoeffs);
 #else
-  DECLARE_ALIGNED(8,  uint8_t, s[kNumCoeffs]);
-  DECLARE_ALIGNED(8,  uint8_t, ref_s[kNumCoeffs]);
+  DECLARE_ALIGNED_ARRAY(8,  uint8_t, s, kNumCoeffs);
+  DECLARE_ALIGNED_ARRAY(8,  uint8_t, ref_s, kNumCoeffs);
 #endif  // CONFIG_VP9_HIGHBITDEPTH
   int err_count_total = 0;
   int first_failure = -1;
@@ -435,74 +520,56 @@ using std::tr1::make_tuple;
 INSTANTIATE_TEST_CASE_P(
     SSE2, Loop8Test6Param,
     ::testing::Values(
-        make_tuple(&vpx_highbd_lpf_horizontal_4_sse2,
-                   &vpx_highbd_lpf_horizontal_4_c, 8),
-        make_tuple(&vpx_highbd_lpf_vertical_4_sse2,
-                   &vpx_highbd_lpf_vertical_4_c, 8),
-        make_tuple(&vpx_highbd_lpf_horizontal_8_sse2,
-                   &vpx_highbd_lpf_horizontal_8_c, 8),
-        make_tuple(&vpx_highbd_lpf_horizontal_edge_8_sse2,
-                   &vpx_highbd_lpf_horizontal_edge_8_c, 8),
-        make_tuple(&vpx_highbd_lpf_horizontal_edge_16_sse2,
-                   &vpx_highbd_lpf_horizontal_edge_16_c, 8),
-        make_tuple(&vpx_highbd_lpf_vertical_8_sse2,
-                   &vpx_highbd_lpf_vertical_8_c, 8),
-        make_tuple(&vpx_highbd_lpf_vertical_16_sse2,
-                   &vpx_highbd_lpf_vertical_16_c, 8),
-        make_tuple(&vpx_highbd_lpf_horizontal_4_sse2,
-                   &vpx_highbd_lpf_horizontal_4_c, 10),
-        make_tuple(&vpx_highbd_lpf_vertical_4_sse2,
-                   &vpx_highbd_lpf_vertical_4_c, 10),
-        make_tuple(&vpx_highbd_lpf_horizontal_8_sse2,
-                   &vpx_highbd_lpf_horizontal_8_c, 10),
-        make_tuple(&vpx_highbd_lpf_horizontal_edge_8_sse2,
-                   &vpx_highbd_lpf_horizontal_edge_8_c, 10),
-        make_tuple(&vpx_highbd_lpf_horizontal_edge_16_sse2,
-                   &vpx_highbd_lpf_horizontal_edge_16_c, 10),
-        make_tuple(&vpx_highbd_lpf_vertical_8_sse2,
-                   &vpx_highbd_lpf_vertical_8_c, 10),
-        make_tuple(&vpx_highbd_lpf_vertical_16_sse2,
-                   &vpx_highbd_lpf_vertical_16_c, 10),
-        make_tuple(&vpx_highbd_lpf_horizontal_4_sse2,
-                   &vpx_highbd_lpf_horizontal_4_c, 12),
-        make_tuple(&vpx_highbd_lpf_vertical_4_sse2,
-                   &vpx_highbd_lpf_vertical_4_c, 12),
-        make_tuple(&vpx_highbd_lpf_horizontal_8_sse2,
-                   &vpx_highbd_lpf_horizontal_8_c, 12),
-        make_tuple(&vpx_highbd_lpf_horizontal_edge_8_sse2,
-                   &vpx_highbd_lpf_horizontal_edge_8_c, 12),
-        make_tuple(&vpx_highbd_lpf_horizontal_edge_16_sse2,
-                   &vpx_highbd_lpf_horizontal_edge_16_c, 12),
-        make_tuple(&vpx_highbd_lpf_vertical_8_sse2,
-                   &vpx_highbd_lpf_vertical_8_c, 12),
-        make_tuple(&vpx_highbd_lpf_vertical_16_sse2,
-                   &vpx_highbd_lpf_vertical_16_c, 12),
-        make_tuple(&vpx_highbd_lpf_vertical_16_dual_sse2,
-                   &vpx_highbd_lpf_vertical_16_dual_c, 8),
-        make_tuple(&vpx_highbd_lpf_vertical_16_dual_sse2,
-                   &vpx_highbd_lpf_vertical_16_dual_c, 10),
-        make_tuple(&vpx_highbd_lpf_vertical_16_dual_sse2,
-                   &vpx_highbd_lpf_vertical_16_dual_c, 12)));
+        make_tuple(&vp9_highbd_lpf_horizontal_4_sse2,
+                   &vp9_highbd_lpf_horizontal_4_c, 8),
+        make_tuple(&vp9_highbd_lpf_vertical_4_sse2,
+                   &vp9_highbd_lpf_vertical_4_c, 8),
+        make_tuple(&vp9_highbd_lpf_horizontal_8_sse2,
+                   &vp9_highbd_lpf_horizontal_8_c, 8),
+        make_tuple(&vp9_highbd_lpf_horizontal_16_sse2,
+                   &vp9_highbd_lpf_horizontal_16_c, 8),
+        make_tuple(&vp9_highbd_lpf_vertical_8_sse2,
+                   &vp9_highbd_lpf_vertical_8_c, 8),
+        make_tuple(&wrapper_vertical_16_sse2,
+                   &wrapper_vertical_16_c, 8),
+        make_tuple(&vp9_highbd_lpf_horizontal_4_sse2,
+                   &vp9_highbd_lpf_horizontal_4_c, 10),
+        make_tuple(&vp9_highbd_lpf_vertical_4_sse2,
+                   &vp9_highbd_lpf_vertical_4_c, 10),
+        make_tuple(&vp9_highbd_lpf_horizontal_8_sse2,
+                   &vp9_highbd_lpf_horizontal_8_c, 10),
+        make_tuple(&vp9_highbd_lpf_horizontal_16_sse2,
+                   &vp9_highbd_lpf_horizontal_16_c, 10),
+        make_tuple(&vp9_highbd_lpf_vertical_8_sse2,
+                   &vp9_highbd_lpf_vertical_8_c, 10),
+        make_tuple(&wrapper_vertical_16_sse2,
+                   &wrapper_vertical_16_c, 10),
+        make_tuple(&vp9_highbd_lpf_horizontal_4_sse2,
+                   &vp9_highbd_lpf_horizontal_4_c, 12),
+        make_tuple(&vp9_highbd_lpf_vertical_4_sse2,
+                   &vp9_highbd_lpf_vertical_4_c, 12),
+        make_tuple(&vp9_highbd_lpf_horizontal_8_sse2,
+                   &vp9_highbd_lpf_horizontal_8_c, 12),
+        make_tuple(&vp9_highbd_lpf_horizontal_16_sse2,
+                   &vp9_highbd_lpf_horizontal_16_c, 12),
+        make_tuple(&vp9_highbd_lpf_vertical_8_sse2,
+                   &vp9_highbd_lpf_vertical_8_c, 12),
+        make_tuple(&wrapper_vertical_16_sse2,
+                   &wrapper_vertical_16_c, 12),
+        make_tuple(&wrapper_vertical_16_dual_sse2,
+                   &wrapper_vertical_16_dual_c, 8),
+        make_tuple(&wrapper_vertical_16_dual_sse2,
+                   &wrapper_vertical_16_dual_c, 10),
+        make_tuple(&wrapper_vertical_16_dual_sse2,
+                   &wrapper_vertical_16_dual_c, 12)));
 #else
 INSTANTIATE_TEST_CASE_P(
     SSE2, Loop8Test6Param,
     ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_4_sse2,
-                   &vpx_lpf_horizontal_4_c, 8),
-        make_tuple(&vpx_lpf_horizontal_8_sse2,
-                   &vpx_lpf_horizontal_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_8_sse2,
-                   &vpx_lpf_horizontal_edge_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_16_sse2,
-                   &vpx_lpf_horizontal_edge_16_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_sse2,
-                   &vpx_lpf_vertical_4_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_sse2,
-                   &vpx_lpf_vertical_8_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_sse2,
-                   &vpx_lpf_vertical_16_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_dual_sse2,
-                   &vpx_lpf_vertical_16_dual_c, 8)));
+        make_tuple(&vp9_lpf_horizontal_8_sse2, &vp9_lpf_horizontal_8_c, 8),
+        make_tuple(&vp9_lpf_horizontal_16_sse2, &vp9_lpf_horizontal_16_c, 8),
+        make_tuple(&vp9_lpf_vertical_8_sse2, &vp9_lpf_vertical_8_c, 8),
+        make_tuple(&wrapper_vertical_16_sse2, &wrapper_vertical_16_c, 8)));
 #endif  // CONFIG_VP9_HIGHBITDEPTH
 #endif
 
@@ -510,10 +577,7 @@ INSTANTIATE_TEST_CASE_P(
 INSTANTIATE_TEST_CASE_P(
     AVX2, Loop8Test6Param,
     ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_edge_8_avx2,
-                   &vpx_lpf_horizontal_edge_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_16_avx2,
-                   &vpx_lpf_horizontal_edge_16_c, 8)));
+        make_tuple(&vp9_lpf_horizontal_16_avx2, &vp9_lpf_horizontal_16_c, 8)));
 #endif
 
 #if HAVE_SSE2
@@ -521,42 +585,42 @@ INSTANTIATE_TEST_CASE_P(
 INSTANTIATE_TEST_CASE_P(
     SSE2, Loop8Test9Param,
     ::testing::Values(
-        make_tuple(&vpx_highbd_lpf_horizontal_4_dual_sse2,
-                   &vpx_highbd_lpf_horizontal_4_dual_c, 8),
-        make_tuple(&vpx_highbd_lpf_horizontal_8_dual_sse2,
-                   &vpx_highbd_lpf_horizontal_8_dual_c, 8),
-        make_tuple(&vpx_highbd_lpf_vertical_4_dual_sse2,
-                   &vpx_highbd_lpf_vertical_4_dual_c, 8),
-        make_tuple(&vpx_highbd_lpf_vertical_8_dual_sse2,
-                   &vpx_highbd_lpf_vertical_8_dual_c, 8),
-        make_tuple(&vpx_highbd_lpf_horizontal_4_dual_sse2,
-                   &vpx_highbd_lpf_horizontal_4_dual_c, 10),
-        make_tuple(&vpx_highbd_lpf_horizontal_8_dual_sse2,
-                   &vpx_highbd_lpf_horizontal_8_dual_c, 10),
-        make_tuple(&vpx_highbd_lpf_vertical_4_dual_sse2,
-                   &vpx_highbd_lpf_vertical_4_dual_c, 10),
-        make_tuple(&vpx_highbd_lpf_vertical_8_dual_sse2,
-                   &vpx_highbd_lpf_vertical_8_dual_c, 10),
-        make_tuple(&vpx_highbd_lpf_horizontal_4_dual_sse2,
-                   &vpx_highbd_lpf_horizontal_4_dual_c, 12),
-        make_tuple(&vpx_highbd_lpf_horizontal_8_dual_sse2,
-                   &vpx_highbd_lpf_horizontal_8_dual_c, 12),
-        make_tuple(&vpx_highbd_lpf_vertical_4_dual_sse2,
-                   &vpx_highbd_lpf_vertical_4_dual_c, 12),
-        make_tuple(&vpx_highbd_lpf_vertical_8_dual_sse2,
-                   &vpx_highbd_lpf_vertical_8_dual_c, 12)));
+        make_tuple(&vp9_highbd_lpf_horizontal_4_dual_sse2,
+                   &vp9_highbd_lpf_horizontal_4_dual_c, 8),
+        make_tuple(&vp9_highbd_lpf_horizontal_8_dual_sse2,
+                   &vp9_highbd_lpf_horizontal_8_dual_c, 8),
+        make_tuple(&vp9_highbd_lpf_vertical_4_dual_sse2,
+                   &vp9_highbd_lpf_vertical_4_dual_c, 8),
+        make_tuple(&vp9_highbd_lpf_vertical_8_dual_sse2,
+                   &vp9_highbd_lpf_vertical_8_dual_c, 8),
+        make_tuple(&vp9_highbd_lpf_horizontal_4_dual_sse2,
+                   &vp9_highbd_lpf_horizontal_4_dual_c, 10),
+        make_tuple(&vp9_highbd_lpf_horizontal_8_dual_sse2,
+                   &vp9_highbd_lpf_horizontal_8_dual_c, 10),
+        make_tuple(&vp9_highbd_lpf_vertical_4_dual_sse2,
+                   &vp9_highbd_lpf_vertical_4_dual_c, 10),
+        make_tuple(&vp9_highbd_lpf_vertical_8_dual_sse2,
+                   &vp9_highbd_lpf_vertical_8_dual_c, 10),
+        make_tuple(&vp9_highbd_lpf_horizontal_4_dual_sse2,
+                   &vp9_highbd_lpf_horizontal_4_dual_c, 12),
+        make_tuple(&vp9_highbd_lpf_horizontal_8_dual_sse2,
+                   &vp9_highbd_lpf_horizontal_8_dual_c, 12),
+        make_tuple(&vp9_highbd_lpf_vertical_4_dual_sse2,
+                   &vp9_highbd_lpf_vertical_4_dual_c, 12),
+        make_tuple(&vp9_highbd_lpf_vertical_8_dual_sse2,
+                   &vp9_highbd_lpf_vertical_8_dual_c, 12)));
 #else
 INSTANTIATE_TEST_CASE_P(
     SSE2, Loop8Test9Param,
     ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_4_dual_sse2,
-                   &vpx_lpf_horizontal_4_dual_c, 8),
-        make_tuple(&vpx_lpf_horizontal_8_dual_sse2,
-                   &vpx_lpf_horizontal_8_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_dual_sse2,
-                   &vpx_lpf_vertical_4_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_dual_sse2,
-                   &vpx_lpf_vertical_8_dual_c, 8)));
+        make_tuple(&vp9_lpf_horizontal_4_dual_sse2,
+                   &vp9_lpf_horizontal_4_dual_c, 8),
+        make_tuple(&vp9_lpf_horizontal_8_dual_sse2,
+                   &vp9_lpf_horizontal_8_dual_c, 8),
+        make_tuple(&vp9_lpf_vertical_4_dual_sse2,
+                   &vp9_lpf_vertical_4_dual_c, 8),
+        make_tuple(&vp9_lpf_vertical_8_dual_sse2,
+                   &vp9_lpf_vertical_8_dual_c, 8)));
 #endif  // CONFIG_VP9_HIGHBITDEPTH
 #endif
 
@@ -570,103 +634,35 @@ INSTANTIATE_TEST_CASE_P(
 #if HAVE_NEON_ASM
 // Using #if inside the macro is unsupported on MSVS but the tests are not
 // currently built for MSVS with ARM and NEON.
-        make_tuple(&vpx_lpf_horizontal_edge_8_neon,
-                   &vpx_lpf_horizontal_edge_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_16_neon,
-                   &vpx_lpf_horizontal_edge_16_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_neon,
-                   &vpx_lpf_vertical_16_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_dual_neon,
-                   &vpx_lpf_vertical_16_dual_c, 8),
+        make_tuple(&vp9_lpf_horizontal_16_neon,
+                   &vp9_lpf_horizontal_16_c, 8),
+        make_tuple(&wrapper_vertical_16_neon,
+                   &wrapper_vertical_16_c, 8),
+        make_tuple(&wrapper_vertical_16_dual_neon,
+                   &wrapper_vertical_16_dual_c, 8),
+        make_tuple(&vp9_lpf_horizontal_8_neon,
+                   &vp9_lpf_horizontal_8_c, 8),
+        make_tuple(&vp9_lpf_vertical_8_neon,
+                   &vp9_lpf_vertical_8_c, 8),
 #endif  // HAVE_NEON_ASM
-        make_tuple(&vpx_lpf_horizontal_8_neon,
-                   &vpx_lpf_horizontal_8_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_neon,
-                   &vpx_lpf_vertical_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_4_neon,
-                   &vpx_lpf_horizontal_4_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_neon,
-                   &vpx_lpf_vertical_4_c, 8)));
+        make_tuple(&vp9_lpf_horizontal_4_neon,
+                   &vp9_lpf_horizontal_4_c, 8),
+        make_tuple(&vp9_lpf_vertical_4_neon,
+                   &vp9_lpf_vertical_4_c, 8)));
 INSTANTIATE_TEST_CASE_P(
     NEON, Loop8Test9Param,
     ::testing::Values(
 #if HAVE_NEON_ASM
-        make_tuple(&vpx_lpf_horizontal_8_dual_neon,
-                   &vpx_lpf_horizontal_8_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_dual_neon,
-                   &vpx_lpf_vertical_8_dual_c, 8),
+        make_tuple(&vp9_lpf_horizontal_8_dual_neon,
+                   &vp9_lpf_horizontal_8_dual_c, 8),
+        make_tuple(&vp9_lpf_vertical_8_dual_neon,
+                   &vp9_lpf_vertical_8_dual_c, 8),
 #endif  // HAVE_NEON_ASM
-        make_tuple(&vpx_lpf_horizontal_4_dual_neon,
-                   &vpx_lpf_horizontal_4_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_dual_neon,
-                   &vpx_lpf_vertical_4_dual_c, 8)));
+        make_tuple(&vp9_lpf_horizontal_4_dual_neon,
+                   &vp9_lpf_horizontal_4_dual_c, 8),
+        make_tuple(&vp9_lpf_vertical_4_dual_neon,
+                   &vp9_lpf_vertical_4_dual_c, 8)));
 #endif  // CONFIG_VP9_HIGHBITDEPTH
 #endif  // HAVE_NEON
-
-#if HAVE_DSPR2 && !CONFIG_VP9_HIGHBITDEPTH
-INSTANTIATE_TEST_CASE_P(
-    DSPR2, Loop8Test6Param,
-    ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_4_dspr2,
-                   &vpx_lpf_horizontal_4_c, 8),
-        make_tuple(&vpx_lpf_horizontal_8_dspr2,
-                   &vpx_lpf_horizontal_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_8,
-                   &vpx_lpf_horizontal_edge_8, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_16,
-                   &vpx_lpf_horizontal_edge_16, 8),
-        make_tuple(&vpx_lpf_vertical_4_dspr2,
-                   &vpx_lpf_vertical_4_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_dspr2,
-                   &vpx_lpf_vertical_8_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_dspr2,
-                   &vpx_lpf_vertical_16_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_dual_dspr2,
-                   &vpx_lpf_vertical_16_dual_c, 8)));
-
-INSTANTIATE_TEST_CASE_P(
-    DSPR2, Loop8Test9Param,
-    ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_4_dual_dspr2,
-                   &vpx_lpf_horizontal_4_dual_c, 8),
-        make_tuple(&vpx_lpf_horizontal_8_dual_dspr2,
-                   &vpx_lpf_horizontal_8_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_dual_dspr2,
-                   &vpx_lpf_vertical_4_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_dual_dspr2,
-                   &vpx_lpf_vertical_8_dual_c, 8)));
-#endif  // HAVE_DSPR2 && !CONFIG_VP9_HIGHBITDEPTH
-
-#if HAVE_MSA && (!CONFIG_VP9_HIGHBITDEPTH)
-INSTANTIATE_TEST_CASE_P(
-    MSA, Loop8Test6Param,
-    ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_4_msa,
-                   &vpx_lpf_horizontal_4_c, 8),
-        make_tuple(&vpx_lpf_horizontal_8_msa,
-                   &vpx_lpf_horizontal_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_8_msa,
-                   &vpx_lpf_horizontal_edge_8_c, 8),
-        make_tuple(&vpx_lpf_horizontal_edge_16_msa,
-                   &vpx_lpf_horizontal_edge_16_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_msa,
-                   &vpx_lpf_vertical_4_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_msa,
-                   &vpx_lpf_vertical_8_c, 8),
-        make_tuple(&vpx_lpf_vertical_16_msa,
-                   &vpx_lpf_vertical_16_c, 8)));
-
-INSTANTIATE_TEST_CASE_P(
-    MSA, Loop8Test9Param,
-    ::testing::Values(
-        make_tuple(&vpx_lpf_horizontal_4_dual_msa,
-                   &vpx_lpf_horizontal_4_dual_c, 8),
-        make_tuple(&vpx_lpf_horizontal_8_dual_msa,
-                   &vpx_lpf_horizontal_8_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_4_dual_msa,
-                   &vpx_lpf_vertical_4_dual_c, 8),
-        make_tuple(&vpx_lpf_vertical_8_dual_msa,
-                   &vpx_lpf_vertical_8_dual_c, 8)));
-#endif  // HAVE_MSA && (!CONFIG_VP9_HIGHBITDEPTH)
 
 }  // namespace
