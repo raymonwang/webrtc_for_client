@@ -87,6 +87,12 @@
 		43288EDD1D38E9320044E4F5 /* video_capture_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_internal.h; sourceTree = "<group>"; };
 		43288EDE1D38E9320044E4F5 /* video_capture_tests.isolate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = video_capture_tests.isolate; sourceTree = "<group>"; };
 		43288F471D38EB680044E4F5 /* libvideo_capture_module_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_capture_module_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4377B28D1DC0AD44002199EA /* device_info_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = device_info_android.cc; sourceTree = "<group>"; };
+		4377B28E1DC0AD44002199EA /* device_info_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = device_info_android.h; sourceTree = "<group>"; };
+		4377B2941DC0AD44002199EA /* VideoCaptureAndroid.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = VideoCaptureAndroid.java; sourceTree = "<group>"; };
+		4377B2951DC0AD44002199EA /* VideoCaptureDeviceInfoAndroid.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = VideoCaptureDeviceInfoAndroid.java; sourceTree = "<group>"; };
+		4377B2961DC0AD44002199EA /* video_capture_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_android.cc; sourceTree = "<group>"; };
+		4377B2971DC0AD44002199EA /* video_capture_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = video_capture_android.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,7 @@
 		43288E9E1D38E9320044E4F5 /* video_capture */ = {
 			isa = PBXGroup;
 			children = (
+				4377B28C1DC0AD44002199EA /* android */,
 				43288EAB1D38E9320044E4F5 /* BUILD.gn */,
 				43288EAC1D38E9320044E4F5 /* device_info_impl.cc */,
 				43288EAD1D38E9320044E4F5 /* device_info_impl.h */,
@@ -216,6 +223,59 @@
 				43288ED11D38E9320044E4F5 /* video_capture_qtkit_utility.h */,
 			);
 			path = qtkit;
+			sourceTree = "<group>";
+		};
+		4377B28C1DC0AD44002199EA /* android */ = {
+			isa = PBXGroup;
+			children = (
+				4377B28D1DC0AD44002199EA /* device_info_android.cc */,
+				4377B28E1DC0AD44002199EA /* device_info_android.h */,
+				4377B28F1DC0AD44002199EA /* java */,
+				4377B2961DC0AD44002199EA /* video_capture_android.cc */,
+				4377B2971DC0AD44002199EA /* video_capture_android.h */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		4377B28F1DC0AD44002199EA /* java */ = {
+			isa = PBXGroup;
+			children = (
+				4377B2901DC0AD44002199EA /* src */,
+			);
+			path = java;
+			sourceTree = "<group>";
+		};
+		4377B2901DC0AD44002199EA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4377B2911DC0AD44002199EA /* org */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		4377B2911DC0AD44002199EA /* org */ = {
+			isa = PBXGroup;
+			children = (
+				4377B2921DC0AD44002199EA /* webrtc */,
+			);
+			path = org;
+			sourceTree = "<group>";
+		};
+		4377B2921DC0AD44002199EA /* webrtc */ = {
+			isa = PBXGroup;
+			children = (
+				4377B2931DC0AD44002199EA /* videoengine */,
+			);
+			path = webrtc;
+			sourceTree = "<group>";
+		};
+		4377B2931DC0AD44002199EA /* videoengine */ = {
+			isa = PBXGroup;
+			children = (
+				4377B2941DC0AD44002199EA /* VideoCaptureAndroid.java */,
+				4377B2951DC0AD44002199EA /* VideoCaptureDeviceInfoAndroid.java */,
+			);
+			path = videoengine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
