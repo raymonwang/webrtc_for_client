@@ -22,6 +22,12 @@
 		430D8FFC19862722009E763A /* libaudio_coding_module.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D88EE19860C40009E763A /* libaudio_coding_module.a */; };
 		430D903219862823009E763A /* libaudio_conference_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D901219862791009E763A /* libaudio_conference_mixer.a */; };
 		430D907F198628DF009E763A /* libaudio_device.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D904819862877009E763A /* libaudio_device.a */; };
+		431883711E14DE6F000E9B3B /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7A641990809F006EAB38 /* libnss_static.a */; };
+		431883D71E14DF1F000E9B3B /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7EF51990934E006EAB38 /* libcrnspr.a */; };
+		431883D81E14DF56000E9B3B /* libcrssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43983119198F6E660090EABA /* libcrssl.a */; };
+		431883D91E14DF98000E9B3B /* libcrnss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD80E11990A827006EAB38 /* libcrnss.a */; };
+		431883DA1E14DFCC000E9B3B /* libcrnssckbi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD807C1990A57A006EAB38 /* libcrnssckbi.a */; };
+		431884B91E14E4C2000E9B3B /* libjsoncpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43983561198FAE120090EABA /* libjsoncpp.a */; };
 		4318D576197E725500D5CADB /* APPRTCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4318D575197E725500D5CADB /* APPRTCViewController.xib */; };
 		437A3A0D1DD9D3D8004DCC31 /* FakeClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4381BD6C1D4704B8000656B1 /* FakeClass.cpp */; };
 		437A3A181DD9D3D8004DCC31 /* libbitrate_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B20198631DA003C5793 /* libbitrate_controller.a */; };
@@ -1107,6 +1113,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				431884B91E14E4C2000E9B3B /* libjsoncpp.a in Frameworks */,
+				431883DA1E14DFCC000E9B3B /* libcrnssckbi.a in Frameworks */,
+				431883D91E14DF98000E9B3B /* libcrnss.a in Frameworks */,
+				431883D81E14DF56000E9B3B /* libcrssl.a in Frameworks */,
+				431883D71E14DF1F000E9B3B /* libcrnspr.a in Frameworks */,
+				431883711E14DE6F000E9B3B /* libnss_static.a in Frameworks */,
 				437A3A181DD9D3D8004DCC31 /* libbitrate_controller.a in Frameworks */,
 				437A3A1F1DD9D3D8004DCC31 /* librtp_rtcp.a in Frameworks */,
 				437A3A201DD9D3D8004DCC31 /* libwebrtc_utility.a in Frameworks */,
