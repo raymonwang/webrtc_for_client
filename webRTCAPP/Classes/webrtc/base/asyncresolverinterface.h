@@ -33,9 +33,14 @@ class AsyncResolverInterface {
   // Returns top most resolved IPv4 address if address is resolved successfully.
   // Otherwise returns address set in SetAddress.
   SocketAddress address() const {
-    SocketAddress addr;
-    GetResolvedAddress(AF_INET, &addr);
-    return addr;
+      SocketAddress addr;
+      if (GetResolvedAddress(AF_INET6, &addr)) {
+          return addr;
+      }
+      else if (GetResolvedAddress(AF_INET, &addr)) {
+          return addr;
+      }
+      return addr;
   }
 
   // This signal is fired when address resolve process is completed.
