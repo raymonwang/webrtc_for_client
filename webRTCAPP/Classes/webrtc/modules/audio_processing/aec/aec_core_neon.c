@@ -78,49 +78,49 @@ static void FilterFarNEON(AecCore* aec, float yf[2][PART_LEN1]) {
 }
 
 // ARM64's arm_neon.h has already defined vdivq_f32 vsqrtq_f32.
-#if !defined (WEBRTC_ARCH_ARM64_NEON)
-static float32x4_t vdivq_f32(float32x4_t a, float32x4_t b) {
-  int i;
-  float32x4_t x = vrecpeq_f32(b);
-  // from arm documentation
-  // The Newton-Raphson iteration:
-  //     x[n+1] = x[n] * (2 - d * x[n])
-  // converges to (1/d) if x0 is the result of VRECPE applied to d.
-  //
-  // Note: The precision did not improve after 2 iterations.
-  for (i = 0; i < 2; i++) {
-    x = vmulq_f32(vrecpsq_f32(b, x), x);
-  }
-  // a/b = a*(1/b)
-  return vmulq_f32(a, x);
+#if !defined(WEBRTC_ARCH_ARM64)
+static float32x4_t my_vdivq_f32(float32x4_t a, float32x4_t b) {
+    int i;
+    float32x4_t x = vrecpeq_f32(b);
+    // from arm documentation
+    // The Newton-Raphson iteration:
+    //     x[n+1] = x[n] * (2 - d * x[n])
+    // converges to (1/d) if x0 is the result of VRECPE applied to d.
+    //
+    // Note: The precision did not improve after 2 iterations.
+    for (i = 0; i < 2; i++) {
+        x = vmulq_f32(vrecpsq_f32(b, x), x);
+    }
+    // a/b = a*(1/b)
+    return vmulq_f32(a, x);
 }
 
-static float32x4_t vsqrtq_f32(float32x4_t s) {
-  int i;
-  float32x4_t x = vrsqrteq_f32(s);
-
-  // Code to handle sqrt(0).
-  // If the input to sqrtf() is zero, a zero will be returned.
-  // If the input to vrsqrteq_f32() is zero, positive infinity is returned.
-  const uint32x4_t vec_p_inf = vdupq_n_u32(0x7F800000);
-  // check for divide by zero
-  const uint32x4_t div_by_zero = vceqq_u32(vec_p_inf, vreinterpretq_u32_f32(x));
-  // zero out the positive infinity results
-  x = vreinterpretq_f32_u32(vandq_u32(vmvnq_u32(div_by_zero),
-                                      vreinterpretq_u32_f32(x)));
-  // from arm documentation
-  // The Newton-Raphson iteration:
-  //     x[n+1] = x[n] * (3 - d * (x[n] * x[n])) / 2)
-  // converges to (1/√d) if x0 is the result of VRSQRTE applied to d.
-  //
-  // Note: The precision did not improve after 2 iterations.
-  for (i = 0; i < 2; i++) {
-    x = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x, x), s), x);
-  }
-  // sqrt(s) = s * 1/sqrt(s)
-  return vmulq_f32(s, x);;
+static float32x4_t my_vsqrtq_f32(float32x4_t s) {
+    int i;
+    float32x4_t x = vrsqrteq_f32(s);
+    
+    // Code to handle sqrt(0).
+    // If the input to sqrtf() is zero, a zero will be returned.
+    // If the input to vrsqrteq_f32() is zero, positive infinity is returned.
+    const uint32x4_t vec_p_inf = vdupq_n_u32(0x7F800000);
+    // check for divide by zero
+    const uint32x4_t div_by_zero = vceqq_u32(vec_p_inf, vreinterpretq_u32_f32(x));
+    // zero out the positive infinity results
+    x = vreinterpretq_f32_u32(
+                              vandq_u32(vmvnq_u32(div_by_zero), vreinterpretq_u32_f32(x)));
+    // from arm documentation
+    // The Newton-Raphson iteration:
+    //     x[n+1] = x[n] * (3 - d * (x[n] * x[n])) / 2)
+    // converges to (1/√d) if x0 is the result of VRSQRTE applied to d.
+    //
+    // Note: The precision did not improve after 2 iterations.
+    for (i = 0; i < 2; i++) {
+        x = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x, x), s), x);
+    }
+    // sqrt(s) = s * 1/sqrt(s)
+    return vmulq_f32(s, x);
 }
-#endif  // WEBRTC_ARCH_ARM64_NEON
+#endif  // WEBRTC_ARCH_ARM64
 
 static void ScaleErrorSignalNEON(AecCore* aec, float ef[2][PART_LEN1]) {
   const float mu = aec->extended_filter_enabled ? kExtendedMu : aec->normal_mu;
@@ -136,14 +136,14 @@ static void ScaleErrorSignalNEON(AecCore* aec, float ef[2][PART_LEN1]) {
     const float32x4_t ef_re_base = vld1q_f32(&ef[0][i]);
     const float32x4_t ef_im_base = vld1q_f32(&ef[1][i]);
     const float32x4_t xPowPlus = vaddq_f32(xPow, k1e_10f);
-    float32x4_t ef_re = vdivq_f32(ef_re_base, xPowPlus);
-    float32x4_t ef_im = vdivq_f32(ef_im_base, xPowPlus);
+    float32x4_t ef_re = my_vdivq_f32(ef_re_base, xPowPlus);
+    float32x4_t ef_im = my_vdivq_f32(ef_im_base, xPowPlus);
     const float32x4_t ef_re2 = vmulq_f32(ef_re, ef_re);
     const float32x4_t ef_sum2 = vmlaq_f32(ef_re2, ef_im, ef_im);
-    const float32x4_t absEf = vsqrtq_f32(ef_sum2);
+    float32x4_t absEf = my_vsqrtq_f32(ef_sum2);
     const uint32x4_t bigger = vcgtq_f32(absEf, kThresh);
     const float32x4_t absEfPlus = vaddq_f32(absEf, k1e_10f);
-    const float32x4_t absEfInv = vdivq_f32(kThresh, absEfPlus);
+    const float32x4_t absEfInv = my_vdivq_f32(kThresh, absEfPlus);
     uint32x4_t ef_re_if = vreinterpretq_u32_f32(vmulq_f32(ef_re, absEfInv));
     uint32x4_t ef_im_if = vreinterpretq_u32_f32(vmulq_f32(ef_im, absEfInv));
     uint32x4_t ef_re_u32 = vandq_u32(vmvnq_u32(bigger),
@@ -707,9 +707,9 @@ static void SubbandCoherenceNEON(AecCore* aec,
       float32x4_t vec_cohde = vmulq_f32(vec_sde.val[0], vec_sde.val[0]);
       float32x4_t vec_cohxd = vmulq_f32(vec_sxd.val[0], vec_sxd.val[0]);
       vec_cohde = vmlaq_f32(vec_cohde, vec_sde.val[1], vec_sde.val[1]);
-      vec_cohde = vdivq_f32(vec_cohde, vec_sdse);
+      vec_cohde = my_vdivq_f32(vec_cohde, vec_sdse);
       vec_cohxd = vmlaq_f32(vec_cohxd, vec_sxd.val[1], vec_sxd.val[1]);
-      vec_cohxd = vdivq_f32(vec_cohxd, vec_sdsx);
+      vec_cohxd = my_vdivq_f32(vec_cohxd, vec_sdsx);
 
       vst1q_f32(&cohde[i], vec_cohde);
       vst1q_f32(&cohxd[i], vec_cohxd);

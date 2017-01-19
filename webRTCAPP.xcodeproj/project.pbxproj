@@ -115,6 +115,7 @@
 		43998B2E19863242003C5793 /* libbitrate_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B20198631DA003C5793 /* libbitrate_controller.a */; };
 		43998B5B198632CF003C5793 /* libmedia_file.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B451986327B003C5793 /* libmedia_file.a */; };
 		43998BA6198633A0003C5793 /* libwebrtc_utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B711986332B003C5793 /* libwebrtc_utility.a */; };
+		43A7CF171E30602F00554E47 /* libcommon_audio_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43A7CF161E30602F00554E47 /* libcommon_audio_arm64.a */; };
 		43AD80E41990A931006EAB38 /* libcrnss.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD80E11990A827006EAB38 /* libcrnss.a */; };
 		43AD80E51990A942006EAB38 /* libnss_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7A641990809F006EAB38 /* libnss_static.a */; };
 		43AD80E61990A95B006EAB38 /* libcrnspr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AD7EF51990934E006EAB38 /* libcrnspr.a */; };
@@ -665,6 +666,27 @@
 			remoteGlobalIDString = 43A4BA3F1D923E6F0063DC77;
 			remoteInfo = webrtc_video;
 		};
+		43A7CF151E30602F00554E47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430D881C198608F8009E763A /* common_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43A7CF111E305EAD00554E47;
+			remoteInfo = common_audio_arm64;
+		};
+		43A7CF711E3060F000554E47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430D881C198608F8009E763A /* common_audio.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 430D87F2198608F8009E763A;
+			remoteInfo = common_audio_armv7;
+		};
+		43A7CF731E3060F000554E47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430D881C198608F8009E763A /* common_audio.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43A7CED21E305EAD00554E47;
+			remoteInfo = common_audio_arm64;
+		};
 		43AD795E19907938006EAB38 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43AD795219907938006EAB38 /* expat.xcodeproj */;
@@ -1143,6 +1165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43A7CF171E30602F00554E47 /* libcommon_audio_arm64.a in Frameworks */,
 				43B5F9C11DB864EB00AD34D8 /* libcommon_audio.a in Frameworks */,
 				43B5F9C01DB864E100AD34D8 /* libaudio_processing.a in Frameworks */,
 				4381BEC01D470875000656B1 /* libiSAC.a in Frameworks */,
@@ -1342,6 +1365,7 @@
 			children = (
 				430D8822198608F9009E763A /* libcommon_audio.a */,
 				43F1793D1D1D5988001817B4 /* libcommon_audio_osx.a */,
+				43A7CF161E30602F00554E47 /* libcommon_audio_arm64.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2390,6 +2414,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				43A7CF721E3060F000554E47 /* PBXTargetDependency */,
+				43A7CF741E3060F000554E47 /* PBXTargetDependency */,
 			);
 			name = rtc_voice;
 			productName = rtc_voice;
@@ -3247,6 +3273,13 @@
 			remoteRef = 43A4BA4A1D923E700063DC77 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		43A7CF161E30602F00554E47 /* libcommon_audio_arm64.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcommon_audio_arm64.a;
+			remoteRef = 43A7CF151E30602F00554E47 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		43AD795F19907938006EAB38 /* libexpat.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3543,6 +3576,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		43A7CF721E3060F000554E47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common_audio_armv7;
+			targetProxy = 43A7CF711E3060F000554E47 /* PBXContainerItemProxy */;
+		};
+		43A7CF741E3060F000554E47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = common_audio_arm64;
+			targetProxy = 43A7CF731E3060F000554E47 /* PBXContainerItemProxy */;
+		};
 		43C67D791D211D5D00427D35 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = webrtc_base_osx;

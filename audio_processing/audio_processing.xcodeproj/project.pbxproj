@@ -136,6 +136,9 @@
 		432B2FC019CAB022001267A7 /* windows_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B4D1994E90E00012AD8 /* windows_private.h */; };
 		432B302819CAB77B001267A7 /* aec_core_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = 432B302619CAB766001267A7 /* aec_core_sse2.c */; };
 		432B302B19CAB8D8001267A7 /* aec_rdft_sse2.c in Sources */ = {isa = PBXBuildFile; fileRef = 432B302919CAB8C2001267A7 /* aec_rdft_sse2.c */; };
+		43BA2FFC1E2F7962007B356D /* aecm_core_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B0D1994E90E00012AD8 /* aecm_core_neon.c */; };
+		43BA2FFD1E2F796B007B356D /* nsx_core_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095B491994E90E00012AD8 /* nsx_core_neon.c */; };
+		43BA2FFE1E2F7A5C007B356D /* aec_core_neon.c in Sources */ = {isa = PBXBuildFile; fileRef = 43095AF81994E90E00012AD8 /* aec_core_neon.c */; };
 		43C697051D22301800427D35 /* analog_agc.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C697001D22301800427D35 /* analog_agc.c */; };
 		43C697061D22301800427D35 /* analog_agc.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C697011D22301800427D35 /* analog_agc.h */; };
 		43C697071D22301800427D35 /* digital_agc.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C697021D22301800427D35 /* digital_agc.c */; };
@@ -298,6 +301,7 @@
 		432B2FC419CAB022001267A7 /* libaudio_processing_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_processing_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		432B302619CAB766001267A7 /* aec_core_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aec_core_sse2.c; sourceTree = "<group>"; };
 		432B302919CAB8C2001267A7 /* aec_rdft_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aec_rdft_sse2.c; sourceTree = "<group>"; };
+		43BA2FFB1E2F78DC007B356D /* aecm_core_mips.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aecm_core_mips.c; sourceTree = "<group>"; };
 		43C697001D22301800427D35 /* analog_agc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = analog_agc.c; sourceTree = "<group>"; };
 		43C697011D22301800427D35 /* analog_agc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = analog_agc.h; sourceTree = "<group>"; };
 		43C697021D22301800427D35 /* digital_agc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = digital_agc.c; sourceTree = "<group>"; };
@@ -457,6 +461,7 @@
 				43095B091994E90E00012AD8 /* aecm_core.c */,
 				43095B0A1994E90E00012AD8 /* aecm_core.h */,
 				43095B0B1994E90E00012AD8 /* aecm_core_c.c */,
+				43BA2FFB1E2F78DC007B356D /* aecm_core_mips.c */,
 				43095B0D1994E90E00012AD8 /* aecm_core_neon.c */,
 				43095B101994E90E00012AD8 /* aecm_defines.h */,
 				43095B111994E90E00012AD8 /* Android.mk */,
@@ -811,6 +816,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43095BC71994E90E00012AD8 /* typing_detection.cc in Sources */,
+				43BA2FFE1E2F7A5C007B356D /* aec_core_neon.c in Sources */,
 				43095BA31994E90E00012AD8 /* gain_control_impl.cc in Sources */,
 				43095BB41994E90E00012AD8 /* nsx_core.c in Sources */,
 				43095B9E1994E90E00012AD8 /* echo_cancellation_impl.cc in Sources */,
@@ -834,6 +840,7 @@
 				43095BB21994E90E00012AD8 /* ns_core.c in Sources */,
 				43095BB01994E90E00012AD8 /* noise_suppression.c in Sources */,
 				43C69B7B1D225FB500427D35 /* file_utils.cc in Sources */,
+				43BA2FFD1E2F796B007B356D /* nsx_core_neon.c in Sources */,
 				43C69CBD1D22921800427D35 /* gmm.cc in Sources */,
 				43C69CA41D2291BE00427D35 /* agc.cc in Sources */,
 				43095B911994E90E00012AD8 /* echo_control_mobile.c in Sources */,
@@ -851,6 +858,7 @@
 				43095BA51994E90E00012AD8 /* high_pass_filter_impl.cc in Sources */,
 				43C69CDC1D22923100427D35 /* pole_zero_filter.cc in Sources */,
 				43095BBF1994E90E00012AD8 /* rms_level.cc in Sources */,
+				43BA2FFC1E2F7962007B356D /* aecm_core_neon.c in Sources */,
 				43095BD41994E90E00012AD8 /* voice_detection_impl.cc in Sources */,
 				43095B801994E90E00012AD8 /* aec_rdft_neon.c in Sources */,
 				43C69CD61D22923100427D35 /* pitch_based_vad.cc in Sources */,
@@ -1005,6 +1013,7 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1032,6 +1041,7 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_ARCH_ARM,
+					WEBRTC_ARCH_ARM_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
