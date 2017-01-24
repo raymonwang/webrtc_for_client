@@ -15,11 +15,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./vpx_config.h"
-#if CONFIG_VP9_HIGHBITDEPTH
-#include "vpx_dsp/vpx_dsp_common.h"
-#endif  // CONFIG_VP9_HIGHBITDEPTH
-#include "vpx_ports/mem.h"
 #include "vp9/common/vp9_common.h"
 #include "vp9/encoder/vp9_resize.h"
 
@@ -33,7 +28,7 @@
 typedef int16_t interp_kernel[INTERP_TAPS];
 
 // Filters for interpolation (0.5-band) - note this also filters integer pels.
-static const interp_kernel filteredinterp_filters500[(1 << SUBPEL_BITS)] = {
+const interp_kernel vp9_filteredinterp_filters500[(1 << SUBPEL_BITS)] = {
   {-3,  0, 35, 64, 35,  0, -3, 0},
   {-3, -1, 34, 64, 36,  1, -3, 0},
   {-3, -1, 32, 64, 38,  1, -3, 0},
@@ -69,7 +64,7 @@ static const interp_kernel filteredinterp_filters500[(1 << SUBPEL_BITS)] = {
 };
 
 // Filters for interpolation (0.625-band) - note this also filters integer pels.
-static const interp_kernel filteredinterp_filters625[(1 << SUBPEL_BITS)] = {
+const interp_kernel vp9_filteredinterp_filters625[(1 << SUBPEL_BITS)] = {
   {-1, -8, 33, 80, 33, -8, -1, 0},
   {-1, -8, 30, 80, 35, -8, -1, 1},
   {-1, -8, 28, 80, 37, -7, -2, 1},
@@ -105,7 +100,7 @@ static const interp_kernel filteredinterp_filters625[(1 << SUBPEL_BITS)] = {
 };
 
 // Filters for interpolation (0.75-band) - note this also filters integer pels.
-static const interp_kernel filteredinterp_filters750[(1 << SUBPEL_BITS)] = {
+const interp_kernel vp9_filteredinterp_filters750[(1 << SUBPEL_BITS)] = {
   {2, -11,  25,  96,  25, -11,   2, 0},
   {2, -11,  22,  96,  28, -11,   2, 0},
   {2, -10,  19,  95,  31, -11,   2, 0},
@@ -141,7 +136,7 @@ static const interp_kernel filteredinterp_filters750[(1 << SUBPEL_BITS)] = {
 };
 
 // Filters for interpolation (0.875-band) - note this also filters integer pels.
-static const interp_kernel filteredinterp_filters875[(1 << SUBPEL_BITS)] = {
+const interp_kernel vp9_filteredinterp_filters875[(1 << SUBPEL_BITS)] = {
   {3,  -8,  13, 112,  13,  -8,   3, 0},
   {3,  -7,  10, 112,  17,  -9,   3, -1},
   {2,  -6,   7, 111,  21,  -9,   3, -1},
@@ -177,7 +172,7 @@ static const interp_kernel filteredinterp_filters875[(1 << SUBPEL_BITS)] = {
 };
 
 // Filters for interpolation (full-band) - no filtering for integer pixels
-static const interp_kernel filteredinterp_filters1000[(1 << SUBPEL_BITS)] = {
+const interp_kernel vp9_filteredinterp_filters1000[(1 << SUBPEL_BITS)] = {
   {0,   0,   0, 128,   0,   0,   0, 0},
   {0,   1,  -3, 128,   3,  -1,   0, 0},
   {-1,   2,  -6, 127,   7,  -2,   1, 0},
@@ -219,15 +214,15 @@ static const int16_t vp9_down2_symodd_half_filter[] = {64, 35, 0, -3};
 static const interp_kernel *choose_interp_filter(int inlength, int outlength) {
   int outlength16 = outlength * 16;
   if (outlength16 >= inlength * 16)
-    return filteredinterp_filters1000;
+    return vp9_filteredinterp_filters1000;
   else if (outlength16 >= inlength * 13)
-    return filteredinterp_filters875;
+    return vp9_filteredinterp_filters875;
   else if (outlength16 >= inlength * 11)
-    return filteredinterp_filters750;
+    return vp9_filteredinterp_filters750;
   else if (outlength16 >= inlength * 9)
-    return filteredinterp_filters625;
+    return vp9_filteredinterp_filters625;
   else
-    return filteredinterp_filters500;
+    return vp9_filteredinterp_filters500;
 }
 
 static void interpolate(const uint8_t *const input, int inlength,
@@ -432,7 +427,7 @@ static int get_down2_length(int length, int steps) {
   return length;
 }
 
-static int get_down2_steps(int in_length, int out_length) {
+int get_down2_steps(int in_length, int out_length) {
   int steps = 0;
   int proj_in_length;
   while ((proj_in_length = get_down2_length(in_length, 1)) >= out_length) {
@@ -446,10 +441,10 @@ static void resize_multistep(const uint8_t *const input,
                              int length,
                              uint8_t *output,
                              int olength,
-                             uint8_t *otmp) {
+                             uint8_t *buf) {
   int steps;
   if (length == olength) {
-    memcpy(output, input, sizeof(output[0]) * length);
+    memcpy(output, input, sizeof(uint8_t) * length);
     return;
   }
   steps = get_down2_steps(length, olength);
@@ -457,10 +452,15 @@ static void resize_multistep(const uint8_t *const input,
   if (steps > 0) {
     int s;
     uint8_t *out = NULL;
-    uint8_t *otmp2;
+    uint8_t *tmpbuf = NULL;
+    uint8_t *otmp, *otmp2;
     int filteredlength = length;
-
-    assert(otmp != NULL);
+    if (!tmpbuf) {
+      tmpbuf = (uint8_t *)malloc(sizeof(uint8_t) * length);
+      otmp = tmpbuf;
+    } else {
+      otmp = buf;
+    }
     otmp2 = otmp + get_down2_length(length, 1);
     for (s = 0; s < steps; ++s) {
       const int proj_filteredlength = get_down2_length(filteredlength, 1);
@@ -478,6 +478,8 @@ static void resize_multistep(const uint8_t *const input,
     if (filteredlength != olength) {
       interpolate(out, filteredlength, output, olength);
     }
+    if (tmpbuf)
+      free(tmpbuf);
   } else {
     interpolate(input, length, output, olength);
   }
@@ -513,29 +515,18 @@ void vp9_resize_plane(const uint8_t *const input,
   uint8_t *intbuf = (uint8_t *)malloc(sizeof(uint8_t) * width2 * height);
   uint8_t *tmpbuf = (uint8_t *)malloc(sizeof(uint8_t) *
                                       (width < height ? height : width));
-  uint8_t *arrbuf = (uint8_t *)malloc(sizeof(uint8_t) * height);
-  uint8_t *arrbuf2 = (uint8_t *)malloc(sizeof(uint8_t) * height2);
-  if (intbuf == NULL || tmpbuf == NULL ||
-      arrbuf == NULL || arrbuf2 == NULL)
-    goto Error;
-  assert(width > 0);
-  assert(height > 0);
-  assert(width2 > 0);
-  assert(height2 > 0);
+  uint8_t *arrbuf = (uint8_t *)malloc(sizeof(uint8_t) * (height + height2));
   for (i = 0; i < height; ++i)
     resize_multistep(input + in_stride * i, width,
-                     intbuf + width2 * i, width2, tmpbuf);
+                        intbuf + width2 * i, width2, tmpbuf);
   for (i = 0; i < width2; ++i) {
     fill_col_to_arr(intbuf + i, width2, height, arrbuf);
-    resize_multistep(arrbuf, height, arrbuf2, height2, tmpbuf);
-    fill_arr_to_col(output + i, out_stride, height2, arrbuf2);
+    resize_multistep(arrbuf, height, arrbuf + height, height2, tmpbuf);
+    fill_arr_to_col(output + i, out_stride, height2, arrbuf + height);
   }
-
- Error:
   free(intbuf);
   free(tmpbuf);
   free(arrbuf);
-  free(arrbuf2);
 }
 
 #if CONFIG_VP9_HIGHBITDEPTH
@@ -738,11 +729,11 @@ static void highbd_resize_multistep(const uint16_t *const input,
                                     int length,
                                     uint16_t *output,
                                     int olength,
-                                    uint16_t *otmp,
+                                    uint16_t *buf,
                                     int bd) {
   int steps;
   if (length == olength) {
-    memcpy(output, input, sizeof(output[0]) * length);
+    memcpy(output, input, sizeof(uint16_t) * length);
     return;
   }
   steps = get_down2_steps(length, olength);
@@ -750,10 +741,15 @@ static void highbd_resize_multistep(const uint16_t *const input,
   if (steps > 0) {
     int s;
     uint16_t *out = NULL;
-    uint16_t *otmp2;
+    uint16_t *tmpbuf = NULL;
+    uint16_t *otmp, *otmp2;
     int filteredlength = length;
-
-    assert(otmp != NULL);
+    if (!tmpbuf) {
+      tmpbuf = (uint16_t *)malloc(sizeof(uint16_t) * length);
+      otmp = tmpbuf;
+    } else {
+      otmp = buf;
+    }
     otmp2 = otmp + get_down2_length(length, 1);
     for (s = 0; s < steps; ++s) {
       const int proj_filteredlength = get_down2_length(filteredlength, 1);
@@ -771,6 +767,8 @@ static void highbd_resize_multistep(const uint16_t *const input,
     if (filteredlength != olength) {
       highbd_interpolate(out, filteredlength, output, olength, bd);
     }
+    if (tmpbuf)
+      free(tmpbuf);
   } else {
     highbd_interpolate(input, length, output, olength, bd);
   }
@@ -809,28 +807,21 @@ void vp9_highbd_resize_plane(const uint8_t *const input,
   uint16_t *intbuf = (uint16_t *)malloc(sizeof(uint16_t) * width2 * height);
   uint16_t *tmpbuf = (uint16_t *)malloc(sizeof(uint16_t) *
                                         (width < height ? height : width));
-  uint16_t *arrbuf = (uint16_t *)malloc(sizeof(uint16_t) * height);
-  uint16_t *arrbuf2 = (uint16_t *)malloc(sizeof(uint16_t) * height2);
-  if (intbuf == NULL || tmpbuf == NULL ||
-      arrbuf == NULL || arrbuf2 == NULL)
-    goto Error;
+  uint16_t *arrbuf = (uint16_t *)malloc(sizeof(uint16_t) * (height + height2));
   for (i = 0; i < height; ++i) {
     highbd_resize_multistep(CONVERT_TO_SHORTPTR(input + in_stride * i), width,
                             intbuf + width2 * i, width2, tmpbuf, bd);
   }
   for (i = 0; i < width2; ++i) {
     highbd_fill_col_to_arr(intbuf + i, width2, height, arrbuf);
-    highbd_resize_multistep(arrbuf, height, arrbuf2, height2, tmpbuf,
+    highbd_resize_multistep(arrbuf, height, arrbuf + height, height2, tmpbuf,
                             bd);
     highbd_fill_arr_to_col(CONVERT_TO_SHORTPTR(output + i), out_stride, height2,
-                           arrbuf2);
+                           arrbuf + height);
   }
-
- Error:
   free(intbuf);
   free(tmpbuf);
   free(arrbuf);
-  free(arrbuf2);
 }
 #endif  // CONFIG_VP9_HIGHBITDEPTH
 

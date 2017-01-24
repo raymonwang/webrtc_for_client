@@ -17,17 +17,15 @@
 
 #include "vp9/encoder/vp9_block.h"
 #include "vp9/encoder/vp9_context_tree.h"
-#include "vp9/encoder/vp9_cost.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #define RDDIV_BITS          7
-#define RD_EPB_SHIFT        6
 
 #define RDCOST(RM, DM, R, D) \
-  (ROUND_POWER_OF_TWO(((int64_t)R) * (RM), VP9_PROB_COST_SHIFT) + (D << DM))
+  (((128 + ((int64_t)R) * (RM)) >> 8) + (D << DM))
 #define QIDX_SKIP_THRESH     115
 
 #define MV_COST_WEIGHT      108
@@ -105,6 +103,8 @@ typedef struct RD_OPT {
   int threshes[MAX_SEGMENTS][BLOCK_SIZES][MAX_MODES];
 
   int64_t prediction_type_threshes[MAX_REF_FRAMES][REFERENCE_MODES];
+  // TODO(agrange): can this overflow?
+  int tx_select_threshes[MAX_REF_FRAMES][TX_MODES];
 
   int64_t filter_threshes[MAX_REF_FRAMES][SWITCHABLE_FILTER_CONTEXTS];
 
@@ -132,7 +132,7 @@ int vp9_compute_rd_mult(const struct VP9_COMP *cpi, int qindex);
 
 void vp9_initialize_rd_consts(struct VP9_COMP *cpi);
 
-void vp9_initialize_me_consts(struct VP9_COMP *cpi, MACROBLOCK *x, int qindex);
+void vp9_initialize_me_consts(struct VP9_COMP *cpi, int qindex);
 
 void vp9_model_rd_from_var_lapndz(unsigned int var, unsigned int n,
                                   unsigned int qstep, int *rate,
@@ -147,10 +147,10 @@ int vp9_raster_block_offset(BLOCK_SIZE plane_bsize,
 int16_t* vp9_raster_block_offset_int16(BLOCK_SIZE plane_bsize,
                                        int raster_block, int16_t *base);
 
-YV12_BUFFER_CONFIG *vp9_get_scaled_ref_frame(const struct VP9_COMP *cpi,
-                                             int ref_frame);
+const YV12_BUFFER_CONFIG *vp9_get_scaled_ref_frame(const struct VP9_COMP *cpi,
+                                                   int ref_frame);
 
-void vp9_init_me_luts(void);
+void vp9_init_me_luts();
 
 void vp9_get_entropy_contexts(BLOCK_SIZE bsize, TX_SIZE tx_size,
                               const struct macroblockd_plane *pd,
@@ -169,11 +169,6 @@ static INLINE int rd_less_than_thresh(int64_t best_rd, int thresh,
     return best_rd < ((int64_t)thresh * thresh_fact >> 5) || thresh == INT_MAX;
 }
 
-static INLINE void set_error_per_bit(MACROBLOCK *x, int rdmult) {
-  x->errorperbit = rdmult >> RD_EPB_SHIFT;
-  x->errorperbit += (x->errorperbit == 0);
-}
-
 void vp9_mv_pred(struct VP9_COMP *cpi, MACROBLOCK *x,
                  uint8_t *ref_y_buffer, int ref_y_stride,
                  int ref_frame, BLOCK_SIZE block_size);
@@ -187,15 +182,6 @@ void vp9_setup_pred_block(const MACROBLOCKD *xd,
 
 int vp9_get_intra_cost_penalty(int qindex, int qdelta,
                                vpx_bit_depth_t bit_depth);
-
-unsigned int vp9_get_sby_perpixel_variance(struct VP9_COMP *cpi,
-                                           const struct buf_2d *ref,
-                                           BLOCK_SIZE bs);
-#if CONFIG_VP9_HIGHBITDEPTH
-unsigned int vp9_high_get_sby_perpixel_variance(struct VP9_COMP *cpi,
-                                                const struct buf_2d *ref,
-                                                BLOCK_SIZE bs, int bd);
-#endif
 
 #ifdef __cplusplus
 }  // extern "C"

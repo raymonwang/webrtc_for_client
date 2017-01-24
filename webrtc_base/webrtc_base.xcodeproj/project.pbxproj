@@ -1155,7 +1155,10 @@
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
-					WEBRTC_MAC,
+					NO_NSPR_10_SUPPORT,
+					NSPR_STATIC,
+					NSS_STATIC,
+					NSS_USE_STATIC_LIBS,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1209,7 +1212,10 @@
 					SSL_USE_NSS,
 					HAVE_NSS_SSL_H,
 					SSL_USE_NSS_RNG,
-					WEBRTC_MAC,
+					NO_NSPR_10_SUPPORT,
+					NSPR_STATIC,
+					NSS_STATIC,
+					NSS_USE_STATIC_LIBS,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

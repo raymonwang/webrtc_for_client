@@ -52,10 +52,10 @@ TEST_P(VP9DenoiserTest, BitexactCheck) {
   // mc_avg_block is the denoised reference block,
   // avg_block_c is the denoised result from C code,
   // avg_block_sse2 is the denoised result from SSE2 code.
-  DECLARE_ALIGNED(16, uint8_t, sig_block[kNumPixels]);
-  DECLARE_ALIGNED(16, uint8_t, mc_avg_block[kNumPixels]);
-  DECLARE_ALIGNED(16, uint8_t, avg_block_c[kNumPixels]);
-  DECLARE_ALIGNED(16, uint8_t, avg_block_sse2[kNumPixels]);
+  DECLARE_ALIGNED_ARRAY(16, uint8_t, sig_block, kNumPixels);
+  DECLARE_ALIGNED_ARRAY(16, uint8_t, mc_avg_block, kNumPixels);
+  DECLARE_ALIGNED_ARRAY(16, uint8_t, avg_block_c, kNumPixels);
+  DECLARE_ALIGNED_ARRAY(16, uint8_t, avg_block_sse2, kNumPixels);
 
   for (int i = 0; i < count_test_block; ++i) {
     // Generate random motion magnitude, 20% of which exceed the threshold.
@@ -94,7 +94,8 @@ TEST_P(VP9DenoiserTest, BitexactCheck) {
 // Test for all block size.
 INSTANTIATE_TEST_CASE_P(
     SSE2, VP9DenoiserTest,
-    ::testing::Values(BLOCK_8X8, BLOCK_8X16, BLOCK_16X8, BLOCK_16X16,
-                      BLOCK_16X32, BLOCK_32X16, BLOCK_32X32, BLOCK_32X64,
-                      BLOCK_64X32, BLOCK_64X64));
+    ::testing::Values(BLOCK_4X4, BLOCK_4X8, BLOCK_8X4, BLOCK_8X8,
+                      BLOCK_8X16, BLOCK_16X8, BLOCK_16X16, BLOCK_16X32,
+                      BLOCK_32X16, BLOCK_32X32, BLOCK_32X64, BLOCK_64X32,
+                      BLOCK_64X64));
 }  // namespace

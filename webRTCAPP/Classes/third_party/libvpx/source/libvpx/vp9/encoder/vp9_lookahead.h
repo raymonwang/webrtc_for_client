@@ -36,10 +36,10 @@ struct lookahead_entry {
 #define MAX_PRE_FRAMES 1
 
 struct lookahead_ctx {
-  int max_sz;                  /* Absolute size of the queue */
-  int sz;                      /* Number of buffers currently in the queue */
-  int read_idx;                /* Read index */
-  int write_idx;               /* Write index */
+  unsigned int max_sz;         /* Absolute size of the queue */
+  unsigned int sz;             /* Number of buffers currently in the queue */
+  unsigned int read_idx;       /* Read index */
+  unsigned int write_idx;      /* Write index */
   struct lookahead_entry *buf; /* Buffer list */
 };
 
@@ -79,11 +79,7 @@ void vp9_lookahead_destroy(struct lookahead_ctx *ctx);
  * \param[in] active_map  Map that specifies which macroblock is active
  */
 int vp9_lookahead_push(struct lookahead_ctx *ctx, YV12_BUFFER_CONFIG *src,
-                       int64_t ts_start, int64_t ts_end,
-#if CONFIG_VP9_HIGHBITDEPTH
-                       int use_highbitdepth,
-#endif
-                       unsigned int flags);
+                       int64_t ts_start, int64_t ts_end, unsigned int flags);
 
 
 /**\brief Get the next source buffer to encode

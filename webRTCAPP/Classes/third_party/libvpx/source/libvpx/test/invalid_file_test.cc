@@ -63,22 +63,9 @@ class InvalidFileTest
     EXPECT_NE(res, EOF) << "Read result data failed";
 
     // Check results match.
-    const DecodeParam input = GET_PARAM(1);
-    if (input.threads > 1) {
-      // The serial decode check is too strict for tile-threaded decoding as
-      // there is no guarantee on the decode order nor which specific error
-      // will take precedence. Currently a tile-level error is not forwarded so
-      // the frame will simply be marked corrupt.
-      EXPECT_TRUE(res_dec == expected_res_dec ||
-                  res_dec == VPX_CODEC_CORRUPT_FRAME)
-          << "Results don't match: frame number = " << video.frame_number()
-          << ". (" << decoder->DecodeError() << "). Expected: "
-          << expected_res_dec << " or " << VPX_CODEC_CORRUPT_FRAME;
-    } else {
-      EXPECT_EQ(expected_res_dec, res_dec)
-          << "Results don't match: frame number = " << video.frame_number()
-          << ". (" << decoder->DecodeError() << ")";
-    }
+    EXPECT_EQ(expected_res_dec, res_dec)
+        << "Results don't match: frame number = " << video.frame_number()
+        << ". (" << decoder->DecodeError() << ")";
 
     return !HasFailure();
   }
@@ -125,9 +112,7 @@ TEST_P(InvalidFileTest, ReturnCode) {
 
 const DecodeParam kVP9InvalidFileTests[] = {
   {1, "invalid-vp90-02-v2.webm"},
-#if CONFIG_VP9_HIGHBITDEPTH
   {1, "invalid-vp90-2-00-quantizer-00.webm.ivf.s5861_r01-05_b6-.v2.ivf"},
-#endif
   {1, "invalid-vp90-03-v3.webm"},
   {1, "invalid-vp90-2-00-quantizer-11.webm.ivf.s52984_r01-05_b6-.ivf"},
   {1, "invalid-vp90-2-00-quantizer-11.webm.ivf.s52984_r01-05_b6-z.ivf"},
@@ -136,8 +121,6 @@ const DecodeParam kVP9InvalidFileTests[] = {
   {1, "invalid-vp90-2-09-subpixel-00.ivf.s20492_r01-05_b6-.v2.ivf"},
   {1, "invalid-vp91-2-mixedrefcsp-444to420.ivf"},
   {1, "invalid-vp90-2-12-droppable_1.ivf.s73804_r01-05_b6-.ivf"},
-  {1, "invalid-vp90-2-03-size-224x196.webm.ivf.s44156_r01-05_b6-.ivf"},
-  {1, "invalid-vp90-2-03-size-202x210.webm.ivf.s113306_r01-05_b6-.ivf"},
 };
 
 VP9_INSTANTIATE_TEST_CASE(InvalidFileTest,
@@ -158,7 +141,7 @@ TEST_P(InvalidFileInvalidPeekTest, ReturnCode) {
 }
 
 const DecodeParam kVP9InvalidFileInvalidPeekTests[] = {
-  {1, "invalid-vp90-01-v3.webm"},
+  {1, "invalid-vp90-01-v2.webm"},
 };
 
 VP9_INSTANTIATE_TEST_CASE(InvalidFileInvalidPeekTest,

@@ -1,0 +1,287 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		439082901DAD11B300F15141 /* h264_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4390828C1DAD11B300F15141 /* h264_impl.cc */; };
+		439082911DAD11B300F15141 /* h264_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4390828D1DAD11B300F15141 /* h264_impl.h */; };
+		439082921DAD11B300F15141 /* h264.h in Headers */ = {isa = PBXBuildFile; fileRef = 4390828F1DAD11B300F15141 /* h264.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4390827D1DAD117500F15141 /* libwebrtc_h264.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_h264.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4390828B1DAD11B300F15141 /* h264.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = h264.gyp; sourceTree = "<group>"; };
+		4390828C1DAD11B300F15141 /* h264_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_impl.cc; sourceTree = "<group>"; };
+		4390828D1DAD11B300F15141 /* h264_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_impl.h; sourceTree = "<group>"; };
+		4390828F1DAD11B300F15141 /* h264.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4390827A1DAD117500F15141 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		439082741DAD117500F15141 = {
+			isa = PBXGroup;
+			children = (
+				4390828A1DAD11B300F15141 /* h264 */,
+				4390827E1DAD117500F15141 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4390827E1DAD117500F15141 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4390827D1DAD117500F15141 /* libwebrtc_h264.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4390828A1DAD11B300F15141 /* h264 */ = {
+			isa = PBXGroup;
+			children = (
+				4390828B1DAD11B300F15141 /* h264.gyp */,
+				4390828C1DAD11B300F15141 /* h264_impl.cc */,
+				4390828D1DAD11B300F15141 /* h264_impl.h */,
+				4390828E1DAD11B300F15141 /* include */,
+			);
+			name = h264;
+			path = ../webRTCAPP/Classes/webrtc/modules/video_coding/codecs/h264;
+			sourceTree = "<group>";
+		};
+		4390828E1DAD11B300F15141 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				4390828F1DAD11B300F15141 /* h264.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4390827B1DAD117500F15141 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				439082921DAD11B300F15141 /* h264.h in Headers */,
+				439082911DAD11B300F15141 /* h264_impl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4390827C1DAD117500F15141 /* webrtc_h264 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 439082811DAD117500F15141 /* Build configuration list for PBXNativeTarget "webrtc_h264" */;
+			buildPhases = (
+				439082791DAD117500F15141 /* Sources */,
+				4390827A1DAD117500F15141 /* Frameworks */,
+				4390827B1DAD117500F15141 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = webrtc_h264;
+			productName = webrtc_h264;
+			productReference = 4390827D1DAD117500F15141 /* libwebrtc_h264.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		439082751DAD117500F15141 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "wang3140@hotmail.com";
+				TargetAttributes = {
+					4390827C1DAD117500F15141 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 4M7A7MW7C6;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 439082781DAD117500F15141 /* Build configuration list for PBXProject "webrtc_h264" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 439082741DAD117500F15141;
+			productRefGroup = 4390827E1DAD117500F15141 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4390827C1DAD117500F15141 /* webrtc_h264 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		439082791DAD117500F15141 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				439082901DAD11B300F15141 /* h264_impl.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4390827F1DAD117500F15141 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		439082801DAD117500F15141 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		439082821DAD117500F15141 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 4M7A7MW7C6;
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/openh264/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		439082831DAD117500F15141 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 4M7A7MW7C6;
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/openh264/include",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		439082781DAD117500F15141 /* Build configuration list for PBXProject "webrtc_h264" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4390827F1DAD117500F15141 /* Debug */,
+				439082801DAD117500F15141 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		439082811DAD117500F15141 /* Build configuration list for PBXNativeTarget "webrtc_h264" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				439082821DAD117500F15141 /* Debug */,
+				439082831DAD117500F15141 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 439082751DAD117500F15141 /* Project object */;
+}

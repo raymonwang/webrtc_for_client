@@ -16,12 +16,12 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include "third_party/googletest/src/include/gtest/gtest.h"
-
 #include "test/acm_random.h"
-#include "vp8/decoder/dboolhuff.h"
-#include "vp8/encoder/boolhuff.h"
+#include "third_party/googletest/src/include/gtest/gtest.h"
 #include "vpx/vpx_integer.h"
+
+#include "vp8/encoder/boolhuff.h"
+#include "vp8/decoder/dboolhuff.h"
 
 namespace {
 const int num_tests = 10;

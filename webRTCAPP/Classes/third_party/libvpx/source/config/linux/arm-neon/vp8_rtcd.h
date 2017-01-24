@@ -7,10 +7,6 @@
 #define RTCD_EXTERN extern
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * VP8
  */
@@ -25,6 +21,10 @@ struct macroblock;
 struct variance_vtable;
 union int_mv;
 struct yv12_buffer_config;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void vp8_bilinear_predict16x16_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 void vp8_bilinear_predict16x16_armv6(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
@@ -59,10 +59,12 @@ int vp8_block_error_c(short *coeff, short *dqcoeff);
 #define vp8_block_error vp8_block_error_c
 
 void vp8_build_intra_predictors_mbuv_s_c(struct macroblockd *x, unsigned char * uabove_row, unsigned char * vabove_row,  unsigned char *uleft, unsigned char *vleft, int left_stride, unsigned char * upred_ptr, unsigned char * vpred_ptr, int pred_stride);
-#define vp8_build_intra_predictors_mbuv_s vp8_build_intra_predictors_mbuv_s_c
+void vp8_build_intra_predictors_mbuv_s_neon(struct macroblockd *x, unsigned char * uabove_row, unsigned char * vabove_row,  unsigned char *uleft, unsigned char *vleft, int left_stride, unsigned char * upred_ptr, unsigned char * vpred_ptr, int pred_stride);
+#define vp8_build_intra_predictors_mbuv_s vp8_build_intra_predictors_mbuv_s_neon
 
 void vp8_build_intra_predictors_mby_s_c(struct macroblockd *x, unsigned char * yabove_row, unsigned char * yleft, int left_stride, unsigned char * ypred_ptr, int y_stride);
-#define vp8_build_intra_predictors_mby_s vp8_build_intra_predictors_mby_s_c
+void vp8_build_intra_predictors_mby_s_neon(struct macroblockd *x, unsigned char * yabove_row, unsigned char * yleft, int left_stride, unsigned char * ypred_ptr, int y_stride);
+#define vp8_build_intra_predictors_mby_s vp8_build_intra_predictors_mby_s_neon
 
 void vp8_clear_system_state_c();
 #define vp8_clear_system_state vp8_clear_system_state_c
@@ -119,13 +121,8 @@ int vp8_diamond_search_sad_c(struct macroblock *x, struct block *b, struct block
 #define vp8_diamond_search_sad vp8_diamond_search_sad_c
 
 void vp8_fast_quantize_b_c(struct block *, struct blockd *);
-void vp8_fast_quantize_b_armv6(struct block *, struct blockd *);
 void vp8_fast_quantize_b_neon(struct block *, struct blockd *);
 #define vp8_fast_quantize_b vp8_fast_quantize_b_neon
-
-void vp8_fast_quantize_b_pair_c(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-void vp8_fast_quantize_b_pair_neon(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-#define vp8_fast_quantize_b_pair vp8_fast_quantize_b_pair_neon
 
 void vp8_filter_by_weight16x16_c(unsigned char *src, int src_stride, unsigned char *dst, int dst_stride, int src_weight);
 #define vp8_filter_by_weight16x16 vp8_filter_by_weight16x16_c
@@ -213,26 +210,11 @@ void vp8_plane_add_noise_c(unsigned char *s, char *noise, char blackclamp[16], c
 void vp8_post_proc_down_and_across_mb_row_c(unsigned char *src, unsigned char *dst, int src_pitch, int dst_pitch, int cols, unsigned char *flimits, int size);
 #define vp8_post_proc_down_and_across_mb_row vp8_post_proc_down_and_across_mb_row_c
 
-void vp8_quantize_mb_c(struct macroblock *);
-void vp8_quantize_mb_neon(struct macroblock *);
-#define vp8_quantize_mb vp8_quantize_mb_neon
-
-void vp8_quantize_mbuv_c(struct macroblock *);
-void vp8_quantize_mbuv_neon(struct macroblock *);
-#define vp8_quantize_mbuv vp8_quantize_mbuv_neon
-
-void vp8_quantize_mby_c(struct macroblock *);
-void vp8_quantize_mby_neon(struct macroblock *);
-#define vp8_quantize_mby vp8_quantize_mby_neon
-
 int vp8_refining_search_sad_c(struct macroblock *x, struct block *b, struct blockd *d, union int_mv *ref_mv, int sad_per_bit, int distance, struct variance_vtable *fn_ptr, int *mvcost[2], union int_mv *center_mv);
 #define vp8_refining_search_sad vp8_refining_search_sad_c
 
 void vp8_regular_quantize_b_c(struct block *, struct blockd *);
 #define vp8_regular_quantize_b vp8_regular_quantize_b_c
-
-void vp8_regular_quantize_b_pair_c(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-#define vp8_regular_quantize_b_pair vp8_regular_quantize_b_pair_c
 
 unsigned int vp8_sad16x16_c(const unsigned char *src_ptr, int src_stride, const unsigned char *ref_ptr, int ref_stride, unsigned int max_sad);
 unsigned int vp8_sad16x16_armv6(const unsigned char *src_ptr, int src_stride, const unsigned char *ref_ptr, int ref_stride, unsigned int max_sad);
@@ -335,8 +317,7 @@ void vp8_sixtap_predict16x16_neon(unsigned char *src, int src_pitch, int xofst, 
 
 void vp8_sixtap_predict4x4_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 void vp8_sixtap_predict4x4_armv6(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
-void vp8_sixtap_predict4x4_neon(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
-#define vp8_sixtap_predict4x4 vp8_sixtap_predict4x4_neon
+#define vp8_sixtap_predict4x4 vp8_sixtap_predict4x4_armv6
 
 void vp8_sixtap_predict8x4_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 void vp8_sixtap_predict8x4_armv6(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
@@ -371,17 +352,14 @@ unsigned int vp8_sub_pixel_variance8x8_neon(const unsigned char  *src_ptr, int  
 #define vp8_sub_pixel_variance8x8 vp8_sub_pixel_variance8x8_neon
 
 void vp8_subtract_b_c(struct block *be, struct blockd *bd, int pitch);
-void vp8_subtract_b_armv6(struct block *be, struct blockd *bd, int pitch);
 void vp8_subtract_b_neon(struct block *be, struct blockd *bd, int pitch);
 #define vp8_subtract_b vp8_subtract_b_neon
 
 void vp8_subtract_mbuv_c(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
-void vp8_subtract_mbuv_armv6(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
 void vp8_subtract_mbuv_neon(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
 #define vp8_subtract_mbuv vp8_subtract_mbuv_neon
 
 void vp8_subtract_mby_c(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
-void vp8_subtract_mby_armv6(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
 void vp8_subtract_mby_neon(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
 #define vp8_subtract_mby vp8_subtract_mby_neon
 
@@ -420,10 +398,6 @@ unsigned int vp8_variance_halfpixvar16x16_v_c(const unsigned char *src_ptr, int 
 unsigned int vp8_variance_halfpixvar16x16_v_armv6(const unsigned char *src_ptr, int source_stride, const unsigned char *ref_ptr, int  ref_stride, unsigned int *sse);
 unsigned int vp8_variance_halfpixvar16x16_v_neon(const unsigned char *src_ptr, int source_stride, const unsigned char *ref_ptr, int  ref_stride, unsigned int *sse);
 #define vp8_variance_halfpixvar16x16_v vp8_variance_halfpixvar16x16_v_neon
-
-void vp8_yv12_copy_partial_frame_c(struct yv12_buffer_config *src_ybc, struct yv12_buffer_config *dst_ybc);
-void vp8_yv12_copy_partial_frame_neon(struct yv12_buffer_config *src_ybc, struct yv12_buffer_config *dst_ybc);
-#define vp8_yv12_copy_partial_frame vp8_yv12_copy_partial_frame_neon
 
 void vp8_rtcd(void);
 

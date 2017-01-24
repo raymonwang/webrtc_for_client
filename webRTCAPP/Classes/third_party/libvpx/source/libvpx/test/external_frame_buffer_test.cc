@@ -24,6 +24,7 @@
 namespace {
 
 const int kVideoNameParam = 1;
+const char kVP9TestFile[] = "vp90-2-02-size-lf-1920x1080.webm";
 
 struct ExternalFrameBuffer {
   uint8_t *data;
@@ -96,19 +97,13 @@ class ExternalFrameBufferList {
     return 0;
   }
 
-  // Marks the external frame buffer that |fb| is pointing to as free.
+  // Marks the external frame buffer that |fb| is pointing too as free.
   // Returns < 0 on an error.
   int ReturnFrameBuffer(vpx_codec_frame_buffer_t *fb) {
-    if (fb == NULL) {
-      EXPECT_TRUE(fb != NULL);
-      return -1;
-    }
+    EXPECT_TRUE(fb != NULL);
     ExternalFrameBuffer *const ext_fb =
         reinterpret_cast<ExternalFrameBuffer*>(fb->priv);
-    if (ext_fb == NULL) {
-      EXPECT_TRUE(ext_fb != NULL);
-      return -1;
-    }
+    EXPECT_TRUE(ext_fb != NULL);
     EXPECT_EQ(1, ext_fb->in_use);
     ext_fb->in_use = 0;
     return 0;
@@ -154,8 +149,6 @@ class ExternalFrameBufferList {
   ExternalFrameBuffer *ext_fb_list_;
 };
 
-#if CONFIG_WEBM_IO
-
 // Callback used by libvpx to request the application to return a frame
 // buffer of at least |min_size| in bytes.
 int get_vp9_frame_buffer(void *user_priv, size_t min_size,
@@ -197,8 +190,6 @@ int do_not_release_vp9_frame_buffer(void *user_priv,
   (void)fb;
   return 0;
 }
-
-#endif  // CONFIG_WEBM_IO
 
 // Class for testing passing in external frame buffers to libvpx.
 class ExternalFrameBufferMD5Test
@@ -281,8 +272,6 @@ class ExternalFrameBufferMD5Test
 };
 
 #if CONFIG_WEBM_IO
-const char kVP9TestFile[] = "vp90-2-02-size-lf-1920x1080.webm";
-
 // Class for testing passing in external frame buffers to libvpx.
 class ExternalFrameBufferTest : public ::testing::Test {
  protected:

@@ -7,10 +7,6 @@
 #define RTCD_EXTERN extern
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * VP8
  */
@@ -25,6 +21,10 @@ struct macroblock;
 struct variance_vtable;
 union int_mv;
 struct yv12_buffer_config;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void vp8_bilinear_predict16x16_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 #define vp8_bilinear_predict16x16 vp8_bilinear_predict16x16_c
@@ -95,9 +95,6 @@ int vp8_diamond_search_sad_c(struct macroblock *x, struct block *b, struct block
 void vp8_fast_quantize_b_c(struct block *, struct blockd *);
 #define vp8_fast_quantize_b vp8_fast_quantize_b_c
 
-void vp8_fast_quantize_b_pair_c(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-#define vp8_fast_quantize_b_pair vp8_fast_quantize_b_pair_c
-
 void vp8_filter_by_weight16x16_c(unsigned char *src, int src_stride, unsigned char *dst, int dst_stride, int src_weight);
 #define vp8_filter_by_weight16x16 vp8_filter_by_weight16x16_c
 
@@ -164,23 +161,11 @@ void vp8_plane_add_noise_c(unsigned char *s, char *noise, char blackclamp[16], c
 void vp8_post_proc_down_and_across_mb_row_c(unsigned char *src, unsigned char *dst, int src_pitch, int dst_pitch, int cols, unsigned char *flimits, int size);
 #define vp8_post_proc_down_and_across_mb_row vp8_post_proc_down_and_across_mb_row_c
 
-void vp8_quantize_mb_c(struct macroblock *);
-#define vp8_quantize_mb vp8_quantize_mb_c
-
-void vp8_quantize_mbuv_c(struct macroblock *);
-#define vp8_quantize_mbuv vp8_quantize_mbuv_c
-
-void vp8_quantize_mby_c(struct macroblock *);
-#define vp8_quantize_mby vp8_quantize_mby_c
-
 int vp8_refining_search_sad_c(struct macroblock *x, struct block *b, struct blockd *d, union int_mv *ref_mv, int sad_per_bit, int distance, struct variance_vtable *fn_ptr, int *mvcost[2], union int_mv *center_mv);
 #define vp8_refining_search_sad vp8_refining_search_sad_c
 
 void vp8_regular_quantize_b_c(struct block *, struct blockd *);
 #define vp8_regular_quantize_b vp8_regular_quantize_b_c
-
-void vp8_regular_quantize_b_pair_c(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-#define vp8_regular_quantize_b_pair vp8_regular_quantize_b_pair_c
 
 unsigned int vp8_sad16x16_c(const unsigned char *src_ptr, int src_stride, const unsigned char *ref_ptr, int ref_stride, unsigned int max_sad);
 #define vp8_sad16x16 vp8_sad16x16_c
@@ -322,9 +307,6 @@ unsigned int vp8_variance_halfpixvar16x16_hv_c(const unsigned char *src_ptr, int
 
 unsigned int vp8_variance_halfpixvar16x16_v_c(const unsigned char *src_ptr, int source_stride, const unsigned char *ref_ptr, int  ref_stride, unsigned int *sse);
 #define vp8_variance_halfpixvar16x16_v vp8_variance_halfpixvar16x16_v_c
-
-void vp8_yv12_copy_partial_frame_c(struct yv12_buffer_config *src_ybc, struct yv12_buffer_config *dst_ybc);
-#define vp8_yv12_copy_partial_frame vp8_yv12_copy_partial_frame_c
 
 void vp8_rtcd(void);
 
