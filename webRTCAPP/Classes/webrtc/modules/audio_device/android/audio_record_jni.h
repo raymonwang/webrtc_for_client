@@ -173,7 +173,7 @@ class AudioRecordJni {
 
   uint16_t _samplingFreqIn; // Sampling frequency for Mic
   int _recAudioSource;
-
+  bool _useBuildInAec;
 };
 
 }  // namespace webrtc

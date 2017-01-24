@@ -257,6 +257,10 @@ class AudioProcessing {
   virtual void set_output_will_be_muted(bool muted) = 0;
   virtual bool output_will_be_muted() const = 0;
 
+
+  // enable Experimental voice enhancement research
+  virtual void enable_voice_enhancement_mode(bool enable) = 0;
+
   // Processes a 10 ms |frame| of the primary audio stream. On the client-side,
   // this is the near-end (or captured) audio.
   //
@@ -299,7 +303,7 @@ class AudioProcessing {
   // |input_sample_rate_hz()|
   //
   // TODO(ajm): add const to input; requires an implementation fix.
-  virtual int AnalyzeReverseStream(AudioFrame* frame) = 0;
+  virtual int AnalyzeReverseStream(AudioFrame* frame, int * is_speech) = 0;
 
   // Accepts deinterleaved float audio with the range [-1, 1]. Each element
   // of |data| points to a channel buffer, arranged according to |layout|.

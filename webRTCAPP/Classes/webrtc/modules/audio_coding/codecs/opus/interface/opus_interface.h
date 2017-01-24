@@ -84,6 +84,9 @@ int16_t WebRtcOpus_Encode(OpusEncInst* inst,
  */
 int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate);
 
+
+int16_t WebRtcOpus_SetCBR(OpusEncInst* inst);
+
 /****************************************************************************
  * WebRtcOpus_SetPacketLossRate(...)
  *

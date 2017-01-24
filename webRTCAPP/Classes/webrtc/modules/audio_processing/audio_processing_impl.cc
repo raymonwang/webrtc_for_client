@@ -52,6 +52,10 @@
   } while (0)
 
 namespace webrtc {
+  const  int kSpeechOffsetDelay = 20;
+  const float kVoiceProbabilityThreshold = 0.25f;
+  //10ms chunk
+  const int kChunkSizeMs = 10; 
 
 // Throughout webrtc, it's assumed that success is represented by zero.
 static_assert(AudioProcessing::kNoError == 0, "kNoError must be zero");
@@ -191,7 +195,12 @@ AudioProcessingImpl::AudioProcessingImpl(const Config& config,
       transient_suppressor_enabled_(config.Get<ExperimentalNs>().enabled),
       beamformer_enabled_(config.Get<Beamforming>().enabled),
       beamformer_(beamformer),
-      array_geometry_(config.Get<Beamforming>().array_geometry) {
+      array_geometry_(config.Get<Beamforming>().array_geometry),
+      chunk_length_(0),
+      chunks_since_voice_(kSpeechOffsetDelay),
+      is_speech_(true),
+      voice_enhancement_flag_(false)
+       {
   echo_cancellation_ = new EchoCancellationImpl(this, crit_);
   component_list_.push_back(echo_cancellation_);
 
@@ -428,6 +437,10 @@ void AudioProcessingImpl::SetExtraOptions(const Config& config) {
     transient_suppressor_enabled_ = config.Get<ExperimentalNs>().enabled;
     InitializeTransient();
   }
+}
+
+void AudioProcessingImpl::enable_voice_enhancement_mode(bool enable) {
+    voice_enhancement_flag_ = enable; 
 }
 
 int AudioProcessingImpl::input_sample_rate_hz() const {
@@ -705,7 +718,7 @@ int AudioProcessingImpl::AnalyzeReverseStream(const float* const* data,
   return AnalyzeReverseStreamLocked();
 }
 
-int AudioProcessingImpl::AnalyzeReverseStream(AudioFrame* frame) {
+int AudioProcessingImpl::AnalyzeReverseStream(AudioFrame* frame, int * is_speech) {
   CriticalSectionScoped crit_scoped(crit_);
   if (frame == NULL) {
     return kNullPointerError;
@@ -745,15 +758,46 @@ int AudioProcessingImpl::AnalyzeReverseStream(AudioFrame* frame) {
 #endif
 
   render_audio_->DeinterleaveFrom(frame);
-  return AnalyzeReverseStreamLocked();
+  int ret = AnalyzeReverseStreamLocked();
+  //default value is true if it is not enable voice enhancement
+  *is_speech = (is_speech_? 1:0);
+  
+  
+  return ret;
 }
+
+
+bool AudioProcessingImpl::IsSpeech(const float* audio, int sample_rate_hz) {
+  FloatToS16(audio, chunk_length_, audio_buffer_.get());
+  vad_.ProcessChunk(audio_buffer_.get(), chunk_length_, sample_rate_hz);
+  if (vad_.last_voice_probability() > kVoiceProbabilityThreshold) {
+    chunks_since_voice_ = 0;
+  } else if (chunks_since_voice_ < kSpeechOffsetDelay) {
+    ++chunks_since_voice_;
+  }
+  return chunks_since_voice_ < kSpeechOffsetDelay;
+}
+
 
 int AudioProcessingImpl::AnalyzeReverseStreamLocked() {
   AudioBuffer* ra = render_audio_.get();  // For brevity.
-  if (rev_proc_format_.rate() == kSampleRate32kHz) {
+  int sample_rate_hz = rev_proc_format_.rate();
+  if (sample_rate_hz == kSampleRate32kHz) {
     ra->SplitIntoFrequencyBands();
   }
-
+  
+//only test android platform
+#if defined(WEBRTC_ANDROID)
+  if(voice_enhancement_flag_)
+  {
+     chunk_length_ = sample_rate_hz * kChunkSizeMs / 1000;
+     //reset audio buffer
+     audio_buffer_.reset(new int16_t[chunk_length_]);
+     float* const* low_band = ra->split_channels_f(kBand0To8kHz);
+     is_speech_ = IsSpeech(low_band[0], sample_rate_hz);
+  }
+#endif
+  
   RETURN_ON_ERR(echo_cancellation_->ProcessRenderAudio(ra));
   RETURN_ON_ERR(echo_control_mobile_->ProcessRenderAudio(ra));
   if (!use_new_agc_) {

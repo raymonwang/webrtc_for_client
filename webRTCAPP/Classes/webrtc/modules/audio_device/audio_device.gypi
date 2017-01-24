@@ -128,6 +128,8 @@
             'android/audio_record_jni.h',
             'android/audio_track_jni.cc',
             'android/audio_track_jni.h',
+            'android/audio_settings.cc',
+            'android/audio_settings.h',
             'android/fine_audio_buffer.cc',
             'android/fine_audio_buffer.h',
             'android/low_latency_event_posix.cc',

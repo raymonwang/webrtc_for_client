@@ -143,6 +143,7 @@ private:
     int _mixingFrequencyHz;
     FileRecorder* _outputFileRecorderPtr;
     bool _outputFileRecording;
+    int _is_speech;
 };
 
 }  // namespace voe

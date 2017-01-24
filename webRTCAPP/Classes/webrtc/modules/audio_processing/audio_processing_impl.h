@@ -18,6 +18,7 @@
 
 #include "webrtc/base/thread_annotations.h"
 #include "webrtc/system_wrappers/interface/scoped_ptr.h"
+#include "webrtc/modules/audio_processing/vad/voice_activity_detector.h"
 
 namespace webrtc {
 
@@ -117,7 +118,7 @@ class AudioProcessingImpl : public AudioProcessing {
                             int output_sample_rate_hz,
                             ChannelLayout output_layout,
                             float* const* dest) OVERRIDE;
-  virtual int AnalyzeReverseStream(AudioFrame* frame) OVERRIDE;
+  virtual int AnalyzeReverseStream(AudioFrame* frame, int* is_speech) OVERRIDE;
   virtual int AnalyzeReverseStream(const float* const* data,
                                    int samples_per_channel,
                                    int sample_rate_hz,
@@ -142,6 +143,7 @@ class AudioProcessingImpl : public AudioProcessing {
   virtual LevelEstimator* level_estimator() const OVERRIDE;
   virtual NoiseSuppression* noise_suppression() const OVERRIDE;
   virtual VoiceDetection* voice_detection() const OVERRIDE;
+  virtual void enable_voice_enhancement_mode(bool enable) OVERRIDE;
 
  protected:
   // Overridden in a mock.
@@ -172,6 +174,8 @@ class AudioProcessingImpl : public AudioProcessing {
   int InitializeExperimentalAgc() EXCLUSIVE_LOCKS_REQUIRED(crit_);
   int InitializeTransient() EXCLUSIVE_LOCKS_REQUIRED(crit_);
   void InitializeBeamformer() EXCLUSIVE_LOCKS_REQUIRED(crit_);
+  bool IsSpeech(const float* audio, int sample_rate_hz);
+  VoiceActivityDetector vad_;
 
   EchoCancellationImpl* echo_cancellation_;
   EchoControlMobileImpl* echo_control_mobile_;
@@ -222,6 +226,14 @@ class AudioProcessingImpl : public AudioProcessing {
   const bool beamformer_enabled_;
   scoped_ptr<Beamformer> beamformer_;
   const std::vector<Point> array_geometry_;
+  // Chunk size in samples.
+  int chunk_length_;  
+  int chunks_since_voice_;
+  scoped_ptr<int16_t[]> audio_buffer_;
+  bool is_speech_;
+  bool voice_enhancement_flag_;
+  
+  
 };
 
 }  // namespace webrtc
