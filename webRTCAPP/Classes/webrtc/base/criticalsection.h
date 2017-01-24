@@ -31,7 +31,7 @@
 #endif
 
 // See notes in the 'Performance' unit test for the effects of this flag.
-#define USE_NATIVE_MUTEX_ON_MAC 1
+#define USE_NATIVE_MUTEX_ON_MAC 0
 
 #if defined(WEBRTC_MAC) && !USE_NATIVE_MUTEX_ON_MAC
 #include <dispatch/dispatch.h>

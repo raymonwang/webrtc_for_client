@@ -126,17 +126,34 @@ void MessageQueueManager::ProcessAllMessageQueues() {
 }
 
 void MessageQueueManager::ProcessAllMessageQueuesInternal() {
-  // Post a delayed message at the current time and wait for it to be dispatched
-  // on all queues, which will ensure that all messages that came before it were
-  // also dispatched.
-  volatile int queues_not_done;
-  auto functor = [&queues_not_done] { AtomicOps::Decrement(&queues_not_done); };
-  FunctorMessageHandler<void, decltype(functor)> handler(functor);
+  // This works by posting a delayed message at the current time and waiting
+  // for it to be dispatched on all queues, which will ensure that all messages
+  // that came before it were also dispatched.
+  volatile int queues_not_done = 0;
+
+  // This class is used so that whether the posted message is processed, or the
+  // message queue is simply cleared, queues_not_done gets decremented.
+  class ScopedIncrement : public MessageData {
+   public:
+    ScopedIncrement(volatile int* value) : value_(value) {
+      AtomicOps::Increment(value_);
+    }
+    ~ScopedIncrement() override { AtomicOps::Decrement(value_); }
+
+   private:
+    volatile int* value_;
+  };
+
   {
     DebugNonReentrantCritScope cs(&crit_, &locked_);
-    queues_not_done = static_cast<int>(message_queues_.size());
     for (MessageQueue* queue : message_queues_) {
-      queue->PostDelayed(RTC_FROM_HERE, 0, &handler);
+      if (queue->IsQuitting()) {
+        // If the queue is quitting, it's done processing messages so it can
+        // be ignored. If we tried to post a message to it, it would be dropped.
+        continue;
+      }
+      queue->PostDelayed(RTC_FROM_HERE, 0, nullptr, MQID_DISPOSE,
+                         new ScopedIncrement(&queues_not_done));
     }
   }
   // Note: One of the message queues may have been on this thread, which is why
@@ -150,8 +167,12 @@ void MessageQueueManager::ProcessAllMessageQueuesInternal() {
 //------------------------------------------------------------------
 // MessageQueue
 MessageQueue::MessageQueue(SocketServer* ss, bool init_queue)
-    : fStop_(false), fPeekKeep_(false),
-      dmsgq_next_num_(0), fInitialized_(false), fDestroyed_(false), ss_(ss) {
+    : fPeekKeep_(false),
+      dmsgq_next_num_(0),
+      fInitialized_(false),
+      fDestroyed_(false),
+      stop_(0),
+      ss_(ss) {
   RTC_DCHECK(ss);
   // Currently, MessageQueue holds a socket server, and is the base class for
   // Thread.  It seems like it makes more sense for Thread to hold the socket
@@ -223,16 +244,16 @@ void MessageQueue::WakeUpSocketServer() {
 }
 
 void MessageQueue::Quit() {
-  fStop_ = true;
+  AtomicOps::ReleaseStore(&stop_, 1);
   WakeUpSocketServer();
 }
 
 bool MessageQueue::IsQuitting() {
-  return fStop_;
+  return AtomicOps::AcquireLoad(&stop_) != 0;
 }
 
 void MessageQueue::Restart() {
-  fStop_ = false;
+  AtomicOps::ReleaseStore(&stop_, 0);
 }
 
 bool MessageQueue::Peek(Message *pmsg, int cmsWait) {
@@ -316,7 +337,7 @@ bool MessageQueue::Get(Message *pmsg, int cmsWait, bool process_io) {
       return true;
     }
 
-    if (fStop_)
+    if (IsQuitting())
       break;
 
     // Which is shorter, the delay wait or the asked wait?
@@ -357,7 +378,7 @@ void MessageQueue::Post(const Location& posted_from,
                         uint32_t id,
                         MessageData* pdata,
                         bool time_sensitive) {
-  if (fStop_)
+  if (IsQuitting())
     return;
 
   // Keep thread safe
@@ -413,7 +434,7 @@ void MessageQueue::DoDelayPost(const Location& posted_from,
                                MessageHandler* phandler,
                                uint32_t id,
                                MessageData* pdata) {
-  if (fStop_) {
+  if (IsQuitting()) {
     return;
   }
 

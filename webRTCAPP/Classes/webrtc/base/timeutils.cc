@@ -23,6 +23,7 @@
 #endif
 #include <windows.h>
 #include <mmsystem.h>
+#include <sys/timeb.h>
 #endif
 
 #include "webrtc/base/checks.h"
@@ -55,7 +56,7 @@ uint64_t SystemTimeNanos() {
   struct timespec ts;
   // TODO(deadbeef): Do we need to handle the case when CLOCK_MONOTONIC is not
   // supported?
-  clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
+  clock_gettime(CLOCK_MONOTONIC, &ts);
   ticks = kNumNanosecsPerSec * static_cast<int64_t>(ts.tv_sec) +
           static_cast<int64_t>(ts.tv_nsec);
 #elif defined(WEBRTC_WIN)
@@ -183,6 +184,23 @@ int64_t TmToSeconds(const std::tm& tm) {
   // which was accumulated into |day| above).
   return (((static_cast<int64_t>
             (year - 1970) * 365 + day) * 24 + hour) * 60 + min) * 60 + sec;
+}
+
+int64_t TimeUTCMicros() {
+#if defined(WEBRTC_POSIX)
+  struct timeval time;
+  gettimeofday(&time, NULL);
+  // Convert from second (1.0) and microsecond (1e-6).
+  return (static_cast<int64_t>(time.tv_sec) * rtc::kNumMicrosecsPerSec +
+          time.tv_usec);
+
+#elif defined(WEBRTC_WIN)
+  struct _timeb time;
+  _ftime(&time);
+  // Convert from second (1.0) and milliseconds (1e-3).
+  return (static_cast<int64_t>(time.time) * rtc::kNumMicrosecsPerSec +
+          static_cast<int64_t>(time.millitm) * rtc::kNumMicrosecsPerMillisec);
+#endif
 }
 
 } // namespace rtc

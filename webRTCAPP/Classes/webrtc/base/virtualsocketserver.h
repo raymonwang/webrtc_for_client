@@ -11,11 +11,10 @@
 #ifndef WEBRTC_BASE_VIRTUALSOCKETSERVER_H_
 #define WEBRTC_BASE_VIRTUALSOCKETSERVER_H_
 
-#include <assert.h>
-
 #include <deque>
 #include <map>
 
+#include "webrtc/base/checks.h"
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/base/messagequeue.h"
 #include "webrtc/base/socketserver.h"
@@ -86,9 +85,20 @@ class VirtualSocketServer : public SocketServer, public sigslot::has_slots<> {
   // is separate from calculations to drop based on queue size.
   double drop_probability() { return drop_prob_; }
   void set_drop_probability(double drop_prob) {
-    assert((0 <= drop_prob) && (drop_prob <= 1));
+    RTC_DCHECK_GE(drop_prob, 0.0);
+    RTC_DCHECK_LE(drop_prob, 1.0);
     drop_prob_ = drop_prob;
   }
+
+  // If |blocked| is true, subsequent attempts to send will result in -1 being
+  // returned, with the socket error set to EWOULDBLOCK.
+  //
+  // If this method is later called with |blocked| set to false, any sockets
+  // that previously failed to send with EWOULDBLOCK will emit SignalWriteEvent.
+  //
+  // This can be used to simulate the send buffer on a network interface being
+  // full, and test functionality related to EWOULDBLOCK/SignalWriteEvent.
+  void SetSendingBlocked(bool blocked);
 
   // SocketFactory:
   Socket* CreateSocket(int type) override;
@@ -223,6 +233,9 @@ class VirtualSocketServer : public SocketServer, public sigslot::has_slots<> {
  private:
   friend class VirtualSocket;
 
+  // Sending was previously blocked, but now isn't.
+  sigslot::signal0<> SignalReadyToSend;
+
   typedef std::map<SocketAddress, VirtualSocket*> AddressMap;
   typedef std::map<SocketAddressPair, VirtualSocket*> ConnectionMap;
 
@@ -251,12 +264,15 @@ class VirtualSocketServer : public SocketServer, public sigslot::has_slots<> {
   CriticalSection delay_crit_;
 
   double drop_prob_;
+  bool sending_blocked_ = false;
   RTC_DISALLOW_COPY_AND_ASSIGN(VirtualSocketServer);
 };
 
 // Implements the socket interface using the virtual network.  Packets are
 // passed as messages using the message queue of the socket server.
-class VirtualSocket : public AsyncSocket, public MessageHandler {
+class VirtualSocket : public AsyncSocket,
+                      public MessageHandler,
+                      public sigslot::has_slots<> {
  public:
   VirtualSocket(VirtualSocketServer* server, int family, int type, bool async);
   ~VirtualSocket() override;
@@ -316,6 +332,8 @@ class VirtualSocket : public AsyncSocket, public MessageHandler {
   // Used by server sockets to set the local address without binding.
   void SetLocalAddress(const SocketAddress& addr);
 
+  void OnSocketServerReadyToSend();
+
   VirtualSocketServer* server_;
   int type_;
   bool async_;
@@ -330,7 +348,9 @@ class VirtualSocket : public AsyncSocket, public MessageHandler {
 
   // Data which tcp has buffered for sending
   SendBuffer send_buffer_;
-  bool write_enabled_;
+  // Set to false if the last attempt to send resulted in EWOULDBLOCK.
+  // Set back to true when the socket can send again.
+  bool ready_to_send_ = true;
 
   // Critical section to protect the recv_buffer and queue_
   CriticalSection crit_;

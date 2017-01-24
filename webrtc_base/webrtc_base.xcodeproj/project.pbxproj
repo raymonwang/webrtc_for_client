@@ -252,6 +252,36 @@
 		43A033E61D4EF0C400BB9828 /* virtualsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031FB1D4EF0C300BB9828 /* virtualsocketserver.cc */; };
 		43A034091D4EF0C400BB9828 /* worker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0321A1D4EF0C300BB9828 /* worker.cc */; };
 		43A0340A1D4EF0C400BB9828 /* worker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0321A1D4EF0C300BB9828 /* worker.cc */; };
+		43A2943E1E376BBD00B6BE98 /* applefilesystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43A293AE1E376BBB00B6BE98 /* applefilesystem.mm */; };
+		43A2943F1E376BBD00B6BE98 /* applefilesystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43A293AE1E376BBB00B6BE98 /* applefilesystem.mm */; };
+		43A294661E376BBD00B6BE98 /* diskcache_win32.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293C31E376BBB00B6BE98 /* diskcache_win32.cc */; };
+		43A294671E376BBD00B6BE98 /* diskcache_win32.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293C31E376BBB00B6BE98 /* diskcache_win32.cc */; };
+		43A2946E1E376BBD00B6BE98 /* file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293C81E376BBB00B6BE98 /* file_posix.cc */; };
+		43A2946F1E376BBD00B6BE98 /* file_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293C81E376BBB00B6BE98 /* file_posix.cc */; };
+		43A294721E376BBD00B6BE98 /* file_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293CA1E376BBB00B6BE98 /* file_win.cc */; };
+		43A294731E376BBD00B6BE98 /* file_win.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293CA1E376BBB00B6BE98 /* file_win.cc */; };
+		43A294741E376BBD00B6BE98 /* file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293CB1E376BBB00B6BE98 /* file.cc */; };
+		43A294751E376BBD00B6BE98 /* file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293CB1E376BBB00B6BE98 /* file.cc */; };
+		43A294B01E376BBD00B6BE98 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293F01E376BBB00B6BE98 /* optional.cc */; };
+		43A294B11E376BBD00B6BE98 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293F01E376BBB00B6BE98 /* optional.cc */; };
+		43A2950C1E376BBD00B6BE98 /* win32.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294261E376BBC00B6BE98 /* win32.cc */; };
+		43A2950D1E376BBD00B6BE98 /* win32.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294261E376BBC00B6BE98 /* win32.cc */; };
+		43A2950E1E376BBD00B6BE98 /* win32filesystem.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294281E376BBC00B6BE98 /* win32filesystem.cc */; };
+		43A2950F1E376BBD00B6BE98 /* win32filesystem.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294281E376BBC00B6BE98 /* win32filesystem.cc */; };
+		43A295121E376BBD00B6BE98 /* win32regkey.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2942B1E376BBC00B6BE98 /* win32regkey.cc */; };
+		43A295131E376BBD00B6BE98 /* win32regkey.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2942B1E376BBC00B6BE98 /* win32regkey.cc */; };
+		43A295141E376BBD00B6BE98 /* win32securityerrors.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2942D1E376BBD00B6BE98 /* win32securityerrors.cc */; };
+		43A295151E376BBD00B6BE98 /* win32securityerrors.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2942D1E376BBD00B6BE98 /* win32securityerrors.cc */; };
+		43A295161E376BBD00B6BE98 /* win32socketinit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2942E1E376BBD00B6BE98 /* win32socketinit.cc */; };
+		43A295171E376BBD00B6BE98 /* win32socketinit.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2942E1E376BBD00B6BE98 /* win32socketinit.cc */; };
+		43A2951A1E376BBD00B6BE98 /* win32socketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294311E376BBD00B6BE98 /* win32socketserver.cc */; };
+		43A2951B1E376BBD00B6BE98 /* win32socketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294311E376BBD00B6BE98 /* win32socketserver.cc */; };
+		43A2951E1E376BBD00B6BE98 /* win32window.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294341E376BBD00B6BE98 /* win32window.cc */; };
+		43A2951F1E376BBD00B6BE98 /* win32window.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294341E376BBD00B6BE98 /* win32window.cc */; };
+		43A295221E376BBD00B6BE98 /* win32windowpicker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294371E376BBD00B6BE98 /* win32windowpicker.cc */; };
+		43A295231E376BBD00B6BE98 /* win32windowpicker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A294371E376BBD00B6BE98 /* win32windowpicker.cc */; };
+		43A295281E376BBD00B6BE98 /* winping.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2943B1E376BBD00B6BE98 /* winping.cc */; };
+		43A295291E376BBD00B6BE98 /* winping.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2943B1E376BBD00B6BE98 /* winping.cc */; };
 		43C037001D51BE5C0022DED1 /* sequenced_task_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031831D4EF0C200BB9828 /* sequenced_task_checker_impl.cc */; };
 		43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -282,7 +312,6 @@
 
 /* Begin PBXFileReference section */
 		430D83241985E421009E763A /* libwebrtc_base.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43A030371D4EF0C100BB9828 /* aclocal.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
 		43A030391D4EF0C100BB9828 /* array_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = array_view.h; sourceTree = "<group>"; };
 		43A0303A1D4EF0C100BB9828 /* arraysize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arraysize.h; sourceTree = "<group>"; };
 		43A0303B1D4EF0C100BB9828 /* asyncfile.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = asyncfile.cc; sourceTree = "<group>"; };
@@ -303,7 +332,6 @@
 		43A0304D1D4EF0C100BB9828 /* atomicops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atomicops.h; sourceTree = "<group>"; };
 		43A0304F1D4EF0C100BB9828 /* autodetectproxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = autodetectproxy.cc; sourceTree = "<group>"; };
 		43A030501D4EF0C100BB9828 /* autodetectproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autodetectproxy.h; sourceTree = "<group>"; };
-		43A030591D4EF0C100BB9828 /* autoscan.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autoscan.log; sourceTree = "<group>"; };
 		43A0305B1D4EF0C100BB9828 /* bandwidthsmoother.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bandwidthsmoother.cc; sourceTree = "<group>"; };
 		43A0305C1D4EF0C100BB9828 /* bandwidthsmoother.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bandwidthsmoother.h; sourceTree = "<group>"; };
 		43A0305D1D4EF0C100BB9828 /* base_tests.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base_tests.gyp; sourceTree = "<group>"; };
@@ -617,6 +645,40 @@
 		43A0321B1D4EF0C300BB9828 /* worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = worker.h; sourceTree = "<group>"; };
 		43A0321D1D4EF0C300BB9828 /* x11windowpicker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = x11windowpicker.cc; sourceTree = "<group>"; };
 		43A0321E1D4EF0C300BB9828 /* x11windowpicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x11windowpicker.h; sourceTree = "<group>"; };
+		43A293AE1E376BBB00B6BE98 /* applefilesystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = applefilesystem.mm; sourceTree = "<group>"; };
+		43A293C21E376BBB00B6BE98 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
+		43A293C31E376BBB00B6BE98 /* diskcache_win32.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = diskcache_win32.cc; sourceTree = "<group>"; };
+		43A293C41E376BBB00B6BE98 /* diskcache_win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diskcache_win32.h; sourceTree = "<group>"; };
+		43A293C81E376BBB00B6BE98 /* file_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_posix.cc; sourceTree = "<group>"; };
+		43A293CA1E376BBB00B6BE98 /* file_win.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_win.cc; sourceTree = "<group>"; };
+		43A293CB1E376BBB00B6BE98 /* file.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file.cc; sourceTree = "<group>"; };
+		43A293CC1E376BBB00B6BE98 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
+		43A293CF1E376BBB00B6BE98 /* gtest_prod.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gtest_prod.target.mk; sourceTree = "<group>"; };
+		43A293F01E376BBB00B6BE98 /* optional.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = optional.cc; sourceTree = "<group>"; };
+		43A293F21E376BBC00B6BE98 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43A294001E376BBC00B6BE98 /* rtc_base_approved.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rtc_base_approved.target.mk; sourceTree = "<group>"; };
+		43A294011E376BBC00B6BE98 /* rtc_base_tests_utils.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rtc_base_tests_utils.target.mk; sourceTree = "<group>"; };
+		43A294021E376BBC00B6BE98 /* rtc_base.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rtc_base.target.mk; sourceTree = "<group>"; };
+		43A294031E376BBC00B6BE98 /* rtc_task_queue.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rtc_task_queue.target.mk; sourceTree = "<group>"; };
+		43A294061E376BBC00B6BE98 /* sanitizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sanitizer.h; sourceTree = "<group>"; };
+		43A294201E376BBC00B6BE98 /* type_traits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type_traits.h; sourceTree = "<group>"; };
+		43A294261E376BBC00B6BE98 /* win32.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32.cc; sourceTree = "<group>"; };
+		43A294271E376BBC00B6BE98 /* win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32.h; sourceTree = "<group>"; };
+		43A294281E376BBC00B6BE98 /* win32filesystem.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32filesystem.cc; sourceTree = "<group>"; };
+		43A294291E376BBC00B6BE98 /* win32filesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32filesystem.h; sourceTree = "<group>"; };
+		43A2942B1E376BBC00B6BE98 /* win32regkey.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32regkey.cc; sourceTree = "<group>"; };
+		43A2942C1E376BBD00B6BE98 /* win32regkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32regkey.h; sourceTree = "<group>"; };
+		43A2942D1E376BBD00B6BE98 /* win32securityerrors.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32securityerrors.cc; sourceTree = "<group>"; };
+		43A2942E1E376BBD00B6BE98 /* win32socketinit.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32socketinit.cc; sourceTree = "<group>"; };
+		43A2942F1E376BBD00B6BE98 /* win32socketinit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32socketinit.h; sourceTree = "<group>"; };
+		43A294311E376BBD00B6BE98 /* win32socketserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32socketserver.cc; sourceTree = "<group>"; };
+		43A294321E376BBD00B6BE98 /* win32socketserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32socketserver.h; sourceTree = "<group>"; };
+		43A294341E376BBD00B6BE98 /* win32window.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32window.cc; sourceTree = "<group>"; };
+		43A294351E376BBD00B6BE98 /* win32window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32window.h; sourceTree = "<group>"; };
+		43A294371E376BBD00B6BE98 /* win32windowpicker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = win32windowpicker.cc; sourceTree = "<group>"; };
+		43A294381E376BBD00B6BE98 /* win32windowpicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = win32windowpicker.h; sourceTree = "<group>"; };
+		43A2943B1E376BBD00B6BE98 /* winping.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = winping.cc; sourceTree = "<group>"; };
+		43A2943C1E376BBD00B6BE98 /* winping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winping.h; sourceTree = "<group>"; };
 		43C67D731D211C8A00427D35 /* libwebrtc_base_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -666,7 +728,40 @@
 		430D83601985E4AB009E763A /* base */ = {
 			isa = PBXGroup;
 			children = (
-				43A030371D4EF0C100BB9828 /* aclocal.m4 */,
+				43A293AE1E376BBB00B6BE98 /* applefilesystem.mm */,
+				43A293C21E376BBB00B6BE98 /* DEPS */,
+				43A293C31E376BBB00B6BE98 /* diskcache_win32.cc */,
+				43A293C41E376BBB00B6BE98 /* diskcache_win32.h */,
+				43A293C81E376BBB00B6BE98 /* file_posix.cc */,
+				43A293CA1E376BBB00B6BE98 /* file_win.cc */,
+				43A293CB1E376BBB00B6BE98 /* file.cc */,
+				43A293CC1E376BBB00B6BE98 /* file.h */,
+				43A293CF1E376BBB00B6BE98 /* gtest_prod.target.mk */,
+				43A293F01E376BBB00B6BE98 /* optional.cc */,
+				43A293F21E376BBC00B6BE98 /* OWNERS */,
+				43A294001E376BBC00B6BE98 /* rtc_base_approved.target.mk */,
+				43A294011E376BBC00B6BE98 /* rtc_base_tests_utils.target.mk */,
+				43A294021E376BBC00B6BE98 /* rtc_base.target.mk */,
+				43A294031E376BBC00B6BE98 /* rtc_task_queue.target.mk */,
+				43A294061E376BBC00B6BE98 /* sanitizer.h */,
+				43A294201E376BBC00B6BE98 /* type_traits.h */,
+				43A294261E376BBC00B6BE98 /* win32.cc */,
+				43A294271E376BBC00B6BE98 /* win32.h */,
+				43A294281E376BBC00B6BE98 /* win32filesystem.cc */,
+				43A294291E376BBC00B6BE98 /* win32filesystem.h */,
+				43A2942B1E376BBC00B6BE98 /* win32regkey.cc */,
+				43A2942C1E376BBD00B6BE98 /* win32regkey.h */,
+				43A2942D1E376BBD00B6BE98 /* win32securityerrors.cc */,
+				43A2942E1E376BBD00B6BE98 /* win32socketinit.cc */,
+				43A2942F1E376BBD00B6BE98 /* win32socketinit.h */,
+				43A294311E376BBD00B6BE98 /* win32socketserver.cc */,
+				43A294321E376BBD00B6BE98 /* win32socketserver.h */,
+				43A294341E376BBD00B6BE98 /* win32window.cc */,
+				43A294351E376BBD00B6BE98 /* win32window.h */,
+				43A294371E376BBD00B6BE98 /* win32windowpicker.cc */,
+				43A294381E376BBD00B6BE98 /* win32windowpicker.h */,
+				43A2943B1E376BBD00B6BE98 /* winping.cc */,
+				43A2943C1E376BBD00B6BE98 /* winping.h */,
 				43A030391D4EF0C100BB9828 /* array_view.h */,
 				43A0303A1D4EF0C100BB9828 /* arraysize.h */,
 				43A0303B1D4EF0C100BB9828 /* asyncfile.cc */,
@@ -687,7 +782,6 @@
 				43A0304D1D4EF0C100BB9828 /* atomicops.h */,
 				43A0304F1D4EF0C100BB9828 /* autodetectproxy.cc */,
 				43A030501D4EF0C100BB9828 /* autodetectproxy.h */,
-				43A030591D4EF0C100BB9828 /* autoscan.log */,
 				43A0305B1D4EF0C100BB9828 /* bandwidthsmoother.cc */,
 				43A0305C1D4EF0C100BB9828 /* bandwidthsmoother.h */,
 				43A0305D1D4EF0C100BB9828 /* base_tests.gyp */,
@@ -1079,14 +1173,19 @@
 				43A0326D1D4EF0C300BB9828 /* dbus.cc in Sources */,
 				4394AE831D5196C900E27530 /* criticalsection.cc in Sources */,
 				43A032471D4EF0C300BB9828 /* bitbuffer.cc in Sources */,
+				43A295141E376BBD00B6BE98 /* win32securityerrors.cc in Sources */,
 				43A033751D4EF0C400BB9828 /* signalthread.cc in Sources */,
+				43A2950C1E376BBD00B6BE98 /* win32.cc in Sources */,
 				43A0327D1D4EF0C300BB9828 /* exp_filter.cc in Sources */,
+				43A294721E376BBD00B6BE98 /* file_win.cc in Sources */,
 				434B058A1D50B3A900FDCA92 /* sslidentity.cc in Sources */,
 				43A033CD1D4EF0C400BB9828 /* timestampaligner.cc in Sources */,
 				43A0323B1D4EF0C300BB9828 /* bandwidthsmoother.cc in Sources */,
+				43A2951E1E376BBD00B6BE98 /* win32window.cc in Sources */,
 				43A033191D4EF0C300BB9828 /* opensslstreamadapter.cc in Sources */,
 				43A0332D1D4EF0C400BB9828 /* platform_thread.cc in Sources */,
 				434BF8201D50A81B00FDCA92 /* helpers.cc in Sources */,
+				43A294741E376BBD00B6BE98 /* file.cc in Sources */,
 				43A033291D4EF0C400BB9828 /* platform_file.cc in Sources */,
 				43A0329F1D4EF0C300BB9828 /* httpserver.cc in Sources */,
 				43A033E11D4EF0C400BB9828 /* versionparsing.cc in Sources */,
@@ -1099,6 +1198,7 @@
 				43A033891D4EF0C400BB9828 /* socketstream.cc in Sources */,
 				43A033151D4EF0C300BB9828 /* openssldigest.cc in Sources */,
 				43A033DD1D4EF0C400BB9828 /* urlencode.cc in Sources */,
+				43A295221E376BBD00B6BE98 /* win32windowpicker.cc in Sources */,
 				43A032C51D4EF0C300BB9828 /* logging_mac.mm in Sources */,
 				43A032291D4EF0C300BB9828 /* asyncsocket.cc in Sources */,
 				43A0338D1D4EF0C400BB9828 /* ssladapter.cc in Sources */,
@@ -1134,17 +1234,20 @@
 				43A032A51D4EF0C300BB9828 /* iosfilesystem.mm in Sources */,
 				43A0335B1D4EF0C400BB9828 /* rtccertificate.cc in Sources */,
 				43A032B71D4EF0C300BB9828 /* latebindingsymboltable.cc in Sources */,
+				43A295121E376BBD00B6BE98 /* win32regkey.cc in Sources */,
 				43A033851D4EF0C400BB9828 /* socketaddresspair.cc in Sources */,
 				43A033D91D4EF0C400BB9828 /* unixfilesystem.cc in Sources */,
 				43A033A51D4EF0C400BB9828 /* stringutils.cc in Sources */,
 				43A032D71D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */,
 				431730341D509C62003B5883 /* sslstreamadapter.cc in Sources */,
+				43A295281E376BBD00B6BE98 /* winping.cc in Sources */,
 				43A032991D4EF0C300BB9828 /* httpcommon.cc in Sources */,
 				43A032591D4EF0C300BB9828 /* checks.cc in Sources */,
 				43A0334B1D4EF0C400BB9828 /* rate_statistics.cc in Sources */,
 				43A0333F1D4EF0C400BB9828 /* race_checker.cc in Sources */,
 				4387795B1D4F522400E6F9E9 /* timeutils.cc in Sources */,
 				43A032A11D4EF0C300BB9828 /* ifaddrs_converter.cc in Sources */,
+				43A2951A1E376BBD00B6BE98 /* win32socketserver.cc in Sources */,
 				43A0330B1D4EF0C300BB9828 /* networkmonitor.cc in Sources */,
 				43A0324B1D4EF0C300BB9828 /* buffer.cc in Sources */,
 				43A0328B1D4EF0C300BB9828 /* flags.cc in Sources */,
@@ -1154,9 +1257,13 @@
 				43A032F11D4EF0C300BB9828 /* messagehandler.cc in Sources */,
 				43C0C70C1D4F26810058AC82 /* task_queue_posix.cc in Sources */,
 				43A032CB1D4EF0C300BB9828 /* logsinks.cc in Sources */,
+				43A2943E1E376BBD00B6BE98 /* applefilesystem.mm in Sources */,
 				43A033131D4EF0C300BB9828 /* openssladapter.cc in Sources */,
+				43A2946E1E376BBD00B6BE98 /* file_posix.cc in Sources */,
 				43A033471D4EF0C400BB9828 /* rate_limiter.cc in Sources */,
 				43A033871D4EF0C400BB9828 /* socketpool.cc in Sources */,
+				43A294661E376BBD00B6BE98 /* diskcache_win32.cc in Sources */,
+				43A295161E376BBD00B6BE98 /* win32socketinit.cc in Sources */,
 				43A0325B1D4EF0C300BB9828 /* common.cc in Sources */,
 				43A033D31D4EF0C400BB9828 /* timing.cc in Sources */,
 				43A032751D4EF0C300BB9828 /* event_tracer.cc in Sources */,
@@ -1175,6 +1282,7 @@
 				43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A032691D4EF0C300BB9828 /* cryptstring.cc in Sources */,
 				43A0331F1D4EF0C300BB9828 /* optionsfile.cc in Sources */,
+				43A294B01E376BBD00B6BE98 /* optional.cc in Sources */,
 				43A0327F1D4EF0C300BB9828 /* fakeclock.cc in Sources */,
 				43A032711D4EF0C300BB9828 /* diskcache.cc in Sources */,
 				43A032D51D4EF0C300BB9828 /* macconversion.cc in Sources */,
@@ -1193,6 +1301,7 @@
 				43A0332F1D4EF0C400BB9828 /* posix.cc in Sources */,
 				43A033691D4EF0C400BB9828 /* sha1.cc in Sources */,
 				43A033BD1D4EF0C400BB9828 /* taskrunner.cc in Sources */,
+				43A2950E1E376BBD00B6BE98 /* win32filesystem.cc in Sources */,
 				43A0323F1D4EF0C300BB9828 /* base64.cc in Sources */,
 				43A0334F1D4EF0C400BB9828 /* ratelimiter.cc in Sources */,
 				43A0338F1D4EF0C400BB9828 /* sslfingerprint.cc in Sources */,
@@ -1205,6 +1314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43A033961D4EF0C400BB9828 /* sslsocketfactory.cc in Sources */,
+				43A295131E376BBD00B6BE98 /* win32regkey.cc in Sources */,
 				43A0326E1D4EF0C300BB9828 /* dbus.cc in Sources */,
 				43A032481D4EF0C300BB9828 /* bitbuffer.cc in Sources */,
 				43A033761D4EF0C400BB9828 /* signalthread.cc in Sources */,
@@ -1214,9 +1324,11 @@
 				43A0331A1D4EF0C300BB9828 /* opensslstreamadapter.cc in Sources */,
 				43A0332E1D4EF0C400BB9828 /* platform_thread.cc in Sources */,
 				43A0332A1D4EF0C400BB9828 /* platform_file.cc in Sources */,
+				43A2950F1E376BBD00B6BE98 /* win32filesystem.cc in Sources */,
 				43A032A01D4EF0C300BB9828 /* httpserver.cc in Sources */,
 				43A033E21D4EF0C400BB9828 /* versionparsing.cc in Sources */,
 				43A0327A1D4EF0C300BB9828 /* event.cc in Sources */,
+				43A295171E376BBD00B6BE98 /* win32socketinit.cc in Sources */,
 				43A0340A1D4EF0C400BB9828 /* worker.cc in Sources */,
 				43A032BA1D4EF0C300BB9828 /* libdbusglibsymboltable.cc in Sources */,
 				43A0329C1D4EF0C300BB9828 /* httprequest.cc in Sources */,
@@ -1230,10 +1342,14 @@
 				43A032C61D4EF0C300BB9828 /* logging_mac.mm in Sources */,
 				43A0322A1D4EF0C300BB9828 /* asyncsocket.cc in Sources */,
 				43A0338E1D4EF0C400BB9828 /* ssladapter.cc in Sources */,
+				43A2951B1E376BBD00B6BE98 /* win32socketserver.cc in Sources */,
 				43A033E61D4EF0C400BB9828 /* virtualsocketserver.cc in Sources */,
+				43A2951F1E376BBD00B6BE98 /* win32window.cc in Sources */,
 				43A033721D4EF0C400BB9828 /* sharedexclusivelock.cc in Sources */,
 				43A033041D4EF0C300BB9828 /* nattypes.cc in Sources */,
+				43A295151E376BBD00B6BE98 /* win32securityerrors.cc in Sources */,
 				43A033C21D4EF0C400BB9828 /* testclient.cc in Sources */,
+				43A295291E376BBD00B6BE98 /* winping.cc in Sources */,
 				43A033CA1D4EF0C400BB9828 /* thread.cc in Sources */,
 				43A033001D4EF0C300BB9828 /* natserver.cc in Sources */,
 				434BF8211D50A81B00FDCA92 /* helpers.cc in Sources */,
@@ -1246,6 +1362,7 @@
 				43A0333A1D4EF0C400BB9828 /* proxydetect.cc in Sources */,
 				43A033021D4EF0C300BB9828 /* natsocketfactory.cc in Sources */,
 				43A033BC1D4EF0C400BB9828 /* taskparent.cc in Sources */,
+				43A294671E376BBD00B6BE98 /* diskcache_win32.cc in Sources */,
 				43A032A41D4EF0C300BB9828 /* ifaddrs-android.cc in Sources */,
 				43A032FC1D4EF0C300BB9828 /* multipart.cc in Sources */,
 				43A0328A1D4EF0C300BB9828 /* firewallsocketserver.cc in Sources */,
@@ -1256,6 +1373,7 @@
 				43A0337A1D4EF0C400BB9828 /* sigslot.cc in Sources */,
 				43A032D21D4EF0C300BB9828 /* maccocoasocketserver.mm in Sources */,
 				43A032E41D4EF0C300BB9828 /* macwindowpicker.cc in Sources */,
+				43A294751E376BBD00B6BE98 /* file.cc in Sources */,
 				43A032CA1D4EF0C300BB9828 /* logging.cc in Sources */,
 				43A032881D4EF0C300BB9828 /* fileutils.cc in Sources */,
 				43A0339E1D4EF0C400BB9828 /* stream.cc in Sources */,
@@ -1277,6 +1395,7 @@
 				43A0330C1D4EF0C300BB9828 /* networkmonitor.cc in Sources */,
 				43A0324C1D4EF0C300BB9828 /* buffer.cc in Sources */,
 				43A0328C1D4EF0C300BB9828 /* flags.cc in Sources */,
+				43A294731E376BBD00B6BE98 /* file_win.cc in Sources */,
 				43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A033D61D4EF0C400BB9828 /* transformadapter.cc in Sources */,
 				43A032B41D4EF0C300BB9828 /* json.cc in Sources */,
@@ -1315,8 +1434,12 @@
 				43A0336E1D4EF0C400BB9828 /* sha1digest.cc in Sources */,
 				43A032541D4EF0C300BB9828 /* bytebuffer.cc in Sources */,
 				43A032841D4EF0C300BB9828 /* filerotatingstream.cc in Sources */,
+				43A2946F1E376BBD00B6BE98 /* file_posix.cc in Sources */,
 				43A032501D4EF0C300BB9828 /* bufferqueue.cc in Sources */,
 				43A033601D4EF0C400BB9828 /* rtccertificategenerator.cc in Sources */,
+				43A295231E376BBD00B6BE98 /* win32windowpicker.cc in Sources */,
+				43A2950D1E376BBD00B6BE98 /* win32.cc in Sources */,
+				43A294B11E376BBD00B6BE98 /* optional.cc in Sources */,
 				43A032261D4EF0C300BB9828 /* asyncpacketsocket.cc in Sources */,
 				43A032641D4EF0C300BB9828 /* crc32.cc in Sources */,
 				431730371D509D43003B5883 /* messagedigest.cc in Sources */,
@@ -1331,6 +1454,7 @@
 				43A032681D4EF0C300BB9828 /* criticalsection.cc in Sources */,
 				43A032EC1D4EF0C300BB9828 /* md5digest.cc in Sources */,
 				43A033661D4EF0C400BB9828 /* sequenced_task_checker_impl.cc in Sources */,
+				43A2943F1E376BBD00B6BE98 /* applefilesystem.mm in Sources */,
 				43A033D21D4EF0C400BB9828 /* timeutils.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
