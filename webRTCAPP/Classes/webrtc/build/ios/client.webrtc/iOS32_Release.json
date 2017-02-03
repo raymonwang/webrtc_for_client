@@ -3,16 +3,19 @@
     "kjellander"
   ],
   "comments": [
-    "Builder for 32-bit devices."
+    "Builder for 32-bit devices.",
+    "gn_args in this file is only read by the buildbot recipe; ",
+    "webrtc/build/mb_config.pyl contains the actual build configuration.",
+    "TODO(kjellander): remove gn_args when the recipe is updated."
   ],
-  "xcode version": "7.0",
-  "GYP_DEFINES": {
-    "chromium_ios_signing": "0",
-    "target_arch": "arm"
-  },
+  "xcode version": "8.0",
+  "gn_args": [
+    "use_goma=true"
+  ],
   "compiler": "ninja",
+  "additional_compile_targets": [ "all" ],
   "configuration": "Release",
-  "sdk": "iphoneos9.0",
+  "sdk": "iphoneos10.0",
   "tests": [
   ]
 }

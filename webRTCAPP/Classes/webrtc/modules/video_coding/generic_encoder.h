@@ -28,7 +28,7 @@ class MediaOptimization;
 }  // namespace media_optimization
 
 struct EncoderParameters {
-  uint32_t target_bitrate;
+  BitrateAllocation target_bitrate;
   uint8_t loss_rate;
   int64_t rtt;
   uint32_t input_frame_rate;
@@ -41,9 +41,10 @@ class VCMEncodedFrameCallback : public EncodedImageCallback {
   virtual ~VCMEncodedFrameCallback();
 
   // Implements EncodedImageCallback.
-  int32_t Encoded(const EncodedImage& encoded_image,
-                  const CodecSpecificInfo* codec_specific,
-                  const RTPFragmentationHeader* fragmentation_header) override;
+  EncodedImageCallback::Result OnEncodedImage(
+      const EncodedImage& encoded_image,
+      const CodecSpecificInfo* codec_specific_info,
+      const RTPFragmentationHeader* fragmentation) override;
   void SetInternalSource(bool internal_source) {
     internal_source_ = internal_source;
   }
@@ -69,8 +70,6 @@ class VCMGenericEncoder {
   int32_t Encode(const VideoFrame& frame,
                  const CodecSpecificInfo* codec_specific,
                  const std::vector<FrameType>& frame_types);
-
-  const char* ImplementationName() const;
 
   void SetEncoderParameters(const EncoderParameters& params);
   EncoderParameters GetEncoderParameters() const;

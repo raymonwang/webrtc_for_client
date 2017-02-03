@@ -10,6 +10,8 @@
 
 #include "webrtc/modules/audio_coding/codecs/audio_format.h"
 
+#include "webrtc/common_types.h"
+
 namespace webrtc {
 
 SdpAudioFormat::SdpAudioFormat(const SdpAudioFormat&) = default;
@@ -20,18 +22,38 @@ SdpAudioFormat::SdpAudioFormat(const char* name,
                                int num_channels)
     : name(name), clockrate_hz(clockrate_hz), num_channels(num_channels) {}
 
+SdpAudioFormat::SdpAudioFormat(const std::string& name,
+                               int clockrate_hz,
+                               int num_channels)
+    : name(name), clockrate_hz(clockrate_hz), num_channels(num_channels) {}
+
 SdpAudioFormat::SdpAudioFormat(const char* name,
                                int clockrate_hz,
                                int num_channels,
-                               Parameters&& param)
+                               const Parameters& param)
     : name(name),
       clockrate_hz(clockrate_hz),
       num_channels(num_channels),
-      parameters(std::move(param)) {}
+      parameters(param) {}
+
+SdpAudioFormat::SdpAudioFormat(const std::string& name,
+                               int clockrate_hz,
+                               int num_channels,
+                               const Parameters& param)
+    : name(name),
+      clockrate_hz(clockrate_hz),
+      num_channels(num_channels),
+      parameters(param) {}
 
 SdpAudioFormat::~SdpAudioFormat() = default;
 SdpAudioFormat& SdpAudioFormat::operator=(const SdpAudioFormat&) = default;
 SdpAudioFormat& SdpAudioFormat::operator=(SdpAudioFormat&&) = default;
+
+bool operator==(const SdpAudioFormat& a, const SdpAudioFormat& b) {
+  return STR_CASE_CMP(a.name.c_str(), b.name.c_str()) == 0 &&
+         a.clockrate_hz == b.clockrate_hz && a.num_channels == b.num_channels &&
+         a.parameters == b.parameters;
+}
 
 void swap(SdpAudioFormat& a, SdpAudioFormat& b) {
   using std::swap;

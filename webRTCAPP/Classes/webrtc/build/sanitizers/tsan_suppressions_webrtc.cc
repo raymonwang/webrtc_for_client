@@ -24,7 +24,6 @@ char kTSanDefaultSuppressions[] =
 // WebRTC specific suppressions.
 
 // Split up suppressions covered previously by thread.cc and messagequeue.cc.
-"race:rtc::MessageQueue::Quit\n"
 "race:vp8cx_remove_encoder_threads\n"
 "race:third_party/libvpx/source/libvpx/vp9/common/vp9_scan.h\n"
 
@@ -35,11 +34,6 @@ char kTSanDefaultSuppressions[] =
 "race:webrtc::VoiceEngine::SetTraceFilter\n"
 "race:webrtc::Trace::set_level_filter\n"
 "race:webrtc::GetStaticInstance<webrtc::TraceImpl>\n"
-
-// Audio processing
-// https://code.google.com/p/webrtc/issues/detail?id=2521 for details.
-"race:webrtc/modules/audio_processing/aec/aec_core.c\n"
-"race:webrtc/modules/audio_processing/aec/aec_rdft.c\n"
 
 // Race in pulse initialization.
 // https://code.google.com/p/webrtc/issues/detail?id=5152

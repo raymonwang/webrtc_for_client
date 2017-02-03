@@ -11,7 +11,6 @@
 		430D871E1986054F009E763A /* channel_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86BD1986054F009E763A /* channel_manager.cc */; };
 		430D87211986054F009E763A /* level_indicator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D61986054F009E763A /* level_indicator.cc */; };
 		430D87221986054F009E763A /* monitor_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D81986054F009E763A /* monitor_module.cc */; };
-		430D87231986054F009E763A /* network_predictor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DA1986054F009E763A /* network_predictor.cc */; };
 		430D87241986054F009E763A /* output_mixer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DC1986054F009E763A /* output_mixer.cc */; };
 		430D87251986054F009E763A /* shared_data.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DE1986054F009E763A /* shared_data.cc */; };
 		430D87261986054F009E763A /* statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86E01986054F009E763A /* statistics.cc */; };
@@ -40,7 +39,6 @@
 		432B2FD419CAB14D001267A7 /* voe_external_media_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87091986054F009E763A /* voe_external_media_impl.cc */; };
 		432B2FD519CAB14D001267A7 /* transmit_mixer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86FC1986054F009E763A /* transmit_mixer.cc */; };
 		432B2FD619CAB14D001267A7 /* statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86E01986054F009E763A /* statistics.cc */; };
-		432B2FD719CAB14D001267A7 /* network_predictor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86DA1986054F009E763A /* network_predictor.cc */; };
 		432B2FD819CAB14D001267A7 /* monitor_module.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D86D81986054F009E763A /* monitor_module.cc */; };
 		432B2FDA19CAB14D001267A7 /* voe_neteq_stats_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D870F1986054F009E763A /* voe_neteq_stats_impl.cc */; };
 		432B2FDB19CAB14D001267A7 /* voe_audio_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87001986054F009E763A /* voe_audio_processing_impl.cc */; };
@@ -98,8 +96,6 @@
 		430D86D71986054F009E763A /* level_indicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level_indicator.h; sourceTree = "<group>"; };
 		430D86D81986054F009E763A /* monitor_module.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = monitor_module.cc; sourceTree = "<group>"; };
 		430D86D91986054F009E763A /* monitor_module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = monitor_module.h; sourceTree = "<group>"; };
-		430D86DA1986054F009E763A /* network_predictor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = network_predictor.cc; sourceTree = "<group>"; };
-		430D86DB1986054F009E763A /* network_predictor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = network_predictor.h; sourceTree = "<group>"; };
 		430D86DC1986054F009E763A /* output_mixer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_mixer.cc; sourceTree = "<group>"; };
 		430D86DD1986054F009E763A /* output_mixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output_mixer.h; sourceTree = "<group>"; };
 		430D86DE1986054F009E763A /* shared_data.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shared_data.cc; sourceTree = "<group>"; };
@@ -112,7 +108,6 @@
 		430D86FF1986054F009E763A /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		430D87001986054F009E763A /* voe_audio_processing_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_audio_processing_impl.cc; sourceTree = "<group>"; };
 		430D87011986054F009E763A /* voe_audio_processing_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_audio_processing_impl.h; sourceTree = "<group>"; };
-		430D87021986054F009E763A /* voe_auto_test.isolate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = voe_auto_test.isolate; sourceTree = "<group>"; };
 		430D87031986054F009E763A /* voe_base_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_base_impl.cc; sourceTree = "<group>"; };
 		430D87041986054F009E763A /* voe_base_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_base_impl.h; sourceTree = "<group>"; };
 		430D87051986054F009E763A /* voe_codec_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_codec_impl.cc; sourceTree = "<group>"; };
@@ -133,7 +128,6 @@
 		430D87161986054F009E763A /* voe_video_sync_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_video_sync_impl.h; sourceTree = "<group>"; };
 		430D87171986054F009E763A /* voe_volume_control_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voe_volume_control_impl.cc; sourceTree = "<group>"; };
 		430D87181986054F009E763A /* voe_volume_control_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voe_volume_control_impl.h; sourceTree = "<group>"; };
-		430D87191986054F009E763A /* voice_engine.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = voice_engine.gyp; sourceTree = "<group>"; };
 		430D871A1986054F009E763A /* voice_engine_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_defines.h; sourceTree = "<group>"; };
 		430D871B1986054F009E763A /* voice_engine_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_engine_impl.cc; sourceTree = "<group>"; };
 		430D871C1986054F009E763A /* voice_engine_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_impl.h; sourceTree = "<group>"; };
@@ -188,9 +182,9 @@
 		430D86B91986054F009E763A /* voice_engine */ = {
 			isa = PBXGroup;
 			children = (
+				430D86C31986054F009E763A /* include */,
 				4394AE191D51958600E27530 /* channel_proxy.cc */,
 				4394AE1A1D51958600E27530 /* channel_proxy.h */,
-				430D86C31986054F009E763A /* include */,
 				430D86BB1986054F009E763A /* channel.cc */,
 				430D86BC1986054F009E763A /* channel.h */,
 				430D86BD1986054F009E763A /* channel_manager.cc */,
@@ -199,8 +193,6 @@
 				430D86D71986054F009E763A /* level_indicator.h */,
 				430D86D81986054F009E763A /* monitor_module.cc */,
 				430D86D91986054F009E763A /* monitor_module.h */,
-				430D86DA1986054F009E763A /* network_predictor.cc */,
-				430D86DB1986054F009E763A /* network_predictor.h */,
 				430D86DC1986054F009E763A /* output_mixer.cc */,
 				430D86DD1986054F009E763A /* output_mixer.h */,
 				430D86DE1986054F009E763A /* shared_data.cc */,
@@ -213,7 +205,6 @@
 				430D86FF1986054F009E763A /* utility.h */,
 				430D87001986054F009E763A /* voe_audio_processing_impl.cc */,
 				430D87011986054F009E763A /* voe_audio_processing_impl.h */,
-				430D87021986054F009E763A /* voe_auto_test.isolate */,
 				430D87031986054F009E763A /* voe_base_impl.cc */,
 				430D87041986054F009E763A /* voe_base_impl.h */,
 				430D87051986054F009E763A /* voe_codec_impl.cc */,
@@ -234,7 +225,6 @@
 				430D87161986054F009E763A /* voe_video_sync_impl.h */,
 				430D87171986054F009E763A /* voe_volume_control_impl.cc */,
 				430D87181986054F009E763A /* voe_volume_control_impl.h */,
-				430D87191986054F009E763A /* voice_engine.gyp */,
 				430D871A1986054F009E763A /* voice_engine_defines.h */,
 				430D871B1986054F009E763A /* voice_engine_impl.cc */,
 				430D871C1986054F009E763A /* voice_engine_impl.h */,
@@ -342,7 +332,6 @@
 				430D872D1986054F009E763A /* voe_external_media_impl.cc in Sources */,
 				430D87271986054F009E763A /* transmit_mixer.cc in Sources */,
 				430D87261986054F009E763A /* statistics.cc in Sources */,
-				430D87231986054F009E763A /* network_predictor.cc in Sources */,
 				430D87221986054F009E763A /* monitor_module.cc in Sources */,
 				430D87301986054F009E763A /* voe_neteq_stats_impl.cc in Sources */,
 				4394AE1B1D51958600E27530 /* channel_proxy.cc in Sources */,
@@ -372,7 +361,6 @@
 				432B2FD419CAB14D001267A7 /* voe_external_media_impl.cc in Sources */,
 				432B2FD519CAB14D001267A7 /* transmit_mixer.cc in Sources */,
 				432B2FD619CAB14D001267A7 /* statistics.cc in Sources */,
-				432B2FD719CAB14D001267A7 /* network_predictor.cc in Sources */,
 				432B2FD819CAB14D001267A7 /* monitor_module.cc in Sources */,
 				432B2FDA19CAB14D001267A7 /* voe_neteq_stats_impl.cc in Sources */,
 				4394AE1C1D51958600E27530 /* channel_proxy.cc in Sources */,

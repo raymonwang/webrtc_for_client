@@ -19,7 +19,21 @@
 
 namespace webrtc {
 
+namespace congestion_controller {
+int GetMinBitrateBps();
+}  // namespace congestion_controller
+
 static const int64_t kBitrateWindowMs = 1000;
+
+extern const char* kBweTypeHistogram;
+
+enum BweNames {
+  kReceiverNoExtension = 0,
+  kReceiverTOffset = 1,
+  kReceiverAbsSendTime = 2,
+  kSendSideTransportSeqNum = 3,
+  kBweNamesMax = 4
+};
 
 enum BandwidthUsage {
   kBwNormal = 0,

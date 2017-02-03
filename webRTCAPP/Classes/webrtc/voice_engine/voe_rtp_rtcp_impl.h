@@ -51,14 +51,6 @@ class VoERTP_RTCPImpl : public VoERTP_RTCP {
                                            bool enable,
                                            unsigned char id) override;
 
-  // RTP Header Extension for Absolute Sender Time
-  int SetSendAbsoluteSenderTimeStatus(int channel,
-                                      bool enable,
-                                      unsigned char id) override;
-  int SetReceiveAbsoluteSenderTimeStatus(int channel,
-                                         bool enable,
-                                         unsigned char id) override;
-
   // Statistics
   int GetRTPStatistics(int channel,
                        unsigned int& averageJitterMs,
@@ -70,11 +62,6 @@ class VoERTP_RTCPImpl : public VoERTP_RTCP {
   int GetRemoteRTCPReportBlocks(
       int channel,
       std::vector<ReportBlock>* report_blocks) override;
-
-  // RED
-  int SetREDStatus(int channel, bool enable, int redPayloadtype = -1) override;
-
-  int GetREDStatus(int channel, bool& enabled, int& redPayloadtype) override;
 
   // NACK
   int SetNACKStatus(int channel, bool enable, int maxNoPackets) override;

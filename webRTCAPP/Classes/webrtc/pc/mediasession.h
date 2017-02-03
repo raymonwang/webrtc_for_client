@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 
+#include "webrtc/api/mediatypes.h"
 #include "webrtc/media/base/codec.h"
 #include "webrtc/media/base/cryptoparams.h"
 #include "webrtc/media/base/mediachannel.h"
@@ -25,7 +26,7 @@
 #include "webrtc/media/base/mediaengine.h"  // For DataChannelType
 #include "webrtc/media/base/streamparams.h"
 #include "webrtc/p2p/base/sessiondescription.h"
-#include "webrtc/p2p/base/transport.h"
+#include "webrtc/p2p/base/jseptransport.h"
 #include "webrtc/p2p/base/transportdescriptionfactory.h"
 
 namespace cricket {
@@ -36,14 +37,6 @@ typedef std::vector<VideoCodec> VideoCodecs;
 typedef std::vector<DataCodec> DataCodecs;
 typedef std::vector<CryptoParams> CryptoParamsVec;
 typedef std::vector<webrtc::RtpExtension> RtpHeaderExtensions;
-
-enum MediaType {
-  MEDIA_TYPE_AUDIO,
-  MEDIA_TYPE_VIDEO,
-  MEDIA_TYPE_DATA
-};
-
-std::string MediaTypeToString(MediaType type);
 
 enum MediaContentDirection {
   MD_INACTIVE,
@@ -160,9 +153,11 @@ struct MediaSessionOptions {
   // bps. -1 == auto.
   int video_bandwidth;
   int data_bandwidth;
+  bool enable_ice_renomination = false;
   // content name ("mid") => options.
   std::map<std::string, TransportOptions> transport_options;
   std::string rtcp_cname;
+  rtc::CryptoOptions crypto_options;
 
   struct Stream {
     Stream(MediaType type,
@@ -594,17 +589,21 @@ VideoContentDescription* GetFirstVideoContentDescription(
 DataContentDescription* GetFirstDataContentDescription(
     SessionDescription* sdesc);
 
-void GetSupportedAudioCryptoSuites(std::vector<int>* crypto_suites);
-void GetSupportedVideoCryptoSuites(std::vector<int>* crypto_suites);
-void GetSupportedDataCryptoSuites(std::vector<int>* crypto_suites);
-void GetDefaultSrtpCryptoSuites(std::vector<int>* crypto_suites);
-void GetSupportedAudioCryptoSuiteNames(
+void GetSupportedAudioCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites);
+void GetSupportedVideoCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites);
+void GetSupportedDataCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites);
+void GetDefaultSrtpCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites);
+void GetSupportedAudioCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names);
-void GetSupportedVideoCryptoSuiteNames(
+void GetSupportedVideoCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names);
-void GetSupportedDataCryptoSuiteNames(
+void GetSupportedDataCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names);
-void GetDefaultSrtpCryptoSuiteNames(
+void GetDefaultSrtpCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names);
 
 }  // namespace cricket

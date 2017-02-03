@@ -11,12 +11,14 @@
 #ifndef WEBRTC_VOICE_ENGINE_OUTPUT_MIXER_H_
 #define WEBRTC_VOICE_ENGINE_OUTPUT_MIXER_H_
 
+#include <memory>
+
 #include "webrtc/base/criticalsection.h"
 #include "webrtc/common_audio/resampler/include/push_resampler.h"
 #include "webrtc/common_types.h"
 #include "webrtc/modules/audio_conference_mixer/include/audio_conference_mixer.h"
 #include "webrtc/modules/audio_conference_mixer/include/audio_conference_mixer_defines.h"
-#include "webrtc/modules/utility/include/file_recorder.h"
+#include "webrtc/voice_engine/file_recorder.h"
 #include "webrtc/voice_engine/level_indicator.h"
 #include "webrtc/voice_engine/voice_engine_defines.h"
 
@@ -104,7 +106,7 @@ private:
     AudioProcessing* _audioProcessingModulePtr;
 
     rtc::CriticalSection _callbackCritSect;
-    // protect the _outputFileRecorderPtr and _outputFileRecording
+    // Protects output_file_recorder_ and _outputFileRecording.
     rtc::CriticalSection _fileCritSect;
     AudioConferenceMixer& _mixerModule;
     AudioFrame _audioFrame;
@@ -119,7 +121,7 @@ private:
     float _panLeft;
     float _panRight;
     int _mixingFrequencyHz;
-    FileRecorder* _outputFileRecorderPtr;
+    std::unique_ptr<FileRecorder> output_file_recorder_;
     bool _outputFileRecording;
 };
 

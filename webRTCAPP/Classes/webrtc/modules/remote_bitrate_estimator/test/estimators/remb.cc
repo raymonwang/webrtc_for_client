@@ -12,12 +12,12 @@
 
 #include "webrtc/modules/remote_bitrate_estimator/test/estimators/remb.h"
 
-#include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/base/common.h"
 #include "webrtc/modules/bitrate_controller/include/bitrate_controller.h"
 #include "webrtc/modules/remote_bitrate_estimator/remote_bitrate_estimator_abs_send_time.h"
 #include "webrtc/modules/remote_bitrate_estimator/test/bwe_test_logging.h"
 #include "webrtc/modules/rtp_rtcp/include/receive_statistics.h"
+#include "webrtc/test/gtest.h"
 
 namespace webrtc {
 namespace testing {
@@ -113,11 +113,11 @@ FeedbackPacket* RembReceiver::GetFeedback(int64_t now_ms) {
     StatisticianMap statisticians = recv_stats_->GetActiveStatisticians();
     RTCPReportBlock report_block;
     if (!statisticians.empty()) {
-      report_block = BuildReportBlock(statisticians.begin()->second);
+      latest_report_block_ = BuildReportBlock(statisticians.begin()->second);
     }
 
     feedback = new RembFeedback(flow_id_, now_ms * 1000, last_feedback_ms_,
-                                estimated_bps, report_block);
+                                estimated_bps, latest_report_block_);
     last_feedback_ms_ = now_ms;
 
     double estimated_kbps = static_cast<double>(estimated_bps) / 1000.0;
@@ -137,8 +137,7 @@ RTCPReportBlock RembReceiver::BuildReportBlock(
     StreamStatistician* statistician) {
   RTCPReportBlock report_block;
   RtcpStatistics stats;
-  if (!statistician->GetStatistics(&stats, true))
-    return report_block;
+  RTC_DCHECK(statistician->GetStatistics(&stats, true));
   report_block.fractionLost = stats.fraction_lost;
   report_block.cumulativeLost = stats.cumulative_lost;
   report_block.extendedHighSeqNum = stats.extended_max_sequence_number;

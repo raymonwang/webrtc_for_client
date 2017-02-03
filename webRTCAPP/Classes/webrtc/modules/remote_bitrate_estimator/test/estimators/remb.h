@@ -16,7 +16,7 @@
 #include <vector>
 
 #include "webrtc/base/constructormagic.h"
-#include "webrtc/call/mock/mock_rtc_event_log.h"
+#include "webrtc/logging/rtc_event_log/mock/mock_rtc_event_log.h"
 #include "webrtc/modules/remote_bitrate_estimator/test/bwe.h"
 
 namespace webrtc {
@@ -76,6 +76,7 @@ class RembReceiver : public BweReceiver, public RemoteBitrateObserver {
   int64_t latest_estimate_bps_;
   int64_t last_feedback_ms_;
   std::unique_ptr<RemoteBitrateEstimator> estimator_;
+  RTCPReportBlock latest_report_block_;
 
   RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(RembReceiver);
 };

@@ -322,8 +322,9 @@ int main(int argc, char* argv[]) {
     printf("Application to encode speech into an RTP stream.\n");
     printf("The program reads a PCM file and encodes is using the specified "
            "codec.\n");
-    printf("The coded speech is packetized in RTP packest and written to the "
-           "output file.\n");
+    printf(
+        "The coded speech is packetized in RTP packets and written to the "
+        "output file.\n");
     printf("The format of the RTP stream file is simlilar to that of "
            "rtpplay,\n");
     printf("but with the receive time euqal to 0 for all packets.\n");
@@ -1723,7 +1724,7 @@ size_t NetEQTest_encode(webrtc::NetEqDecoder coder,
 #ifdef CODEC_OPUS
     cdlen = WebRtcOpus_Encode(opus_inst[k], indata, frameLen, kRtpDataSize - 12,
                               encoded);
-    RTC_CHECK_GT(cdlen, 0u);
+    RTC_CHECK_GT(cdlen, 0);
 #endif
     indata += frameLen;
     encoded += cdlen;

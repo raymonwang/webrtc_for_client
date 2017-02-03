@@ -11,13 +11,23 @@
 #include <list>
 #include <memory>
 
-#include "testing/gmock/include/gmock/gmock.h"
-#include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/modules/pacing/paced_sender.h"
 #include "webrtc/system_wrappers/include/clock.h"
+#include "webrtc/test/gmock.h"
+#include "webrtc/test/gtest.h"
 
 using testing::_;
 using testing::Return;
+
+namespace {
+constexpr unsigned kFirstClusterBps = 900000;
+constexpr unsigned kSecondClusterBps = 1800000;
+
+// The error stems from truncating the time interval of probe packets to integer
+// values. This results in probing slightly higher than the target bitrate.
+// For 1.8 Mbps, this comes to be about 120 kbps with 1200 probe packets.
+constexpr int kBitrateProbingError = 150000;
+}  // namespace
 
 namespace webrtc {
 namespace test {
@@ -62,46 +72,29 @@ class PacedSenderPadding : public PacedSender::PacketSender {
 
 class PacedSenderProbing : public PacedSender::PacketSender {
  public:
-  PacedSenderProbing(const std::list<int>& expected_deltas, Clock* clock)
-      : prev_packet_time_ms_(-1),
-        expected_deltas_(expected_deltas),
-        packets_sent_(0),
-        clock_(clock) {}
+  PacedSenderProbing() : packets_sent_(0), padding_sent_(0) {}
 
   bool TimeToSendPacket(uint32_t ssrc,
                         uint16_t sequence_number,
                         int64_t capture_time_ms,
                         bool retransmission,
                         int probe_cluster_id) override {
-    ExpectAndCountPacket();
+    packets_sent_++;
     return true;
   }
 
   size_t TimeToSendPadding(size_t bytes, int probe_cluster_id) override {
-    ExpectAndCountPacket();
-    return bytes;
-  }
-
-  void ExpectAndCountPacket() {
-    ++packets_sent_;
-    EXPECT_FALSE(expected_deltas_.empty());
-    if (expected_deltas_.empty())
-      return;
-    int64_t now_ms = clock_->TimeInMilliseconds();
-    if (prev_packet_time_ms_ >= 0) {
-      EXPECT_EQ(expected_deltas_.front(), now_ms - prev_packet_time_ms_);
-      expected_deltas_.pop_front();
-    }
-    prev_packet_time_ms_ = now_ms;
+    padding_sent_ += bytes;
+    return padding_sent_;
   }
 
   int packets_sent() const { return packets_sent_; }
 
+  int padding_sent() const { return padding_sent_; }
+
  private:
-  int64_t prev_packet_time_ms_;
-  std::list<int> expected_deltas_;
   int packets_sent_;
-  Clock* clock_;
+  int padding_sent_;
 };
 
 class PacedSenderTest : public ::testing::Test {
@@ -110,6 +103,8 @@ class PacedSenderTest : public ::testing::Test {
     srand(0);
     // Need to initialize PacedSender after we initialize clock.
     send_bucket_.reset(new PacedSender(&clock_, &callback_));
+    send_bucket_->CreateProbeCluster(kFirstClusterBps);
+    send_bucket_->CreateProbeCluster(kSecondClusterBps);
     // Default to bitrate probing disabled for testing purposes. Probing tests
     // have to enable probing, either by creating a new PacedSender instance or
     // by calling SetProbingEnabled(true).
@@ -128,7 +123,7 @@ class PacedSenderTest : public ::testing::Test {
     send_bucket_->InsertPacket(priority, ssrc, sequence_number, capture_time_ms,
                                size, retransmission);
     EXPECT_CALL(callback_, TimeToSendPacket(ssrc, sequence_number,
-                                            capture_time_ms, false, _))
+                                            capture_time_ms, retransmission, _))
         .Times(1)
         .WillRepeatedly(Return(true));
   }
@@ -493,6 +488,60 @@ TEST_F(PacedSenderTest, Priority) {
   send_bucket_->Process();
 }
 
+TEST_F(PacedSenderTest, RetransmissionPriority) {
+  uint32_t ssrc = 12345;
+  uint16_t sequence_number = 1234;
+  int64_t capture_time_ms = 45678;
+  int64_t capture_time_ms_retransmission = 56789;
+
+  // Due to the multiplicative factor we can send 5 packets during a send
+  // interval. (network capacity * multiplier / (8 bits per byte *
+  // (packet size * #send intervals per second)
+  const size_t packets_to_send_per_interval =
+      kTargetBitrateBps * PacedSender::kDefaultPaceMultiplier / (8 * 250 * 200);
+  send_bucket_->Process();
+  EXPECT_EQ(0u, send_bucket_->QueueSizePackets());
+
+  // Alternate retransmissions and normal packets.
+  for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+    send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
+                               sequence_number++,
+                               capture_time_ms_retransmission, 250, true);
+    send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
+                               sequence_number++, capture_time_ms, 250, false);
+  }
+  EXPECT_EQ(2 * packets_to_send_per_interval, send_bucket_->QueueSizePackets());
+
+  // Expect all retransmissions to be sent out first despite having a later
+  // capture time.
+  EXPECT_CALL(callback_, TimeToSendPadding(_, _)).Times(0);
+  EXPECT_CALL(callback_, TimeToSendPacket(_, _, _, false, _)).Times(0);
+  EXPECT_CALL(callback_, TimeToSendPacket(
+                             ssrc, _, capture_time_ms_retransmission, true, _))
+      .Times(packets_to_send_per_interval)
+      .WillRepeatedly(Return(true));
+
+  EXPECT_EQ(5, send_bucket_->TimeUntilNextProcess());
+  clock_.AdvanceTimeMilliseconds(5);
+  EXPECT_EQ(0, send_bucket_->TimeUntilNextProcess());
+  send_bucket_->Process();
+  EXPECT_EQ(packets_to_send_per_interval, send_bucket_->QueueSizePackets());
+
+  // Expect the remaining (non-retransmission) packets to be sent.
+  EXPECT_CALL(callback_, TimeToSendPadding(_, _)).Times(0);
+  EXPECT_CALL(callback_, TimeToSendPacket(_, _, _, true, _)).Times(0);
+  EXPECT_CALL(callback_, TimeToSendPacket(ssrc, _, capture_time_ms, false, _))
+      .Times(packets_to_send_per_interval)
+      .WillRepeatedly(Return(true));
+
+  EXPECT_EQ(5, send_bucket_->TimeUntilNextProcess());
+  clock_.AdvanceTimeMilliseconds(5);
+  EXPECT_EQ(0, send_bucket_->TimeUntilNextProcess());
+  send_bucket_->Process();
+
+  EXPECT_EQ(0u, send_bucket_->QueueSizePackets());
+}
+
 TEST_F(PacedSenderTest, HighPrioDoesntAffectBudget) {
   uint32_t ssrc = 12346;
   uint16_t sequence_number = 1234;
@@ -534,6 +583,7 @@ TEST_F(PacedSenderTest, HighPrioDoesntAffectBudget) {
 TEST_F(PacedSenderTest, Pause) {
   uint32_t ssrc_low_priority = 12345;
   uint32_t ssrc = 12346;
+  uint32_t ssrc_high_priority = 12347;
   uint16_t sequence_number = 1234;
   int64_t capture_time_ms = clock_.TimeInMilliseconds();
 
@@ -553,48 +603,86 @@ TEST_F(PacedSenderTest, Pause) {
 
   send_bucket_->Pause();
 
-  send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
-                             sequence_number++, capture_time_ms, 250, false);
-  send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
-                             sequence_number++, capture_time_ms, 250, false);
-  send_bucket_->InsertPacket(PacedSender::kHighPriority, ssrc,
-                             sequence_number++, capture_time_ms, 250, false);
-
+  for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+    send_bucket_->InsertPacket(PacedSender::kLowPriority, ssrc_low_priority,
+                               sequence_number++, capture_time_ms, 250, false);
+    send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
+                               sequence_number++, capture_time_ms, 250, false);
+    send_bucket_->InsertPacket(PacedSender::kHighPriority, ssrc_high_priority,
+                               sequence_number++, capture_time_ms, 250, false);
+  }
   clock_.AdvanceTimeMilliseconds(10000);
   int64_t second_capture_time_ms = clock_.TimeInMilliseconds();
+  for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+    send_bucket_->InsertPacket(PacedSender::kLowPriority, ssrc_low_priority,
+                               sequence_number++, second_capture_time_ms, 250,
+                               false);
+    send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
+                               sequence_number++, second_capture_time_ms, 250,
+                               false);
+    send_bucket_->InsertPacket(PacedSender::kHighPriority, ssrc_high_priority,
+                               sequence_number++, second_capture_time_ms, 250,
+                               false);
+  }
 
   // Expect everything to be queued.
-  send_bucket_->InsertPacket(PacedSender::kLowPriority, ssrc_low_priority,
-                             sequence_number++, second_capture_time_ms, 250,
-                             false);
-
-  EXPECT_EQ(clock_.TimeInMilliseconds() - capture_time_ms,
+  EXPECT_EQ(second_capture_time_ms - capture_time_ms,
             send_bucket_->QueueInMs());
 
-  // Expect no packet to come out while paused.
+  // Expect only high priority packets to come out while paused.
   EXPECT_CALL(callback_, TimeToSendPadding(_, _)).Times(0);
   EXPECT_CALL(callback_, TimeToSendPacket(_, _, _, _, _)).Times(0);
+  EXPECT_CALL(callback_,
+              TimeToSendPacket(ssrc_high_priority, _, capture_time_ms, _, _))
+      .Times(packets_to_send_per_interval)
+      .WillRepeatedly(Return(true));
+  EXPECT_CALL(callback_, TimeToSendPacket(ssrc_high_priority, _,
+                                          second_capture_time_ms, _, _))
+      .Times(packets_to_send_per_interval)
+      .WillRepeatedly(Return(true));
 
   for (int i = 0; i < 10; ++i) {
     clock_.AdvanceTimeMilliseconds(5);
     EXPECT_EQ(0, send_bucket_->TimeUntilNextProcess());
     send_bucket_->Process();
   }
-  // Expect high prio packets to come out first followed by all packets in the
-  // way they were added.
-  EXPECT_CALL(callback_, TimeToSendPacket(_, _, capture_time_ms, false, _))
-      .Times(3)
-      .WillRepeatedly(Return(true));
-  EXPECT_CALL(callback_,
-              TimeToSendPacket(_, _, second_capture_time_ms, false, _))
-      .Times(1)
-      .WillRepeatedly(Return(true));
+
+  // Expect normal prio packets to come out first (in capture order)
+  // followed by all low prio packets (in capture order).
+  {
+    ::testing::InSequence sequence;
+    for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+      EXPECT_CALL(callback_, TimeToSendPacket(ssrc, _, capture_time_ms, _, _))
+          .Times(1)
+          .WillRepeatedly(Return(true));
+    }
+    for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+      EXPECT_CALL(callback_,
+                  TimeToSendPacket(ssrc, _, second_capture_time_ms, _, _))
+          .Times(1)
+          .WillRepeatedly(Return(true));
+    }
+    for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+      EXPECT_CALL(callback_,
+                  TimeToSendPacket(ssrc_low_priority, _, capture_time_ms, _, _))
+          .Times(1)
+          .WillRepeatedly(Return(true));
+    }
+    for (size_t i = 0; i < packets_to_send_per_interval; ++i) {
+      EXPECT_CALL(callback_, TimeToSendPacket(ssrc_low_priority, _,
+                                              second_capture_time_ms, _, _))
+          .Times(1)
+          .WillRepeatedly(Return(true));
+    }
+  }
   send_bucket_->Resume();
 
-  EXPECT_EQ(5, send_bucket_->TimeUntilNextProcess());
-  clock_.AdvanceTimeMilliseconds(5);
-  EXPECT_EQ(0, send_bucket_->TimeUntilNextProcess());
-  send_bucket_->Process();
+  for (size_t i = 0; i < 4; i++) {
+    EXPECT_EQ(5, send_bucket_->TimeUntilNextProcess());
+    clock_.AdvanceTimeMilliseconds(5);
+    EXPECT_EQ(0, send_bucket_->TimeUntilNextProcess());
+    send_bucket_->Process();
+  }
 
   EXPECT_EQ(0, send_bucket_->QueueInMs());
 }
@@ -708,70 +796,86 @@ TEST_F(PacedSenderTest, QueueTimeGrowsOverTime) {
   EXPECT_EQ(0, send_bucket_->QueueInMs());
 }
 
-TEST_F(PacedSenderTest, ProbingWithInitialFrame) {
-  const int kNumPackets = 11;
-  const int kNumDeltas = kNumPackets - 1;
+TEST_F(PacedSenderTest, ProbingWithInsertedPackets) {
   const size_t kPacketSize = 1200;
   const int kInitialBitrateBps = 300000;
   uint32_t ssrc = 12346;
   uint16_t sequence_number = 1234;
 
-  const int expected_deltas[kNumDeltas] = {10, 10, 10, 10, 10, 5, 5, 5, 5, 5};
-  std::list<int> expected_deltas_list(expected_deltas,
-                                      expected_deltas + kNumDeltas);
-  PacedSenderProbing callback(expected_deltas_list, &clock_);
-  send_bucket_.reset(new PacedSender(&clock_, &callback));
+  PacedSenderProbing packet_sender;
+  send_bucket_.reset(new PacedSender(&clock_, &packet_sender));
+  send_bucket_->CreateProbeCluster(kFirstClusterBps);
+  send_bucket_->CreateProbeCluster(kSecondClusterBps);
   send_bucket_->SetEstimatedBitrate(kInitialBitrateBps);
 
-  for (int i = 0; i < kNumPackets; ++i) {
+  for (int i = 0; i < 10; ++i) {
     send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
                                sequence_number++, clock_.TimeInMilliseconds(),
                                kPacketSize, false);
   }
 
-  while (callback.packets_sent() < kNumPackets) {
+  int64_t start = clock_.TimeInMilliseconds();
+  while (packet_sender.packets_sent() < 5) {
     int time_until_process = send_bucket_->TimeUntilNextProcess();
-    if (time_until_process <= 0) {
-      send_bucket_->Process();
-    } else {
-      clock_.AdvanceTimeMilliseconds(time_until_process);
-    }
+    clock_.AdvanceTimeMilliseconds(time_until_process);
+    send_bucket_->Process();
   }
+  int packets_sent = packet_sender.packets_sent();
+  // Validate first cluster bitrate. Note that we have to account for number
+  // of intervals and hence (packets_sent - 1) on the first cluster.
+  EXPECT_NEAR((packets_sent - 1) * kPacketSize * 8000 /
+                  (clock_.TimeInMilliseconds() - start),
+              kFirstClusterBps, kBitrateProbingError);
+  EXPECT_EQ(0, packet_sender.padding_sent());
+
+  clock_.AdvanceTimeMilliseconds(send_bucket_->TimeUntilNextProcess());
+  start = clock_.TimeInMilliseconds();
+  while (packet_sender.packets_sent() < 10) {
+    int time_until_process = send_bucket_->TimeUntilNextProcess();
+    clock_.AdvanceTimeMilliseconds(time_until_process);
+    send_bucket_->Process();
+  }
+  packets_sent = packet_sender.packets_sent() - packets_sent;
+  // Validate second cluster bitrate.
+  EXPECT_NEAR((packets_sent - 1) * kPacketSize * 8000 /
+                  (clock_.TimeInMilliseconds() - start),
+              kSecondClusterBps, kBitrateProbingError);
 }
 
-TEST_F(PacedSenderTest, ProbingWithTooSmallInitialFrame) {
-  const int kNumPackets = 11;
-  const int kNumDeltas = kNumPackets - 1;
+TEST_F(PacedSenderTest, ProbingWithPaddingSupport) {
   const size_t kPacketSize = 1200;
   const int kInitialBitrateBps = 300000;
   uint32_t ssrc = 12346;
   uint16_t sequence_number = 1234;
-  const int expected_deltas[kNumDeltas] = {10, 10, 10, 10, 10, 5, 5, 5, 5, 5};
-  std::list<int> expected_deltas_list(expected_deltas,
-                                      expected_deltas + kNumDeltas);
-  PacedSenderProbing callback(expected_deltas_list, &clock_);
-  send_bucket_.reset(new PacedSender(&clock_, &callback));
+
+  PacedSenderProbing packet_sender;
+  send_bucket_.reset(new PacedSender(&clock_, &packet_sender));
+  send_bucket_->CreateProbeCluster(kFirstClusterBps);
   send_bucket_->SetEstimatedBitrate(kInitialBitrateBps);
 
-  for (int i = 0; i < kNumPackets - 5; ++i) {
+  for (int i = 0; i < 3; ++i) {
     send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
                                sequence_number++, clock_.TimeInMilliseconds(),
                                kPacketSize, false);
   }
-  while (callback.packets_sent() < kNumPackets) {
-    int time_until_process = send_bucket_->TimeUntilNextProcess();
-    if (time_until_process <= 0) {
-      send_bucket_->Process();
-    } else {
-      clock_.AdvanceTimeMilliseconds(time_until_process);
-    }
-  }
 
-  // Process one more time and make sure we don't send any more probes.
-  int time_until_process = send_bucket_->TimeUntilNextProcess();
-  clock_.AdvanceTimeMilliseconds(time_until_process);
-  send_bucket_->Process();
-  EXPECT_EQ(kNumPackets, callback.packets_sent());
+  int64_t start = clock_.TimeInMilliseconds();
+  int process_count = 0;
+  while (process_count < 5) {
+    int time_until_process = send_bucket_->TimeUntilNextProcess();
+    clock_.AdvanceTimeMilliseconds(time_until_process);
+    send_bucket_->Process();
+    ++process_count;
+  }
+  int packets_sent = packet_sender.packets_sent();
+  int padding_sent = packet_sender.padding_sent();
+  EXPECT_GT(packets_sent, 0);
+  EXPECT_GT(padding_sent, 0);
+  // Note that the number of intervals here for kPacketSize is
+  // packets_sent due to padding in the same cluster.
+  EXPECT_NEAR((packets_sent * kPacketSize * 8000 + padding_sent) /
+                  (clock_.TimeInMilliseconds() - start),
+              kFirstClusterBps, kBitrateProbingError);
 }
 
 TEST_F(PacedSenderTest, PriorityInversion) {
@@ -903,7 +1007,7 @@ TEST_F(PacedSenderTest, ProbeClusterId) {
 
   send_bucket_->SetSendBitrateLimits(kTargetBitrateBps, kTargetBitrateBps);
   send_bucket_->SetProbingEnabled(true);
-  for (int i = 0; i < 11; ++i) {
+  for (int i = 0; i < 10; ++i) {
     send_bucket_->InsertPacket(PacedSender::kNormalPriority, ssrc,
                                sequence_number + i, clock_.TimeInMilliseconds(),
                                kPacketSize, false);
@@ -911,9 +1015,9 @@ TEST_F(PacedSenderTest, ProbeClusterId) {
 
   // First probing cluster.
   EXPECT_CALL(callback_, TimeToSendPacket(_, _, _, _, 0))
-      .Times(6)
+      .Times(5)
       .WillRepeatedly(Return(true));
-  for (int i = 0; i < 6; ++i) {
+  for (int i = 0; i < 5; ++i) {
     clock_.AdvanceTimeMilliseconds(20);
     send_bucket_->Process();
   }

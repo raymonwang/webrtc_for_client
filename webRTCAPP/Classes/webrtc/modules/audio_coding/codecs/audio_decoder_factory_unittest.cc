@@ -10,8 +10,8 @@
 
 #include <memory>
 
-#include "testing/gtest/include/gtest/gtest.h"
 #include "webrtc/modules/audio_coding/codecs/builtin_audio_decoder_factory.h"
+#include "webrtc/test/gtest.h"
 
 namespace webrtc {
 
@@ -122,8 +122,8 @@ TEST(AudioDecoderFactoryTest, CreateOpus) {
         if (stereo != "XX") {
           params["stereo"] = stereo;
         }
-        bool good =
-            (hz == 48000 && channels == 2 && (stereo == "0" || stereo == "1"));
+        const bool good = (hz == 48000 && channels == 2 &&
+                           (stereo == "XX" || stereo == "0" || stereo == "1"));
         EXPECT_EQ(good, static_cast<bool>(adf->MakeAudioDecoder(SdpAudioFormat(
                             "opus", hz, channels, std::move(params)))));
       }

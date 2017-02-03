@@ -10,340 +10,361 @@
 
 #include "webrtc/modules/congestion_controller/delay_based_bwe.h"
 
-#include <math.h>
-
 #include <algorithm>
+#include <cmath>
+#include <string>
 
 #include "webrtc/base/checks.h"
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/thread_annotations.h"
+#include "webrtc/modules/congestion_controller/include/congestion_controller.h"
 #include "webrtc/modules/pacing/paced_sender.h"
 #include "webrtc/modules/remote_bitrate_estimator/include/remote_bitrate_estimator.h"
-#include "webrtc/system_wrappers/include/critical_section_wrapper.h"
+#include "webrtc/modules/remote_bitrate_estimator/test/bwe_test_logging.h"
+#include "webrtc/system_wrappers/include/field_trial.h"
+#include "webrtc/system_wrappers/include/metrics.h"
 #include "webrtc/typedefs.h"
 
 namespace {
-enum {
-  kTimestampGroupLengthMs = 5,
-  kAbsSendTimeFraction = 18,
-  kAbsSendTimeInterArrivalUpshift = 8,
-  kInterArrivalShift = kAbsSendTimeFraction + kAbsSendTimeInterArrivalUpshift,
-  kInitialProbingIntervalMs = 2000,
-  kMinClusterSize = 4,
-  kMaxProbePackets = 15,
-  kExpectedNumberOfProbes = 3
-};
-
-static const double kTimestampToMs =
+constexpr int kTimestampGroupLengthMs = 5;
+constexpr int kAbsSendTimeFraction = 18;
+constexpr int kAbsSendTimeInterArrivalUpshift = 8;
+constexpr int kInterArrivalShift =
+    kAbsSendTimeFraction + kAbsSendTimeInterArrivalUpshift;
+constexpr double kTimestampToMs =
     1000.0 / static_cast<double>(1 << kInterArrivalShift);
+// This ssrc is used to fulfill the current API but will be removed
+// after the API has been changed.
+constexpr uint32_t kFixedSsrc = 0;
+constexpr int kInitialRateWindowMs = 500;
+constexpr int kRateWindowMs = 150;
 
-template <typename K, typename V>
-std::vector<K> Keys(const std::map<K, V>& map) {
-  std::vector<K> keys;
-  keys.reserve(map.size());
-  for (typename std::map<K, V>::const_iterator it = map.begin();
-       it != map.end(); ++it) {
-    keys.push_back(it->first);
-  }
-  return keys;
+// Parameters for linear least squares fit of regression line to noisy data.
+constexpr size_t kDefaultTrendlineWindowSize = 15;
+constexpr double kDefaultTrendlineSmoothingCoeff = 0.9;
+constexpr double kDefaultTrendlineThresholdGain = 4.0;
+
+// Parameters for Theil-Sen robust fitting of line to noisy data.
+constexpr size_t kDefaultMedianSlopeWindowSize = 20;
+constexpr double kDefaultMedianSlopeThresholdGain = 4.0;
+
+const char kBitrateEstimateExperiment[] = "WebRTC-ImprovedBitrateEstimate";
+const char kBweTrendlineFilterExperiment[] = "WebRTC-BweTrendlineFilter";
+const char kBweMedianSlopeFilterExperiment[] = "WebRTC-BweMedianSlopeFilter";
+
+bool BitrateEstimateExperimentIsEnabled() {
+  return webrtc::field_trial::FindFullName(kBitrateEstimateExperiment) ==
+         "Enabled";
 }
 
-uint32_t ConvertMsTo24Bits(int64_t time_ms) {
-  uint32_t time_24_bits =
-      static_cast<uint32_t>(
-          ((static_cast<uint64_t>(time_ms) << kAbsSendTimeFraction) + 500) /
-          1000) &
-      0x00FFFFFF;
-  return time_24_bits;
+bool TrendlineFilterExperimentIsEnabled() {
+  std::string experiment_string =
+      webrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
+  // The experiment is enabled iff the field trial string begins with "Enabled".
+  return experiment_string.find("Enabled") == 0;
+}
+
+bool MedianSlopeFilterExperimentIsEnabled() {
+  std::string experiment_string =
+      webrtc::field_trial::FindFullName(kBweMedianSlopeFilterExperiment);
+  // The experiment is enabled iff the field trial string begins with "Enabled".
+  return experiment_string.find("Enabled") == 0;
+}
+
+bool ReadTrendlineFilterExperimentParameters(size_t* window_size,
+                                             double* smoothing_coef,
+                                             double* threshold_gain) {
+  RTC_DCHECK(TrendlineFilterExperimentIsEnabled());
+  RTC_DCHECK(!MedianSlopeFilterExperimentIsEnabled());
+  RTC_DCHECK(window_size != nullptr);
+  RTC_DCHECK(smoothing_coef != nullptr);
+  RTC_DCHECK(threshold_gain != nullptr);
+  std::string experiment_string =
+      webrtc::field_trial::FindFullName(kBweTrendlineFilterExperiment);
+  int parsed_values = sscanf(experiment_string.c_str(), "Enabled-%zu,%lf,%lf",
+                             window_size, smoothing_coef, threshold_gain);
+  if (parsed_values == 3) {
+    RTC_CHECK_GT(*window_size, 1) << "Need at least 2 points to fit a line.";
+    RTC_CHECK(0 <= *smoothing_coef && *smoothing_coef <= 1)
+        << "Coefficient needs to be between 0 and 1 for weighted average.";
+    RTC_CHECK_GT(*threshold_gain, 0) << "Threshold gain needs to be positive.";
+    return true;
+  }
+  LOG(LS_WARNING) << "Failed to parse parameters for BweTrendlineFilter "
+                     "experiment from field trial string. Using default.";
+  *window_size = kDefaultTrendlineWindowSize;
+  *smoothing_coef = kDefaultTrendlineSmoothingCoeff;
+  *threshold_gain = kDefaultTrendlineThresholdGain;
+  return false;
+}
+
+bool ReadMedianSlopeFilterExperimentParameters(size_t* window_size,
+                                               double* threshold_gain) {
+  RTC_DCHECK(!TrendlineFilterExperimentIsEnabled());
+  RTC_DCHECK(MedianSlopeFilterExperimentIsEnabled());
+  RTC_DCHECK(window_size != nullptr);
+  RTC_DCHECK(threshold_gain != nullptr);
+  std::string experiment_string =
+      webrtc::field_trial::FindFullName(kBweMedianSlopeFilterExperiment);
+  int parsed_values = sscanf(experiment_string.c_str(), "Enabled-%zu,%lf",
+                             window_size, threshold_gain);
+  if (parsed_values == 2) {
+    RTC_CHECK_GT(*window_size, 1) << "Need at least 2 points to fit a line.";
+    RTC_CHECK_GT(*threshold_gain, 0) << "Threshold gain needs to be positive.";
+    return true;
+  }
+  LOG(LS_WARNING) << "Failed to parse parameters for BweMedianSlopeFilter "
+                     "experiment from field trial string. Using default.";
+  *window_size = kDefaultMedianSlopeWindowSize;
+  *threshold_gain = kDefaultMedianSlopeThresholdGain;
+  return false;
 }
 }  // namespace
 
 namespace webrtc {
 
-void DelayBasedBwe::AddCluster(std::list<Cluster>* clusters, Cluster* cluster) {
-  cluster->send_mean_ms /= static_cast<float>(cluster->count);
-  cluster->recv_mean_ms /= static_cast<float>(cluster->count);
-  cluster->mean_size /= cluster->count;
-  clusters->push_back(*cluster);
+DelayBasedBwe::BitrateEstimator::BitrateEstimator()
+    : sum_(0),
+      current_win_ms_(0),
+      prev_time_ms_(-1),
+      bitrate_estimate_(-1.0f),
+      bitrate_estimate_var_(50.0f),
+      old_estimator_(kBitrateWindowMs, 8000),
+      in_experiment_(BitrateEstimateExperimentIsEnabled()) {}
+
+void DelayBasedBwe::BitrateEstimator::Update(int64_t now_ms, int bytes) {
+  if (!in_experiment_) {
+    old_estimator_.Update(bytes, now_ms);
+    rtc::Optional<uint32_t> rate = old_estimator_.Rate(now_ms);
+    bitrate_estimate_ = -1.0f;
+    if (rate)
+      bitrate_estimate_ = *rate / 1000.0f;
+    return;
+  }
+  int rate_window_ms = kRateWindowMs;
+  // We use a larger window at the beginning to get a more stable sample that
+  // we can use to initialize the estimate.
+  if (bitrate_estimate_ < 0.f)
+    rate_window_ms = kInitialRateWindowMs;
+  float bitrate_sample = UpdateWindow(now_ms, bytes, rate_window_ms);
+  if (bitrate_sample < 0.0f)
+    return;
+  if (bitrate_estimate_ < 0.0f) {
+    // This is the very first sample we get. Use it to initialize the estimate.
+    bitrate_estimate_ = bitrate_sample;
+    return;
+  }
+  // Define the sample uncertainty as a function of how far away it is from the
+  // current estimate.
+  float sample_uncertainty =
+      10.0f * std::abs(bitrate_estimate_ - bitrate_sample) / bitrate_estimate_;
+  float sample_var = sample_uncertainty * sample_uncertainty;
+  // Update a bayesian estimate of the rate, weighting it lower if the sample
+  // uncertainty is large.
+  // The bitrate estimate uncertainty is increased with each update to model
+  // that the bitrate changes over time.
+  float pred_bitrate_estimate_var = bitrate_estimate_var_ + 5.f;
+  bitrate_estimate_ = (sample_var * bitrate_estimate_ +
+                       pred_bitrate_estimate_var * bitrate_sample) /
+                      (sample_var + pred_bitrate_estimate_var);
+  bitrate_estimate_var_ = sample_var * pred_bitrate_estimate_var /
+                          (sample_var + pred_bitrate_estimate_var);
 }
 
-DelayBasedBwe::DelayBasedBwe(RemoteBitrateObserver* observer, Clock* clock)
-    : clock_(clock),
-      observer_(observer),
+float DelayBasedBwe::BitrateEstimator::UpdateWindow(int64_t now_ms,
+                                                    int bytes,
+                                                    int rate_window_ms) {
+  // Reset if time moves backwards.
+  if (now_ms < prev_time_ms_) {
+    prev_time_ms_ = -1;
+    sum_ = 0;
+    current_win_ms_ = 0;
+  }
+  if (prev_time_ms_ >= 0) {
+    current_win_ms_ += now_ms - prev_time_ms_;
+    // Reset if nothing has been received for more than a full window.
+    if (now_ms - prev_time_ms_ > rate_window_ms) {
+      sum_ = 0;
+      current_win_ms_ %= rate_window_ms;
+    }
+  }
+  prev_time_ms_ = now_ms;
+  float bitrate_sample = -1.0f;
+  if (current_win_ms_ >= rate_window_ms) {
+    bitrate_sample = 8.0f * sum_ / static_cast<float>(rate_window_ms);
+    current_win_ms_ -= rate_window_ms;
+    sum_ = 0;
+  }
+  sum_ += bytes;
+  return bitrate_sample;
+}
+
+rtc::Optional<uint32_t> DelayBasedBwe::BitrateEstimator::bitrate_bps() const {
+  if (bitrate_estimate_ < 0.f)
+    return rtc::Optional<uint32_t>();
+  return rtc::Optional<uint32_t>(bitrate_estimate_ * 1000);
+}
+
+DelayBasedBwe::DelayBasedBwe(Clock* clock)
+    : in_trendline_experiment_(TrendlineFilterExperimentIsEnabled()),
+      in_median_slope_experiment_(MedianSlopeFilterExperimentIsEnabled()),
+      clock_(clock),
       inter_arrival_(),
-      estimator_(),
-      detector_(OverUseDetectorOptions()),
-      incoming_bitrate_(kBitrateWindowMs, 8000),
-      total_probes_received_(0),
-      first_packet_time_ms_(-1),
+      kalman_estimator_(),
+      trendline_estimator_(),
+      detector_(),
+      receiver_incoming_bitrate_(),
       last_update_ms_(-1),
-      ssrcs_() {
-  RTC_DCHECK(observer_);
-  // NOTE! The BitrateEstimatorTest relies on this EXACT log line.
-  LOG(LS_INFO) << "RemoteBitrateEstimatorAbsSendTime: Instantiating.";
+      last_seen_packet_ms_(-1),
+      uma_recorded_(false),
+      trendline_window_size_(kDefaultTrendlineWindowSize),
+      trendline_smoothing_coeff_(kDefaultTrendlineSmoothingCoeff),
+      trendline_threshold_gain_(kDefaultTrendlineThresholdGain),
+      probing_interval_estimator_(&rate_control_),
+      median_slope_window_size_(kDefaultMedianSlopeWindowSize),
+      median_slope_threshold_gain_(kDefaultMedianSlopeThresholdGain) {
+  if (in_trendline_experiment_) {
+    ReadTrendlineFilterExperimentParameters(&trendline_window_size_,
+                                            &trendline_smoothing_coeff_,
+                                            &trendline_threshold_gain_);
+  }
+  if (in_median_slope_experiment_) {
+    ReadMedianSlopeFilterExperimentParameters(&median_slope_window_size_,
+                                              &median_slope_threshold_gain_);
+  }
+
   network_thread_.DetachFromThread();
 }
 
-void DelayBasedBwe::ComputeClusters(std::list<Cluster>* clusters) const {
-  Cluster current;
-  int64_t prev_send_time = -1;
-  int64_t prev_recv_time = -1;
-  int last_probe_cluster_id = -1;
-  for (std::list<Probe>::const_iterator it = probes_.begin();
-       it != probes_.end(); ++it) {
-    if (last_probe_cluster_id == -1)
-      last_probe_cluster_id = it->cluster_id;
-    if (prev_send_time >= 0) {
-      int send_delta_ms = it->send_time_ms - prev_send_time;
-      int recv_delta_ms = it->recv_time_ms - prev_recv_time;
-      if (send_delta_ms >= 1 && recv_delta_ms >= 1) {
-        ++current.num_above_min_delta;
-      }
-      if (it->cluster_id != last_probe_cluster_id) {
-        if (current.count >= kMinClusterSize)
-          AddCluster(clusters, &current);
-        current = Cluster();
-      }
-      current.send_mean_ms += send_delta_ms;
-      current.recv_mean_ms += recv_delta_ms;
-      current.mean_size += it->payload_size;
-      ++current.count;
-      last_probe_cluster_id = it->cluster_id;
-    }
-    prev_send_time = it->send_time_ms;
-    prev_recv_time = it->recv_time_ms;
-  }
-  if (current.count >= kMinClusterSize)
-    AddCluster(clusters, &current);
-}
-
-std::list<DelayBasedBwe::Cluster>::const_iterator DelayBasedBwe::FindBestProbe(
-    const std::list<Cluster>& clusters) const {
-  int highest_probe_bitrate_bps = 0;
-  std::list<Cluster>::const_iterator best_it = clusters.end();
-  for (std::list<Cluster>::const_iterator it = clusters.begin();
-       it != clusters.end(); ++it) {
-    if (it->send_mean_ms == 0 || it->recv_mean_ms == 0)
-      continue;
-    int send_bitrate_bps = it->mean_size * 8 * 1000 / it->send_mean_ms;
-    int recv_bitrate_bps = it->mean_size * 8 * 1000 / it->recv_mean_ms;
-    if (it->num_above_min_delta > it->count / 2 &&
-        (it->recv_mean_ms - it->send_mean_ms <= 2.0f &&
-         it->send_mean_ms - it->recv_mean_ms <= 5.0f)) {
-      int probe_bitrate_bps =
-          std::min(it->GetSendBitrateBps(), it->GetRecvBitrateBps());
-      if (probe_bitrate_bps > highest_probe_bitrate_bps) {
-        highest_probe_bitrate_bps = probe_bitrate_bps;
-        best_it = it;
-      }
-    } else {
-      LOG(LS_INFO) << "Probe failed, sent at " << send_bitrate_bps
-                   << " bps, received at " << recv_bitrate_bps
-                   << " bps. Mean send delta: " << it->send_mean_ms
-                   << " ms, mean recv delta: " << it->recv_mean_ms
-                   << " ms, num probes: " << it->count;
-      break;
-    }
-  }
-  return best_it;
-}
-
-DelayBasedBwe::ProbeResult DelayBasedBwe::ProcessClusters(int64_t now_ms) {
-  std::list<Cluster> clusters;
-  ComputeClusters(&clusters);
-  if (clusters.empty()) {
-    // If we reach the max number of probe packets and still have no clusters,
-    // we will remove the oldest one.
-    if (probes_.size() >= kMaxProbePackets)
-      probes_.pop_front();
-    return ProbeResult::kNoUpdate;
-  }
-
-  std::list<Cluster>::const_iterator best_it = FindBestProbe(clusters);
-  if (best_it != clusters.end()) {
-    int probe_bitrate_bps =
-        std::min(best_it->GetSendBitrateBps(), best_it->GetRecvBitrateBps());
-    // Make sure that a probe sent on a lower bitrate than our estimate can't
-    // reduce the estimate.
-    if (IsBitrateImproving(probe_bitrate_bps)) {
-      LOG(LS_INFO) << "Probe successful, sent at "
-                   << best_it->GetSendBitrateBps() << " bps, received at "
-                   << best_it->GetRecvBitrateBps()
-                   << " bps. Mean send delta: " << best_it->send_mean_ms
-                   << " ms, mean recv delta: " << best_it->recv_mean_ms
-                   << " ms, num probes: " << best_it->count;
-      remote_rate_.SetEstimate(probe_bitrate_bps, now_ms);
-      return ProbeResult::kBitrateUpdated;
-    }
-  }
-
-  // Not probing and received non-probe packet, or finished with current set
-  // of probes.
-  if (clusters.size() >= kExpectedNumberOfProbes)
-    probes_.clear();
-  return ProbeResult::kNoUpdate;
-}
-
-bool DelayBasedBwe::IsBitrateImproving(int new_bitrate_bps) const {
-  bool initial_probe = !remote_rate_.ValidEstimate() && new_bitrate_bps > 0;
-  bool bitrate_above_estimate =
-      remote_rate_.ValidEstimate() &&
-      new_bitrate_bps > static_cast<int>(remote_rate_.LatestEstimate());
-  return initial_probe || bitrate_above_estimate;
-}
-
-void DelayBasedBwe::IncomingPacketFeedbackVector(
+DelayBasedBwe::Result DelayBasedBwe::IncomingPacketFeedbackVector(
     const std::vector<PacketInfo>& packet_feedback_vector) {
   RTC_DCHECK(network_thread_.CalledOnValidThread());
-  for (const auto& packet_info : packet_feedback_vector) {
-    IncomingPacketInfo(packet_info.arrival_time_ms,
-                       ConvertMsTo24Bits(packet_info.send_time_ms),
-                       packet_info.payload_size, 0,
-                       packet_info.probe_cluster_id);
+  if (!uma_recorded_) {
+    RTC_HISTOGRAM_ENUMERATION(kBweTypeHistogram,
+                              BweNames::kSendSideTransportSeqNum,
+                              BweNames::kBweNamesMax);
+    uma_recorded_ = true;
   }
+  Result aggregated_result;
+  for (const auto& packet_info : packet_feedback_vector) {
+    Result result = IncomingPacketInfo(packet_info);
+    if (result.updated)
+      aggregated_result = result;
+  }
+  return aggregated_result;
 }
 
-void DelayBasedBwe::IncomingPacketInfo(int64_t arrival_time_ms,
-                                       uint32_t send_time_24bits,
-                                       size_t payload_size,
-                                       uint32_t ssrc,
-                                       int probe_cluster_id) {
-  assert(send_time_24bits < (1ul << 24));
+DelayBasedBwe::Result DelayBasedBwe::IncomingPacketInfo(
+    const PacketInfo& info) {
+  int64_t now_ms = clock_->TimeInMilliseconds();
+
+  receiver_incoming_bitrate_.Update(info.arrival_time_ms, info.payload_size);
+  Result result;
+  // Reset if the stream has timed out.
+  if (last_seen_packet_ms_ == -1 ||
+      now_ms - last_seen_packet_ms_ > kStreamTimeOutMs) {
+    inter_arrival_.reset(
+        new InterArrival((kTimestampGroupLengthMs << kInterArrivalShift) / 1000,
+                         kTimestampToMs, true));
+    kalman_estimator_.reset(new OveruseEstimator(OverUseDetectorOptions()));
+    trendline_estimator_.reset(new TrendlineEstimator(
+        trendline_window_size_, trendline_smoothing_coeff_,
+        trendline_threshold_gain_));
+    median_slope_estimator_.reset(new MedianSlopeEstimator(
+        median_slope_window_size_, median_slope_threshold_gain_));
+  }
+  last_seen_packet_ms_ = now_ms;
+
+  uint32_t send_time_24bits =
+      static_cast<uint32_t>(
+          ((static_cast<uint64_t>(info.send_time_ms) << kAbsSendTimeFraction) +
+           500) /
+          1000) &
+      0x00FFFFFF;
   // Shift up send time to use the full 32 bits that inter_arrival works with,
   // so wrapping works properly.
   uint32_t timestamp = send_time_24bits << kAbsSendTimeInterArrivalUpshift;
-  int64_t send_time_ms = static_cast<int64_t>(timestamp) * kTimestampToMs;
-
-  int64_t now_ms = clock_->TimeInMilliseconds();
-  // TODO(holmer): SSRCs are only needed for REMB, should be broken out from
-  // here.
-  incoming_bitrate_.Update(payload_size, arrival_time_ms);
-
-  if (first_packet_time_ms_ == -1)
-    first_packet_time_ms_ = now_ms;
 
   uint32_t ts_delta = 0;
   int64_t t_delta = 0;
   int size_delta = 0;
-
-  bool update_estimate = false;
-  uint32_t target_bitrate_bps = 0;
-  std::vector<uint32_t> ssrcs;
-  {
-    rtc::CritScope lock(&crit_);
-
-    TimeoutStreams(now_ms);
-    RTC_DCHECK(inter_arrival_.get());
-    RTC_DCHECK(estimator_.get());
-    ssrcs_[ssrc] = now_ms;
-
-    // For now only try to detect probes while we don't have a valid estimate,
-    // and make sure the packet was paced. We currently assume that only packets
-    // larger than 200 bytes are paced by the sender.
-    if (probe_cluster_id != PacketInfo::kNotAProbe &&
-        payload_size > PacedSender::kMinProbePacketSize &&
-        (!remote_rate_.ValidEstimate() ||
-         now_ms - first_packet_time_ms_ < kInitialProbingIntervalMs)) {
-      // TODO(holmer): Use a map instead to get correct order?
-      if (total_probes_received_ < kMaxProbePackets) {
-        int send_delta_ms = -1;
-        int recv_delta_ms = -1;
-        if (!probes_.empty()) {
-          send_delta_ms = send_time_ms - probes_.back().send_time_ms;
-          recv_delta_ms = arrival_time_ms - probes_.back().recv_time_ms;
-        }
-        LOG(LS_INFO) << "Probe packet received: send time=" << send_time_ms
-                     << " ms, recv time=" << arrival_time_ms
-                     << " ms, send delta=" << send_delta_ms
-                     << " ms, recv delta=" << recv_delta_ms << " ms.";
-      }
-      probes_.push_back(
-          Probe(send_time_ms, arrival_time_ms, payload_size, probe_cluster_id));
-      ++total_probes_received_;
-      // Make sure that a probe which updated the bitrate immediately has an
-      // effect by calling the OnReceiveBitrateChanged callback.
-      if (ProcessClusters(now_ms) == ProbeResult::kBitrateUpdated)
-        update_estimate = true;
-    }
-    if (inter_arrival_->ComputeDeltas(timestamp, arrival_time_ms, now_ms,
-                                      payload_size, &ts_delta, &t_delta,
-                                      &size_delta)) {
-      double ts_delta_ms = (1000.0 * ts_delta) / (1 << kInterArrivalShift);
-      estimator_->Update(t_delta, ts_delta_ms, size_delta, detector_.State());
-      detector_.Detect(estimator_->offset(), ts_delta_ms,
-                       estimator_->num_of_deltas(), arrival_time_ms);
-    }
-
-    if (!update_estimate) {
-      // Check if it's time for a periodic update or if we should update because
-      // of an over-use.
-      if (last_update_ms_ == -1 ||
-          now_ms - last_update_ms_ > remote_rate_.GetFeedbackInterval()) {
-        update_estimate = true;
-      } else if (detector_.State() == kBwOverusing) {
-        rtc::Optional<uint32_t> incoming_rate =
-            incoming_bitrate_.Rate(arrival_time_ms);
-        if (incoming_rate &&
-            remote_rate_.TimeToReduceFurther(now_ms, *incoming_rate)) {
-          update_estimate = true;
-        }
-      }
-    }
-
-    if (update_estimate) {
-      // The first overuse should immediately trigger a new estimate.
-      // We also have to update the estimate immediately if we are overusing
-      // and the target bitrate is too high compared to what we are receiving.
-      const RateControlInput input(detector_.State(),
-                                   incoming_bitrate_.Rate(arrival_time_ms),
-                                   estimator_->var_noise());
-      remote_rate_.Update(&input, now_ms);
-      target_bitrate_bps = remote_rate_.UpdateBandwidthEstimate(now_ms);
-      update_estimate = remote_rate_.ValidEstimate();
-      ssrcs = Keys(ssrcs_);
-    }
-  }
-  if (update_estimate) {
-    last_update_ms_ = now_ms;
-    observer_->OnReceiveBitrateChanged(ssrcs, target_bitrate_bps);
-  }
-}
-
-void DelayBasedBwe::Process() {}
-
-int64_t DelayBasedBwe::TimeUntilNextProcess() {
-  const int64_t kDisabledModuleTime = 1000;
-  return kDisabledModuleTime;
-}
-
-void DelayBasedBwe::TimeoutStreams(int64_t now_ms) {
-  for (Ssrcs::iterator it = ssrcs_.begin(); it != ssrcs_.end();) {
-    if ((now_ms - it->second) > kStreamTimeOutMs) {
-      ssrcs_.erase(it++);
+  if (inter_arrival_->ComputeDeltas(timestamp, info.arrival_time_ms, now_ms,
+                                    info.payload_size, &ts_delta, &t_delta,
+                                    &size_delta)) {
+    double ts_delta_ms = (1000.0 * ts_delta) / (1 << kInterArrivalShift);
+    if (in_trendline_experiment_) {
+      trendline_estimator_->Update(t_delta, ts_delta_ms, info.arrival_time_ms);
+      detector_.Detect(trendline_estimator_->trendline_slope(), ts_delta_ms,
+                       trendline_estimator_->num_of_deltas(),
+                       info.arrival_time_ms);
+    } else if (in_median_slope_experiment_) {
+      median_slope_estimator_->Update(t_delta, ts_delta_ms,
+                                      info.arrival_time_ms);
+      detector_.Detect(median_slope_estimator_->trendline_slope(), ts_delta_ms,
+                       median_slope_estimator_->num_of_deltas(),
+                       info.arrival_time_ms);
     } else {
-      ++it;
+      kalman_estimator_->Update(t_delta, ts_delta_ms, size_delta,
+                                detector_.State(), info.arrival_time_ms);
+      detector_.Detect(kalman_estimator_->offset(), ts_delta_ms,
+                       kalman_estimator_->num_of_deltas(),
+                       info.arrival_time_ms);
     }
   }
-  if (ssrcs_.empty()) {
-    // We can't update the estimate if we don't have any active streams.
-    inter_arrival_.reset(
-        new InterArrival((kTimestampGroupLengthMs << kInterArrivalShift) / 1000,
-                         kTimestampToMs, true));
-    estimator_.reset(new OveruseEstimator(OverUseDetectorOptions()));
-    // We deliberately don't reset the first_packet_time_ms_ here for now since
-    // we only probe for bandwidth in the beginning of a call right now.
+
+  int probing_bps = 0;
+  if (info.probe_cluster_id != PacketInfo::kNotAProbe) {
+    probing_bps = probe_bitrate_estimator_.HandleProbeAndEstimateBitrate(info);
   }
+  rtc::Optional<uint32_t> acked_bitrate_bps =
+      receiver_incoming_bitrate_.bitrate_bps();
+  // Currently overusing the bandwidth.
+  if (detector_.State() == kBwOverusing) {
+    if (acked_bitrate_bps &&
+        rate_control_.TimeToReduceFurther(now_ms, *acked_bitrate_bps)) {
+      result.updated =
+          UpdateEstimate(info.arrival_time_ms, now_ms, acked_bitrate_bps,
+                         &result.target_bitrate_bps);
+    }
+  } else if (probing_bps > 0) {
+    // No overuse, but probing measured a bitrate.
+    rate_control_.SetEstimate(probing_bps, info.arrival_time_ms);
+    result.probe = true;
+    result.updated =
+        UpdateEstimate(info.arrival_time_ms, now_ms, acked_bitrate_bps,
+                       &result.target_bitrate_bps);
+  }
+  if (!result.updated &&
+      (last_update_ms_ == -1 ||
+       now_ms - last_update_ms_ > rate_control_.GetFeedbackInterval())) {
+    result.updated =
+        UpdateEstimate(info.arrival_time_ms, now_ms, acked_bitrate_bps,
+                       &result.target_bitrate_bps);
+  }
+  if (result.updated) {
+    last_update_ms_ = now_ms;
+    BWE_TEST_LOGGING_PLOT(1, "target_bitrate_bps", now_ms,
+                          result.target_bitrate_bps);
+  }
+
+  return result;
+}
+
+bool DelayBasedBwe::UpdateEstimate(int64_t arrival_time_ms,
+                                   int64_t now_ms,
+                                   rtc::Optional<uint32_t> acked_bitrate_bps,
+                                   uint32_t* target_bitrate_bps) {
+  // TODO(terelius): RateControlInput::noise_var is deprecated and will be
+  // removed. In the meantime, we set it to zero.
+  const RateControlInput input(detector_.State(), acked_bitrate_bps, 0);
+  rate_control_.Update(&input, now_ms);
+  *target_bitrate_bps = rate_control_.UpdateBandwidthEstimate(now_ms);
+  return rate_control_.ValidEstimate();
 }
 
 void DelayBasedBwe::OnRttUpdate(int64_t avg_rtt_ms, int64_t max_rtt_ms) {
-  rtc::CritScope lock(&crit_);
-  remote_rate_.SetRtt(avg_rtt_ms);
-}
-
-void DelayBasedBwe::RemoveStream(uint32_t ssrc) {
-  rtc::CritScope lock(&crit_);
-  ssrcs_.erase(ssrc);
+  rate_control_.SetRtt(avg_rtt_ms);
 }
 
 bool DelayBasedBwe::LatestEstimate(std::vector<uint32_t>* ssrcs,
@@ -354,23 +375,21 @@ bool DelayBasedBwe::LatestEstimate(std::vector<uint32_t>* ssrcs,
   // thread.
   RTC_DCHECK(ssrcs);
   RTC_DCHECK(bitrate_bps);
-  rtc::CritScope lock(&crit_);
-  if (!remote_rate_.ValidEstimate()) {
+  if (!rate_control_.ValidEstimate())
     return false;
-  }
-  *ssrcs = Keys(ssrcs_);
-  if (ssrcs_.empty()) {
-    *bitrate_bps = 0;
-  } else {
-    *bitrate_bps = remote_rate_.LatestEstimate();
-  }
+
+  *ssrcs = {kFixedSsrc};
+  *bitrate_bps = rate_control_.LatestEstimate();
   return true;
 }
 
 void DelayBasedBwe::SetMinBitrate(int min_bitrate_bps) {
   // Called from both the configuration thread and the network thread. Shouldn't
   // be called from the network thread in the future.
-  rtc::CritScope lock(&crit_);
-  remote_rate_.SetMinBitrate(min_bitrate_bps);
+  rate_control_.SetMinBitrate(min_bitrate_bps);
+}
+
+int64_t DelayBasedBwe::GetProbingIntervalMs() const {
+  return probing_interval_estimator_.GetIntervalMs();
 }
 }  // namespace webrtc

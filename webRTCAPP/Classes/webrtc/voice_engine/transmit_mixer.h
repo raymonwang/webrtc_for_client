@@ -11,17 +11,25 @@
 #ifndef WEBRTC_VOICE_ENGINE_TRANSMIT_MIXER_H
 #define WEBRTC_VOICE_ENGINE_TRANSMIT_MIXER_H
 
+#include <memory>
+
 #include "webrtc/base/criticalsection.h"
 #include "webrtc/common_audio/resampler/include/push_resampler.h"
 #include "webrtc/common_types.h"
 #include "webrtc/modules/audio_processing/typing_detection.h"
 #include "webrtc/modules/include/module_common_types.h"
-#include "webrtc/modules/utility/include/file_player.h"
-#include "webrtc/modules/utility/include/file_recorder.h"
+#include "webrtc/voice_engine/file_player.h"
+#include "webrtc/voice_engine/file_recorder.h"
 #include "webrtc/voice_engine/include/voe_base.h"
 #include "webrtc/voice_engine/level_indicator.h"
 #include "webrtc/voice_engine/monitor_module.h"
 #include "webrtc/voice_engine/voice_engine_defines.h"
+
+#if !defined(WEBRTC_ANDROID) && !defined(WEBRTC_IOS)
+#define WEBRTC_VOICE_ENGINE_TYPING_DETECTION 1
+#else
+#define WEBRTC_VOICE_ENGINE_TYPING_DETECTION 0
+#endif
 
 namespace webrtc {
 
@@ -149,7 +157,7 @@ public:
 
     void RecordFileEnded(int32_t id);
 
-#ifdef WEBRTC_VOICE_ENGINE_TYPING_DETECTION
+#if WEBRTC_VOICE_ENGINE_TYPING_DETECTION
     // Typing detection
     int TimeSinceLastTyping(int &seconds);
     int SetTypingDetectionParameters(int timeWindow,
@@ -181,7 +189,7 @@ private:
     void ProcessAudio(int delay_ms, int clock_drift, int current_mic_level,
                       bool key_pressed);
 
-#ifdef WEBRTC_VOICE_ENGINE_TYPING_DETECTION
+#if WEBRTC_VOICE_ENGINE_TYPING_DETECTION
     void TypingDetection(bool keyPressed);
 #endif
 
@@ -196,9 +204,9 @@ private:
     MonitorModule _monitorModule;
     AudioFrame _audioFrame;
     PushResampler<int16_t> resampler_;  // ADM sample rate -> mixing rate
-    FilePlayer* _filePlayerPtr;
-    FileRecorder* _fileRecorderPtr;
-    FileRecorder* _fileCallRecorderPtr;
+    std::unique_ptr<FilePlayer> file_player_;
+    std::unique_ptr<FileRecorder> file_recorder_;
+    std::unique_ptr<FileRecorder> file_call_recorder_;
     int _filePlayerId;
     int _fileRecorderId;
     int _fileCallRecorderId;
@@ -210,7 +218,7 @@ private:
     rtc::CriticalSection _critSect;
     rtc::CriticalSection _callbackCritSect;
 
-#ifdef WEBRTC_VOICE_ENGINE_TYPING_DETECTION
+#if WEBRTC_VOICE_ENGINE_TYPING_DETECTION
     webrtc::TypingDetection _typingDetection;
     bool _typingNoiseWarningPending;
     bool _typingNoiseDetected;

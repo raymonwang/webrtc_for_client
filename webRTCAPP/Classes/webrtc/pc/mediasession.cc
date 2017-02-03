@@ -18,29 +18,28 @@
 #include <unordered_map>
 #include <utility>
 
+#include "webrtc/base/base64.h"
+#include "webrtc/base/checks.h"
 #include "webrtc/base/helpers.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/stringutils.h"
+#include "webrtc/common_video/h264/profile_level_id.h"
 #include "webrtc/media/base/cryptoparams.h"
 #include "webrtc/media/base/mediaconstants.h"
 #include "webrtc/p2p/base/p2pconstants.h"
 #include "webrtc/pc/channelmanager.h"
 #include "webrtc/pc/srtpfilter.h"
 
-#ifdef HAVE_SCTP
-#include "webrtc/media/sctp/sctpdataengine.h"
-#else
-static const uint32_t kMaxSctpSid = 1023;
-#endif
-
 namespace {
 const char kInline[] = "inline:";
 
-void GetSupportedCryptoSuiteNames(void (*func)(std::vector<int>*),
+void GetSupportedCryptoSuiteNames(void (*func)(const rtc::CryptoOptions&,
+                                      std::vector<int>*),
+                                  const rtc::CryptoOptions& crypto_options,
                                   std::vector<std::string>* names) {
 #ifdef HAVE_SRTP
   std::vector<int> crypto_suites;
-  func(&crypto_suites);
+  func(crypto_options, &crypto_suites);
   for (const auto crypto : crypto_suites) {
     names->push_back(rtc::SrtpCryptoSuiteToName(crypto));
   }
@@ -107,12 +106,22 @@ static bool IsMediaContentOfType(const ContentInfo* content,
 
 static bool CreateCryptoParams(int tag, const std::string& cipher,
                                CryptoParams *out) {
-  std::string key;
-  key.reserve(SRTP_MASTER_KEY_BASE64_LEN);
-
-  if (!rtc::CreateRandomString(SRTP_MASTER_KEY_BASE64_LEN, &key)) {
+  int key_len;
+  int salt_len;
+  if (!rtc::GetSrtpKeyAndSaltLengths(
+      rtc::SrtpCryptoSuiteFromName(cipher), &key_len, &salt_len)) {
     return false;
   }
+
+  int master_key_len = key_len + salt_len;
+  std::string master_key;
+  if (!rtc::CreateRandomData(master_key_len, &master_key)) {
+    return false;
+  }
+
+  RTC_CHECK_EQ(master_key_len, master_key.size());
+  std::string key = rtc::Base64::Encode(master_key);
+
   out->tag = tag;
   out->cipher_suite = cipher;
   out->key_params = kInline;
@@ -171,63 +180,80 @@ bool FindMatchingCrypto(const CryptoParamsVec& cryptos,
   return false;
 }
 
-// For audio, HMAC 32 is prefered because of the low overhead.
-void GetSupportedAudioCryptoSuites(std::vector<int>* crypto_suites) {
+// For audio, HMAC 32 is prefered over HMAC 80 because of the low overhead.
+void GetSupportedAudioCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites) {
 #ifdef HAVE_SRTP
+  if (crypto_options.enable_gcm_crypto_suites) {
+    crypto_suites->push_back(rtc::SRTP_AEAD_AES_256_GCM);
+    crypto_suites->push_back(rtc::SRTP_AEAD_AES_128_GCM);
+  }
   crypto_suites->push_back(rtc::SRTP_AES128_CM_SHA1_32);
   crypto_suites->push_back(rtc::SRTP_AES128_CM_SHA1_80);
 #endif
 }
 
-void GetSupportedAudioCryptoSuiteNames(
+void GetSupportedAudioCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names) {
   GetSupportedCryptoSuiteNames(GetSupportedAudioCryptoSuites,
-                               crypto_suite_names);
+                               crypto_options, crypto_suite_names);
 }
 
-void GetSupportedVideoCryptoSuites(std::vector<int>* crypto_suites) {
-  GetDefaultSrtpCryptoSuites(crypto_suites);
+void GetSupportedVideoCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites) {
+  GetDefaultSrtpCryptoSuites(crypto_options, crypto_suites);
 }
 
-void GetSupportedVideoCryptoSuiteNames(
+void GetSupportedVideoCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names) {
   GetSupportedCryptoSuiteNames(GetSupportedVideoCryptoSuites,
-                               crypto_suite_names);
+                               crypto_options, crypto_suite_names);
 }
 
-void GetSupportedDataCryptoSuites(std::vector<int>* crypto_suites) {
-  GetDefaultSrtpCryptoSuites(crypto_suites);
+void GetSupportedDataCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites) {
+  GetDefaultSrtpCryptoSuites(crypto_options, crypto_suites);
 }
 
-void GetSupportedDataCryptoSuiteNames(
+void GetSupportedDataCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names) {
   GetSupportedCryptoSuiteNames(GetSupportedDataCryptoSuites,
-                               crypto_suite_names);
+                               crypto_options, crypto_suite_names);
 }
 
-void GetDefaultSrtpCryptoSuites(std::vector<int>* crypto_suites) {
+void GetDefaultSrtpCryptoSuites(const rtc::CryptoOptions& crypto_options,
+    std::vector<int>* crypto_suites) {
 #ifdef HAVE_SRTP
+  if (crypto_options.enable_gcm_crypto_suites) {
+    crypto_suites->push_back(rtc::SRTP_AEAD_AES_256_GCM);
+    crypto_suites->push_back(rtc::SRTP_AEAD_AES_128_GCM);
+  }
   crypto_suites->push_back(rtc::SRTP_AES128_CM_SHA1_80);
 #endif
 }
 
-void GetDefaultSrtpCryptoSuiteNames(
+void GetDefaultSrtpCryptoSuiteNames(const rtc::CryptoOptions& crypto_options,
     std::vector<std::string>* crypto_suite_names) {
-  GetSupportedCryptoSuiteNames(GetDefaultSrtpCryptoSuites, crypto_suite_names);
+  GetSupportedCryptoSuiteNames(GetDefaultSrtpCryptoSuites,
+                               crypto_options, crypto_suite_names);
 }
 
-// For video support only 80-bit SHA1 HMAC. For audio 32-bit HMAC is
-// tolerated unless bundle is enabled because it is low overhead. Pick the
-// crypto in the list that is supported.
+// Support any GCM cipher (if enabled through options). For video support only
+// 80-bit SHA1 HMAC. For audio 32-bit HMAC is tolerated unless bundle is enabled
+// because it is low overhead.
+// Pick the crypto in the list that is supported.
 static bool SelectCrypto(const MediaContentDescription* offer,
                          bool bundle,
+                         const rtc::CryptoOptions& crypto_options,
                          CryptoParams *crypto) {
   bool audio = offer->type() == MEDIA_TYPE_AUDIO;
   const CryptoParamsVec& cryptos = offer->cryptos();
 
   for (CryptoParamsVec::const_iterator i = cryptos.begin();
        i != cryptos.end(); ++i) {
-    if (rtc::CS_AES_CM_128_HMAC_SHA1_80 == i->cipher_suite ||
+    if ((crypto_options.enable_gcm_crypto_suites &&
+         rtc::IsGcmCryptoSuiteName(i->cipher_suite)) ||
+        rtc::CS_AES_CM_128_HMAC_SHA1_80 == i->cipher_suite ||
         (rtc::CS_AES_CM_128_HMAC_SHA1_32 == i->cipher_suite && audio &&
          !bundle)) {
       return CreateCryptoParams(i->tag, i->cipher_suite, crypto);
@@ -250,33 +276,6 @@ static void GenerateSsrcs(const StreamParamsVec& params_vec,
              std::count(ssrcs->begin(), ssrcs->end(), candidate) > 0);
     ssrcs->push_back(candidate);
   }
-}
-
-// Returns false if we exhaust the range of SIDs.
-static bool GenerateSctpSid(const StreamParamsVec& params_vec, uint32_t* sid) {
-  if (params_vec.size() > kMaxSctpSid) {
-    LOG(LS_WARNING) <<
-        "Could not generate an SCTP SID: too many SCTP streams.";
-    return false;
-  }
-  while (true) {
-    uint32_t candidate = rtc::CreateRandomNonZeroId() % kMaxSctpSid;
-    if (!GetStreamBySsrc(params_vec, candidate)) {
-      *sid = candidate;
-      return true;
-    }
-  }
-}
-
-static bool GenerateSctpSids(const StreamParamsVec& params_vec,
-                             std::vector<uint32_t>* sids) {
-  uint32_t sid;
-  if (!GenerateSctpSid(params_vec, &sid)) {
-    LOG(LS_WARNING) << "Could not generated an SCTP SID.";
-    return false;
-  }
-  sids->push_back(sid);
-  return true;
 }
 
 // Finds all StreamParams of all media types and attach them to stream_params.
@@ -305,10 +304,11 @@ static void GetCurrentStreamParams(const SessionDescription* sdesc,
 // Filters the data codecs for the data channel type.
 void FilterDataCodecs(std::vector<DataCodec>* codecs, bool sctp) {
   // Filter RTP codec for SCTP and vice versa.
-  int codec_id = sctp ? kGoogleRtpDataCodecId : kGoogleSctpDataCodecId;
+  const char* codec_name =
+      sctp ? kGoogleRtpDataCodecName : kGoogleSctpDataCodecName;
   for (std::vector<DataCodec>::iterator iter = codecs->begin();
        iter != codecs->end();) {
-    if (iter->id == codec_id) {
+    if (CodecNamesEq(iter->name, codec_name)) {
       iter = codecs->erase(iter);
     } else {
       ++iter;
@@ -365,7 +365,7 @@ class UsedIds {
     while (IsIdUsed(next_id_) && next_id_ >= min_allowed_id_) {
       --next_id_;
     }
-    ASSERT(next_id_ >= min_allowed_id_);
+    RTC_DCHECK(next_id_ >= min_allowed_id_);
     return next_id_;
   }
 
@@ -424,6 +424,11 @@ static bool AddStreamParams(MediaType media_type,
                             StreamParamsVec* current_streams,
                             MediaContentDescriptionImpl<C>* content_description,
                             const bool add_legacy_stream) {
+  // SCTP streams are not negotiated using SDP/ContentDescriptions.
+  if (IsSctp(content_description)) {
+    return true;
+  }
+
   const bool include_rtx_streams =
       ContainsRtxCodec(content_description->codecs());
 
@@ -431,12 +436,8 @@ static bool AddStreamParams(MediaType media_type,
   if (streams.empty() && add_legacy_stream) {
     // TODO(perkj): Remove this legacy stream when all apps use StreamParams.
     std::vector<uint32_t> ssrcs;
-    if (IsSctp(content_description)) {
-      GenerateSctpSids(*current_streams, &ssrcs);
-    } else {
-      int num_ssrcs = include_rtx_streams ? 2 : 1;
-      GenerateSsrcs(*current_streams, num_ssrcs, &ssrcs);
-    }
+    int num_ssrcs = include_rtx_streams ? 2 : 1;
+    GenerateSsrcs(*current_streams, num_ssrcs, &ssrcs);
     if (include_rtx_streams) {
       content_description->AddLegacyStream(ssrcs[0], ssrcs[1]);
       content_description->set_multistream(true);
@@ -445,6 +446,9 @@ static bool AddStreamParams(MediaType media_type,
     }
     return true;
   }
+
+  const bool include_flexfec_stream =
+      ContainsFlexfecCodec(content_description->codecs());
 
   MediaSessionOptions::Streams::const_iterator stream_it;
   for (stream_it = streams.begin();
@@ -459,11 +463,7 @@ static bool AddStreamParams(MediaType media_type,
     if (!param) {
       // This is a new stream.
       std::vector<uint32_t> ssrcs;
-      if (IsSctp(content_description)) {
-        GenerateSctpSids(*current_streams, &ssrcs);
-      } else {
-        GenerateSsrcs(*current_streams, stream_it->num_sim_layers, &ssrcs);
-      }
+      GenerateSsrcs(*current_streams, stream_it->num_sim_layers, &ssrcs);
       StreamParams stream_param;
       stream_param.id = stream_it->id;
       // Add the generated ssrc.
@@ -484,6 +484,21 @@ static bool AddStreamParams(MediaType media_type,
           stream_param.AddFidSsrc(ssrcs[i], rtx_ssrcs[i]);
         }
         content_description->set_multistream(true);
+      }
+      // Generate extra ssrc for include_flexfec_stream case.
+      if (include_flexfec_stream) {
+        // TODO(brandtr): Update when we support multistream protection.
+        if (ssrcs.size() == 1) {
+          std::vector<uint32_t> flexfec_ssrcs;
+          GenerateSsrcs(*current_streams, 1, &flexfec_ssrcs);
+          stream_param.AddFecFrSsrc(ssrcs[0], flexfec_ssrcs[0]);
+          content_description->set_multistream(true);
+        } else if (!ssrcs.empty()) {
+          LOG(LS_WARNING)
+              << "Our FlexFEC implementation only supports protecting "
+              << "a single media streams. This session has multiple "
+              << "media streams however, so no FlexFEC SSRC will be generated.";
+        }
       }
       stream_param.cname = options.rtcp_cname;
       stream_param.sync_label = stream_it->sync_label;
@@ -676,9 +691,8 @@ static bool UpdateCryptoParamsForBundle(const ContentGroup& bundle_group,
 
 template <class C>
 static bool ContainsRtxCodec(const std::vector<C>& codecs) {
-  typename std::vector<C>::const_iterator it;
-  for (it = codecs.begin(); it != codecs.end(); ++it) {
-    if (IsRtxCodec(*it)) {
+  for (const auto& codec : codecs) {
+    if (IsRtxCodec(codec)) {
       return true;
     }
   }
@@ -690,13 +704,30 @@ static bool IsRtxCodec(const C& codec) {
   return stricmp(codec.name.c_str(), kRtxCodecName) == 0;
 }
 
+template <class C>
+static bool ContainsFlexfecCodec(const std::vector<C>& codecs) {
+  for (const auto& codec : codecs) {
+    if (IsFlexfecCodec(codec)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+template <class C>
+static bool IsFlexfecCodec(const C& codec) {
+  return stricmp(codec.name.c_str(), kFlexfecCodecName) == 0;
+}
+
 static TransportOptions GetTransportOptions(const MediaSessionOptions& options,
                                             const std::string& content_name) {
+  TransportOptions transport_options;
   auto it = options.transport_options.find(content_name);
-  if (it == options.transport_options.end()) {
-    return TransportOptions();
+  if (it != options.transport_options.end()) {
+    transport_options = it->second;
   }
-  return it->second;
+  transport_options.enable_ice_renomination = options.enable_ice_renomination;
+  return transport_options;
 }
 
 // Create a media content to be offered in a session-initiate,
@@ -719,9 +750,6 @@ static bool CreateMediaContentOffer(
     MediaContentDescriptionImpl<C>* offer) {
   offer->AddCodecs(codecs);
 
-  if (secure_policy == SEC_REQUIRED) {
-    offer->set_crypto_required(CT_SDES);
-  }
   offer->set_rtcp_mux(options.rtcp_mux_enabled);
   if (offer->type() == cricket::MEDIA_TYPE_VIDEO) {
     offer->set_rtcp_reduced_size(true);
@@ -747,7 +775,7 @@ static bool CreateMediaContentOffer(
   }
 #endif
 
-  if (offer->crypto_required() == CT_SDES && offer->cryptos().empty()) {
+  if (secure_policy == SEC_REQUIRED && offer->cryptos().empty()) {
     return false;
   }
   return true;
@@ -755,20 +783,12 @@ static bool CreateMediaContentOffer(
 
 template <class C>
 static bool ReferencedCodecsMatch(const std::vector<C>& codecs1,
-                                  const std::string& codec1_id_str,
+                                  const int codec1_id,
                                   const std::vector<C>& codecs2,
-                                  const std::string& codec2_id_str) {
-  int codec1_id;
-  int codec2_id;
-  C codec1;
-  C codec2;
-  if (!rtc::FromString(codec1_id_str, &codec1_id) ||
-      !rtc::FromString(codec2_id_str, &codec2_id) ||
-      !FindCodecById(codecs1, codec1_id, &codec1) ||
-      !FindCodecById(codecs2, codec2_id, &codec2)) {
-    return false;
-  }
-  return codec1.Matches(codec2);
+                                  const int codec2_id) {
+  const C* codec1 = FindCodecById(codecs1, codec1_id);
+  const C* codec2 = FindCodecById(codecs2, codec2_id);
+  return codec1 != nullptr && codec2 != nullptr && codec1->Matches(*codec2);
 }
 
 template <class C>
@@ -783,16 +803,19 @@ static void NegotiateCodecs(const std::vector<C>& local_codecs,
       C negotiated = ours;
       negotiated.IntersectFeedbackParams(theirs);
       if (IsRtxCodec(negotiated)) {
-        std::string offered_apt_value;
-        theirs.GetParam(kCodecParamAssociatedPayloadType, &offered_apt_value);
+        const auto apt_it =
+            theirs.params.find(kCodecParamAssociatedPayloadType);
         // FindMatchingCodec shouldn't return something with no apt value.
-        RTC_DCHECK(!offered_apt_value.empty());
-        negotiated.SetParam(kCodecParamAssociatedPayloadType,
-                            offered_apt_value);
+        RTC_DCHECK(apt_it != theirs.params.end());
+        negotiated.SetParam(kCodecParamAssociatedPayloadType, apt_it->second);
+      }
+      if (CodecNamesEq(ours.name.c_str(), kH264CodecName)) {
+        webrtc::H264::GenerateProfileLevelIdForAnswer(
+            ours.params, theirs.params, &negotiated.params);
       }
       negotiated.id = theirs.id;
       negotiated.name = theirs.name;
-      negotiated_codecs->push_back(negotiated);
+      negotiated_codecs->push_back(std::move(negotiated));
     }
   }
   // RFC3264: Although the answerer MAY list the formats in their desired
@@ -822,8 +845,8 @@ static bool FindMatchingCodec(const std::vector<C>& codecs1,
   for (const C& potential_match : codecs2) {
     if (potential_match.Matches(codec_to_match)) {
       if (IsRtxCodec(codec_to_match)) {
-        std::string apt_value_1;
-        std::string apt_value_2;
+        int apt_value_1 = 0;
+        int apt_value_2 = 0;
         if (!codec_to_match.GetParam(kCodecParamAssociatedPayloadType,
                                      &apt_value_1) ||
             !potential_match.GetParam(kCodecParamAssociatedPayloadType,
@@ -889,8 +912,9 @@ static void FindCodecsToOffer(
       }
 
       // Find the associated reference codec for the reference RTX codec.
-      C associated_codec;
-      if (!FindCodecById(reference_codecs, associated_pt, &associated_codec)) {
+      const C* associated_codec =
+          FindCodecById(reference_codecs, associated_pt);
+      if (!associated_codec) {
         LOG(LS_WARNING) << "Couldn't find associated codec with payload type "
                         << associated_pt << " for RTX codec " << rtx_codec.name
                         << ".";
@@ -901,8 +925,8 @@ static void FindCodecsToOffer(
       // Its payload type may be different than the reference codec.
       C matching_codec;
       if (!FindMatchingCodec<C>(reference_codecs, *offered_codecs,
-                               associated_codec, &matching_codec)) {
-        LOG(LS_WARNING) << "Couldn't find matching " << associated_codec.name
+                                *associated_codec, &matching_codec)) {
+        LOG(LS_WARNING) << "Couldn't find matching " << associated_codec->name
                         << " codec.";
         continue;
       }
@@ -1034,7 +1058,7 @@ static bool CreateMediaContentAnswer(
 
   if (sdes_policy != SEC_DISABLED) {
     CryptoParams crypto;
-    if (SelectCrypto(offer, bundle_enabled, &crypto)) {
+    if (SelectCrypto(offer, bundle_enabled, options.crypto_options, &crypto)) {
       if (current_cryptos) {
         FindMatchingCrypto(*current_cryptos, crypto, &crypto);
       }
@@ -1042,8 +1066,7 @@ static bool CreateMediaContentAnswer(
     }
   }
 
-  if (answer->cryptos().empty() &&
-      (offer->crypto_required() == CT_SDES || sdes_policy == SEC_REQUIRED)) {
+  if (answer->cryptos().empty() && sdes_policy == SEC_REQUIRED) {
     return false;
   }
 
@@ -1170,25 +1193,6 @@ static bool IsDtlsActive(
   return current_tdesc->secure();
 }
 
-std::string MediaTypeToString(MediaType type) {
-  std::string type_str;
-  switch (type) {
-    case MEDIA_TYPE_AUDIO:
-      type_str = "audio";
-      break;
-    case MEDIA_TYPE_VIDEO:
-      type_str = "video";
-      break;
-    case MEDIA_TYPE_DATA:
-      type_str = "data";
-      break;
-    default:
-      ASSERT(false);
-      break;
-  }
-  return type_str;
-}
-
 std::string MediaContentDirectionToString(MediaContentDirection direction) {
   std::string dir_str;
   switch (direction) {
@@ -1205,7 +1209,7 @@ std::string MediaContentDirectionToString(MediaContentDirection direction) {
       dir_str = "sendrecv";
       break;
     default:
-      ASSERT(false);
+      RTC_NOTREACHED();
       break;
   }
 
@@ -1247,7 +1251,7 @@ void MediaSessionOptions::RemoveSendStream(MediaType type,
       return;
     }
   }
-  ASSERT(false);
+  RTC_NOTREACHED();
 }
 
 bool MediaSessionOptions::HasSendMediaStream(MediaType type) const {
@@ -1376,7 +1380,7 @@ SessionDescription* MediaSessionDescriptionFactory::CreateOffer(
         }
         data_added = true;
       } else {
-        ASSERT(false);
+        RTC_NOTREACHED();
       }
     }
   }
@@ -1447,7 +1451,7 @@ SessionDescription* MediaSessionDescriptionFactory::CreateAnswer(
           return NULL;
         }
       } else {
-        ASSERT(IsMediaContentOfType(&*it, MEDIA_TYPE_DATA));
+        RTC_DCHECK(IsMediaContentOfType(&*it, MEDIA_TYPE_DATA));
         if (!AddDataContentForAnswer(offer, options, current_description,
                                      &current_streams, answer.get())) {
           return NULL;
@@ -1672,7 +1676,7 @@ bool MediaSessionDescriptionFactory::AddAudioContentForOffer(
 
   std::unique_ptr<AudioContentDescription> audio(new AudioContentDescription());
   std::vector<std::string> crypto_suites;
-  GetSupportedAudioCryptoSuiteNames(&crypto_suites);
+  GetSupportedAudioCryptoSuiteNames(options.crypto_options, &crypto_suites);
   if (!CreateMediaContentOffer(
           options,
           audio_codecs,
@@ -1722,7 +1726,7 @@ bool MediaSessionDescriptionFactory::AddVideoContentForOffer(
 
   std::unique_ptr<VideoContentDescription> video(new VideoContentDescription());
   std::vector<std::string> crypto_suites;
-  GetSupportedVideoCryptoSuiteNames(&crypto_suites);
+  GetSupportedVideoCryptoSuiteNames(options.crypto_options, &crypto_suites);
   if (!CreateMediaContentOffer(
           options,
           video_codecs,
@@ -1798,7 +1802,7 @@ bool MediaSessionDescriptionFactory::AddDataContentForOffer(
     data->set_protocol(
         secure_transport ? kMediaProtocolDtlsSctp : kMediaProtocolSctp);
   } else {
-    GetSupportedDataCryptoSuiteNames(&crypto_suites);
+    GetSupportedDataCryptoSuiteNames(options.crypto_options, &crypto_suites);
   }
 
   if (!CreateMediaContentOffer(

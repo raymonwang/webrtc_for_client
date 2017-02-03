@@ -11,6 +11,7 @@
 package org.webrtc;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 
 import java.util.concurrent.Callable;
@@ -39,12 +40,19 @@ public class ThreadUtils {
   }
 
   /**
+   * Throws exception if called from other than main thread.
+   */
+  public static void checkIsOnMainThread() {
+    if (Thread.currentThread() != Looper.getMainLooper().getThread()) {
+      throw new IllegalStateException("Not on main thread!");
+    }
+  }
+
+  /**
    * Utility interface to be used with executeUninterruptibly() to wait for blocking operations
    * to complete without getting interrupted..
    */
-  public interface BlockingOperation {
-    void run() throws InterruptedException;
-  }
+  public interface BlockingOperation { void run() throws InterruptedException; }
 
   /**
    * Utility method to make sure a blocking operation is executed to completion without getting
@@ -168,7 +176,8 @@ public class ThreadUtils {
     final CaughtException caughtException = new CaughtException();
     final CountDownLatch barrier = new CountDownLatch(1);
     handler.post(new Runnable() {
-      @Override public void run() {
+      @Override
+      public void run() {
         try {
           result.value = callable.call();
         } catch (Exception e) {
@@ -182,9 +191,8 @@ public class ThreadUtils {
     // stack trace for the waiting thread as well.
     if (caughtException.e != null) {
       final RuntimeException runtimeException = new RuntimeException(caughtException.e);
-      runtimeException.setStackTrace(concatStackTraces(
-          caughtException.e.getStackTrace(),
-          runtimeException.getStackTrace()));
+      runtimeException.setStackTrace(
+          concatStackTraces(caughtException.e.getStackTrace(), runtimeException.getStackTrace()));
       throw runtimeException;
     }
     return result.value;

@@ -216,7 +216,6 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
   }
 
   bool Recording() const override {
-    LOG(LS_VERBOSE) << __FUNCTION__;
     return input_.Recording() ;
   }
 
@@ -296,7 +295,6 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
 
   int32_t MicrophoneVolumeIsAvailable(bool& available) override{
     available = false;
-    FATAL() << "Should never be called";
     return -1;
   }
 
@@ -421,7 +419,6 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
   int32_t PlayoutDelay(uint16_t& delay_ms) const override {
     // Best guess we can do is to use half of the estimated total delay.
     delay_ms = audio_manager_->GetDelayEstimateInMilliseconds() / 2;
-    LOG(LS_VERBOSE) << __FUNCTION__ << " delay = " << delay_ms;
     RTC_DCHECK_GT(delay_ms, 0);
     return 0;
   }
@@ -440,22 +437,18 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
   }
 
   bool PlayoutWarning() const override {
-    LOG(LS_VERBOSE) << __FUNCTION__;
     return false;
   }
 
   bool PlayoutError() const override {
-    LOG(LS_VERBOSE) << __FUNCTION__;
     return false;
   }
 
   bool RecordingWarning() const override {
-    LOG(LS_VERBOSE) << __FUNCTION__;
     return false;
   }
 
   bool RecordingError() const override {
-    LOG(LS_VERBOSE) << __FUNCTION__;
     return false;
   }
 
@@ -491,11 +484,22 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
 
   // Returns true if the device both supports built in AEC and the device
   // is not blacklisted.
+  // Currently, if OpenSL ES is used in both directions, this method will still
+  // report the correct value and it has the correct effect. As an example:
+  // a device supports built in AEC and this method returns true. Libjingle
+  // will then disable the WebRTC based AEC and that will work for all devices
+  // (mainly Nexus) even when OpenSL ES is used for input since our current
+  // implementation will enable built-in AEC by default also for OpenSL ES.
+  // The only "bad" thing that happens today is that when Libjingle calls
+  // OpenSLESRecorder::EnableBuiltInAEC() it will not have any real effect and
+  // a "Not Implemented" log will be filed. This non-perfect state will remain
+  // until I have added full support for audio effects based on OpenSL ES APIs.
   bool BuiltInAECIsAvailable() const override {
     LOG(INFO) << __FUNCTION__;
     return audio_manager_->IsAcousticEchoCancelerSupported();
   }
 
+  // TODO(henrika): add implementation for OpenSL ES based audio as well.
   int32_t EnableBuiltInAEC(bool enable) override {
     LOG(INFO) << __FUNCTION__ << "(" << enable << ")";
     RTC_CHECK(BuiltInAECIsAvailable()) << "HW AEC is not available";
@@ -504,11 +508,14 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
 
   // Returns true if the device both supports built in AGC and the device
   // is not blacklisted.
+  // TODO(henrika): add implementation for OpenSL ES based audio as well.
+  // In addition, see comments for BuiltInAECIsAvailable().
   bool BuiltInAGCIsAvailable() const override {
     LOG(INFO) << __FUNCTION__;
     return audio_manager_->IsAutomaticGainControlSupported();
   }
 
+  // TODO(henrika): add implementation for OpenSL ES based audio as well.
   int32_t EnableBuiltInAGC(bool enable) override {
     LOG(INFO) << __FUNCTION__ << "(" << enable << ")";
     RTC_CHECK(BuiltInAGCIsAvailable()) << "HW AGC is not available";
@@ -517,11 +524,14 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
 
   // Returns true if the device both supports built in NS and the device
   // is not blacklisted.
+  // TODO(henrika): add implementation for OpenSL ES based audio as well.
+  // In addition, see comments for BuiltInAECIsAvailable().
   bool BuiltInNSIsAvailable() const override {
     LOG(INFO) << __FUNCTION__;
     return audio_manager_->IsNoiseSuppressorSupported();
   }
 
+  // TODO(henrika): add implementation for OpenSL ES based audio as well.
   int32_t EnableBuiltInNS(bool enable) override {
     LOG(INFO) << __FUNCTION__ << "(" << enable << ")";
     RTC_CHECK(BuiltInNSIsAvailable()) << "HW NS is not available";

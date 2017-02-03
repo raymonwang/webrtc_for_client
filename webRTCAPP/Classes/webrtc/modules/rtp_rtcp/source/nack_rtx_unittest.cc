@@ -14,7 +14,7 @@
 #include <memory>
 #include <set>
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "webrtc/api/call/transport.h"
 #include "webrtc/base/rate_limiter.h"
 #include "webrtc/common_types.h"
 #include "webrtc/modules/rtp_rtcp/include/receive_statistics.h"
@@ -23,7 +23,7 @@
 #include "webrtc/modules/rtp_rtcp/include/rtp_receiver.h"
 #include "webrtc/modules/rtp_rtcp/include/rtp_rtcp.h"
 #include "webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h"
-#include "webrtc/transport.h"
+#include "webrtc/test/gtest.h"
 
 namespace webrtc {
 
@@ -169,13 +169,12 @@ class RtxLoopBackTransport : public webrtc::Transport {
 class RtpRtcpRtxNackTest : public ::testing::Test {
  protected:
   RtpRtcpRtxNackTest()
-      : rtp_payload_registry_(RTPPayloadStrategy::CreateStrategy(false)),
-        rtp_rtcp_module_(nullptr),
+      : rtp_rtcp_module_(nullptr),
         transport_(kTestSsrc + 1),
         receiver_(),
         payload_data_length(sizeof(payload_data)),
         fake_clock(123456),
-        retranmission_rate_limiter_(&fake_clock, kMaxRttMs) {}
+        retransmission_rate_limiter_(&fake_clock, kMaxRttMs) {}
   ~RtpRtcpRtxNackTest() {}
 
   void SetUp() override {
@@ -185,7 +184,7 @@ class RtpRtcpRtxNackTest : public ::testing::Test {
     receive_statistics_.reset(ReceiveStatistics::Create(&fake_clock));
     configuration.receive_statistics = receive_statistics_.get();
     configuration.outgoing_transport = &transport_;
-    configuration.retransmission_rate_limiter = &retranmission_rate_limiter_;
+    configuration.retransmission_rate_limiter = &retransmission_rate_limiter_;
     rtp_rtcp_module_ = RtpRtcp::CreateRtpRtcp(configuration);
 
     rtp_feedback_.reset(new TestRtpFeedback(rtp_rtcp_module_));
@@ -210,9 +209,7 @@ class RtpRtcpRtxNackTest : public ::testing::Test {
 
     EXPECT_EQ(0, rtp_rtcp_module_->RegisterSendPayload(video_codec));
     rtp_rtcp_module_->SetRtxSendPayloadType(kRtxPayloadType, kPayloadType);
-    EXPECT_EQ(0, rtp_receiver_->RegisterReceivePayload(
-                     video_codec.plName, video_codec.plType, 90000, 0,
-                     video_codec.maxBitrate));
+    EXPECT_EQ(0, rtp_payload_registry_.RegisterReceivePayload(video_codec));
     rtp_payload_registry_.SetRtxPayloadType(kRtxPayloadType, kPayloadType);
 
     for (size_t n = 0; n < payload_data_length; n++) {
@@ -264,9 +261,9 @@ class RtpRtcpRtxNackTest : public ::testing::Test {
     uint32_t timestamp = 3000;
     uint16_t nack_list[kVideoNackListSize];
     for (int frame = 0; frame < kNumFrames; ++frame) {
-      EXPECT_EQ(0, rtp_rtcp_module_->SendOutgoingData(
-                       webrtc::kVideoFrameDelta, kPayloadType, timestamp,
-                       timestamp / 90, payload_data, payload_data_length));
+      EXPECT_TRUE(rtp_rtcp_module_->SendOutgoingData(
+          webrtc::kVideoFrameDelta, kPayloadType, timestamp, timestamp / 90,
+          payload_data, payload_data_length, nullptr, nullptr, nullptr));
       // Min required delay until retransmit = 5 + RTT ms (RTT = 0).
       fake_clock.AdvanceTimeMilliseconds(5);
       int length = BuildNackList(nack_list);
@@ -292,7 +289,7 @@ class RtpRtcpRtxNackTest : public ::testing::Test {
   uint8_t payload_data[65000];
   size_t payload_data_length;
   SimulatedClock fake_clock;
-  RateLimiter retranmission_rate_limiter_;
+  RateLimiter retransmission_rate_limiter_;
 };
 
 TEST_F(RtpRtcpRtxNackTest, LongNackList) {
@@ -310,9 +307,9 @@ TEST_F(RtpRtcpRtxNackTest, LongNackList) {
   // Send 30 frames which at the default size is roughly what we need to get
   // enough packets.
   for (int frame = 0; frame < kNumFrames; ++frame) {
-    EXPECT_EQ(0, rtp_rtcp_module_->SendOutgoingData(
-                     webrtc::kVideoFrameDelta, kPayloadType, timestamp,
-                     timestamp / 90, payload_data, payload_data_length));
+    EXPECT_TRUE(rtp_rtcp_module_->SendOutgoingData(
+        webrtc::kVideoFrameDelta, kPayloadType, timestamp, timestamp / 90,
+        payload_data, payload_data_length, nullptr, nullptr, nullptr));
     // Prepare next frame.
     timestamp += 3000;
     fake_clock.AdvanceTimeMilliseconds(33);

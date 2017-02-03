@@ -11,18 +11,21 @@
 #ifndef WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_H_
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_SENDER_H_
 
-#include <list>
 #include <map>
 #include <memory>
 #include <utility>
 #include <vector>
 
+#include "webrtc/api/call/transport.h"
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/base/criticalsection.h"
+#include "webrtc/base/deprecation.h"
+#include "webrtc/base/optional.h"
 #include "webrtc/base/random.h"
 #include "webrtc/base/rate_statistics.h"
 #include "webrtc/base/thread_annotations.h"
 #include "webrtc/common_types.h"
+#include "webrtc/modules/rtp_rtcp/include/flexfec_sender.h"
 #include "webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "webrtc/modules/rtp_rtcp/source/playout_delay_oracle.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_header_extension.h"
@@ -30,64 +33,25 @@
 #include "webrtc/modules/rtp_rtcp/source/rtp_rtcp_config.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
 #include "webrtc/modules/rtp_rtcp/source/ssrc_database.h"
-#include "webrtc/transport.h"
 
 namespace webrtc {
 
+class OverheadObserver;
 class RateLimiter;
+class RtcEventLog;
+class RtpPacketToSend;
 class RTPSenderAudio;
 class RTPSenderVideo;
-class RtcEventLog;
 
-class RTPSenderInterface {
- public:
-  RTPSenderInterface() {}
-  virtual ~RTPSenderInterface() {}
-
-  virtual uint32_t SSRC() const = 0;
-  virtual uint32_t Timestamp() const = 0;
-
-  virtual int32_t BuildRTPheader(uint8_t* data_buffer,
-                                 int8_t payload_type,
-                                 bool marker_bit,
-                                 uint32_t capture_timestamp,
-                                 int64_t capture_time_ms,
-                                 bool timestamp_provided = true,
-                                 bool inc_sequence_number = true) = 0;
-
-  // This returns the expected header length taking into consideration
-  // the optional RTP header extensions that may not be currently active.
-  virtual size_t RtpHeaderLength() const = 0;
-  // Returns the next sequence number to use for a packet and allocates
-  // 'packets_to_send' number of sequence numbers. It's important all allocated
-  // sequence numbers are used in sequence to avoid perceived packet loss.
-  virtual uint16_t AllocateSequenceNumber(uint16_t packets_to_send) = 0;
-  virtual uint16_t SequenceNumber() const = 0;
-  virtual size_t MaxPayloadLength() const = 0;
-  virtual size_t MaxDataPayloadLength() const = 0;
-  virtual uint16_t ActualSendBitrateKbit() const = 0;
-
-  virtual int32_t SendToNetwork(uint8_t* data_buffer,
-                                size_t payload_length,
-                                size_t rtp_header_length,
-                                int64_t capture_time_ms,
-                                StorageType storage,
-                                RtpPacketSender::Priority priority) = 0;
-
-  virtual bool UpdateVideoRotation(uint8_t* rtp_packet,
-                                   size_t rtp_packet_length,
-                                   const RTPHeader& rtp_header,
-                                   VideoRotation rotation) const = 0;
-  virtual bool IsRtpHeaderExtensionRegistered(RTPExtensionType type) = 0;
-  virtual bool ActivateCVORtpHeaderExtension() = 0;
-};
-
-class RTPSender : public RTPSenderInterface {
+class RTPSender {
  public:
   RTPSender(bool audio,
             Clock* clock,
             Transport* transport,
             RtpPacketSender* paced_sender,
+            // TODO(brandtr): Remove |flexfec_sender| when that is hooked up
+            // to PacedSender instead.
+            FlexfecSender* flexfec_sender,
             TransportSequenceNumberAllocator* sequence_number_allocator,
             TransportFeedbackObserver* transport_feedback_callback,
             BitrateStatisticsObserver* bitrate_callback,
@@ -95,20 +59,21 @@ class RTPSender : public RTPSenderInterface {
             SendSideDelayObserver* send_side_delay_observer,
             RtcEventLog* event_log,
             SendPacketObserver* send_packet_observer,
-            RateLimiter* nack_rate_limiter);
+            RateLimiter* nack_rate_limiter,
+            OverheadObserver* overhead_observer);
 
-  virtual ~RTPSender();
+  ~RTPSender();
 
   void ProcessBitrate();
 
-  uint16_t ActualSendBitrateKbit() const override;
+  uint16_t ActualSendBitrateKbit() const;
 
   uint32_t VideoBitrateSent() const;
   uint32_t FecOverheadRate() const;
   uint32_t NackOverheadRate() const;
 
-  // Includes size of RTP and FEC headers.
-  size_t MaxDataPayloadLength() const override;
+  // Excluding size of RTP and FEC headers.
+  size_t MaxPayloadSize() const;
 
   int32_t RegisterPayload(const char* payload_name,
                           const int8_t payload_type,
@@ -122,8 +87,6 @@ class RTPSender : public RTPSenderInterface {
 
   int8_t SendPayloadType() const;
 
-  int SendPayloadFrequency() const;
-
   void SetSendingStatus(bool enabled);
 
   void SetSendingMediaStatus(bool enabled);
@@ -132,83 +95,36 @@ class RTPSender : public RTPSenderInterface {
   void GetDataCounters(StreamDataCounters* rtp_stats,
                        StreamDataCounters* rtx_stats) const;
 
-  uint32_t StartTimestamp() const;
-  void SetStartTimestamp(uint32_t timestamp, bool force);
+  uint32_t TimestampOffset() const;
+  void SetTimestampOffset(uint32_t timestamp);
 
   uint32_t GenerateNewSSRC();
   void SetSSRC(uint32_t ssrc);
 
-  uint16_t SequenceNumber() const override;
+  uint16_t SequenceNumber() const;
   void SetSequenceNumber(uint16_t seq);
 
   void SetCsrcs(const std::vector<uint32_t>& csrcs);
 
-  void SetMaxPayloadLength(size_t max_payload_length);
+  void SetMaxRtpPacketSize(size_t max_packet_size);
 
-  int32_t SendOutgoingData(FrameType frame_type,
-                           int8_t payload_type,
-                           uint32_t timestamp,
-                           int64_t capture_time_ms,
-                           const uint8_t* payload_data,
-                           size_t payload_size,
-                           const RTPFragmentationHeader* fragmentation,
-                           const RTPVideoHeader* rtp_hdr = NULL);
+  bool SendOutgoingData(FrameType frame_type,
+                        int8_t payload_type,
+                        uint32_t timestamp,
+                        int64_t capture_time_ms,
+                        const uint8_t* payload_data,
+                        size_t payload_size,
+                        const RTPFragmentationHeader* fragmentation,
+                        const RTPVideoHeader* rtp_header,
+                        uint32_t* transport_frame_id_out);
 
   // RTP header extension
-  int32_t SetTransmissionTimeOffset(int32_t transmission_time_offset);
-  int32_t SetAbsoluteSendTime(uint32_t absolute_send_time);
-  void SetVideoRotation(VideoRotation rotation);
-  int32_t SetTransportSequenceNumber(uint16_t sequence_number);
-
   int32_t RegisterRtpHeaderExtension(RTPExtensionType type, uint8_t id);
-  bool IsRtpHeaderExtensionRegistered(RTPExtensionType type) override;
+  bool IsRtpHeaderExtensionRegistered(RTPExtensionType type);
   int32_t DeregisterRtpHeaderExtension(RTPExtensionType type);
 
-  size_t RtpHeaderExtensionLength() const;
-
-  uint16_t BuildRTPHeaderExtension(uint8_t* data_buffer, bool marker_bit) const;
-
-  uint8_t BuildTransmissionTimeOffsetExtension(uint8_t *data_buffer) const;
-  uint8_t BuildAudioLevelExtension(uint8_t* data_buffer) const;
-  uint8_t BuildAbsoluteSendTimeExtension(uint8_t* data_buffer) const;
-  uint8_t BuildVideoRotationExtension(uint8_t* data_buffer) const;
-  uint8_t BuildTransportSequenceNumberExtension(uint8_t* data_buffer,
-                                                uint16_t sequence_number) const;
-  uint8_t BuildPlayoutDelayExtension(uint8_t* data_buffer,
-                                     uint16_t min_playout_delay_ms,
-                                     uint16_t max_playout_delay_ms) const;
-
-  // Verifies that the specified extension is registered, and that it is
-  // present in rtp packet. If extension is not registered kNotRegistered is
-  // returned. If extension cannot be found in the rtp header, or if it is
-  // malformed, kError is returned. Otherwise *extension_offset is set to the
-  // offset of the extension from the beginning of the rtp packet and kOk is
-  // returned.
-  enum class ExtensionStatus {
-    kNotRegistered,
-    kOk,
-    kError,
-  };
-  ExtensionStatus VerifyExtension(RTPExtensionType extension_type,
-                                  uint8_t* rtp_packet,
-                                  size_t rtp_packet_length,
-                                  const RTPHeader& rtp_header,
-                                  size_t extension_length_bytes,
-                                  size_t* extension_offset) const
-      EXCLUSIVE_LOCKS_REQUIRED(send_critsect_);
-
-  bool UpdateAudioLevel(uint8_t* rtp_packet,
-                        size_t rtp_packet_length,
-                        const RTPHeader& rtp_header,
-                        bool is_voiced,
-                        uint8_t dBov) const;
-
-  bool UpdateVideoRotation(uint8_t* rtp_packet,
-                           size_t rtp_packet_length,
-                           const RTPHeader& rtp_header,
-                           VideoRotation rotation) const override;
-
-  bool TimeToSendPacket(uint16_t sequence_number,
+  bool TimeToSendPacket(uint32_t ssrc,
+                        uint16_t sequence_number,
                         int64_t capture_time_ms,
                         bool retransmission,
                         int probe_cluster_id);
@@ -217,7 +133,7 @@ class RTPSender : public RTPSenderInterface {
   // NACK.
   int SelectiveRetransmissions() const;
   int SetSelectiveRetransmissions(uint8_t settings);
-  void OnReceivedNACK(const std::list<uint16_t>& nack_sequence_numbers,
+  void OnReceivedNack(const std::vector<uint16_t>& nack_sequence_numbers,
                       int64_t avg_rtt);
 
   void SetStorePacketsStatus(bool enable, uint16_t number_to_store);
@@ -238,75 +154,49 @@ class RTPSender : public RTPSenderInterface {
 
   void SetRtxPayloadType(int payload_type, int associated_payload_type);
 
-  // Functions wrapping RTPSenderInterface.
-  int32_t BuildRTPheader(uint8_t* data_buffer,
-                         int8_t payload_type,
-                         bool marker_bit,
-                         uint32_t capture_timestamp,
-                         int64_t capture_time_ms,
-                         const bool timestamp_provided = true,
-                         const bool inc_sequence_number = true) override;
+  // Create empty packet, fills ssrc, csrcs and reserve place for header
+  // extensions RtpSender updates before sending.
+  std::unique_ptr<RtpPacketToSend> AllocatePacket() const;
+  // Allocate sequence number for provided packet.
+  // Save packet's fields to generate padding that doesn't break media stream.
+  // Return false if sending was turned off.
+  bool AssignSequenceNumber(RtpPacketToSend* packet);
 
-  size_t RtpHeaderLength() const override;
-  uint16_t AllocateSequenceNumber(uint16_t packets_to_send) override;
-  size_t MaxPayloadLength() const override;
+  size_t RtpHeaderLength() const;
+  uint16_t AllocateSequenceNumber(uint16_t packets_to_send);
+  // Including RTP headers.
+  size_t MaxRtpPacketSize() const;
 
-  // Current timestamp.
-  uint32_t Timestamp() const override;
-  uint32_t SSRC() const override;
+  uint32_t SSRC() const;
 
-  int32_t SendToNetwork(uint8_t* data_buffer,
-                        size_t payload_length,
-                        size_t rtp_header_length,
-                        int64_t capture_time_ms,
-                        StorageType storage,
-                        RtpPacketSender::Priority priority) override;
+  rtc::Optional<uint32_t> FlexfecSsrc() const;
+
+  bool SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
+                     StorageType storage,
+                     RtpPacketSender::Priority priority);
 
   // Audio.
 
   // Send a DTMF tone using RFC 2833 (4733).
   int32_t SendTelephoneEvent(uint8_t key, uint16_t time_ms, uint8_t level);
 
-  // Set audio packet size, used to determine when it's time to send a DTMF
-  // packet in silence (CNG).
-  int32_t SetAudioPacketSize(uint16_t packet_size_samples);
+  // This function is deprecated. It was previously used to determine when it
+  // was time to send a DTMF packet in silence (CNG).
+  RTC_DEPRECATED int32_t SetAudioPacketSize(uint16_t packet_size_samples);
 
   // Store the audio level in d_bov for
   // header-extension-for-audio-level-indication.
   int32_t SetAudioLevel(uint8_t level_d_bov);
 
-  // Set payload type for Redundant Audio Data RFC 2198.
-  int32_t SetRED(int8_t payload_type);
-
-  // Get payload type for Redundant Audio Data RFC 2198.
-  int32_t RED(int8_t *payload_type) const;
-
   RtpVideoCodecTypes VideoCodecType() const;
 
   uint32_t MaxConfiguredBitrateVideo() const;
 
-  // FEC.
-  void SetGenericFECStatus(bool enable,
-                           uint8_t payload_type_red,
-                           uint8_t payload_type_fec);
+  // ULPFEC.
+  void SetUlpfecConfig(int red_payload_type, int ulpfec_payload_type);
 
-  void GenericFECStatus(bool* enable,
-                        uint8_t* payload_type_red,
-                        uint8_t* payload_type_fec) const;
-
-  int32_t SetFecParameters(const FecProtectionParams *delta_params,
-                           const FecProtectionParams *key_params);
-
-  size_t SendPadData(size_t bytes,
-                     bool timestamp_provided,
-                     uint32_t timestamp,
-                     int64_t capture_time_ms);
-
-  size_t SendPadData(size_t bytes,
-                     bool timestamp_provided,
-                     uint32_t timestamp,
-                     int64_t capture_time_ms,
-                     int probe_cluster_id);
+  bool SetFecParameters(const FecProtectionParams& delta_params,
+                        const FecProtectionParams& key_params);
 
   // Called on update of RTP statistics.
   void RegisterRtpStatisticsCallback(StreamDataCountersCallback* callback);
@@ -318,7 +208,6 @@ class RTPSender : public RTPSenderInterface {
   RtpState GetRtpState() const;
   void SetRtxRtpState(const RtpState& rtp_state);
   RtpState GetRtxRtpState() const;
-  bool ActivateCVORtpHeaderExtension() override;
 
  protected:
   int32_t CheckPayloadType(int8_t payload_type, RtpVideoCodecTypes* video_type);
@@ -329,17 +218,9 @@ class RTPSender : public RTPSenderInterface {
   // time.
   typedef std::map<int64_t, int> SendDelayMap;
 
-  size_t CreateRtpHeader(uint8_t* header,
-                         int8_t payload_type,
-                         uint32_t ssrc,
-                         bool marker_bit,
-                         uint32_t timestamp,
-                         uint16_t sequence_number,
-                         const std::vector<uint32_t>& csrcs) const;
+  size_t SendPadData(size_t bytes, int probe_cluster_id);
 
-  bool PrepareAndSendPacket(uint8_t* buffer,
-                            size_t length,
-                            int64_t capture_time_ms,
+  bool PrepareAndSendPacket(std::unique_ptr<RtpPacketToSend> packet,
                             bool send_over_rtx,
                             bool is_retransmit,
                             int probe_cluster_id);
@@ -348,15 +229,10 @@ class RTPSender : public RTPSenderInterface {
   // return a larger value that their argument.
   size_t TrySendRedundantPayloads(size_t bytes, int probe_cluster_id);
 
-  void BuildPaddingPacket(uint8_t* packet,
-                          size_t header_length,
-                          size_t padding_length);
+  std::unique_ptr<RtpPacketToSend> BuildRtxPacket(
+      const RtpPacketToSend& packet);
 
-  void BuildRtxPacket(uint8_t* buffer, size_t* length,
-                      uint8_t* buffer_rtx);
-
-  bool SendPacketToNetwork(const uint8_t* packet,
-                           size_t size,
+  bool SendPacketToNetwork(const RtpPacketToSend& packet,
                            const PacketOptions& options);
 
   void UpdateDelayStatistics(int64_t capture_time_ms, int64_t now_ms);
@@ -364,42 +240,19 @@ class RTPSender : public RTPSenderInterface {
                           int64_t capture_time_ms,
                           uint32_t ssrc);
 
-  // Find the byte position of the RTP extension as indicated by |type| in
-  // |rtp_packet|. Return false if such extension doesn't exist.
-  bool FindHeaderExtensionPosition(RTPExtensionType type,
-                                   const uint8_t* rtp_packet,
-                                   size_t rtp_packet_length,
-                                   const RTPHeader& rtp_header,
-                                   size_t* position) const;
+  bool UpdateTransportSequenceNumber(RtpPacketToSend* packet,
+                                     int* packet_id) const;
 
-  void UpdateTransmissionTimeOffset(uint8_t* rtp_packet,
-                                    size_t rtp_packet_length,
-                                    const RTPHeader& rtp_header,
-                                    int64_t time_diff_ms) const;
-  void UpdateAbsoluteSendTime(uint8_t* rtp_packet,
-                              size_t rtp_packet_length,
-                              const RTPHeader& rtp_header,
-                              int64_t now_ms) const;
-
-  bool UpdateTransportSequenceNumber(uint16_t sequence_number,
-                                     uint8_t* rtp_packet,
-                                     size_t rtp_packet_length,
-                                     const RTPHeader& rtp_header) const;
-
-  void UpdatePlayoutDelayLimits(uint8_t* rtp_packet,
-                                size_t rtp_packet_length,
-                                const RTPHeader& rtp_header,
-                                uint16_t min_playout_delay,
-                                uint16_t max_playout_delay) const;
-
-  bool AllocateTransportSequenceNumber(int* packet_id) const;
-
-  void UpdateRtpStats(const uint8_t* buffer,
-                      size_t packet_length,
-                      const RTPHeader& header,
+  void UpdateRtpStats(const RtpPacketToSend& packet,
                       bool is_rtx,
                       bool is_retransmit);
-  bool IsFecPacket(const uint8_t* buffer, const RTPHeader& header) const;
+  bool IsFecPacket(const RtpPacketToSend& packet) const;
+
+  void AddPacketToTransportFeedback(uint16_t packet_id,
+                                    const RtpPacketToSend& packet,
+                                    int probe_cluster_id);
+
+  void UpdateRtpOverhead(const RtpPacketToSend& packet);
 
   Clock* const clock_;
   const int64_t clock_delta_ms_;
@@ -415,28 +268,25 @@ class RTPSender : public RTPSenderInterface {
   int64_t last_capture_time_ms_sent_;
   rtc::CriticalSection send_critsect_;
 
-  Transport *transport_;
+  Transport* transport_;
   bool sending_media_ GUARDED_BY(send_critsect_);
 
-  size_t max_payload_length_;
+  size_t max_packet_size_;
 
   int8_t payload_type_ GUARDED_BY(send_critsect_);
   std::map<int8_t, RtpUtility::Payload*> payload_type_map_;
 
-  RtpHeaderExtensionMap rtp_header_extension_map_;
-  int32_t transmission_time_offset_;
-  uint32_t absolute_send_time_;
-  VideoRotation rotation_;
-  bool video_rotation_active_;
-  uint16_t transport_sequence_number_;
+  RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(send_critsect_);
 
   // Tracks the current request for playout delay limits from application
   // and decides whether the current RTP frame should include the playout
   // delay extension on header.
   PlayoutDelayOracle playout_delay_oracle_;
-  bool playout_delay_active_ GUARDED_BY(send_critsect_);
 
-  RTPPacketHistory packet_history_;
+  RtpPacketHistory packet_history_;
+  // TODO(brandtr): Remove |flexfec_packet_history_| when the FlexfecSender
+  // is hooked up to the PacedSender.
+  RtpPacketHistory flexfec_packet_history_;
 
   // Statistics
   rtc::CriticalSection statistics_crit_;
@@ -454,8 +304,7 @@ class RTPSender : public RTPSenderInterface {
   BitrateStatisticsObserver* const bitrate_callback_;
 
   // RTP variables
-  bool start_timestamp_forced_ GUARDED_BY(send_critsect_);
-  uint32_t start_timestamp_ GUARDED_BY(send_critsect_);
+  uint32_t timestamp_offset_ GUARDED_BY(send_critsect_);
   SSRCDatabase* const ssrc_db_;
   uint32_t remote_ssrc_ GUARDED_BY(send_critsect_);
   bool sequence_number_forced_ GUARDED_BY(send_critsect_);
@@ -463,7 +312,7 @@ class RTPSender : public RTPSenderInterface {
   uint16_t sequence_number_rtx_ GUARDED_BY(send_critsect_);
   bool ssrc_forced_ GUARDED_BY(send_critsect_);
   uint32_t ssrc_ GUARDED_BY(send_critsect_);
-  uint32_t timestamp_ GUARDED_BY(send_critsect_);
+  uint32_t last_rtp_timestamp_ GUARDED_BY(send_critsect_);
   int64_t capture_time_ms_ GUARDED_BY(send_critsect_);
   int64_t last_timestamp_time_ms_ GUARDED_BY(send_critsect_);
   bool media_has_been_sent_ GUARDED_BY(send_critsect_);
@@ -473,8 +322,10 @@ class RTPSender : public RTPSenderInterface {
   uint32_t ssrc_rtx_ GUARDED_BY(send_critsect_);
   // Mapping rtx_payload_type_map_[associated] = rtx.
   std::map<int8_t, int8_t> rtx_payload_type_map_ GUARDED_BY(send_critsect_);
+  size_t rtp_overhead_bytes_per_packet_ GUARDED_BY(send_critsect_);
 
   RateLimiter* const retransmission_rate_limiter_;
+  OverheadObserver* overhead_observer_;
 
   RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(RTPSender);
 };

@@ -37,6 +37,9 @@ TransportDescription* TransportDescriptionFactory::CreateOffer(
     desc->ice_ufrag = current_description->ice_ufrag;
     desc->ice_pwd = current_description->ice_pwd;
   }
+  if (options.enable_ice_renomination) {
+    desc->AddOption(ICE_RENOMINATION_STR);
+  }
 
   // If we are trying to establish a secure transport, add a fingerprint.
   if (secure_ == SEC_ENABLED || secure_ == SEC_REQUIRED) {
@@ -71,6 +74,9 @@ TransportDescription* TransportDescriptionFactory::CreateAnswer(
     desc->ice_ufrag = current_description->ice_ufrag;
     desc->ice_pwd = current_description->ice_pwd;
   }
+  if (options.enable_ice_renomination) {
+    desc->AddOption(ICE_RENOMINATION_STR);
+  }
 
   // Negotiate security params.
   if (offer && offer->identity_fingerprint.get()) {
@@ -104,7 +110,12 @@ bool TransportDescriptionFactory::SetSecurityInfo(
 
   // This digest algorithm is used to produce the a=fingerprint lines in SDP.
   // RFC 4572 Section 5 requires that those lines use the same hash function as
-  // the certificate's signature.
+  // the certificate's signature, which is what CreateFromCertificate does.
+  desc->identity_fingerprint.reset(
+      rtc::SSLFingerprint::CreateFromCertificate(certificate_));
+  if (!desc->identity_fingerprint) {
+    return false;
+  }
   std::string digest_alg;
   if (!certificate_->ssl_certificate().GetSignatureDigestAlgorithm(
           &digest_alg)) {

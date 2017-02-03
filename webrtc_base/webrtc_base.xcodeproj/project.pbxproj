@@ -113,7 +113,6 @@
 		43A032D71D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030FE1D4EF0C200BB9828 /* macifaddrs_converter.cc */; };
 		43A032D81D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030FE1D4EF0C200BB9828 /* macifaddrs_converter.cc */; };
 		43A032DC1D4EF0C300BB9828 /* macsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031001D4EF0C200BB9828 /* macsocketserver.cc */; };
-		43A032DF1D4EF0C300BB9828 /* macutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031031D4EF0C200BB9828 /* macutils.cc */; };
 		43A032E01D4EF0C300BB9828 /* macutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031031D4EF0C200BB9828 /* macutils.cc */; };
 		43A032E41D4EF0C300BB9828 /* macwindowpicker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031061D4EF0C200BB9828 /* macwindowpicker.cc */; };
 		43A032E71D4EF0C300BB9828 /* md5.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0310C1D4EF0C200BB9828 /* md5.cc */; };
@@ -256,8 +255,6 @@
 		43A294751E376BBD00B6BE98 /* file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293CB1E376BBB00B6BE98 /* file.cc */; };
 		43A294B01E376BBD00B6BE98 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293F01E376BBB00B6BE98 /* optional.cc */; };
 		43A294B11E376BBD00B6BE98 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293F01E376BBB00B6BE98 /* optional.cc */; };
-		43A295281E376BBD00B6BE98 /* winping.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2943B1E376BBD00B6BE98 /* winping.cc */; };
-		43A295291E376BBD00B6BE98 /* winping.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A2943B1E376BBD00B6BE98 /* winping.cc */; };
 		43C037001D51BE5C0022DED1 /* sequenced_task_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031831D4EF0C200BB9828 /* sequenced_task_checker_impl.cc */; };
 		43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1159,7 +1156,6 @@
 				43A033C91D4EF0C400BB9828 /* thread.cc in Sources */,
 				43A032FF1D4EF0C300BB9828 /* natserver.cc in Sources */,
 				43A032A91D4EF0C300BB9828 /* ipaddress.cc in Sources */,
-				43A032DF1D4EF0C300BB9828 /* macutils.cc in Sources */,
 				43A033171D4EF0C300BB9828 /* opensslidentity.cc in Sources */,
 				43A033531D4EF0C400BB9828 /* ratetracker.cc in Sources */,
 				43A032371D4EF0C300BB9828 /* autodetectproxy.cc in Sources */,
@@ -1187,7 +1183,6 @@
 				43A033A51D4EF0C400BB9828 /* stringutils.cc in Sources */,
 				43A032D71D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */,
 				431730341D509C62003B5883 /* sslstreamadapter.cc in Sources */,
-				43A295281E376BBD00B6BE98 /* winping.cc in Sources */,
 				43A032991D4EF0C300BB9828 /* httpcommon.cc in Sources */,
 				43A032591D4EF0C300BB9828 /* checks.cc in Sources */,
 				43A0334B1D4EF0C400BB9828 /* rate_statistics.cc in Sources */,
@@ -1284,7 +1279,6 @@
 				43A033721D4EF0C400BB9828 /* sharedexclusivelock.cc in Sources */,
 				43A033041D4EF0C300BB9828 /* nattypes.cc in Sources */,
 				43A033C21D4EF0C400BB9828 /* testclient.cc in Sources */,
-				43A295291E376BBD00B6BE98 /* winping.cc in Sources */,
 				43A033CA1D4EF0C400BB9828 /* thread.cc in Sources */,
 				43A033001D4EF0C300BB9828 /* natserver.cc in Sources */,
 				434BF8211D50A81B00FDCA92 /* helpers.cc in Sources */,

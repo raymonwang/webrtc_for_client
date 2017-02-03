@@ -14,40 +14,26 @@
 
 #include <memory>
 
-#include "webrtc/media/engine/webrtcvideoframe.h"
-
 namespace webrtc {
 
 class VideoRendererAdapter
-    : public rtc::VideoSinkInterface<cricket::VideoFrame> {
+    : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
  public:
   VideoRendererAdapter(RTCVideoRendererAdapter* adapter) {
     adapter_ = adapter;
     size_ = CGSizeZero;
   }
 
-  void OnFrame(const cricket::VideoFrame& nativeVideoFrame) override {
-    RTCVideoFrame *videoFrame = nil;
-    // Rotation of native handles is unsupported right now. Convert to CPU
-    // I420 buffer for rotation before calling the rotation method otherwise
-    // it will hit a DCHECK.
-    if (nativeVideoFrame.rotation() != webrtc::kVideoRotation_0 &&
-        nativeVideoFrame.video_frame_buffer()->native_handle()) {
-      rtc::scoped_refptr<webrtc::VideoFrameBuffer> i420Buffer =
-          nativeVideoFrame.video_frame_buffer()->NativeToI420Buffer();
-      std::unique_ptr<cricket::VideoFrame> cpuFrame(
-          new cricket::WebRtcVideoFrame(i420Buffer,
-                                        nativeVideoFrame.rotation(),
-                                        nativeVideoFrame.timestamp_us()));
-      const cricket::VideoFrame *rotatedFrame =
-          cpuFrame->GetCopyWithRotationApplied();
-      videoFrame = [[RTCVideoFrame alloc] initWithNativeFrame:rotatedFrame];
-    } else {
-      const cricket::VideoFrame *rotatedFrame =
-          nativeVideoFrame.GetCopyWithRotationApplied();
-      videoFrame = [[RTCVideoFrame alloc] initWithNativeFrame:rotatedFrame];
-    }
-    CGSize current_size = CGSizeMake(videoFrame.width, videoFrame.height);
+  void OnFrame(const webrtc::VideoFrame& nativeVideoFrame) override {
+    RTCVideoFrame* videoFrame = [[RTCVideoFrame alloc]
+        initWithVideoBuffer:nativeVideoFrame.video_frame_buffer()
+                   rotation:nativeVideoFrame.rotation()
+                timeStampNs:nativeVideoFrame.timestamp_us() *
+                                rtc::kNumNanosecsPerMicrosec];
+    CGSize current_size = (videoFrame.rotation % 180 == 0)
+                              ? CGSizeMake(videoFrame.width, videoFrame.height)
+                              : CGSizeMake(videoFrame.height, videoFrame.width);
+
     if (!CGSizeEqualToSize(size_, current_size)) {
       size_ = current_size;
       [adapter_.videoRenderer setSize:size_];
@@ -76,7 +62,7 @@ class VideoRendererAdapter
   return self;
 }
 
-- (rtc::VideoSinkInterface<cricket::VideoFrame> *)nativeVideoRenderer {
+- (rtc::VideoSinkInterface<webrtc::VideoFrame> *)nativeVideoRenderer {
   return _adapter.get();
 }
 

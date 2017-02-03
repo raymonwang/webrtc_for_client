@@ -32,35 +32,29 @@ struct RTPVideoHeader;
 class PayloadRouter : public EncodedImageCallback {
  public:
   // Rtp modules are assumed to be sorted in simulcast index order.
-  explicit PayloadRouter(const std::vector<RtpRtcp*>& rtp_modules,
-                         int payload_type);
+  PayloadRouter(const std::vector<RtpRtcp*>& rtp_modules,
+                int payload_type);
   ~PayloadRouter();
-
-  static size_t DefaultMaxPayloadLength();
-  void SetSendStreams(const std::vector<VideoStream>& streams);
 
   // PayloadRouter will only route packets if being active, all packets will be
   // dropped otherwise.
-  void set_active(bool active);
-  bool active();
+  void SetActive(bool active);
+  bool IsActive();
 
   // Implements EncodedImageCallback.
   // Returns 0 if the packet was routed / sent, -1 otherwise.
-  int32_t Encoded(const EncodedImage& encoded_image,
-                  const CodecSpecificInfo* codec_specific_info,
-                  const RTPFragmentationHeader* fragmentation) override;
+  EncodedImageCallback::Result OnEncodedImage(
+      const EncodedImage& encoded_image,
+      const CodecSpecificInfo* codec_specific_info,
+      const RTPFragmentationHeader* fragmentation) override;
 
-  // Returns the maximum allowed data payload length, given the configured MTU
-  // and RTP headers.
-  size_t MaxPayloadLength() const;
+  void OnBitrateAllocationUpdated(const BitrateAllocation& bitrate);
 
  private:
   void UpdateModuleSendingState() EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
   rtc::CriticalSection crit_;
   bool active_ GUARDED_BY(crit_);
-  std::vector<VideoStream> streams_ GUARDED_BY(crit_);
-  size_t num_sending_modules_ GUARDED_BY(crit_);
 
   // Rtp modules are assumed to be sorted in simulcast index order. Not owned.
   const std::vector<RtpRtcp*> rtp_modules_;
