@@ -43,20 +43,9 @@
 		439FC1E71D5072FB00939424 /* RTCVideoSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1711D5072FB00939424 /* RTCVideoSource.h */; };
 		439FC1E81D5072FB00939424 /* RTCVideoTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1721D5072FB00939424 /* RTCVideoTrack.h */; };
 		439FC1E91D5072FB00939424 /* WebRTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1731D5072FB00939424 /* WebRTC.h */; };
-		439FC1F31D50733700939424 /* NSString+StdString.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1F11D50733700939424 /* NSString+StdString.h */; };
-		439FC1F41D50733700939424 /* NSString+StdString.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC1F21D50733700939424 /* NSString+StdString.mm */; };
-		439FC1F61D50735700939424 /* RTCDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 439FC1F51D50735700939424 /* RTCDispatcher.m */; };
-		439FC1F81D50736A00939424 /* RTCFieldTrials.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC1F71D50736A00939424 /* RTCFieldTrials.mm */; };
-		439FC1FA1D50737C00939424 /* RTCLogging.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC1F91D50737C00939424 /* RTCLogging.mm */; };
-		439FC1FE1D5073A000939424 /* RTCMetrics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC1FB1D5073A000939424 /* RTCMetrics.mm */; };
-		439FC1FF1D5073A000939424 /* RTCMetricsSampleInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC1FC1D5073A000939424 /* RTCMetricsSampleInfo.mm */; };
-		439FC2001D5073A000939424 /* RTCMetricsSampleInfo+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1FD1D5073A000939424 /* RTCMetricsSampleInfo+Private.h */; };
-		439FC2021D5073B000939424 /* RTCSSLAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC2011D5073B000939424 /* RTCSSLAdapter.mm */; };
-		439FC2041D5073C500939424 /* RTCTracing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC2031D5073C500939424 /* RTCTracing.mm */; };
-		439FC2061D5074E300939424 /* RTCCameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 439FC2051D5074E300939424 /* RTCCameraPreviewView.m */; };
-		439FC2091D50754000939424 /* RTCUIApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC2071D50754000939424 /* RTCUIApplication.h */; };
-		439FC20A1D50754000939424 /* RTCUIApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 439FC2081D50754000939424 /* RTCUIApplication.mm */; };
-		43C036D81D51AC3F0022DED1 /* RTCFileLogger.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C036D71D51AC3F0022DED1 /* RTCFileLogger.mm */; };
+		43AC8C851E4853200092C54E /* helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC8C821E4853200092C54E /* helpers.h */; };
+		43AC8C861E4853200092C54E /* helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8C831E4853200092C54E /* helpers.mm */; };
+		43AC8C871E4853200092C54E /* RTCLogging.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8C841E4853200092C54E /* RTCLogging.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,20 +86,9 @@
 		439FC1711D5072FB00939424 /* RTCVideoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoSource.h; sourceTree = "<group>"; };
 		439FC1721D5072FB00939424 /* RTCVideoTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoTrack.h; sourceTree = "<group>"; };
 		439FC1731D5072FB00939424 /* WebRTC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRTC.h; sourceTree = "<group>"; };
-		439FC1F11D50733700939424 /* NSString+StdString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StdString.h"; sourceTree = "<group>"; };
-		439FC1F21D50733700939424 /* NSString+StdString.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "NSString+StdString.mm"; sourceTree = "<group>"; };
-		439FC1F51D50735700939424 /* RTCDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCDispatcher.m; sourceTree = "<group>"; };
-		439FC1F71D50736A00939424 /* RTCFieldTrials.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCFieldTrials.mm; sourceTree = "<group>"; };
-		439FC1F91D50737C00939424 /* RTCLogging.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCLogging.mm; sourceTree = "<group>"; };
-		439FC1FB1D5073A000939424 /* RTCMetrics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCMetrics.mm; sourceTree = "<group>"; };
-		439FC1FC1D5073A000939424 /* RTCMetricsSampleInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCMetricsSampleInfo.mm; sourceTree = "<group>"; };
-		439FC1FD1D5073A000939424 /* RTCMetricsSampleInfo+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCMetricsSampleInfo+Private.h"; sourceTree = "<group>"; };
-		439FC2011D5073B000939424 /* RTCSSLAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCSSLAdapter.mm; sourceTree = "<group>"; };
-		439FC2031D5073C500939424 /* RTCTracing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCTracing.mm; sourceTree = "<group>"; };
-		439FC2051D5074E300939424 /* RTCCameraPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCCameraPreviewView.m; sourceTree = "<group>"; };
-		439FC2071D50754000939424 /* RTCUIApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCUIApplication.h; sourceTree = "<group>"; };
-		439FC2081D50754000939424 /* RTCUIApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCUIApplication.mm; sourceTree = "<group>"; };
-		43C036D71D51AC3F0022DED1 /* RTCFileLogger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCFileLogger.mm; sourceTree = "<group>"; };
+		43AC8C821E4853200092C54E /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
+		43AC8C831E4853200092C54E /* helpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = helpers.mm; sourceTree = "<group>"; };
+		43AC8C841E4853200092C54E /* RTCLogging.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCLogging.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,20 +139,9 @@
 		439FC1071D5072FB00939424 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				43C036D71D51AC3F0022DED1 /* RTCFileLogger.mm */,
-				439FC2071D50754000939424 /* RTCUIApplication.h */,
-				439FC2081D50754000939424 /* RTCUIApplication.mm */,
-				439FC2051D5074E300939424 /* RTCCameraPreviewView.m */,
-				439FC2031D5073C500939424 /* RTCTracing.mm */,
-				439FC2011D5073B000939424 /* RTCSSLAdapter.mm */,
-				439FC1FB1D5073A000939424 /* RTCMetrics.mm */,
-				439FC1FC1D5073A000939424 /* RTCMetricsSampleInfo.mm */,
-				439FC1FD1D5073A000939424 /* RTCMetricsSampleInfo+Private.h */,
-				439FC1F91D50737C00939424 /* RTCLogging.mm */,
-				439FC1F71D50736A00939424 /* RTCFieldTrials.mm */,
-				439FC1F51D50735700939424 /* RTCDispatcher.m */,
-				439FC1F11D50733700939424 /* NSString+StdString.h */,
-				439FC1F21D50733700939424 /* NSString+StdString.mm */,
+				43AC8C821E4853200092C54E /* helpers.h */,
+				43AC8C831E4853200092C54E /* helpers.mm */,
+				43AC8C841E4853200092C54E /* RTCLogging.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -246,7 +213,6 @@
 				439FC1D91D5072FB00939424 /* RTCNSGLVideoView.h in Headers */,
 				439FC1E01D5072FB00939424 /* RTCRtpSender.h in Headers */,
 				439FC1D11D5072FB00939424 /* RTCIceServer.h in Headers */,
-				439FC1F31D50733700939424 /* NSString+StdString.h in Headers */,
 				439FC1E51D5072FB00939424 /* RTCVideoFrame.h in Headers */,
 				439FC1D41D5072FB00939424 /* RTCMediaConstraints.h in Headers */,
 				439FC1D01D5072FB00939424 /* RTCIceCandidate.h in Headers */,
@@ -265,16 +231,15 @@
 				439FC1D71D5072FB00939424 /* RTCMetrics.h in Headers */,
 				439FC1CF1D5072FB00939424 /* RTCFileLogger.h in Headers */,
 				439FC1CD1D5072FB00939424 /* RTCEAGLVideoView.h in Headers */,
+				43AC8C851E4853200092C54E /* helpers.h in Headers */,
 				439FC1CE1D5072FB00939424 /* RTCFieldTrials.h in Headers */,
 				439FC1E71D5072FB00939424 /* RTCVideoSource.h in Headers */,
 				439FC1E81D5072FB00939424 /* RTCVideoTrack.h in Headers */,
-				439FC2091D50754000939424 /* RTCUIApplication.h in Headers */,
 				439FC1E91D5072FB00939424 /* WebRTC.h in Headers */,
 				439FC1DD1D5072FB00939424 /* RTCRtpEncodingParameters.h in Headers */,
 				439FC1D51D5072FB00939424 /* RTCMediaStream.h in Headers */,
 				439FC1CB1D5072FB00939424 /* RTCDataChannelConfiguration.h in Headers */,
 				439FC1D31D5072FB00939424 /* RTCMacros.h in Headers */,
-				439FC2001D5073A000939424 /* RTCMetricsSampleInfo+Private.h in Headers */,
 				439FC1C81D5072FB00939424 /* RTCCameraPreviewView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,17 +300,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				439FC2061D5074E300939424 /* RTCCameraPreviewView.m in Sources */,
-				439FC1F81D50736A00939424 /* RTCFieldTrials.mm in Sources */,
-				439FC20A1D50754000939424 /* RTCUIApplication.mm in Sources */,
-				43C036D81D51AC3F0022DED1 /* RTCFileLogger.mm in Sources */,
-				439FC1FA1D50737C00939424 /* RTCLogging.mm in Sources */,
-				439FC1F61D50735700939424 /* RTCDispatcher.m in Sources */,
-				439FC1FF1D5073A000939424 /* RTCMetricsSampleInfo.mm in Sources */,
-				439FC1F41D50733700939424 /* NSString+StdString.mm in Sources */,
-				439FC1FE1D5073A000939424 /* RTCMetrics.mm in Sources */,
-				439FC2041D5073C500939424 /* RTCTracing.mm in Sources */,
-				439FC2021D5073B000939424 /* RTCSSLAdapter.mm in Sources */,
+				43AC8C861E4853200092C54E /* helpers.mm in Sources */,
+				43AC8C871E4853200092C54E /* RTCLogging.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

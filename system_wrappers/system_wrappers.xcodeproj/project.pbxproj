@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43AC79321E483F750092C54E /* rtp_to_ntp_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC792F1E483F750092C54E /* rtp_to_ntp_estimator.cc */; };
+		43AC79331E483F750092C54E /* rtp_to_ntp_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC792F1E483F750092C54E /* rtp_to_ntp_estimator.cc */; };
 		43C0C5541D4EFD200058AC82 /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C4E11D4EFD200058AC82 /* aligned_malloc.cc */; };
 		43C0C5551D4EFD200058AC82 /* aligned_malloc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C4E11D4EFD200058AC82 /* aligned_malloc.cc */; };
 		43C0C5581D4EFD200058AC82 /* atomic32_darwin.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C4E31D4EFD200058AC82 /* atomic32_darwin.cc */; };
@@ -67,6 +69,8 @@
 
 /* Begin PBXFileReference section */
 		430D87401986073F009E763A /* libsystem_wrappers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsystem_wrappers.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AC792E1E483F750092C54E /* logcat_trace_context.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logcat_trace_context.cc; sourceTree = "<group>"; };
+		43AC792F1E483F750092C54E /* rtp_to_ntp_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_to_ntp_estimator.cc; sourceTree = "<group>"; };
 		43C0C4BE1D4EFD030058AC82 /* aligned_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aligned_array.h; sourceTree = "<group>"; };
 		43C0C4BF1D4EFD030058AC82 /* aligned_malloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aligned_malloc.h; sourceTree = "<group>"; };
 		43C0C4C01D4EFD030058AC82 /* asm_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asm_defines.h; sourceTree = "<group>"; };
@@ -209,6 +213,8 @@
 		43C0C4DE1D4EFD200058AC82 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				43AC792E1E483F750092C54E /* logcat_trace_context.cc */,
+				43AC792F1E483F750092C54E /* rtp_to_ntp_estimator.cc */,
 				43C0C4E11D4EFD200058AC82 /* aligned_malloc.cc */,
 				43C0C4E31D4EFD200058AC82 /* atomic32_darwin.cc */,
 				43C0C4E51D4EFD200058AC82 /* atomic32_non_darwin_unix.cc */,
@@ -309,6 +315,7 @@
 				43C0C58E1D4EFD200058AC82 /* event.cc in Sources */,
 				43C0C5DA1D4EFD210058AC82 /* trace_posix.cc in Sources */,
 				43C0C5B61D4EFD200058AC82 /* rw_lock.cc in Sources */,
+				43AC79321E483F750092C54E /* rtp_to_ntp_estimator.cc in Sources */,
 				43C0C59E1D4EFD200058AC82 /* field_trial_default.cc in Sources */,
 				43C0C5701D4EFD200058AC82 /* cpu_features.cc in Sources */,
 				43C0C5AA1D4EFD200058AC82 /* metrics_default.cc in Sources */,
@@ -344,6 +351,7 @@
 				43C0C5BB1D4EFD210058AC82 /* rw_lock_posix.cc in Sources */,
 				43C0C5591D4EFD200058AC82 /* atomic32_darwin.cc in Sources */,
 				43C0C5D91D4EFD210058AC82 /* trace_impl.cc in Sources */,
+				43AC79331E483F750092C54E /* rtp_to_ntp_estimator.cc in Sources */,
 				43C0C5931D4EFD200058AC82 /* event_timer_posix.cc in Sources */,
 				43C0C5771D4EFD200058AC82 /* cpu_info.cc in Sources */,
 				43C0C5551D4EFD200058AC82 /* aligned_malloc.cc in Sources */,

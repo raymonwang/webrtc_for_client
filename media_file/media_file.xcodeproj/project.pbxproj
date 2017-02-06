@@ -27,7 +27,6 @@
 		4341202B1D4F30CA003D3A39 /* media_file_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_impl.h; sourceTree = "<group>"; };
 		4341202D1D4F30CA003D3A39 /* media_file_utility.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = media_file_utility.cc; sourceTree = "<group>"; };
 		4341202E1D4F30CA003D3A39 /* media_file_utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file_utility.h; sourceTree = "<group>"; };
-		4341202F1D4F30CA003D3A39 /* media_file.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = media_file.gypi; sourceTree = "<group>"; };
 		434120301D4F30CA003D3A39 /* media_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media_file.h; sourceTree = "<group>"; };
 		43998B391986327B003C5793 /* libmedia_file.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmedia_file.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43E04EDC1D263F0F00B39549 /* libmedia_file_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmedia_file_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,7 +75,6 @@
 				4341202B1D4F30CA003D3A39 /* media_file_impl.h */,
 				4341202D1D4F30CA003D3A39 /* media_file_utility.cc */,
 				4341202E1D4F30CA003D3A39 /* media_file_utility.h */,
-				4341202F1D4F30CA003D3A39 /* media_file.gypi */,
 				434120301D4F30CA003D3A39 /* media_file.h */,
 			);
 			name = media_file;

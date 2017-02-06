@@ -51,6 +51,12 @@
 		432B2FE319CAB14D001267A7 /* voe_base_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D87031986054F009E763A /* voe_base_impl.cc */; };
 		4394AE1B1D51958600E27530 /* channel_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4394AE191D51958600E27530 /* channel_proxy.cc */; };
 		4394AE1C1D51958600E27530 /* channel_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4394AE191D51958600E27530 /* channel_proxy.cc */; };
+		43AC8B2C1E484F0D0092C54E /* coder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8B241E484F0D0092C54E /* coder.cc */; };
+		43AC8B2D1E484F0D0092C54E /* coder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8B241E484F0D0092C54E /* coder.cc */; };
+		43AC8B2E1E484F0D0092C54E /* file_player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8B261E484F0D0092C54E /* file_player.cc */; };
+		43AC8B2F1E484F0D0092C54E /* file_player.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8B261E484F0D0092C54E /* file_player.cc */; };
+		43AC8B301E484F0D0092C54E /* file_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8B281E484F0D0092C54E /* file_recorder.cc */; };
+		43AC8B311E484F0E0092C54E /* file_recorder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8B281E484F0D0092C54E /* file_recorder.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -134,6 +140,14 @@
 		432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoice_engine_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4394AE191D51958600E27530 /* channel_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_proxy.cc; sourceTree = "<group>"; };
 		4394AE1A1D51958600E27530 /* channel_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel_proxy.h; sourceTree = "<group>"; };
+		43AC8B241E484F0D0092C54E /* coder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coder.cc; sourceTree = "<group>"; };
+		43AC8B251E484F0D0092C54E /* coder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coder.h; sourceTree = "<group>"; };
+		43AC8B261E484F0D0092C54E /* file_player.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_player.cc; sourceTree = "<group>"; };
+		43AC8B271E484F0D0092C54E /* file_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_player.h; sourceTree = "<group>"; };
+		43AC8B281E484F0D0092C54E /* file_recorder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_recorder.cc; sourceTree = "<group>"; };
+		43AC8B291E484F0D0092C54E /* file_recorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_recorder.h; sourceTree = "<group>"; };
+		43AC8B2A1E484F0D0092C54E /* voice_engine_fixture.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_engine_fixture.cc; sourceTree = "<group>"; };
+		43AC8B2B1E484F0D0092C54E /* voice_engine_fixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_fixture.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +242,14 @@
 				430D871A1986054F009E763A /* voice_engine_defines.h */,
 				430D871B1986054F009E763A /* voice_engine_impl.cc */,
 				430D871C1986054F009E763A /* voice_engine_impl.h */,
+				43AC8B241E484F0D0092C54E /* coder.cc */,
+				43AC8B251E484F0D0092C54E /* coder.h */,
+				43AC8B261E484F0D0092C54E /* file_player.cc */,
+				43AC8B271E484F0D0092C54E /* file_player.h */,
+				43AC8B281E484F0D0092C54E /* file_recorder.cc */,
+				43AC8B291E484F0D0092C54E /* file_recorder.h */,
+				43AC8B2A1E484F0D0092C54E /* voice_engine_fixture.cc */,
+				43AC8B2B1E484F0D0092C54E /* voice_engine_fixture.h */,
 			);
 			name = voice_engine;
 			path = ../../webRTCAPP/Classes/webrtc/voice_engine;
@@ -322,11 +344,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				430D87241986054F009E763A /* output_mixer.cc in Sources */,
+				43AC8B301E484F0D0092C54E /* file_recorder.cc in Sources */,
 				430D87251986054F009E763A /* shared_data.cc in Sources */,
 				430D87311986054F009E763A /* voe_network_impl.cc in Sources */,
 				430D871D1986054F009E763A /* channel.cc in Sources */,
 				430D87331986054F009E763A /* voe_video_sync_impl.cc in Sources */,
 				430D872E1986054F009E763A /* voe_file_impl.cc in Sources */,
+				43AC8B2E1E484F0D0092C54E /* file_player.cc in Sources */,
 				430D872B1986054F009E763A /* voe_codec_impl.cc in Sources */,
 				430D87351986054F009E763A /* voice_engine_impl.cc in Sources */,
 				430D872D1986054F009E763A /* voe_external_media_impl.cc in Sources */,
@@ -342,6 +366,7 @@
 				430D87281986054F009E763A /* utility.cc in Sources */,
 				430D871E1986054F009E763A /* channel_manager.cc in Sources */,
 				430D872F1986054F009E763A /* voe_hardware_impl.cc in Sources */,
+				43AC8B2C1E484F0D0092C54E /* coder.cc in Sources */,
 				430D872A1986054F009E763A /* voe_base_impl.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,11 +376,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				432B2FCB19CAB14D001267A7 /* output_mixer.cc in Sources */,
+				43AC8B311E484F0E0092C54E /* file_recorder.cc in Sources */,
 				432B2FCC19CAB14D001267A7 /* shared_data.cc in Sources */,
 				432B2FCE19CAB14D001267A7 /* voe_network_impl.cc in Sources */,
 				432B2FCF19CAB14D001267A7 /* channel.cc in Sources */,
 				432B2FD019CAB14D001267A7 /* voe_video_sync_impl.cc in Sources */,
 				432B2FD119CAB14D001267A7 /* voe_file_impl.cc in Sources */,
+				43AC8B2F1E484F0D0092C54E /* file_player.cc in Sources */,
 				432B2FD219CAB14D001267A7 /* voe_codec_impl.cc in Sources */,
 				432B2FD319CAB14D001267A7 /* voice_engine_impl.cc in Sources */,
 				432B2FD419CAB14D001267A7 /* voe_external_media_impl.cc in Sources */,
@@ -371,6 +398,7 @@
 				432B2FE019CAB14D001267A7 /* utility.cc in Sources */,
 				432B2FE119CAB14D001267A7 /* channel_manager.cc in Sources */,
 				432B2FE219CAB14D001267A7 /* voe_hardware_impl.cc in Sources */,
+				43AC8B2D1E484F0D0092C54E /* coder.cc in Sources */,
 				432B2FE319CAB14D001267A7 /* voe_base_impl.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

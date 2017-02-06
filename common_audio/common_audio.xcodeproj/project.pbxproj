@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4303DCC01E4833AE00CD116B /* smoothing_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DCBE1E4833AE00CD116B /* smoothing_filter.cc */; };
+		4303DCC11E4833AE00CD116B /* smoothing_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DCBE1E4833AE00CD116B /* smoothing_filter.cc */; };
 		43095D2B1994F0E700012AD8 /* audio_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095CB81994F0E600012AD8 /* audio_util.cc */; };
 		43095D2D1994F0E700012AD8 /* fir_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095CBD1994F0E600012AD8 /* fir_filter.cc */; };
 		43095D2E1994F0E700012AD8 /* fir_filter_neon.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095CBF1994F0E600012AD8 /* fir_filter_neon.cc */; };
@@ -149,6 +151,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4303DCBE1E4833AE00CD116B /* smoothing_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = smoothing_filter.cc; sourceTree = "<group>"; };
+		4303DCBF1E4833AE00CD116B /* smoothing_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smoothing_filter.h; sourceTree = "<group>"; };
 		43095CB81994F0E600012AD8 /* audio_util.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_util.cc; sourceTree = "<group>"; };
 		43095CBA1994F0E600012AD8 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
 		43095CBB1994F0E600012AD8 /* common_audio.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = common_audio.gyp; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 		43095CB71994F0E600012AD8 /* common_audio */ = {
 			isa = PBXGroup;
 			children = (
+				4303DCBE1E4833AE00CD116B /* smoothing_filter.cc */,
+				4303DCBF1E4833AE00CD116B /* smoothing_filter.h */,
 				4394AE881D5198E200E27530 /* real_fourier_ooura.cc */,
 				4394AE891D5198E200E27530 /* real_fourier_ooura.h */,
 				4394AE8A1D5198E200E27530 /* real_fourier_openmax.cc */,
@@ -628,6 +634,7 @@
 				43095D431994F0E700012AD8 /* copy_set_operations.c in Sources */,
 				43095D3E1994F0E700012AD8 /* complex_bit_reverse.c in Sources */,
 				43095D761994F0E700012AD8 /* vad_sp.c in Sources */,
+				4303DCC01E4833AE00CD116B /* smoothing_filter.cc in Sources */,
 				43095D351994F0E700012AD8 /* resampler.cc in Sources */,
 				43095D311994F0E700012AD8 /* push_resampler.cc in Sources */,
 				43095D441994F0E700012AD8 /* cross_correlation.c in Sources */,
@@ -686,6 +693,7 @@
 				432B2E6E19CA9696001267A7 /* resample_48khz.c in Sources */,
 				432B2E6F19CA9696001267A7 /* spl_init.c in Sources */,
 				432B2E7019CA9696001267A7 /* filter_ma_fast_q12.c in Sources */,
+				4303DCC11E4833AE00CD116B /* smoothing_filter.cc in Sources */,
 				432B2E7219CA9696001267A7 /* vector_scaling_operations.c in Sources */,
 				432B2E7419CA9696001267A7 /* division_operations.c in Sources */,
 				432B2E7519CA9696001267A7 /* push_sinc_resampler.cc in Sources */,

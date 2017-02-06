@@ -11,7 +11,6 @@
 		43E0406B1D50380A009FDAE6 /* common_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040651D50380A009FDAE6 /* common_types.h */; };
 		43E0406C1D50380A009FDAE6 /* config.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040661D50380A009FDAE6 /* config.cc */; };
 		43E0406D1D50380A009FDAE6 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040671D50380A009FDAE6 /* config.h */; };
-		43E0406E1D50380A009FDAE6 /* engine_configurations.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040681D50380A009FDAE6 /* engine_configurations.h */; };
 		43E0406F1D50380A009FDAE6 /* typedefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040691D50380A009FDAE6 /* typedefs.h */; };
 /* End PBXBuildFile section */
 
@@ -21,7 +20,6 @@
 		43E040651D50380A009FDAE6 /* common_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common_types.h; path = ../webRTCAPP/Classes/webrtc/common_types.h; sourceTree = "<group>"; };
 		43E040661D50380A009FDAE6 /* config.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = config.cc; path = ../webRTCAPP/Classes/webrtc/config.cc; sourceTree = "<group>"; };
 		43E040671D50380A009FDAE6 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../webRTCAPP/Classes/webrtc/config.h; sourceTree = "<group>"; };
-		43E040681D50380A009FDAE6 /* engine_configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = engine_configurations.h; path = ../webRTCAPP/Classes/webrtc/engine_configurations.h; sourceTree = "<group>"; };
 		43E040691D50380A009FDAE6 /* typedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = typedefs.h; path = ../webRTCAPP/Classes/webrtc/typedefs.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -43,7 +41,6 @@
 				43E040651D50380A009FDAE6 /* common_types.h */,
 				43E040661D50380A009FDAE6 /* config.cc */,
 				43E040671D50380A009FDAE6 /* config.h */,
-				43E040681D50380A009FDAE6 /* engine_configurations.h */,
 				43E040691D50380A009FDAE6 /* typedefs.h */,
 				43E040001D50374A009FDAE6 /* Products */,
 			);
@@ -65,7 +62,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43E0406F1D50380A009FDAE6 /* typedefs.h in Headers */,
-				43E0406E1D50380A009FDAE6 /* engine_configurations.h in Headers */,
 				43E0406D1D50380A009FDAE6 /* config.h in Headers */,
 				43E0406B1D50380A009FDAE6 /* common_types.h in Headers */,
 			);
@@ -220,7 +216,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -232,7 +231,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";

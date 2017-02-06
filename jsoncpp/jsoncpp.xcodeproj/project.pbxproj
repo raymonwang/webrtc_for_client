@@ -21,13 +21,10 @@
 		4398365A198FAE300090EABA /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 439835A4198FAE300090EABA /* json_batchallocator.h */; };
 		4398365C198FAE300090EABA /* json_tool.h in Headers */ = {isa = PBXBuildFile; fileRef = 439835A8198FAE300090EABA /* json_tool.h */; };
 		4398365E198FAE300090EABA /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 439835AB198FAE300090EABA /* json_writer.cpp */; };
-		43983666198FB3F70090EABA /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983665198FB3F70090EABA /* value.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		43983555198FAE110090EABA /* libjsoncpp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjsoncpp.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43983564198FAE2F0090EABA /* jsoncpp.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jsoncpp.gyp; sourceTree = "<group>"; };
-		43983565198FAE2F0090EABA /* jsoncpp.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jsoncpp.gypi; sourceTree = "<group>"; };
 		4398356B198FAE2F0090EABA /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		4398356E198FAE2F0090EABA /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
 		4398356F198FAE2F0090EABA /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
@@ -80,8 +77,6 @@
 		43983562198FAE2F0090EABA /* jsoncpp */ = {
 			isa = PBXGroup;
 			children = (
-				43983564198FAE2F0090EABA /* jsoncpp.gyp */,
-				43983565198FAE2F0090EABA /* jsoncpp.gypi */,
 				43983568198FAE2F0090EABA /* overrides */,
 				43983572198FAE2F0090EABA /* source */,
 			);
@@ -200,7 +195,6 @@
 				43983658198FAE300090EABA /* writer.h in Headers */,
 				43983651198FAE300090EABA /* autolink.h in Headers */,
 				43983655198FAE300090EABA /* json.h in Headers */,
-				43983666198FB3F70090EABA /* value.h in Headers */,
 				4398364D198FAE300090EABA /* value.h in Headers */,
 				4398365A198FAE300090EABA /* json_batchallocator.h in Headers */,
 				43983653198FAE300090EABA /* features.h in Headers */,
@@ -351,8 +345,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/src/lib_json",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -372,8 +366,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
-					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/overrides/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/include",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/jsoncpp/source/src/lib_json",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -400,6 +394,7 @@
 				4398355B198FAE110090EABA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

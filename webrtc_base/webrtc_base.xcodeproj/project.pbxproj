@@ -227,6 +227,10 @@
 		43A294751E376BBD00B6BE98 /* file.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293CB1E376BBB00B6BE98 /* file.cc */; };
 		43A294B01E376BBD00B6BE98 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293F01E376BBB00B6BE98 /* optional.cc */; };
 		43A294B11E376BBD00B6BE98 /* optional.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A293F01E376BBB00B6BE98 /* optional.cc */; };
+		43AC8AF41E484B1A0092C54E /* httpclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030C01D4EF0C200BB9828 /* httpclient.cc */; };
+		43AC8AF51E484B1B0092C54E /* httpclient.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030C01D4EF0C200BB9828 /* httpclient.cc */; };
+		43AC8AFC1E484C610092C54E /* httpbase.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030BE1D4EF0C200BB9828 /* httpbase.cc */; };
+		43AC8AFD1E484C610092C54E /* httpbase.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030BE1D4EF0C200BB9828 /* httpbase.cc */; };
 		43C037001D51BE5C0022DED1 /* sequenced_task_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031831D4EF0C200BB9828 /* sequenced_task_checker_impl.cc */; };
 		43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1057,6 +1061,7 @@
 				43A033711D4EF0C400BB9828 /* sharedexclusivelock.cc in Sources */,
 				431730361D509D42003B5883 /* messagedigest.cc in Sources */,
 				43A033031D4EF0C300BB9828 /* nattypes.cc in Sources */,
+				43AC8AFC1E484C610092C54E /* httpbase.cc in Sources */,
 				43A033C11D4EF0C400BB9828 /* testclient.cc in Sources */,
 				43A033C91D4EF0C400BB9828 /* thread.cc in Sources */,
 				43A032FF1D4EF0C300BB9828 /* natserver.cc in Sources */,
@@ -1066,6 +1071,7 @@
 				43A032371D4EF0C300BB9828 /* autodetectproxy.cc in Sources */,
 				43A033391D4EF0C400BB9828 /* proxydetect.cc in Sources */,
 				43A033011D4EF0C300BB9828 /* natsocketfactory.cc in Sources */,
+				43AC8AF41E484B1A0092C54E /* httpclient.cc in Sources */,
 				43A033BB1D4EF0C400BB9828 /* taskparent.cc in Sources */,
 				43A032A31D4EF0C300BB9828 /* ifaddrs-android.cc in Sources */,
 				43A032891D4EF0C300BB9828 /* firewallsocketserver.cc in Sources */,
@@ -1163,6 +1169,7 @@
 				43A0327A1D4EF0C300BB9828 /* event.cc in Sources */,
 				431730351D509C64003B5883 /* sslstreamadapter.cc in Sources */,
 				43A0338A1D4EF0C400BB9828 /* socketstream.cc in Sources */,
+				43AC8AF51E484B1B0092C54E /* httpclient.cc in Sources */,
 				43A033161D4EF0C300BB9828 /* openssldigest.cc in Sources */,
 				434B058B1D50B3A900FDCA92 /* sslidentity.cc in Sources */,
 				43A032C61D4EF0C300BB9828 /* logging_mac.mm in Sources */,
@@ -1209,6 +1216,7 @@
 				43A033401D4EF0C400BB9828 /* race_checker.cc in Sources */,
 				43A032A21D4EF0C300BB9828 /* ifaddrs_converter.cc in Sources */,
 				43A0330C1D4EF0C300BB9828 /* networkmonitor.cc in Sources */,
+				43AC8AFD1E484C610092C54E /* httpbase.cc in Sources */,
 				43A0328C1D4EF0C300BB9828 /* flags.cc in Sources */,
 				43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A033D61D4EF0C400BB9828 /* transformadapter.cc in Sources */,

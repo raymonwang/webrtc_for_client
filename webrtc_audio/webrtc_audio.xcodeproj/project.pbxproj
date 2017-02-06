@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43AC8AEC1E4849DF0092C54E /* audio_frame_operations.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8AE81E4849DF0092C54E /* audio_frame_operations.cc */; };
+		43AC8AED1E4849DF0092C54E /* audio_frame_operations.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC8AE91E4849DF0092C54E /* audio_frame_operations.h */; };
+		43AC8AF11E4849FB0092C54E /* audio_transport_proxy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8AEF1E4849FB0092C54E /* audio_transport_proxy.cc */; };
+		43AC8AF21E4849FB0092C54E /* audio_transport_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC8AF01E4849FB0092C54E /* audio_transport_proxy.h */; };
 		43E041C41D50412B009FDAE6 /* audio_receive_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E041B51D50412B009FDAE6 /* audio_receive_stream.cc */; };
 		43E041C51D50412B009FDAE6 /* audio_receive_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E041B61D50412B009FDAE6 /* audio_receive_stream.h */; };
 		43E041C71D50412B009FDAE6 /* audio_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E041B81D50412B009FDAE6 /* audio_send_stream.cc */; };
@@ -18,6 +22,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43AC8AE81E4849DF0092C54E /* audio_frame_operations.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_frame_operations.cc; sourceTree = "<group>"; };
+		43AC8AE91E4849DF0092C54E /* audio_frame_operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_operations.h; sourceTree = "<group>"; };
+		43AC8AEB1E4849DF0092C54E /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
+		43AC8AEF1E4849FB0092C54E /* audio_transport_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_transport_proxy.cc; sourceTree = "<group>"; };
+		43AC8AF01E4849FB0092C54E /* audio_transport_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_transport_proxy.h; sourceTree = "<group>"; };
 		43E041A71D50410B009FDAE6 /* libwebrtc_audio.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_audio.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43E041B51D50412B009FDAE6 /* audio_receive_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_receive_stream.cc; sourceTree = "<group>"; };
 		43E041B61D50412B009FDAE6 /* audio_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_receive_stream.h; sourceTree = "<group>"; };
@@ -30,7 +39,6 @@
 		43E041C01D50412B009FDAE6 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
 		43E041C11D50412B009FDAE6 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		43E041C21D50412B009FDAE6 /* scoped_voe_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scoped_voe_interface.h; sourceTree = "<group>"; };
-		43E041C31D50412B009FDAE6 /* webrtc_audio.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webrtc_audio.gypi; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +52,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43AC8AE71E4849DF0092C54E /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				43AC8AE81E4849DF0092C54E /* audio_frame_operations.cc */,
+				43AC8AE91E4849DF0092C54E /* audio_frame_operations.h */,
+				43AC8AEB1E4849DF0092C54E /* BUILD.gn */,
+			);
+			path = utility;
+			sourceTree = "<group>";
+		};
 		43E0419E1D50410B009FDAE6 = {
 			isa = PBXGroup;
 			children = (
@@ -63,8 +81,11 @@
 		43E041B41D50412B009FDAE6 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				43AC8AE71E4849DF0092C54E /* utility */,
 				43E041B51D50412B009FDAE6 /* audio_receive_stream.cc */,
 				43E041B61D50412B009FDAE6 /* audio_receive_stream.h */,
+				43AC8AEF1E4849FB0092C54E /* audio_transport_proxy.cc */,
+				43AC8AF01E4849FB0092C54E /* audio_transport_proxy.h */,
 				43E041B81D50412B009FDAE6 /* audio_send_stream.cc */,
 				43E041B91D50412B009FDAE6 /* audio_send_stream.h */,
 				43E041BB1D50412B009FDAE6 /* audio_state.cc */,
@@ -74,7 +95,6 @@
 				43E041C01D50412B009FDAE6 /* DEPS */,
 				43E041C11D50412B009FDAE6 /* OWNERS */,
 				43E041C21D50412B009FDAE6 /* scoped_voe_interface.h */,
-				43E041C31D50412B009FDAE6 /* webrtc_audio.gypi */,
 			);
 			name = audio;
 			path = ../webRTCAPP/Classes/webrtc/audio;
@@ -87,9 +107,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AC8AF21E4849FB0092C54E /* audio_transport_proxy.h in Headers */,
 				43E041CE1D50412B009FDAE6 /* scoped_voe_interface.h in Headers */,
 				43E041CD1D50412B009FDAE6 /* conversion.h in Headers */,
 				43E041CB1D50412B009FDAE6 /* audio_state.h in Headers */,
+				43AC8AED1E4849DF0092C54E /* audio_frame_operations.h in Headers */,
 				43E041C51D50412B009FDAE6 /* audio_receive_stream.h in Headers */,
 				43E041C81D50412B009FDAE6 /* audio_send_stream.h in Headers */,
 			);
@@ -151,9 +173,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43AC8AEC1E4849DF0092C54E /* audio_frame_operations.cc in Sources */,
 				43E041C71D50412B009FDAE6 /* audio_send_stream.cc in Sources */,
 				43E041CA1D50412B009FDAE6 /* audio_state.cc in Sources */,
 				43E041C41D50412B009FDAE6 /* audio_receive_stream.cc in Sources */,
+				43AC8AF11E4849FB0092C54E /* audio_transport_proxy.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +272,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -263,6 +289,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -290,6 +318,7 @@
 				43E041AD1D50410B009FDAE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
