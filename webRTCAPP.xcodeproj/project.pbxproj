@@ -1071,7 +1071,6 @@
 		43ECEE9C197CA80B00E9267B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		43ECEEA0197CA80B00E9267B /* webRTCAPP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "webRTCAPP-Prefix.pch"; sourceTree = "<group>"; };
 		43ECEEAA197CA80B00E9267B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		43F1EDE11D477C3000AEAEC2 /* engine_configurations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = engine_configurations.h; path = webRTCAPP/Classes/webrtc/engine_configurations.h; sourceTree = "<group>"; };
 		43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_i420.xcodeproj; path = webrtc_i420/webrtc_i420.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1998,7 +1997,6 @@
 				43E0409E1D503BED009FDAE6 /* congestion_controller.xcodeproj */,
 				43E040801D503AAF009FDAE6 /* rtc_event_log.xcodeproj */,
 				43E040061D50374A009FDAE6 /* webrtc_common.xcodeproj */,
-				43F1EDE11D477C3000AEAEC2 /* engine_configurations.h */,
 				4381BD6B1D470474000656B1 /* Test */,
 				43819DA11D4621C2000656B1 /* thirdpart */,
 				43288AD71D38DCAC0044E4F5 /* Voice */,

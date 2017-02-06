@@ -18,8 +18,6 @@
 		43C0C5711D4EFD200058AC82 /* cpu_features.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C4FF1D4EFD200058AC82 /* cpu_features.cc */; };
 		43C0C5761D4EFD200058AC82 /* cpu_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5021D4EFD200058AC82 /* cpu_info.cc */; };
 		43C0C5771D4EFD200058AC82 /* cpu_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5021D4EFD200058AC82 /* cpu_info.cc */; };
-		43C0C5881D4EFD200058AC82 /* data_log_no_op.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C50E1D4EFD200058AC82 /* data_log_no_op.cc */; };
-		43C0C5891D4EFD200058AC82 /* data_log_no_op.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C50E1D4EFD200058AC82 /* data_log_no_op.cc */; };
 		43C0C58E1D4EFD200058AC82 /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5121D4EFD200058AC82 /* event.cc */; };
 		43C0C58F1D4EFD200058AC82 /* event.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5121D4EFD200058AC82 /* event.cc */; };
 		43C0C5921D4EFD200058AC82 /* event_timer_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5151D4EFD200058AC82 /* event_timer_posix.cc */; };
@@ -32,24 +30,18 @@
 		43C0C5A51D4EFD200058AC82 /* logging.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5231D4EFD200058AC82 /* logging.cc */; };
 		43C0C5AA1D4EFD200058AC82 /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5281D4EFD200058AC82 /* metrics_default.cc */; };
 		43C0C5AB1D4EFD200058AC82 /* metrics_default.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5281D4EFD200058AC82 /* metrics_default.cc */; };
-		43C0C5B21D4EFD200058AC82 /* rtp_to_ntp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C52E1D4EFD200058AC82 /* rtp_to_ntp.cc */; };
-		43C0C5B31D4EFD200058AC82 /* rtp_to_ntp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C52E1D4EFD200058AC82 /* rtp_to_ntp.cc */; };
 		43C0C5B61D4EFD200058AC82 /* rw_lock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5301D4EFD200058AC82 /* rw_lock.cc */; };
 		43C0C5B71D4EFD210058AC82 /* rw_lock.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5301D4EFD200058AC82 /* rw_lock.cc */; };
 		43C0C5BA1D4EFD210058AC82 /* rw_lock_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5331D4EFD200058AC82 /* rw_lock_posix.cc */; };
 		43C0C5BB1D4EFD210058AC82 /* rw_lock_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5331D4EFD200058AC82 /* rw_lock_posix.cc */; };
 		43C0C5C21D4EFD210058AC82 /* sleep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C53B1D4EFD200058AC82 /* sleep.cc */; };
 		43C0C5C31D4EFD210058AC82 /* sleep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C53B1D4EFD200058AC82 /* sleep.cc */; };
-		43C0C5C41D4EFD210058AC82 /* sort.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C53C1D4EFD200058AC82 /* sort.cc */; };
-		43C0C5C51D4EFD210058AC82 /* sort.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C53C1D4EFD200058AC82 /* sort.cc */; };
 		43C0C5D61D4EFD210058AC82 /* timestamp_extrapolator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C54B1D4EFD200058AC82 /* timestamp_extrapolator.cc */; };
 		43C0C5D71D4EFD210058AC82 /* timestamp_extrapolator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C54B1D4EFD200058AC82 /* timestamp_extrapolator.cc */; };
 		43C0C5D81D4EFD210058AC82 /* trace_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C54C1D4EFD200058AC82 /* trace_impl.cc */; };
 		43C0C5D91D4EFD210058AC82 /* trace_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C54C1D4EFD200058AC82 /* trace_impl.cc */; };
 		43C0C5DA1D4EFD210058AC82 /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C54E1D4EFD200058AC82 /* trace_posix.cc */; };
 		43C0C5DB1D4EFD210058AC82 /* trace_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C54E1D4EFD200058AC82 /* trace_posix.cc */; };
-		43C0C5E01D4F008A0058AC82 /* data_log_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5DF1D4F008A0058AC82 /* data_log_c.cc */; };
-		43C0C5E11D4F008A0058AC82 /* data_log_c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5DF1D4F008A0058AC82 /* data_log_c.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,9 +76,6 @@
 		43C0C4C41D4EFD030058AC82 /* cpu_features_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_features_wrapper.h; sourceTree = "<group>"; };
 		43C0C4C51D4EFD030058AC82 /* cpu_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpu_info.h; sourceTree = "<group>"; };
 		43C0C4C61D4EFD030058AC82 /* critical_section_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = critical_section_wrapper.h; sourceTree = "<group>"; };
-		43C0C4C71D4EFD030058AC82 /* data_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_log.h; sourceTree = "<group>"; };
-		43C0C4C81D4EFD030058AC82 /* data_log_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_log_c.h; sourceTree = "<group>"; };
-		43C0C4C91D4EFD030058AC82 /* data_log_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_log_impl.h; sourceTree = "<group>"; };
 		43C0C4CA1D4EFD030058AC82 /* event_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_wrapper.h; sourceTree = "<group>"; };
 		43C0C4CB1D4EFD030058AC82 /* field_trial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = field_trial.h; sourceTree = "<group>"; };
 		43C0C4CC1D4EFD030058AC82 /* field_trial_default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = field_trial_default.h; sourceTree = "<group>"; };
@@ -97,12 +86,9 @@
 		43C0C4D11D4EFD030058AC82 /* metrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metrics.h; sourceTree = "<group>"; };
 		43C0C4D21D4EFD030058AC82 /* metrics_default.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metrics_default.h; sourceTree = "<group>"; };
 		43C0C4D31D4EFD030058AC82 /* ntp_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ntp_time.h; sourceTree = "<group>"; };
-		43C0C4D41D4EFD030058AC82 /* rtp_to_ntp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_to_ntp.h; sourceTree = "<group>"; };
 		43C0C4D51D4EFD030058AC82 /* rw_lock_wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rw_lock_wrapper.h; sourceTree = "<group>"; };
 		43C0C4D61D4EFD030058AC82 /* sleep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sleep.h; sourceTree = "<group>"; };
-		43C0C4D71D4EFD030058AC82 /* sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sort.h; sourceTree = "<group>"; };
 		43C0C4D81D4EFD030058AC82 /* static_instance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = static_instance.h; sourceTree = "<group>"; };
-		43C0C4D91D4EFD030058AC82 /* stl_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stl_util.h; sourceTree = "<group>"; };
 		43C0C4DA1D4EFD030058AC82 /* stringize_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringize_macros.h; sourceTree = "<group>"; };
 		43C0C4DB1D4EFD030058AC82 /* timestamp_extrapolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timestamp_extrapolator.h; sourceTree = "<group>"; };
 		43C0C4DC1D4EFD030058AC82 /* trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace.h; sourceTree = "<group>"; };
@@ -115,7 +101,6 @@
 		43C0C5001D4EFD200058AC82 /* cpu_features_android.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpu_features_android.c; sourceTree = "<group>"; };
 		43C0C5011D4EFD200058AC82 /* cpu_features_linux.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpu_features_linux.c; sourceTree = "<group>"; };
 		43C0C5021D4EFD200058AC82 /* cpu_info.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpu_info.cc; sourceTree = "<group>"; };
-		43C0C50E1D4EFD200058AC82 /* data_log_no_op.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = data_log_no_op.cc; sourceTree = "<group>"; };
 		43C0C5121D4EFD200058AC82 /* event.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cc; sourceTree = "<group>"; };
 		43C0C5151D4EFD200058AC82 /* event_timer_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event_timer_posix.cc; sourceTree = "<group>"; };
 		43C0C5161D4EFD200058AC82 /* event_timer_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_timer_posix.h; sourceTree = "<group>"; };
@@ -123,22 +108,15 @@
 		43C0C51F1D4EFD200058AC82 /* file_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_impl.cc; sourceTree = "<group>"; };
 		43C0C5231D4EFD200058AC82 /* logging.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logging.cc; sourceTree = "<group>"; };
 		43C0C5281D4EFD200058AC82 /* metrics_default.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metrics_default.cc; sourceTree = "<group>"; };
-		43C0C52E1D4EFD200058AC82 /* rtp_to_ntp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_to_ntp.cc; sourceTree = "<group>"; };
 		43C0C5301D4EFD200058AC82 /* rw_lock.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rw_lock.cc; sourceTree = "<group>"; };
 		43C0C5331D4EFD200058AC82 /* rw_lock_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rw_lock_posix.cc; sourceTree = "<group>"; };
 		43C0C5341D4EFD200058AC82 /* rw_lock_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rw_lock_posix.h; sourceTree = "<group>"; };
 		43C0C53B1D4EFD200058AC82 /* sleep.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sleep.cc; sourceTree = "<group>"; };
-		43C0C53C1D4EFD200058AC82 /* sort.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sort.cc; sourceTree = "<group>"; };
-		43C0C53E1D4EFD200058AC82 /* constants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = constants.hpp; sourceTree = "<group>"; };
-		43C0C53F1D4EFD200058AC82 /* spreadsort.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spreadsort.hpp; sourceTree = "<group>"; };
-		43C0C5401D4EFD200058AC82 /* stamp-h1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "stamp-h1"; sourceTree = "<group>"; };
 		43C0C54B1D4EFD200058AC82 /* timestamp_extrapolator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timestamp_extrapolator.cc; sourceTree = "<group>"; };
 		43C0C54C1D4EFD200058AC82 /* trace_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace_impl.cc; sourceTree = "<group>"; };
 		43C0C54D1D4EFD200058AC82 /* trace_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_impl.h; sourceTree = "<group>"; };
 		43C0C54E1D4EFD200058AC82 /* trace_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace_posix.cc; sourceTree = "<group>"; };
 		43C0C54F1D4EFD200058AC82 /* trace_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_posix.h; sourceTree = "<group>"; };
-		43C0C5DE1D4F00230058AC82 /* system_wrappers.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = system_wrappers.gyp; sourceTree = "<group>"; };
-		43C0C5DF1D4F008A0058AC82 /* data_log_c.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = data_log_c.cc; sourceTree = "<group>"; };
 		43E04D0B1D262BB500B39549 /* libsystem_wrappers_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsystem_wrappers_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -188,7 +166,6 @@
 		430D87721986075F009E763A /* system_wrappers */ = {
 			isa = PBXGroup;
 			children = (
-				43C0C5DE1D4F00230058AC82 /* system_wrappers.gyp */,
 				43C0C4DE1D4EFD200058AC82 /* source */,
 				43C0C4BD1D4EFD030058AC82 /* include */,
 			);
@@ -208,9 +185,6 @@
 				43C0C4C41D4EFD030058AC82 /* cpu_features_wrapper.h */,
 				43C0C4C51D4EFD030058AC82 /* cpu_info.h */,
 				43C0C4C61D4EFD030058AC82 /* critical_section_wrapper.h */,
-				43C0C4C71D4EFD030058AC82 /* data_log.h */,
-				43C0C4C81D4EFD030058AC82 /* data_log_c.h */,
-				43C0C4C91D4EFD030058AC82 /* data_log_impl.h */,
 				43C0C4CA1D4EFD030058AC82 /* event_wrapper.h */,
 				43C0C4CB1D4EFD030058AC82 /* field_trial.h */,
 				43C0C4CC1D4EFD030058AC82 /* field_trial_default.h */,
@@ -221,12 +195,9 @@
 				43C0C4D11D4EFD030058AC82 /* metrics.h */,
 				43C0C4D21D4EFD030058AC82 /* metrics_default.h */,
 				43C0C4D31D4EFD030058AC82 /* ntp_time.h */,
-				43C0C4D41D4EFD030058AC82 /* rtp_to_ntp.h */,
 				43C0C4D51D4EFD030058AC82 /* rw_lock_wrapper.h */,
 				43C0C4D61D4EFD030058AC82 /* sleep.h */,
-				43C0C4D71D4EFD030058AC82 /* sort.h */,
 				43C0C4D81D4EFD030058AC82 /* static_instance.h */,
-				43C0C4D91D4EFD030058AC82 /* stl_util.h */,
 				43C0C4DA1D4EFD030058AC82 /* stringize_macros.h */,
 				43C0C4DB1D4EFD030058AC82 /* timestamp_extrapolator.h */,
 				43C0C4DC1D4EFD030058AC82 /* trace.h */,
@@ -246,8 +217,6 @@
 				43C0C5001D4EFD200058AC82 /* cpu_features_android.c */,
 				43C0C5011D4EFD200058AC82 /* cpu_features_linux.c */,
 				43C0C5021D4EFD200058AC82 /* cpu_info.cc */,
-				43C0C5DF1D4F008A0058AC82 /* data_log_c.cc */,
-				43C0C50E1D4EFD200058AC82 /* data_log_no_op.cc */,
 				43C0C5121D4EFD200058AC82 /* event.cc */,
 				43C0C5151D4EFD200058AC82 /* event_timer_posix.cc */,
 				43C0C5161D4EFD200058AC82 /* event_timer_posix.h */,
@@ -255,14 +224,10 @@
 				43C0C51F1D4EFD200058AC82 /* file_impl.cc */,
 				43C0C5231D4EFD200058AC82 /* logging.cc */,
 				43C0C5281D4EFD200058AC82 /* metrics_default.cc */,
-				43C0C52E1D4EFD200058AC82 /* rtp_to_ntp.cc */,
 				43C0C5301D4EFD200058AC82 /* rw_lock.cc */,
 				43C0C5331D4EFD200058AC82 /* rw_lock_posix.cc */,
 				43C0C5341D4EFD200058AC82 /* rw_lock_posix.h */,
 				43C0C53B1D4EFD200058AC82 /* sleep.cc */,
-				43C0C53C1D4EFD200058AC82 /* sort.cc */,
-				43C0C53D1D4EFD200058AC82 /* spreadsortlib */,
-				43C0C5401D4EFD200058AC82 /* stamp-h1 */,
 				43C0C54B1D4EFD200058AC82 /* timestamp_extrapolator.cc */,
 				43C0C54C1D4EFD200058AC82 /* trace_impl.cc */,
 				43C0C54D1D4EFD200058AC82 /* trace_impl.h */,
@@ -270,15 +235,6 @@
 				43C0C54F1D4EFD200058AC82 /* trace_posix.h */,
 			);
 			path = source;
-			sourceTree = "<group>";
-		};
-		43C0C53D1D4EFD200058AC82 /* spreadsortlib */ = {
-			isa = PBXGroup;
-			children = (
-				43C0C53E1D4EFD200058AC82 /* constants.hpp */,
-				43C0C53F1D4EFD200058AC82 /* spreadsort.hpp */,
-			);
-			path = spreadsortlib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,7 +308,6 @@
 			files = (
 				43C0C58E1D4EFD200058AC82 /* event.cc in Sources */,
 				43C0C5DA1D4EFD210058AC82 /* trace_posix.cc in Sources */,
-				43C0C5881D4EFD200058AC82 /* data_log_no_op.cc in Sources */,
 				43C0C5B61D4EFD200058AC82 /* rw_lock.cc in Sources */,
 				43C0C59E1D4EFD200058AC82 /* field_trial_default.cc in Sources */,
 				43C0C5701D4EFD200058AC82 /* cpu_features.cc in Sources */,
@@ -361,15 +316,12 @@
 				43C0C5A01D4EFD200058AC82 /* file_impl.cc in Sources */,
 				43C0C5C21D4EFD210058AC82 /* sleep.cc in Sources */,
 				43C0C5D61D4EFD210058AC82 /* timestamp_extrapolator.cc in Sources */,
-				43C0C5E01D4F008A0058AC82 /* data_log_c.cc in Sources */,
 				43C0C5BA1D4EFD210058AC82 /* rw_lock_posix.cc in Sources */,
 				43C0C5581D4EFD200058AC82 /* atomic32_darwin.cc in Sources */,
 				43C0C5D81D4EFD210058AC82 /* trace_impl.cc in Sources */,
 				43C0C5921D4EFD200058AC82 /* event_timer_posix.cc in Sources */,
 				43C0C5761D4EFD200058AC82 /* cpu_info.cc in Sources */,
-				43C0C5C41D4EFD210058AC82 /* sort.cc in Sources */,
 				43C0C5541D4EFD200058AC82 /* aligned_malloc.cc in Sources */,
-				43C0C5B21D4EFD200058AC82 /* rtp_to_ntp.cc in Sources */,
 				43C0C5621D4EFD200058AC82 /* clock.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,7 +333,6 @@
 				43C0C58F1D4EFD200058AC82 /* event.cc in Sources */,
 				43C0C5DB1D4EFD210058AC82 /* trace_posix.cc in Sources */,
 				43C0C55D1D4EFD200058AC82 /* atomic32_non_darwin_unix.cc in Sources */,
-				43C0C5891D4EFD200058AC82 /* data_log_no_op.cc in Sources */,
 				43C0C5B71D4EFD210058AC82 /* rw_lock.cc in Sources */,
 				43C0C59F1D4EFD200058AC82 /* field_trial_default.cc in Sources */,
 				43C0C5711D4EFD200058AC82 /* cpu_features.cc in Sources */,
@@ -392,13 +343,10 @@
 				43C0C5D71D4EFD210058AC82 /* timestamp_extrapolator.cc in Sources */,
 				43C0C5BB1D4EFD210058AC82 /* rw_lock_posix.cc in Sources */,
 				43C0C5591D4EFD200058AC82 /* atomic32_darwin.cc in Sources */,
-				43C0C5E11D4F008A0058AC82 /* data_log_c.cc in Sources */,
 				43C0C5D91D4EFD210058AC82 /* trace_impl.cc in Sources */,
 				43C0C5931D4EFD200058AC82 /* event_timer_posix.cc in Sources */,
 				43C0C5771D4EFD200058AC82 /* cpu_info.cc in Sources */,
-				43C0C5C51D4EFD210058AC82 /* sort.cc in Sources */,
 				43C0C5551D4EFD200058AC82 /* aligned_malloc.cc in Sources */,
-				43C0C5B31D4EFD200058AC82 /* rtp_to_ntp.cc in Sources */,
 				43C0C5631D4EFD200058AC82 /* clock.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

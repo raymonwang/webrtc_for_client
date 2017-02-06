@@ -19,8 +19,6 @@
 		43C0C6A41D4F0C010058AC82 /* call_statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6861D4F0C010058AC82 /* call_statistics.cc */; };
 		43C0C6A71D4F0C010058AC82 /* codec_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6891D4F0C010058AC82 /* codec_manager.cc */; };
 		43C0C6A81D4F0C010058AC82 /* codec_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6891D4F0C010058AC82 /* codec_manager.cc */; };
-		43C0C6AB1D4F0C010058AC82 /* initial_delay_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C68C1D4F0C010058AC82 /* initial_delay_manager.cc */; };
-		43C0C6AC1D4F0C010058AC82 /* initial_delay_manager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C68C1D4F0C010058AC82 /* initial_delay_manager.cc */; };
 		43C0C6AF1D4F0C010058AC82 /* rent_a_codec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6901D4F0C010058AC82 /* rent_a_codec.cc */; };
 		43C0C6B01D4F0C010058AC82 /* rent_a_codec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6901D4F0C010058AC82 /* rent_a_codec.cc */; };
 /* End PBXBuildFile section */
@@ -60,9 +58,6 @@
 		43C0C6871D4F0C010058AC82 /* call_statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = call_statistics.h; sourceTree = "<group>"; };
 		43C0C6891D4F0C010058AC82 /* codec_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = codec_manager.cc; sourceTree = "<group>"; };
 		43C0C68A1D4F0C010058AC82 /* codec_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codec_manager.h; sourceTree = "<group>"; };
-		43C0C68C1D4F0C010058AC82 /* initial_delay_manager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = initial_delay_manager.cc; sourceTree = "<group>"; };
-		43C0C68D1D4F0C010058AC82 /* initial_delay_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = initial_delay_manager.h; sourceTree = "<group>"; };
-		43C0C68F1D4F0C010058AC82 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		43C0C6901D4F0C010058AC82 /* rent_a_codec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rent_a_codec.cc; sourceTree = "<group>"; };
 		43C0C6911D4F0C010058AC82 /* rent_a_codec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rent_a_codec.h; sourceTree = "<group>"; };
 		43E04A371D261EFD00B39549 /* libaudio_coding_module_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_coding_module_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,9 +113,6 @@
 				43C0C6871D4F0C010058AC82 /* call_statistics.h */,
 				43C0C6891D4F0C010058AC82 /* codec_manager.cc */,
 				43C0C68A1D4F0C010058AC82 /* codec_manager.h */,
-				43C0C68C1D4F0C010058AC82 /* initial_delay_manager.cc */,
-				43C0C68D1D4F0C010058AC82 /* initial_delay_manager.h */,
-				43C0C68F1D4F0C010058AC82 /* Makefile.am */,
 				43C0C6901D4F0C010058AC82 /* rent_a_codec.cc */,
 				43C0C6911D4F0C010058AC82 /* rent_a_codec.h */,
 			);
@@ -202,7 +194,6 @@
 				43C0C6AF1D4F0C010058AC82 /* rent_a_codec.cc in Sources */,
 				43C0C6931D4F0C010058AC82 /* acm_codec_database.cc in Sources */,
 				43C0C69F1D4F0C010058AC82 /* audio_coding_module.cc in Sources */,
-				43C0C6AB1D4F0C010058AC82 /* initial_delay_manager.cc in Sources */,
 				43C0C6A71D4F0C010058AC82 /* codec_manager.cc in Sources */,
 				43C0C69B1D4F0C010058AC82 /* acm_resampler.cc in Sources */,
 			);
@@ -217,7 +208,6 @@
 				43C0C6B01D4F0C010058AC82 /* rent_a_codec.cc in Sources */,
 				43C0C6941D4F0C010058AC82 /* acm_codec_database.cc in Sources */,
 				43C0C6A01D4F0C010058AC82 /* audio_coding_module.cc in Sources */,
-				43C0C6AC1D4F0C010058AC82 /* initial_delay_manager.cc in Sources */,
 				43C0C6A81D4F0C010058AC82 /* codec_manager.cc in Sources */,
 				43C0C69C1D4F0C010058AC82 /* acm_resampler.cc in Sources */,
 			);
