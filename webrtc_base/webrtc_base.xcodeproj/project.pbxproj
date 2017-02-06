@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4303DAF61E4826F500CD116B /* Logging.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA751E4826F400CD116B /* Logging.java */; };
+		4303DAF71E4826F500CD116B /* Logging.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA751E4826F400CD116B /* Logging.java */; };
+		4303DAF81E4826F500CD116B /* Size.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA771E4826F400CD116B /* Size.java */; };
+		4303DAF91E4826F500CD116B /* Size.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA771E4826F400CD116B /* Size.java */; };
+		4303DAFA1E4826F500CD116B /* ThreadUtils.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA781E4826F400CD116B /* ThreadUtils.java */; };
+		4303DAFB1E4826F500CD116B /* ThreadUtils.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA781E4826F400CD116B /* ThreadUtils.java */; };
+		4303DB101E4826F500CD116B /* exp_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA841E4826F400CD116B /* exp_filter.cc */; };
+		4303DB111E4826F500CD116B /* exp_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA841E4826F400CD116B /* exp_filter.cc */; };
+		4303DB701E4826F500CD116B /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DAB91E4826F500CD116B /* weak_ptr.cc */; };
+		4303DB711E4826F500CD116B /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DAB91E4826F500CD116B /* weak_ptr.cc */; };
 		431730341D509C62003B5883 /* sslstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031B61D4EF0C300BB9828 /* sslstreamadapter.cc */; };
 		431730351D509C64003B5883 /* sslstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031B61D4EF0C300BB9828 /* sslstreamadapter.cc */; };
 		431730361D509D42003B5883 /* messagedigest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031121D4EF0C200BB9828 /* messagedigest.cc */; };
@@ -246,6 +256,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4303DA6A1E4826F400CD116B /* function_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = function_view.h; sourceTree = "<group>"; };
+		4303DA6F1E4826F400CD116B /* ignore_wundef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ignore_wundef.h; sourceTree = "<group>"; };
+		4303DA751E4826F400CD116B /* Logging.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = Logging.java; sourceTree = "<group>"; };
+		4303DA761E4826F400CD116B /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		4303DA771E4826F400CD116B /* Size.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = Size.java; sourceTree = "<group>"; };
+		4303DA781E4826F400CD116B /* ThreadUtils.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = ThreadUtils.java; sourceTree = "<group>"; };
+		4303DA841E4826F400CD116B /* exp_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exp_filter.cc; sourceTree = "<group>"; };
+		4303DA851E4826F400CD116B /* exp_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exp_filter.h; sourceTree = "<group>"; };
+		4303DA871E4826F400CD116B /* percentile_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = percentile_filter.h; sourceTree = "<group>"; };
+		4303DA971E4826F400CD116B /* refcountedobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = refcountedobject.h; sourceTree = "<group>"; };
+		4303DA9C1E4826F400CD116B /* safe_compare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safe_compare.h; sourceTree = "<group>"; };
+		4303DAB91E4826F500CD116B /* weak_ptr.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = weak_ptr.cc; sourceTree = "<group>"; };
+		4303DABA1E4826F500CD116B /* weak_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weak_ptr.h; sourceTree = "<group>"; };
 		430D83241985E421009E763A /* libwebrtc_base.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_base.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43A030391D4EF0C100BB9828 /* array_view.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = array_view.h; sourceTree = "<group>"; };
 		43A0303A1D4EF0C100BB9828 /* arraysize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arraysize.h; sourceTree = "<group>"; };
@@ -562,6 +585,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4303DA711E4826F400CD116B /* java */ = {
+			isa = PBXGroup;
+			children = (
+				4303DA721E4826F400CD116B /* src */,
+			);
+			path = java;
+			sourceTree = "<group>";
+		};
+		4303DA721E4826F400CD116B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4303DA731E4826F400CD116B /* org */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		4303DA731E4826F400CD116B /* org */ = {
+			isa = PBXGroup;
+			children = (
+				4303DA741E4826F400CD116B /* webrtc */,
+			);
+			path = org;
+			sourceTree = "<group>";
+		};
+		4303DA741E4826F400CD116B /* webrtc */ = {
+			isa = PBXGroup;
+			children = (
+				4303DA751E4826F400CD116B /* Logging.java */,
+				4303DA761E4826F400CD116B /* OWNERS */,
+				4303DA771E4826F400CD116B /* Size.java */,
+				4303DA781E4826F400CD116B /* ThreadUtils.java */,
+			);
+			path = webrtc;
+			sourceTree = "<group>";
+		};
+		4303DA831E4826F400CD116B /* numerics */ = {
+			isa = PBXGroup;
+			children = (
+				4303DA841E4826F400CD116B /* exp_filter.cc */,
+				4303DA851E4826F400CD116B /* exp_filter.h */,
+				4303DA871E4826F400CD116B /* percentile_filter.h */,
+			);
+			path = numerics;
+			sourceTree = "<group>";
+		};
 		430D831B1985E421009E763A = {
 			isa = PBXGroup;
 			children = (
@@ -591,6 +659,14 @@
 			isa = PBXGroup;
 			children = (
 				43A293AE1E376BBB00B6BE98 /* applefilesystem.mm */,
+				4303DA6A1E4826F400CD116B /* function_view.h */,
+				4303DA6F1E4826F400CD116B /* ignore_wundef.h */,
+				4303DA711E4826F400CD116B /* java */,
+				4303DA831E4826F400CD116B /* numerics */,
+				4303DA971E4826F400CD116B /* refcountedobject.h */,
+				4303DA9C1E4826F400CD116B /* safe_compare.h */,
+				4303DAB91E4826F500CD116B /* weak_ptr.cc */,
+				4303DABA1E4826F500CD116B /* weak_ptr.h */,
 				43A293C21E376BBB00B6BE98 /* DEPS */,
 				43A293C31E376BBB00B6BE98 /* diskcache_win32.cc */,
 				43A293C41E376BBB00B6BE98 /* diskcache_win32.h */,
@@ -963,6 +1039,7 @@
 				43A032471D4EF0C300BB9828 /* bitbuffer.cc in Sources */,
 				43A033751D4EF0C400BB9828 /* signalthread.cc in Sources */,
 				434B058A1D50B3A900FDCA92 /* sslidentity.cc in Sources */,
+				4303DB101E4826F500CD116B /* exp_filter.cc in Sources */,
 				43A033CD1D4EF0C400BB9828 /* timestampaligner.cc in Sources */,
 				43A033191D4EF0C300BB9828 /* opensslstreamadapter.cc in Sources */,
 				43A0332D1D4EF0C400BB9828 /* platform_thread.cc in Sources */,
@@ -1018,6 +1095,7 @@
 				43A0328B1D4EF0C300BB9828 /* flags.cc in Sources */,
 				43A033D51D4EF0C400BB9828 /* transformadapter.cc in Sources */,
 				43A032B31D4EF0C300BB9828 /* json.cc in Sources */,
+				4303DAF61E4826F500CD116B /* Logging.java in Sources */,
 				43A032F11D4EF0C300BB9828 /* messagehandler.cc in Sources */,
 				43C0C70C1D4F26810058AC82 /* task_queue_posix.cc in Sources */,
 				43A032CB1D4EF0C300BB9828 /* logsinks.cc in Sources */,
@@ -1025,6 +1103,7 @@
 				43A033131D4EF0C300BB9828 /* openssladapter.cc in Sources */,
 				43A2946E1E376BBD00B6BE98 /* file_posix.cc in Sources */,
 				43A033471D4EF0C400BB9828 /* rate_limiter.cc in Sources */,
+				4303DB701E4826F500CD116B /* weak_ptr.cc in Sources */,
 				43A033871D4EF0C400BB9828 /* socketpool.cc in Sources */,
 				43A0325B1D4EF0C300BB9828 /* common.cc in Sources */,
 				43A032751D4EF0C300BB9828 /* event_tracer.cc in Sources */,
@@ -1042,12 +1121,14 @@
 				43A033831D4EF0C400BB9828 /* socketaddress.cc in Sources */,
 				43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A032691D4EF0C300BB9828 /* cryptstring.cc in Sources */,
+				4303DAF81E4826F500CD116B /* Size.java in Sources */,
 				43A0331F1D4EF0C300BB9828 /* optionsfile.cc in Sources */,
 				43A294B01E376BBD00B6BE98 /* optional.cc in Sources */,
 				43A0327F1D4EF0C300BB9828 /* fakeclock.cc in Sources */,
 				43A032711D4EF0C300BB9828 /* diskcache.cc in Sources */,
 				43A032D51D4EF0C300BB9828 /* macconversion.cc in Sources */,
 				43A032231D4EF0C300BB9828 /* asyncinvoker.cc in Sources */,
+				4303DAFA1E4826F500CD116B /* ThreadUtils.java in Sources */,
 				43A032271D4EF0C300BB9828 /* asyncresolverinterface.cc in Sources */,
 				43A0333B1D4EF0C400BB9828 /* proxyinfo.cc in Sources */,
 				43A0336D1D4EF0C400BB9828 /* sha1digest.cc in Sources */,
@@ -1119,6 +1200,7 @@
 				43A033861D4EF0C400BB9828 /* socketaddresspair.cc in Sources */,
 				43A033DA1D4EF0C400BB9828 /* unixfilesystem.cc in Sources */,
 				43A033A61D4EF0C400BB9828 /* stringutils.cc in Sources */,
+				4303DAF71E4826F500CD116B /* Logging.java in Sources */,
 				43A032D81D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */,
 				43C0C70D1D4F26850058AC82 /* task_queue_posix.cc in Sources */,
 				43A0329A1D4EF0C300BB9828 /* httpcommon.cc in Sources */,
@@ -1131,7 +1213,9 @@
 				43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A033D61D4EF0C400BB9828 /* transformadapter.cc in Sources */,
 				43A032B41D4EF0C300BB9828 /* json.cc in Sources */,
+				4303DAF91E4826F500CD116B /* Size.java in Sources */,
 				43A032F21D4EF0C300BB9828 /* messagehandler.cc in Sources */,
+				4303DAFB1E4826F500CD116B /* ThreadUtils.java in Sources */,
 				43A032CC1D4EF0C300BB9828 /* logsinks.cc in Sources */,
 				43A033141D4EF0C300BB9828 /* openssladapter.cc in Sources */,
 				43A033481D4EF0C400BB9828 /* rate_limiter.cc in Sources */,
@@ -1160,10 +1244,12 @@
 				43A032281D4EF0C300BB9828 /* asyncresolverinterface.cc in Sources */,
 				43A0333C1D4EF0C400BB9828 /* proxyinfo.cc in Sources */,
 				43A0336E1D4EF0C400BB9828 /* sha1digest.cc in Sources */,
+				4303DB111E4826F500CD116B /* exp_filter.cc in Sources */,
 				43A032541D4EF0C300BB9828 /* bytebuffer.cc in Sources */,
 				43A032841D4EF0C300BB9828 /* filerotatingstream.cc in Sources */,
 				43A2946F1E376BBD00B6BE98 /* file_posix.cc in Sources */,
 				43A032501D4EF0C300BB9828 /* bufferqueue.cc in Sources */,
+				4303DB711E4826F500CD116B /* weak_ptr.cc in Sources */,
 				43A033601D4EF0C400BB9828 /* rtccertificategenerator.cc in Sources */,
 				43A294B11E376BBD00B6BE98 /* optional.cc in Sources */,
 				43A032261D4EF0C300BB9828 /* asyncpacketsocket.cc in Sources */,

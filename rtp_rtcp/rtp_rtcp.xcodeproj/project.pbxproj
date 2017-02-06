@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4303DA4B1E4825A900CD116B /* flexfec_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA4A1E4825A900CD116B /* flexfec_sender.cc */; };
+		4303DA4C1E4825A900CD116B /* flexfec_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA4A1E4825A900CD116B /* flexfec_sender.cc */; };
+		4303DA4F1E4826C500CD116B /* target_bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA4D1E4826C500CD116B /* target_bitrate.cc */; };
+		4303DA501E4826C500CD116B /* target_bitrate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA4D1E4826C500CD116B /* target_bitrate.cc */; };
+		4303DA511E4826C500CD116B /* target_bitrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4303DA4E1E4826C500CD116B /* target_bitrate.h */; };
+		4303DA521E4826C500CD116B /* target_bitrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4303DA4E1E4826C500CD116B /* target_bitrate.h */; };
 		4340D4BA1E4811AC00E5F040 /* flexfec_receiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 4340D4B81E4811AC00E5F040 /* flexfec_receiver.h */; };
 		4340D4BB1E4811AC00E5F040 /* flexfec_sender.h in Headers */ = {isa = PBXBuildFile; fileRef = 4340D4B91E4811AC00E5F040 /* flexfec_sender.h */; };
 		4340D4C51E4811EF00E5F040 /* flexfec_header_reader_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4340D4BC1E4811EF00E5F040 /* flexfec_header_reader_writer.cc */; };
@@ -298,6 +304,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4303DA4A1E4825A900CD116B /* flexfec_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flexfec_sender.cc; sourceTree = "<group>"; };
+		4303DA4D1E4826C500CD116B /* target_bitrate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target_bitrate.cc; sourceTree = "<group>"; };
+		4303DA4E1E4826C500CD116B /* target_bitrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target_bitrate.h; sourceTree = "<group>"; };
 		4340D4B81E4811AC00E5F040 /* flexfec_receiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flexfec_receiver.h; sourceTree = "<group>"; };
 		4340D4B91E4811AC00E5F040 /* flexfec_sender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flexfec_sender.h; sourceTree = "<group>"; };
 		4340D4BC1E4811EF00E5F040 /* flexfec_header_reader_writer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flexfec_header_reader_writer.cc; sourceTree = "<group>"; };
@@ -486,6 +495,8 @@
 			isa = PBXGroup;
 			children = (
 				434121891D4F33AE003D3A39 /* app.cc */,
+				4303DA4D1E4826C500CD116B /* target_bitrate.cc */,
+				4303DA4E1E4826C500CD116B /* target_bitrate.h */,
 				4341218A1D4F33AE003D3A39 /* app.h */,
 				4341218C1D4F33AE003D3A39 /* bye.cc */,
 				4341218D1D4F33AE003D3A39 /* bye.h */,
@@ -573,6 +584,7 @@
 			children = (
 				434121881D4F33AE003D3A39 /* rtcp_packet */,
 				4341207C1D4F338A003D3A39 /* packet_loss_stats.cc */,
+				4303DA4A1E4825A900CD116B /* flexfec_sender.cc */,
 				4340D4BC1E4811EF00E5F040 /* flexfec_header_reader_writer.cc */,
 				4340D4BD1E4811EF00E5F040 /* flexfec_header_reader_writer.h */,
 				4340D4BE1E4811EF00E5F040 /* flexfec_receiver.cc */,
@@ -681,6 +693,7 @@
 				434121861D4F338A003D3A39 /* time_util.h in Headers */,
 				43998B0219863072003C5793 /* rtp_utility.h in Headers */,
 				434121FA1D4F33AE003D3A39 /* extended_reports.h in Headers */,
+				4303DA511E4826C500CD116B /* target_bitrate.h in Headers */,
 				434122501D4F33AE003D3A39 /* tmmb_item.h in Headers */,
 				43998AE719863072003C5793 /* rtp_format_video_generic.h in Headers */,
 				434122121D4F33AE003D3A39 /* psfb.h in Headers */,
@@ -779,6 +792,7 @@
 				43E04A951D26215400B39549 /* dtmf_queue.h in Headers */,
 				434122011D4F33AE003D3A39 /* fir.h in Headers */,
 				43E04A971D26215400B39549 /* rtp_receiver_audio.h in Headers */,
+				4303DA521E4826C500CD116B /* target_bitrate.h in Headers */,
 				434121EF1D4F33AE003D3A39 /* dlrr.h in Headers */,
 				43E04A981D26215400B39549 /* rtp_receiver_video.h in Headers */,
 				4341207B1D4F3330003D3A39 /* rtp_rtcp_defines.h in Headers */,
@@ -943,6 +957,7 @@
 				434120DA1D4F338A003D3A39 /* playout_delay_oracle.cc in Sources */,
 				43998B0519863072003C5793 /* tmmbr_help.cc in Sources */,
 				434122201D4F33AE003D3A39 /* remb.cc in Sources */,
+				4303DA4F1E4826C500CD116B /* target_bitrate.cc in Sources */,
 				434121801D4F338A003D3A39 /* rtp_packet.cc in Sources */,
 				434122101D4F33AE003D3A39 /* psfb.cc in Sources */,
 				434121F81D4F33AE003D3A39 /* extended_reports.cc in Sources */,
@@ -974,6 +989,7 @@
 				43998B0819863072003C5793 /* vp8_partition_aggregator.cc in Sources */,
 				434121781D4F338A003D3A39 /* rtp_header_extensions.cc in Sources */,
 				43998B0319863072003C5793 /* ssrc_database.cc in Sources */,
+				4303DA4B1E4825A900CD116B /* flexfec_sender.cc in Sources */,
 				43C69C9E1D2290E900427D35 /* rtp_format.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1016,6 +1032,7 @@
 				434120DB1D4F338A003D3A39 /* playout_delay_oracle.cc in Sources */,
 				43E04A761D26215400B39549 /* tmmbr_help.cc in Sources */,
 				434122211D4F33AE003D3A39 /* remb.cc in Sources */,
+				4303DA501E4826C500CD116B /* target_bitrate.cc in Sources */,
 				434121811D4F338A003D3A39 /* rtp_packet.cc in Sources */,
 				434122111D4F33AE003D3A39 /* psfb.cc in Sources */,
 				434121F91D4F33AE003D3A39 /* extended_reports.cc in Sources */,
@@ -1047,6 +1064,7 @@
 				43E04A871D26215400B39549 /* vp8_partition_aggregator.cc in Sources */,
 				434121791D4F338A003D3A39 /* rtp_header_extensions.cc in Sources */,
 				43E04A881D26215400B39549 /* ssrc_database.cc in Sources */,
+				4303DA4C1E4825A900CD116B /* flexfec_sender.cc in Sources */,
 				43E04A891D26215400B39549 /* rtp_format.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

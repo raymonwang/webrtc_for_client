@@ -73,7 +73,6 @@
 		43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_factory.cc; sourceTree = "<group>"; };
 		43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_impl.cc; sourceTree = "<group>"; };
 		43288EDC1D38E9320044E4F5 /* video_capture_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_impl.h; sourceTree = "<group>"; };
-		43288EDE1D38E9320044E4F5 /* video_capture_tests.isolate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = video_capture_tests.isolate; sourceTree = "<group>"; };
 		43288F471D38EB680044E4F5 /* libvideo_capture_module_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_capture_module_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4387763A1D4F486D00E6F9E9 /* video_capture_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_defines.h; sourceTree = "<group>"; };
 		4387763B1D4F486D00E6F9E9 /* video_capture_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_factory.h; sourceTree = "<group>"; };
@@ -133,7 +132,6 @@
 				43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */,
 				43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */,
 				43288EDC1D38E9320044E4F5 /* video_capture_impl.h */,
-				43288EDE1D38E9320044E4F5 /* video_capture_tests.isolate */,
 			);
 			name = video_capture;
 			path = ../webRTCAPP/Classes/webrtc/modules/video_capture;
