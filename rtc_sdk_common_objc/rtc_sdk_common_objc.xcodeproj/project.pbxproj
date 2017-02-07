@@ -46,6 +46,7 @@
 		43AC8C851E4853200092C54E /* helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC8C821E4853200092C54E /* helpers.h */; };
 		43AC8C861E4853200092C54E /* helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8C831E4853200092C54E /* helpers.mm */; };
 		43AC8C871E4853200092C54E /* RTCLogging.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8C841E4853200092C54E /* RTCLogging.mm */; };
+		43EC22C01E499AE20043399B /* UIDevice+RTCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43EC22BF1E499AE20043399B /* UIDevice+RTCDevice.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		43AC8C821E4853200092C54E /* helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
 		43AC8C831E4853200092C54E /* helpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = helpers.mm; sourceTree = "<group>"; };
 		43AC8C841E4853200092C54E /* RTCLogging.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCLogging.mm; sourceTree = "<group>"; };
+		43EC22BF1E499AE20043399B /* UIDevice+RTCDevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIDevice+RTCDevice.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 				43AC8C821E4853200092C54E /* helpers.h */,
 				43AC8C831E4853200092C54E /* helpers.mm */,
 				43AC8C841E4853200092C54E /* RTCLogging.mm */,
+				43EC22BF1E499AE20043399B /* UIDevice+RTCDevice.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43AC8C861E4853200092C54E /* helpers.mm in Sources */,
+				43EC22C01E499AE20043399B /* UIDevice+RTCDevice.mm in Sources */,
 				43AC8C871E4853200092C54E /* RTCLogging.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

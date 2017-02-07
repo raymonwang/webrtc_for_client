@@ -18,7 +18,6 @@
 		43E040971D503BED009FDAE6 /* libcongestion_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcongestion_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43E040A51D503C2C009FDAE6 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
 		43E040A61D503C2C009FDAE6 /* congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = congestion_controller.cc; sourceTree = "<group>"; };
-		43E040A71D503C2C009FDAE6 /* congestion_controller.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = congestion_controller.gypi; sourceTree = "<group>"; };
 		43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay_based_bwe.cc; sourceTree = "<group>"; };
 		43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay_based_bwe.h; sourceTree = "<group>"; };
 		43E040AE1D503C2C009FDAE6 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
@@ -59,7 +58,6 @@
 			children = (
 				43E040A51D503C2C009FDAE6 /* BUILD.gn */,
 				43E040A61D503C2C009FDAE6 /* congestion_controller.cc */,
-				43E040A71D503C2C009FDAE6 /* congestion_controller.gypi */,
 				43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */,
 				43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */,
 				43E040AE1D503C2C009FDAE6 /* DEPS */,
@@ -294,6 +292,7 @@
 				43E0409D1D503BED009FDAE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
