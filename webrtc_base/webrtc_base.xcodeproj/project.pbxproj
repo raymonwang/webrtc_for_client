@@ -17,6 +17,8 @@
 		4303DB111E4826F500CD116B /* exp_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA841E4826F400CD116B /* exp_filter.cc */; };
 		4303DB701E4826F500CD116B /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DAB91E4826F500CD116B /* weak_ptr.cc */; };
 		4303DB711E4826F500CD116B /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DAB91E4826F500CD116B /* weak_ptr.cc */; };
+		43042CB11E4B337100817496 /* maccocoathreadhelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43A030FB1D4EF0C200BB9828 /* maccocoathreadhelper.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		43042CB21E4B338000817496 /* scoped_autorelease_pool.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43A0317E1D4EF0C200BB9828 /* scoped_autorelease_pool.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		431730341D509C62003B5883 /* sslstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031B61D4EF0C300BB9828 /* sslstreamadapter.cc */; };
 		431730351D509C64003B5883 /* sslstreamadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031B61D4EF0C300BB9828 /* sslstreamadapter.cc */; };
 		431730361D509D42003B5883 /* messagedigest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031121D4EF0C200BB9828 /* messagedigest.cc */; };
@@ -26,7 +28,7 @@
 		434BF8201D50A81B00FDCA92 /* helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030BB1D4EF0C200BB9828 /* helpers.cc */; };
 		434BF8211D50A81B00FDCA92 /* helpers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A030BB1D4EF0C200BB9828 /* helpers.cc */; };
 		4387795B1D4F522400E6F9E9 /* timeutils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031EA1D4EF0C300BB9828 /* timeutils.cc */; };
-		4394AE831D5196C900E27530 /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0308D1D4EF0C200BB9828 /* criticalsection.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4394AE831D5196C900E27530 /* criticalsection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0308D1D4EF0C200BB9828 /* criticalsection.cc */; };
 		4394AE901D519CD400E27530 /* physicalsocketserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031461D4EF0C200BB9828 /* physicalsocketserver.cc */; };
 		43A032231D4EF0C300BB9828 /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0303E1D4EF0C100BB9828 /* asyncinvoker.cc */; };
 		43A032241D4EF0C300BB9828 /* asyncinvoker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A0303E1D4EF0C100BB9828 /* asyncinvoker.cc */; };
@@ -1068,6 +1070,7 @@
 				43A032A91D4EF0C300BB9828 /* ipaddress.cc in Sources */,
 				43A033171D4EF0C300BB9828 /* opensslidentity.cc in Sources */,
 				43A033531D4EF0C400BB9828 /* ratetracker.cc in Sources */,
+				43042CB21E4B338000817496 /* scoped_autorelease_pool.mm in Sources */,
 				43A032371D4EF0C300BB9828 /* autodetectproxy.cc in Sources */,
 				43A033391D4EF0C400BB9828 /* proxydetect.cc in Sources */,
 				43A033011D4EF0C300BB9828 /* natsocketfactory.cc in Sources */,
@@ -1121,6 +1124,7 @@
 				43A033C31D4EF0C400BB9828 /* thread_checker_impl.cc in Sources */,
 				43A0330F1D4EF0C300BB9828 /* nullsocketserver.cc in Sources */,
 				43A033231D4EF0C400BB9828 /* pathutils.cc in Sources */,
+				43042CB11E4B337100817496 /* maccocoathreadhelper.mm in Sources */,
 				43A0337F1D4EF0C400BB9828 /* socketadapters.cc in Sources */,
 				43A0322D1D4EF0C300BB9828 /* asynctcpsocket.cc in Sources */,
 				43A033431D4EF0C400BB9828 /* random.cc in Sources */,
@@ -1355,7 +1359,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				DSTROOT = /tmp/webrtc_base.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1396,7 +1400,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1409,7 +1413,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				DSTROOT = /tmp/webrtc_base.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1449,7 +1453,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/boringssl/src/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				USER_HEADER_SEARCH_PATHS = "";

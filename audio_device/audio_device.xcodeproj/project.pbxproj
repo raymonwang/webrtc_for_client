@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43042CB31E4B469F00817496 /* audio_device_not_implemented_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6DF1D4F1A0F0058AC82 /* audio_device_not_implemented_ios.mm */; };
 		430D9068198628A0009E763A /* audio_device_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D904D198628A0009E763A /* audio_device_buffer.h */; };
 		430D9069198628A0009E763A /* audio_device_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D904E198628A0009E763A /* audio_device_config.h */; };
 		430D906B198628A0009E763A /* audio_device_generic.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9050198628A0009E763A /* audio_device_generic.h */; };
@@ -25,7 +26,6 @@
 		43C0371A1D51C68E0022DED1 /* pa_memorybarrier.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E04E3E1D263A4600B39549 /* pa_memorybarrier.h */; };
 		43C0371B1D51C68E0022DED1 /* pa_ringbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 43E04E3F1D263A4600B39549 /* pa_ringbuffer.c */; };
 		43C0371C1D51C68E0022DED1 /* pa_ringbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E04E401D263A4600B39549 /* pa_ringbuffer.h */; };
-		43C0371F1D51C6BC0022DED1 /* audio_device_not_implemented_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6DF1D4F1A0F0058AC82 /* audio_device_not_implemented_ios.mm */; };
 		43C037201D51C6BC0022DED1 /* audio_session_observer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6E11D4F1A0F0058AC82 /* audio_session_observer.h */; };
 		43C037211D51C6BC0022DED1 /* voice_processing_audio_unit.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6EC1D4F1A0F0058AC82 /* voice_processing_audio_unit.h */; };
 		43C037221D51C6BC0022DED1 /* voice_processing_audio_unit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6ED1D4F1A0F0058AC82 /* voice_processing_audio_unit.mm */; };
@@ -404,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43C0372A1D51C6CA0022DED1 /* RTCAudioSessionConfiguration.m in Sources */,
+				43042CB31E4B469F00817496 /* audio_device_not_implemented_ios.mm in Sources */,
 				43C0372D1D51C7250022DED1 /* audio_device_dummy.cc in Sources */,
 				43C0372F1D51C7250022DED1 /* file_audio_device.cc in Sources */,
 				43C036FD1D51BDD60022DED1 /* audio_device_generic.cc in Sources */,
@@ -415,7 +416,6 @@
 				43C0C70B1D4F201F0058AC82 /* fine_audio_buffer.cc in Sources */,
 				43C037221D51C6BC0022DED1 /* voice_processing_audio_unit.mm in Sources */,
 				43C037281D51C6CA0022DED1 /* RTCAudioSession.mm in Sources */,
-				43C0371F1D51C6BC0022DED1 /* audio_device_not_implemented_ios.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,8 +517,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
-					WEBRTC_ARCH_ARM_NEON,
+					WEBRTC_HAS_NEON,
 					WEBRTC_BUILD_LIBEVENT,
 					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 				);
@@ -546,8 +545,7 @@
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_V7,
-					WEBRTC_ARCH_ARM_NEON,
+					WEBRTC_HAS_NEON,
 					WEBRTC_BUILD_LIBEVENT,
 					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 				);

@@ -15,6 +15,7 @@
 		4303DCB01E4830D000CD116B /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8822198608F9009E763A /* libcommon_audio.a */; };
 		4303DCBD1E48317200CD116B /* librtp_rtcp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998A7319862D95003C5793 /* librtp_rtcp.a */; };
 		4303DCC21E48340900CD116B /* libwebrtc_common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040571D50374B009FDAE6 /* libwebrtc_common.a */; };
+		43042D001E4B51CF00817496 /* libcommon_audio_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43042CFF1E4B51CF00817496 /* libcommon_audio_armv7.a */; };
 		430B298E197F68AA0076767F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B298D197F68AA0076767F /* GLKit.framework */; };
 		43172F621D50946D003B5883 /* librtc_sdk_peerconnection_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC2221D5075B100939424 /* librtc_sdk_peerconnection_objc.a */; };
 		43172F631D5094A2003B5883 /* librtc_sdk_common_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC1041D50710700939424 /* librtc_sdk_common_objc.a */; };
@@ -129,6 +130,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		43042CFE1E4B51CF00817496 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430D881C198608F8009E763A /* common_audio.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43042CFA1E4B512600817496;
+			remoteInfo = common_audio_armv7;
+		};
 		430955031994839800012AD8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43AD7EF01990934E006EAB38 /* crnspr.xcodeproj */;
@@ -967,13 +975,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43042D001E4B51CF00817496 /* libcommon_audio_armv7.a in Frameworks */,
+				4303DCB01E4830D000CD116B /* libcommon_audio.a in Frameworks */,
 				43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */,
 				43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */,
 				43AC8B341E484F4F0092C54E /* librtc_media.a in Frameworks */,
 				43AC797B1E4840B80092C54E /* libjsoncpp.a in Frameworks */,
 				4303DCC21E48340900CD116B /* libwebrtc_common.a in Frameworks */,
 				4303DCBD1E48317200CD116B /* librtp_rtcp.a in Frameworks */,
-				4303DCB01E4830D000CD116B /* libcommon_audio.a in Frameworks */,
 				4303DCAE1E48303600CD116B /* libcommon_video.a in Frameworks */,
 				4303DCAF1E48306100CD116B /* libsystem_wrappers.a in Frameworks */,
 				4303DCAD1E48301500CD116B /* libwebrtc_base.a in Frameworks */,
@@ -1169,6 +1178,7 @@
 		430D881D198608F8009E763A /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				43042CFF1E4B51CF00817496 /* libcommon_audio_armv7.a */,
 				430D8822198608F9009E763A /* libcommon_audio.a */,
 				43F1793D1D1D5988001817B4 /* libcommon_audio_osx.a */,
 			);
@@ -2350,6 +2360,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		43042CFF1E4B51CF00817496 /* libcommon_audio_armv7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcommon_audio_armv7.a;
+			remoteRef = 43042CFE1E4B51CF00817496 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		430955041994839800012AD8 /* libcrnspr_osx.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
