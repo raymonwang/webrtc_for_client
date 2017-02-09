@@ -12,7 +12,7 @@
 		4303DCAD1E48301500CD116B /* libwebrtc_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D835D1985E422009E763A /* libwebrtc_base.a */; };
 		4303DCAE1E48303600CD116B /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288A971D38DACC0044E4F5 /* libcommon_video.a */; };
 		4303DCAF1E48306100CD116B /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D876F19860740009E763A /* libsystem_wrappers.a */; };
-		4303DCB01E4830D000CD116B /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8822198608F9009E763A /* libcommon_audio.a */; };
+		4303DCB01E4830D000CD116B /* libcommon_audio_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8822198608F9009E763A /* libcommon_audio_arm64.a */; };
 		4303DCBD1E48317200CD116B /* librtp_rtcp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998A7319862D95003C5793 /* librtp_rtcp.a */; };
 		4303DCC21E48340900CD116B /* libwebrtc_common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040571D50374B009FDAE6 /* libwebrtc_common.a */; };
 		43042D001E4B51CF00817496 /* libcommon_audio_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43042CFF1E4B51CF00817496 /* libcommon_audio_armv7.a */; };
@@ -28,7 +28,7 @@
 		434B05911D50B66100FDCA92 /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288A971D38DACC0044E4F5 /* libcommon_video.a */; };
 		434B05921D50B73100FDCA92 /* librtc_p2p.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6978B1D22568300427D35 /* librtc_p2p.a */; };
 		434B05931D50B76600FDCA92 /* libwebrtc_common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040571D50374B009FDAE6 /* libwebrtc_common.a */; };
-		434B05941D50B7A600FDCA92 /* libcommon_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8822198608F9009E763A /* libcommon_audio.a */; };
+		434B05941D50B7A600FDCA92 /* libcommon_audio_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8822198608F9009E763A /* libcommon_audio_arm64.a */; };
 		434B05951D50B7BA00FDCA92 /* libyuv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43819D031D461614000656B1 /* libyuv.a */; };
 		434B059A1D50B8B900FDCA92 /* librtc_voice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4381BC6C1D47017C000656B1 /* librtc_voice.a */; };
 		434B059D1D50B97100FDCA92 /* libwebrtc_audio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E041B31D50410C009FDAE6 /* libwebrtc_audio.a */; };
@@ -38,6 +38,7 @@
 		434B061C1D50CEF600FDCA92 /* librtc_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4381BEFB1D470B07000656B1 /* librtc_video.a */; };
 		434BF7C01D50A5E800FDCA92 /* librtc_pc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 431730501D509EEF003B5883 /* librtc_pc.a */; };
 		434BF81E1D50A60100FDCA92 /* libsrtp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439831AD198F760C0090EABA /* libsrtp.a */; };
+		436C671F1E4C413B00C03555 /* libaudio_processing_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 436C671E1E4C413B00C03555 /* libaudio_processing_armv7.a */; };
 		4381BCC91D470191000656B1 /* libvoice_engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D86B61986051E009E763A /* libvoice_engine.a */; };
 		4381BCCD1D470220000656B1 /* libmedia_file.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B451986327B003C5793 /* libmedia_file.a */; };
 		4381BCCE1D470227000656B1 /* libwebrtc_utility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998B711986332B003C5793 /* libwebrtc_utility.a */; };
@@ -472,6 +473,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 434B05EF1D50C5AC00FDCA92;
 			remoteInfo = webrtc_h264;
+		};
+		436C671D1E4C413B00C03555 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430D909019862952009E763A /* audio_processing.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 436C67191E4C40DF00C03555;
+			remoteInfo = audio_processing_armv7;
 		};
 		43819D021D461614000656B1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -976,7 +984,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43042D001E4B51CF00817496 /* libcommon_audio_armv7.a in Frameworks */,
-				4303DCB01E4830D000CD116B /* libcommon_audio.a in Frameworks */,
+				4303DCB01E4830D000CD116B /* libcommon_audio_arm64.a in Frameworks */,
 				43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */,
 				43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */,
 				43AC8B341E484F4F0092C54E /* librtc_media.a in Frameworks */,
@@ -1000,6 +1008,7 @@
 				4381BEBD1D4707BE000656B1 /* libopus.a in Frameworks */,
 				4381BE671D4707A6000656B1 /* libwebrtc_opus.a in Frameworks */,
 				4381BCDB1D470299000656B1 /* libaudio_processing.a in Frameworks */,
+				436C671F1E4C413B00C03555 /* libaudio_processing_armv7.a in Frameworks */,
 				4381BCDA1D470291000656B1 /* libaudio_device.a in Frameworks */,
 				4381BCD91D47028A000656B1 /* libaudio_coding_module.a in Frameworks */,
 				4381BCD81D47027E000656B1 /* libneteq.a in Frameworks */,
@@ -1113,7 +1122,7 @@
 				434B05951D50B7BA00FDCA92 /* libyuv.a in Frameworks */,
 				434B05931D50B76600FDCA92 /* libwebrtc_common.a in Frameworks */,
 				434B05921D50B73100FDCA92 /* librtc_p2p.a in Frameworks */,
-				434B05941D50B7A600FDCA92 /* libcommon_audio.a in Frameworks */,
+				434B05941D50B7A600FDCA92 /* libcommon_audio_arm64.a in Frameworks */,
 				434B05911D50B66100FDCA92 /* libcommon_video.a in Frameworks */,
 				434BF81E1D50A60100FDCA92 /* libsrtp.a in Frameworks */,
 				434BF7C01D50A5E800FDCA92 /* librtc_pc.a in Frameworks */,
@@ -1179,7 +1188,7 @@
 			isa = PBXGroup;
 			children = (
 				43042CFF1E4B51CF00817496 /* libcommon_audio_armv7.a */,
-				430D8822198608F9009E763A /* libcommon_audio.a */,
+				430D8822198608F9009E763A /* libcommon_audio_arm64.a */,
 				43F1793D1D1D5988001817B4 /* libcommon_audio_osx.a */,
 			);
 			name = Products;
@@ -1296,6 +1305,7 @@
 			isa = PBXGroup;
 			children = (
 				430D909519862953009E763A /* libaudio_processing.a */,
+				436C671E1E4C413B00C03555 /* libaudio_processing_armv7.a */,
 				43F179371D1D5988001817B4 /* libaudio_processing_osx.a */,
 			);
 			name = Products;
@@ -2416,10 +2426,10 @@
 			remoteRef = 430D876E19860740009E763A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		430D8822198608F9009E763A /* libcommon_audio.a */ = {
+		430D8822198608F9009E763A /* libcommon_audio_arm64.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libcommon_audio.a;
+			path = libcommon_audio_arm64.a;
 			remoteRef = 430D8821198608F9009E763A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2701,6 +2711,13 @@
 			fileType = archive.ar;
 			path = libwebrtc_h264.a;
 			remoteRef = 434B05FA1D50C5AD00FDCA92 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		436C671E1E4C413B00C03555 /* libaudio_processing_armv7.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libaudio_processing_armv7.a;
+			remoteRef = 436C671D1E4C413B00C03555 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43819D031D461614000656B1 /* libyuv.a */ = {
