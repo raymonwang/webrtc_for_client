@@ -21,7 +21,6 @@
 
 /* Begin PBXFileReference section */
 		43998B14198631D9003C5793 /* libbitrate_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43998B22198631F8003C5793 /* bitrate_controller.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitrate_controller.gypi; sourceTree = "<group>"; };
 		43998B23198631F8003C5793 /* bitrate_controller_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitrate_controller_impl.cc; sourceTree = "<group>"; };
 		43998B24198631F8003C5793 /* bitrate_controller_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller_impl.h; sourceTree = "<group>"; };
 		43998B26198631F8003C5793 /* bitrate_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller.h; sourceTree = "<group>"; };
@@ -69,7 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				43998B25198631F8003C5793 /* include */,
-				43998B22198631F8003C5793 /* bitrate_controller.gypi */,
 				43998B23198631F8003C5793 /* bitrate_controller_impl.cc */,
 				43998B24198631F8003C5793 /* bitrate_controller_impl.h */,
 				43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */,
@@ -255,6 +253,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -271,7 +270,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
@@ -296,7 +295,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,

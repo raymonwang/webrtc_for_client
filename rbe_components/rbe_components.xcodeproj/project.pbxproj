@@ -17,10 +17,6 @@
 		434120591D4F31C5003D3A39 /* remote_estimator_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341204C1D4F31C5003D3A39 /* remote_estimator_proxy.h */; };
 		4341205A1D4F31C5003D3A39 /* send_time_history.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4341204D1D4F31C5003D3A39 /* send_time_history.cc */; };
 		4341205B1D4F31C5003D3A39 /* send_time_history.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4341204D1D4F31C5003D3A39 /* send_time_history.cc */; };
-		4341205C1D4F31C5003D3A39 /* transport_feedback_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4341204E1D4F31C5003D3A39 /* transport_feedback_adapter.cc */; };
-		4341205D1D4F31C5003D3A39 /* transport_feedback_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4341204E1D4F31C5003D3A39 /* transport_feedback_adapter.cc */; };
-		4341205E1D4F31C5003D3A39 /* transport_feedback_adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341204F1D4F31C5003D3A39 /* transport_feedback_adapter.h */; };
-		4341205F1D4F31C5003D3A39 /* transport_feedback_adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4341204F1D4F31C5003D3A39 /* transport_feedback_adapter.h */; };
 		4381C0601D4716DA000656B1 /* overuse_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B971D2260D500427D35 /* overuse_estimator.cc */; };
 		4381C0611D4716DA000656B1 /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B991D2260D500427D35 /* remote_bitrate_estimator_abs_send_time.cc */; };
 		4381C0621D4716DA000656B1 /* inter_arrival.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B931D2260D500427D35 /* inter_arrival.cc */; };
@@ -55,8 +51,9 @@
 		4341204B1D4F31C5003D3A39 /* remote_estimator_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remote_estimator_proxy.cc; sourceTree = "<group>"; };
 		4341204C1D4F31C5003D3A39 /* remote_estimator_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remote_estimator_proxy.h; sourceTree = "<group>"; };
 		4341204D1D4F31C5003D3A39 /* send_time_history.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_time_history.cc; sourceTree = "<group>"; };
-		4341204E1D4F31C5003D3A39 /* transport_feedback_adapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transport_feedback_adapter.cc; sourceTree = "<group>"; };
-		4341204F1D4F31C5003D3A39 /* transport_feedback_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transport_feedback_adapter.h; sourceTree = "<group>"; };
+		436C688F1E5164E800C03555 /* BUILD.gn */ = {isa = PBXFileReference; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
+		436C68901E51655F00C03555 /* bwe_defines.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bwe_defines.cc; sourceTree = "<group>"; };
+		436C68911E51655F00C03555 /* bwe_simulations.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = bwe_simulations.cc; sourceTree = "<group>"; };
 		4381C0781D4716DA000656B1 /* librbe_components_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librbe_components_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		439834D1198FAAC60090EABA /* librbe_components.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librbe_components.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		439834E2198FAAFB0090EABA /* bwe_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bwe_defines.h; sourceTree = "<group>"; };
@@ -65,7 +62,6 @@
 		439834E6198FAAFB0090EABA /* overuse_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = overuse_detector.cc; sourceTree = "<group>"; };
 		439834E7198FAAFB0090EABA /* overuse_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = overuse_detector.h; sourceTree = "<group>"; };
 		439834E8198FAAFB0090EABA /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
-		439834EC198FAAFB0090EABA /* remote_bitrate_estimator.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = remote_bitrate_estimator.gypi; sourceTree = "<group>"; };
 		439834EE198FAAFB0090EABA /* remote_bitrate_estimator_single_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remote_bitrate_estimator_single_stream.cc; sourceTree = "<group>"; };
 		43C69B911D2260D500427D35 /* aimd_rate_control.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aimd_rate_control.cc; sourceTree = "<group>"; };
 		43C69B921D2260D500427D35 /* aimd_rate_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aimd_rate_control.h; sourceTree = "<group>"; };
@@ -114,13 +110,14 @@
 		439834DE198FAAFB0090EABA /* remote_bitrate_estimator */ = {
 			isa = PBXGroup;
 			children = (
+				436C68901E51655F00C03555 /* bwe_defines.cc */,
+				436C68911E51655F00C03555 /* bwe_simulations.cc */,
+				436C688F1E5164E800C03555 /* BUILD.gn */,
 				434120491D4F31C5003D3A39 /* remote_bitrate_estimator_abs_send_time.h */,
 				4341204A1D4F31C5003D3A39 /* remote_bitrate_estimator_single_stream.h */,
 				4341204B1D4F31C5003D3A39 /* remote_estimator_proxy.cc */,
 				4341204C1D4F31C5003D3A39 /* remote_estimator_proxy.h */,
 				4341204D1D4F31C5003D3A39 /* send_time_history.cc */,
-				4341204E1D4F31C5003D3A39 /* transport_feedback_adapter.cc */,
-				4341204F1D4F31C5003D3A39 /* transport_feedback_adapter.h */,
 				43C69B911D2260D500427D35 /* aimd_rate_control.cc */,
 				43C69B921D2260D500427D35 /* aimd_rate_control.h */,
 				43C69B931D2260D500427D35 /* inter_arrival.cc */,
@@ -132,7 +129,6 @@
 				439834E6198FAAFB0090EABA /* overuse_detector.cc */,
 				439834E7198FAAFB0090EABA /* overuse_detector.h */,
 				439834E8198FAAFB0090EABA /* OWNERS */,
-				439834EC198FAAFB0090EABA /* remote_bitrate_estimator.gypi */,
 				439834EE198FAAFB0090EABA /* remote_bitrate_estimator_single_stream.cc */,
 			);
 			name = remote_bitrate_estimator;
@@ -172,7 +168,6 @@
 				434120591D4F31C5003D3A39 /* remote_estimator_proxy.h in Headers */,
 				4381C0701D4716DA000656B1 /* overuse_estimator.h in Headers */,
 				4381C0711D4716DA000656B1 /* aimd_rate_control.h in Headers */,
-				4341205F1D4F31C5003D3A39 /* transport_feedback_adapter.h in Headers */,
 				4381C0741D4716DA000656B1 /* inter_arrival.h in Headers */,
 				434120551D4F31C5003D3A39 /* remote_bitrate_estimator_single_stream.h in Headers */,
 			);
@@ -190,7 +185,6 @@
 				434120581D4F31C5003D3A39 /* remote_estimator_proxy.h in Headers */,
 				43C69BA11D2260D500427D35 /* overuse_estimator.h in Headers */,
 				43C69B9B1D2260D500427D35 /* aimd_rate_control.h in Headers */,
-				4341205E1D4F31C5003D3A39 /* transport_feedback_adapter.h in Headers */,
 				43C69B9D1D2260D500427D35 /* inter_arrival.h in Headers */,
 				434120541D4F31C5003D3A39 /* remote_bitrate_estimator_single_stream.h in Headers */,
 			);
@@ -271,7 +265,6 @@
 				4381C0641D4716DA000656B1 /* remote_bitrate_estimator_single_stream.cc in Sources */,
 				4341205B1D4F31C5003D3A39 /* send_time_history.cc in Sources */,
 				434120571D4F31C5003D3A39 /* remote_estimator_proxy.cc in Sources */,
-				4341205D1D4F31C5003D3A39 /* transport_feedback_adapter.cc in Sources */,
 				4381C0671D4716DA000656B1 /* aimd_rate_control.cc in Sources */,
 				4381C0681D4716DA000656B1 /* overuse_detector.cc in Sources */,
 			);
@@ -287,7 +280,6 @@
 				43983510198FAAFB0090EABA /* remote_bitrate_estimator_single_stream.cc in Sources */,
 				4341205A1D4F31C5003D3A39 /* send_time_history.cc in Sources */,
 				434120561D4F31C5003D3A39 /* remote_estimator_proxy.cc in Sources */,
-				4341205C1D4F31C5003D3A39 /* transport_feedback_adapter.cc in Sources */,
 				43C69B9A1D2260D500427D35 /* aimd_rate_control.cc in Sources */,
 				4398350B198FAAFB0090EABA /* overuse_detector.cc in Sources */,
 			);

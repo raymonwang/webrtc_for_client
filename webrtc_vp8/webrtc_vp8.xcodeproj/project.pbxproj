@@ -29,7 +29,6 @@
 		43C69C211D2281A600427D35 /* default_temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_temporal_layers.h; sourceTree = "<group>"; };
 		43C69C241D2281A600427D35 /* vp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8.h; sourceTree = "<group>"; };
 		43C69C251D2281A600427D35 /* vp8_common_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_common_types.h; sourceTree = "<group>"; };
-		43C69C261D2281A600427D35 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = realtime_temporal_layers.cc; sourceTree = "<group>"; };
 		43C69C281D2281A600427D35 /* reference_picture_selection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reference_picture_selection.cc; sourceTree = "<group>"; };
 		43C69C291D2281A600427D35 /* reference_picture_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference_picture_selection.h; sourceTree = "<group>"; };
@@ -38,7 +37,6 @@
 		43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulcast_encoder_adapter.cc; sourceTree = "<group>"; };
 		43C69C2F1D2281A600427D35 /* simulcast_encoder_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulcast_encoder_adapter.h; sourceTree = "<group>"; };
 		43C69C331D2281A600427D35 /* temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temporal_layers.h; sourceTree = "<group>"; };
-		43C69C361D2281A600427D35 /* vp8.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vp8.gyp; sourceTree = "<group>"; };
 		43C69C391D2281A600427D35 /* vp8_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_impl.cc; sourceTree = "<group>"; };
 		43C69C3A1D2281A600427D35 /* vp8_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_impl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +74,6 @@
 				43C69C231D2281A600427D35 /* include */,
 				43C69C201D2281A600427D35 /* default_temporal_layers.cc */,
 				43C69C211D2281A600427D35 /* default_temporal_layers.h */,
-				43C69C261D2281A600427D35 /* OWNERS */,
 				43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */,
 				43C69C281D2281A600427D35 /* reference_picture_selection.cc */,
 				43C69C291D2281A600427D35 /* reference_picture_selection.h */,
@@ -85,7 +82,6 @@
 				43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */,
 				43C69C2F1D2281A600427D35 /* simulcast_encoder_adapter.h */,
 				43C69C331D2281A600427D35 /* temporal_layers.h */,
-				43C69C361D2281A600427D35 /* vp8.gyp */,
 				43C69C391D2281A600427D35 /* vp8_impl.cc */,
 				43C69C3A1D2281A600427D35 /* vp8_impl.h */,
 			);

@@ -25,9 +25,7 @@
 
 /* Begin PBXFileReference section */
 		43095536199483C600012AD8 /* libwebrtc_opus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_opus.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43095546199483EC00012AD8 /* opus.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = opus.gypi; sourceTree = "<group>"; };
 		43095547199483EC00012AD8 /* opus_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = opus_interface.c; sourceTree = "<group>"; };
-		43095548199483EC00012AD8 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		43C0C65E1D4F0AB70058AC82 /* audio_decoder_opus.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder_opus.cc; sourceTree = "<group>"; };
 		43C0C65F1D4F0AB70058AC82 /* audio_decoder_opus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder_opus.h; sourceTree = "<group>"; };
 		43C0C6601D4F0AB70058AC82 /* audio_encoder_opus.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_opus.cc; sourceTree = "<group>"; };
@@ -81,9 +79,7 @@
 				43C0C6611D4F0AB70058AC82 /* audio_encoder_opus.h */,
 				43C0C6621D4F0AB70058AC82 /* opus_inst.h */,
 				43C0C6631D4F0AB70058AC82 /* opus_interface.h */,
-				43095546199483EC00012AD8 /* opus.gypi */,
 				43095547199483EC00012AD8 /* opus_interface.c */,
-				43095548199483EC00012AD8 /* OWNERS */,
 			);
 			name = opus;
 			path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/opus;

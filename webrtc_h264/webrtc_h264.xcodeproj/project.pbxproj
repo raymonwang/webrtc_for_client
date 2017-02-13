@@ -12,32 +12,19 @@
 		434B060F1D50C5D000FDCA92 /* h264_decoder_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B06001D50C5D000FDCA92 /* h264_decoder_impl.h */; };
 		434B06101D50C5D000FDCA92 /* h264_encoder_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B06011D50C5D000FDCA92 /* h264_encoder_impl.cc */; };
 		434B06111D50C5D000FDCA92 /* h264_encoder_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B06021D50C5D000FDCA92 /* h264_encoder_impl.h */; };
-		434B06121D50C5D000FDCA92 /* h264_objc.mm in Sources */ = {isa = PBXBuildFile; fileRef = 434B06031D50C5D000FDCA92 /* h264_objc.mm */; };
-		434B06131D50C5D000FDCA92 /* h264_video_toolbox_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B06041D50C5D000FDCA92 /* h264_video_toolbox_decoder.cc */; };
-		434B06141D50C5D000FDCA92 /* h264_video_toolbox_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B06051D50C5D000FDCA92 /* h264_video_toolbox_decoder.h */; };
-		434B06151D50C5D000FDCA92 /* h264_video_toolbox_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B06061D50C5D000FDCA92 /* h264_video_toolbox_encoder.cc */; };
-		434B06161D50C5D000FDCA92 /* h264_video_toolbox_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B06071D50C5D000FDCA92 /* h264_video_toolbox_encoder.h */; };
-		434B06171D50C5D000FDCA92 /* h264_video_toolbox_nalu.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B06081D50C5D000FDCA92 /* h264_video_toolbox_nalu.cc */; };
-		434B06181D50C5D000FDCA92 /* h264_video_toolbox_nalu.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B06091D50C5D000FDCA92 /* h264_video_toolbox_nalu.h */; };
 		434B061A1D50C5D000FDCA92 /* h264.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B060C1D50C5D000FDCA92 /* h264.h */; };
+		436C68931E51694300C03555 /* h264_globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C68921E51694300C03555 /* h264_globals.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		434B05EF1D50C5AC00FDCA92 /* libwebrtc_h264.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_h264.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		434B05FD1D50C5D000FDCA92 /* h264.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264.cc; sourceTree = "<group>"; };
-		434B05FE1D50C5D000FDCA92 /* h264.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = h264.gypi; sourceTree = "<group>"; };
 		434B05FF1D50C5D000FDCA92 /* h264_decoder_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_decoder_impl.cc; sourceTree = "<group>"; };
 		434B06001D50C5D000FDCA92 /* h264_decoder_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_decoder_impl.h; sourceTree = "<group>"; };
 		434B06011D50C5D000FDCA92 /* h264_encoder_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_encoder_impl.cc; sourceTree = "<group>"; };
 		434B06021D50C5D000FDCA92 /* h264_encoder_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_encoder_impl.h; sourceTree = "<group>"; };
-		434B06031D50C5D000FDCA92 /* h264_objc.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = h264_objc.mm; sourceTree = "<group>"; };
-		434B06041D50C5D000FDCA92 /* h264_video_toolbox_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_video_toolbox_decoder.cc; sourceTree = "<group>"; };
-		434B06051D50C5D000FDCA92 /* h264_video_toolbox_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_video_toolbox_decoder.h; sourceTree = "<group>"; };
-		434B06061D50C5D000FDCA92 /* h264_video_toolbox_encoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_video_toolbox_encoder.cc; sourceTree = "<group>"; };
-		434B06071D50C5D000FDCA92 /* h264_video_toolbox_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_video_toolbox_encoder.h; sourceTree = "<group>"; };
-		434B06081D50C5D000FDCA92 /* h264_video_toolbox_nalu.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_video_toolbox_nalu.cc; sourceTree = "<group>"; };
-		434B06091D50C5D000FDCA92 /* h264_video_toolbox_nalu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_video_toolbox_nalu.h; sourceTree = "<group>"; };
 		434B060C1D50C5D000FDCA92 /* h264.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264.h; sourceTree = "<group>"; };
+		436C68921E51694300C03555 /* h264_globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_globals.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,18 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				434B05FD1D50C5D000FDCA92 /* h264.cc */,
-				434B05FE1D50C5D000FDCA92 /* h264.gypi */,
 				434B05FF1D50C5D000FDCA92 /* h264_decoder_impl.cc */,
 				434B06001D50C5D000FDCA92 /* h264_decoder_impl.h */,
 				434B06011D50C5D000FDCA92 /* h264_encoder_impl.cc */,
 				434B06021D50C5D000FDCA92 /* h264_encoder_impl.h */,
-				434B06031D50C5D000FDCA92 /* h264_objc.mm */,
-				434B06041D50C5D000FDCA92 /* h264_video_toolbox_decoder.cc */,
-				434B06051D50C5D000FDCA92 /* h264_video_toolbox_decoder.h */,
-				434B06061D50C5D000FDCA92 /* h264_video_toolbox_encoder.cc */,
-				434B06071D50C5D000FDCA92 /* h264_video_toolbox_encoder.h */,
-				434B06081D50C5D000FDCA92 /* h264_video_toolbox_nalu.cc */,
-				434B06091D50C5D000FDCA92 /* h264_video_toolbox_nalu.h */,
 				434B060B1D50C5D000FDCA92 /* include */,
 			);
 			name = h264;
@@ -92,6 +71,7 @@
 		434B060B1D50C5D000FDCA92 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				436C68921E51694300C03555 /* h264_globals.h */,
 				434B060C1D50C5D000FDCA92 /* h264.h */,
 			);
 			path = include;
@@ -105,11 +85,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				434B060F1D50C5D000FDCA92 /* h264_decoder_impl.h in Headers */,
-				434B06161D50C5D000FDCA92 /* h264_video_toolbox_encoder.h in Headers */,
-				434B06181D50C5D000FDCA92 /* h264_video_toolbox_nalu.h in Headers */,
-				434B06141D50C5D000FDCA92 /* h264_video_toolbox_decoder.h in Headers */,
 				434B061A1D50C5D000FDCA92 /* h264.h in Headers */,
 				434B06111D50C5D000FDCA92 /* h264_encoder_impl.h in Headers */,
+				436C68931E51694300C03555 /* h264_globals.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,10 +148,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				434B060E1D50C5D000FDCA92 /* h264_decoder_impl.cc in Sources */,
-				434B06131D50C5D000FDCA92 /* h264_video_toolbox_decoder.cc in Sources */,
-				434B06171D50C5D000FDCA92 /* h264_video_toolbox_nalu.cc in Sources */,
-				434B06151D50C5D000FDCA92 /* h264_video_toolbox_encoder.cc in Sources */,
-				434B06121D50C5D000FDCA92 /* h264_objc.mm in Sources */,
 				434B060D1D50C5D000FDCA92 /* h264.cc in Sources */,
 				434B06101D50C5D000FDCA92 /* h264_encoder_impl.cc in Sources */,
 			);
@@ -320,6 +294,7 @@
 				434B05F51D50C5AC00FDCA92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

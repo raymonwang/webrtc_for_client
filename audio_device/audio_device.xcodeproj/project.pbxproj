@@ -68,7 +68,6 @@
 
 /* Begin PBXFileReference section */
 		430D903C19862876009E763A /* libaudio_device.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_device.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D904B198628A0009E763A /* audio_device.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = audio_device.gypi; sourceTree = "<group>"; };
 		430D904C198628A0009E763A /* audio_device_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_buffer.cc; sourceTree = "<group>"; };
 		430D904D198628A0009E763A /* audio_device_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_buffer.h; sourceTree = "<group>"; };
 		430D904E198628A0009E763A /* audio_device_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_config.h; sourceTree = "<group>"; };
@@ -101,6 +100,7 @@
 		4328907C1D3C7D6F0044E4F5 /* latebindingsymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = latebindingsymboltable_linux.h; sourceTree = "<group>"; };
 		4328907D1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pulseaudiosymboltable_linux.cc; sourceTree = "<group>"; };
 		4328907E1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pulseaudiosymboltable_linux.h; sourceTree = "<group>"; };
+		436C68351E51616300C03555 /* BUILD.gn */ = {isa = PBXFileReference; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
 		43C0C6D31D4F17750058AC82 /* mock_audio_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_audio_device.h; sourceTree = "<group>"; };
 		43C0C6D61D4F17DD0058AC82 /* fine_audio_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fine_audio_buffer.cc; sourceTree = "<group>"; };
 		43C0C6D71D4F17DD0058AC82 /* fine_audio_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fine_audio_buffer.h; sourceTree = "<group>"; };
@@ -165,8 +165,8 @@
 		430D9049198628A0009E763A /* audio_device */ = {
 			isa = PBXGroup;
 			children = (
+				436C68351E51616300C03555 /* BUILD.gn */,
 				4328906E1D3C7D6F0044E4F5 /* linux */,
-				430D904B198628A0009E763A /* audio_device.gypi */,
 				43C0C6D61D4F17DD0058AC82 /* fine_audio_buffer.cc */,
 				43C0C6D71D4F17DD0058AC82 /* fine_audio_buffer.h */,
 				43C0C6D81D4F17DD0058AC82 /* mock_audio_device_buffer.h */,
@@ -516,9 +516,7 @@
 					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
-					WEBRTC_ARCH_ARM,
-					WEBRTC_HAS_NEON,
-					WEBRTC_BUILD_LIBEVENT,
+					WEBRTC_MAC,
 					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -544,9 +542,7 @@
 					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
-					WEBRTC_ARCH_ARM,
-					WEBRTC_HAS_NEON,
-					WEBRTC_BUILD_LIBEVENT,
+					WEBRTC_MAC,
 					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 				);
 				HEADER_SEARCH_PATHS = (

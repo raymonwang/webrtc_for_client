@@ -138,6 +138,7 @@
 		430D871B1986054F009E763A /* voice_engine_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_engine_impl.cc; sourceTree = "<group>"; };
 		430D871C1986054F009E763A /* voice_engine_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_engine_impl.h; sourceTree = "<group>"; };
 		432B2FEA19CAB14D001267A7 /* libvoice_engine_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvoice_engine_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		436C68941E518C1600C03555 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
 		4394AE191D51958600E27530 /* channel_proxy.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel_proxy.cc; sourceTree = "<group>"; };
 		4394AE1A1D51958600E27530 /* channel_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel_proxy.h; sourceTree = "<group>"; };
 		43AC8B241E484F0D0092C54E /* coder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coder.cc; sourceTree = "<group>"; };
@@ -199,6 +200,7 @@
 				430D86C31986054F009E763A /* include */,
 				4394AE191D51958600E27530 /* channel_proxy.cc */,
 				4394AE1A1D51958600E27530 /* channel_proxy.h */,
+				436C68941E518C1600C03555 /* BUILD.gn */,
 				430D86BB1986054F009E763A /* channel.cc */,
 				430D86BC1986054F009E763A /* channel.h */,
 				430D86BD1986054F009E763A /* channel_manager.cc */,

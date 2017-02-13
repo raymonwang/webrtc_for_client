@@ -7,155 +7,72 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43172FD41D5095D0003B5883 /* audiotrack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F6D1D5095D0003B5883 /* audiotrack.cc */; };
-		43172FD51D5095D0003B5883 /* audiotrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F6E1D5095D0003B5883 /* audiotrack.h */; };
-		43172FD71D5095D0003B5883 /* datachannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F711D5095D0003B5883 /* datachannel.cc */; };
 		43172FD81D5095D0003B5883 /* datachannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F721D5095D0003B5883 /* datachannel.h */; };
 		43172FD91D5095D0003B5883 /* datachannelinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F731D5095D0003B5883 /* datachannelinterface.h */; };
-		43172FDB1D5095D0003B5883 /* dtmfsender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F761D5095D0003B5883 /* dtmfsender.cc */; };
-		43172FDC1D5095D0003B5883 /* dtmfsender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F771D5095D0003B5883 /* dtmfsender.h */; };
 		43172FDD1D5095D0003B5883 /* dtmfsenderinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F781D5095D0003B5883 /* dtmfsenderinterface.h */; };
-		43172FDE1D5095D0003B5883 /* fakemediacontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F791D5095D0003B5883 /* fakemediacontroller.h */; };
 		43172FDF1D5095D0003B5883 /* fakemetricsobserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F7A1D5095D0003B5883 /* fakemetricsobserver.cc */; };
 		43172FE01D5095D0003B5883 /* fakemetricsobserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F7B1D5095D0003B5883 /* fakemetricsobserver.h */; };
 		43172FE11D5095D0003B5883 /* jsep.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F7C1D5095D0003B5883 /* jsep.h */; };
-		43172FE21D5095D0003B5883 /* jsepicecandidate.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F7D1D5095D0003B5883 /* jsepicecandidate.cc */; };
 		43172FE31D5095D0003B5883 /* jsepicecandidate.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F7E1D5095D0003B5883 /* jsepicecandidate.h */; };
-		43172FE51D5095D0003B5883 /* jsepsessiondescription.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F801D5095D0003B5883 /* jsepsessiondescription.cc */; };
 		43172FE61D5095D0003B5883 /* jsepsessiondescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F811D5095D0003B5883 /* jsepsessiondescription.h */; };
-		43172FE81D5095D0003B5883 /* localaudiosource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F841D5095D0003B5883 /* localaudiosource.cc */; };
-		43172FE91D5095D0003B5883 /* localaudiosource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F851D5095D0003B5883 /* localaudiosource.h */; };
 		43172FEB1D5095D0003B5883 /* mediaconstraintsinterface.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F871D5095D0003B5883 /* mediaconstraintsinterface.cc */; };
 		43172FEC1D5095D0003B5883 /* mediaconstraintsinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F881D5095D0003B5883 /* mediaconstraintsinterface.h */; };
-		43172FED1D5095D0003B5883 /* mediacontroller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F891D5095D0003B5883 /* mediacontroller.cc */; };
 		43172FEE1D5095D0003B5883 /* mediacontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F8A1D5095D0003B5883 /* mediacontroller.h */; };
-		43172FF01D5095D0003B5883 /* mediastream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F8C1D5095D0003B5883 /* mediastream.cc */; };
 		43172FF11D5095D0003B5883 /* mediastream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F8D1D5095D0003B5883 /* mediastream.h */; };
 		43172FF21D5095D0003B5883 /* mediastreaminterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F8E1D5095D0003B5883 /* mediastreaminterface.h */; };
-		43172FF31D5095D0003B5883 /* mediastreamobserver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F8F1D5095D0003B5883 /* mediastreamobserver.cc */; };
-		43172FF41D5095D0003B5883 /* mediastreamobserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F901D5095D0003B5883 /* mediastreamobserver.h */; };
 		43172FF51D5095D0003B5883 /* mediastreamproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F911D5095D0003B5883 /* mediastreamproxy.h */; };
 		43172FF61D5095D0003B5883 /* mediastreamtrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F921D5095D0003B5883 /* mediastreamtrack.h */; };
 		43172FF71D5095D0003B5883 /* mediastreamtrackproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F931D5095D0003B5883 /* mediastreamtrackproxy.h */; };
 		43172FF81D5095D0003B5883 /* notifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F941D5095D0003B5883 /* notifier.h */; };
-		43172FFA1D5095D0003B5883 /* peerconnection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F9B1D5095D0003B5883 /* peerconnection.cc */; };
-		43172FFB1D5095D0003B5883 /* peerconnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F9C1D5095D0003B5883 /* peerconnection.h */; };
-		43172FFE1D5095D0003B5883 /* peerconnectionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F9F1D5095D0003B5883 /* peerconnectionfactory.cc */; };
-		43172FFF1D5095D0003B5883 /* peerconnectionfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FA01D5095D0003B5883 /* peerconnectionfactory.h */; };
 		431730001D5095D0003B5883 /* peerconnectionfactoryproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FA11D5095D0003B5883 /* peerconnectionfactoryproxy.h */; };
 		431730021D5095D0003B5883 /* peerconnectioninterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FA31D5095D0003B5883 /* peerconnectioninterface.h */; };
 		431730031D5095D0003B5883 /* peerconnectionproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FA41D5095D0003B5883 /* peerconnectionproxy.h */; };
 		431730051D5095D0003B5883 /* proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FA61D5095D0003B5883 /* proxy.h */; };
-		4317300C1D5095D0003B5883 /* remoteaudiosource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FAD1D5095D0003B5883 /* remoteaudiosource.cc */; };
-		4317300D1D5095D0003B5883 /* remoteaudiosource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FAE1D5095D0003B5883 /* remoteaudiosource.h */; };
 		4317300E1D5095D0003B5883 /* rtpparameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FAF1D5095D0003B5883 /* rtpparameters.h */; };
-		4317300F1D5095D0003B5883 /* rtpreceiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FB01D5095D0003B5883 /* rtpreceiver.cc */; };
-		431730101D5095D0003B5883 /* rtpreceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FB11D5095D0003B5883 /* rtpreceiver.h */; };
 		431730111D5095D0003B5883 /* rtpreceiverinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FB21D5095D0003B5883 /* rtpreceiverinterface.h */; };
-		431730121D5095D0003B5883 /* rtpsender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FB31D5095D0003B5883 /* rtpsender.cc */; };
 		431730131D5095D0003B5883 /* rtpsender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FB41D5095D0003B5883 /* rtpsender.h */; };
 		431730141D5095D0003B5883 /* rtpsenderinterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FB51D5095D0003B5883 /* rtpsenderinterface.h */; };
-		431730171D5095D0003B5883 /* sctputils.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FB81D5095D0003B5883 /* sctputils.cc */; };
-		431730181D5095D0003B5883 /* sctputils.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FB91D5095D0003B5883 /* sctputils.h */; };
-		4317301A1D5095D0003B5883 /* statscollector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FBB1D5095D0003B5883 /* statscollector.cc */; };
-		4317301B1D5095D0003B5883 /* statscollector.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FBC1D5095D0003B5883 /* statscollector.h */; };
 		4317301C1D5095D0003B5883 /* statstypes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FBD1D5095D0003B5883 /* statstypes.cc */; };
 		4317301D1D5095D0003B5883 /* statstypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FBE1D5095D0003B5883 /* statstypes.h */; };
 		4317301E1D5095D0003B5883 /* streamcollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FBF1D5095D0003B5883 /* streamcollection.h */; };
 		4317301F1D5095D0003B5883 /* umametrics.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FC01D5095D0003B5883 /* umametrics.h */; };
-		431730211D5095D0003B5883 /* videocapturertracksource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FC21D5095D0003B5883 /* videocapturertracksource.cc */; };
-		431730221D5095D0003B5883 /* videocapturertracksource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FC31D5095D0003B5883 /* videocapturertracksource.h */; };
 		431730231D5095D0003B5883 /* videosourceproxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FC41D5095D0003B5883 /* videosourceproxy.h */; };
-		431730251D5095D0003B5883 /* videotrack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FC61D5095D0003B5883 /* videotrack.cc */; };
-		431730261D5095D0003B5883 /* videotrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FC71D5095D0003B5883 /* videotrack.h */; };
-		431730271D5095D0003B5883 /* videotracksource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FC81D5095D0003B5883 /* videotracksource.cc */; };
 		431730281D5095D0003B5883 /* videotracksource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FC91D5095D0003B5883 /* videotracksource.h */; };
-		4317302A1D5095D0003B5883 /* webrtcsdp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FCB1D5095D0003B5883 /* webrtcsdp.cc */; };
-		4317302B1D5095D0003B5883 /* webrtcsdp.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FCC1D5095D0003B5883 /* webrtcsdp.h */; };
-		4317302D1D5095D0003B5883 /* webrtcsession.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FCE1D5095D0003B5883 /* webrtcsession.cc */; };
-		4317302E1D5095D0003B5883 /* webrtcsession.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FCF1D5095D0003B5883 /* webrtcsession.h */; };
-		4317302F1D5095D0003B5883 /* webrtcsessiondescriptionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172FD01D5095D0003B5883 /* webrtcsessiondescriptionfactory.cc */; };
-		431730301D5095D0003B5883 /* webrtcsessiondescriptionfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172FD11D5095D0003B5883 /* webrtcsessiondescriptionfactory.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		43172F6B1D5095D0003B5883 /* api.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = api.gyp; path = ../webRTCAPP/Classes/webrtc/api/api.gyp; sourceTree = "<group>"; };
-		43172F6C1D5095D0003B5883 /* api.Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = api.Makefile; path = ../webRTCAPP/Classes/webrtc/api/api.Makefile; sourceTree = "<group>"; };
-		43172F6D1D5095D0003B5883 /* audiotrack.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audiotrack.cc; path = ../webRTCAPP/Classes/webrtc/api/audiotrack.cc; sourceTree = "<group>"; };
-		43172F6E1D5095D0003B5883 /* audiotrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audiotrack.h; path = ../webRTCAPP/Classes/webrtc/api/audiotrack.h; sourceTree = "<group>"; };
-		43172F711D5095D0003B5883 /* datachannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = datachannel.cc; path = ../webRTCAPP/Classes/webrtc/api/datachannel.cc; sourceTree = "<group>"; };
 		43172F721D5095D0003B5883 /* datachannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datachannel.h; path = ../webRTCAPP/Classes/webrtc/api/datachannel.h; sourceTree = "<group>"; };
 		43172F731D5095D0003B5883 /* datachannelinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = datachannelinterface.h; path = ../webRTCAPP/Classes/webrtc/api/datachannelinterface.h; sourceTree = "<group>"; };
-		43172F761D5095D0003B5883 /* dtmfsender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dtmfsender.cc; path = ../webRTCAPP/Classes/webrtc/api/dtmfsender.cc; sourceTree = "<group>"; };
-		43172F771D5095D0003B5883 /* dtmfsender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtmfsender.h; path = ../webRTCAPP/Classes/webrtc/api/dtmfsender.h; sourceTree = "<group>"; };
 		43172F781D5095D0003B5883 /* dtmfsenderinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dtmfsenderinterface.h; path = ../webRTCAPP/Classes/webrtc/api/dtmfsenderinterface.h; sourceTree = "<group>"; };
-		43172F791D5095D0003B5883 /* fakemediacontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fakemediacontroller.h; path = ../webRTCAPP/Classes/webrtc/api/fakemediacontroller.h; sourceTree = "<group>"; };
 		43172F7A1D5095D0003B5883 /* fakemetricsobserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fakemetricsobserver.cc; path = ../webRTCAPP/Classes/webrtc/api/fakemetricsobserver.cc; sourceTree = "<group>"; };
 		43172F7B1D5095D0003B5883 /* fakemetricsobserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fakemetricsobserver.h; path = ../webRTCAPP/Classes/webrtc/api/fakemetricsobserver.h; sourceTree = "<group>"; };
 		43172F7C1D5095D0003B5883 /* jsep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsep.h; path = ../webRTCAPP/Classes/webrtc/api/jsep.h; sourceTree = "<group>"; };
-		43172F7D1D5095D0003B5883 /* jsepicecandidate.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsepicecandidate.cc; path = ../webRTCAPP/Classes/webrtc/api/jsepicecandidate.cc; sourceTree = "<group>"; };
 		43172F7E1D5095D0003B5883 /* jsepicecandidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsepicecandidate.h; path = ../webRTCAPP/Classes/webrtc/api/jsepicecandidate.h; sourceTree = "<group>"; };
-		43172F801D5095D0003B5883 /* jsepsessiondescription.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsepsessiondescription.cc; path = ../webRTCAPP/Classes/webrtc/api/jsepsessiondescription.cc; sourceTree = "<group>"; };
 		43172F811D5095D0003B5883 /* jsepsessiondescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsepsessiondescription.h; path = ../webRTCAPP/Classes/webrtc/api/jsepsessiondescription.h; sourceTree = "<group>"; };
-		43172F821D5095D0003B5883 /* libjingle_peerconnection.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = libjingle_peerconnection.target.mk; path = ../webRTCAPP/Classes/webrtc/api/libjingle_peerconnection.target.mk; sourceTree = "<group>"; };
-		43172F841D5095D0003B5883 /* localaudiosource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = localaudiosource.cc; path = ../webRTCAPP/Classes/webrtc/api/localaudiosource.cc; sourceTree = "<group>"; };
-		43172F851D5095D0003B5883 /* localaudiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = localaudiosource.h; path = ../webRTCAPP/Classes/webrtc/api/localaudiosource.h; sourceTree = "<group>"; };
 		43172F871D5095D0003B5883 /* mediaconstraintsinterface.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediaconstraintsinterface.cc; path = ../webRTCAPP/Classes/webrtc/api/mediaconstraintsinterface.cc; sourceTree = "<group>"; };
 		43172F881D5095D0003B5883 /* mediaconstraintsinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediaconstraintsinterface.h; path = ../webRTCAPP/Classes/webrtc/api/mediaconstraintsinterface.h; sourceTree = "<group>"; };
-		43172F891D5095D0003B5883 /* mediacontroller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediacontroller.cc; path = ../webRTCAPP/Classes/webrtc/api/mediacontroller.cc; sourceTree = "<group>"; };
 		43172F8A1D5095D0003B5883 /* mediacontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediacontroller.h; path = ../webRTCAPP/Classes/webrtc/api/mediacontroller.h; sourceTree = "<group>"; };
-		43172F8C1D5095D0003B5883 /* mediastream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediastream.cc; path = ../webRTCAPP/Classes/webrtc/api/mediastream.cc; sourceTree = "<group>"; };
 		43172F8D1D5095D0003B5883 /* mediastream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastream.h; path = ../webRTCAPP/Classes/webrtc/api/mediastream.h; sourceTree = "<group>"; };
 		43172F8E1D5095D0003B5883 /* mediastreaminterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreaminterface.h; path = ../webRTCAPP/Classes/webrtc/api/mediastreaminterface.h; sourceTree = "<group>"; };
-		43172F8F1D5095D0003B5883 /* mediastreamobserver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mediastreamobserver.cc; path = ../webRTCAPP/Classes/webrtc/api/mediastreamobserver.cc; sourceTree = "<group>"; };
-		43172F901D5095D0003B5883 /* mediastreamobserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamobserver.h; path = ../webRTCAPP/Classes/webrtc/api/mediastreamobserver.h; sourceTree = "<group>"; };
 		43172F911D5095D0003B5883 /* mediastreamproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamproxy.h; path = ../webRTCAPP/Classes/webrtc/api/mediastreamproxy.h; sourceTree = "<group>"; };
 		43172F921D5095D0003B5883 /* mediastreamtrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamtrack.h; path = ../webRTCAPP/Classes/webrtc/api/mediastreamtrack.h; sourceTree = "<group>"; };
 		43172F931D5095D0003B5883 /* mediastreamtrackproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mediastreamtrackproxy.h; path = ../webRTCAPP/Classes/webrtc/api/mediastreamtrackproxy.h; sourceTree = "<group>"; };
 		43172F941D5095D0003B5883 /* notifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = notifier.h; path = ../webRTCAPP/Classes/webrtc/api/notifier.h; sourceTree = "<group>"; };
 		43172F951D5095D0003B5883 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OWNERS; path = ../webRTCAPP/Classes/webrtc/api/OWNERS; sourceTree = "<group>"; };
-		43172F9B1D5095D0003B5883 /* peerconnection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = peerconnection.cc; path = ../webRTCAPP/Classes/webrtc/api/peerconnection.cc; sourceTree = "<group>"; };
-		43172F9C1D5095D0003B5883 /* peerconnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnection.h; path = ../webRTCAPP/Classes/webrtc/api/peerconnection.h; sourceTree = "<group>"; };
-		43172F9F1D5095D0003B5883 /* peerconnectionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = peerconnectionfactory.cc; path = ../webRTCAPP/Classes/webrtc/api/peerconnectionfactory.cc; sourceTree = "<group>"; };
-		43172FA01D5095D0003B5883 /* peerconnectionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectionfactory.h; path = ../webRTCAPP/Classes/webrtc/api/peerconnectionfactory.h; sourceTree = "<group>"; };
 		43172FA11D5095D0003B5883 /* peerconnectionfactoryproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectionfactoryproxy.h; path = ../webRTCAPP/Classes/webrtc/api/peerconnectionfactoryproxy.h; sourceTree = "<group>"; };
 		43172FA31D5095D0003B5883 /* peerconnectioninterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectioninterface.h; path = ../webRTCAPP/Classes/webrtc/api/peerconnectioninterface.h; sourceTree = "<group>"; };
 		43172FA41D5095D0003B5883 /* peerconnectionproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = peerconnectionproxy.h; path = ../webRTCAPP/Classes/webrtc/api/peerconnectionproxy.h; sourceTree = "<group>"; };
 		43172FA61D5095D0003B5883 /* proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = proxy.h; path = ../webRTCAPP/Classes/webrtc/api/proxy.h; sourceTree = "<group>"; };
-		43172FA81D5095D0003B5883 /* quicdatachannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = quicdatachannel.cc; path = ../webRTCAPP/Classes/webrtc/api/quicdatachannel.cc; sourceTree = "<group>"; };
-		43172FA91D5095D0003B5883 /* quicdatachannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = quicdatachannel.h; path = ../webRTCAPP/Classes/webrtc/api/quicdatachannel.h; sourceTree = "<group>"; };
-		43172FAB1D5095D0003B5883 /* quicdatatransport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = quicdatatransport.cc; path = ../webRTCAPP/Classes/webrtc/api/quicdatatransport.cc; sourceTree = "<group>"; };
-		43172FAC1D5095D0003B5883 /* quicdatatransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = quicdatatransport.h; path = ../webRTCAPP/Classes/webrtc/api/quicdatatransport.h; sourceTree = "<group>"; };
-		43172FAD1D5095D0003B5883 /* remoteaudiosource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remoteaudiosource.cc; path = ../webRTCAPP/Classes/webrtc/api/remoteaudiosource.cc; sourceTree = "<group>"; };
-		43172FAE1D5095D0003B5883 /* remoteaudiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = remoteaudiosource.h; path = ../webRTCAPP/Classes/webrtc/api/remoteaudiosource.h; sourceTree = "<group>"; };
 		43172FAF1D5095D0003B5883 /* rtpparameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtpparameters.h; path = ../webRTCAPP/Classes/webrtc/api/rtpparameters.h; sourceTree = "<group>"; };
-		43172FB01D5095D0003B5883 /* rtpreceiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rtpreceiver.cc; path = ../webRTCAPP/Classes/webrtc/api/rtpreceiver.cc; sourceTree = "<group>"; };
-		43172FB11D5095D0003B5883 /* rtpreceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtpreceiver.h; path = ../webRTCAPP/Classes/webrtc/api/rtpreceiver.h; sourceTree = "<group>"; };
 		43172FB21D5095D0003B5883 /* rtpreceiverinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtpreceiverinterface.h; path = ../webRTCAPP/Classes/webrtc/api/rtpreceiverinterface.h; sourceTree = "<group>"; };
-		43172FB31D5095D0003B5883 /* rtpsender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rtpsender.cc; path = ../webRTCAPP/Classes/webrtc/api/rtpsender.cc; sourceTree = "<group>"; };
 		43172FB41D5095D0003B5883 /* rtpsender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtpsender.h; path = ../webRTCAPP/Classes/webrtc/api/rtpsender.h; sourceTree = "<group>"; };
 		43172FB51D5095D0003B5883 /* rtpsenderinterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rtpsenderinterface.h; path = ../webRTCAPP/Classes/webrtc/api/rtpsenderinterface.h; sourceTree = "<group>"; };
-		43172FB81D5095D0003B5883 /* sctputils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sctputils.cc; path = ../webRTCAPP/Classes/webrtc/api/sctputils.cc; sourceTree = "<group>"; };
-		43172FB91D5095D0003B5883 /* sctputils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sctputils.h; path = ../webRTCAPP/Classes/webrtc/api/sctputils.h; sourceTree = "<group>"; };
-		43172FBB1D5095D0003B5883 /* statscollector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = statscollector.cc; path = ../webRTCAPP/Classes/webrtc/api/statscollector.cc; sourceTree = "<group>"; };
-		43172FBC1D5095D0003B5883 /* statscollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = statscollector.h; path = ../webRTCAPP/Classes/webrtc/api/statscollector.h; sourceTree = "<group>"; };
 		43172FBD1D5095D0003B5883 /* statstypes.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = statstypes.cc; path = ../webRTCAPP/Classes/webrtc/api/statstypes.cc; sourceTree = "<group>"; };
 		43172FBE1D5095D0003B5883 /* statstypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = statstypes.h; path = ../webRTCAPP/Classes/webrtc/api/statstypes.h; sourceTree = "<group>"; };
 		43172FBF1D5095D0003B5883 /* streamcollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = streamcollection.h; path = ../webRTCAPP/Classes/webrtc/api/streamcollection.h; sourceTree = "<group>"; };
 		43172FC01D5095D0003B5883 /* umametrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = umametrics.h; path = ../webRTCAPP/Classes/webrtc/api/umametrics.h; sourceTree = "<group>"; };
-		43172FC21D5095D0003B5883 /* videocapturertracksource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = videocapturertracksource.cc; path = ../webRTCAPP/Classes/webrtc/api/videocapturertracksource.cc; sourceTree = "<group>"; };
-		43172FC31D5095D0003B5883 /* videocapturertracksource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videocapturertracksource.h; path = ../webRTCAPP/Classes/webrtc/api/videocapturertracksource.h; sourceTree = "<group>"; };
 		43172FC41D5095D0003B5883 /* videosourceproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videosourceproxy.h; path = ../webRTCAPP/Classes/webrtc/api/videosourceproxy.h; sourceTree = "<group>"; };
-		43172FC61D5095D0003B5883 /* videotrack.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = videotrack.cc; path = ../webRTCAPP/Classes/webrtc/api/videotrack.cc; sourceTree = "<group>"; };
-		43172FC71D5095D0003B5883 /* videotrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videotrack.h; path = ../webRTCAPP/Classes/webrtc/api/videotrack.h; sourceTree = "<group>"; };
-		43172FC81D5095D0003B5883 /* videotracksource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = videotracksource.cc; path = ../webRTCAPP/Classes/webrtc/api/videotracksource.cc; sourceTree = "<group>"; };
 		43172FC91D5095D0003B5883 /* videotracksource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videotracksource.h; path = ../webRTCAPP/Classes/webrtc/api/videotracksource.h; sourceTree = "<group>"; };
-		43172FCB1D5095D0003B5883 /* webrtcsdp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtcsdp.cc; path = ../webRTCAPP/Classes/webrtc/api/webrtcsdp.cc; sourceTree = "<group>"; };
-		43172FCC1D5095D0003B5883 /* webrtcsdp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtcsdp.h; path = ../webRTCAPP/Classes/webrtc/api/webrtcsdp.h; sourceTree = "<group>"; };
-		43172FCE1D5095D0003B5883 /* webrtcsession.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtcsession.cc; path = ../webRTCAPP/Classes/webrtc/api/webrtcsession.cc; sourceTree = "<group>"; };
-		43172FCF1D5095D0003B5883 /* webrtcsession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtcsession.h; path = ../webRTCAPP/Classes/webrtc/api/webrtcsession.h; sourceTree = "<group>"; };
-		43172FD01D5095D0003B5883 /* webrtcsessiondescriptionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = webrtcsessiondescriptionfactory.cc; path = ../webRTCAPP/Classes/webrtc/api/webrtcsessiondescriptionfactory.cc; sourceTree = "<group>"; };
-		43172FD11D5095D0003B5883 /* webrtcsessiondescriptionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = webrtcsessiondescriptionfactory.h; path = ../webRTCAPP/Classes/webrtc/api/webrtcsessiondescriptionfactory.h; sourceTree = "<group>"; };
 		43982D62198F53890090EABA /* libjingle_peerconnection.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjingle_peerconnection.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -173,83 +90,38 @@
 		43172F651D5095A1003B5883 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				43172F6B1D5095D0003B5883 /* api.gyp */,
-				43172F6C1D5095D0003B5883 /* api.Makefile */,
-				43172F6D1D5095D0003B5883 /* audiotrack.cc */,
-				43172F6E1D5095D0003B5883 /* audiotrack.h */,
-				43172F711D5095D0003B5883 /* datachannel.cc */,
 				43172F721D5095D0003B5883 /* datachannel.h */,
 				43172F731D5095D0003B5883 /* datachannelinterface.h */,
-				43172F761D5095D0003B5883 /* dtmfsender.cc */,
-				43172F771D5095D0003B5883 /* dtmfsender.h */,
 				43172F781D5095D0003B5883 /* dtmfsenderinterface.h */,
-				43172F791D5095D0003B5883 /* fakemediacontroller.h */,
 				43172F7A1D5095D0003B5883 /* fakemetricsobserver.cc */,
 				43172F7B1D5095D0003B5883 /* fakemetricsobserver.h */,
 				43172F7C1D5095D0003B5883 /* jsep.h */,
-				43172F7D1D5095D0003B5883 /* jsepicecandidate.cc */,
 				43172F7E1D5095D0003B5883 /* jsepicecandidate.h */,
-				43172F801D5095D0003B5883 /* jsepsessiondescription.cc */,
 				43172F811D5095D0003B5883 /* jsepsessiondescription.h */,
-				43172F821D5095D0003B5883 /* libjingle_peerconnection.target.mk */,
-				43172F841D5095D0003B5883 /* localaudiosource.cc */,
-				43172F851D5095D0003B5883 /* localaudiosource.h */,
 				43172F871D5095D0003B5883 /* mediaconstraintsinterface.cc */,
 				43172F881D5095D0003B5883 /* mediaconstraintsinterface.h */,
-				43172F891D5095D0003B5883 /* mediacontroller.cc */,
 				43172F8A1D5095D0003B5883 /* mediacontroller.h */,
-				43172F8C1D5095D0003B5883 /* mediastream.cc */,
 				43172F8D1D5095D0003B5883 /* mediastream.h */,
 				43172F8E1D5095D0003B5883 /* mediastreaminterface.h */,
-				43172F8F1D5095D0003B5883 /* mediastreamobserver.cc */,
-				43172F901D5095D0003B5883 /* mediastreamobserver.h */,
 				43172F911D5095D0003B5883 /* mediastreamproxy.h */,
 				43172F921D5095D0003B5883 /* mediastreamtrack.h */,
 				43172F931D5095D0003B5883 /* mediastreamtrackproxy.h */,
 				43172F941D5095D0003B5883 /* notifier.h */,
 				43172F951D5095D0003B5883 /* OWNERS */,
-				43172F9B1D5095D0003B5883 /* peerconnection.cc */,
-				43172F9C1D5095D0003B5883 /* peerconnection.h */,
-				43172F9F1D5095D0003B5883 /* peerconnectionfactory.cc */,
-				43172FA01D5095D0003B5883 /* peerconnectionfactory.h */,
 				43172FA11D5095D0003B5883 /* peerconnectionfactoryproxy.h */,
 				43172FA31D5095D0003B5883 /* peerconnectioninterface.h */,
 				43172FA41D5095D0003B5883 /* peerconnectionproxy.h */,
 				43172FA61D5095D0003B5883 /* proxy.h */,
-				43172FA81D5095D0003B5883 /* quicdatachannel.cc */,
-				43172FA91D5095D0003B5883 /* quicdatachannel.h */,
-				43172FAB1D5095D0003B5883 /* quicdatatransport.cc */,
-				43172FAC1D5095D0003B5883 /* quicdatatransport.h */,
-				43172FAD1D5095D0003B5883 /* remoteaudiosource.cc */,
-				43172FAE1D5095D0003B5883 /* remoteaudiosource.h */,
 				43172FAF1D5095D0003B5883 /* rtpparameters.h */,
-				43172FB01D5095D0003B5883 /* rtpreceiver.cc */,
-				43172FB11D5095D0003B5883 /* rtpreceiver.h */,
 				43172FB21D5095D0003B5883 /* rtpreceiverinterface.h */,
-				43172FB31D5095D0003B5883 /* rtpsender.cc */,
 				43172FB41D5095D0003B5883 /* rtpsender.h */,
 				43172FB51D5095D0003B5883 /* rtpsenderinterface.h */,
-				43172FB81D5095D0003B5883 /* sctputils.cc */,
-				43172FB91D5095D0003B5883 /* sctputils.h */,
-				43172FBB1D5095D0003B5883 /* statscollector.cc */,
-				43172FBC1D5095D0003B5883 /* statscollector.h */,
 				43172FBD1D5095D0003B5883 /* statstypes.cc */,
 				43172FBE1D5095D0003B5883 /* statstypes.h */,
 				43172FBF1D5095D0003B5883 /* streamcollection.h */,
 				43172FC01D5095D0003B5883 /* umametrics.h */,
-				43172FC21D5095D0003B5883 /* videocapturertracksource.cc */,
-				43172FC31D5095D0003B5883 /* videocapturertracksource.h */,
 				43172FC41D5095D0003B5883 /* videosourceproxy.h */,
-				43172FC61D5095D0003B5883 /* videotrack.cc */,
-				43172FC71D5095D0003B5883 /* videotrack.h */,
-				43172FC81D5095D0003B5883 /* videotracksource.cc */,
 				43172FC91D5095D0003B5883 /* videotracksource.h */,
-				43172FCB1D5095D0003B5883 /* webrtcsdp.cc */,
-				43172FCC1D5095D0003B5883 /* webrtcsdp.h */,
-				43172FCE1D5095D0003B5883 /* webrtcsession.cc */,
-				43172FCF1D5095D0003B5883 /* webrtcsession.h */,
-				43172FD01D5095D0003B5883 /* webrtcsessiondescriptionfactory.cc */,
-				43172FD11D5095D0003B5883 /* webrtcsessiondescriptionfactory.h */,
 			);
 			name = api;
 			sourceTree = "<group>";
@@ -280,8 +152,6 @@
 				431730051D5095D0003B5883 /* proxy.h in Headers */,
 				43172FD91D5095D0003B5883 /* datachannelinterface.h in Headers */,
 				43172FE01D5095D0003B5883 /* fakemetricsobserver.h in Headers */,
-				431730301D5095D0003B5883 /* webrtcsessiondescriptionfactory.h in Headers */,
-				431730261D5095D0003B5883 /* videotrack.h in Headers */,
 				43172FF61D5095D0003B5883 /* mediastreamtrack.h in Headers */,
 				43172FE61D5095D0003B5883 /* jsepsessiondescription.h in Headers */,
 				431730111D5095D0003B5883 /* rtpreceiverinterface.h in Headers */,
@@ -290,34 +160,20 @@
 				43172FE11D5095D0003B5883 /* jsep.h in Headers */,
 				43172FDD1D5095D0003B5883 /* dtmfsenderinterface.h in Headers */,
 				4317301F1D5095D0003B5883 /* umametrics.h in Headers */,
-				43172FE91D5095D0003B5883 /* localaudiosource.h in Headers */,
-				43172FDC1D5095D0003B5883 /* dtmfsender.h in Headers */,
-				4317300D1D5095D0003B5883 /* remoteaudiosource.h in Headers */,
 				431730141D5095D0003B5883 /* rtpsenderinterface.h in Headers */,
-				431730101D5095D0003B5883 /* rtpreceiver.h in Headers */,
 				431730231D5095D0003B5883 /* videosourceproxy.h in Headers */,
-				43172FDE1D5095D0003B5883 /* fakemediacontroller.h in Headers */,
 				43172FF21D5095D0003B5883 /* mediastreaminterface.h in Headers */,
-				4317302E1D5095D0003B5883 /* webrtcsession.h in Headers */,
 				43172FF11D5095D0003B5883 /* mediastream.h in Headers */,
-				43172FFB1D5095D0003B5883 /* peerconnection.h in Headers */,
 				431730131D5095D0003B5883 /* rtpsender.h in Headers */,
 				431730281D5095D0003B5883 /* videotracksource.h in Headers */,
 				431730021D5095D0003B5883 /* peerconnectioninterface.h in Headers */,
 				43172FF71D5095D0003B5883 /* mediastreamtrackproxy.h in Headers */,
-				431730181D5095D0003B5883 /* sctputils.h in Headers */,
 				43172FEE1D5095D0003B5883 /* mediacontroller.h in Headers */,
-				43172FD51D5095D0003B5883 /* audiotrack.h in Headers */,
 				431730001D5095D0003B5883 /* peerconnectionfactoryproxy.h in Headers */,
-				43172FF41D5095D0003B5883 /* mediastreamobserver.h in Headers */,
 				43172FF51D5095D0003B5883 /* mediastreamproxy.h in Headers */,
-				43172FFF1D5095D0003B5883 /* peerconnectionfactory.h in Headers */,
-				431730221D5095D0003B5883 /* videocapturertracksource.h in Headers */,
-				4317302B1D5095D0003B5883 /* webrtcsdp.h in Headers */,
 				4317301D1D5095D0003B5883 /* statstypes.h in Headers */,
 				43172FF81D5095D0003B5883 /* notifier.h in Headers */,
 				43172FE31D5095D0003B5883 /* jsepicecandidate.h in Headers */,
-				4317301B1D5095D0003B5883 /* statscollector.h in Headers */,
 				43172FEC1D5095D0003B5883 /* mediaconstraintsinterface.h in Headers */,
 				43172FD81D5095D0003B5883 /* datachannel.h in Headers */,
 				4317301E1D5095D0003B5883 /* streamcollection.h in Headers */,
@@ -375,31 +231,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43172FD41D5095D0003B5883 /* audiotrack.cc in Sources */,
-				43172FFA1D5095D0003B5883 /* peerconnection.cc in Sources */,
-				431730171D5095D0003B5883 /* sctputils.cc in Sources */,
 				4317301C1D5095D0003B5883 /* statstypes.cc in Sources */,
-				4317302D1D5095D0003B5883 /* webrtcsession.cc in Sources */,
 				43172FDF1D5095D0003B5883 /* fakemetricsobserver.cc in Sources */,
-				431730211D5095D0003B5883 /* videocapturertracksource.cc in Sources */,
-				43172FE51D5095D0003B5883 /* jsepsessiondescription.cc in Sources */,
-				43172FF01D5095D0003B5883 /* mediastream.cc in Sources */,
-				4317301A1D5095D0003B5883 /* statscollector.cc in Sources */,
-				43172FFE1D5095D0003B5883 /* peerconnectionfactory.cc in Sources */,
-				43172FD71D5095D0003B5883 /* datachannel.cc in Sources */,
-				431730271D5095D0003B5883 /* videotracksource.cc in Sources */,
-				431730251D5095D0003B5883 /* videotrack.cc in Sources */,
-				4317300F1D5095D0003B5883 /* rtpreceiver.cc in Sources */,
-				43172FED1D5095D0003B5883 /* mediacontroller.cc in Sources */,
-				4317302F1D5095D0003B5883 /* webrtcsessiondescriptionfactory.cc in Sources */,
-				431730121D5095D0003B5883 /* rtpsender.cc in Sources */,
-				43172FE81D5095D0003B5883 /* localaudiosource.cc in Sources */,
-				43172FF31D5095D0003B5883 /* mediastreamobserver.cc in Sources */,
 				43172FEB1D5095D0003B5883 /* mediaconstraintsinterface.cc in Sources */,
-				43172FDB1D5095D0003B5883 /* dtmfsender.cc in Sources */,
-				4317302A1D5095D0003B5883 /* webrtcsdp.cc in Sources */,
-				43172FE21D5095D0003B5883 /* jsepicecandidate.cc in Sources */,
-				4317300C1D5095D0003B5883 /* remoteaudiosource.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

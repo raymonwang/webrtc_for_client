@@ -23,7 +23,6 @@
 		438778901D4F49D500E6F9E9 /* vp9_frame_buffer_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp9_frame_buffer_pool.h; sourceTree = "<group>"; };
 		43C69BC51D227F2F00427D35 /* libwebrtc_vp9.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_vp9.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C69BD41D227FB000427D35 /* vp9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp9.h; sourceTree = "<group>"; };
-		43C69BD51D227FB000427D35 /* vp9.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vp9.gyp; sourceTree = "<group>"; };
 		43C69BD61D227FB000427D35 /* vp9_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp9_impl.cc; sourceTree = "<group>"; };
 		43C69BD71D227FB000427D35 /* vp9_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp9_impl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				43C69BD31D227FB000427D35 /* include */,
-				43C69BD51D227FB000427D35 /* vp9.gyp */,
 				43C69BD61D227FB000427D35 /* vp9_impl.cc */,
 				43C69BD71D227FB000427D35 /* vp9_impl.h */,
 				4387788D1D4F49D500E6F9E9 /* screenshare_layers.cc */,
@@ -243,6 +241,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libvpx/source/libvpx",
@@ -258,6 +257,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libvpx/source/libvpx",

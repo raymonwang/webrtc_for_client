@@ -23,7 +23,6 @@
 		4317308A1D509F05003B5883 /* mediamonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730651D509F04003B5883 /* mediamonitor.h */; };
 		4317308B1D509F05003B5883 /* mediasession.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730661D509F04003B5883 /* mediasession.cc */; };
 		4317308C1D509F05003B5883 /* mediasession.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730671D509F04003B5883 /* mediasession.h */; };
-		4317308E1D509F05003B5883 /* mediasink.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730691D509F04003B5883 /* mediasink.h */; };
 		4317308F1D509F05003B5883 /* rtcpmuxfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730711D509F04003B5883 /* rtcpmuxfilter.cc */; };
 		431730901D509F05003B5883 /* rtcpmuxfilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730721D509F04003B5883 /* rtcpmuxfilter.h */; };
 		431730921D509F05003B5883 /* srtpfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730741D509F04003B5883 /* srtpfilter.cc */; };
@@ -51,16 +50,11 @@
 		431730651D509F04003B5883 /* mediamonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediamonitor.h; sourceTree = "<group>"; };
 		431730661D509F04003B5883 /* mediasession.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediasession.cc; sourceTree = "<group>"; };
 		431730671D509F04003B5883 /* mediasession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediasession.h; sourceTree = "<group>"; };
-		431730691D509F04003B5883 /* mediasink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediasink.h; sourceTree = "<group>"; };
 		4317306A1D509F04003B5883 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
-		4317306B1D509F04003B5883 /* pc.gyp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pc.gyp; sourceTree = "<group>"; };
-		4317306C1D509F04003B5883 /* pc.Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pc.Makefile; sourceTree = "<group>"; };
-		4317306D1D509F04003B5883 /* rtc_pc.target.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rtc_pc.target.mk; sourceTree = "<group>"; };
 		431730711D509F04003B5883 /* rtcpmuxfilter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcpmuxfilter.cc; sourceTree = "<group>"; };
 		431730721D509F04003B5883 /* rtcpmuxfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcpmuxfilter.h; sourceTree = "<group>"; };
 		431730741D509F04003B5883 /* srtpfilter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = srtpfilter.cc; sourceTree = "<group>"; };
 		431730751D509F04003B5883 /* srtpfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtpfilter.h; sourceTree = "<group>"; };
-		431730771D509F04003B5883 /* typewrapping.h.pump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = typewrapping.h.pump; sourceTree = "<group>"; };
 		431730781D509F04003B5883 /* voicechannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voicechannel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,16 +106,11 @@
 				431730651D509F04003B5883 /* mediamonitor.h */,
 				431730661D509F04003B5883 /* mediasession.cc */,
 				431730671D509F04003B5883 /* mediasession.h */,
-				431730691D509F04003B5883 /* mediasink.h */,
 				4317306A1D509F04003B5883 /* OWNERS */,
-				4317306B1D509F04003B5883 /* pc.gyp */,
-				4317306C1D509F04003B5883 /* pc.Makefile */,
-				4317306D1D509F04003B5883 /* rtc_pc.target.mk */,
 				431730711D509F04003B5883 /* rtcpmuxfilter.cc */,
 				431730721D509F04003B5883 /* rtcpmuxfilter.h */,
 				431730741D509F04003B5883 /* srtpfilter.cc */,
 				431730751D509F04003B5883 /* srtpfilter.h */,
-				431730771D509F04003B5883 /* typewrapping.h.pump */,
 				431730781D509F04003B5883 /* voicechannel.h */,
 			);
 			name = pc;
@@ -141,7 +130,6 @@
 				4317307C1D509F05003B5883 /* bundlefilter.h in Headers */,
 				431730881D509F05003B5883 /* externalhmac.h in Headers */,
 				431730851D509F05003B5883 /* currentspeakermonitor.h in Headers */,
-				4317308E1D509F05003B5883 /* mediasink.h in Headers */,
 				431730951D509F05003B5883 /* voicechannel.h in Headers */,
 				431730901D509F05003B5883 /* rtcpmuxfilter.h in Headers */,
 				431730821D509F05003B5883 /* channelmanager.h in Headers */,
