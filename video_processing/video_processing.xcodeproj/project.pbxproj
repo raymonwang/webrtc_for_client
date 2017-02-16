@@ -7,18 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		438775A41D4F47B100E6F9E9 /* frame_preprocessor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775811D4F47B100E6F9E9 /* frame_preprocessor.cc */; };
-		438775A51D4F47B100E6F9E9 /* frame_preprocessor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775811D4F47B100E6F9E9 /* frame_preprocessor.cc */; };
-		438775A61D4F47B100E6F9E9 /* frame_preprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775821D4F47B100E6F9E9 /* frame_preprocessor.h */; };
-		438775A71D4F47B100E6F9E9 /* frame_preprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775821D4F47B100E6F9E9 /* frame_preprocessor.h */; };
-		438775A81D4F47B100E6F9E9 /* video_processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775841D4F47B100E6F9E9 /* video_processing.h */; };
-		438775A91D4F47B100E6F9E9 /* video_processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775841D4F47B100E6F9E9 /* video_processing.h */; };
-		438775AA1D4F47B100E6F9E9 /* video_processing_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775851D4F47B100E6F9E9 /* video_processing_defines.h */; };
-		438775AB1D4F47B100E6F9E9 /* video_processing_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775851D4F47B100E6F9E9 /* video_processing_defines.h */; };
-		438775AC1D4F47B100E6F9E9 /* spatial_resampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775871D4F47B100E6F9E9 /* spatial_resampler.cc */; };
-		438775AD1D4F47B100E6F9E9 /* spatial_resampler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775871D4F47B100E6F9E9 /* spatial_resampler.cc */; };
-		438775AE1D4F47B100E6F9E9 /* spatial_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775881D4F47B100E6F9E9 /* spatial_resampler.h */; };
-		438775AF1D4F47B100E6F9E9 /* spatial_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775881D4F47B100E6F9E9 /* spatial_resampler.h */; };
 		438775BC1D4F47B100E6F9E9 /* denoiser_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775911D4F47B100E6F9E9 /* denoiser_filter.cc */; };
 		438775BD1D4F47B100E6F9E9 /* denoiser_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775911D4F47B100E6F9E9 /* denoiser_filter.cc */; };
 		438775BE1D4F47B100E6F9E9 /* denoiser_filter.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775921D4F47B100E6F9E9 /* denoiser_filter.h */; };
@@ -41,30 +29,16 @@
 		438775D11D4F47B100E6F9E9 /* skin_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387759B1D4F47B100E6F9E9 /* skin_detection.cc */; };
 		438775D21D4F47B100E6F9E9 /* skin_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387759C1D4F47B100E6F9E9 /* skin_detection.h */; };
 		438775D31D4F47B100E6F9E9 /* skin_detection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387759C1D4F47B100E6F9E9 /* skin_detection.h */; };
-		438775D41D4F47B100E6F9E9 /* video_decimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387759D1D4F47B100E6F9E9 /* video_decimator.cc */; };
-		438775D51D4F47B100E6F9E9 /* video_decimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387759D1D4F47B100E6F9E9 /* video_decimator.cc */; };
-		438775D61D4F47B100E6F9E9 /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387759E1D4F47B100E6F9E9 /* video_decimator.h */; };
-		438775D71D4F47B100E6F9E9 /* video_decimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387759E1D4F47B100E6F9E9 /* video_decimator.h */; };
 		438775D81D4F47B100E6F9E9 /* video_denoiser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387759F1D4F47B100E6F9E9 /* video_denoiser.cc */; };
 		438775D91D4F47B100E6F9E9 /* video_denoiser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4387759F1D4F47B100E6F9E9 /* video_denoiser.cc */; };
 		438775DA1D4F47B100E6F9E9 /* video_denoiser.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775A01D4F47B100E6F9E9 /* video_denoiser.h */; };
 		438775DB1D4F47B100E6F9E9 /* video_denoiser.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775A01D4F47B100E6F9E9 /* video_denoiser.h */; };
-		438775DC1D4F47B100E6F9E9 /* video_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775A21D4F47B100E6F9E9 /* video_processing_impl.cc */; };
-		438775DD1D4F47B100E6F9E9 /* video_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438775A21D4F47B100E6F9E9 /* video_processing_impl.cc */; };
-		438775DE1D4F47B100E6F9E9 /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775A31D4F47B100E6F9E9 /* video_processing_impl.h */; };
-		438775DF1D4F47B100E6F9E9 /* video_processing_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 438775A31D4F47B100E6F9E9 /* video_processing_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		43288E121D38E3CD0044E4F5 /* libvideo_processing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_processing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43288E841D38E4510044E4F5 /* libvideo_processing_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_processing_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		438775811D4F47B100E6F9E9 /* frame_preprocessor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frame_preprocessor.cc; sourceTree = "<group>"; };
-		438775821D4F47B100E6F9E9 /* frame_preprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_preprocessor.h; sourceTree = "<group>"; };
-		438775841D4F47B100E6F9E9 /* video_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing.h; sourceTree = "<group>"; };
-		438775851D4F47B100E6F9E9 /* video_processing_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing_defines.h; sourceTree = "<group>"; };
 		438775861D4F47B100E6F9E9 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
-		438775871D4F47B100E6F9E9 /* spatial_resampler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spatial_resampler.cc; sourceTree = "<group>"; };
-		438775881D4F47B100E6F9E9 /* spatial_resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spatial_resampler.h; sourceTree = "<group>"; };
 		438775911D4F47B100E6F9E9 /* denoiser_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = denoiser_filter.cc; sourceTree = "<group>"; };
 		438775921D4F47B100E6F9E9 /* denoiser_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = denoiser_filter.h; sourceTree = "<group>"; };
 		438775931D4F47B100E6F9E9 /* denoiser_filter_c.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = denoiser_filter_c.cc; sourceTree = "<group>"; };
@@ -77,13 +51,8 @@
 		4387759A1D4F47B100E6F9E9 /* noise_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noise_estimation.h; sourceTree = "<group>"; };
 		4387759B1D4F47B100E6F9E9 /* skin_detection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = skin_detection.cc; sourceTree = "<group>"; };
 		4387759C1D4F47B100E6F9E9 /* skin_detection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skin_detection.h; sourceTree = "<group>"; };
-		4387759D1D4F47B100E6F9E9 /* video_decimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_decimator.cc; sourceTree = "<group>"; };
-		4387759E1D4F47B100E6F9E9 /* video_decimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_decimator.h; sourceTree = "<group>"; };
 		4387759F1D4F47B100E6F9E9 /* video_denoiser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_denoiser.cc; sourceTree = "<group>"; };
 		438775A01D4F47B100E6F9E9 /* video_denoiser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_denoiser.h; sourceTree = "<group>"; };
-		438775A11D4F47B100E6F9E9 /* video_processing.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = video_processing.gypi; sourceTree = "<group>"; };
-		438775A21D4F47B100E6F9E9 /* video_processing_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_processing_impl.cc; sourceTree = "<group>"; };
-		438775A31D4F47B100E6F9E9 /* video_processing_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_processing_impl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,20 +93,11 @@
 		4387757E1D4F47B100E6F9E9 /* video_processing */ = {
 			isa = PBXGroup;
 			children = (
-				438775811D4F47B100E6F9E9 /* frame_preprocessor.cc */,
-				438775821D4F47B100E6F9E9 /* frame_preprocessor.h */,
 				438775831D4F47B100E6F9E9 /* include */,
 				438775861D4F47B100E6F9E9 /* OWNERS */,
-				438775871D4F47B100E6F9E9 /* spatial_resampler.cc */,
-				438775881D4F47B100E6F9E9 /* spatial_resampler.h */,
 				438775901D4F47B100E6F9E9 /* util */,
-				4387759D1D4F47B100E6F9E9 /* video_decimator.cc */,
-				4387759E1D4F47B100E6F9E9 /* video_decimator.h */,
 				4387759F1D4F47B100E6F9E9 /* video_denoiser.cc */,
 				438775A01D4F47B100E6F9E9 /* video_denoiser.h */,
-				438775A11D4F47B100E6F9E9 /* video_processing.gypi */,
-				438775A21D4F47B100E6F9E9 /* video_processing_impl.cc */,
-				438775A31D4F47B100E6F9E9 /* video_processing_impl.h */,
 			);
 			name = video_processing;
 			path = ../webRTCAPP/Classes/webrtc/modules/video_processing;
@@ -146,8 +106,6 @@
 		438775831D4F47B100E6F9E9 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				438775841D4F47B100E6F9E9 /* video_processing.h */,
-				438775851D4F47B100E6F9E9 /* video_processing_defines.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -179,16 +137,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				438775CE1D4F47B100E6F9E9 /* noise_estimation.h in Headers */,
-				438775DE1D4F47B100E6F9E9 /* video_processing_impl.h in Headers */,
-				438775A61D4F47B100E6F9E9 /* frame_preprocessor.h in Headers */,
 				438775DA1D4F47B100E6F9E9 /* video_denoiser.h in Headers */,
 				438775C61D4F47B100E6F9E9 /* denoiser_filter_neon.h in Headers */,
 				438775D21D4F47B100E6F9E9 /* skin_detection.h in Headers */,
-				438775D61D4F47B100E6F9E9 /* video_decimator.h in Headers */,
-				438775AE1D4F47B100E6F9E9 /* spatial_resampler.h in Headers */,
 				438775C21D4F47B100E6F9E9 /* denoiser_filter_c.h in Headers */,
-				438775AA1D4F47B100E6F9E9 /* video_processing_defines.h in Headers */,
-				438775A81D4F47B100E6F9E9 /* video_processing.h in Headers */,
 				438775BE1D4F47B100E6F9E9 /* denoiser_filter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,17 +150,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				438775CF1D4F47B100E6F9E9 /* noise_estimation.h in Headers */,
-				438775DF1D4F47B100E6F9E9 /* video_processing_impl.h in Headers */,
-				438775A71D4F47B100E6F9E9 /* frame_preprocessor.h in Headers */,
 				438775DB1D4F47B100E6F9E9 /* video_denoiser.h in Headers */,
 				438775C71D4F47B100E6F9E9 /* denoiser_filter_neon.h in Headers */,
 				438775D31D4F47B100E6F9E9 /* skin_detection.h in Headers */,
-				438775D71D4F47B100E6F9E9 /* video_decimator.h in Headers */,
-				438775AF1D4F47B100E6F9E9 /* spatial_resampler.h in Headers */,
 				438775C31D4F47B100E6F9E9 /* denoiser_filter_c.h in Headers */,
 				438775CB1D4F47B100E6F9E9 /* denoiser_filter_sse2.h in Headers */,
-				438775AB1D4F47B100E6F9E9 /* video_processing_defines.h in Headers */,
-				438775A91D4F47B100E6F9E9 /* video_processing.h in Headers */,
 				438775BF1D4F47B100E6F9E9 /* denoiser_filter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,16 +233,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				438775DC1D4F47B100E6F9E9 /* video_processing_impl.cc in Sources */,
 				438775C01D4F47B100E6F9E9 /* denoiser_filter_c.cc in Sources */,
 				438775C41D4F47B100E6F9E9 /* denoiser_filter_neon.cc in Sources */,
-				438775AC1D4F47B100E6F9E9 /* spatial_resampler.cc in Sources */,
 				438775CC1D4F47B100E6F9E9 /* noise_estimation.cc in Sources */,
-				438775D41D4F47B100E6F9E9 /* video_decimator.cc in Sources */,
 				438775D81D4F47B100E6F9E9 /* video_denoiser.cc in Sources */,
 				438775D01D4F47B100E6F9E9 /* skin_detection.cc in Sources */,
 				438775BC1D4F47B100E6F9E9 /* denoiser_filter.cc in Sources */,
-				438775A41D4F47B100E6F9E9 /* frame_preprocessor.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,17 +246,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				438775DD1D4F47B100E6F9E9 /* video_processing_impl.cc in Sources */,
 				438775C11D4F47B100E6F9E9 /* denoiser_filter_c.cc in Sources */,
 				438775C51D4F47B100E6F9E9 /* denoiser_filter_neon.cc in Sources */,
-				438775AD1D4F47B100E6F9E9 /* spatial_resampler.cc in Sources */,
 				438775CD1D4F47B100E6F9E9 /* noise_estimation.cc in Sources */,
-				438775D51D4F47B100E6F9E9 /* video_decimator.cc in Sources */,
 				438775D91D4F47B100E6F9E9 /* video_denoiser.cc in Sources */,
 				438775D11D4F47B100E6F9E9 /* skin_detection.cc in Sources */,
 				438775BD1D4F47B100E6F9E9 /* denoiser_filter.cc in Sources */,
 				438775C91D4F47B100E6F9E9 /* denoiser_filter_sse2.cc in Sources */,
-				438775A51D4F47B100E6F9E9 /* frame_preprocessor.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
