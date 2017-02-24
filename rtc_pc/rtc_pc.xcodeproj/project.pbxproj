@@ -28,6 +28,32 @@
 		431730921D509F05003B5883 /* srtpfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730741D509F04003B5883 /* srtpfilter.cc */; };
 		431730931D509F05003B5883 /* srtpfilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730751D509F04003B5883 /* srtpfilter.h */; };
 		431730951D509F05003B5883 /* voicechannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730781D509F04003B5883 /* voicechannel.h */; };
+		43EFD1C61E57085300E3DEAD /* mediacontroller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1AC1E57085300E3DEAD /* mediacontroller.cc */; };
+		43EFD1C71E57085300E3DEAD /* mediacontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1AD1E57085300E3DEAD /* mediacontroller.h */; };
+		43EFD1C81E57085300E3DEAD /* mediastream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1AE1E57085300E3DEAD /* mediastream.cc */; };
+		43EFD1C91E57085300E3DEAD /* mediastream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1AF1E57085300E3DEAD /* mediastream.h */; };
+		43EFD1CA1E57085300E3DEAD /* ortcfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1B01E57085300E3DEAD /* ortcfactory.cc */; };
+		43EFD1CB1E57085300E3DEAD /* ortcfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1B11E57085300E3DEAD /* ortcfactory.h */; };
+		43EFD1CC1E57085300E3DEAD /* peerconnection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1B21E57085300E3DEAD /* peerconnection.cc */; };
+		43EFD1CD1E57085300E3DEAD /* peerconnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1B31E57085300E3DEAD /* peerconnection.h */; };
+		43EFD1CE1E57085300E3DEAD /* peerconnectionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1B41E57085300E3DEAD /* peerconnectionfactory.cc */; };
+		43EFD1CF1E57085300E3DEAD /* peerconnectionfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1B51E57085300E3DEAD /* peerconnectionfactory.h */; };
+		43EFD1D01E57085300E3DEAD /* remoteaudiosource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1B61E57085300E3DEAD /* remoteaudiosource.cc */; };
+		43EFD1D11E57085300E3DEAD /* remoteaudiosource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1B71E57085300E3DEAD /* remoteaudiosource.h */; };
+		43EFD1D21E57085300E3DEAD /* rtpreceiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1B81E57085300E3DEAD /* rtpreceiver.cc */; };
+		43EFD1D31E57085300E3DEAD /* rtpreceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1B91E57085300E3DEAD /* rtpreceiver.h */; };
+		43EFD1D41E57085300E3DEAD /* rtpsender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1BA1E57085300E3DEAD /* rtpsender.cc */; };
+		43EFD1D51E57085300E3DEAD /* rtpsender.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1BB1E57085300E3DEAD /* rtpsender.h */; };
+		43EFD1D61E57085300E3DEAD /* videocapturertracksource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1BC1E57085300E3DEAD /* videocapturertracksource.cc */; };
+		43EFD1D71E57085300E3DEAD /* videocapturertracksource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1BD1E57085300E3DEAD /* videocapturertracksource.h */; };
+		43EFD1D81E57085300E3DEAD /* videotrack.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1BE1E57085300E3DEAD /* videotrack.cc */; };
+		43EFD1D91E57085300E3DEAD /* videotrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1BF1E57085300E3DEAD /* videotrack.h */; };
+		43EFD1DA1E57085300E3DEAD /* videotracksource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1C01E57085300E3DEAD /* videotracksource.cc */; };
+		43EFD1DB1E57085300E3DEAD /* videotracksource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1C11E57085300E3DEAD /* videotracksource.h */; };
+		43EFD1DC1E57085300E3DEAD /* webrtcsession.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1C21E57085300E3DEAD /* webrtcsession.cc */; };
+		43EFD1DD1E57085300E3DEAD /* webrtcsession.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1C31E57085300E3DEAD /* webrtcsession.h */; };
+		43EFD1DE1E57085300E3DEAD /* webrtcsessiondescriptionfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1C41E57085300E3DEAD /* webrtcsessiondescriptionfactory.cc */; };
+		43EFD1DF1E57085300E3DEAD /* webrtcsessiondescriptionfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1C51E57085300E3DEAD /* webrtcsessiondescriptionfactory.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +82,32 @@
 		431730741D509F04003B5883 /* srtpfilter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = srtpfilter.cc; sourceTree = "<group>"; };
 		431730751D509F04003B5883 /* srtpfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtpfilter.h; sourceTree = "<group>"; };
 		431730781D509F04003B5883 /* voicechannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voicechannel.h; sourceTree = "<group>"; };
+		43EFD1AC1E57085300E3DEAD /* mediacontroller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediacontroller.cc; sourceTree = "<group>"; };
+		43EFD1AD1E57085300E3DEAD /* mediacontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediacontroller.h; sourceTree = "<group>"; };
+		43EFD1AE1E57085300E3DEAD /* mediastream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediastream.cc; sourceTree = "<group>"; };
+		43EFD1AF1E57085300E3DEAD /* mediastream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediastream.h; sourceTree = "<group>"; };
+		43EFD1B01E57085300E3DEAD /* ortcfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ortcfactory.cc; sourceTree = "<group>"; };
+		43EFD1B11E57085300E3DEAD /* ortcfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ortcfactory.h; sourceTree = "<group>"; };
+		43EFD1B21E57085300E3DEAD /* peerconnection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peerconnection.cc; sourceTree = "<group>"; };
+		43EFD1B31E57085300E3DEAD /* peerconnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peerconnection.h; sourceTree = "<group>"; };
+		43EFD1B41E57085300E3DEAD /* peerconnectionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = peerconnectionfactory.cc; sourceTree = "<group>"; };
+		43EFD1B51E57085300E3DEAD /* peerconnectionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = peerconnectionfactory.h; sourceTree = "<group>"; };
+		43EFD1B61E57085300E3DEAD /* remoteaudiosource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remoteaudiosource.cc; sourceTree = "<group>"; };
+		43EFD1B71E57085300E3DEAD /* remoteaudiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remoteaudiosource.h; sourceTree = "<group>"; };
+		43EFD1B81E57085300E3DEAD /* rtpreceiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtpreceiver.cc; sourceTree = "<group>"; };
+		43EFD1B91E57085300E3DEAD /* rtpreceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtpreceiver.h; sourceTree = "<group>"; };
+		43EFD1BA1E57085300E3DEAD /* rtpsender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtpsender.cc; sourceTree = "<group>"; };
+		43EFD1BB1E57085300E3DEAD /* rtpsender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtpsender.h; sourceTree = "<group>"; };
+		43EFD1BC1E57085300E3DEAD /* videocapturertracksource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videocapturertracksource.cc; sourceTree = "<group>"; };
+		43EFD1BD1E57085300E3DEAD /* videocapturertracksource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videocapturertracksource.h; sourceTree = "<group>"; };
+		43EFD1BE1E57085300E3DEAD /* videotrack.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videotrack.cc; sourceTree = "<group>"; };
+		43EFD1BF1E57085300E3DEAD /* videotrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videotrack.h; sourceTree = "<group>"; };
+		43EFD1C01E57085300E3DEAD /* videotracksource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videotracksource.cc; sourceTree = "<group>"; };
+		43EFD1C11E57085300E3DEAD /* videotracksource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videotracksource.h; sourceTree = "<group>"; };
+		43EFD1C21E57085300E3DEAD /* webrtcsession.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcsession.cc; sourceTree = "<group>"; };
+		43EFD1C31E57085300E3DEAD /* webrtcsession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcsession.h; sourceTree = "<group>"; };
+		43EFD1C41E57085300E3DEAD /* webrtcsessiondescriptionfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcsessiondescriptionfactory.cc; sourceTree = "<group>"; };
+		43EFD1C51E57085300E3DEAD /* webrtcsessiondescriptionfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcsessiondescriptionfactory.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +142,32 @@
 			children = (
 				431730521D509F04003B5883 /* audiomonitor.cc */,
 				431730531D509F04003B5883 /* audiomonitor.h */,
+				43EFD1AC1E57085300E3DEAD /* mediacontroller.cc */,
+				43EFD1AD1E57085300E3DEAD /* mediacontroller.h */,
+				43EFD1AE1E57085300E3DEAD /* mediastream.cc */,
+				43EFD1AF1E57085300E3DEAD /* mediastream.h */,
+				43EFD1B01E57085300E3DEAD /* ortcfactory.cc */,
+				43EFD1B11E57085300E3DEAD /* ortcfactory.h */,
+				43EFD1B21E57085300E3DEAD /* peerconnection.cc */,
+				43EFD1B31E57085300E3DEAD /* peerconnection.h */,
+				43EFD1B41E57085300E3DEAD /* peerconnectionfactory.cc */,
+				43EFD1B51E57085300E3DEAD /* peerconnectionfactory.h */,
+				43EFD1B61E57085300E3DEAD /* remoteaudiosource.cc */,
+				43EFD1B71E57085300E3DEAD /* remoteaudiosource.h */,
+				43EFD1B81E57085300E3DEAD /* rtpreceiver.cc */,
+				43EFD1B91E57085300E3DEAD /* rtpreceiver.h */,
+				43EFD1BA1E57085300E3DEAD /* rtpsender.cc */,
+				43EFD1BB1E57085300E3DEAD /* rtpsender.h */,
+				43EFD1BC1E57085300E3DEAD /* videocapturertracksource.cc */,
+				43EFD1BD1E57085300E3DEAD /* videocapturertracksource.h */,
+				43EFD1BE1E57085300E3DEAD /* videotrack.cc */,
+				43EFD1BF1E57085300E3DEAD /* videotrack.h */,
+				43EFD1C01E57085300E3DEAD /* videotracksource.cc */,
+				43EFD1C11E57085300E3DEAD /* videotracksource.h */,
+				43EFD1C21E57085300E3DEAD /* webrtcsession.cc */,
+				43EFD1C31E57085300E3DEAD /* webrtcsession.h */,
+				43EFD1C41E57085300E3DEAD /* webrtcsessiondescriptionfactory.cc */,
+				43EFD1C51E57085300E3DEAD /* webrtcsessiondescriptionfactory.h */,
 				431730541D509F04003B5883 /* BUILD.gn */,
 				431730551D509F04003B5883 /* bundlefilter.cc */,
 				431730561D509F04003B5883 /* bundlefilter.h */,
@@ -125,16 +203,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				431730931D509F05003B5883 /* srtpfilter.h in Headers */,
+				43EFD1CF1E57085300E3DEAD /* peerconnectionfactory.h in Headers */,
+				43EFD1D51E57085300E3DEAD /* rtpsender.h in Headers */,
+				43EFD1DB1E57085300E3DEAD /* videotracksource.h in Headers */,
+				43EFD1D31E57085300E3DEAD /* rtpreceiver.h in Headers */,
 				4317308C1D509F05003B5883 /* mediasession.h in Headers */,
 				4317307F1D509F05003B5883 /* channel.h in Headers */,
 				4317307C1D509F05003B5883 /* bundlefilter.h in Headers */,
 				431730881D509F05003B5883 /* externalhmac.h in Headers */,
+				43EFD1D11E57085300E3DEAD /* remoteaudiosource.h in Headers */,
+				43EFD1CD1E57085300E3DEAD /* peerconnection.h in Headers */,
 				431730851D509F05003B5883 /* currentspeakermonitor.h in Headers */,
+				43EFD1D71E57085300E3DEAD /* videocapturertracksource.h in Headers */,
 				431730951D509F05003B5883 /* voicechannel.h in Headers */,
+				43EFD1C71E57085300E3DEAD /* mediacontroller.h in Headers */,
+				43EFD1C91E57085300E3DEAD /* mediastream.h in Headers */,
 				431730901D509F05003B5883 /* rtcpmuxfilter.h in Headers */,
 				431730821D509F05003B5883 /* channelmanager.h in Headers */,
+				43EFD1DF1E57085300E3DEAD /* webrtcsessiondescriptionfactory.h in Headers */,
 				4317308A1D509F05003B5883 /* mediamonitor.h in Headers */,
+				43EFD1D91E57085300E3DEAD /* videotrack.h in Headers */,
 				4317307A1D509F04003B5883 /* audiomonitor.h in Headers */,
+				43EFD1CB1E57085300E3DEAD /* ortcfactory.h in Headers */,
+				43EFD1DD1E57085300E3DEAD /* webrtcsession.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,14 +287,27 @@
 			files = (
 				431730921D509F05003B5883 /* srtpfilter.cc in Sources */,
 				431730791D509F04003B5883 /* audiomonitor.cc in Sources */,
+				43EFD1C81E57085300E3DEAD /* mediastream.cc in Sources */,
+				43EFD1CE1E57085300E3DEAD /* peerconnectionfactory.cc in Sources */,
+				43EFD1C61E57085300E3DEAD /* mediacontroller.cc in Sources */,
+				43EFD1CA1E57085300E3DEAD /* ortcfactory.cc in Sources */,
+				43EFD1DE1E57085300E3DEAD /* webrtcsessiondescriptionfactory.cc in Sources */,
 				431730841D509F05003B5883 /* currentspeakermonitor.cc in Sources */,
+				43EFD1DC1E57085300E3DEAD /* webrtcsession.cc in Sources */,
+				43EFD1D01E57085300E3DEAD /* remoteaudiosource.cc in Sources */,
 				4317308B1D509F05003B5883 /* mediasession.cc in Sources */,
 				4317307B1D509F05003B5883 /* bundlefilter.cc in Sources */,
 				4317308F1D509F05003B5883 /* rtcpmuxfilter.cc in Sources */,
+				43EFD1CC1E57085300E3DEAD /* peerconnection.cc in Sources */,
+				43EFD1D61E57085300E3DEAD /* videocapturertracksource.cc in Sources */,
+				43EFD1DA1E57085300E3DEAD /* videotracksource.cc in Sources */,
+				43EFD1D81E57085300E3DEAD /* videotrack.cc in Sources */,
 				431730891D509F05003B5883 /* mediamonitor.cc in Sources */,
 				431730871D509F05003B5883 /* externalhmac.cc in Sources */,
 				4317307E1D509F05003B5883 /* channel.cc in Sources */,
+				43EFD1D41E57085300E3DEAD /* rtpsender.cc in Sources */,
 				431730811D509F05003B5883 /* channelmanager.cc in Sources */,
+				43EFD1D21E57085300E3DEAD /* rtpreceiver.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

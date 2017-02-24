@@ -59,6 +59,10 @@
 		438775391D4F3EF300E6F9E9 /* video_render_frames.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438774F81D4F3EF300E6F9E9 /* video_render_frames.cc */; };
 		4387753A1D4F3EF300E6F9E9 /* video_render_frames.h in Headers */ = {isa = PBXBuildFile; fileRef = 438774F91D4F3EF300E6F9E9 /* video_render_frames.h */; };
 		4387753B1D4F3EF300E6F9E9 /* video_render_frames.h in Headers */ = {isa = PBXBuildFile; fileRef = 438774F91D4F3EF300E6F9E9 /* video_render_frames.h */; };
+		43EFD2211E5AE36200E3DEAD /* h264_bitstream_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD21D1E5AE36200E3DEAD /* h264_bitstream_parser.cc */; };
+		43EFD2221E5AE36200E3DEAD /* h264_bitstream_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD21E1E5AE36200E3DEAD /* h264_bitstream_parser.h */; };
+		43EFD2231E5AE36200E3DEAD /* profile_level_id.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD21F1E5AE36200E3DEAD /* profile_level_id.cc */; };
+		43EFD2241E5AE36200E3DEAD /* profile_level_id.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2201E5AE36200E3DEAD /* profile_level_id.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +95,10 @@
 		438774F71D4F3EF300E6F9E9 /* video_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_frame.cc; sourceTree = "<group>"; };
 		438774F81D4F3EF300E6F9E9 /* video_render_frames.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_render_frames.cc; sourceTree = "<group>"; };
 		438774F91D4F3EF300E6F9E9 /* video_render_frames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_render_frames.h; sourceTree = "<group>"; };
+		43EFD21D1E5AE36200E3DEAD /* h264_bitstream_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = h264_bitstream_parser.cc; sourceTree = "<group>"; };
+		43EFD21E1E5AE36200E3DEAD /* h264_bitstream_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = h264_bitstream_parser.h; sourceTree = "<group>"; };
+		43EFD21F1E5AE36200E3DEAD /* profile_level_id.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profile_level_id.cc; sourceTree = "<group>"; };
+		43EFD2201E5AE36200E3DEAD /* profile_level_id.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profile_level_id.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +162,10 @@
 			children = (
 				438774D81D4F3EF300E6F9E9 /* h264_common.cc */,
 				438774D91D4F3EF300E6F9E9 /* h264_common.h */,
+				43EFD21D1E5AE36200E3DEAD /* h264_bitstream_parser.cc */,
+				43EFD21E1E5AE36200E3DEAD /* h264_bitstream_parser.h */,
+				43EFD21F1E5AE36200E3DEAD /* profile_level_id.cc */,
+				43EFD2201E5AE36200E3DEAD /* profile_level_id.h */,
 				438774DA1D4F3EF300E6F9E9 /* pps_parser.cc */,
 				438774DB1D4F3EF300E6F9E9 /* pps_parser.h */,
 				438774DD1D4F3EF300E6F9E9 /* sps_parser.cc */,
@@ -214,8 +226,10 @@
 				438775281D4F3EF300E6F9E9 /* video_image.h in Headers */,
 				438775241D4F3EF300E6F9E9 /* incoming_video_stream.h in Headers */,
 				438775021D4F3EF300E6F9E9 /* h264_common.h in Headers */,
+				43EFD2241E5AE36200E3DEAD /* profile_level_id.h in Headers */,
 				4387751C1D4F3EF300E6F9E9 /* bitrate_adjuster.h in Headers */,
 				438775061D4F3EF300E6F9E9 /* pps_parser.h in Headers */,
+				43EFD2221E5AE36200E3DEAD /* h264_bitstream_parser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				438775041D4F3EF300E6F9E9 /* pps_parser.cc in Sources */,
+				43EFD2211E5AE36200E3DEAD /* h264_bitstream_parser.cc in Sources */,
 				438774FE1D4F3EF300E6F9E9 /* corevideo_frame_buffer.cc in Sources */,
 				4387752A1D4F3EF300E6F9E9 /* incoming_video_stream.cc in Sources */,
 				4387750A1D4F3EF300E6F9E9 /* sps_parser.cc in Sources */,
@@ -326,6 +341,7 @@
 				438775101D4F3EF300E6F9E9 /* sps_vui_rewriter.cc in Sources */,
 				438775001D4F3EF300E6F9E9 /* h264_common.cc in Sources */,
 				438774FC1D4F3EF300E6F9E9 /* bitrate_adjuster.cc in Sources */,
+				43EFD2231E5AE36200E3DEAD /* profile_level_id.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +454,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
 					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -457,6 +475,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
 					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (

@@ -236,8 +236,7 @@
 		43C037001D51BE5C0022DED1 /* sequenced_task_checker_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031831D4EF0C200BB9828 /* sequenced_task_checker_impl.cc */; };
 		43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C71D4EF0C300BB9828 /* task_queue_gcd.cc */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		43C0C70C1D4F26810058AC82 /* task_queue_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C91D4EF0C300BB9828 /* task_queue_posix.cc */; };
-		43C0C70D1D4F26850058AC82 /* task_queue_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C91D4EF0C300BB9828 /* task_queue_posix.cc */; };
+		43C20DB71E5BFAD800B727CC /* task_queue_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43A031C91D4EF0C300BB9828 /* task_queue_posix.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1106,11 +1105,11 @@
 				43A032B31D4EF0C300BB9828 /* json.cc in Sources */,
 				4303DAF61E4826F500CD116B /* Logging.java in Sources */,
 				43A032F11D4EF0C300BB9828 /* messagehandler.cc in Sources */,
-				43C0C70C1D4F26810058AC82 /* task_queue_posix.cc in Sources */,
 				43A032CB1D4EF0C300BB9828 /* logsinks.cc in Sources */,
 				43A2943E1E376BBD00B6BE98 /* applefilesystem.mm in Sources */,
 				43A033131D4EF0C300BB9828 /* openssladapter.cc in Sources */,
 				43A2946E1E376BBD00B6BE98 /* file_posix.cc in Sources */,
+				43C20DB71E5BFAD800B727CC /* task_queue_posix.cc in Sources */,
 				43A033471D4EF0C400BB9828 /* rate_limiter.cc in Sources */,
 				4303DB701E4826F500CD116B /* weak_ptr.cc in Sources */,
 				43A033871D4EF0C400BB9828 /* socketpool.cc in Sources */,
@@ -1213,7 +1212,6 @@
 				43A033A61D4EF0C400BB9828 /* stringutils.cc in Sources */,
 				4303DAF71E4826F500CD116B /* Logging.java in Sources */,
 				43A032D81D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */,
-				43C0C70D1D4F26850058AC82 /* task_queue_posix.cc in Sources */,
 				43A0329A1D4EF0C300BB9828 /* httpcommon.cc in Sources */,
 				43A0325A1D4EF0C300BB9828 /* checks.cc in Sources */,
 				43A0334C1D4EF0C400BB9828 /* rate_statistics.cc in Sources */,
