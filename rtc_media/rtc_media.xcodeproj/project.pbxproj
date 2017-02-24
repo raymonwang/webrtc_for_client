@@ -58,8 +58,22 @@
 		439FC5251D508D2000939424 /* webrtcvideoengine2.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC4AA1D508D2000939424 /* webrtcvideoengine2.h */; };
 		439FC5281D508D2000939424 /* webrtcvideoframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC4AD1D508D2000939424 /* webrtcvideoframe.h */; };
 		439FC52D1D508D2000939424 /* webrtcvoe.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC4B21D508D2000939424 /* webrtcvoe.h */; };
-		439FC52E1D508D2000939424 /* webrtcvoiceengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439FC4B31D508D2000939424 /* webrtcvoiceengine.cc */; };
 		439FC52F1D508D2000939424 /* webrtcvoiceengine.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC4B41D508D2000939424 /* webrtcvoiceengine.h */; };
+		43EFD20F1E5AE26600E3DEAD /* fakewebrtcdeviceinfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1FF1E5AE26600E3DEAD /* fakewebrtcdeviceinfo.h */; };
+		43EFD2101E5AE26600E3DEAD /* fakewebrtcvcmfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2001E5AE26600E3DEAD /* fakewebrtcvcmfactory.h */; };
+		43EFD2111E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2011E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h */; };
+		43EFD2121E5AE26600E3DEAD /* fakewebrtcvideoengine.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2021E5AE26600E3DEAD /* fakewebrtcvideoengine.h */; };
+		43EFD2131E5AE26600E3DEAD /* fakewebrtcvoiceengine.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2031E5AE26600E3DEAD /* fakewebrtcvoiceengine.h */; };
+		43EFD2141E5AE26600E3DEAD /* internaldecoderfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2041E5AE26600E3DEAD /* internaldecoderfactory.cc */; };
+		43EFD2151E5AE26600E3DEAD /* internaldecoderfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2051E5AE26600E3DEAD /* internaldecoderfactory.h */; };
+		43EFD2161E5AE26600E3DEAD /* internalencoderfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2061E5AE26600E3DEAD /* internalencoderfactory.cc */; };
+		43EFD2171E5AE26600E3DEAD /* internalencoderfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2071E5AE26600E3DEAD /* internalencoderfactory.h */; };
+		43EFD2181E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2081E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.cc */; };
+		43EFD2191E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2091E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.h */; };
+		43EFD21A1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD20A1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.cc */; };
+		43EFD21B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD20B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h */; };
+		43EFD21C1E5AE26600E3DEAD /* webrtcvideoencoderfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD20C1E5AE26600E3DEAD /* webrtcvideoencoderfactory.cc */; };
+		43EFD2421E5AE7F700E3DEAD /* webrtcvoiceengine.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439FC4B31D508D2000939424 /* webrtcvoiceengine.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +134,20 @@
 		439FC4B31D508D2000939424 /* webrtcvoiceengine.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcvoiceengine.cc; sourceTree = "<group>"; };
 		439FC4B41D508D2000939424 /* webrtcvoiceengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webrtcvoiceengine.h; sourceTree = "<group>"; };
 		439FC4B81D508D2000939424 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43EFD1FF1E5AE26600E3DEAD /* fakewebrtcdeviceinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcdeviceinfo.h; sourceTree = "<group>"; };
+		43EFD2001E5AE26600E3DEAD /* fakewebrtcvcmfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvcmfactory.h; sourceTree = "<group>"; };
+		43EFD2011E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvideocapturemodule.h; sourceTree = "<group>"; };
+		43EFD2021E5AE26600E3DEAD /* fakewebrtcvideoengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvideoengine.h; sourceTree = "<group>"; };
+		43EFD2031E5AE26600E3DEAD /* fakewebrtcvoiceengine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fakewebrtcvoiceengine.h; sourceTree = "<group>"; };
+		43EFD2041E5AE26600E3DEAD /* internaldecoderfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = internaldecoderfactory.cc; sourceTree = "<group>"; };
+		43EFD2051E5AE26600E3DEAD /* internaldecoderfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internaldecoderfactory.h; sourceTree = "<group>"; };
+		43EFD2061E5AE26600E3DEAD /* internalencoderfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = internalencoderfactory.cc; sourceTree = "<group>"; };
+		43EFD2071E5AE26600E3DEAD /* internalencoderfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = internalencoderfactory.h; sourceTree = "<group>"; };
+		43EFD2081E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videodecodersoftwarefallbackwrapper.cc; sourceTree = "<group>"; };
+		43EFD2091E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videodecodersoftwarefallbackwrapper.h; sourceTree = "<group>"; };
+		43EFD20A1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videoencodersoftwarefallbackwrapper.cc; sourceTree = "<group>"; };
+		43EFD20B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoencodersoftwarefallbackwrapper.h; sourceTree = "<group>"; };
+		43EFD20C1E5AE26600E3DEAD /* webrtcvideoencoderfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = webrtcvideoencoderfactory.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +233,20 @@
 			isa = PBXGroup;
 			children = (
 				439FC48D1D508D2000939424 /* constants.h */,
+				43EFD1FF1E5AE26600E3DEAD /* fakewebrtcdeviceinfo.h */,
+				43EFD2001E5AE26600E3DEAD /* fakewebrtcvcmfactory.h */,
+				43EFD2011E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h */,
+				43EFD2021E5AE26600E3DEAD /* fakewebrtcvideoengine.h */,
+				43EFD2031E5AE26600E3DEAD /* fakewebrtcvoiceengine.h */,
+				43EFD2041E5AE26600E3DEAD /* internaldecoderfactory.cc */,
+				43EFD2051E5AE26600E3DEAD /* internaldecoderfactory.h */,
+				43EFD2061E5AE26600E3DEAD /* internalencoderfactory.cc */,
+				43EFD2071E5AE26600E3DEAD /* internalencoderfactory.h */,
+				43EFD2081E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.cc */,
+				43EFD2091E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.h */,
+				43EFD20A1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.cc */,
+				43EFD20B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h */,
+				43EFD20C1E5AE26600E3DEAD /* webrtcvideoencoderfactory.cc */,
 				439FC4961D508D2000939424 /* nullwebrtcvideoengine.h */,
 				439FC4981D508D2000939424 /* payload_type_mapper.cc */,
 				439FC4991D508D2000939424 /* payload_type_mapper.h */,
@@ -243,15 +285,22 @@
 				439FC5001D508D2000939424 /* videosourceinterface.h in Headers */,
 				439FC4F51D508D2000939424 /* videocommon.h in Headers */,
 				439FC51A1D508D2000939424 /* webrtcmediaengine.h in Headers */,
+				43EFD2131E5AE26600E3DEAD /* fakewebrtcvoiceengine.h in Headers */,
+				43EFD2151E5AE26600E3DEAD /* internaldecoderfactory.h in Headers */,
 				439FC5111D508D2000939424 /* nullwebrtcvideoengine.h in Headers */,
+				43EFD2101E5AE26600E3DEAD /* fakewebrtcvcmfactory.h in Headers */,
 				439FC4EE1D508D2000939424 /* videobroadcaster.h in Headers */,
 				439FC4F31D508D2000939424 /* videocapturerfactory.h in Headers */,
 				439FC5281D508D2000939424 /* webrtcvideoframe.h in Headers */,
 				439FC52D1D508D2000939424 /* webrtcvoe.h in Headers */,
 				439FC5231D508D2000939424 /* webrtcvideoencoderfactory.h in Headers */,
 				439FC4D51D508D2000939424 /* mediaconstants.h in Headers */,
+				43EFD2121E5AE26600E3DEAD /* fakewebrtcvideoengine.h in Headers */,
+				43EFD20F1E5AE26600E3DEAD /* fakewebrtcdeviceinfo.h in Headers */,
 				439FC5221D508D2000939424 /* webrtcvideodecoderfactory.h in Headers */,
 				439FC4C91D508D2000939424 /* cryptoparams.h in Headers */,
+				43EFD21B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h in Headers */,
+				43EFD2111E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h in Headers */,
 				439FC4CA1D508D2000939424 /* device.h in Headers */,
 				439FC4C21D508D2000939424 /* audiosource.h in Headers */,
 				439FC4FD1D508D2000939424 /* videosinkinterface.h in Headers */,
@@ -260,12 +309,14 @@
 				439FC5251D508D2000939424 /* webrtcvideoengine2.h in Headers */,
 				439FC4FF1D508D2000939424 /* videosourcebase.h in Headers */,
 				439FC4DF1D508D2000939424 /* rtputils.h in Headers */,
+				43EFD2191E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.h in Headers */,
 				439FC4EB1D508D2000939424 /* videoadapter.h in Headers */,
 				439FC51D1D508D2000939424 /* webrtcvideocapturer.h in Headers */,
 				439FC4F11D508D2000939424 /* videocapturer.h in Headers */,
 				439FC5161D508D2000939424 /* simulcast.h in Headers */,
 				439FC5081D508D2000939424 /* constants.h in Headers */,
 				439FC4D71D508D2000939424 /* mediaengine.h in Headers */,
+				43EFD2171E5AE26600E3DEAD /* internalencoderfactory.h in Headers */,
 				439FC5201D508D2000939424 /* webrtcvideocapturerfactory.h in Headers */,
 				439FC5181D508D2000939424 /* webrtccommon.h in Headers */,
 				439FC4D21D508D2000939424 /* mediachannel.h in Headers */,
@@ -331,8 +382,11 @@
 			files = (
 				439FC51F1D508D2000939424 /* webrtcvideocapturerfactory.cc in Sources */,
 				439FC51C1D508D2000939424 /* webrtcvideocapturer.cc in Sources */,
+				43EFD2161E5AE26600E3DEAD /* internalencoderfactory.cc in Sources */,
 				439FC4ED1D508D2000939424 /* videobroadcaster.cc in Sources */,
 				439FC4D61D508D2000939424 /* mediaengine.cc in Sources */,
+				43EFD21A1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.cc in Sources */,
+				43EFD2181E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.cc in Sources */,
 				439FC4F41D508D2000939424 /* videocommon.cc in Sources */,
 				439FC5241D508D2000939424 /* webrtcvideoengine2.cc in Sources */,
 				439FC5151D508D2000939424 /* simulcast.cc in Sources */,
@@ -342,10 +396,12 @@
 				439FC5131D508D2000939424 /* payload_type_mapper.cc in Sources */,
 				439FC4C31D508D2000939424 /* codec.cc in Sources */,
 				439FC5191D508D2000939424 /* webrtcmediaengine.cc in Sources */,
+				43EFD21C1E5AE26600E3DEAD /* webrtcvideoencoderfactory.cc in Sources */,
 				439FC4EA1D508D2000939424 /* videoadapter.cc in Sources */,
 				439FC4D41D508D2000939424 /* mediaconstants.cc in Sources */,
+				43EFD2421E5AE7F700E3DEAD /* webrtcvoiceengine.cc in Sources */,
 				439FC4D81D508D2000939424 /* rtpdataengine.cc in Sources */,
-				439FC52E1D508D2000939424 /* webrtcvoiceengine.cc in Sources */,
+				43EFD2141E5AE26600E3DEAD /* internaldecoderfactory.cc in Sources */,
 				439FC4FE1D508D2000939424 /* videosourcebase.cc in Sources */,
 				439FC4E21D508D2000939424 /* streamparams.cc in Sources */,
 			);
@@ -441,8 +497,9 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
 					HAVE_WEBRTC_VIDEO,
 					HAVE_WEBRTC_VOICE,
 					"WEBRTC_INTELLIGIBILITY_ENHANCER=1",
@@ -465,8 +522,9 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
 					HAVE_WEBRTC_VIDEO,
 					HAVE_WEBRTC_VOICE,
 					"WEBRTC_INTELLIGIBILITY_ENHANCER=1",
