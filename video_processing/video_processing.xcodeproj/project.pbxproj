@@ -346,9 +346,14 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
 					WEBRTC_POSIX,
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -362,9 +367,14 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
 					WEBRTC_POSIX,
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
