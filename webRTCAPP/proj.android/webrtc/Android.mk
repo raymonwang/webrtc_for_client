@@ -21,6 +21,8 @@ LOCAL_MODULE_FILENAME := libwebrtc
 
 WEBRTC_SOURCE_PATH := $(LOCAL_PATH)/../../Classes
 
+WEBRTC_OVERRIDES_SOURCE_PATH := $(LOCAL_PATH)/../../../../RTChatSdk/Client/ios/RTChat/Classes/webrtc_overrides
+
 MY_FILES_WEBRTC_BASE_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/base
 MY_FILES_WEBRTC_VOICE_ENGINE_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/voice_engine
 MY_FILES_WEBRTC_SYSTEM_WRAPPER_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/system_wrappers
@@ -29,6 +31,7 @@ MY_FILES_WEBRTC_AUDIO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/audio
 MY_FILES_WEBRTC_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/video
 MY_FILES_WEBRTC_COMMON_AUDIO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_audio
 MY_FILES_WEBRTC_COMMON_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_video
+MY_FILES_WEBRTC_OVERRIDES_PATH  :=  $(WEBRTC_OVERRIDES_SOURCE_PATH)/webrtc
 
 MY_FILES_SUFFIX := %.cpp %.c %.cc
 
@@ -53,7 +56,6 @@ MY_SRC_FILES := $(call not-containing,macutils,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,macconversion,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,gcd,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,test,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,_sse,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,mips,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,examples,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,corevideo,$(MY_SRC_FILES))
@@ -75,6 +77,29 @@ MY_SRC_FILES := $(call not-containing,cpu_features_linux,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,replay,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,loopback,$(MY_SRC_FILES))
 
+#remove defautl files
+MY_SRC_FILES := $(call not-containing,audio_manager.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,audio_record_jni.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,audio_settings.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,audio_track_jni.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,opensles_player.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,opensles_recorder.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,audio_processing_impl.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,voe_audio_processing_impl.cc,$(MY_SRC_FILES))
+
+#add change files
+MY_SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_OVERRIDES_PATH)/,$(MY_FILES_SUFFIX))
+
+
+ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
+MY_SRC_FILES := $(call not-containing,_sse,$(MY_SRC_FILES))
+else ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
+MY_SRC_FILES := $(call not-containing,_sse,$(MY_SRC_FILES))
+else ifeq ($(TARGET_ARCH_ABI), x86)
+MY_SRC_FILES := $(call not-containing,_neon,$(MY_SRC_FILES))
+else ifeq ($(TARGET_ARCH_ABI), x86_64)
+MY_SRC_FILES := $(call not-containing,_neon,$(MY_SRC_FILES))
+endif
 
 #$(warning "$(MY_SRC_FILES)")
 
@@ -86,7 +111,8 @@ LOCAL_SRC_FILES += $(MY_SRC_FILES:$(LOCAL_PATH)/%=%) \
 				   $(WEBRTC_SOURCE_PATH)/webrtc/common_audio/signal_processing/get_hanning_window.c\
 				   $(WEBRTC_SOURCE_PATH)/webrtc/modules/audio_coding/codecs/ilbc/window32_w32.c
 
-LOCAL_C_INCLUDES := $(WEBRTC_SOURCE_PATH) \
+LOCAL_C_INCLUDES := $(WEBRTC_OVERRIDES_SOURCE_PATH) \
+                    $(WEBRTC_SOURCE_PATH) \
 					$(WEBRTC_SOURCE_PATH)/third_party/boringssl/src/include \
 					$(WEBRTC_SOURCE_PATH)/third_party/jsoncpp/source/include \
 					$(WEBRTC_SOURCE_PATH)/third_party/libyuv/include \
@@ -101,6 +127,10 @@ ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
 LOCAL_C_INCLUDES += $(WEBRTC_SOURCE_PATH)/third_party/ffmpeg/chromium/config/Chromium/android/arm-neon
 else ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
 LOCAL_C_INCLUDES += $(WEBRTC_SOURCE_PATH)/third_party/ffmpeg/chromium/config/Chromium/android/arm64
+else ifeq ($(TARGET_ARCH_ABI), x86)
+LOCAL_C_INCLUDES += $(WEBRTC_SOURCE_PATH)/third_party/ffmpeg/chromium/config/Chromium/android/ia32
+else ifeq ($(TARGET_ARCH_ABI), x86_64)
+LOCAL_C_INCLUDES += $(WEBRTC_SOURCE_PATH)/third_party/ffmpeg/chromium/config/Chromium/android/x64
 endif
 	
 #$(warning "$(LOCAL_C_INCLUDES)")			    
@@ -111,7 +141,7 @@ LOCAL_CFLAGS += -Wno-narrowing
 
 LOCAL_CFLAGS += -DWEBRTC_INTELLIGIBILITY_ENHANCER=1 -DWEBRTC_NS_FIXED -DWEBRTC_AEC_DEBUG_DUMP=0 -DWEBRTC_APM_DEBUG_DUMP=0 -DWEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE
 
-LOCAL_CFLAGS += -DWEBRTC_CODEC_OPUS -DOPUS_FIXED_POINT -DWEBRTC_CODEC_ISACFX -DWEBRTC_CODEC_ILBC -DWEBRTC_CODEC_G722 -DWEBRTC_CODEC_RED
+LOCAL_CFLAGS += -DWEBRTC_CODEC_OPUS -DOPUS_FIXED_POINT -DWEBRTC_CODEC_ISACFX -DWEBRTC_CODEC_ILBC -DWEBRTC_CODEC_G722 -DWEBRTC_CODEC_RED -DWEBRTC_HOWLINGCONTROL
 
 ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
 LOCAL_CFLAGS += -DWEBRTC_ARCH_ARM -DWEBRTC_ARCH_ARM_V7 -DWEBRTC_HAS_NEON
