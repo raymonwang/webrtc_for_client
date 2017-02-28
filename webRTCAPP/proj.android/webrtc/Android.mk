@@ -31,6 +31,10 @@ MY_FILES_WEBRTC_AUDIO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/audio
 MY_FILES_WEBRTC_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/video
 MY_FILES_WEBRTC_COMMON_AUDIO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_audio
 MY_FILES_WEBRTC_COMMON_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_video
+MY_FILES_WEBRTC_MEDIA_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/media
+MY_FILES_WEBRTC_LOGGING_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/logging/rtc_event_log
+MY_FILES_WEBRTC_CALL_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/call
+MY_FILES_WEBRTC_API_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/api
 MY_FILES_WEBRTC_OVERRIDES_PATH  :=  $(WEBRTC_OVERRIDES_SOURCE_PATH)/webrtc
 
 MY_FILES_SUFFIX := %.cpp %.c %.cc
@@ -46,6 +50,10 @@ SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_AUDIO_PATH)/,$(MY_FILES_SUFFIX)
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_VIDEO_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_COMMON_AUDIO_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_COMMON_VIDEO_PATH)/,$(MY_FILES_SUFFIX))
+SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_MEDIA_PATH)/,$(MY_FILES_SUFFIX))
+SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_LOGGING_PATH)/,$(MY_FILES_SUFFIX))
+SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_CALL_PATH)/,$(MY_FILES_SUFFIX))
+SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_API_PATH)/,$(MY_FILES_SUFFIX))
 #$(warning "$(SRC_FILES)")
 
 not-containing = $(foreach v,$2,$(if $(findstring $1,$v),,$v))
@@ -59,7 +67,6 @@ MY_SRC_FILES := $(call not-containing,test,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,mips,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,examples,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,corevideo,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,rtc_event_log,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,fake,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,mock,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,openmax,$(MY_SRC_FILES))
@@ -77,7 +84,8 @@ MY_SRC_FILES := $(call not-containing,cpu_features_linux,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,replay,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,loopback,$(MY_SRC_FILES))
 
-#remove defautl files
+#remove default files
+MY_SRC_FILES := $(call not-containing,rtc_event_log2rtp_dump.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,audio_manager.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,audio_record_jni.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,audio_settings.cc,$(MY_SRC_FILES))
@@ -119,6 +127,7 @@ LOCAL_C_INCLUDES := $(WEBRTC_OVERRIDES_SOURCE_PATH) \
 					$(WEBRTC_SOURCE_PATH)/third_party/libvpx/source/libvpx \
 					$(WEBRTC_SOURCE_PATH)/third_party/opus/src/include \
 					$(WEBRTC_SOURCE_PATH)/third_party/ffmpeg \
+                                        $(WEBRTC_SOURCE_PATH)/third_party/protobuf/src \
 					$(WEBRTC_SOURCE_PATH)/webrtc/common_audio/signal_processing/include \
 				    $(WEBRTC_SOURCE_PATH)/webrtc/modules/audio_coding/codecs/isac/main/include \
 				    $(NDK_ROOT)/sources/android/cpufeatures \
@@ -135,8 +144,8 @@ endif
 	
 #$(warning "$(LOCAL_C_INCLUDES)")			    
 
-LOCAL_CFLAGS += -DANDROID -DWEBRTC_POSIX -DWEBRTC_ANDROID -DWEBRTC_LINUX
-LOCAL_CFLAGS += -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D__GNU_SOURCE=1 -DWEBRTC_BUILD_LIBEVENT
+LOCAL_CFLAGS += -DANDROID -DWEBRTC_POSIX -DWEBRTC_ANDROID -DWEBRTC_LINUX 
+LOCAL_CFLAGS += -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D__GNU_SOURCE=1 -DWEBRTC_BUILD_LIBEVENT -DGOOGLE_PROTOBUF_NO_RTTI -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DUSE_LIBJPEG_TURBO=1 -DHAVE_WEBRTC_VIDEO -DHAVE_WEBRTC_VOICE
 LOCAL_CFLAGS += -Wno-narrowing
 
 LOCAL_CFLAGS += -DWEBRTC_INTELLIGIBILITY_ENHANCER=1 -DWEBRTC_NS_FIXED -DWEBRTC_AEC_DEBUG_DUMP=0 -DWEBRTC_APM_DEBUG_DUMP=0 -DWEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE
