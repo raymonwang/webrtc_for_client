@@ -401,6 +401,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
 					WEBRTC_POSIX,
 					HAVE_SRTP,
 				);
@@ -422,6 +424,8 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
 					WEBRTC_POSIX,
 					HAVE_SRTP,
 				);
