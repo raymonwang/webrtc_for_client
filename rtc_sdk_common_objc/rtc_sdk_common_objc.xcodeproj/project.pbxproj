@@ -399,8 +399,9 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/sdk/objc/Framework/Headers",
@@ -418,8 +419,9 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					WEBRTC_POSIX,
 					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../webRTCAPP/Classes/webrtc/sdk/objc/Framework/Headers",
