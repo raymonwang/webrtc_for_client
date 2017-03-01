@@ -1700,7 +1700,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
 					OPUS_BUILD,
 					"OPUS_EXPORT=",
 					HAVE_LRINT,
@@ -1734,7 +1737,10 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_MAC,
+					WEBRTC_POSIX,
 					OPUS_BUILD,
 					"OPUS_EXPORT=",
 					HAVE_LRINT,

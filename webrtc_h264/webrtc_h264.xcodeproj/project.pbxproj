@@ -246,6 +246,8 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_POSIX,
+					WEBRTC_USE_H264,
+					WEBRTC_INITIALIZE_FFMPEG,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../webRTCAPP/Classes",
@@ -267,6 +269,8 @@
 					WEBRTC_IOS,
 					WEBRTC_MAC,
 					WEBRTC_POSIX,
+					WEBRTC_USE_H264,
+					WEBRTC_INITIALIZE_FFMPEG,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../webRTCAPP/Classes",
