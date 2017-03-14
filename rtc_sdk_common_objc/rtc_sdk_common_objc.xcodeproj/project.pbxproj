@@ -36,7 +36,6 @@
 		439FC1E01D5072FB00939424 /* RTCRtpSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC16A1D5072FB00939424 /* RTCRtpSender.h */; };
 		439FC1E11D5072FB00939424 /* RTCSessionDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC16B1D5072FB00939424 /* RTCSessionDescription.h */; };
 		439FC1E21D5072FB00939424 /* RTCSSLAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC16C1D5072FB00939424 /* RTCSSLAdapter.h */; };
-		439FC1E31D5072FB00939424 /* RTCStatsReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC16D1D5072FB00939424 /* RTCStatsReport.h */; };
 		439FC1E41D5072FB00939424 /* RTCTracing.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC16E1D5072FB00939424 /* RTCTracing.h */; };
 		439FC1E51D5072FB00939424 /* RTCVideoFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC16F1D5072FB00939424 /* RTCVideoFrame.h */; };
 		439FC1E61D5072FB00939424 /* RTCVideoRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1701D5072FB00939424 /* RTCVideoRenderer.h */; };
@@ -80,7 +79,6 @@
 		439FC16A1D5072FB00939424 /* RTCRtpSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCRtpSender.h; sourceTree = "<group>"; };
 		439FC16B1D5072FB00939424 /* RTCSessionDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCSessionDescription.h; sourceTree = "<group>"; };
 		439FC16C1D5072FB00939424 /* RTCSSLAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCSSLAdapter.h; sourceTree = "<group>"; };
-		439FC16D1D5072FB00939424 /* RTCStatsReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCStatsReport.h; sourceTree = "<group>"; };
 		439FC16E1D5072FB00939424 /* RTCTracing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCTracing.h; sourceTree = "<group>"; };
 		439FC16F1D5072FB00939424 /* RTCVideoFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoFrame.h; sourceTree = "<group>"; };
 		439FC1701D5072FB00939424 /* RTCVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCVideoRenderer.h; sourceTree = "<group>"; };
@@ -189,7 +187,6 @@
 				439FC16A1D5072FB00939424 /* RTCRtpSender.h */,
 				439FC16B1D5072FB00939424 /* RTCSessionDescription.h */,
 				439FC16C1D5072FB00939424 /* RTCSSLAdapter.h */,
-				439FC16D1D5072FB00939424 /* RTCStatsReport.h */,
 				439FC16E1D5072FB00939424 /* RTCTracing.h */,
 				439FC16F1D5072FB00939424 /* RTCVideoFrame.h */,
 				439FC1701D5072FB00939424 /* RTCVideoRenderer.h */,
@@ -211,7 +208,6 @@
 				439FC1D21D5072FB00939424 /* RTCLogging.h in Headers */,
 				439FC1DC1D5072FB00939424 /* RTCRtpCodecParameters.h in Headers */,
 				439FC1D81D5072FB00939424 /* RTCMetricsSampleInfo.h in Headers */,
-				439FC1E31D5072FB00939424 /* RTCStatsReport.h in Headers */,
 				439FC1D61D5072FB00939424 /* RTCMediaStreamTrack.h in Headers */,
 				439FC1D91D5072FB00939424 /* RTCNSGLVideoView.h in Headers */,
 				439FC1E01D5072FB00939424 /* RTCRtpSender.h in Headers */,
