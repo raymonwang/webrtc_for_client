@@ -17,7 +17,6 @@
 		4303DCC21E48340900CD116B /* libwebrtc_common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040571D50374B009FDAE6 /* libwebrtc_common.a */; };
 		43042D001E4B51CF00817496 /* libcommon_audio_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43042CFF1E4B51CF00817496 /* libcommon_audio_armv7.a */; };
 		430B298E197F68AA0076767F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 430B298D197F68AA0076767F /* GLKit.framework */; };
-		43172F621D50946D003B5883 /* librtc_sdk_peerconnection_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC2221D5075B100939424 /* librtc_sdk_peerconnection_objc.a */; };
 		43172F631D5094A2003B5883 /* librtc_sdk_common_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC1041D50710700939424 /* librtc_sdk_common_objc.a */; };
 		43172F641D5094D2003B5883 /* libsystem_wrappers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D876F19860740009E763A /* libsystem_wrappers.a */; };
 		431730311D509720003B5883 /* libjingle_peerconnection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43982D6E198F538B0090EABA /* libjingle_peerconnection.a */; };
@@ -590,13 +589,6 @@
 			remoteGlobalIDString = 439FC0F81D50710500939424;
 			remoteInfo = rtc_sdk_common_objc;
 		};
-		439FC2211D5075B100939424 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 439FC21D1D5075B000939424 /* rtc_sdk_peerconnection_objc.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 439FC2161D5075B000939424;
-			remoteInfo = rtc_sdk_peerconnection_objc;
-		};
 		439FC43F1D508CF100939424 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 439FC43B1D508CF000939424 /* rtc_media.xcodeproj */;
@@ -941,7 +933,6 @@
 		43998B401986327B003C5793 /* media_file.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = media_file.xcodeproj; path = media_file/media_file.xcodeproj; sourceTree = "<group>"; };
 		43998B6C1986332A003C5793 /* webrtc_utility.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_utility.xcodeproj; path = webrtc_utility/webrtc_utility.xcodeproj; sourceTree = "<group>"; };
 		439FC0FF1D50710500939424 /* rtc_sdk_common_objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_sdk_common_objc.xcodeproj; path = rtc_sdk_common_objc/rtc_sdk_common_objc.xcodeproj; sourceTree = "<group>"; };
-		439FC21D1D5075B000939424 /* rtc_sdk_peerconnection_objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_sdk_peerconnection_objc.xcodeproj; path = rtc_sdk_peerconnection_objc/rtc_sdk_peerconnection_objc.xcodeproj; sourceTree = "<group>"; };
 		439FC43B1D508CF000939424 /* rtc_media.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_media.xcodeproj; path = rtc_media/rtc_media.xcodeproj; sourceTree = "<group>"; };
 		43AC8AE51E4848700092C54E /* libboringssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboringssl.a; path = webRTCAPP/libs/libboringssl.a; sourceTree = "<group>"; };
 		43AD795219907938006EAB38 /* expat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = expat.xcodeproj; path = expat/expat.xcodeproj; sourceTree = "<group>"; };
@@ -1157,7 +1148,6 @@
 				431730311D509720003B5883 /* libjingle_peerconnection.a in Frameworks */,
 				43172F641D5094D2003B5883 /* libsystem_wrappers.a in Frameworks */,
 				43172F631D5094A2003B5883 /* librtc_sdk_common_objc.a in Frameworks */,
-				43172F621D50946D003B5883 /* librtc_sdk_peerconnection_objc.a in Frameworks */,
 				432331F41E66DD5800D3D99B /* libavutil.a in Frameworks */,
 				43E03A731D2372DD00B39549 /* CoreMedia.framework in Frameworks */,
 				43E03A711D2372A900B39549 /* AudioToolbox.framework in Frameworks */,
@@ -1623,14 +1613,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		439FC21E1D5075B000939424 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				439FC2221D5075B100939424 /* librtc_sdk_peerconnection_objc.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		439FC3AA1D508ABC00939424 /* AppRTCDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1778,7 +1760,6 @@
 				4317304B1D509EEE003B5883 /* rtc_pc.xcodeproj */,
 				43C697861D22568300427D35 /* rtc_p2p.xcodeproj */,
 				439FC43B1D508CF000939424 /* rtc_media.xcodeproj */,
-				439FC21D1D5075B000939424 /* rtc_sdk_peerconnection_objc.xcodeproj */,
 				439FC0FF1D50710500939424 /* rtc_sdk_common_objc.xcodeproj */,
 				43E041AE1D50410B009FDAE6 /* webrtc_audio.xcodeproj */,
 				43E0411C1D503FCC009FDAE6 /* webrtc_video.xcodeproj */,
@@ -2255,10 +2236,6 @@
 				{
 					ProductGroup = 439FC1001D50710500939424 /* Products */;
 					ProjectRef = 439FC0FF1D50710500939424 /* rtc_sdk_common_objc.xcodeproj */;
-				},
-				{
-					ProductGroup = 439FC21E1D5075B000939424 /* Products */;
-					ProjectRef = 439FC21D1D5075B000939424 /* rtc_sdk_peerconnection_objc.xcodeproj */;
 				},
 				{
 					ProductGroup = 4328870D1980FFFD0000F16A /* Products */;
@@ -2815,13 +2792,6 @@
 			fileType = archive.ar;
 			path = librtc_sdk_common_objc.a;
 			remoteRef = 439FC1031D50710700939424 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		439FC2221D5075B100939424 /* librtc_sdk_peerconnection_objc.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = librtc_sdk_peerconnection_objc.a;
-			remoteRef = 439FC2211D5075B100939424 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		439FC4401D508CF100939424 /* librtc_media.a */ = {
