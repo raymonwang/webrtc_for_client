@@ -14,6 +14,8 @@
 #
 LOCAL_PATH := $(call my-dir)
 
+VIDEO_BUILD := true
+
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := webrtc
@@ -94,6 +96,8 @@ MY_SRC_FILES := $(call not-containing,opensles_player.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,opensles_recorder.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,audio_processing_impl.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,voe_audio_processing_impl.cc,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,jvm_android.cc,$(MY_SRC_FILES))
+
 
 #add change files
 MY_SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_OVERRIDES_PATH)/,$(MY_FILES_SUFFIX))
@@ -152,12 +156,15 @@ LOCAL_CFLAGS += -DWEBRTC_INTELLIGIBILITY_ENHANCER=1 -DWEBRTC_NS_FIXED -DWEBRTC_A
 
 LOCAL_CFLAGS += -DWEBRTC_CODEC_OPUS -DOPUS_FIXED_POINT -DWEBRTC_CODEC_ISACFX -DWEBRTC_CODEC_ILBC -DWEBRTC_CODEC_G722 -DWEBRTC_CODEC_RED -DWEBRTC_HOWLINGCONTROL
 
+ifeq ($(VIDEO_BUILD),true)
+LOCAL_CFLAGS += -DWEBRTC_USE_H264 -DWEBRTC_INITIALIZE_FFMPEG
+endif
+
 ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
 LOCAL_CFLAGS += -DWEBRTC_ARCH_ARM -DWEBRTC_ARCH_ARM_V7 -DWEBRTC_HAS_NEON
 LOCAL_CFLAGS += -mfpu=neon
 else ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
 LOCAL_CFLAGS += -DWEBRTC_ARCH_ARM -DWEBRTC_ARCH_ARM64 -DWEBRTC_HAS_NEON
-LOCAL_CFLAGS += -mfpu=neon
 endif
 
 LOCAL_CPPFLAGS += -std=gnu++11
