@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "432B2E8C19CA982B001267A7"
-               BuildableName = "libopus_osx.a"
-               BlueprintName = "opus_osx"
+               BlueprintIdentifier = "430955531994859200012AD8"
+               BuildableName = "libopus_armv7.a"
+               BlueprintName = "opus_armv7"
                ReferencedContainer = "container:opus.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "432B2E8C19CA982B001267A7"
-            BuildableName = "libopus_osx.a"
-            BlueprintName = "opus_osx"
+            BlueprintIdentifier = "430955531994859200012AD8"
+            BuildableName = "libopus_armv7.a"
+            BlueprintName = "opus_armv7"
             ReferencedContainer = "container:opus.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

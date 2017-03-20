@@ -117,6 +117,7 @@
 		43AC8B341E484F4F0092C54E /* librtc_media.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC4401D508CF100939424 /* librtc_media.a */; };
 		43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4398353C198FACD40090EABA /* libpaced_sender.a */; };
 		43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC1041D50710700939424 /* librtc_sdk_common_objc.a */; };
+		43B993C11E7AC17D00215E9C /* libopus_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B993C01E7AC17D00215E9C /* libopus_arm64.a */; };
 		43C036D91D51ACBE0022DED1 /* libwebrtc_call.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040D21D503E75009FDAE6 /* libwebrtc_call.a */; };
 		43C036DA1D51ACE80022DED1 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040A31D503BEE009FDAE6 /* libcongestion_controller.a */; };
 		43C036F61D51ADD30022DED1 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040851D503AB0009FDAE6 /* librtc_event_log.a */; };
@@ -610,6 +611,27 @@
 			remoteGlobalIDString = 43AD79BC19907B96006EAB38;
 			remoteInfo = sqlite_regexp;
 		};
+		43B993BF1E7AC17D00215E9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C67C461D20CDE000427D35 /* opus.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43B993BB1E7ABEE800215E9C;
+			remoteInfo = opus_arm64;
+		};
+		43B994151E7AC1AB00215E9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C67C461D20CDE000427D35 /* opus.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 430955531994859200012AD8;
+			remoteInfo = opus_armv7;
+		};
+		43B994171E7AC1AB00215E9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43C67C461D20CDE000427D35 /* opus.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43B992DC1E7ABEE800215E9C;
+			remoteInfo = opus_arm64;
+		};
 		43C0368F1D51A0440022DED1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C0363D1D51A0430022DED1 /* vpx.xcodeproj */;
@@ -1007,6 +1029,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B993C11E7AC17D00215E9C /* libopus_arm64.a in Frameworks */,
 				43E3FF3C1E65363700842905 /* libaudio_processing_arm64.a in Frameworks */,
 				43E3FF3D1E65363700842905 /* libaudio_processing_armv7.a in Frameworks */,
 				43EFD26F1E5AE98F00E3DEAD /* libaudio_mixer.a in Frameworks */,
@@ -1659,6 +1682,7 @@
 			isa = PBXGroup;
 			children = (
 				43C67C4C1D20CDE000427D35 /* libopus.a */,
+				43B993C01E7AC17D00215E9C /* libopus_arm64.a */,
 				43C67C4E1D20CDE000427D35 /* libopus_osx.a */,
 			);
 			name = Products;
@@ -1961,6 +1985,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				43B994161E7AC1AB00215E9C /* PBXTargetDependency */,
+				43B994181E7AC1AB00215E9C /* PBXTargetDependency */,
 				43E3FF391E65352C00842905 /* PBXTargetDependency */,
 				43E3FF3B1E65352C00842905 /* PBXTargetDependency */,
 			);
@@ -2815,6 +2841,13 @@
 			remoteRef = 43AD79C719907B97006EAB38 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		43B993C01E7AC17D00215E9C /* libopus_arm64.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libopus_arm64.a;
+			remoteRef = 43B993BF1E7AC17D00215E9C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		43C036901D51A0440022DED1 /* libvpx_armv7.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3077,6 +3110,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		43B994161E7AC1AB00215E9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = opus_armv7;
+			targetProxy = 43B994151E7AC1AB00215E9C /* PBXContainerItemProxy */;
+		};
+		43B994181E7AC1AB00215E9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = opus_arm64;
+			targetProxy = 43B994171E7AC1AB00215E9C /* PBXContainerItemProxy */;
+		};
 		43C036A91D51A0CA0022DED1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = vpx_armv7;
