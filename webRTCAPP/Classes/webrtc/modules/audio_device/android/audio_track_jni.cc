@@ -27,6 +27,9 @@
 #include "webrtc/system_wrappers/interface/thread_wrapper.h"
 #include "webrtc/system_wrappers/interface/trace.h"
 
+// test by luke
+#include "webrtc/modules/audio_device/android/audio_settings.h"
+
 namespace webrtc {
 
 JavaVM* AudioTrackJni::globalJvm = NULL;
@@ -118,7 +121,9 @@ AudioTrackJni::AudioTrackJni(const int32_t id)
       _playError(0),
       _delayPlayout(0),
       _samplingFreqOut((N_PLAY_SAMPLES_PER_SEC/1000)),
-      _maxSpeakerVolume(0) {
+      _maxSpeakerVolume(0),
+      _audioType(3),
+      _streamType(3) {
 }
 
 AudioTrackJni::~AudioTrackJni() {
@@ -419,7 +424,8 @@ int32_t AudioTrackJni::InitPlayout() {
 
     // get the method ID
     jmethodID initPlaybackID = env->GetMethodID(_javaScClass, "InitPlayback",
-                                                "(I)I");
+                                                //"(I)I");
+                                                "(III)I");//modified by luke
 
     int samplingFreq = 44100;
     if (_samplingFreqOut != 44)
@@ -430,7 +436,8 @@ int32_t AudioTrackJni::InitPlayout() {
     int retVal = -1;
 
     // Call java sc object method
-    jint res = env->CallIntMethod(_javaScObj, initPlaybackID, samplingFreq);
+    //jint res = env->CallIntMethod(_javaScObj, initPlaybackID, samplingFreq);
+    jint res = env->CallIntMethod(_javaScObj, initPlaybackID, samplingFreq, _audioType, _streamType);//modified by luke
     if (res < 0)
     {
       WEBRTC_TRACE(kTraceError, kTraceAudioDevice, _id,
@@ -1149,9 +1156,26 @@ int32_t AudioTrackJni::InitSampleRate() {
     isAttached = true;
   }
 
+  //test by luke, get the phone model
+  jmethodID getPhoeneModelID = env->GetMethodID(_javaScClass, "getPhoneModel", "()Ljava/lang/String;");
+  // call java sc object method
+  jstring jstr = static_cast<jstring>(env->CallObjectMethod(_javaScObj, getPhoeneModelID));
+  
+  const char* phoneModel  = env->GetStringUTFChars(jstr, 0);
+  
+  //set the audio settings
+  int outSettings[AUDIO_SETTING_NUMBER];
+  audio_settings(phoneModel, outSettings);
+  _audioType = outSettings[AUDIO_TYPE_INDEX];
+  _streamType = outSettings[STREAM_TYPE_INDEX];
+
+  //release env
+  env->ReleaseStringUTFChars(jstr, phoneModel);
+  
   // get the method ID
   jmethodID initPlaybackID = env->GetMethodID(_javaScClass, "InitPlayback",
-                                              "(I)I");
+                                              //"(I)I");
+                                              "(III)I");
 
   if (_samplingFreqOut > 0)
   {
@@ -1180,7 +1204,8 @@ int32_t AudioTrackJni::InitSampleRate() {
   while (keepTrying)
   {
     // call java sc object method
-    res = env->CallIntMethod(_javaScObj, initPlaybackID, samplingFreq);
+    //res = env->CallIntMethod(_javaScObj, initPlaybackID, samplingFreq);
+    res = env->CallIntMethod(_javaScObj, initPlaybackID, samplingFreq, _audioType, _streamType);//modified by zhuqian 20141102
     if (res < 0)
     {
       switch (samplingFreq)

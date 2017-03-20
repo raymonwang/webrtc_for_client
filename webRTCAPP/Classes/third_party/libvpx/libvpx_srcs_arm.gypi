@@ -1,5 +1,5 @@
 # This file is generated. Do not edit.
-# Copyright (c) 2013 The Chromium Authors. All rights reserved.
+# Copyright (c) 2014 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
@@ -104,13 +104,10 @@
     '<(libvpx_source)/vp8/decoder/onyxd_int.h',
     '<(libvpx_source)/vp8/decoder/threading.c',
     '<(libvpx_source)/vp8/decoder/treereader.h',
-    '<(libvpx_source)/vp8/encoder/arm/armv6/vp8_fast_quantize_b_armv6.asm',
     '<(libvpx_source)/vp8/encoder/arm/armv6/vp8_mse16x16_armv6.asm',
     '<(libvpx_source)/vp8/encoder/arm/armv6/vp8_short_fdct4x4_armv6.asm',
-    '<(libvpx_source)/vp8/encoder/arm/armv6/vp8_subtract_armv6.asm',
     '<(libvpx_source)/vp8/encoder/arm/armv6/walsh_v6.asm',
     '<(libvpx_source)/vp8/encoder/arm/dct_arm.c',
-    '<(libvpx_source)/vp8/encoder/arm/quantize_arm.c',
     '<(libvpx_source)/vp8/encoder/bitstream.c',
     '<(libvpx_source)/vp8/encoder/bitstream.h',
     '<(libvpx_source)/vp8/encoder/block.h',
@@ -235,6 +232,7 @@
     '<(libvpx_source)/vp9/encoder/vp9_aq_cyclicrefresh.h',
     '<(libvpx_source)/vp9/encoder/vp9_aq_variance.c',
     '<(libvpx_source)/vp9/encoder/vp9_aq_variance.h',
+    '<(libvpx_source)/vp9/encoder/vp9_avg.c',
     '<(libvpx_source)/vp9/encoder/vp9_bitstream.c',
     '<(libvpx_source)/vp9/encoder/vp9_bitstream.h',
     '<(libvpx_source)/vp9/encoder/vp9_block.h',
@@ -243,6 +241,7 @@
     '<(libvpx_source)/vp9/encoder/vp9_cost.c',
     '<(libvpx_source)/vp9/encoder/vp9_cost.h',
     '<(libvpx_source)/vp9/encoder/vp9_dct.c',
+    '<(libvpx_source)/vp9/encoder/vp9_dct.h',
     '<(libvpx_source)/vp9/encoder/vp9_encodeframe.c',
     '<(libvpx_source)/vp9/encoder/vp9_encodeframe.h',
     '<(libvpx_source)/vp9/encoder/vp9_encodemb.c',
@@ -251,6 +250,8 @@
     '<(libvpx_source)/vp9/encoder/vp9_encodemv.h',
     '<(libvpx_source)/vp9/encoder/vp9_encoder.c',
     '<(libvpx_source)/vp9/encoder/vp9_encoder.h',
+    '<(libvpx_source)/vp9/encoder/vp9_ethread.c',
+    '<(libvpx_source)/vp9/encoder/vp9_ethread.h',
     '<(libvpx_source)/vp9/encoder/vp9_extend.c',
     '<(libvpx_source)/vp9/encoder/vp9_extend.h',
     '<(libvpx_source)/vp9/encoder/vp9_firstpass.c',

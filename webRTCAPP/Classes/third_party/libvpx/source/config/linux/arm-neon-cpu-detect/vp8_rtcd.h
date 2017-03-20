@@ -7,10 +7,6 @@
 #define RTCD_EXTERN extern
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /*
  * VP8
  */
@@ -25,6 +21,10 @@ struct macroblock;
 struct variance_vtable;
 union int_mv;
 struct yv12_buffer_config;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void vp8_bilinear_predict16x16_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 void vp8_bilinear_predict16x16_armv6(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
@@ -59,10 +59,12 @@ int vp8_block_error_c(short *coeff, short *dqcoeff);
 #define vp8_block_error vp8_block_error_c
 
 void vp8_build_intra_predictors_mbuv_s_c(struct macroblockd *x, unsigned char * uabove_row, unsigned char * vabove_row,  unsigned char *uleft, unsigned char *vleft, int left_stride, unsigned char * upred_ptr, unsigned char * vpred_ptr, int pred_stride);
-#define vp8_build_intra_predictors_mbuv_s vp8_build_intra_predictors_mbuv_s_c
+void vp8_build_intra_predictors_mbuv_s_neon(struct macroblockd *x, unsigned char * uabove_row, unsigned char * vabove_row,  unsigned char *uleft, unsigned char *vleft, int left_stride, unsigned char * upred_ptr, unsigned char * vpred_ptr, int pred_stride);
+RTCD_EXTERN void (*vp8_build_intra_predictors_mbuv_s)(struct macroblockd *x, unsigned char * uabove_row, unsigned char * vabove_row,  unsigned char *uleft, unsigned char *vleft, int left_stride, unsigned char * upred_ptr, unsigned char * vpred_ptr, int pred_stride);
 
 void vp8_build_intra_predictors_mby_s_c(struct macroblockd *x, unsigned char * yabove_row, unsigned char * yleft, int left_stride, unsigned char * ypred_ptr, int y_stride);
-#define vp8_build_intra_predictors_mby_s vp8_build_intra_predictors_mby_s_c
+void vp8_build_intra_predictors_mby_s_neon(struct macroblockd *x, unsigned char * yabove_row, unsigned char * yleft, int left_stride, unsigned char * ypred_ptr, int y_stride);
+RTCD_EXTERN void (*vp8_build_intra_predictors_mby_s)(struct macroblockd *x, unsigned char * yabove_row, unsigned char * yleft, int left_stride, unsigned char * ypred_ptr, int y_stride);
 
 void vp8_clear_system_state_c();
 #define vp8_clear_system_state vp8_clear_system_state_c
@@ -119,13 +121,8 @@ int vp8_diamond_search_sad_c(struct macroblock *x, struct block *b, struct block
 #define vp8_diamond_search_sad vp8_diamond_search_sad_c
 
 void vp8_fast_quantize_b_c(struct block *, struct blockd *);
-void vp8_fast_quantize_b_armv6(struct block *, struct blockd *);
 void vp8_fast_quantize_b_neon(struct block *, struct blockd *);
 RTCD_EXTERN void (*vp8_fast_quantize_b)(struct block *, struct blockd *);
-
-void vp8_fast_quantize_b_pair_c(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-void vp8_fast_quantize_b_pair_neon(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-RTCD_EXTERN void (*vp8_fast_quantize_b_pair)(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
 
 void vp8_filter_by_weight16x16_c(unsigned char *src, int src_stride, unsigned char *dst, int dst_stride, int src_weight);
 #define vp8_filter_by_weight16x16 vp8_filter_by_weight16x16_c
@@ -148,7 +145,7 @@ unsigned int vp8_get_mb_ss_c(const short *);
 
 void vp8_intra4x4_predict_c(unsigned char *Above, unsigned char *yleft, int left_stride, int b_mode, unsigned char *dst, int dst_stride, unsigned char top_left);
 void vp8_intra4x4_predict_armv6(unsigned char *Above, unsigned char *yleft, int left_stride, int b_mode, unsigned char *dst, int dst_stride, unsigned char top_left);
-RTCD_EXTERN void (*vp8_intra4x4_predict)(unsigned char *Above, unsigned char *yleft, int left_stride, int b_mode, unsigned char *dst, int dst_stride, unsigned char top_left);
+#define vp8_intra4x4_predict vp8_intra4x4_predict_armv6
 
 void vp8_loop_filter_bh_c(unsigned char *y, unsigned char *u, unsigned char *v, int ystride, int uv_stride, struct loop_filter_info *lfi);
 void vp8_loop_filter_bh_armv6(unsigned char *y, unsigned char *u, unsigned char *v, int ystride, int uv_stride, struct loop_filter_info *lfi);
@@ -213,26 +210,11 @@ void vp8_plane_add_noise_c(unsigned char *s, char *noise, char blackclamp[16], c
 void vp8_post_proc_down_and_across_mb_row_c(unsigned char *src, unsigned char *dst, int src_pitch, int dst_pitch, int cols, unsigned char *flimits, int size);
 #define vp8_post_proc_down_and_across_mb_row vp8_post_proc_down_and_across_mb_row_c
 
-void vp8_quantize_mb_c(struct macroblock *);
-void vp8_quantize_mb_neon(struct macroblock *);
-RTCD_EXTERN void (*vp8_quantize_mb)(struct macroblock *);
-
-void vp8_quantize_mbuv_c(struct macroblock *);
-void vp8_quantize_mbuv_neon(struct macroblock *);
-RTCD_EXTERN void (*vp8_quantize_mbuv)(struct macroblock *);
-
-void vp8_quantize_mby_c(struct macroblock *);
-void vp8_quantize_mby_neon(struct macroblock *);
-RTCD_EXTERN void (*vp8_quantize_mby)(struct macroblock *);
-
 int vp8_refining_search_sad_c(struct macroblock *x, struct block *b, struct blockd *d, union int_mv *ref_mv, int sad_per_bit, int distance, struct variance_vtable *fn_ptr, int *mvcost[2], union int_mv *center_mv);
 #define vp8_refining_search_sad vp8_refining_search_sad_c
 
 void vp8_regular_quantize_b_c(struct block *, struct blockd *);
 #define vp8_regular_quantize_b vp8_regular_quantize_b_c
-
-void vp8_regular_quantize_b_pair_c(struct block *b1, struct block *b2, struct blockd *d1, struct blockd *d2);
-#define vp8_regular_quantize_b_pair vp8_regular_quantize_b_pair_c
 
 unsigned int vp8_sad16x16_c(const unsigned char *src_ptr, int src_stride, const unsigned char *ref_ptr, int ref_stride, unsigned int max_sad);
 unsigned int vp8_sad16x16_armv6(const unsigned char *src_ptr, int src_stride, const unsigned char *ref_ptr, int ref_stride, unsigned int max_sad);
@@ -335,8 +317,7 @@ RTCD_EXTERN void (*vp8_sixtap_predict16x16)(unsigned char *src, int src_pitch, i
 
 void vp8_sixtap_predict4x4_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 void vp8_sixtap_predict4x4_armv6(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
-void vp8_sixtap_predict4x4_neon(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
-RTCD_EXTERN void (*vp8_sixtap_predict4x4)(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
+#define vp8_sixtap_predict4x4 vp8_sixtap_predict4x4_armv6
 
 void vp8_sixtap_predict8x4_c(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
 void vp8_sixtap_predict8x4_armv6(unsigned char *src, int src_pitch, int xofst, int yofst, unsigned char *dst, int dst_pitch);
@@ -371,17 +352,14 @@ unsigned int vp8_sub_pixel_variance8x8_neon(const unsigned char  *src_ptr, int  
 RTCD_EXTERN unsigned int (*vp8_sub_pixel_variance8x8)(const unsigned char  *src_ptr, int  source_stride, int  xoffset, int  yoffset, const unsigned char *ref_ptr, int Refstride, unsigned int *sse);
 
 void vp8_subtract_b_c(struct block *be, struct blockd *bd, int pitch);
-void vp8_subtract_b_armv6(struct block *be, struct blockd *bd, int pitch);
 void vp8_subtract_b_neon(struct block *be, struct blockd *bd, int pitch);
 RTCD_EXTERN void (*vp8_subtract_b)(struct block *be, struct blockd *bd, int pitch);
 
 void vp8_subtract_mbuv_c(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
-void vp8_subtract_mbuv_armv6(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
 void vp8_subtract_mbuv_neon(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
 RTCD_EXTERN void (*vp8_subtract_mbuv)(short *diff, unsigned char *usrc, unsigned char *vsrc, int src_stride, unsigned char *upred, unsigned char *vpred, int pred_stride);
 
 void vp8_subtract_mby_c(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
-void vp8_subtract_mby_armv6(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
 void vp8_subtract_mby_neon(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
 RTCD_EXTERN void (*vp8_subtract_mby)(short *diff, unsigned char *src, int src_stride, unsigned char *pred, int pred_stride);
 
@@ -421,10 +399,6 @@ unsigned int vp8_variance_halfpixvar16x16_v_armv6(const unsigned char *src_ptr, 
 unsigned int vp8_variance_halfpixvar16x16_v_neon(const unsigned char *src_ptr, int source_stride, const unsigned char *ref_ptr, int  ref_stride, unsigned int *sse);
 RTCD_EXTERN unsigned int (*vp8_variance_halfpixvar16x16_v)(const unsigned char *src_ptr, int source_stride, const unsigned char *ref_ptr, int  ref_stride, unsigned int *sse);
 
-void vp8_yv12_copy_partial_frame_c(struct yv12_buffer_config *src_ybc, struct yv12_buffer_config *dst_ybc);
-void vp8_yv12_copy_partial_frame_neon(struct yv12_buffer_config *src_ybc, struct yv12_buffer_config *dst_ybc);
-RTCD_EXTERN void (*vp8_yv12_copy_partial_frame)(struct yv12_buffer_config *src_ybc, struct yv12_buffer_config *dst_ybc);
-
 void vp8_rtcd(void);
 
 #include "vpx_config.h"
@@ -437,90 +411,61 @@ static void setup_rtcd_internal(void)
 
     (void)flags;
 
-    vp8_bilinear_predict16x16 = vp8_bilinear_predict16x16_c;
-    if (flags & HAS_MEDIA) vp8_bilinear_predict16x16 = vp8_bilinear_predict16x16_armv6;
+    vp8_bilinear_predict16x16 = vp8_bilinear_predict16x16_armv6;
     if (flags & HAS_NEON) vp8_bilinear_predict16x16 = vp8_bilinear_predict16x16_neon;
-    vp8_bilinear_predict4x4 = vp8_bilinear_predict4x4_c;
-    if (flags & HAS_MEDIA) vp8_bilinear_predict4x4 = vp8_bilinear_predict4x4_armv6;
+    vp8_bilinear_predict4x4 = vp8_bilinear_predict4x4_armv6;
     if (flags & HAS_NEON) vp8_bilinear_predict4x4 = vp8_bilinear_predict4x4_neon;
-    vp8_bilinear_predict8x4 = vp8_bilinear_predict8x4_c;
-    if (flags & HAS_MEDIA) vp8_bilinear_predict8x4 = vp8_bilinear_predict8x4_armv6;
+    vp8_bilinear_predict8x4 = vp8_bilinear_predict8x4_armv6;
     if (flags & HAS_NEON) vp8_bilinear_predict8x4 = vp8_bilinear_predict8x4_neon;
-    vp8_bilinear_predict8x8 = vp8_bilinear_predict8x8_c;
-    if (flags & HAS_MEDIA) vp8_bilinear_predict8x8 = vp8_bilinear_predict8x8_armv6;
+    vp8_bilinear_predict8x8 = vp8_bilinear_predict8x8_armv6;
     if (flags & HAS_NEON) vp8_bilinear_predict8x8 = vp8_bilinear_predict8x8_neon;
-    vp8_copy_mem16x16 = vp8_copy_mem16x16_c;
-    if (flags & HAS_MEDIA) vp8_copy_mem16x16 = vp8_copy_mem16x16_v6;
+    vp8_build_intra_predictors_mbuv_s = vp8_build_intra_predictors_mbuv_s_c;
+    if (flags & HAS_NEON) vp8_build_intra_predictors_mbuv_s = vp8_build_intra_predictors_mbuv_s_neon;
+    vp8_build_intra_predictors_mby_s = vp8_build_intra_predictors_mby_s_c;
+    if (flags & HAS_NEON) vp8_build_intra_predictors_mby_s = vp8_build_intra_predictors_mby_s_neon;
+    vp8_copy_mem16x16 = vp8_copy_mem16x16_v6;
     if (flags & HAS_NEON) vp8_copy_mem16x16 = vp8_copy_mem16x16_neon;
-    vp8_copy_mem8x4 = vp8_copy_mem8x4_c;
-    if (flags & HAS_MEDIA) vp8_copy_mem8x4 = vp8_copy_mem8x4_v6;
+    vp8_copy_mem8x4 = vp8_copy_mem8x4_v6;
     if (flags & HAS_NEON) vp8_copy_mem8x4 = vp8_copy_mem8x4_neon;
-    vp8_copy_mem8x8 = vp8_copy_mem8x8_c;
-    if (flags & HAS_MEDIA) vp8_copy_mem8x8 = vp8_copy_mem8x8_v6;
+    vp8_copy_mem8x8 = vp8_copy_mem8x8_v6;
     if (flags & HAS_NEON) vp8_copy_mem8x8 = vp8_copy_mem8x8_neon;
-    vp8_dc_only_idct_add = vp8_dc_only_idct_add_c;
-    if (flags & HAS_MEDIA) vp8_dc_only_idct_add = vp8_dc_only_idct_add_v6;
+    vp8_dc_only_idct_add = vp8_dc_only_idct_add_v6;
     if (flags & HAS_NEON) vp8_dc_only_idct_add = vp8_dc_only_idct_add_neon;
     vp8_denoiser_filter = vp8_denoiser_filter_c;
     if (flags & HAS_NEON) vp8_denoiser_filter = vp8_denoiser_filter_neon;
     vp8_denoiser_filter_uv = vp8_denoiser_filter_uv_c;
     if (flags & HAS_NEON) vp8_denoiser_filter_uv = vp8_denoiser_filter_uv_neon;
-    vp8_dequant_idct_add = vp8_dequant_idct_add_c;
-    if (flags & HAS_MEDIA) vp8_dequant_idct_add = vp8_dequant_idct_add_v6;
+    vp8_dequant_idct_add = vp8_dequant_idct_add_v6;
     if (flags & HAS_NEON) vp8_dequant_idct_add = vp8_dequant_idct_add_neon;
-    vp8_dequant_idct_add_uv_block = vp8_dequant_idct_add_uv_block_c;
-    if (flags & HAS_MEDIA) vp8_dequant_idct_add_uv_block = vp8_dequant_idct_add_uv_block_v6;
+    vp8_dequant_idct_add_uv_block = vp8_dequant_idct_add_uv_block_v6;
     if (flags & HAS_NEON) vp8_dequant_idct_add_uv_block = vp8_dequant_idct_add_uv_block_neon;
-    vp8_dequant_idct_add_y_block = vp8_dequant_idct_add_y_block_c;
-    if (flags & HAS_MEDIA) vp8_dequant_idct_add_y_block = vp8_dequant_idct_add_y_block_v6;
+    vp8_dequant_idct_add_y_block = vp8_dequant_idct_add_y_block_v6;
     if (flags & HAS_NEON) vp8_dequant_idct_add_y_block = vp8_dequant_idct_add_y_block_neon;
-    vp8_dequantize_b = vp8_dequantize_b_c;
-    if (flags & HAS_MEDIA) vp8_dequantize_b = vp8_dequantize_b_v6;
+    vp8_dequantize_b = vp8_dequantize_b_v6;
     if (flags & HAS_NEON) vp8_dequantize_b = vp8_dequantize_b_neon;
     vp8_fast_quantize_b = vp8_fast_quantize_b_c;
-    if (flags & HAS_MEDIA) vp8_fast_quantize_b = vp8_fast_quantize_b_armv6;
     if (flags & HAS_NEON) vp8_fast_quantize_b = vp8_fast_quantize_b_neon;
-    vp8_fast_quantize_b_pair = vp8_fast_quantize_b_pair_c;
-    if (flags & HAS_NEON) vp8_fast_quantize_b_pair = vp8_fast_quantize_b_pair_neon;
     vp8_get4x4sse_cs = vp8_get4x4sse_cs_c;
     if (flags & HAS_NEON) vp8_get4x4sse_cs = vp8_get4x4sse_cs_neon;
-    vp8_intra4x4_predict = vp8_intra4x4_predict_c;
-    if (flags & HAS_MEDIA) vp8_intra4x4_predict = vp8_intra4x4_predict_armv6;
-    vp8_loop_filter_bh = vp8_loop_filter_bh_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_bh = vp8_loop_filter_bh_armv6;
+    vp8_loop_filter_bh = vp8_loop_filter_bh_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_bh = vp8_loop_filter_bh_neon;
-    vp8_loop_filter_bv = vp8_loop_filter_bv_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_bv = vp8_loop_filter_bv_armv6;
+    vp8_loop_filter_bv = vp8_loop_filter_bv_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_bv = vp8_loop_filter_bv_neon;
-    vp8_loop_filter_mbh = vp8_loop_filter_mbh_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_mbh = vp8_loop_filter_mbh_armv6;
+    vp8_loop_filter_mbh = vp8_loop_filter_mbh_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_mbh = vp8_loop_filter_mbh_neon;
-    vp8_loop_filter_mbv = vp8_loop_filter_mbv_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_mbv = vp8_loop_filter_mbv_armv6;
+    vp8_loop_filter_mbv = vp8_loop_filter_mbv_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_mbv = vp8_loop_filter_mbv_neon;
-    vp8_loop_filter_simple_bh = vp8_loop_filter_bhs_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_simple_bh = vp8_loop_filter_bhs_armv6;
+    vp8_loop_filter_simple_bh = vp8_loop_filter_bhs_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_simple_bh = vp8_loop_filter_bhs_neon;
-    vp8_loop_filter_simple_bv = vp8_loop_filter_bvs_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_simple_bv = vp8_loop_filter_bvs_armv6;
+    vp8_loop_filter_simple_bv = vp8_loop_filter_bvs_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_simple_bv = vp8_loop_filter_bvs_neon;
-    vp8_loop_filter_simple_mbh = vp8_loop_filter_simple_horizontal_edge_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_simple_mbh = vp8_loop_filter_simple_horizontal_edge_armv6;
+    vp8_loop_filter_simple_mbh = vp8_loop_filter_simple_horizontal_edge_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_simple_mbh = vp8_loop_filter_mbhs_neon;
-    vp8_loop_filter_simple_mbv = vp8_loop_filter_simple_vertical_edge_c;
-    if (flags & HAS_MEDIA) vp8_loop_filter_simple_mbv = vp8_loop_filter_simple_vertical_edge_armv6;
+    vp8_loop_filter_simple_mbv = vp8_loop_filter_simple_vertical_edge_armv6;
     if (flags & HAS_NEON) vp8_loop_filter_simple_mbv = vp8_loop_filter_mbvs_neon;
-    vp8_mse16x16 = vp8_mse16x16_c;
-    if (flags & HAS_MEDIA) vp8_mse16x16 = vp8_mse16x16_armv6;
+    vp8_mse16x16 = vp8_mse16x16_armv6;
     if (flags & HAS_NEON) vp8_mse16x16 = vp8_mse16x16_neon;
-    vp8_quantize_mb = vp8_quantize_mb_c;
-    if (flags & HAS_NEON) vp8_quantize_mb = vp8_quantize_mb_neon;
-    vp8_quantize_mbuv = vp8_quantize_mbuv_c;
-    if (flags & HAS_NEON) vp8_quantize_mbuv = vp8_quantize_mbuv_neon;
-    vp8_quantize_mby = vp8_quantize_mby_c;
-    if (flags & HAS_NEON) vp8_quantize_mby = vp8_quantize_mby_neon;
-    vp8_sad16x16 = vp8_sad16x16_c;
-    if (flags & HAS_MEDIA) vp8_sad16x16 = vp8_sad16x16_armv6;
+    vp8_sad16x16 = vp8_sad16x16_armv6;
     if (flags & HAS_NEON) vp8_sad16x16 = vp8_sad16x16_neon;
     vp8_sad16x8 = vp8_sad16x8_c;
     if (flags & HAS_NEON) vp8_sad16x8 = vp8_sad16x8_neon;
@@ -530,69 +475,46 @@ static void setup_rtcd_internal(void)
     if (flags & HAS_NEON) vp8_sad8x16 = vp8_sad8x16_neon;
     vp8_sad8x8 = vp8_sad8x8_c;
     if (flags & HAS_NEON) vp8_sad8x8 = vp8_sad8x8_neon;
-    vp8_short_fdct4x4 = vp8_short_fdct4x4_c;
-    if (flags & HAS_MEDIA) vp8_short_fdct4x4 = vp8_short_fdct4x4_armv6;
+    vp8_short_fdct4x4 = vp8_short_fdct4x4_armv6;
     if (flags & HAS_NEON) vp8_short_fdct4x4 = vp8_short_fdct4x4_neon;
-    vp8_short_fdct8x4 = vp8_short_fdct8x4_c;
-    if (flags & HAS_MEDIA) vp8_short_fdct8x4 = vp8_short_fdct8x4_armv6;
+    vp8_short_fdct8x4 = vp8_short_fdct8x4_armv6;
     if (flags & HAS_NEON) vp8_short_fdct8x4 = vp8_short_fdct8x4_neon;
-    vp8_short_idct4x4llm = vp8_short_idct4x4llm_c;
-    if (flags & HAS_MEDIA) vp8_short_idct4x4llm = vp8_short_idct4x4llm_v6_dual;
+    vp8_short_idct4x4llm = vp8_short_idct4x4llm_v6_dual;
     if (flags & HAS_NEON) vp8_short_idct4x4llm = vp8_short_idct4x4llm_neon;
-    vp8_short_inv_walsh4x4 = vp8_short_inv_walsh4x4_c;
-    if (flags & HAS_MEDIA) vp8_short_inv_walsh4x4 = vp8_short_inv_walsh4x4_v6;
+    vp8_short_inv_walsh4x4 = vp8_short_inv_walsh4x4_v6;
     if (flags & HAS_NEON) vp8_short_inv_walsh4x4 = vp8_short_inv_walsh4x4_neon;
-    vp8_short_walsh4x4 = vp8_short_walsh4x4_c;
-    if (flags & HAS_MEDIA) vp8_short_walsh4x4 = vp8_short_walsh4x4_armv6;
+    vp8_short_walsh4x4 = vp8_short_walsh4x4_armv6;
     if (flags & HAS_NEON) vp8_short_walsh4x4 = vp8_short_walsh4x4_neon;
-    vp8_sixtap_predict16x16 = vp8_sixtap_predict16x16_c;
-    if (flags & HAS_MEDIA) vp8_sixtap_predict16x16 = vp8_sixtap_predict16x16_armv6;
+    vp8_sixtap_predict16x16 = vp8_sixtap_predict16x16_armv6;
     if (flags & HAS_NEON) vp8_sixtap_predict16x16 = vp8_sixtap_predict16x16_neon;
-    vp8_sixtap_predict4x4 = vp8_sixtap_predict4x4_c;
-    if (flags & HAS_MEDIA) vp8_sixtap_predict4x4 = vp8_sixtap_predict4x4_armv6;
-    if (flags & HAS_NEON) vp8_sixtap_predict4x4 = vp8_sixtap_predict4x4_neon;
-    vp8_sixtap_predict8x4 = vp8_sixtap_predict8x4_c;
-    if (flags & HAS_MEDIA) vp8_sixtap_predict8x4 = vp8_sixtap_predict8x4_armv6;
+    vp8_sixtap_predict8x4 = vp8_sixtap_predict8x4_armv6;
     if (flags & HAS_NEON) vp8_sixtap_predict8x4 = vp8_sixtap_predict8x4_neon;
-    vp8_sixtap_predict8x8 = vp8_sixtap_predict8x8_c;
-    if (flags & HAS_MEDIA) vp8_sixtap_predict8x8 = vp8_sixtap_predict8x8_armv6;
+    vp8_sixtap_predict8x8 = vp8_sixtap_predict8x8_armv6;
     if (flags & HAS_NEON) vp8_sixtap_predict8x8 = vp8_sixtap_predict8x8_neon;
-    vp8_sub_pixel_variance16x16 = vp8_sub_pixel_variance16x16_c;
-    if (flags & HAS_MEDIA) vp8_sub_pixel_variance16x16 = vp8_sub_pixel_variance16x16_armv6;
+    vp8_sub_pixel_variance16x16 = vp8_sub_pixel_variance16x16_armv6;
     if (flags & HAS_NEON) vp8_sub_pixel_variance16x16 = vp8_sub_pixel_variance16x16_neon;
-    vp8_sub_pixel_variance8x8 = vp8_sub_pixel_variance8x8_c;
-    if (flags & HAS_MEDIA) vp8_sub_pixel_variance8x8 = vp8_sub_pixel_variance8x8_armv6;
+    vp8_sub_pixel_variance8x8 = vp8_sub_pixel_variance8x8_armv6;
     if (flags & HAS_NEON) vp8_sub_pixel_variance8x8 = vp8_sub_pixel_variance8x8_neon;
     vp8_subtract_b = vp8_subtract_b_c;
-    if (flags & HAS_MEDIA) vp8_subtract_b = vp8_subtract_b_armv6;
     if (flags & HAS_NEON) vp8_subtract_b = vp8_subtract_b_neon;
     vp8_subtract_mbuv = vp8_subtract_mbuv_c;
-    if (flags & HAS_MEDIA) vp8_subtract_mbuv = vp8_subtract_mbuv_armv6;
     if (flags & HAS_NEON) vp8_subtract_mbuv = vp8_subtract_mbuv_neon;
     vp8_subtract_mby = vp8_subtract_mby_c;
-    if (flags & HAS_MEDIA) vp8_subtract_mby = vp8_subtract_mby_armv6;
     if (flags & HAS_NEON) vp8_subtract_mby = vp8_subtract_mby_neon;
-    vp8_variance16x16 = vp8_variance16x16_c;
-    if (flags & HAS_MEDIA) vp8_variance16x16 = vp8_variance16x16_armv6;
+    vp8_variance16x16 = vp8_variance16x16_armv6;
     if (flags & HAS_NEON) vp8_variance16x16 = vp8_variance16x16_neon;
     vp8_variance16x8 = vp8_variance16x8_c;
     if (flags & HAS_NEON) vp8_variance16x8 = vp8_variance16x8_neon;
     vp8_variance8x16 = vp8_variance8x16_c;
     if (flags & HAS_NEON) vp8_variance8x16 = vp8_variance8x16_neon;
-    vp8_variance8x8 = vp8_variance8x8_c;
-    if (flags & HAS_MEDIA) vp8_variance8x8 = vp8_variance8x8_armv6;
+    vp8_variance8x8 = vp8_variance8x8_armv6;
     if (flags & HAS_NEON) vp8_variance8x8 = vp8_variance8x8_neon;
-    vp8_variance_halfpixvar16x16_h = vp8_variance_halfpixvar16x16_h_c;
-    if (flags & HAS_MEDIA) vp8_variance_halfpixvar16x16_h = vp8_variance_halfpixvar16x16_h_armv6;
+    vp8_variance_halfpixvar16x16_h = vp8_variance_halfpixvar16x16_h_armv6;
     if (flags & HAS_NEON) vp8_variance_halfpixvar16x16_h = vp8_variance_halfpixvar16x16_h_neon;
-    vp8_variance_halfpixvar16x16_hv = vp8_variance_halfpixvar16x16_hv_c;
-    if (flags & HAS_MEDIA) vp8_variance_halfpixvar16x16_hv = vp8_variance_halfpixvar16x16_hv_armv6;
+    vp8_variance_halfpixvar16x16_hv = vp8_variance_halfpixvar16x16_hv_armv6;
     if (flags & HAS_NEON) vp8_variance_halfpixvar16x16_hv = vp8_variance_halfpixvar16x16_hv_neon;
-    vp8_variance_halfpixvar16x16_v = vp8_variance_halfpixvar16x16_v_c;
-    if (flags & HAS_MEDIA) vp8_variance_halfpixvar16x16_v = vp8_variance_halfpixvar16x16_v_armv6;
+    vp8_variance_halfpixvar16x16_v = vp8_variance_halfpixvar16x16_v_armv6;
     if (flags & HAS_NEON) vp8_variance_halfpixvar16x16_v = vp8_variance_halfpixvar16x16_v_neon;
-    vp8_yv12_copy_partial_frame = vp8_yv12_copy_partial_frame_c;
-    if (flags & HAS_NEON) vp8_yv12_copy_partial_frame = vp8_yv12_copy_partial_frame_neon;
 }
 #endif
 

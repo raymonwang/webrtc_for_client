@@ -108,6 +108,35 @@
 		4328907C1D3C7D6F0044E4F5 /* latebindingsymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = latebindingsymboltable_linux.h; sourceTree = "<group>"; };
 		4328907D1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = pulseaudiosymboltable_linux.cc; sourceTree = "<group>"; };
 		4328907E1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pulseaudiosymboltable_linux.h; sourceTree = "<group>"; };
+		437697C11DC9ED2B0064F63E /* audio_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_common.h; sourceTree = "<group>"; };
+		437697C21DC9ED2B0064F63E /* audio_device_template.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_device_template.h; sourceTree = "<group>"; };
+		437697C31DC9ED2B0064F63E /* audio_device_utility_android.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_utility_android.cc; sourceTree = "<group>"; };
+		437697C41DC9ED2B0064F63E /* audio_device_utility_android.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_device_utility_android.h; sourceTree = "<group>"; };
+		437697C51DC9ED2B0064F63E /* audio_manager_jni.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_manager_jni.cc; sourceTree = "<group>"; };
+		437697C61DC9ED2B0064F63E /* audio_manager_jni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_manager_jni.h; sourceTree = "<group>"; };
+		437697C71DC9ED2B0064F63E /* audio_record_jni.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_record_jni.cc; sourceTree = "<group>"; };
+		437697C81DC9ED2B0064F63E /* audio_record_jni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_record_jni.h; sourceTree = "<group>"; };
+		437697C91DC9ED2B0064F63E /* audio_track_jni.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio_track_jni.cc; sourceTree = "<group>"; };
+		437697CA1DC9ED2B0064F63E /* audio_track_jni.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_track_jni.h; sourceTree = "<group>"; };
+		437697CB1DC9ED2B0064F63E /* fine_audio_buffer.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fine_audio_buffer.cc; sourceTree = "<group>"; };
+		437697CC1DC9ED2B0064F63E /* fine_audio_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fine_audio_buffer.h; sourceTree = "<group>"; };
+		437697CD1DC9ED2B0064F63E /* fine_audio_buffer_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fine_audio_buffer_unittest.cc; sourceTree = "<group>"; };
+		437697D31DC9ED2B0064F63E /* AudioManagerAndroid.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = AudioManagerAndroid.java; sourceTree = "<group>"; };
+		437697D41DC9ED2B0064F63E /* WebRtcAudioRecord.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = WebRtcAudioRecord.java; sourceTree = "<group>"; };
+		437697D51DC9ED2B0064F63E /* WebRtcAudioTrack.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = WebRtcAudioTrack.java; sourceTree = "<group>"; };
+		437697D61DC9ED2B0064F63E /* low_latency_event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = low_latency_event.h; sourceTree = "<group>"; };
+		437697D71DC9ED2B0064F63E /* low_latency_event_posix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = low_latency_event_posix.cc; sourceTree = "<group>"; };
+		437697D81DC9ED2B0064F63E /* low_latency_event_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = low_latency_event_unittest.cc; sourceTree = "<group>"; };
+		437697D91DC9ED2B0064F63E /* opensles_common.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = opensles_common.cc; sourceTree = "<group>"; };
+		437697DA1DC9ED2B0064F63E /* opensles_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opensles_common.h; sourceTree = "<group>"; };
+		437697DB1DC9ED2B0064F63E /* opensles_input.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = opensles_input.cc; sourceTree = "<group>"; };
+		437697DC1DC9ED2B0064F63E /* opensles_input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opensles_input.h; sourceTree = "<group>"; };
+		437697DD1DC9ED2B0064F63E /* opensles_output.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = opensles_output.cc; sourceTree = "<group>"; };
+		437697DE1DC9ED2B0064F63E /* opensles_output.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opensles_output.h; sourceTree = "<group>"; };
+		437697DF1DC9ED2B0064F63E /* OWNERS */ = {isa = PBXFileReference; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		437697E01DC9ED2B0064F63E /* single_rw_fifo.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = single_rw_fifo.cc; sourceTree = "<group>"; };
+		437697E11DC9ED2B0064F63E /* single_rw_fifo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = single_rw_fifo.h; sourceTree = "<group>"; };
+		437697E21DC9ED2B0064F63E /* single_rw_fifo_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = single_rw_fifo_unittest.cc; sourceTree = "<group>"; };
 		43E04E1E1D2639D500B39549 /* libaudio_device_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_device_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43E04E371D263A4600B39549 /* audio_device_mac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_device_mac.cc; sourceTree = "<group>"; };
 		43E04E381D263A4600B39549 /* audio_device_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_device_mac.h; sourceTree = "<group>"; };
@@ -158,6 +187,7 @@
 		430D9049198628A0009E763A /* audio_device */ = {
 			isa = PBXGroup;
 			children = (
+				437697C01DC9ED2B0064F63E /* android */,
 				4328906E1D3C7D6F0044E4F5 /* linux */,
 				430D904B198628A0009E763A /* audio_device.gypi */,
 				430D904C198628A0009E763A /* audio_device_buffer.cc */,
@@ -235,6 +265,82 @@
 				4328907E1D3C7D6F0044E4F5 /* pulseaudiosymboltable_linux.h */,
 			);
 			path = linux;
+			sourceTree = "<group>";
+		};
+		437697C01DC9ED2B0064F63E /* android */ = {
+			isa = PBXGroup;
+			children = (
+				437697C11DC9ED2B0064F63E /* audio_common.h */,
+				437697C21DC9ED2B0064F63E /* audio_device_template.h */,
+				437697C31DC9ED2B0064F63E /* audio_device_utility_android.cc */,
+				437697C41DC9ED2B0064F63E /* audio_device_utility_android.h */,
+				437697C51DC9ED2B0064F63E /* audio_manager_jni.cc */,
+				437697C61DC9ED2B0064F63E /* audio_manager_jni.h */,
+				437697C71DC9ED2B0064F63E /* audio_record_jni.cc */,
+				437697C81DC9ED2B0064F63E /* audio_record_jni.h */,
+				437697C91DC9ED2B0064F63E /* audio_track_jni.cc */,
+				437697CA1DC9ED2B0064F63E /* audio_track_jni.h */,
+				437697CB1DC9ED2B0064F63E /* fine_audio_buffer.cc */,
+				437697CC1DC9ED2B0064F63E /* fine_audio_buffer.h */,
+				437697CD1DC9ED2B0064F63E /* fine_audio_buffer_unittest.cc */,
+				437697CE1DC9ED2B0064F63E /* java */,
+				437697D61DC9ED2B0064F63E /* low_latency_event.h */,
+				437697D71DC9ED2B0064F63E /* low_latency_event_posix.cc */,
+				437697D81DC9ED2B0064F63E /* low_latency_event_unittest.cc */,
+				437697D91DC9ED2B0064F63E /* opensles_common.cc */,
+				437697DA1DC9ED2B0064F63E /* opensles_common.h */,
+				437697DB1DC9ED2B0064F63E /* opensles_input.cc */,
+				437697DC1DC9ED2B0064F63E /* opensles_input.h */,
+				437697DD1DC9ED2B0064F63E /* opensles_output.cc */,
+				437697DE1DC9ED2B0064F63E /* opensles_output.h */,
+				437697DF1DC9ED2B0064F63E /* OWNERS */,
+				437697E01DC9ED2B0064F63E /* single_rw_fifo.cc */,
+				437697E11DC9ED2B0064F63E /* single_rw_fifo.h */,
+				437697E21DC9ED2B0064F63E /* single_rw_fifo_unittest.cc */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		437697CE1DC9ED2B0064F63E /* java */ = {
+			isa = PBXGroup;
+			children = (
+				437697CF1DC9ED2B0064F63E /* src */,
+			);
+			path = java;
+			sourceTree = "<group>";
+		};
+		437697CF1DC9ED2B0064F63E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				437697D01DC9ED2B0064F63E /* org */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		437697D01DC9ED2B0064F63E /* org */ = {
+			isa = PBXGroup;
+			children = (
+				437697D11DC9ED2B0064F63E /* webrtc */,
+			);
+			path = org;
+			sourceTree = "<group>";
+		};
+		437697D11DC9ED2B0064F63E /* webrtc */ = {
+			isa = PBXGroup;
+			children = (
+				437697D21DC9ED2B0064F63E /* voiceengine */,
+			);
+			path = webrtc;
+			sourceTree = "<group>";
+		};
+		437697D21DC9ED2B0064F63E /* voiceengine */ = {
+			isa = PBXGroup;
+			children = (
+				437697D31DC9ED2B0064F63E /* AudioManagerAndroid.java */,
+				437697D41DC9ED2B0064F63E /* WebRtcAudioRecord.java */,
+				437697D51DC9ED2B0064F63E /* WebRtcAudioTrack.java */,
+			);
+			path = voiceengine;
 			sourceTree = "<group>";
 		};
 		43E04E361D263A4600B39549 /* mac */ = {

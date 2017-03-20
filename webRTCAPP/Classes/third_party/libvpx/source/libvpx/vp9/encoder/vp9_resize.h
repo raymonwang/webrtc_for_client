@@ -14,10 +14,6 @@
 #include <stdio.h>
 #include "vpx/vpx_integer.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 void vp9_resize_plane(const uint8_t *const input,
                       int height,
                       int width,
@@ -125,9 +121,4 @@ void vp9_highbd_resize_frame444(const uint8_t *const y,
                                 int owidth,
                                 int bd);
 #endif    // CONFIG_VP9_HIGHBITDEPTH
-
-#ifdef __cplusplus
-}  // extern "C"
-#endif
-
 #endif    // VP9_ENCODER_VP9_RESIZE_H_

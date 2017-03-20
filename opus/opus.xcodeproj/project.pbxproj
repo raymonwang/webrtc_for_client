@@ -1818,7 +1818,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					OPUS_BUILD,
 					"OPUS_EXPORT=",
 					HAVE_LRINT,
@@ -1826,6 +1826,7 @@
 					VAR_ARRAYS,
 					FIXED_POINT,
 					OPUS_ARM_ASM,
+					OPUS_ARM_MAY_HAVE_NEON,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
@@ -1843,6 +1844,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -1852,7 +1854,7 @@
 				EXECUTABLE_PREFIX = lib;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					OPUS_BUILD,
 					"OPUS_EXPORT=",
 					HAVE_LRINT,
@@ -1860,6 +1862,7 @@
 					VAR_ARRAYS,
 					FIXED_POINT,
 					OPUS_ARM_ASM,
+					OPUS_ARM_MAY_HAVE_NEON,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
@@ -1876,6 +1879,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};

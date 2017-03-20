@@ -11,7 +11,6 @@
 
 #include "vpx_config.h"
 #include "vp8_rtcd.h"
-#include "./vpx_dsp_rtcd.h"
 #include "encodemb.h"
 #include "encodemv.h"
 #include "vp8/common/common.h"
@@ -91,7 +90,7 @@ static unsigned int tt_activity_measure( VP8_COMP *cpi, MACROBLOCK *x )
      *  lambda using a non-linear combination (e.g., the smallest, or second
      *  smallest, etc.).
      */
-    act =  vpx_variance16x16(x->src.y_buffer,
+    act =  vp8_variance16x16(x->src.y_buffer,
                     x->src.y_stride, VP8_VAR_OFFS, 0, &sse);
     act = act<<4;
 
@@ -156,8 +155,8 @@ static void calc_av_activity( VP8_COMP *cpi, int64_t activity_sum )
                         cpi->common.MBs));
 
         /* Copy map to sort list */
-        memcpy( sortlist, cpi->mb_activity_map,
-                sizeof(unsigned int) * cpi->common.MBs );
+        vpx_memcpy( sortlist, cpi->mb_activity_map,
+                    sizeof(unsigned int) * cpi->common.MBs );
 
 
         /* Ripple each value down to its correct position */
@@ -386,8 +385,8 @@ void encode_mb_row(VP8_COMP *cpi,
 #if CONFIG_MULTITHREAD
     const int nsync = cpi->mt_sync_range;
     const int rightmost_col = cm->mb_cols + nsync;
-    const int *last_row_current_mb_col;
-    int *current_mb_col = &cpi->mt_current_mb_col[mb_row];
+    volatile const int *last_row_current_mb_col;
+    volatile int *current_mb_col = &cpi->mt_current_mb_col[mb_row];
 
     if ((cpi->b_multi_threaded != 0) && (mb_row != 0))
         last_row_current_mb_col = &cpi->mt_current_mb_col[mb_row - 1];
@@ -461,15 +460,17 @@ void encode_mb_row(VP8_COMP *cpi,
         vp8_copy_mem16x16(x->src.y_buffer, x->src.y_stride, x->thismb, 16);
 
 #if CONFIG_MULTITHREAD
-        if (cpi->b_multi_threaded != 0) {
-            if (((mb_col - 1) % nsync) == 0) {
-                pthread_mutex_t *mutex = &cpi->pmutex[mb_row];
-                protected_write(mutex, current_mb_col, mb_col - 1);
-            }
+        if (cpi->b_multi_threaded != 0)
+        {
+            *current_mb_col = mb_col - 1; /* set previous MB done */
 
-            if (mb_row && !(mb_col & (nsync - 1))) {
-                pthread_mutex_t *mutex = &cpi->pmutex[mb_row-1];
-                sync_read(mutex, mb_col, last_row_current_mb_col, nsync);
+            if ((mb_col & (nsync - 1)) == 0)
+            {
+                while (mb_col > (*last_row_current_mb_col - nsync))
+                {
+                    x86_pause_hint();
+                    thread_sleep(0);
+                }
             }
         }
 #endif
@@ -614,7 +615,7 @@ void encode_mb_row(VP8_COMP *cpi,
 
 #if CONFIG_MULTITHREAD
     if (cpi->b_multi_threaded != 0)
-        protected_write(&cpi->pmutex[mb_row], current_mb_col, rightmost_col);
+        *current_mb_col = rightmost_col;
 #endif
 
     /* this is to account for the border */
@@ -664,7 +665,8 @@ static void init_encode_frame_mb_context(VP8_COMP *cpi)
 
     x->mvc = cm->fc.mvc;
 
-    memset(cm->above_context, 0, sizeof(ENTROPY_CONTEXT_PLANES) * cm->mb_cols);
+    vpx_memset(cm->above_context, 0,
+               sizeof(ENTROPY_CONTEXT_PLANES) * cm->mb_cols);
 
     /* Special case treatment when GF and ARF are not sensible options
      * for reference
@@ -698,7 +700,6 @@ static void init_encode_frame_mb_context(VP8_COMP *cpi)
     vp8_zero(x->count_mb_ref_frame_usage);
 }
 
-#if CONFIG_MULTITHREAD
 static void sum_coef_counts(MACROBLOCK *x, MACROBLOCK *x_thread)
 {
     int i = 0;
@@ -728,7 +729,6 @@ static void sum_coef_counts(MACROBLOCK *x, MACROBLOCK *x_thread)
     }
     while (++i < BLOCK_TYPES);
 }
-#endif  // CONFIG_MULTITHREAD
 
 void vp8_encode_frame(VP8_COMP *cpi)
 {
@@ -744,7 +744,7 @@ void vp8_encode_frame(VP8_COMP *cpi)
     const int num_part = (1 << cm->multi_token_partition);
 #endif
 
-    memset(segment_counts, 0, sizeof(segment_counts));
+    vpx_memset(segment_counts, 0, sizeof(segment_counts));
     totalrate = 0;
 
     if (cpi->compressor_speed == 2)
@@ -927,7 +927,7 @@ void vp8_encode_frame(VP8_COMP *cpi)
 
         }
         else
-#endif  // CONFIG_MULTITHREAD
+#endif
         {
 
             /* for each macroblock row in image */
@@ -974,7 +974,7 @@ void vp8_encode_frame(VP8_COMP *cpi)
         int i;
 
         /* Set to defaults */
-        memset(xd->mb_segment_tree_probs, 255 , sizeof(xd->mb_segment_tree_probs));
+        vpx_memset(xd->mb_segment_tree_probs, 255 , sizeof(xd->mb_segment_tree_probs));
 
         tot_count = segment_counts[0] + segment_counts[1] + segment_counts[2] + segment_counts[3];
 

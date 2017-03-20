@@ -994,6 +994,15 @@ int VoEAudioProcessingImpl::StopDebugRecording() {
   return _shared->audio_processing()->StopDebugRecording();
 }
 
+int VoEAudioProcessingImpl::EnableVoiceEnhancementMode(bool enable){
+  if (!_shared->statistics().Initialized()) {
+    _shared->SetLastError(VE_NOT_INITED, kTraceError);
+    return -1;
+  }
+  _shared->audio_processing()->enable_voice_enhancement_mode(enable);
+  return 0;
+}
+
 int VoEAudioProcessingImpl::SetTypingDetectionStatus(bool enable) {
   WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
                "SetTypingDetectionStatus()");

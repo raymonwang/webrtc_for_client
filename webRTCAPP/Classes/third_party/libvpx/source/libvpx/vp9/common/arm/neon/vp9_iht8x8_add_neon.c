@@ -15,6 +15,13 @@
 #include "./vpx_config.h"
 #include "vp9/common/vp9_common.h"
 
+#if (__clang_major__ == 3) && (__clang_minor__ == 6)
+// http://llvm.org/bugs/show_bug.cgi?id=22178
+void vp9_iht8x8_64_add_neon(const tran_low_t *input, uint8_t *dest,
+                            int dest_stride, int tx_type) {
+  vp9_iht8x8_64_add_c(input, dest, dest_stride, tx_type);
+}
+#else
 static int16_t cospi_2_64 = 16305;
 static int16_t cospi_4_64 = 16069;
 static int16_t cospi_6_64 = 15679;
@@ -622,3 +629,4 @@ void vp9_iht8x8_64_add_neon(const tran_low_t *input, uint8_t *dest,
     }
     return;
 }
+#endif

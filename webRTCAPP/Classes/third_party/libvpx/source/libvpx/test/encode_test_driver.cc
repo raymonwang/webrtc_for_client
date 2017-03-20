@@ -8,16 +8,13 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include <string>
-
-#include "third_party/googletest/src/include/gtest/gtest.h"
-
 #include "./vpx_config.h"
 #include "test/codec_factory.h"
-#include "test/decode_test_driver.h"
 #include "test/encode_test_driver.h"
+#include "test/decode_test_driver.h"
 #include "test/register_state_check.h"
 #include "test/video_source.h"
+#include "third_party/googletest/src/include/gtest/gtest.h"
 
 namespace libvpx_test {
 void Encoder::InitEncoder(VideoSource *video) {
@@ -29,26 +26,9 @@ void Encoder::InitEncoder(VideoSource *video) {
     cfg_.g_h = img->d_h;
     cfg_.g_timebase = video->timebase();
     cfg_.rc_twopass_stats_in = stats_->buf();
-
     res = vpx_codec_enc_init(&encoder_, CodecInterface(), &cfg_,
                              init_flags_);
     ASSERT_EQ(VPX_CODEC_OK, res) << EncoderError();
-
-#if CONFIG_VP9_ENCODER
-    if (CodecInterface() == &vpx_codec_vp9_cx_algo) {
-      // Default to 1 tile column for VP9.
-      const int log2_tile_columns = 0;
-      res = vpx_codec_control_(&encoder_, VP9E_SET_TILE_COLUMNS,
-                               log2_tile_columns);
-      ASSERT_EQ(VPX_CODEC_OK, res) << EncoderError();
-    } else
-#endif
-    {
-#if CONFIG_VP8_ENCODER
-      ASSERT_EQ(&vpx_codec_vp8_cx_algo, CodecInterface())
-          << "Unknown Codec Interface";
-#endif
-    }
   }
 }
 
@@ -134,7 +114,6 @@ void EncoderTest::SetMode(TestMode mode) {
 static bool compare_img(const vpx_image_t *img1,
                         const vpx_image_t *img2) {
   bool match = (img1->fmt == img2->fmt) &&
-               (img1->cs == img2->cs) &&
                (img1->d_w == img2->d_w) &&
                (img1->d_h == img2->d_h);
 
@@ -186,7 +165,6 @@ void EncoderTest::RunLoop(VideoSource *video) {
 
     video->Begin();
     encoder->InitEncoder(video);
-    ASSERT_FALSE(::testing::Test::HasFatalFailure());
 
     unsigned long dec_init_flags = 0;  // NOLINT
     // Use fragment decoder if encoder outputs partitions.

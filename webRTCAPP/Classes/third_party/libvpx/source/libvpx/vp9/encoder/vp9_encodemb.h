@@ -37,8 +37,7 @@ void vp9_subtract_plane(MACROBLOCK *x, BLOCK_SIZE bsize, int plane);
 void vp9_encode_block_intra(int plane, int block, BLOCK_SIZE plane_bsize,
                             TX_SIZE tx_size, void *arg);
 
-void vp9_encode_intra_block_plane(MACROBLOCK *x, BLOCK_SIZE bsize, int plane,
-                                  int enable_optimize_b);
+void vp9_encode_intra_block_plane(MACROBLOCK *x, BLOCK_SIZE bsize, int plane);
 
 #ifdef __cplusplus
 }  // extern "C"

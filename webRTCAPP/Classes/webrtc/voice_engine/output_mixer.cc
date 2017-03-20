@@ -126,7 +126,8 @@ OutputMixer::OutputMixer(uint32_t instanceId) :
     _panRight(1.0f),
     _mixingFrequencyHz(8000),
     _outputFileRecorderPtr(NULL),
-    _outputFileRecording(false)
+    _outputFileRecording(false),
+    _is_speech(1)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,-1),
                  "OutputMixer::OutputMixer() - ctor");
@@ -505,6 +506,16 @@ int OutputMixer::GetMixedAudio(int sample_rate_hz,
   // TODO(andrew): Ideally the downmixing would occur much earlier, in
   // AudioCodingModule.
   RemixAndResample(_audioFrame, &resampler_, frame);
+  
+  //it is mute 
+  //TODO we will do a callback to remove it into application layer, and used comfort noise;  
+#if defined(WEBRTC_ANDROID)
+  if(_is_speech == 0)
+  {
+     memset(frame->data_, 0, sizeof(int16_t) *
+      frame->samples_per_channel_ * frame->num_channels_);
+  }
+#endif
   return 0;
 }
 
@@ -582,7 +593,7 @@ void OutputMixer::APMAnalyzeReverseStream() {
   frame.sample_rate_hz_ = _audioProcessingModulePtr->input_sample_rate_hz();
   RemixAndResample(_audioFrame, &audioproc_resampler_, &frame);
 
-  if (_audioProcessingModulePtr->AnalyzeReverseStream(&frame) == -1) {
+  if (_audioProcessingModulePtr->AnalyzeReverseStream(&frame, &_is_speech) == -1) {
     WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId,-1),
                  "AudioProcessingModule::AnalyzeReverseStream() => error");
   }

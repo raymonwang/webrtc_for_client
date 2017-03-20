@@ -19,6 +19,7 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.util.Log;
+import android.os.Build;
 
 class WebRtcAudioTrack {
     private AudioTrack _audioTrack = null;
@@ -39,6 +40,9 @@ class WebRtcAudioTrack {
     private int _bufferedPlaySamples = 0;
     private int _playPosition = 0;
 
+    private int _audioType;
+    private int _streamType;
+
     WebRtcAudioTrack() {
         try {
             _playBuffer = ByteBuffer.allocateDirect(2 * 480); // Max 10 ms @ 48
@@ -50,8 +54,15 @@ class WebRtcAudioTrack {
         _tempBufPlay = new byte[2 * 480];
     }
 
+
+    private String getPhoneModel() {
+    return Build.MODEL;
+    }
+
+
     @SuppressWarnings("unused")
-    private int InitPlayback(int sampleRate) {
+    //private int InitPlayback(int sampleRate) {
+    private int InitPlayback(int sampleRate, int audioType, int streamType) {
         // get the minimum buffer size that can be used
         int minPlayBufSize = AudioTrack.getMinBufferSize(
             sampleRate,
@@ -72,10 +83,11 @@ class WebRtcAudioTrack {
             _audioTrack.release();
             _audioTrack = null;
         }
-
+        _audioType = audioType;
+        _streamType = streamType;
         try {
             _audioTrack = new AudioTrack(
-                            AudioManager.STREAM_VOICE_CALL,
+                            _streamType,
                             sampleRate,
                             AudioFormat.CHANNEL_OUT_MONO,
                             AudioFormat.ENCODING_PCM_16BIT,
@@ -104,7 +116,7 @@ class WebRtcAudioTrack {
             // so we should not return error.
             return 0;
         }
-        return _audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL);
+        return _audioManager.getStreamMaxVolume(_streamType);
     }
 
     @SuppressWarnings("unused")
@@ -228,10 +240,10 @@ class WebRtcAudioTrack {
             // 1.5 and 1.6 devices
             if (loudspeakerOn) {
                 // route audio to back speaker
-                _audioManager.setMode(AudioManager.MODE_NORMAL);
+                _audioManager.setMode(_audioType);
             } else {
                 // route audio to earpiece
-                _audioManager.setMode(AudioManager.MODE_IN_CALL);
+                _audioManager.setMode(_audioType);
             }
         } else {
             // 2.x devices
@@ -242,12 +254,12 @@ class WebRtcAudioTrack {
                 // Samsung 2.0, 2.0.1 and 2.1 devices
                 if (loudspeakerOn) {
                     // route audio to back speaker
-                    _audioManager.setMode(AudioManager.MODE_IN_CALL);
+                    _audioManager.setMode(_audioType);
                     _audioManager.setSpeakerphoneOn(loudspeakerOn);
                 } else {
                     // route audio to earpiece
                     _audioManager.setSpeakerphoneOn(loudspeakerOn);
-                    _audioManager.setMode(AudioManager.MODE_NORMAL);
+                    _audioManager.setMode(_audioType);
                 }
             } else {
                 // Non-Samsung and Samsung 2.2 and up devices
@@ -270,8 +282,7 @@ class WebRtcAudioTrack {
         int retVal = -1;
 
         if (_audioManager != null) {
-            _audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
-                            level, 0);
+            _audioManager.setStreamVolume(_streamType, level, 0);
             retVal = 0;
         }
 
@@ -290,8 +301,7 @@ class WebRtcAudioTrack {
         int level = -1;
 
         if (_audioManager != null) {
-            level = _audioManager.getStreamVolume(
-                AudioManager.STREAM_VOICE_CALL);
+            level = _audioManager.getStreamVolume(_streamType);
         }
 
         return level;
