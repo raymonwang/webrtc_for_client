@@ -98,6 +98,8 @@ class VoEAudioProcessingImpl : public VoEAudioProcessing {
 
   virtual void EnableStereoChannelSwapping(bool enable);
   virtual bool IsStereoChannelSwappingEnabled();
+  // enable Experimental voice enhancement research
+  virtual int EnableVoiceEnhancementMode(bool enable);
 
  protected:
   VoEAudioProcessingImpl(voe::SharedData* shared);

@@ -27,6 +27,8 @@
 #include "webrtc/system_wrappers/interface/thread_wrapper.h"
 #include "webrtc/system_wrappers/interface/trace.h"
 
+#include "webrtc/modules/audio_device/android/audio_settings.h"
+
 namespace webrtc {
 
 JavaVM* AudioRecordJni::globalJvm = NULL;
@@ -122,7 +124,8 @@ AudioRecordJni::AudioRecordJni(
       _delayRecording(0),
       _AGC(false),
       _samplingFreqIn((N_REC_SAMPLES_PER_SEC/1000)),
-      _recAudioSource(1) { // 1 is AudioSource.MIC which is our default
+      _recAudioSource(1), // 1 is AudioSource.MIC which is our default
+      _useBuildInAec(true) {
   memset(_recBuffer, 0, sizeof(_recBuffer));
 }
 
@@ -833,7 +836,7 @@ bool AudioRecordJni::BuiltInAECIsAvailable() const {
     }
   }
 
-  return hw_aec;
+  return hw_aec && _useBuildInAec;
 }
 
 int32_t AudioRecordJni::EnableBuiltInAEC(bool enable) {
@@ -1077,6 +1080,20 @@ int32_t AudioRecordJni::InitSampleRate() {
                  samplingFreq);
   }
 
+  //get the phone model
+  jmethodID getPhoeneModelID = env->GetMethodID(_javaScClass, "getPhoneModel", "()Ljava/lang/String;");
+  // call java sc object method
+  jstring jstr = static_cast<jstring>(env->CallObjectMethod(_javaScObj, getPhoeneModelID));
+  
+  const char* phoneModel  = env->GetStringUTFChars(jstr, 0);
+   
+  //set the audio settings
+  int outSettings[AUDIO_SETTING_NUMBER];
+  audio_settings(phoneModel, outSettings);
+  _recAudioSource = outSettings[MIC_TYPE_INDEX];
+  _useBuildInAec = outSettings[USE_BUILDIN_AEC];
+  //release env
+ env->ReleaseStringUTFChars(jstr, phoneModel);
   // get the method ID
   jmethodID initRecordingID = env->GetMethodID(_javaScClass, "InitRecording",
                                                "(II)I");

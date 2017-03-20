@@ -57,6 +57,9 @@ class WebRtcAudioRecord {
         _tempBufRec = new byte[2 * 480];
     }
 
+    private String getPhoneModel() {
+        return Build.MODEL;
+    }
     public static boolean BuiltInAECIsAvailable() {
       // AcousticEchoCanceler was added in API level 16 (Jelly Bean).
       if (!runningOnJellyBeanOrHigher()) {
@@ -92,8 +95,8 @@ class WebRtcAudioRecord {
 
     @SuppressWarnings("unused")
     private int InitRecording(int audioSource, int sampleRate) {
-        DoLog("InitRecording");
-        audioSource = AudioSource.VOICE_COMMUNICATION;
+        //audioSource = AudioSource.VOICE_COMMUNICATION; 
+        //Log.e("WebRtcAudioRecord.java","InitRecording(), micType = " + audioSource);
         // get the minimum buffer size that can be used
         int minRecBufSize = AudioRecord.getMinBufferSize(
             sampleRate,

@@ -77,6 +77,8 @@
         'agc/utility.cc',
         'agc/utility.h',
         'agc/voice_gmm_tables.h',
+	'vad/voice_activity_detector.cc',
+	'vad/voice_activity_detector.h',
         'audio_buffer.cc',
         'audio_buffer.h',
         'audio_processing_impl.cc',

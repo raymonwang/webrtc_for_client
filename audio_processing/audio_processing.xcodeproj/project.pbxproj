@@ -70,6 +70,10 @@
 		43095BD01994E90E00012AD8 /* fft4g.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B701994E90E00012AD8 /* fft4g.h */; };
 		43095BD41994E90E00012AD8 /* voice_detection_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095B741994E90E00012AD8 /* voice_detection_impl.cc */; };
 		43095BD51994E90E00012AD8 /* voice_detection_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43095B751994E90E00012AD8 /* voice_detection_impl.h */; };
+		431BC4A11E370ACB00840D20 /* voice_activity_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431BC49F1E370ACB00840D20 /* voice_activity_detector.cc */; };
+		431BC4A21E370ACB00840D20 /* voice_activity_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = 431BC4A01E370ACB00840D20 /* voice_activity_detector.h */; };
+		431BC4A31E370ADF00840D20 /* voice_activity_detector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431BC49F1E370ACB00840D20 /* voice_activity_detector.cc */; };
+		431BC4A41E3712DA00840D20 /* voice_activity_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = 431BC4A01E370ACB00840D20 /* voice_activity_detector.h */; };
 		432890961D3C82EB0044E4F5 /* audio_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095B211994E90E00012AD8 /* audio_processing_impl.cc */; };
 		432890971D3C82EC0044E4F5 /* audio_processing_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095B211994E90E00012AD8 /* audio_processing_impl.cc */; };
 		432B2F7119CAB022001267A7 /* typing_detection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43095B651994E90E00012AD8 /* typing_detection.cc */; };
@@ -298,6 +302,8 @@
 		43095B741994E90E00012AD8 /* voice_detection_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_detection_impl.cc; sourceTree = "<group>"; };
 		43095B751994E90E00012AD8 /* voice_detection_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_detection_impl.h; sourceTree = "<group>"; };
 		430D908919862952009E763A /* libaudio_processing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_processing.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		431BC49F1E370ACB00840D20 /* voice_activity_detector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voice_activity_detector.cc; sourceTree = "<group>"; };
+		431BC4A01E370ACB00840D20 /* voice_activity_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_activity_detector.h; sourceTree = "<group>"; };
 		432B2FC419CAB022001267A7 /* libaudio_processing_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_processing_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		432B302619CAB766001267A7 /* aec_core_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aec_core_sse2.c; sourceTree = "<group>"; };
 		432B302919CAB8C2001267A7 /* aec_rdft_sse2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aec_rdft_sse2.c; sourceTree = "<group>"; };
@@ -385,6 +391,7 @@
 				43095B151994E90E00012AD8 /* agc */,
 				43095B3B1994E90E00012AD8 /* ns */,
 				43095B671994E90E00012AD8 /* utility */,
+				431BC49E1E370ACB00840D20 /* vad */,
 				43C69B511D225F5A00427D35 /* channel_buffer.cc */,
 				43C69B521D225F5A00427D35 /* channel_buffer.h */,
 				43C69B531D225F5A00427D35 /* splitting_filter.cc */,
@@ -586,6 +593,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		431BC49E1E370ACB00840D20 /* vad */ = {
+			isa = PBXGroup;
+			children = (
+				431BC49F1E370ACB00840D20 /* voice_activity_detector.cc */,
+				431BC4A01E370ACB00840D20 /* voice_activity_detector.h */,
+			);
+			path = vad;
+			sourceTree = "<group>";
+		};
 		43C696FF1D22301800427D35 /* legacy */ = {
 			isa = PBXGroup;
 			children = (
@@ -690,6 +706,7 @@
 				43095BC01994E90E00012AD8 /* rms_level.h in Headers */,
 				43095BCB1994E90E00012AD8 /* delay_estimator_internal.h in Headers */,
 				43095B8A1994E90E00012AD8 /* aecm_core.h in Headers */,
+				431BC4A21E370ACB00840D20 /* voice_activity_detector.h in Headers */,
 				43C69B851D225FB500427D35 /* transient_detector.h in Headers */,
 				43C69B8C1D225FB500427D35 /* wpd_node.h in Headers */,
 				43C69CBB1D22921800427D35 /* gain_map_internal.h in Headers */,
@@ -708,6 +725,7 @@
 				432B2F9C19CAB022001267A7 /* voice_detection_impl.h in Headers */,
 				432B2F9D19CAB022001267A7 /* level_estimator_impl.h in Headers */,
 				432B2F9E19CAB022001267A7 /* echo_cancellation_internal.h in Headers */,
+				431BC4A41E3712DA00840D20 /* voice_activity_detector.h in Headers */,
 				432B2F9F19CAB022001267A7 /* echo_cancellation_impl.h in Headers */,
 				432B2FA119CAB022001267A7 /* aec_common.h in Headers */,
 				432B2FA219CAB022001267A7 /* ns_core.h in Headers */,
@@ -826,6 +844,7 @@
 				43C697051D22301800427D35 /* analog_agc.c in Sources */,
 				43C69B8E1D225FB500427D35 /* wpd_tree.cc in Sources */,
 				43C69B881D225FB500427D35 /* transient_suppressor.cc in Sources */,
+				431BC4A11E370ACB00840D20 /* voice_activity_detector.cc in Sources */,
 				43095B8B1994E90E00012AD8 /* aecm_core_c.c in Sources */,
 				43095BCD1994E90E00012AD8 /* delay_estimator_wrapper.c in Sources */,
 				43095BCF1994E90E00012AD8 /* fft4g.c in Sources */,
@@ -898,6 +917,7 @@
 				432B2F7C19CAB022001267A7 /* fft4g.c in Sources */,
 				43E04DC81D262F3700B39549 /* circular_buffer.cc in Sources */,
 				432B2F7D19CAB022001267A7 /* nsx_core_c.c in Sources */,
+				431BC4A31E370ADF00840D20 /* voice_activity_detector.cc in Sources */,
 				432B2F7E19CAB022001267A7 /* level_estimator_impl.cc in Sources */,
 				432B2F7F19CAB022001267A7 /* noise_suppression_x.c in Sources */,
 				43E04DC11D262E6900B39549 /* histogram.cc in Sources */,

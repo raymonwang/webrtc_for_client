@@ -121,6 +121,15 @@ int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate) {
   }
 }
 
+int16_t WebRtcOpus_SetCBR(OpusEncInst* inst) {
+  if (inst) {
+    return opus_encoder_ctl(inst->encoder, OPUS_SET_VBR(0));
+  } else {
+    return -1;
+  }
+}
+
+
 int16_t WebRtcOpus_SetPacketLossRate(OpusEncInst* inst, int32_t loss_rate) {
   if (inst) {
     return opus_encoder_ctl(inst->encoder,

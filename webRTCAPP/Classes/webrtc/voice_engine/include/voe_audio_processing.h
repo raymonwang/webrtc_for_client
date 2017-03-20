@@ -233,6 +233,9 @@ public:
     virtual void EnableStereoChannelSwapping(bool enable) = 0;
     virtual bool IsStereoChannelSwappingEnabled() = 0;
 
+    // enable Experimental voice enhancement research
+    virtual int EnableVoiceEnhancementMode(bool enable) = 0;
+
 protected:
     VoEAudioProcessing() {}
     virtual ~VoEAudioProcessing() {}

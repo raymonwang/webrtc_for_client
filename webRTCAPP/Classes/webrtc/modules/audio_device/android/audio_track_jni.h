@@ -167,6 +167,8 @@ class AudioTrackJni : public PlayoutDelayProvider {
   uint32_t _maxSpeakerVolume; // The maximum speaker volume value
   bool _loudSpeakerOn;
 
+  int _audioType;
+  int _streamType;
 };
 
 }  // namespace webrtc
