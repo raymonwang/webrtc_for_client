@@ -208,6 +208,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/nss/nss/lib/ckfw",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -263,6 +264,7 @@
 				43AD80DB1990A826006EAB38 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
