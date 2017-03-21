@@ -63,7 +63,7 @@
 		4381BD6E1D4704B8000656B1 /* FakeClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4381BD6C1D4704B8000656B1 /* FakeClass.cpp */; };
 		4381BD6F1D4704B8000656B1 /* FakeClass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4381BD6D1D4704B8000656B1 /* FakeClass.hpp */; };
 		4381BE671D4707A6000656B1 /* libwebrtc_opus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C551D20CF2600427D35 /* libwebrtc_opus.a */; };
-		4381BEBD1D4707BE000656B1 /* libopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C4C1D20CDE000427D35 /* libopus.a */; };
+		4381BEBD1D4707BE000656B1 /* libopus_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67C4C1D20CDE000427D35 /* libopus_armv7.a */; };
 		4381BEC01D470875000656B1 /* libiSAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D8BCE19861C2E009E763A /* libiSAC.a */; };
 		4381BEC31D4709B5000656B1 /* FakeClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4381BD6C1D4704B8000656B1 /* FakeClass.cpp */; };
 		4381BEDC1D4709B5000656B1 /* FakeClass.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4381BD6D1D4704B8000656B1 /* FakeClass.hpp */; };
@@ -118,6 +118,7 @@
 		43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4398353C198FACD40090EABA /* libpaced_sender.a */; };
 		43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC1041D50710700939424 /* librtc_sdk_common_objc.a */; };
 		43B993C11E7AC17D00215E9C /* libopus_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B993C01E7AC17D00215E9C /* libopus_arm64.a */; };
+		43B99A4F1E80E5B500215E9C /* libiSACFix_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B99A161E80E59300215E9C /* libiSACFix_arm64.a */; };
 		43C036D91D51ACBE0022DED1 /* libwebrtc_call.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040D21D503E75009FDAE6 /* libwebrtc_call.a */; };
 		43C036DA1D51ACE80022DED1 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040A31D503BEE009FDAE6 /* libcongestion_controller.a */; };
 		43C036F61D51ADD30022DED1 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040851D503AB0009FDAE6 /* librtc_event_log.a */; };
@@ -632,6 +633,27 @@
 			remoteGlobalIDString = 43B992DC1E7ABEE800215E9C;
 			remoteInfo = opus_arm64;
 		};
+		43B999F61E80E59300215E9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 430959D01994DE3D00012AD8;
+			remoteInfo = iSACFix_armv7;
+		};
+		43B99A151E80E59300215E9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43B999F51E80E36E00215E9C;
+			remoteInfo = iSACFix_arm64;
+		};
+		43B99A501E80E5BD00215E9C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 430959D81994DE3E00012AD8 /* iSACFix.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43B999B81E80E36E00215E9C;
+			remoteInfo = iSACFix_arm64;
+		};
 		43C0368F1D51A0440022DED1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C0363D1D51A0430022DED1 /* vpx.xcodeproj */;
@@ -1029,6 +1051,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B99A4F1E80E5B500215E9C /* libiSACFix_arm64.a in Frameworks */,
 				43B993C11E7AC17D00215E9C /* libopus_arm64.a in Frameworks */,
 				43E3FF3C1E65363700842905 /* libaudio_processing_arm64.a in Frameworks */,
 				43E3FF3D1E65363700842905 /* libaudio_processing_armv7.a in Frameworks */,
@@ -1036,7 +1059,7 @@
 				43EFD2251E5AE57F00E3DEAD /* libwebrtc_audio.a in Frameworks */,
 				434B05E21D50C4A800FDCA92 /* libisac_common.a in Frameworks */,
 				4381BEC01D470875000656B1 /* libiSAC.a in Frameworks */,
-				4381BEBD1D4707BE000656B1 /* libopus.a in Frameworks */,
+				4381BEBD1D4707BE000656B1 /* libopus_armv7.a in Frameworks */,
 				4381BE671D4707A6000656B1 /* libwebrtc_opus.a in Frameworks */,
 				4381BCDA1D470291000656B1 /* libaudio_device.a in Frameworks */,
 				4381BCD91D47028A000656B1 /* libaudio_coding_module.a in Frameworks */,
@@ -1192,6 +1215,7 @@
 			isa = PBXGroup;
 			children = (
 				430959EF1994DE3E00012AD8 /* libiSACFix.a */,
+				43B99A161E80E59300215E9C /* libiSACFix_arm64.a */,
 				43F179521D1D5988001817B4 /* libiSACFix_osx.a */,
 			);
 			name = Products;
@@ -1681,7 +1705,7 @@
 		43C67C471D20CDE000427D35 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43C67C4C1D20CDE000427D35 /* libopus.a */,
+				43C67C4C1D20CDE000427D35 /* libopus_armv7.a */,
 				43B993C01E7AC17D00215E9C /* libopus_arm64.a */,
 				43C67C4E1D20CDE000427D35 /* libopus_osx.a */,
 			);
@@ -1985,6 +2009,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				43B99A511E80E5BD00215E9C /* PBXTargetDependency */,
+				43B999F71E80E59300215E9C /* PBXTargetDependency */,
 				43B994161E7AC1AB00215E9C /* PBXTargetDependency */,
 				43B994181E7AC1AB00215E9C /* PBXTargetDependency */,
 				43E3FF391E65352C00842905 /* PBXTargetDependency */,
@@ -2848,6 +2874,13 @@
 			remoteRef = 43B993BF1E7AC17D00215E9C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		43B99A161E80E59300215E9C /* libiSACFix_arm64.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libiSACFix_arm64.a;
+			remoteRef = 43B99A151E80E59300215E9C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		43C036901D51A0440022DED1 /* libvpx_armv7.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2869,10 +2902,10 @@
 			remoteRef = 43C036931D51A0440022DED1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		43C67C4C1D20CDE000427D35 /* libopus.a */ = {
+		43C67C4C1D20CDE000427D35 /* libopus_armv7.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libopus.a;
+			path = libopus_armv7.a;
 			remoteRef = 43C67C4B1D20CDE000427D35 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -3119,6 +3152,16 @@
 			isa = PBXTargetDependency;
 			name = opus_arm64;
 			targetProxy = 43B994171E7AC1AB00215E9C /* PBXContainerItemProxy */;
+		};
+		43B999F71E80E59300215E9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iSACFix_armv7;
+			targetProxy = 43B999F61E80E59300215E9C /* PBXContainerItemProxy */;
+		};
+		43B99A511E80E5BD00215E9C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iSACFix_arm64;
+			targetProxy = 43B99A501E80E5BD00215E9C /* PBXContainerItemProxy */;
 		};
 		43C036A91D51A0CA0022DED1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
