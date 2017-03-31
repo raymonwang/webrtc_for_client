@@ -76,6 +76,8 @@
 		430D8DDE19861F05009E763A /* vq4.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D9219861F05009E763A /* vq4.c */; };
 		430D8DDF19861F05009E763A /* window32_w32.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D9419861F05009E763A /* window32_w32.c */; };
 		430D8DE019861F05009E763A /* xcorr_coef.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D9619861F05009E763A /* xcorr_coef.c */; };
+		43C0C6111D4F07E20058AC82 /* audio_decoder_ilbc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C60E1D4F07E20058AC82 /* audio_decoder_ilbc.cc */; };
+		43C0C6121D4F07E20058AC82 /* audio_decoder_ilbc.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C60E1D4F07E20058AC82 /* audio_decoder_ilbc.cc */; };
 		43E049871D2619DE00B39549 /* simple_lsf_dequant.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D7719861F05009E763A /* simple_lsf_dequant.c */; };
 		43E049881D2619DE00B39549 /* get_lsp_poly.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D4019861F05009E763A /* get_lsp_poly.c */; };
 		43E049891D2619DE00B39549 /* refiner.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8D7119861F05009E763A /* refiner.c */; };
@@ -175,7 +177,6 @@
 		430D8D0419861F05009E763A /* abs_quant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = abs_quant.h; sourceTree = "<group>"; };
 		430D8D0519861F05009E763A /* abs_quant_loop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = abs_quant_loop.c; sourceTree = "<group>"; };
 		430D8D0619861F05009E763A /* abs_quant_loop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = abs_quant_loop.h; sourceTree = "<group>"; };
-		430D8D0719861F05009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		430D8D0819861F05009E763A /* augmented_cb_corr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = augmented_cb_corr.c; sourceTree = "<group>"; };
 		430D8D0919861F05009E763A /* augmented_cb_corr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = augmented_cb_corr.h; sourceTree = "<group>"; };
 		430D8D0A19861F05009E763A /* bw_expand.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bw_expand.c; sourceTree = "<group>"; };
@@ -313,6 +314,9 @@
 		430D8D9519861F05009E763A /* window32_w32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window32_w32.h; sourceTree = "<group>"; };
 		430D8D9619861F05009E763A /* xcorr_coef.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xcorr_coef.c; sourceTree = "<group>"; };
 		430D8D9719861F05009E763A /* xcorr_coef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xcorr_coef.h; sourceTree = "<group>"; };
+		43C0C60E1D4F07E20058AC82 /* audio_decoder_ilbc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder_ilbc.cc; sourceTree = "<group>"; };
+		43C0C60F1D4F07E20058AC82 /* audio_decoder_ilbc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder_ilbc.h; sourceTree = "<group>"; };
+		43C0C6101D4F07E20058AC82 /* audio_encoder_ilbc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_encoder_ilbc.h; sourceTree = "<group>"; };
 		43E049D21D2619DE00B39549 /* libiLBC_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiLBC_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43FDB1021D4793F5004DD0EA /* audio_encoder_ilbc.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_ilbc.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -363,11 +367,13 @@
 		430D8D0219861F05009E763A /* ilbc */ = {
 			isa = PBXGroup;
 			children = (
+				43C0C60E1D4F07E20058AC82 /* audio_decoder_ilbc.cc */,
+				43C0C60F1D4F07E20058AC82 /* audio_decoder_ilbc.h */,
+				43C0C6101D4F07E20058AC82 /* audio_encoder_ilbc.h */,
 				430D8D0319861F05009E763A /* abs_quant.c */,
 				430D8D0419861F05009E763A /* abs_quant.h */,
 				430D8D0519861F05009E763A /* abs_quant_loop.c */,
 				430D8D0619861F05009E763A /* abs_quant_loop.h */,
-				430D8D0719861F05009E763A /* Android.mk */,
 				430D8D0819861F05009E763A /* augmented_cb_corr.c */,
 				430D8D0919861F05009E763A /* augmented_cb_corr.h */,
 				430D8D0A19861F05009E763A /* bw_expand.c */,
@@ -589,6 +595,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				430D8DD019861F05009E763A /* simple_lsf_dequant.c in Sources */,
+				43C0C6111D4F07E20058AC82 /* audio_decoder_ilbc.cc in Sources */,
 				430D8DB619861F05009E763A /* get_lsp_poly.c in Sources */,
 				430D8DCD19861F05009E763A /* refiner.c in Sources */,
 				430D8DC619861F05009E763A /* lsf_to_poly.c in Sources */,
@@ -714,6 +721,7 @@
 				43E049B51D2619DE00B39549 /* enhancer_interface.c in Sources */,
 				43E049B61D2619DE00B39549 /* gain_quant.c in Sources */,
 				43E049B71D2619DE00B39549 /* init_encode.c in Sources */,
+				43C0C6121D4F07E20058AC82 /* audio_decoder_ilbc.cc in Sources */,
 				43E049B81D2619DE00B39549 /* simple_interpolate_lsf.c in Sources */,
 				43E049B91D2619DE00B39549 /* do_plc.c in Sources */,
 				43E049BA1D2619DE00B39549 /* cb_mem_energy_calc.c in Sources */,

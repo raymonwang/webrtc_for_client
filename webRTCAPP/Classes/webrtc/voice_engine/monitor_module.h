@@ -11,7 +11,9 @@
 #ifndef WEBRTC_VOICE_ENGINE_MONITOR_MODULE_H
 #define WEBRTC_VOICE_ENGINE_MONITOR_MODULE_H
 
-#include "webrtc/modules/interface/module.h"
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/thread_annotations.h"
+#include "webrtc/modules/include/module.h"
 #include "webrtc/typedefs.h"
 #include "webrtc/voice_engine/voice_engine_defines.h"
 
@@ -25,8 +27,6 @@ protected:
 
 
 namespace webrtc {
-class CriticalSectionWrapper;
-
 namespace voe {
 
 class MonitorModule : public Module
@@ -40,14 +40,13 @@ public:
 
     virtual ~MonitorModule();
 public:	// module
-    virtual int32_t ChangeUniqueId(int32_t id) OVERRIDE;
+ int64_t TimeUntilNextProcess() override;
 
-    virtual int64_t TimeUntilNextProcess() OVERRIDE;
+ void Process() override;
 
-    virtual int32_t Process() OVERRIDE;
 private:
-    MonitorObserver* _observerPtr;
-    CriticalSectionWrapper&	_callbackCritSect;
+    rtc::CriticalSection _callbackCritSect;
+    MonitorObserver* _observerPtr GUARDED_BY(_callbackCritSect);
     int64_t _lastProcessTime;
 };
 

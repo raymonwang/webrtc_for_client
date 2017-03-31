@@ -36,6 +36,7 @@ typedef enum {
   RTCICEConnectionFailed,
   RTCICEConnectionDisconnected,
   RTCICEConnectionClosed,
+  RTCICEConnectionMax,
 } RTCICEConnectionState;
 
 // RTCICEGatheringState the states in webrtc::ICEGatheringState.
@@ -71,8 +72,6 @@ typedef enum {
 
 // RTCTrackState corresponds to the states in webrtc::TrackState.
 typedef enum {
-  RTCTrackStateInitializing,
   RTCTrackStateLive,
   RTCTrackStateEnded,
-  RTCTrackStateFailed,
 } RTCTrackState;

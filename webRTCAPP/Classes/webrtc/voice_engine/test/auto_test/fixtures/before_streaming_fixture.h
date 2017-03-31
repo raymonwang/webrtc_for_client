@@ -13,7 +13,6 @@
 
 #include <string>
 #include "webrtc/voice_engine/test/auto_test/fixtures/after_initialization_fixture.h"
-#include "webrtc/voice_engine/test/auto_test/resource_manager.h"
 
 // This fixture will, in addition to the work done by its superclasses,
 // create a channel and prepare playing a file through the fake microphone
@@ -26,7 +25,6 @@ class BeforeStreamingFixture : public AfterInitializationFixture {
 
  protected:
   int             channel_;
-  ResourceManager resource_manager_;
   std::string     fake_microphone_input_file_;
 
   // Shuts off the fake microphone for this test.
@@ -40,6 +38,9 @@ class BeforeStreamingFixture : public AfterInitializationFixture {
 
   // Resumes all sending and playout.
   void ResumePlaying();
+
+  // Waits until packet_count packetes have been processed by recipient.
+  void WaitForTransmittedPackets(int32_t packet_count);
 
  private:
   void SetUpLocalPlayback();

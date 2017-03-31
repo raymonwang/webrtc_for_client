@@ -13,7 +13,7 @@
 
 #include "webrtc/modules/video_capture/device_info_impl.h"
 #include "webrtc/modules/video_capture/video_capture_config.h"
-#include "webrtc/system_wrappers/interface/logging.h"
+#include "webrtc/system_wrappers/include/logging.h"
 
 #ifndef abs
 #define abs(a) (a>=0?a:-a)
@@ -23,8 +23,8 @@ namespace webrtc
 {
 namespace videocapturemodule
 {
-DeviceInfoImpl::DeviceInfoImpl(const int32_t id)
-    : _id(id), _apiLock(*RWLockWrapper::CreateRWLock()), _lastUsedDeviceName(NULL),
+DeviceInfoImpl::DeviceInfoImpl()
+    : _apiLock(*RWLockWrapper::CreateRWLock()), _lastUsedDeviceName(NULL),
       _lastUsedDeviceNameLength(0)
 {
 }
@@ -351,9 +351,8 @@ int32_t DeviceInfoImpl::GetExpectedCaptureDelay(
 
 //Default implementation. This should be overridden by Mobile implementations.
 int32_t DeviceInfoImpl::GetOrientation(const char* deviceUniqueIdUTF8,
-                                       VideoCaptureRotation& orientation)
-{
-    orientation = kCameraRotate0;
+                                       VideoRotation& orientation) {
+  orientation = kVideoRotation_0;
     return -1;
 }
 }  // namespace videocapturemodule

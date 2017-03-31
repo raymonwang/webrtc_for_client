@@ -14,7 +14,7 @@
 #include <map>
 #include <stdio.h>
 #include "webrtc/typedefs.h"
-#include "webrtc/modules/interface/module_common_types.h"
+#include "webrtc/modules/include/module_common_types.h"
 
 enum stereoModes {
     stereoModeMono,
@@ -36,7 +36,6 @@ public:
     int readFixedFromFile(FILE *fp, size_t len);
     virtual int writeToFile(FILE *fp);
     void blockPT(uint8_t pt);
-    //int16_t payloadType();
     virtual void parseHeader();
     void parseHeader(webrtc::WebRtcRTPHeader* rtp_header);
     const webrtc::WebRtcRTPHeader* RTPinfo() const;

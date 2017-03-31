@@ -17,18 +17,15 @@ namespace webrtc {
 namespace test {
 
 class NullRenderer : public VideoRenderer {
-  virtual void RenderFrame(const I420VideoFrame& video_frame,
-                           int time_to_render_ms) OVERRIDE {}
+  void OnFrame(const VideoFrame& video_frame) override {}
 };
 
 VideoRenderer* VideoRenderer::Create(const char* window_title,
                                      size_t width,
                                      size_t height) {
   VideoRenderer* renderer = CreatePlatformRenderer(window_title, width, height);
-  if (renderer != NULL) {
-    // TODO(mflodman) Add a warning log.
+  if (renderer != nullptr)
     return renderer;
-  }
 
   return new NullRenderer();
 }

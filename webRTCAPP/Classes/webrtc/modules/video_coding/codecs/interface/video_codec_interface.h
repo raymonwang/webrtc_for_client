@@ -8,23 +8,24 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#ifndef WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_VIDEO_CODEC_INTERFACE_H
-#define WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_VIDEO_CODEC_INTERFACE_H
+#ifndef WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_VIDEO_CODEC_INTERFACE_H_
+#define WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_VIDEO_CODEC_INTERFACE_H_
 
+#pragma message("WARNING: video_coding/codecs/interface is DEPRECATED; "
+    "use video_coding/include")
 #include <vector>
 
+#include "webrtc/api/video/video_frame.h"
 #include "webrtc/common_types.h"
-#include "webrtc/common_video/interface/i420_video_frame.h"
-#include "webrtc/modules/interface/module_common_types.h"
-#include "webrtc/modules/video_coding/codecs/interface/video_error_codes.h"
+#include "webrtc/modules/include/module_common_types.h"
+#include "webrtc/modules/video_coding/include/video_error_codes.h"
 #include "webrtc/typedefs.h"
 #include "webrtc/video_decoder.h"
 #include "webrtc/video_encoder.h"
 
-namespace webrtc
-{
+namespace webrtc {
 
-class RTPFragmentationHeader; // forward declaration
+class RTPFragmentationHeader;  // forward declaration
 
 // Note: if any pointers are added to this struct, it must be fitted
 // with a copy-constructor. See below.
@@ -43,16 +44,35 @@ struct CodecSpecificInfoVP8 {
 };
 
 struct CodecSpecificInfoVP9 {
-  bool hasReceivedSLI;
-  uint8_t pictureIdSLI;
-  bool hasReceivedRPSI;
-  uint64_t pictureIdRPSI;
-  int16_t pictureId;  // Negative value to skip pictureId.
-  bool nonReference;
-  uint8_t temporalIdx;
-  bool layerSync;
-  int tl0PicIdx;  // Negative value to skip tl0PicIdx.
-  int8_t keyIdx;  // Negative value to skip keyIdx.
+  bool has_received_sli;
+  uint8_t picture_id_sli;
+  bool has_received_rpsi;
+  uint64_t picture_id_rpsi;
+  int16_t picture_id;  // Negative value to skip pictureId.
+
+  bool inter_pic_predicted;  // This layer frame is dependent on previously
+                             // coded frame(s).
+  bool flexible_mode;
+  bool ss_data_available;
+
+  int tl0_pic_idx;  // Negative value to skip tl0PicIdx.
+  uint8_t temporal_idx;
+  uint8_t spatial_idx;
+  bool temporal_up_switch;
+  bool inter_layer_predicted;  // Frame is dependent on directly lower spatial
+                               // layer frame.
+  uint8_t gof_idx;
+
+  // SS data.
+  size_t num_spatial_layers;  // Always populated.
+  bool spatial_layer_resolution_present;
+  uint16_t width[kMaxVp9NumberOfSpatialLayers];
+  uint16_t height[kMaxVp9NumberOfSpatialLayers];
+  GofInfoVP9 gof;
+
+  // Frame reference data.
+  uint8_t num_ref_pics;
+  uint8_t p_diff[kMaxVp9RefPics];
 };
 
 struct CodecSpecificInfoGeneric {
@@ -71,12 +91,11 @@ union CodecSpecificInfoUnion {
 // Note: if any pointers are added to this struct or its sub-structs, it
 // must be fitted with a copy-constructor. This is because it is copied
 // in the copy-constructor of VCMEncodedFrame.
-struct CodecSpecificInfo
-{
-    VideoCodecType   codecType;
-    CodecSpecificInfoUnion codecSpecific;
+struct CodecSpecificInfo {
+  VideoCodecType codecType;
+  CodecSpecificInfoUnion codecSpecific;
 };
 
 }  // namespace webrtc
 
-#endif // WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_VIDEO_CODEC_INTERFACE_H
+#endif  // WEBRTC_MODULES_VIDEO_CODING_CODECS_INTERFACE_VIDEO_CODEC_INTERFACE_H_

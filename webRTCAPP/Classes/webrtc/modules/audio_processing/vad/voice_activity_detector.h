@@ -1,15 +1,24 @@
-#ifndef WEBRTC_MODULES_AUDIO_PROCESSING_AGC_VOICE_ACTIVITY_DETECTOR_H_
-#define WEBRTC_MODULES_AUDIO_PROCESSING_AGC_VOICE_ACTIVITY_DETECTOR_H_
+/*
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
+#ifndef WEBRTC_MODULES_AUDIO_PROCESSING_VAD_VOICE_ACTIVITY_DETECTOR_H_
+#define WEBRTC_MODULES_AUDIO_PROCESSING_VAD_VOICE_ACTIVITY_DETECTOR_H_
 
 #include <memory>
 #include <vector>
 
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 #include "webrtc/common_audio/resampler/include/resampler.h"
-#include "webrtc/modules/audio_processing/agc/agc_audio_proc.h"
-#include "webrtc/modules/audio_processing/agc/common.h"
-#include "webrtc/modules/audio_processing/agc/pitch_based_vad.h"
-#include "webrtc/modules/audio_processing/agc/standalone_vad.h"
+#include "webrtc/modules/audio_processing/vad/vad_audio_proc.h"
+#include "webrtc/modules/audio_processing/vad/common.h"
+#include "webrtc/modules/audio_processing/vad/pitch_based_vad.h"
+#include "webrtc/modules/audio_processing/vad/standalone_vad.h"
 
 namespace webrtc {
 
@@ -23,7 +32,7 @@ class VoiceActivityDetector {
   // Processes each audio chunk and estimates the voice probability. The maximum
   // supported sample rate is 32kHz.
   // TODO(aluebs): Change |length| to size_t.
-  void ProcessChunk(const int16_t* audio, int length, int sample_rate_hz);
+  void ProcessChunk(const int16_t* audio, size_t length, int sample_rate_hz);
 
   // Returns a vector of voice probabilities for each chunk. It can be empty for
   // some chunks, but it catches up afterwards returning multiple values at
@@ -48,9 +57,9 @@ class VoiceActivityDetector {
   float last_voice_probability_;
 
   Resampler resampler_;
-  AgcAudioProc audio_processing_;
+  VadAudioProc audio_processing_;
 
-  scoped_ptr<StandaloneVad> standalone_vad_;
+  std::unique_ptr<StandaloneVad> standalone_vad_;
   PitchBasedVad pitch_based_vad_;
 
   int16_t resampled_[kLength10Ms];

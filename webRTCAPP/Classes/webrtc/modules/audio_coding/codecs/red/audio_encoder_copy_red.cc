@@ -12,77 +12,125 @@
 
 #include <string.h>
 
+#include <utility>
+
+#include "webrtc/base/checks.h"
+
 namespace webrtc {
 
-AudioEncoderCopyRed::AudioEncoderCopyRed(const Config& config)
-    : speech_encoder_(config.speech_encoder),
-      red_payload_type_(config.payload_type),
-      secondary_allocated_(0) {
-  CHECK(speech_encoder_) << "Speech encoder not provided.";
+AudioEncoderCopyRed::Config::Config() = default;
+AudioEncoderCopyRed::Config::Config(Config&&) = default;
+AudioEncoderCopyRed::Config::~Config() = default;
+
+AudioEncoderCopyRed::AudioEncoderCopyRed(Config&& config)
+    : speech_encoder_(std::move(config.speech_encoder)),
+      red_payload_type_(config.payload_type) {
+  RTC_CHECK(speech_encoder_) << "Speech encoder not provided.";
 }
 
-AudioEncoderCopyRed::~AudioEncoderCopyRed() {
+AudioEncoderCopyRed::~AudioEncoderCopyRed() = default;
+
+int AudioEncoderCopyRed::SampleRateHz() const {
+  return speech_encoder_->SampleRateHz();
 }
 
-int AudioEncoderCopyRed::sample_rate_hz() const {
-  return speech_encoder_->sample_rate_hz();
+size_t AudioEncoderCopyRed::NumChannels() const {
+  return speech_encoder_->NumChannels();
 }
 
-int AudioEncoderCopyRed::num_channels() const {
-  return speech_encoder_->num_channels();
+int AudioEncoderCopyRed::RtpTimestampRateHz() const {
+  return speech_encoder_->RtpTimestampRateHz();
 }
 
-int AudioEncoderCopyRed::Num10MsFramesInNextPacket() const {
+size_t AudioEncoderCopyRed::Num10MsFramesInNextPacket() const {
   return speech_encoder_->Num10MsFramesInNextPacket();
 }
 
-int AudioEncoderCopyRed::Max10MsFramesInAPacket() const {
+size_t AudioEncoderCopyRed::Max10MsFramesInAPacket() const {
   return speech_encoder_->Max10MsFramesInAPacket();
 }
 
-bool AudioEncoderCopyRed::EncodeInternal(uint32_t timestamp,
-                                         const int16_t* audio,
-                                         size_t max_encoded_bytes,
-                                         uint8_t* encoded,
-                                         EncodedInfo* info) {
-  if (!speech_encoder_->Encode(timestamp, audio,
-                               static_cast<size_t>(sample_rate_hz() / 100),
-                               max_encoded_bytes, encoded, info))
-    return false;
-  if (max_encoded_bytes < info->encoded_bytes + secondary_info_.encoded_bytes)
-    return false;
-  CHECK(info->redundant.empty()) << "Cannot use nested redundant encoders.";
+int AudioEncoderCopyRed::GetTargetBitrate() const {
+  return speech_encoder_->GetTargetBitrate();
+}
 
-  if (info->encoded_bytes > 0) {
+AudioEncoder::EncodedInfo AudioEncoderCopyRed::EncodeImpl(
+    uint32_t rtp_timestamp,
+    rtc::ArrayView<const int16_t> audio,
+    rtc::Buffer* encoded) {
+
+  const size_t primary_offset = encoded->size();
+  EncodedInfo info =
+      speech_encoder_->Encode(rtp_timestamp, audio, encoded);
+
+  RTC_CHECK(info.redundant.empty()) << "Cannot use nested redundant encoders.";
+  RTC_DCHECK_EQ(encoded->size() - primary_offset, info.encoded_bytes);
+
+  if (info.encoded_bytes > 0) {
     // |info| will be implicitly cast to an EncodedInfoLeaf struct, effectively
     // discarding the (empty) vector of redundant information. This is
     // intentional.
-    info->redundant.push_back(*info);
-    DCHECK_EQ(info->redundant.size(), 1u);
+    info.redundant.push_back(info);
+    RTC_DCHECK_EQ(info.redundant.size(), 1);
     if (secondary_info_.encoded_bytes > 0) {
-      memcpy(&encoded[info->encoded_bytes], secondary_encoded_.get(),
-             secondary_info_.encoded_bytes);
-      info->redundant.push_back(secondary_info_);
-      DCHECK_EQ(info->redundant.size(), 2u);
+      encoded->AppendData(secondary_encoded_);
+      info.redundant.push_back(secondary_info_);
+      RTC_DCHECK_EQ(info.redundant.size(), 2);
     }
     // Save primary to secondary.
-    if (secondary_allocated_ < info->encoded_bytes) {
-      secondary_encoded_.reset(new uint8_t[info->encoded_bytes]);
-      secondary_allocated_ = info->encoded_bytes;
-    }
-    CHECK(secondary_encoded_);
-    memcpy(secondary_encoded_.get(), encoded, info->encoded_bytes);
-    secondary_info_ = *info;
+    secondary_encoded_.SetData(encoded->data() + primary_offset,
+                               info.encoded_bytes);
+    secondary_info_ = info;
+    RTC_DCHECK_EQ(info.speech, info.redundant[0].speech);
   }
   // Update main EncodedInfo.
-  info->payload_type = red_payload_type_;
-  info->encoded_bytes = 0;
-  for (std::vector<EncodedInfoLeaf>::const_iterator it =
-           info->redundant.begin();
-       it != info->redundant.end(); ++it) {
-    info->encoded_bytes += it->encoded_bytes;
+  info.payload_type = red_payload_type_;
+  info.encoded_bytes = 0;
+  for (std::vector<EncodedInfoLeaf>::const_iterator it = info.redundant.begin();
+       it != info.redundant.end(); ++it) {
+    info.encoded_bytes += it->encoded_bytes;
   }
-  return true;
+  return info;
+}
+
+void AudioEncoderCopyRed::Reset() {
+  speech_encoder_->Reset();
+  secondary_encoded_.Clear();
+  secondary_info_.encoded_bytes = 0;
+}
+
+bool AudioEncoderCopyRed::SetFec(bool enable) {
+  return speech_encoder_->SetFec(enable);
+}
+
+bool AudioEncoderCopyRed::SetDtx(bool enable) {
+  return speech_encoder_->SetDtx(enable);
+}
+
+bool AudioEncoderCopyRed::SetApplication(Application application) {
+  return speech_encoder_->SetApplication(application);
+}
+
+void AudioEncoderCopyRed::SetMaxPlaybackRate(int frequency_hz) {
+  speech_encoder_->SetMaxPlaybackRate(frequency_hz);
+}
+
+rtc::ArrayView<std::unique_ptr<AudioEncoder>>
+AudioEncoderCopyRed::ReclaimContainedEncoders() {
+  return rtc::ArrayView<std::unique_ptr<AudioEncoder>>(&speech_encoder_, 1);
+}
+
+void AudioEncoderCopyRed::OnReceivedUplinkPacketLossFraction(
+    float uplink_packet_loss_fraction) {
+  speech_encoder_->OnReceivedUplinkPacketLossFraction(
+      uplink_packet_loss_fraction);
+}
+
+void AudioEncoderCopyRed::OnReceivedUplinkBandwidth(
+    int target_audio_bitrate_bps,
+    rtc::Optional<int64_t> probing_interval_ms) {
+  speech_encoder_->OnReceivedUplinkBandwidth(target_audio_bitrate_bps,
+                                             probing_interval_ms);
 }
 
 }  // namespace webrtc

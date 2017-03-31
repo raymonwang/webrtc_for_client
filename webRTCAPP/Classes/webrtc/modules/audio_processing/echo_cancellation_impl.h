@@ -11,68 +11,104 @@
 #ifndef WEBRTC_MODULES_AUDIO_PROCESSING_ECHO_CANCELLATION_IMPL_H_
 #define WEBRTC_MODULES_AUDIO_PROCESSING_ECHO_CANCELLATION_IMPL_H_
 
+#include <memory>
+#include <vector>
+
+#include "webrtc/base/constructormagic.h"
+#include "webrtc/base/criticalsection.h"
 #include "webrtc/modules/audio_processing/include/audio_processing.h"
-#include "webrtc/modules/audio_processing/processing_component.h"
 
 namespace webrtc {
 
 class AudioBuffer;
-class CriticalSectionWrapper;
 
-class EchoCancellationImpl : public EchoCancellation,
-                             public ProcessingComponent {
+class EchoCancellationImpl : public EchoCancellation {
  public:
-  EchoCancellationImpl(const AudioProcessing* apm,
-                       CriticalSectionWrapper* crit);
-  virtual ~EchoCancellationImpl();
+  EchoCancellationImpl(rtc::CriticalSection* crit_render,
+                       rtc::CriticalSection* crit_capture);
+  ~EchoCancellationImpl() override;
 
-  int ProcessRenderAudio(const AudioBuffer* audio);
-  int ProcessCaptureAudio(AudioBuffer* audio);
+  void ProcessRenderAudio(rtc::ArrayView<const float> packed_render_audio);
+  int ProcessCaptureAudio(AudioBuffer* audio, int stream_delay_ms);
 
   // EchoCancellation implementation.
-  virtual bool is_enabled() const OVERRIDE;
-  virtual int stream_drift_samples() const OVERRIDE;
+  bool is_enabled() const override;
+  int stream_drift_samples() const override;
+  SuppressionLevel suppression_level() const override;
+  bool is_drift_compensation_enabled() const override;
 
-  // ProcessingComponent implementation.
-  virtual int Initialize() OVERRIDE;
-  virtual void SetExtraOptions(const Config& config) OVERRIDE;
+  void Initialize(int sample_rate_hz,
+                  size_t num_reverse_channels_,
+                  size_t num_output_channels_,
+                  size_t num_proc_channels_);
+  void SetExtraOptions(const webrtc::Config& config);
+  bool is_delay_agnostic_enabled() const;
+  bool is_extended_filter_enabled() const;
+  std::string GetExperimentsDescription();
+  bool is_refined_adaptive_filter_enabled() const;
+
+  // Returns the system delay of the first AEC component.
+  int GetSystemDelayInSamples() const;
+
+  static void PackRenderAudioBuffer(const AudioBuffer* audio,
+                                    size_t num_output_channels,
+                                    size_t num_channels,
+                                    std::vector<float>* packed_buffer);
+  static size_t NumCancellersRequired(size_t num_output_channels,
+                                      size_t num_reverse_channels);
+
+  // Enable logging of various AEC statistics.
+  int enable_metrics(bool enable) override;
+
+  // Provides various statistics about the AEC.
+  int GetMetrics(Metrics* metrics) override;
+
+  // Enable logging of delay metrics.
+  int enable_delay_logging(bool enable) override;
+
+  // Provides delay metrics.
+  int GetDelayMetrics(int* median,
+                      int* std,
+                      float* fraction_poor_delays) override;
 
  private:
+  class Canceller;
+  struct StreamProperties;
+
   // EchoCancellation implementation.
-  virtual int Enable(bool enable) OVERRIDE;
-  virtual int enable_drift_compensation(bool enable) OVERRIDE;
-  virtual bool is_drift_compensation_enabled() const OVERRIDE;
-  virtual void set_stream_drift_samples(int drift) OVERRIDE;
-  virtual int set_suppression_level(SuppressionLevel level) OVERRIDE;
-  virtual SuppressionLevel suppression_level() const OVERRIDE;
-  virtual int enable_metrics(bool enable) OVERRIDE;
-  virtual bool are_metrics_enabled() const OVERRIDE;
-  virtual bool stream_has_echo() const OVERRIDE;
-  virtual int GetMetrics(Metrics* metrics) OVERRIDE;
-  virtual int enable_delay_logging(bool enable) OVERRIDE;
-  virtual bool is_delay_logging_enabled() const OVERRIDE;
-  virtual int GetDelayMetrics(int* median, int* std) OVERRIDE;
-  virtual struct AecCore* aec_core() const OVERRIDE;
+  int Enable(bool enable) override;
+  int enable_drift_compensation(bool enable) override;
+  void set_stream_drift_samples(int drift) override;
+  int set_suppression_level(SuppressionLevel level) override;
+  bool are_metrics_enabled() const override;
+  bool stream_has_echo() const override;
+  bool is_delay_logging_enabled() const override;
+  int GetDelayMetrics(int* median, int* std) override;
 
-  // ProcessingComponent implementation.
-  virtual void* CreateHandle() const OVERRIDE;
-  virtual int InitializeHandle(void* handle) const OVERRIDE;
-  virtual int ConfigureHandle(void* handle) const OVERRIDE;
-  virtual void DestroyHandle(void* handle) const OVERRIDE;
-  virtual int num_handles_required() const OVERRIDE;
-  virtual int GetHandleError(void* handle) const OVERRIDE;
+  struct AecCore* aec_core() const override;
 
-  const AudioProcessing* apm_;
-  CriticalSectionWrapper* crit_;
-  bool drift_compensation_enabled_;
-  bool metrics_enabled_;
-  SuppressionLevel suppression_level_;
-  int stream_drift_samples_;
-  bool was_stream_drift_set_;
-  bool stream_has_echo_;
-  bool delay_logging_enabled_;
-  bool delay_correction_enabled_;
-  bool reported_delay_enabled_;
+  void AllocateRenderQueue();
+  int Configure();
+
+  rtc::CriticalSection* const crit_render_ ACQUIRED_BEFORE(crit_capture_);
+  rtc::CriticalSection* const crit_capture_;
+
+  bool enabled_ = false;
+  bool drift_compensation_enabled_ GUARDED_BY(crit_capture_);
+  bool metrics_enabled_ GUARDED_BY(crit_capture_);
+  SuppressionLevel suppression_level_ GUARDED_BY(crit_capture_);
+  int stream_drift_samples_ GUARDED_BY(crit_capture_);
+  bool was_stream_drift_set_ GUARDED_BY(crit_capture_);
+  bool stream_has_echo_ GUARDED_BY(crit_capture_);
+  bool delay_logging_enabled_ GUARDED_BY(crit_capture_);
+  bool extended_filter_enabled_ GUARDED_BY(crit_capture_);
+  bool delay_agnostic_enabled_ GUARDED_BY(crit_capture_);
+  bool refined_adaptive_filter_enabled_ GUARDED_BY(crit_capture_) = false;
+
+  std::vector<std::unique_ptr<Canceller>> cancellers_;
+  std::unique_ptr<StreamProperties> stream_properties_;
+
+  RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(EchoCancellationImpl);
 };
 
 }  // namespace webrtc

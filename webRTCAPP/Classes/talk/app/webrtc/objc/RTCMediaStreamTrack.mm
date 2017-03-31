@@ -32,13 +32,15 @@
 #import "RTCEnumConverter.h"
 #import "RTCMediaStreamTrack+Internal.h"
 
+#include <memory>
+
 namespace webrtc {
 
 class RTCMediaStreamTrackObserver : public ObserverInterface {
  public:
   RTCMediaStreamTrackObserver(RTCMediaStreamTrack* track) { _track = track; }
 
-  virtual void OnChanged() OVERRIDE {
+  void OnChanged() override {
     [_track.delegate mediaStreamTrackDidChange:_track];
   }
 
@@ -49,7 +51,7 @@ class RTCMediaStreamTrackObserver : public ObserverInterface {
 
 @implementation RTCMediaStreamTrack {
   rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> _mediaTrack;
-  rtc::scoped_ptr<webrtc::RTCMediaStreamTrackObserver> _observer;
+  std::unique_ptr<webrtc::RTCMediaStreamTrackObserver> _observer;
 }
 
 @synthesize label;
@@ -88,11 +90,6 @@ class RTCMediaStreamTrackObserver : public ObserverInterface {
 
 - (RTCTrackState)state {
   return [RTCEnumConverter convertTrackStateToObjC:self.mediaTrack->state()];
-}
-
-- (BOOL)setState:(RTCTrackState)state {
-  return self.mediaTrack->set_state(
-      [RTCEnumConverter convertTrackStateToNative:state]);
 }
 
 @end

@@ -1,0 +1,300 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43E040B41D503C2C009FDAE6 /* congestion_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040A61D503C2C009FDAE6 /* congestion_controller.cc */; };
+		43E040B61D503C2C009FDAE6 /* delay_based_bwe.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */; };
+		43E040B71D503C2C009FDAE6 /* delay_based_bwe.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */; };
+		43E040BB1D503C2C009FDAE6 /* congestion_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040B01D503C2C009FDAE6 /* congestion_controller.h */; };
+		43E040BC1D503C2C009FDAE6 /* mock_congestion_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040B21D503C2C009FDAE6 /* mock_congestion_controller.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43E040971D503BED009FDAE6 /* libcongestion_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcongestion_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43E040A51D503C2C009FDAE6 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
+		43E040A61D503C2C009FDAE6 /* congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = congestion_controller.cc; sourceTree = "<group>"; };
+		43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = delay_based_bwe.cc; sourceTree = "<group>"; };
+		43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = delay_based_bwe.h; sourceTree = "<group>"; };
+		43E040AE1D503C2C009FDAE6 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
+		43E040B01D503C2C009FDAE6 /* congestion_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = congestion_controller.h; sourceTree = "<group>"; };
+		43E040B21D503C2C009FDAE6 /* mock_congestion_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_congestion_controller.h; sourceTree = "<group>"; };
+		43E040B31D503C2C009FDAE6 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43E040941D503BED009FDAE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43E0408E1D503BED009FDAE6 = {
+			isa = PBXGroup;
+			children = (
+				43E040A41D503C2C009FDAE6 /* congestion_controller */,
+				43E040981D503BED009FDAE6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43E040981D503BED009FDAE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43E040971D503BED009FDAE6 /* libcongestion_controller.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43E040A41D503C2C009FDAE6 /* congestion_controller */ = {
+			isa = PBXGroup;
+			children = (
+				43E040A51D503C2C009FDAE6 /* BUILD.gn */,
+				43E040A61D503C2C009FDAE6 /* congestion_controller.cc */,
+				43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */,
+				43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */,
+				43E040AE1D503C2C009FDAE6 /* DEPS */,
+				43E040AF1D503C2C009FDAE6 /* include */,
+				43E040B31D503C2C009FDAE6 /* OWNERS */,
+			);
+			name = congestion_controller;
+			path = ../webRTCAPP/Classes/webrtc/modules/congestion_controller;
+			sourceTree = "<group>";
+		};
+		43E040AF1D503C2C009FDAE6 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				43E040B01D503C2C009FDAE6 /* congestion_controller.h */,
+				43E040B11D503C2C009FDAE6 /* mock */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		43E040B11D503C2C009FDAE6 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				43E040B21D503C2C009FDAE6 /* mock_congestion_controller.h */,
+			);
+			path = mock;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43E040951D503BED009FDAE6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E040BB1D503C2C009FDAE6 /* congestion_controller.h in Headers */,
+				43E040B71D503C2C009FDAE6 /* delay_based_bwe.h in Headers */,
+				43E040BC1D503C2C009FDAE6 /* mock_congestion_controller.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43E040961D503BED009FDAE6 /* congestion_controller */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43E0409B1D503BED009FDAE6 /* Build configuration list for PBXNativeTarget "congestion_controller" */;
+			buildPhases = (
+				43E040931D503BED009FDAE6 /* Sources */,
+				43E040941D503BED009FDAE6 /* Frameworks */,
+				43E040951D503BED009FDAE6 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = congestion_controller;
+			productName = congestion_controller;
+			productReference = 43E040971D503BED009FDAE6 /* libcongestion_controller.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43E0408F1D503BED009FDAE6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangxin;
+				TargetAttributes = {
+					43E040961D503BED009FDAE6 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 43E040921D503BED009FDAE6 /* Build configuration list for PBXProject "congestion_controller" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43E0408E1D503BED009FDAE6;
+			productRefGroup = 43E040981D503BED009FDAE6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43E040961D503BED009FDAE6 /* congestion_controller */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43E040931D503BED009FDAE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43E040B61D503C2C009FDAE6 /* delay_based_bwe.cc in Sources */,
+				43E040B41D503C2C009FDAE6 /* congestion_controller.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43E040991D503BED009FDAE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43E0409A1D503BED009FDAE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43E0409C1D503BED009FDAE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43E0409D1D503BED009FDAE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43E040921D503BED009FDAE6 /* Build configuration list for PBXProject "congestion_controller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E040991D503BED009FDAE6 /* Debug */,
+				43E0409A1D503BED009FDAE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43E0409B1D503BED009FDAE6 /* Build configuration list for PBXNativeTarget "congestion_controller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43E0409C1D503BED009FDAE6 /* Debug */,
+				43E0409D1D503BED009FDAE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43E0408F1D503BED009FDAE6 /* Project object */;
+}

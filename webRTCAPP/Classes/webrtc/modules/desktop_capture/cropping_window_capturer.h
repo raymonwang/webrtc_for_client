@@ -11,36 +11,38 @@
 #ifndef WEBRTC_MODULES_DESKTOP_CAPTURE_CROPPING_WINDOW_CAPTURER_H_
 #define WEBRTC_MODULES_DESKTOP_CAPTURE_CROPPING_WINDOW_CAPTURER_H_
 
+#include <memory>
+
+#include "webrtc/modules/desktop_capture/desktop_capturer.h"
 #include "webrtc/modules/desktop_capture/desktop_capture_options.h"
-#include "webrtc/modules/desktop_capture/screen_capturer.h"
-#include "webrtc/modules/desktop_capture/window_capturer.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 
 namespace webrtc {
 
 // WindowCapturer implementation that uses a screen capturer to capture the
 // whole screen and crops the video frame to the window area when the captured
 // window is on top.
-class CroppingWindowCapturer : public WindowCapturer,
+class CroppingWindowCapturer : public DesktopCapturer,
                                public DesktopCapturer::Callback {
  public:
-  static WindowCapturer* Create(const DesktopCaptureOptions& options);
-  virtual ~CroppingWindowCapturer();
+  static std::unique_ptr<DesktopCapturer> CreateCapturer(
+      const DesktopCaptureOptions& options);
+
+  ~CroppingWindowCapturer() override;
 
   // DesktopCapturer implementation.
-  virtual void Start(DesktopCapturer::Callback* callback) OVERRIDE;
-  virtual void Capture(const DesktopRegion& region) OVERRIDE;
-  virtual void SetExcludedWindow(WindowId window) OVERRIDE;
-
-  // WindowCapturer implementation.
-  virtual bool GetWindowList(WindowList* windows) OVERRIDE;
-  virtual bool SelectWindow(WindowId id) OVERRIDE;
-  virtual bool BringSelectedWindowToFront() OVERRIDE;
+  void Start(DesktopCapturer::Callback* callback) override;
+  void SetSharedMemoryFactory(
+      std::unique_ptr<SharedMemoryFactory> shared_memory_factory) override;
+  void CaptureFrame() override;
+  void SetExcludedWindow(WindowId window) override;
+  bool GetSourceList(SourceList* sources) override;
+  bool SelectSource(SourceId id) override;
+  bool FocusOnSelectedSource() override;
 
   // DesktopCapturer::Callback implementation, passed to |screen_capturer_| to
   // intercept the capture result.
-  virtual SharedMemory* CreateSharedMemory(size_t size) OVERRIDE;
-  virtual void OnCaptureCompleted(DesktopFrame* frame) OVERRIDE;
+  void OnCaptureResult(DesktopCapturer::Result result,
+                       std::unique_ptr<DesktopFrame> frame) override;
 
  protected:
   explicit CroppingWindowCapturer(const DesktopCaptureOptions& options);
@@ -62,9 +64,9 @@ class CroppingWindowCapturer : public WindowCapturer,
  private:
   DesktopCaptureOptions options_;
   DesktopCapturer::Callback* callback_;
-  scoped_ptr<WindowCapturer> window_capturer_;
-  scoped_ptr<ScreenCapturer> screen_capturer_;
-  WindowId selected_window_;
+  std::unique_ptr<DesktopCapturer> window_capturer_;
+  std::unique_ptr<DesktopCapturer> screen_capturer_;
+  SourceId selected_window_;
   WindowId excluded_window_;
 };
 

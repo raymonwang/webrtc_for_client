@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "430D87F2198608F8009E763A"
-               BuildableName = "libcommon_audio_armv7.a"
-               BlueprintName = "common_audio_armv7"
+               BuildableName = "libcommon_audio_arm64.a"
+               BlueprintName = "common_audio_arm64"
                ReferencedContainer = "container:common_audio.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,8 +56,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "430D87F2198608F8009E763A"
-            BuildableName = "libcommon_audio_armv7.a"
-            BlueprintName = "common_audio_armv7"
+            BuildableName = "libcommon_audio_arm64.a"
+            BlueprintName = "common_audio_arm64"
             ReferencedContainer = "container:common_audio.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -12,6 +12,8 @@
 
 #include "webrtc/base/taskparent.h"
 
+#include "webrtc/base/checks.h"
+#include "webrtc/base/common.h"
 #include "webrtc/base/task.h"
 #include "webrtc/base/taskrunner.h"
 
@@ -19,8 +21,8 @@ namespace rtc {
 
 TaskParent::TaskParent(Task* derived_instance, TaskParent *parent)
     : parent_(parent) {
-  ASSERT(derived_instance != NULL);
-  ASSERT(parent != NULL);
+  RTC_DCHECK(derived_instance != NULL);
+  RTC_DCHECK(parent != NULL);
   runner_ = parent->GetRunner();
   parent_->AddChild(derived_instance);
   Initialize();
@@ -29,9 +31,11 @@ TaskParent::TaskParent(Task* derived_instance, TaskParent *parent)
 TaskParent::TaskParent(TaskRunner *derived_instance)
     : parent_(NULL),
       runner_(derived_instance) {
-  ASSERT(derived_instance != NULL);
+  RTC_DCHECK(derived_instance != NULL);
   Initialize();
 }
+
+TaskParent::~TaskParent() = default;
 
 // Does common initialization of member variables
 void TaskParent::Initialize() {
@@ -43,9 +47,9 @@ void TaskParent::AddChild(Task *child) {
   children_->insert(child);
 }
 
-#ifdef _DEBUG
+#if RTC_DCHECK_IS_ON
 bool TaskParent::IsChildTask(Task *task) {
-  ASSERT(task != NULL);
+  RTC_DCHECK(task != NULL);
   return task->parent_ == this && children_->find(task) != children_->end();
 }
 #endif
@@ -66,7 +70,7 @@ bool TaskParent::AnyChildError() {
 
 void TaskParent::AbortAllChildren() {
   if (children_->size() > 0) {
-#ifdef _DEBUG
+#if RTC_DCHECK_IS_ON
     runner_->IncrementAbortCount();
 #endif
 
@@ -75,7 +79,7 @@ void TaskParent::AbortAllChildren() {
       (*it)->Abort(true);  // Note we do not wake
     }
 
-#ifdef _DEBUG
+#if RTC_DCHECK_IS_ON
     runner_->DecrementAbortCount();
 #endif
   }

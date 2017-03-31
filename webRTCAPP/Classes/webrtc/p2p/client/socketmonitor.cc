@@ -10,6 +10,7 @@
 
 #include "webrtc/p2p/client/socketmonitor.h"
 
+#include "webrtc/base/checks.h"
 #include "webrtc/base/common.h"
 
 namespace cricket {
@@ -21,57 +22,57 @@ enum {
   MSG_MONITOR_SIGNAL
 };
 
-SocketMonitor::SocketMonitor(TransportChannel* channel,
-                             rtc::Thread* worker_thread,
-                             rtc::Thread* monitor_thread) {
-  channel_ = channel;
-  channel_thread_ = worker_thread;
-  monitoring_thread_ = monitor_thread;
+ConnectionMonitor::ConnectionMonitor(ConnectionStatsGetter* stats_getter,
+                                     rtc::Thread* network_thread,
+                                     rtc::Thread* monitoring_thread) {
+  stats_getter_ = stats_getter;
+  network_thread_ = network_thread;
+  monitoring_thread_ = monitoring_thread;
   monitoring_ = false;
 }
 
-SocketMonitor::~SocketMonitor() {
-  channel_thread_->Clear(this);
+ConnectionMonitor::~ConnectionMonitor() {
+  network_thread_->Clear(this);
   monitoring_thread_->Clear(this);
 }
 
-void SocketMonitor::Start(int milliseconds) {
+void ConnectionMonitor::Start(int milliseconds) {
   rate_ = milliseconds;
   if (rate_ < 250)
     rate_ = 250;
-  channel_thread_->Post(this, MSG_MONITOR_START);
+  network_thread_->Post(RTC_FROM_HERE, this, MSG_MONITOR_START);
 }
 
-void SocketMonitor::Stop() {
-  channel_thread_->Post(this, MSG_MONITOR_STOP);
+void ConnectionMonitor::Stop() {
+  network_thread_->Post(RTC_FROM_HERE, this, MSG_MONITOR_STOP);
 }
 
-void SocketMonitor::OnMessage(rtc::Message *message) {
+void ConnectionMonitor::OnMessage(rtc::Message *message) {
   rtc::CritScope cs(&crit_);
   switch (message->message_id) {
     case MSG_MONITOR_START:
-      ASSERT(rtc::Thread::Current() == channel_thread_);
+      RTC_DCHECK(rtc::Thread::Current() == network_thread_);
       if (!monitoring_) {
         monitoring_ = true;
-        PollSocket(true);
+        PollConnectionStats_w();
       }
       break;
 
     case MSG_MONITOR_STOP:
-      ASSERT(rtc::Thread::Current() == channel_thread_);
+      RTC_DCHECK(rtc::Thread::Current() == network_thread_);
       if (monitoring_) {
         monitoring_ = false;
-        channel_thread_->Clear(this);
+        network_thread_->Clear(this);
       }
       break;
 
     case MSG_MONITOR_POLL:
-      ASSERT(rtc::Thread::Current() == channel_thread_);
-      PollSocket(true);
+      RTC_DCHECK(rtc::Thread::Current() == network_thread_);
+      PollConnectionStats_w();
       break;
 
     case MSG_MONITOR_SIGNAL: {
-      ASSERT(rtc::Thread::Current() == monitoring_thread_);
+      RTC_DCHECK(rtc::Thread::Current() == monitoring_thread_);
       std::vector<ConnectionInfo> infos = connection_infos_;
       crit_.Leave();
       SignalUpdate(this, infos);
@@ -81,17 +82,16 @@ void SocketMonitor::OnMessage(rtc::Message *message) {
   }
 }
 
-void SocketMonitor::PollSocket(bool poll) {
-  ASSERT(rtc::Thread::Current() == channel_thread_);
+void ConnectionMonitor::PollConnectionStats_w() {
+  RTC_DCHECK(rtc::Thread::Current() == network_thread_);
   rtc::CritScope cs(&crit_);
 
   // Gather connection infos
-  channel_->GetStats(&connection_infos_);
+  stats_getter_->GetConnectionStats(&connection_infos_);
 
   // Signal the monitoring thread, start another poll timer
-  monitoring_thread_->Post(this, MSG_MONITOR_SIGNAL);
-  if (poll)
-    channel_thread_->PostDelayed(rate_, this, MSG_MONITOR_POLL);
+  monitoring_thread_->Post(RTC_FROM_HERE, this, MSG_MONITOR_SIGNAL);
+  network_thread_->PostDelayed(RTC_FROM_HERE, rate_, this, MSG_MONITOR_POLL);
 }
 
 }  // namespace cricket

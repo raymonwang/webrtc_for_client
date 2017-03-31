@@ -29,34 +29,41 @@
 #error "This file requires ARC support."
 #endif
 
-#import "RTCVideoRendererAdapter.h"
 #import "RTCI420Frame+Internal.h"
+#import "RTCVideoRendererAdapter.h"
+
+#include <memory>
 
 namespace webrtc {
 
-class RTCVideoRendererNativeAdapter : public VideoRendererInterface {
+class RTCVideoRendererNativeAdapter
+    : public rtc::VideoSinkInterface<cricket::VideoFrame> {
  public:
   RTCVideoRendererNativeAdapter(RTCVideoRendererAdapter* adapter) {
     _adapter = adapter;
+    _size = CGSizeZero;
   }
 
-  virtual void SetSize(int width, int height) OVERRIDE {
-    [_adapter.videoRenderer setSize:CGSizeMake(width, height)];
-  }
-
-  virtual void RenderFrame(const cricket::VideoFrame* frame) OVERRIDE {
+  void OnFrame(const cricket::VideoFrame& videoFrame) override {
+    const cricket::VideoFrame* frame = videoFrame.GetCopyWithRotationApplied();
+    CGSize currentSize = CGSizeMake(frame->width(), frame->height());
+    if (!CGSizeEqualToSize(_size, currentSize)) {
+      _size = currentSize;
+      [_adapter.videoRenderer setSize:_size];
+    }
     RTCI420Frame* i420Frame = [[RTCI420Frame alloc] initWithVideoFrame:frame];
     [_adapter.videoRenderer renderFrame:i420Frame];
   }
 
  private:
   __weak RTCVideoRendererAdapter* _adapter;
+  CGSize _size;
 };
 }
 
 @implementation RTCVideoRendererAdapter {
   id<RTCVideoRenderer> _videoRenderer;
-  rtc::scoped_ptr<webrtc::RTCVideoRendererNativeAdapter> _adapter;
+  std::unique_ptr<webrtc::RTCVideoRendererNativeAdapter> _adapter;
 }
 
 - (instancetype)initWithVideoRenderer:(id<RTCVideoRenderer>)videoRenderer {
@@ -68,7 +75,7 @@ class RTCVideoRendererNativeAdapter : public VideoRendererInterface {
   return self;
 }
 
-- (webrtc::VideoRendererInterface*)nativeVideoRenderer {
+- (rtc::VideoSinkInterface<cricket::VideoFrame> *)nativeVideoRenderer {
   return _adapter.get();
 }
 

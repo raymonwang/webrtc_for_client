@@ -472,11 +472,6 @@
 				DSTROOT = /tmp/libjingle_peerconnection_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle_peerconnection_objc/jingle_peerconnection_objc-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"CLANG_ENABLE_OBJC_ARC=1",
-					WEBRTC_POSIX,
-				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -499,11 +494,6 @@
 				DSTROOT = /tmp/libjingle_peerconnection_objc.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "libjingle_peerconnection_objc/jingle_peerconnection_objc-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"CLANG_ENABLE_OBJC_ARC=1",
-					WEBRTC_POSIX,
-				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

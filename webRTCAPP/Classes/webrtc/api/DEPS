@@ -1,0 +1,14 @@
+include_rules = [
+  "+third_party/libyuv",
+  "+webrtc/base",
+  "+webrtc/common_video",
+  "+webrtc/media",
+  "+webrtc/p2p",
+  "+webrtc/pc",
+]
+
+specific_include_rules = {
+  "peerconnection_jni\.cc": [
+    "+webrtc/voice_engine",
+  ],
+}

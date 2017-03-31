@@ -25,12 +25,10 @@
 		43983495198FA3AF0090EABA /* sctp_indata.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398344F198FA3AE0090EABA /* sctp_indata.h */; };
 		43983496198FA3AF0090EABA /* sctp_input.c in Sources */ = {isa = PBXBuildFile; fileRef = 43983450198FA3AE0090EABA /* sctp_input.c */; };
 		43983497198FA3AF0090EABA /* sctp_input.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983451198FA3AE0090EABA /* sctp_input.h */; };
-		43983498198FA3AF0090EABA /* sctp_lock_userspace.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983452198FA3AE0090EABA /* sctp_lock_userspace.h */; };
 		43983499198FA3AF0090EABA /* sctp_nss_sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 43983453198FA3AE0090EABA /* sctp_nss_sha1.c */; };
 		4398349A198FA3AF0090EABA /* sctp_nss_sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983454198FA3AE0090EABA /* sctp_nss_sha1.h */; };
 		4398349B198FA3AF0090EABA /* sctp_openssl_sha1.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983455198FA3AE0090EABA /* sctp_openssl_sha1.h */; };
 		4398349C198FA3AF0090EABA /* sctp_os.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983456198FA3AE0090EABA /* sctp_os.h */; };
-		4398349D198FA3AF0090EABA /* sctp_os_userspace.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983457198FA3AF0090EABA /* sctp_os_userspace.h */; };
 		4398349E198FA3AF0090EABA /* sctp_output.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398345A198FA3AF0090EABA /* sctp_output.c */; };
 		4398349F198FA3AF0090EABA /* sctp_output.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398345B198FA3AF0090EABA /* sctp_output.h */; };
 		439834A0198FA3AF0090EABA /* sctp_pcb.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398345C198FA3AF0090EABA /* sctp_pcb.c */; };
@@ -47,11 +45,8 @@
 		439834AB198FA3AF0090EABA /* sctp_timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 43983469198FA3AF0090EABA /* sctp_timer.c */; };
 		439834AC198FA3AF0090EABA /* sctp_timer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398346A198FA3AF0090EABA /* sctp_timer.h */; };
 		439834AD198FA3AF0090EABA /* sctp_uio.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398346B198FA3AF0090EABA /* sctp_uio.h */; };
-		439834AE198FA3AF0090EABA /* sctp_userspace.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398346C198FA3AF0090EABA /* sctp_userspace.c */; };
 		439834AF198FA3AF0090EABA /* sctp_usrreq.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398346D198FA3AF0090EABA /* sctp_usrreq.c */; };
 		439834B0198FA3AF0090EABA /* sctp_var.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398346E198FA3AF0090EABA /* sctp_var.h */; };
-		439834B1198FA3AF0090EABA /* sctputil.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398346F198FA3AF0090EABA /* sctputil.c */; };
-		439834B2198FA3AF0090EABA /* sctputil.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983470198FA3AF0090EABA /* sctputil.h */; };
 		439834B3198FA3AF0090EABA /* sctp6_usrreq.c in Sources */ = {isa = PBXBuildFile; fileRef = 43983472198FA3AF0090EABA /* sctp6_usrreq.c */; };
 		439834B4198FA3AF0090EABA /* sctp6_var.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983473198FA3AF0090EABA /* sctp6_var.h */; };
 		439834B5198FA3AF0090EABA /* user_atomic.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983474198FA3AF0090EABA /* user_atomic.h */; };
@@ -64,8 +59,6 @@
 		439834BC198FA3AF0090EABA /* user_mbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398347B198FA3AF0090EABA /* user_mbuf.c */; };
 		439834BD198FA3AF0090EABA /* user_mbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398347C198FA3AF0090EABA /* user_mbuf.h */; };
 		439834BE198FA3AF0090EABA /* user_queue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398347D198FA3AF0090EABA /* user_queue.h */; };
-		439834BF198FA3AF0090EABA /* user_recv_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 4398347E198FA3AF0090EABA /* user_recv_thread.c */; };
-		439834C0198FA3AF0090EABA /* user_recv_thread.h in Headers */ = {isa = PBXBuildFile; fileRef = 4398347F198FA3AF0090EABA /* user_recv_thread.h */; };
 		439834C1198FA3AF0090EABA /* user_route.h in Headers */ = {isa = PBXBuildFile; fileRef = 43983480198FA3AF0090EABA /* user_route.h */; };
 		439834C2198FA3AF0090EABA /* user_sctp_timer_iterate.c in Sources */ = {isa = PBXBuildFile; fileRef = 43983481198FA3AF0090EABA /* user_sctp_timer_iterate.c */; };
 		439834C3198FA3AF0090EABA /* user_socket.c in Sources */ = {isa = PBXBuildFile; fileRef = 43983482198FA3AF0090EABA /* user_socket.c */; };
@@ -95,12 +88,10 @@
 		4398344F198FA3AE0090EABA /* sctp_indata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_indata.h; sourceTree = "<group>"; };
 		43983450198FA3AE0090EABA /* sctp_input.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_input.c; sourceTree = "<group>"; };
 		43983451198FA3AE0090EABA /* sctp_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_input.h; sourceTree = "<group>"; };
-		43983452198FA3AE0090EABA /* sctp_lock_userspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_lock_userspace.h; sourceTree = "<group>"; };
 		43983453198FA3AE0090EABA /* sctp_nss_sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_nss_sha1.c; sourceTree = "<group>"; };
 		43983454198FA3AE0090EABA /* sctp_nss_sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_nss_sha1.h; sourceTree = "<group>"; };
 		43983455198FA3AE0090EABA /* sctp_openssl_sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_openssl_sha1.h; sourceTree = "<group>"; };
 		43983456198FA3AE0090EABA /* sctp_os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_os.h; sourceTree = "<group>"; };
-		43983457198FA3AF0090EABA /* sctp_os_userspace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_os_userspace.h; sourceTree = "<group>"; };
 		4398345A198FA3AF0090EABA /* sctp_output.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_output.c; sourceTree = "<group>"; };
 		4398345B198FA3AF0090EABA /* sctp_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_output.h; sourceTree = "<group>"; };
 		4398345C198FA3AF0090EABA /* sctp_pcb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_pcb.c; sourceTree = "<group>"; };
@@ -117,11 +108,8 @@
 		43983469198FA3AF0090EABA /* sctp_timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_timer.c; sourceTree = "<group>"; };
 		4398346A198FA3AF0090EABA /* sctp_timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_timer.h; sourceTree = "<group>"; };
 		4398346B198FA3AF0090EABA /* sctp_uio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_uio.h; sourceTree = "<group>"; };
-		4398346C198FA3AF0090EABA /* sctp_userspace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_userspace.c; sourceTree = "<group>"; };
 		4398346D198FA3AF0090EABA /* sctp_usrreq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp_usrreq.c; sourceTree = "<group>"; };
 		4398346E198FA3AF0090EABA /* sctp_var.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp_var.h; sourceTree = "<group>"; };
-		4398346F198FA3AF0090EABA /* sctputil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctputil.c; sourceTree = "<group>"; };
-		43983470198FA3AF0090EABA /* sctputil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctputil.h; sourceTree = "<group>"; };
 		43983472198FA3AF0090EABA /* sctp6_usrreq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sctp6_usrreq.c; sourceTree = "<group>"; };
 		43983473198FA3AF0090EABA /* sctp6_var.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctp6_var.h; sourceTree = "<group>"; };
 		43983474198FA3AF0090EABA /* user_atomic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_atomic.h; sourceTree = "<group>"; };
@@ -134,8 +122,6 @@
 		4398347B198FA3AF0090EABA /* user_mbuf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = user_mbuf.c; sourceTree = "<group>"; };
 		4398347C198FA3AF0090EABA /* user_mbuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_mbuf.h; sourceTree = "<group>"; };
 		4398347D198FA3AF0090EABA /* user_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_queue.h; sourceTree = "<group>"; };
-		4398347E198FA3AF0090EABA /* user_recv_thread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = user_recv_thread.c; sourceTree = "<group>"; };
-		4398347F198FA3AF0090EABA /* user_recv_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_recv_thread.h; sourceTree = "<group>"; };
 		43983480198FA3AF0090EABA /* user_route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = user_route.h; sourceTree = "<group>"; };
 		43983481198FA3AF0090EABA /* user_sctp_timer_iterate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = user_sctp_timer_iterate.c; sourceTree = "<group>"; };
 		43983482198FA3AF0090EABA /* user_socket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = user_socket.c; sourceTree = "<group>"; };
@@ -196,8 +182,6 @@
 				4398347B198FA3AF0090EABA /* user_mbuf.c */,
 				4398347C198FA3AF0090EABA /* user_mbuf.h */,
 				4398347D198FA3AF0090EABA /* user_queue.h */,
-				4398347E198FA3AF0090EABA /* user_recv_thread.c */,
-				4398347F198FA3AF0090EABA /* user_recv_thread.h */,
 				43983480198FA3AF0090EABA /* user_route.h */,
 				43983481198FA3AF0090EABA /* user_sctp_timer_iterate.c */,
 				43983482198FA3AF0090EABA /* user_socket.c */,
@@ -229,12 +213,10 @@
 				4398344F198FA3AE0090EABA /* sctp_indata.h */,
 				43983450198FA3AE0090EABA /* sctp_input.c */,
 				43983451198FA3AE0090EABA /* sctp_input.h */,
-				43983452198FA3AE0090EABA /* sctp_lock_userspace.h */,
 				43983453198FA3AE0090EABA /* sctp_nss_sha1.c */,
 				43983454198FA3AE0090EABA /* sctp_nss_sha1.h */,
 				43983455198FA3AE0090EABA /* sctp_openssl_sha1.h */,
 				43983456198FA3AE0090EABA /* sctp_os.h */,
-				43983457198FA3AF0090EABA /* sctp_os_userspace.h */,
 				4398345A198FA3AF0090EABA /* sctp_output.c */,
 				4398345B198FA3AF0090EABA /* sctp_output.h */,
 				4398345C198FA3AF0090EABA /* sctp_pcb.c */,
@@ -251,11 +233,8 @@
 				43983469198FA3AF0090EABA /* sctp_timer.c */,
 				4398346A198FA3AF0090EABA /* sctp_timer.h */,
 				4398346B198FA3AF0090EABA /* sctp_uio.h */,
-				4398346C198FA3AF0090EABA /* sctp_userspace.c */,
 				4398346D198FA3AF0090EABA /* sctp_usrreq.c */,
 				4398346E198FA3AF0090EABA /* sctp_var.h */,
-				4398346F198FA3AF0090EABA /* sctputil.c */,
-				43983470198FA3AF0090EABA /* sctputil.h */,
 			);
 			path = netinet;
 			sourceTree = "<group>";
@@ -281,7 +260,6 @@
 				43983490198FA3AF0090EABA /* sctp_constants.h in Headers */,
 				439834BA198FA3AF0090EABA /* user_ip_icmp.h in Headers */,
 				439834A8198FA3AF0090EABA /* sctp_structs.h in Headers */,
-				439834C0198FA3AF0090EABA /* user_recv_thread.h in Headers */,
 				439834C5198FA3AF0090EABA /* user_uma.h in Headers */,
 				43983488198FA3AF0090EABA /* sctp_asconf.h in Headers */,
 				439834B9198FA3AF0090EABA /* user_ip6_var.h in Headers */,
@@ -302,14 +280,11 @@
 				439834AC198FA3AF0090EABA /* sctp_timer.h in Headers */,
 				4398348E198FA3AF0090EABA /* sctp_callout.h in Headers */,
 				439834BD198FA3AF0090EABA /* user_mbuf.h in Headers */,
-				4398349D198FA3AF0090EABA /* sctp_os_userspace.h in Headers */,
 				43983493198FA3AF0090EABA /* sctp_header.h in Headers */,
 				4398349C198FA3AF0090EABA /* sctp_os.h in Headers */,
 				439834B8198FA3AF0090EABA /* user_inpcb.h in Headers */,
-				439834B2198FA3AF0090EABA /* sctputil.h in Headers */,
 				43983495198FA3AF0090EABA /* sctp_indata.h in Headers */,
 				4398348A198FA3AF0090EABA /* sctp_auth.h in Headers */,
-				43983498198FA3AF0090EABA /* sctp_lock_userspace.h in Headers */,
 				439834BB198FA3AF0090EABA /* user_malloc.h in Headers */,
 				4398349F198FA3AF0090EABA /* sctp_output.h in Headers */,
 				439834B4198FA3AF0090EABA /* sctp6_var.h in Headers */,
@@ -374,7 +349,6 @@
 				4398348D198FA3AF0090EABA /* sctp_callout.c in Sources */,
 				439834A9198FA3AF0090EABA /* sctp_sysctl.c in Sources */,
 				439834A7198FA3AF0090EABA /* sctp_ss_functions.c in Sources */,
-				439834B1198FA3AF0090EABA /* sctputil.c in Sources */,
 				439834AF198FA3AF0090EABA /* sctp_usrreq.c in Sources */,
 				439834C3198FA3AF0090EABA /* user_socket.c in Sources */,
 				43983494198FA3AF0090EABA /* sctp_indata.c in Sources */,
@@ -385,10 +359,8 @@
 				439834AB198FA3AF0090EABA /* sctp_timer.c in Sources */,
 				439834BC198FA3AF0090EABA /* user_mbuf.c in Sources */,
 				439834A2198FA3AF0090EABA /* sctp_peeloff.c in Sources */,
-				439834AE198FA3AF0090EABA /* sctp_userspace.c in Sources */,
 				439834C2198FA3AF0090EABA /* user_sctp_timer_iterate.c in Sources */,
 				439834A5198FA3AF0090EABA /* sctp_sha1.c in Sources */,
-				439834BF198FA3AF0090EABA /* user_recv_thread.c in Sources */,
 				43983491198FA3AF0090EABA /* sctp_crc32.c in Sources */,
 				4398348B198FA3AF0090EABA /* sctp_bsd_addr.c in Sources */,
 				43983496198FA3AF0090EABA /* sctp_input.c in Sources */,

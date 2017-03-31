@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "437A3A0B1DD9D3D8004DCC31"
+               BlueprintIdentifier = "4303DC2D1E482FE300CD116B"
                BuildableName = "librtc_common.a"
                BlueprintName = "rtc_common"
                ReferencedContainer = "container:webRTCAPP.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "437A3A0B1DD9D3D8004DCC31"
+            BlueprintIdentifier = "4303DC2D1E482FE300CD116B"
             BuildableName = "librtc_common.a"
             BlueprintName = "rtc_common"
             ReferencedContainer = "container:webRTCAPP.xcodeproj">
@@ -63,7 +63,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "437A3A0B1DD9D3D8004DCC31"
+            BlueprintIdentifier = "4303DC2D1E482FE300CD116B"
             BuildableName = "librtc_common.a"
             BlueprintName = "rtc_common"
             ReferencedContainer = "container:webRTCAPP.xcodeproj">

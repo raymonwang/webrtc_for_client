@@ -8,6 +8,10 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <stdio.h>
+#include <string>
+
+#include "webrtc/test/testsupport/fileutils.h"
 #include "webrtc/voice_engine/test/auto_test/fixtures/after_streaming_fixture.h"
 #include "webrtc/voice_engine/voice_engine_defines.h"
 
@@ -44,7 +48,7 @@ static bool IsNotViableSendCodec(const char* codec_name) {
 
 TEST_F(CodecTest, PcmuIsDefaultCodecAndHasTheRightValues) {
   EXPECT_EQ(0, voe_codec_->GetSendCodec(channel_, codec_instance_));
-  EXPECT_EQ(1, codec_instance_.channels);
+  EXPECT_EQ(1u, codec_instance_.channels);
   EXPECT_EQ(160, codec_instance_.pacsize);
   EXPECT_EQ(8000, codec_instance_.plfreq);
   EXPECT_EQ(0, codec_instance_.pltype);
@@ -97,16 +101,17 @@ TEST_F(CodecTest, VoiceActivityDetectionTypeSettingsCanBeChanged) {
   EXPECT_EQ(vad_mode, webrtc::kVadAggressiveMid);
   EXPECT_FALSE(dtx_disabled);
 
-  // The fourth argument is the DTX disable flag.
-  EXPECT_EQ(0, voe_codec_->SetVADStatus(
-      channel_, true, webrtc::kVadAggressiveHigh, true));
+  // The fourth argument is the DTX disable flag, which is always supposed to
+  // be false.
+  EXPECT_EQ(0, voe_codec_->SetVADStatus(channel_, true,
+                                        webrtc::kVadAggressiveHigh, false));
   EXPECT_EQ(0, voe_codec_->GetVADStatus(
       channel_, vad_enabled, vad_mode, dtx_disabled));
   EXPECT_EQ(vad_mode, webrtc::kVadAggressiveHigh);
-  EXPECT_TRUE(dtx_disabled);
+  EXPECT_FALSE(dtx_disabled);
 
-  EXPECT_EQ(0, voe_codec_->SetVADStatus(
-      channel_, true, webrtc::kVadConventional, true));
+  EXPECT_EQ(0, voe_codec_->SetVADStatus(channel_, true,
+                                        webrtc::kVadConventional, false));
   EXPECT_EQ(0, voe_codec_->GetVADStatus(
       channel_, vad_enabled, vad_mode, dtx_disabled));
   EXPECT_EQ(vad_mode, webrtc::kVadConventional);
@@ -146,14 +151,26 @@ TEST_F(CodecTest, OpusMaxPlaybackRateCanBeSet) {
   }
 }
 
-TEST_F(CodecTest, OpusMaxPlaybackRateCannotBeSetForNonOpus) {
+TEST_F(CodecTest, OpusDtxCanBeSetForOpus) {
+  for (int i = 0; i < voe_codec_->NumOfCodecs(); ++i) {
+    voe_codec_->GetCodec(i, codec_instance_);
+    if (_stricmp("opus", codec_instance_.plname)) {
+      continue;
+    }
+    voe_codec_->SetSendCodec(channel_, codec_instance_);
+    EXPECT_EQ(0, voe_codec_->SetOpusDtx(channel_, false));
+    EXPECT_EQ(0, voe_codec_->SetOpusDtx(channel_, true));
+  }
+}
+
+TEST_F(CodecTest, OpusDtxCannotBeSetForNonOpus) {
   for (int i = 0; i < voe_codec_->NumOfCodecs(); ++i) {
     voe_codec_->GetCodec(i, codec_instance_);
     if (!_stricmp("opus", codec_instance_.plname)) {
       continue;
     }
     voe_codec_->SetSendCodec(channel_, codec_instance_);
-    EXPECT_EQ(-1, voe_codec_->SetOpusMaxPlaybackRate(channel_, 16000));
+    EXPECT_EQ(-1, voe_codec_->SetOpusDtx(channel_, true));
   }
 }
 

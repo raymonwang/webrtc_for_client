@@ -12,27 +12,20 @@
 		43998B2B198631F8003C5793 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B26198631F8003C5793 /* bitrate_controller.h */; };
 		43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */; };
 		43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */; };
-		43C69BA91D2265E700427D35 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BA71D2265E700427D35 /* remb_suppressor.cc */; };
-		43C69BAA1D2265E700427D35 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BA81D2265E700427D35 /* remb_suppressor.h */; };
 		43E04F271D263FB500B39549 /* bitrate_controller_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B23198631F8003C5793 /* bitrate_controller_impl.cc */; };
-		43E04F281D263FB500B39549 /* remb_suppressor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69BA71D2265E700427D35 /* remb_suppressor.cc */; };
 		43E04F291D263FB500B39549 /* send_side_bandwidth_estimation.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */; };
 		43E04F2C1D263FB500B39549 /* send_side_bandwidth_estimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */; };
 		43E04F2D1D263FB500B39549 /* bitrate_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B26198631F8003C5793 /* bitrate_controller.h */; };
-		43E04F2E1D263FB500B39549 /* remb_suppressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69BA81D2265E700427D35 /* remb_suppressor.h */; };
 		43E04F2F1D263FB500B39549 /* bitrate_controller_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998B24198631F8003C5793 /* bitrate_controller_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		43998B14198631D9003C5793 /* libbitrate_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43998B22198631F8003C5793 /* bitrate_controller.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitrate_controller.gypi; sourceTree = "<group>"; };
 		43998B23198631F8003C5793 /* bitrate_controller_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitrate_controller_impl.cc; sourceTree = "<group>"; };
 		43998B24198631F8003C5793 /* bitrate_controller_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller_impl.h; sourceTree = "<group>"; };
 		43998B26198631F8003C5793 /* bitrate_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitrate_controller.h; sourceTree = "<group>"; };
 		43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_side_bandwidth_estimation.cc; sourceTree = "<group>"; };
 		43998B28198631F8003C5793 /* send_side_bandwidth_estimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_side_bandwidth_estimation.h; sourceTree = "<group>"; };
-		43C69BA71D2265E700427D35 /* remb_suppressor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = remb_suppressor.cc; sourceTree = "<group>"; };
-		43C69BA81D2265E700427D35 /* remb_suppressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = remb_suppressor.h; sourceTree = "<group>"; };
 		43E04F331D263FB500B39549 /* libbitrate_controller_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbitrate_controller_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -75,9 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				43998B25198631F8003C5793 /* include */,
-				43C69BA71D2265E700427D35 /* remb_suppressor.cc */,
-				43C69BA81D2265E700427D35 /* remb_suppressor.h */,
-				43998B22198631F8003C5793 /* bitrate_controller.gypi */,
 				43998B23198631F8003C5793 /* bitrate_controller_impl.cc */,
 				43998B24198631F8003C5793 /* bitrate_controller_impl.h */,
 				43998B27198631F8003C5793 /* send_side_bandwidth_estimation.cc */,
@@ -104,7 +94,6 @@
 			files = (
 				43998B2D198631F8003C5793 /* send_side_bandwidth_estimation.h in Headers */,
 				43998B2B198631F8003C5793 /* bitrate_controller.h in Headers */,
-				43C69BAA1D2265E700427D35 /* remb_suppressor.h in Headers */,
 				43998B2A198631F8003C5793 /* bitrate_controller_impl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,7 +104,6 @@
 			files = (
 				43E04F2C1D263FB500B39549 /* send_side_bandwidth_estimation.h in Headers */,
 				43E04F2D1D263FB500B39549 /* bitrate_controller.h in Headers */,
-				43E04F2E1D263FB500B39549 /* remb_suppressor.h in Headers */,
 				43E04F2F1D263FB500B39549 /* bitrate_controller_impl.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,7 +178,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43998B29198631F8003C5793 /* bitrate_controller_impl.cc in Sources */,
-				43C69BA91D2265E700427D35 /* remb_suppressor.cc in Sources */,
 				43998B2C198631F8003C5793 /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,7 +187,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43E04F271D263FB500B39549 /* bitrate_controller_impl.cc in Sources */,
-				43E04F281D263FB500B39549 /* remb_suppressor.cc in Sources */,
 				43E04F291D263FB500B39549 /* send_side_bandwidth_estimation.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +253,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -283,7 +270,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
@@ -308,7 +295,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					"$(inherited)",
 					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,

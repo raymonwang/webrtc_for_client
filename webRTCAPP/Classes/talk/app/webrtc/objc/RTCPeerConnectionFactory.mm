@@ -29,8 +29,9 @@
 #error "This file requires ARC support."
 #endif
 
-#import "RTCPeerConnectionFactory.h"
+#import "RTCPeerConnectionFactory+Internal.h"
 
+#include <memory>
 #include <vector>
 
 #import "RTCAudioTrack+Internal.h"
@@ -41,30 +42,22 @@
 #import "RTCMediaStreamTrack+Internal.h"
 #import "RTCPeerConnection+Internal.h"
 #import "RTCPeerConnectionDelegate.h"
+#import "RTCPeerConnectionInterface+Internal.h"
 #import "RTCVideoCapturer+Internal.h"
 #import "RTCVideoSource+Internal.h"
 #import "RTCVideoTrack+Internal.h"
 
-#include "talk/app/webrtc/audiotrack.h"
-#include "talk/app/webrtc/mediastreaminterface.h"
-#include "talk/app/webrtc/peerconnectionfactory.h"
-#include "talk/app/webrtc/peerconnectioninterface.h"
-#include "talk/app/webrtc/videosourceinterface.h"
-#include "talk/app/webrtc/videotrack.h"
+#include "webrtc/api/audiotrack.h"
+#include "webrtc/api/mediastreaminterface.h"
+#include "webrtc/api/peerconnectioninterface.h"
+#include "webrtc/api/videotrack.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/base/scoped_ptr.h"
 #include "webrtc/base/ssladapter.h"
 
-@interface RTCPeerConnectionFactory ()
-
-@property(nonatomic, assign) rtc::scoped_refptr<
-    webrtc::PeerConnectionFactoryInterface> nativeFactory;
-
-@end
-
 @implementation RTCPeerConnectionFactory {
-  rtc::scoped_ptr<rtc::Thread> _signalingThread;
-  rtc::scoped_ptr<rtc::Thread> _workerThread;
+  std::unique_ptr<rtc::Thread> _networkThread;
+  std::unique_ptr<rtc::Thread> _workerThread;
+  std::unique_ptr<rtc::Thread> _signalingThread;
 }
 
 @synthesize nativeFactory = _nativeFactory;
@@ -81,19 +74,40 @@
 
 - (id)init {
   if ((self = [super init])) {
-    _signalingThread.reset(new rtc::Thread());
-    BOOL result = _signalingThread->Start();
-    NSAssert(result, @"Failed to start signaling thread.");
-    _workerThread.reset(new rtc::Thread());
+    _networkThread = rtc::Thread::CreateWithSocketServer();
+    BOOL result = _networkThread->Start();
+    NSAssert(result, @"Failed to start network thread.");
+
+    _workerThread = rtc::Thread::Create();
     result = _workerThread->Start();
     NSAssert(result, @"Failed to start worker thread.");
+
+    _signalingThread = rtc::Thread::Create();
+    result = _signalingThread->Start();
+    NSAssert(result, @"Failed to start signaling thread.");
+
     _nativeFactory = webrtc::CreatePeerConnectionFactory(
-        _signalingThread.get(), _workerThread.get(), NULL, NULL, NULL);
+        _networkThread.get(), _workerThread.get(), _signalingThread.get(),
+        nullptr, nullptr, nullptr);
     NSAssert(_nativeFactory, @"Failed to initialize PeerConnectionFactory!");
     // Uncomment to get sensitive logs emitted (to stderr or logcat).
     // rtc::LogMessage::LogToDebug(rtc::LS_SENSITIVE);
   }
   return self;
+}
+
+- (RTCPeerConnection *)peerConnectionWithConfiguration:(RTCConfiguration *)configuration
+                                           constraints:(RTCMediaConstraints *)constraints
+                                              delegate:(id<RTCPeerConnectionDelegate>)delegate {
+  std::unique_ptr<webrtc::PeerConnectionInterface::RTCConfiguration> config(
+      [configuration createNativeConfiguration]);
+  if (!config) {
+    return nil;
+  }
+  return [[RTCPeerConnection alloc] initWithFactory:self.nativeFactory.get()
+                                             config:*config
+                                        constraints:constraints.constraints
+                                           delegate:delegate];
 }
 
 - (RTCPeerConnection*)
@@ -123,9 +137,8 @@
   if (!capturer) {
     return nil;
   }
-  rtc::scoped_refptr<webrtc::VideoSourceInterface> source =
-      self.nativeFactory->CreateVideoSource([capturer takeNativeCapturer],
-                                            constraints.constraints);
+  rtc::scoped_refptr<webrtc::VideoTrackSourceInterface> source =
+      self.nativeFactory->CreateVideoSource([capturer takeNativeCapturer], constraints.constraints);
   return [[RTCVideoSource alloc] initWithMediaSource:source];
 }
 

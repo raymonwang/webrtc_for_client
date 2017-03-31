@@ -12,6 +12,7 @@
 
 #include <string>
 
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/common_types.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_format.h"
 #include "webrtc/typedefs.h"
@@ -30,27 +31,22 @@ class RtpPacketizerGeneric : public RtpPacketizer {
 
   virtual ~RtpPacketizerGeneric();
 
-  virtual void SetPayloadData(
-      const uint8_t* payload_data,
-      size_t payload_size,
-      const RTPFragmentationHeader* fragmentation) OVERRIDE;
+  void SetPayloadData(const uint8_t* payload_data,
+                      size_t payload_size,
+                      const RTPFragmentationHeader* fragmentation) override;
 
   // Get the next payload with generic payload header.
-  // buffer is a pointer to where the output will be written.
-  // bytes_to_send is an output variable that will contain number of bytes
-  // written to buffer. The parameter last_packet is true for the last packet of
-  // the frame, false otherwise (i.e., call the function again to get the
-  // next packet).
-  // Returns true on success or false if there was no payload to packetize.
-  virtual bool NextPacket(uint8_t* buffer,
-                          size_t* bytes_to_send,
-                          bool* last_packet) OVERRIDE;
+  // Write payload and set marker bit of the |packet|.
+  // The parameter |last_packet| is true for the last packet of the frame, false
+  // otherwise (i.e., call the function again to get the next packet).
+  // Returns true on success, false otherwise.
+  bool NextPacket(RtpPacketToSend* packet, bool* last_packet) override;
 
-  virtual ProtectionType GetProtectionType() OVERRIDE;
+  ProtectionType GetProtectionType() override;
 
-  virtual StorageType GetStorageType(uint32_t retransmission_settings) OVERRIDE;
+  StorageType GetStorageType(uint32_t retransmission_settings) override;
 
-  virtual std::string ToString() OVERRIDE;
+  std::string ToString() override;
 
  private:
   const uint8_t* payload_data_;
@@ -60,7 +56,7 @@ class RtpPacketizerGeneric : public RtpPacketizer {
   size_t payload_length_;
   uint8_t generic_header_;
 
-  DISALLOW_COPY_AND_ASSIGN(RtpPacketizerGeneric);
+  RTC_DISALLOW_COPY_AND_ASSIGN(RtpPacketizerGeneric);
 };
 
 // Depacketizer for generic codec.
@@ -68,9 +64,9 @@ class RtpDepacketizerGeneric : public RtpDepacketizer {
  public:
   virtual ~RtpDepacketizerGeneric() {}
 
-  virtual bool Parse(ParsedPayload* parsed_payload,
-                     const uint8_t* payload_data,
-                     size_t payload_data_length) OVERRIDE;
+  bool Parse(ParsedPayload* parsed_payload,
+             const uint8_t* payload_data,
+             size_t payload_data_length) override;
 };
 }  // namespace webrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_VIDEO_GENERIC_H_

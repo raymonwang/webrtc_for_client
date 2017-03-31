@@ -11,11 +11,10 @@
 #ifndef WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_VIDEO_H_
 #define WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_RECEIVER_VIDEO_H_
 
-#include "webrtc/modules/rtp_rtcp/interface/rtp_rtcp_defines.h"
-#include "webrtc/modules/rtp_rtcp/source/bitrate.h"
+#include "webrtc/base/onetimeevent.h"
+#include "webrtc/modules/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_receiver_strategy.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
 #include "webrtc/typedefs.h"
 
 namespace webrtc {
@@ -26,40 +25,32 @@ class RTPReceiverVideo : public RTPReceiverStrategy {
 
   virtual ~RTPReceiverVideo();
 
-  virtual int32_t ParseRtpPacket(WebRtcRTPHeader* rtp_header,
-                                 const PayloadUnion& specific_payload,
-                                 bool is_red,
-                                 const uint8_t* packet,
-                                 size_t packet_length,
-                                 int64_t timestamp,
-                                 bool is_first_packet) OVERRIDE;
+  int32_t ParseRtpPacket(WebRtcRTPHeader* rtp_header,
+                         const PayloadUnion& specific_payload,
+                         bool is_red,
+                         const uint8_t* packet,
+                         size_t packet_length,
+                         int64_t timestamp,
+                         bool is_first_packet) override;
 
-  TelephoneEventHandler* GetTelephoneEventHandler() { return NULL; }
+  TelephoneEventHandler* GetTelephoneEventHandler() override { return NULL; }
 
-  int GetPayloadTypeFrequency() const OVERRIDE;
+  RTPAliveType ProcessDeadOrAlive(uint16_t last_payload_length) const override;
 
-  virtual RTPAliveType ProcessDeadOrAlive(
-      uint16_t last_payload_length) const OVERRIDE;
+  bool ShouldReportCsrcChanges(uint8_t payload_type) const override;
 
-  virtual bool ShouldReportCsrcChanges(uint8_t payload_type) const OVERRIDE;
+  int32_t OnNewPayloadTypeCreated(const CodecInst& audio_codec) override;
 
-  virtual int32_t OnNewPayloadTypeCreated(
-      const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-      int8_t payload_type,
-      uint32_t frequency) OVERRIDE;
-
-  virtual int32_t InvokeOnInitializeDecoder(
+  int32_t InvokeOnInitializeDecoder(
       RtpFeedback* callback,
-      int32_t id,
       int8_t payload_type,
       const char payload_name[RTP_PAYLOAD_NAME_SIZE],
-      const PayloadUnion& specific_payload) const OVERRIDE;
+      const PayloadUnion& specific_payload) const override;
 
   void SetPacketOverHead(uint16_t packet_over_head);
 
  private:
-  int32_t BuildRTPheader(const WebRtcRTPHeader* rtp_header,
-                         uint8_t* data_buffer) const;
+  OneTimeEvent first_packet_received_;
 };
 }  // namespace webrtc
 

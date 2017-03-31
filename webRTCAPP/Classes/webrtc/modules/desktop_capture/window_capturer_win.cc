@@ -8,25 +8,25 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#include "webrtc/modules/desktop_capture/window_capturer.h"
-
 #include <assert.h>
 
+#include <memory>
+
+#include "webrtc/base/checks.h"
+#include "webrtc/base/constructormagic.h"
 #include "webrtc/base/win32.h"
+#include "webrtc/modules/desktop_capture/desktop_capturer.h"
 #include "webrtc/modules/desktop_capture/desktop_frame_win.h"
 #include "webrtc/modules/desktop_capture/win/window_capture_utils.h"
-#include "webrtc/system_wrappers/interface/logging.h"
-#include "webrtc/system_wrappers/interface/scoped_ptr.h"
+#include "webrtc/system_wrappers/include/logging.h"
 
 namespace webrtc {
 
 namespace {
 
-typedef HRESULT (WINAPI *DwmIsCompositionEnabledFunc)(BOOL* enabled);
-
 BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
-  WindowCapturer::WindowList* list =
-      reinterpret_cast<WindowCapturer::WindowList*>(param);
+  DesktopCapturer::SourceList* list =
+      reinterpret_cast<DesktopCapturer::SourceList*>(param);
 
   // Skip windows that are invisible, minimized, have no title, or are owned,
   // unless they have the app window style set.
@@ -41,15 +41,28 @@ BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
   // Skip the Program Manager window and the Start button.
   const size_t kClassLength = 256;
   WCHAR class_name[kClassLength];
-  GetClassName(hwnd, class_name, kClassLength);
+  const int class_name_length = GetClassName(hwnd, class_name, kClassLength);
+  RTC_DCHECK(class_name_length)
+      << "Error retrieving the application's class name";
+
   // Skip Program Manager window and the Start button. This is the same logic
   // that's used in Win32WindowPicker in libjingle. Consider filtering other
   // windows as well (e.g. toolbars).
   if (wcscmp(class_name, L"Progman") == 0 || wcscmp(class_name, L"Button") == 0)
     return TRUE;
 
-  WindowCapturer::Window window;
-  window.id = reinterpret_cast<WindowCapturer::WindowId>(hwnd);
+  // Windows 8 introduced a "Modern App" identified by their class name being
+  // either ApplicationFrameWindow or windows.UI.Core.coreWindow. The
+  // associated windows cannot be captured, so we skip them.
+  // http://crbug.com/526883.
+  if (rtc::IsWindows8OrLater() &&
+      (wcscmp(class_name, L"ApplicationFrameWindow") == 0 ||
+       wcscmp(class_name, L"Windows.UI.Core.CoreWindow") == 0)) {
+    return TRUE;
+  }
+
+  DesktopCapturer::Source window;
+  window.id = reinterpret_cast<WindowId>(hwnd);
 
   const size_t kTitleLength = 500;
   WCHAR window_title[kTitleLength];
@@ -66,91 +79,76 @@ BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
   return TRUE;
 }
 
-class WindowCapturerWin : public WindowCapturer {
+class WindowCapturerWin : public DesktopCapturer {
  public:
   WindowCapturerWin();
-  virtual ~WindowCapturerWin();
-
-  // WindowCapturer interface.
-  virtual bool GetWindowList(WindowList* windows) OVERRIDE;
-  virtual bool SelectWindow(WindowId id) OVERRIDE;
-  virtual bool BringSelectedWindowToFront() OVERRIDE;
+  ~WindowCapturerWin() override;
 
   // DesktopCapturer interface.
-  virtual void Start(Callback* callback) OVERRIDE;
-  virtual void Capture(const DesktopRegion& region) OVERRIDE;
+  void Start(Callback* callback) override;
+  void CaptureFrame() override;
+  bool GetSourceList(SourceList* sources) override;
+  bool SelectSource(SourceId id) override;
+  bool FocusOnSelectedSource() override;
 
  private:
-  bool IsAeroEnabled();
+  Callback* callback_ = nullptr;
 
-  Callback* callback_;
-
-  // HWND and HDC for the currently selected window or NULL if window is not
+  // HWND and HDC for the currently selected window or nullptr if window is not
   // selected.
-  HWND window_;
-
-  // dwmapi.dll is used to determine if desktop compositing is enabled.
-  HMODULE dwmapi_library_;
-  DwmIsCompositionEnabledFunc is_composition_enabled_func_;
+  HWND window_ = nullptr;
 
   DesktopSize previous_size_;
 
-  DISALLOW_COPY_AND_ASSIGN(WindowCapturerWin);
+  AeroChecker aero_checker_;
+
+  // This map is used to avoid flickering for the case when SelectWindow() calls
+  // are interleaved with Capture() calls.
+  std::map<HWND, DesktopSize> window_size_map_;
+
+  RTC_DISALLOW_COPY_AND_ASSIGN(WindowCapturerWin);
 };
 
-WindowCapturerWin::WindowCapturerWin()
-    : callback_(NULL),
-      window_(NULL) {
-  // Try to load dwmapi.dll dynamically since it is not available on XP.
-  dwmapi_library_ = LoadLibrary(L"dwmapi.dll");
-  if (dwmapi_library_) {
-    is_composition_enabled_func_ =
-        reinterpret_cast<DwmIsCompositionEnabledFunc>(
-            GetProcAddress(dwmapi_library_, "DwmIsCompositionEnabled"));
-    assert(is_composition_enabled_func_);
-  } else {
-    is_composition_enabled_func_ = NULL;
-  }
-}
+WindowCapturerWin::WindowCapturerWin() {}
+WindowCapturerWin::~WindowCapturerWin() {}
 
-WindowCapturerWin::~WindowCapturerWin() {
-  if (dwmapi_library_)
-    FreeLibrary(dwmapi_library_);
-}
-
-bool WindowCapturerWin::IsAeroEnabled() {
-  BOOL result = FALSE;
-  if (is_composition_enabled_func_)
-    is_composition_enabled_func_(&result);
-  return result != FALSE;
-}
-
-bool WindowCapturerWin::GetWindowList(WindowList* windows) {
-  WindowList result;
+bool WindowCapturerWin::GetSourceList(SourceList* sources) {
+  SourceList result;
   LPARAM param = reinterpret_cast<LPARAM>(&result);
   if (!EnumWindows(&WindowsEnumerationHandler, param))
     return false;
-  windows->swap(result);
+  sources->swap(result);
+
+  std::map<HWND, DesktopSize> new_map;
+  for (const auto& item : *sources) {
+    HWND hwnd = reinterpret_cast<HWND>(item.id);
+    new_map[hwnd] = window_size_map_[hwnd];
+  }
+  window_size_map_.swap(new_map);
+
   return true;
 }
 
-bool WindowCapturerWin::SelectWindow(WindowId id) {
+bool WindowCapturerWin::SelectSource(SourceId id) {
   HWND window = reinterpret_cast<HWND>(id);
   if (!IsWindow(window) || !IsWindowVisible(window) || IsIconic(window))
     return false;
   window_ = window;
-  previous_size_.set(0, 0);
+  // When a window is not in the map, window_size_map_[window] will create an
+  // item with DesktopSize (0, 0).
+  previous_size_ = window_size_map_[window];
   return true;
 }
 
-bool WindowCapturerWin::BringSelectedWindowToFront() {
+bool WindowCapturerWin::FocusOnSelectedSource() {
   if (!window_)
     return false;
 
   if (!IsWindow(window_) || !IsWindowVisible(window_) || IsIconic(window_))
     return false;
 
-  return SetForegroundWindow(window_) != 0;
+  return BringWindowToTop(window_) != FALSE &&
+         SetForegroundWindow(window_) != FALSE;
 }
 
 void WindowCapturerWin::Start(Callback* callback) {
@@ -160,27 +158,30 @@ void WindowCapturerWin::Start(Callback* callback) {
   callback_ = callback;
 }
 
-void WindowCapturerWin::Capture(const DesktopRegion& region) {
+void WindowCapturerWin::CaptureFrame() {
   if (!window_) {
     LOG(LS_ERROR) << "Window hasn't been selected: " << GetLastError();
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_PERMANENT, nullptr);
     return;
   }
 
-  // Stop capturing if the window has been closed or hidden.
-  if (!IsWindow(window_) || !IsWindowVisible(window_)) {
-    callback_->OnCaptureCompleted(NULL);
+  // Stop capturing if the window has been closed.
+  if (!IsWindow(window_)) {
+    callback_->OnCaptureResult(Result::ERROR_PERMANENT, nullptr);
     return;
   }
 
-  // Return a 1x1 black frame if the window is minimized, to match the behavior
-  // on Mac.
-  if (IsIconic(window_)) {
-    BasicDesktopFrame* frame = new BasicDesktopFrame(DesktopSize(1, 1));
+  // Return a 1x1 black frame if the window is minimized or invisible, to match
+  // behavior on mace. Window can be temporarily invisible during the
+  // transition of full screen mode on/off.
+  if (IsIconic(window_) || !IsWindowVisible(window_)) {
+    std::unique_ptr<DesktopFrame> frame(
+        new BasicDesktopFrame(DesktopSize(1, 1)));
     memset(frame->data(), 0, frame->stride() * frame->size().height());
 
     previous_size_ = frame->size();
-    callback_->OnCaptureCompleted(frame);
+    window_size_map_[window_] = previous_size_;
+    callback_->OnCaptureResult(Result::SUCCESS, std::move(frame));
     return;
   }
 
@@ -188,22 +189,22 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
   DesktopRect cropped_rect;
   if (!GetCroppedWindowRect(window_, &cropped_rect, &original_rect)) {
     LOG(LS_WARNING) << "Failed to get window info: " << GetLastError();
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
     return;
   }
 
   HDC window_dc = GetWindowDC(window_);
   if (!window_dc) {
     LOG(LS_WARNING) << "Failed to get window DC: " << GetLastError();
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
     return;
   }
 
-  scoped_ptr<DesktopFrameWin> frame(DesktopFrameWin::Create(
-      cropped_rect.size(), NULL, window_dc));
+  std::unique_ptr<DesktopFrameWin> frame(
+      DesktopFrameWin::Create(cropped_rect.size(), nullptr, window_dc));
   if (!frame.get()) {
     ReleaseDC(window_, window_dc);
-    callback_->OnCaptureCompleted(NULL);
+    callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
     return;
   }
 
@@ -228,7 +229,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
   // capturing - it somehow affects what we get from BitBlt() on the subsequent
   // captures.
 
-  if (!IsAeroEnabled() || !previous_size_.equals(frame->size())) {
+  if (!aero_checker_.IsAeroEnabled() || !previous_size_.equals(frame->size())) {
     result = PrintWindow(window_, mem_dc, 0);
   }
 
@@ -246,6 +247,7 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
   ReleaseDC(window_, window_dc);
 
   previous_size_ = frame->size();
+  window_size_map_[window_] = previous_size_;
 
   frame->mutable_updated_region()->SetRect(
       DesktopRect::MakeSize(frame->size()));
@@ -255,14 +257,15 @@ void WindowCapturerWin::Capture(const DesktopRegion& region) {
     frame.reset();
   }
 
-  callback_->OnCaptureCompleted(frame.release());
+  callback_->OnCaptureResult(Result::SUCCESS, std::move(frame));
 }
 
 }  // namespace
 
 // static
-WindowCapturer* WindowCapturer::Create(const DesktopCaptureOptions& options) {
-  return new WindowCapturerWin();
+std::unique_ptr<DesktopCapturer> DesktopCapturer::CreateRawWindowCapturer(
+    const DesktopCaptureOptions& options) {
+  return std::unique_ptr<DesktopCapturer>(new WindowCapturerWin());
 }
 
 }  // namespace webrtc

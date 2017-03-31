@@ -1,0 +1,359 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		431730791D509F04003B5883 /* audiomonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730521D509F04003B5883 /* audiomonitor.cc */; };
+		4317307A1D509F04003B5883 /* audiomonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730531D509F04003B5883 /* audiomonitor.h */; };
+		4317307B1D509F05003B5883 /* bundlefilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730551D509F04003B5883 /* bundlefilter.cc */; };
+		4317307C1D509F05003B5883 /* bundlefilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730561D509F04003B5883 /* bundlefilter.h */; };
+		4317307E1D509F05003B5883 /* channel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730581D509F04003B5883 /* channel.cc */; };
+		4317307F1D509F05003B5883 /* channel.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730591D509F04003B5883 /* channel.h */; };
+		431730811D509F05003B5883 /* channelmanager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4317305B1D509F04003B5883 /* channelmanager.cc */; };
+		431730821D509F05003B5883 /* channelmanager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4317305C1D509F04003B5883 /* channelmanager.h */; };
+		431730841D509F05003B5883 /* currentspeakermonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4317305E1D509F04003B5883 /* currentspeakermonitor.cc */; };
+		431730851D509F05003B5883 /* currentspeakermonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4317305F1D509F04003B5883 /* currentspeakermonitor.h */; };
+		431730871D509F05003B5883 /* externalhmac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730621D509F04003B5883 /* externalhmac.cc */; };
+		431730881D509F05003B5883 /* externalhmac.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730631D509F04003B5883 /* externalhmac.h */; };
+		431730891D509F05003B5883 /* mediamonitor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730641D509F04003B5883 /* mediamonitor.cc */; };
+		4317308A1D509F05003B5883 /* mediamonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730651D509F04003B5883 /* mediamonitor.h */; };
+		4317308B1D509F05003B5883 /* mediasession.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730661D509F04003B5883 /* mediasession.cc */; };
+		4317308C1D509F05003B5883 /* mediasession.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730671D509F04003B5883 /* mediasession.h */; };
+		4317308F1D509F05003B5883 /* rtcpmuxfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730711D509F04003B5883 /* rtcpmuxfilter.cc */; };
+		431730901D509F05003B5883 /* rtcpmuxfilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730721D509F04003B5883 /* rtcpmuxfilter.h */; };
+		431730921D509F05003B5883 /* srtpfilter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 431730741D509F04003B5883 /* srtpfilter.cc */; };
+		431730931D509F05003B5883 /* srtpfilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730751D509F04003B5883 /* srtpfilter.h */; };
+		431730951D509F05003B5883 /* voicechannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 431730781D509F04003B5883 /* voicechannel.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		431730441D509EEE003B5883 /* librtc_pc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_pc.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		431730521D509F04003B5883 /* audiomonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audiomonitor.cc; sourceTree = "<group>"; };
+		431730531D509F04003B5883 /* audiomonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiomonitor.h; sourceTree = "<group>"; };
+		431730541D509F04003B5883 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
+		431730551D509F04003B5883 /* bundlefilter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bundlefilter.cc; sourceTree = "<group>"; };
+		431730561D509F04003B5883 /* bundlefilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bundlefilter.h; sourceTree = "<group>"; };
+		431730581D509F04003B5883 /* channel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cc; sourceTree = "<group>"; };
+		431730591D509F04003B5883 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
+		4317305B1D509F04003B5883 /* channelmanager.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channelmanager.cc; sourceTree = "<group>"; };
+		4317305C1D509F04003B5883 /* channelmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channelmanager.h; sourceTree = "<group>"; };
+		4317305E1D509F04003B5883 /* currentspeakermonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = currentspeakermonitor.cc; sourceTree = "<group>"; };
+		4317305F1D509F04003B5883 /* currentspeakermonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = currentspeakermonitor.h; sourceTree = "<group>"; };
+		431730611D509F04003B5883 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
+		431730621D509F04003B5883 /* externalhmac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = externalhmac.cc; sourceTree = "<group>"; };
+		431730631D509F04003B5883 /* externalhmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = externalhmac.h; sourceTree = "<group>"; };
+		431730641D509F04003B5883 /* mediamonitor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediamonitor.cc; sourceTree = "<group>"; };
+		431730651D509F04003B5883 /* mediamonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediamonitor.h; sourceTree = "<group>"; };
+		431730661D509F04003B5883 /* mediasession.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mediasession.cc; sourceTree = "<group>"; };
+		431730671D509F04003B5883 /* mediasession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mediasession.h; sourceTree = "<group>"; };
+		4317306A1D509F04003B5883 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		431730711D509F04003B5883 /* rtcpmuxfilter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtcpmuxfilter.cc; sourceTree = "<group>"; };
+		431730721D509F04003B5883 /* rtcpmuxfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtcpmuxfilter.h; sourceTree = "<group>"; };
+		431730741D509F04003B5883 /* srtpfilter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = srtpfilter.cc; sourceTree = "<group>"; };
+		431730751D509F04003B5883 /* srtpfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtpfilter.h; sourceTree = "<group>"; };
+		431730781D509F04003B5883 /* voicechannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voicechannel.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		431730411D509EEE003B5883 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4317303B1D509EEE003B5883 = {
+			isa = PBXGroup;
+			children = (
+				431730511D509F04003B5883 /* pc */,
+				431730451D509EEE003B5883 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		431730451D509EEE003B5883 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				431730441D509EEE003B5883 /* librtc_pc.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		431730511D509F04003B5883 /* pc */ = {
+			isa = PBXGroup;
+			children = (
+				431730521D509F04003B5883 /* audiomonitor.cc */,
+				431730531D509F04003B5883 /* audiomonitor.h */,
+				431730541D509F04003B5883 /* BUILD.gn */,
+				431730551D509F04003B5883 /* bundlefilter.cc */,
+				431730561D509F04003B5883 /* bundlefilter.h */,
+				431730581D509F04003B5883 /* channel.cc */,
+				431730591D509F04003B5883 /* channel.h */,
+				4317305B1D509F04003B5883 /* channelmanager.cc */,
+				4317305C1D509F04003B5883 /* channelmanager.h */,
+				4317305E1D509F04003B5883 /* currentspeakermonitor.cc */,
+				4317305F1D509F04003B5883 /* currentspeakermonitor.h */,
+				431730611D509F04003B5883 /* DEPS */,
+				431730621D509F04003B5883 /* externalhmac.cc */,
+				431730631D509F04003B5883 /* externalhmac.h */,
+				431730641D509F04003B5883 /* mediamonitor.cc */,
+				431730651D509F04003B5883 /* mediamonitor.h */,
+				431730661D509F04003B5883 /* mediasession.cc */,
+				431730671D509F04003B5883 /* mediasession.h */,
+				4317306A1D509F04003B5883 /* OWNERS */,
+				431730711D509F04003B5883 /* rtcpmuxfilter.cc */,
+				431730721D509F04003B5883 /* rtcpmuxfilter.h */,
+				431730741D509F04003B5883 /* srtpfilter.cc */,
+				431730751D509F04003B5883 /* srtpfilter.h */,
+				431730781D509F04003B5883 /* voicechannel.h */,
+			);
+			name = pc;
+			path = ../webRTCAPP/Classes/webrtc/pc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		431730421D509EEE003B5883 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				431730931D509F05003B5883 /* srtpfilter.h in Headers */,
+				4317308C1D509F05003B5883 /* mediasession.h in Headers */,
+				4317307F1D509F05003B5883 /* channel.h in Headers */,
+				4317307C1D509F05003B5883 /* bundlefilter.h in Headers */,
+				431730881D509F05003B5883 /* externalhmac.h in Headers */,
+				431730851D509F05003B5883 /* currentspeakermonitor.h in Headers */,
+				431730951D509F05003B5883 /* voicechannel.h in Headers */,
+				431730901D509F05003B5883 /* rtcpmuxfilter.h in Headers */,
+				431730821D509F05003B5883 /* channelmanager.h in Headers */,
+				4317308A1D509F05003B5883 /* mediamonitor.h in Headers */,
+				4317307A1D509F04003B5883 /* audiomonitor.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		431730431D509EEE003B5883 /* rtc_pc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 431730481D509EEE003B5883 /* Build configuration list for PBXNativeTarget "rtc_pc" */;
+			buildPhases = (
+				431730401D509EEE003B5883 /* Sources */,
+				431730411D509EEE003B5883 /* Frameworks */,
+				431730421D509EEE003B5883 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rtc_pc;
+			productName = rtc_pc;
+			productReference = 431730441D509EEE003B5883 /* librtc_pc.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4317303C1D509EEE003B5883 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangxin;
+				TargetAttributes = {
+					431730431D509EEE003B5883 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 4317303F1D509EEE003B5883 /* Build configuration list for PBXProject "rtc_pc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4317303B1D509EEE003B5883;
+			productRefGroup = 431730451D509EEE003B5883 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				431730431D509EEE003B5883 /* rtc_pc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		431730401D509EEE003B5883 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				431730921D509F05003B5883 /* srtpfilter.cc in Sources */,
+				431730791D509F04003B5883 /* audiomonitor.cc in Sources */,
+				431730841D509F05003B5883 /* currentspeakermonitor.cc in Sources */,
+				4317308B1D509F05003B5883 /* mediasession.cc in Sources */,
+				4317307B1D509F05003B5883 /* bundlefilter.cc in Sources */,
+				4317308F1D509F05003B5883 /* rtcpmuxfilter.cc in Sources */,
+				431730891D509F05003B5883 /* mediamonitor.cc in Sources */,
+				431730871D509F05003B5883 /* externalhmac.cc in Sources */,
+				4317307E1D509F05003B5883 /* channel.cc in Sources */,
+				431730811D509F05003B5883 /* channelmanager.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		431730461D509EEE003B5883 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		431730471D509EEE003B5883 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		431730491D509EEE003B5883 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+					HAVE_SRTP,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4317304A1D509EEE003B5883 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_POSIX,
+					HAVE_SRTP,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../webRTCAPP/Classes",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/srtp/crypto/include",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libsrtp/config",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4317303F1D509EEE003B5883 /* Build configuration list for PBXProject "rtc_pc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				431730461D509EEE003B5883 /* Debug */,
+				431730471D509EEE003B5883 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		431730481D509EEE003B5883 /* Build configuration list for PBXNativeTarget "rtc_pc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				431730491D509EEE003B5883 /* Debug */,
+				4317304A1D509EEE003B5883 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4317303C1D509EEE003B5883 /* Project object */;
+}

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		430D8F3F198623E3009E763A /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F3D198623E3009E763A /* pcm16b.c */; };
+		43C0C6751D4F0B090058AC82 /* audio_decoder_pcm16b.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6701D4F0B090058AC82 /* audio_decoder_pcm16b.cc */; };
+		43C0C6761D4F0B090058AC82 /* audio_encoder_pcm16b.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6721D4F0B090058AC82 /* audio_encoder_pcm16b.cc */; };
 		43E04C1B1D2627B000B39549 /* pcm16b.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8F3D198623E3009E763A /* pcm16b.c */; };
 /* End PBXBuildFile section */
 
@@ -34,11 +36,14 @@
 
 /* Begin PBXFileReference section */
 		430D8F06198623C6009E763A /* libPCM16B.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM16B.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8F39198623E3009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		430D8F3B198623E3009E763A /* pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcm16b.h; sourceTree = "<group>"; };
 		430D8F3C198623E3009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		430D8F3D198623E3009E763A /* pcm16b.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcm16b.c; sourceTree = "<group>"; };
 		430D8F3E198623E3009E763A /* pcm16b.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pcm16b.gypi; sourceTree = "<group>"; };
+		43C0C6701D4F0B090058AC82 /* audio_decoder_pcm16b.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder_pcm16b.cc; sourceTree = "<group>"; };
+		43C0C6711D4F0B090058AC82 /* audio_decoder_pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder_pcm16b.h; sourceTree = "<group>"; };
+		43C0C6721D4F0B090058AC82 /* audio_encoder_pcm16b.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_pcm16b.cc; sourceTree = "<group>"; };
+		43C0C6731D4F0B090058AC82 /* audio_encoder_pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_encoder_pcm16b.h; sourceTree = "<group>"; };
+		43C0C6741D4F0B090058AC82 /* pcm16b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcm16b.h; sourceTree = "<group>"; };
 		43E04C211D2627B000B39549 /* libPCM16B_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM16B_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -88,22 +93,17 @@
 		430D8F38198623E3009E763A /* pcm16b */ = {
 			isa = PBXGroup;
 			children = (
-				430D8F39198623E3009E763A /* Android.mk */,
-				430D8F3A198623E3009E763A /* include */,
+				43C0C6701D4F0B090058AC82 /* audio_decoder_pcm16b.cc */,
+				43C0C6711D4F0B090058AC82 /* audio_decoder_pcm16b.h */,
+				43C0C6721D4F0B090058AC82 /* audio_encoder_pcm16b.cc */,
+				43C0C6731D4F0B090058AC82 /* audio_encoder_pcm16b.h */,
+				43C0C6741D4F0B090058AC82 /* pcm16b.h */,
 				430D8F3C198623E3009E763A /* OWNERS */,
 				430D8F3D198623E3009E763A /* pcm16b.c */,
 				430D8F3E198623E3009E763A /* pcm16b.gypi */,
 			);
 			name = pcm16b;
 			path = ../../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/pcm16b;
-			sourceTree = "<group>";
-		};
-		430D8F3A198623E3009E763A /* include */ = {
-			isa = PBXGroup;
-			children = (
-				430D8F3B198623E3009E763A /* pcm16b.h */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +175,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C0C6761D4F0B090058AC82 /* audio_encoder_pcm16b.cc in Sources */,
+				43C0C6751D4F0B090058AC82 /* audio_decoder_pcm16b.cc in Sources */,
 				430D8F3F198623E3009E763A /* pcm16b.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

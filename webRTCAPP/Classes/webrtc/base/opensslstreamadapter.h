@@ -12,6 +12,7 @@
 #define WEBRTC_BASE_OPENSSLSTREAMADAPTER_H__
 
 #include <string>
+#include <memory>
 #include <vector>
 
 #include "webrtc/base/buffer.h"
@@ -20,34 +21,32 @@
 
 typedef struct ssl_st SSL;
 typedef struct ssl_ctx_st SSL_CTX;
+typedef struct ssl_cipher_st SSL_CIPHER;
 typedef struct x509_store_ctx_st X509_STORE_CTX;
 
 namespace rtc {
 
 // This class was written with OpenSSLAdapter (a socket adapter) as a
-// starting point. It has similar structure and functionality, with
-// the peer-to-peer mode added.
+// starting point. It has similar structure and functionality, but uses a
+// "peer-to-peer" mode, verifying the peer's certificate using a digest
+// sent over a secure signaling channel.
 //
 // Static methods to initialize and deinit the SSL library are in
-// OpenSSLAdapter. This class also uses
-// OpenSSLAdapter::custom_verify_callback_ (a static field). These
-// should probably be moved out to a neutral class.
+// OpenSSLAdapter. These should probably be moved out to a neutral class.
 //
-// In a few cases I have factored out some OpenSSLAdapter code into
-// static methods so it can be reused from this class. Eventually that
-// code should probably be moved to a common support
-// class. Unfortunately there remain a few duplicated sections of
-// code. I have not done more restructuring because I did not want to
-// affect existing code that uses OpenSSLAdapter.
+// In a few cases I have factored out some OpenSSLAdapter code into static
+// methods so it can be reused from this class. Eventually that code should
+// probably be moved to a common support class. Unfortunately there remain a
+// few duplicated sections of code. I have not done more restructuring because
+// I did not want to affect existing code that uses OpenSSLAdapter.
 //
-// This class does not support the SSL connection restart feature
-// present in OpenSSLAdapter. I am not entirely sure how the feature
-// is useful and I am not convinced that it works properly.
+// This class does not support the SSL connection restart feature present in
+// OpenSSLAdapter. I am not entirely sure how the feature is useful and I am
+// not convinced that it works properly.
 //
-// This implementation is careful to disallow data exchange after an
-// SSL error, and it has an explicit SSL_CLOSED state. It should not
-// be possible to send any data in clear after one of the StartSSL
-// methods has been called.
+// This implementation is careful to disallow data exchange after an SSL error,
+// and it has an explicit SSL_CLOSED state. It should not be possible to send
+// any data in clear after one of the StartSSL methods has been called.
 
 // Look in sslstreamadapter.h for documentation of the methods.
 
@@ -58,49 +57,70 @@ class OpenSSLIdentity;
 class OpenSSLStreamAdapter : public SSLStreamAdapter {
  public:
   explicit OpenSSLStreamAdapter(StreamInterface* stream);
-  virtual ~OpenSSLStreamAdapter();
+  ~OpenSSLStreamAdapter() override;
 
-  virtual void SetIdentity(SSLIdentity* identity);
+  void SetIdentity(SSLIdentity* identity) override;
 
   // Default argument is for compatibility
-  virtual void SetServerRole(SSLRole role = SSL_SERVER);
-  virtual bool SetPeerCertificateDigest(const std::string& digest_alg,
-                                        const unsigned char* digest_val,
-                                        size_t digest_len);
+  void SetServerRole(SSLRole role = SSL_SERVER) override;
+  bool SetPeerCertificateDigest(
+      const std::string& digest_alg,
+      const unsigned char* digest_val,
+      size_t digest_len,
+      SSLPeerCertificateDigestError* error = nullptr) override;
 
-  virtual bool GetPeerCertificate(SSLCertificate** cert) const;
+  std::unique_ptr<SSLCertificate> GetPeerCertificate() const override;
 
-  virtual int StartSSLWithServer(const char* server_name);
-  virtual int StartSSLWithPeer();
-  virtual void SetMode(SSLMode mode);
+  // Goes from state SSL_NONE to either SSL_CONNECTING or SSL_WAIT, depending
+  // on whether the underlying stream is already open or not.
+  int StartSSL() override;
+  void SetMode(SSLMode mode) override;
+  void SetMaxProtocolVersion(SSLProtocolVersion version) override;
 
-  virtual StreamResult Read(void* data, size_t data_len,
-                            size_t* read, int* error);
-  virtual StreamResult Write(const void* data, size_t data_len,
-                             size_t* written, int* error);
-  virtual void Close();
-  virtual StreamState GetState() const;
+  StreamResult Read(void* data,
+                    size_t data_len,
+                    size_t* read,
+                    int* error) override;
+  StreamResult Write(const void* data,
+                     size_t data_len,
+                     size_t* written,
+                     int* error) override;
+  void Close() override;
+  StreamState GetState() const override;
+
+  // TODO(guoweis): Move this away from a static class method.
+  static std::string SslCipherSuiteToName(int crypto_suite);
+
+  bool GetSslCipherSuite(int* cipher) override;
+
+  int GetSslVersion() const override;
 
   // Key Extractor interface
-  virtual bool ExportKeyingMaterial(const std::string& label,
-                                    const uint8* context,
-                                    size_t context_len,
-                                    bool use_context,
-                                    uint8* result,
-                                    size_t result_len);
-
+  bool ExportKeyingMaterial(const std::string& label,
+                            const uint8_t* context,
+                            size_t context_len,
+                            bool use_context,
+                            uint8_t* result,
+                            size_t result_len) override;
 
   // DTLS-SRTP interface
-  virtual bool SetDtlsSrtpCiphers(const std::vector<std::string>& ciphers);
-  virtual bool GetDtlsSrtpCipher(std::string* cipher);
+  bool SetDtlsSrtpCryptoSuites(const std::vector<int>& crypto_suites) override;
+  bool GetDtlsSrtpCryptoSuite(int* crypto_suite) override;
 
-  // Capabilities interfaces
-  static bool HaveDtls();
-  static bool HaveDtlsSrtp();
-  static bool HaveExporter();
+  bool IsTlsConnected() override;
+
+  // Capabilities interfaces.
+  static bool IsBoringSsl();
+
+  static bool IsAcceptableCipher(int cipher, KeyType key_type);
+  static bool IsAcceptableCipher(const std::string& cipher, KeyType key_type);
+
+  // Use our timeutils.h source of timing in BoringSSL, allowing us to test
+  // using a fake clock.
+  static void enable_time_callback_for_testing();
 
  protected:
-  virtual void OnEvent(StreamInterface* stream, int events, int err);
+  void OnEvent(StreamInterface* stream, int events, int err) override;
 
  private:
   enum SSLState {
@@ -121,10 +141,6 @@ class OpenSSLStreamAdapter : public SSLStreamAdapter {
   // on some other error cases, so it can't really be interpreted
   // unfortunately.
 
-  // Go from state SSL_NONE to either SSL_CONNECTING or SSL_WAIT,
-  // depending on whether the underlying stream is already open or
-  // not.
-  int StartSSL();
   // Prepare SSL library, state is SSL_CONNECTING.
   int BeginSSL();
   // Perform SSL negotiation steps.
@@ -136,26 +152,36 @@ class OpenSSLStreamAdapter : public SSLStreamAdapter {
   // raised on the stream with the specified error.
   // A 0 error means a graceful close, otherwise there is not really enough
   // context to interpret the error code.
-  void Error(const char* context, int err, bool signal);
-  void Cleanup();
+  // |alert| indicates an alert description (one of the SSL_AD constants) to
+  // send to the remote endpoint when closing the association. If 0, a normal
+  // shutdown will be performed.
+  void Error(const char* context, int err, uint8_t alert, bool signal);
+  void Cleanup(uint8_t alert);
 
   // Override MessageHandler
-  virtual void OnMessage(Message* msg);
+  void OnMessage(Message* msg) override;
 
   // Flush the input buffers by reading left bytes (for DTLS)
   void FlushInput(unsigned int left);
 
   // SSL library configuration
   SSL_CTX* SetupSSLContext();
-  // SSL verification check
-  bool SSLPostConnectionCheck(SSL* ssl, const char* server_name,
-                              const X509* peer_cert,
-                              const std::string& peer_digest);
+  // Verify the peer certificate matches the signaled digest.
+  bool VerifyPeerCertificate();
   // SSL certification verification error handler, called back from
   // the openssl library. Returns an int interpreted as a boolean in
   // the C style: zero means verification failure, non-zero means
   // passed.
   static int SSLVerifyCallback(int ok, X509_STORE_CTX* store);
+
+  bool waiting_to_verify_peer_certificate() const {
+    return client_auth_enabled() && !peer_certificate_verified_;
+  }
+
+  bool has_peer_certificate_digest() const {
+    return !peer_certificate_digest_algorithm_.empty() &&
+           !peer_certificate_digest_value_.empty();
+  }
 
   SSLState state_;
   SSLRole role_;
@@ -168,27 +194,24 @@ class OpenSSLStreamAdapter : public SSLStreamAdapter {
   SSL* ssl_;
   SSL_CTX* ssl_ctx_;
 
-  // Our key and certificate, mostly useful in peer-to-peer mode.
-  scoped_ptr<OpenSSLIdentity> identity_;
-  // in traditional mode, the server name that the server's certificate
-  // must specify. Empty in peer-to-peer mode.
-  std::string ssl_server_name_;
-  // The certificate that the peer must present or did present. Initially
-  // null in traditional mode, until the connection is established.
-  scoped_ptr<OpenSSLCertificate> peer_certificate_;
-  // In peer-to-peer mode, the digest of the certificate that
-  // the peer must present.
+  // Our key and certificate.
+  std::unique_ptr<OpenSSLIdentity> identity_;
+  // The certificate that the peer presented. Initially null, until the
+  // connection is established.
+  std::unique_ptr<OpenSSLCertificate> peer_certificate_;
+  bool peer_certificate_verified_ = false;
+  // The digest of the certificate that the peer must present.
   Buffer peer_certificate_digest_value_;
   std::string peer_certificate_digest_algorithm_;
-
-  // OpenSSLAdapter::custom_verify_callback_ result
-  bool custom_verification_succeeded_;
 
   // The DtlsSrtp ciphers
   std::string srtp_ciphers_;
 
   // Do DTLS or not
   SSLMode ssl_mode_;
+
+  // Max. allowed protocol version
+  SSLProtocolVersion ssl_max_version_;
 };
 
 /////////////////////////////////////////////////////////////////////////////

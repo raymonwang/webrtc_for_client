@@ -11,7 +11,7 @@
 #ifndef WEBRTC_TEST_TEST_SUPPORT_TRACE_TO_STDERR_H_
 #define WEBRTC_TEST_TEST_SUPPORT_TRACE_TO_STDERR_H_
 
-#include "webrtc/system_wrappers/interface/trace.h"
+#include "webrtc/system_wrappers/include/trace.h"
 
 namespace webrtc {
 namespace test {
@@ -28,7 +28,7 @@ class TraceToStderr : public TraceCallback {
   // This is useful for offline test tools, where the file time is much more
   // informative than the real time.
   explicit TraceToStderr(bool override_time);
-  virtual ~TraceToStderr();
+  ~TraceToStderr() override;
 
   // Every subsequent trace printout will use |time|. Has no effect if
   // |override_time| in the constructor was set to false.
@@ -39,9 +39,7 @@ class TraceToStderr : public TraceCallback {
   virtual void SetTimeSeconds(float time);
 
   // Implements TraceCallback.
-  virtual void Print(TraceLevel level,
-                     const char* msg_array,
-                     int length) OVERRIDE;
+  void Print(TraceLevel level, const char* msg_array, int length) override;
 
  private:
   bool override_time_;

@@ -30,7 +30,7 @@
 #include <vector>
 
 #include "webrtc/base/constructormagic.h"
-#include "webrtc/modules/interface/module_common_types.h"
+#include "webrtc/modules/include/module_common_types.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_format.h"
 #include "webrtc/typedefs.h"
 
@@ -60,31 +60,22 @@ class RtpPacketizerVp8 : public RtpPacketizer {
 
   virtual ~RtpPacketizerVp8();
 
-  virtual void SetPayloadData(
-      const uint8_t* payload_data,
-      size_t payload_size,
-      const RTPFragmentationHeader* fragmentation) OVERRIDE;
+  void SetPayloadData(const uint8_t* payload_data,
+                      size_t payload_size,
+                      const RTPFragmentationHeader* fragmentation) override;
 
   // Get the next payload with VP8 payload header.
-  // max_payload_len limits the sum length of payload and VP8 payload header.
-  // buffer is a pointer to where the output will be written.
-  // bytes_to_send is an output variable that will contain number of bytes
-  // written to buffer. Parameter last_packet is true for the last packet of
-  // the frame, false otherwise (i.e., call the function again to get the
-  // next packet).
-  // For the kStrict and kAggregate mode: returns the partition index from which
-  // the first payload byte in the packet is taken, with the first partition
-  // having index 0; returns negative on error.
-  // For the kEqualSize mode: returns 0 on success, return negative on error.
-  virtual bool NextPacket(uint8_t* buffer,
-                          size_t* bytes_to_send,
-                          bool* last_packet) OVERRIDE;
+  // Write payload and set marker bit of the |packet|.
+  // The parameter |last_packet| is true for the last packet of the frame, false
+  // otherwise (i.e., call the function again to get the next packet).
+  // Returns true on success, false otherwise.
+  bool NextPacket(RtpPacketToSend* packet, bool* last_packet) override;
 
-  virtual ProtectionType GetProtectionType() OVERRIDE;
+  ProtectionType GetProtectionType() override;
 
-  virtual StorageType GetStorageType(uint32_t retransmission_settings) OVERRIDE;
+  StorageType GetStorageType(uint32_t retransmission_settings) override;
 
-  virtual std::string ToString() OVERRIDE;
+  std::string ToString() override;
 
  private:
   typedef struct {
@@ -213,7 +204,7 @@ class RtpPacketizerVp8 : public RtpPacketizer {
   InfoQueue packets_;
   bool packets_calculated_;
 
-  DISALLOW_COPY_AND_ASSIGN(RtpPacketizerVp8);
+  RTC_DISALLOW_COPY_AND_ASSIGN(RtpPacketizerVp8);
 };
 
 // Depacketizer for VP8.
@@ -221,9 +212,9 @@ class RtpDepacketizerVp8 : public RtpDepacketizer {
  public:
   virtual ~RtpDepacketizerVp8() {}
 
-  virtual bool Parse(ParsedPayload* parsed_payload,
-                     const uint8_t* payload_data,
-                     size_t payload_data_length) OVERRIDE;
+  bool Parse(ParsedPayload* parsed_payload,
+             const uint8_t* payload_data,
+             size_t payload_data_length) override;
 };
 }  // namespace webrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTP_FORMAT_VP8_H_

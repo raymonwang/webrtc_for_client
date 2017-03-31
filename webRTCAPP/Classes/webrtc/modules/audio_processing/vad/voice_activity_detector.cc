@@ -1,12 +1,24 @@
+/*
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree. An additional intellectual property rights grant can be found
+ *  in the file PATENTS.  All contributing project authors may
+ *  be found in the AUTHORS file in the root of the source tree.
+ */
+
 #include "webrtc/modules/audio_processing/vad/voice_activity_detector.h"
+
 #include <algorithm>
+
 #include "webrtc/base/checks.h"
 
 namespace webrtc {
 namespace {
 
-const int kMaxLength = 320;
-const int kNumChannels = 1;
+const size_t kMaxLength = 320;
+const size_t kNumChannels = 1;
 
 const double kDefaultVoiceValue = 1.0;
 const double kNeutralProbability = 0.5;
@@ -25,26 +37,25 @@ VoiceActivityDetector::~VoiceActivityDetector() = default;
 // |chunkwise_voice_probabilities_| and |chunkwise_rms_| when there is new data.
 // Otherwise it clears them.
 void VoiceActivityDetector::ProcessChunk(const int16_t* audio,
-                                         int length,
+                                         size_t length,
                                          int sample_rate_hz) {
-  DCHECK_EQ(static_cast<int>(length), sample_rate_hz / 100);
-  DCHECK_LE(length, kMaxLength);
+  RTC_DCHECK_EQ(length, sample_rate_hz / 100);
+  RTC_DCHECK_LE(length, kMaxLength);
   // Resample to the required rate.
   const int16_t* resampled_ptr = audio;
   if (sample_rate_hz != kSampleRateHz) {
-    CHECK_EQ(
-        resampler_.ResetIfNeeded(sample_rate_hz, kSampleRateHz, kResamplerSynchronous),
+    RTC_CHECK_EQ(
+        resampler_.ResetIfNeeded(sample_rate_hz, kSampleRateHz, kNumChannels),
         0);
-	
     resampler_.Push(audio, length, resampled_, kLength10Ms, length);
     resampled_ptr = resampled_;
   }
-  DCHECK_EQ(length, kLength10Ms);
+  RTC_DCHECK_EQ(length, kLength10Ms);
 
   // Each chunk needs to be passed into |standalone_vad_|, because internally it
   // buffers the audio and processes it all at once when GetActivity() is
   // called.
-  CHECK_EQ(standalone_vad_->AddAudio(resampled_ptr, length), 0);
+  RTC_CHECK_EQ(standalone_vad_->AddAudio(resampled_ptr, length), 0);
 
   audio_processing_.ExtractFeatures(resampled_ptr, length, &features_);
 
@@ -61,11 +72,11 @@ void VoiceActivityDetector::ProcessChunk(const int16_t* audio,
     } else {
       std::fill(chunkwise_voice_probabilities_.begin(),
                 chunkwise_voice_probabilities_.end(), kNeutralProbability);
-      CHECK_GE(
+      RTC_CHECK_GE(
           standalone_vad_->GetActivity(&chunkwise_voice_probabilities_[0],
                                        chunkwise_voice_probabilities_.size()),
           0);
-      CHECK_GE(pitch_based_vad_.VoicingProbability(
+      RTC_CHECK_GE(pitch_based_vad_.VoicingProbability(
                        features_, &chunkwise_voice_probabilities_[0]),
                    0);
     }

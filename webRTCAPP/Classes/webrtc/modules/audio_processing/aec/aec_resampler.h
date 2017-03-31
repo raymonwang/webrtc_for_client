@@ -13,17 +13,15 @@
 
 #include "webrtc/modules/audio_processing/aec/aec_core.h"
 
-enum {
-  kResamplingDelay = 1
-};
-enum {
-  kResamplerBufferSize = FRAME_LEN * 4
-};
+namespace webrtc {
 
-// Unless otherwise specified, functions return 0 on success and -1 on error
-int WebRtcAec_CreateResampler(void** resampInst);
+enum { kResamplingDelay = 1 };
+enum { kResamplerBufferSize = FRAME_LEN * 4 };
+
+// Unless otherwise specified, functions return 0 on success and -1 on error.
+void* WebRtcAec_CreateResampler();  // Returns NULL on error.
 int WebRtcAec_InitResampler(void* resampInst, int deviceSampleRateHz);
-int WebRtcAec_FreeResampler(void* resampInst);
+void WebRtcAec_FreeResampler(void* resampInst);
 
 // Estimates skew from raw measurement.
 int WebRtcAec_GetSkew(void* resampInst, int rawSkew, float* skewEst);
@@ -31,9 +29,11 @@ int WebRtcAec_GetSkew(void* resampInst, int rawSkew, float* skewEst);
 // Resamples input using linear interpolation.
 void WebRtcAec_ResampleLinear(void* resampInst,
                               const float* inspeech,
-                              int size,
+                              size_t size,
                               float skew,
                               float* outspeech,
-                              int* size_out);
+                              size_t* size_out);
+
+}  // namespace webrtc
 
 #endif  // WEBRTC_MODULES_AUDIO_PROCESSING_AEC_AEC_RESAMPLER_H_

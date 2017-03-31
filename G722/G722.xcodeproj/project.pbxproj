@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		430D8EB619862208009E763A /* g722_decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8EAF19862208009E763A /* g722_decode.c */; };
-		430D8EB719862208009E763A /* g722_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8EB119862208009E763A /* g722_encode.c */; };
-		430D8EB819862208009E763A /* g722_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8EB219862208009E763A /* g722_interface.c */; };
-		43E04B7C1D2625A900B39549 /* g722_decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8EAF19862208009E763A /* g722_decode.c */; };
-		43E04B7D1D2625A900B39549 /* g722_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8EB219862208009E763A /* g722_interface.c */; };
-		43E04B7E1D2625A900B39549 /* g722_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 430D8EB119862208009E763A /* g722_encode.c */; };
+		43C0C6041D4F07780058AC82 /* audio_decoder_g722.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5FA1D4F07780058AC82 /* audio_decoder_g722.cc */; };
+		43C0C6051D4F07780058AC82 /* audio_decoder_g722.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5FA1D4F07780058AC82 /* audio_decoder_g722.cc */; };
+		43C0C6061D4F07780058AC82 /* audio_encoder_g722.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5FC1D4F07780058AC82 /* audio_encoder_g722.cc */; };
+		43C0C6071D4F07780058AC82 /* audio_encoder_g722.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5FC1D4F07780058AC82 /* audio_encoder_g722.cc */; };
+		43C0C6081D4F07780058AC82 /* g722_decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5FE1D4F07780058AC82 /* g722_decode.c */; };
+		43C0C6091D4F07780058AC82 /* g722_decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C5FE1D4F07780058AC82 /* g722_decode.c */; };
+		43C0C60A1D4F07780058AC82 /* g722_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6001D4F07780058AC82 /* g722_encode.c */; };
+		43C0C60B1D4F07780058AC82 /* g722_encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6001D4F07780058AC82 /* g722_encode.c */; };
+		43C0C60C1D4F07780058AC82 /* g722_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6011D4F07780058AC82 /* g722_interface.c */; };
+		43C0C60D1D4F07780058AC82 /* g722_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6011D4F07780058AC82 /* g722_interface.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,14 +42,16 @@
 
 /* Begin PBXFileReference section */
 		430D8E7A198621E7009E763A /* libG722.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libG722.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		430D8EAD19862208009E763A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
-		430D8EAE19862208009E763A /* g722.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = g722.gypi; sourceTree = "<group>"; };
-		430D8EAF19862208009E763A /* g722_decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g722_decode.c; sourceTree = "<group>"; };
-		430D8EB019862208009E763A /* g722_enc_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g722_enc_dec.h; sourceTree = "<group>"; };
-		430D8EB119862208009E763A /* g722_encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g722_encode.c; sourceTree = "<group>"; };
-		430D8EB219862208009E763A /* g722_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g722_interface.c; sourceTree = "<group>"; };
-		430D8EB419862208009E763A /* g722_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g722_interface.h; sourceTree = "<group>"; };
-		430D8EB519862208009E763A /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43C0C5FA1D4F07780058AC82 /* audio_decoder_g722.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_decoder_g722.cc; sourceTree = "<group>"; };
+		43C0C5FB1D4F07780058AC82 /* audio_decoder_g722.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_decoder_g722.h; sourceTree = "<group>"; };
+		43C0C5FC1D4F07780058AC82 /* audio_encoder_g722.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_encoder_g722.cc; sourceTree = "<group>"; };
+		43C0C5FD1D4F07780058AC82 /* audio_encoder_g722.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_encoder_g722.h; sourceTree = "<group>"; };
+		43C0C5FE1D4F07780058AC82 /* g722_decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g722_decode.c; sourceTree = "<group>"; };
+		43C0C5FF1D4F07780058AC82 /* g722_enc_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g722_enc_dec.h; sourceTree = "<group>"; };
+		43C0C6001D4F07780058AC82 /* g722_encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g722_encode.c; sourceTree = "<group>"; };
+		43C0C6011D4F07780058AC82 /* g722_interface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = g722_interface.c; sourceTree = "<group>"; };
+		43C0C6021D4F07780058AC82 /* g722_interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = g722_interface.h; sourceTree = "<group>"; };
+		43C0C6031D4F07780058AC82 /* g722.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = g722.gypi; sourceTree = "<group>"; };
 		43E04B841D2625A900B39549 /* libG722_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libG722_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,25 +101,19 @@
 		430D8EAC19862208009E763A /* g722 */ = {
 			isa = PBXGroup;
 			children = (
-				430D8EAD19862208009E763A /* Android.mk */,
-				430D8EAE19862208009E763A /* g722.gypi */,
-				430D8EAF19862208009E763A /* g722_decode.c */,
-				430D8EB019862208009E763A /* g722_enc_dec.h */,
-				430D8EB119862208009E763A /* g722_encode.c */,
-				430D8EB219862208009E763A /* g722_interface.c */,
-				430D8EB319862208009E763A /* include */,
-				430D8EB519862208009E763A /* OWNERS */,
+				43C0C5FA1D4F07780058AC82 /* audio_decoder_g722.cc */,
+				43C0C5FB1D4F07780058AC82 /* audio_decoder_g722.h */,
+				43C0C5FC1D4F07780058AC82 /* audio_encoder_g722.cc */,
+				43C0C5FD1D4F07780058AC82 /* audio_encoder_g722.h */,
+				43C0C5FE1D4F07780058AC82 /* g722_decode.c */,
+				43C0C5FF1D4F07780058AC82 /* g722_enc_dec.h */,
+				43C0C6001D4F07780058AC82 /* g722_encode.c */,
+				43C0C6011D4F07780058AC82 /* g722_interface.c */,
+				43C0C6021D4F07780058AC82 /* g722_interface.h */,
+				43C0C6031D4F07780058AC82 /* g722.gypi */,
 			);
 			name = g722;
 			path = ../../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/g722;
-			sourceTree = "<group>";
-		};
-		430D8EB319862208009E763A /* include */ = {
-			isa = PBXGroup;
-			children = (
-				430D8EB419862208009E763A /* g722_interface.h */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,9 +185,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				430D8EB619862208009E763A /* g722_decode.c in Sources */,
-				430D8EB819862208009E763A /* g722_interface.c in Sources */,
-				430D8EB719862208009E763A /* g722_encode.c in Sources */,
+				43C0C6041D4F07780058AC82 /* audio_decoder_g722.cc in Sources */,
+				43C0C60A1D4F07780058AC82 /* g722_encode.c in Sources */,
+				43C0C6061D4F07780058AC82 /* audio_encoder_g722.cc in Sources */,
+				43C0C60C1D4F07780058AC82 /* g722_interface.c in Sources */,
+				43C0C6081D4F07780058AC82 /* g722_decode.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,9 +197,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43E04B7C1D2625A900B39549 /* g722_decode.c in Sources */,
-				43E04B7D1D2625A900B39549 /* g722_interface.c in Sources */,
-				43E04B7E1D2625A900B39549 /* g722_encode.c in Sources */,
+				43C0C6051D4F07780058AC82 /* audio_decoder_g722.cc in Sources */,
+				43C0C60B1D4F07780058AC82 /* g722_encode.c in Sources */,
+				43C0C6071D4F07780058AC82 /* audio_encoder_g722.cc in Sources */,
+				43C0C60D1D4F07780058AC82 /* g722_interface.c in Sources */,
+				43C0C6091D4F07780058AC82 /* g722_decode.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

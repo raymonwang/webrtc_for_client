@@ -8,24 +8,22 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
-#if defined(_MSC_VER) && _MSC_VER <= 1500
-// Need to include math.h before calling tmmintrin.h/intrin.h
-// in certain versions of MSVS.
-#include <math.h>
-#endif
+#include <assert.h>
 #include <tmmintrin.h>  // SSSE3
-#include "vp9/common/x86/vp9_idct_intrin_sse2.h"
 
-void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
-                             int16_t* coeff_ptr, intptr_t n_coeffs,
-                             int skip_block, const int16_t* zbin_ptr,
-                             const int16_t* round_ptr, const int16_t* quant_ptr,
-                             const int16_t* quant_shift_ptr,
-                             int16_t* qcoeff_ptr,
-                             int16_t* dqcoeff_ptr, const int16_t* dequant_ptr,
-                             uint16_t* eob_ptr,
-                             const int16_t* scan_ptr,
-                             const int16_t* iscan_ptr) {
+#include "./vp9_rtcd.h"
+#include "./vpx_config.h"
+#include "vpx_dsp/vpx_dsp_common.h"
+#include "vpx_dsp/x86/fdct.h"
+#include "vpx_dsp/x86/inv_txfm_sse2.h"
+#include "vpx_dsp/x86/txfm_common_sse2.h"
+
+void vp9_fdct8x8_quant_ssse3(
+    const int16_t *input, int stride, tran_low_t *coeff_ptr, intptr_t n_coeffs,
+    int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr,
+    const int16_t *quant_ptr, const int16_t *quant_shift_ptr,
+    tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr,
+    uint16_t *eob_ptr, const int16_t *scan_ptr, const int16_t *iscan_ptr) {
   __m128i zero;
   int pass;
   // Constants
@@ -43,14 +41,14 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
   const __m128i k__cospi_m20_p12 = pair_set_epi16(-cospi_20_64, cospi_12_64);
   const __m128i k__DCT_CONST_ROUNDING = _mm_set1_epi32(DCT_CONST_ROUNDING);
   // Load input
-  __m128i in0  = _mm_load_si128((const __m128i *)(input + 0 * stride));
-  __m128i in1  = _mm_load_si128((const __m128i *)(input + 1 * stride));
-  __m128i in2  = _mm_load_si128((const __m128i *)(input + 2 * stride));
-  __m128i in3  = _mm_load_si128((const __m128i *)(input + 3 * stride));
-  __m128i in4  = _mm_load_si128((const __m128i *)(input + 4 * stride));
-  __m128i in5  = _mm_load_si128((const __m128i *)(input + 5 * stride));
-  __m128i in6  = _mm_load_si128((const __m128i *)(input + 6 * stride));
-  __m128i in7  = _mm_load_si128((const __m128i *)(input + 7 * stride));
+  __m128i in0 = _mm_load_si128((const __m128i *)(input + 0 * stride));
+  __m128i in1 = _mm_load_si128((const __m128i *)(input + 1 * stride));
+  __m128i in2 = _mm_load_si128((const __m128i *)(input + 2 * stride));
+  __m128i in3 = _mm_load_si128((const __m128i *)(input + 3 * stride));
+  __m128i in4 = _mm_load_si128((const __m128i *)(input + 4 * stride));
+  __m128i in5 = _mm_load_si128((const __m128i *)(input + 5 * stride));
+  __m128i in6 = _mm_load_si128((const __m128i *)(input + 6 * stride));
+  __m128i in7 = _mm_load_si128((const __m128i *)(input + 7 * stride));
   __m128i *in[8];
   int index = 0;
 
@@ -102,99 +100,56 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
       const __m128i r2 = _mm_sub_epi16(q1, q2);
       const __m128i r3 = _mm_sub_epi16(q0, q3);
       // Interleave to do the multiply by constants which gets us into 32bits
-      const __m128i t0 = _mm_add_epi16(r0, r1);
-      const __m128i t1 = _mm_sub_epi16(r0, r1);
+      const __m128i t0 = _mm_unpacklo_epi16(r0, r1);
+      const __m128i t1 = _mm_unpackhi_epi16(r0, r1);
       const __m128i t2 = _mm_unpacklo_epi16(r2, r3);
       const __m128i t3 = _mm_unpackhi_epi16(r2, r3);
 
-      const __m128i u0 = _mm_mulhrs_epi16(t0, k__dual_p16_p16);
-      const __m128i u1 = _mm_mulhrs_epi16(t1, k__dual_p16_p16);
+      const __m128i u0 = _mm_madd_epi16(t0, k__cospi_p16_p16);
+      const __m128i u1 = _mm_madd_epi16(t1, k__cospi_p16_p16);
+      const __m128i u2 = _mm_madd_epi16(t0, k__cospi_p16_m16);
+      const __m128i u3 = _mm_madd_epi16(t1, k__cospi_p16_m16);
+
       const __m128i u4 = _mm_madd_epi16(t2, k__cospi_p24_p08);
       const __m128i u5 = _mm_madd_epi16(t3, k__cospi_p24_p08);
       const __m128i u6 = _mm_madd_epi16(t2, k__cospi_m08_p24);
       const __m128i u7 = _mm_madd_epi16(t3, k__cospi_m08_p24);
       // dct_const_round_shift
-      const __m128i v4 = _mm_add_epi32(u4, k__DCT_CONST_ROUNDING);
-      const __m128i v5 = _mm_add_epi32(u5, k__DCT_CONST_ROUNDING);
-      const __m128i v6 = _mm_add_epi32(u6, k__DCT_CONST_ROUNDING);
-      const __m128i v7 = _mm_add_epi32(u7, k__DCT_CONST_ROUNDING);
-      const __m128i w4 = _mm_srai_epi32(v4, DCT_CONST_BITS);
-      const __m128i w5 = _mm_srai_epi32(v5, DCT_CONST_BITS);
-      const __m128i w6 = _mm_srai_epi32(v6, DCT_CONST_BITS);
-      const __m128i w7 = _mm_srai_epi32(v7, DCT_CONST_BITS);
-      // Combine
-      res0 = u0;
-      res4 = u1;
-      res2 = _mm_packs_epi32(w4, w5);
-      res6 = _mm_packs_epi32(w6, w7);
-    }
-    // Work on next four results
-    if (pass == 1) {
-      // Interleave to do the multiply by constants which gets us into 32bits
-      const __m128i d0 = _mm_unpacklo_epi16(q6, q5);
-      const __m128i d1 = _mm_unpackhi_epi16(q6, q5);
-      const __m128i e0 = _mm_madd_epi16(d0, k__cospi_p16_m16);
-      const __m128i e1 = _mm_madd_epi16(d1, k__cospi_p16_m16);
-      const __m128i e2 = _mm_madd_epi16(d0, k__cospi_p16_p16);
-      const __m128i e3 = _mm_madd_epi16(d1, k__cospi_p16_p16);
-      // dct_const_round_shift
-      const __m128i f0 = _mm_add_epi32(e0, k__DCT_CONST_ROUNDING);
-      const __m128i f1 = _mm_add_epi32(e1, k__DCT_CONST_ROUNDING);
-      const __m128i f2 = _mm_add_epi32(e2, k__DCT_CONST_ROUNDING);
-      const __m128i f3 = _mm_add_epi32(e3, k__DCT_CONST_ROUNDING);
-      const __m128i s0 = _mm_srai_epi32(f0, DCT_CONST_BITS);
-      const __m128i s1 = _mm_srai_epi32(f1, DCT_CONST_BITS);
-      const __m128i s2 = _mm_srai_epi32(f2, DCT_CONST_BITS);
-      const __m128i s3 = _mm_srai_epi32(f3, DCT_CONST_BITS);
-      // Combine
-      const __m128i r0 = _mm_packs_epi32(s0, s1);
-      const __m128i r1 = _mm_packs_epi32(s2, s3);
-      // Add/subtract
-      const __m128i x0 = _mm_add_epi16(q4, r0);
-      const __m128i x1 = _mm_sub_epi16(q4, r0);
-      const __m128i x2 = _mm_sub_epi16(q7, r1);
-      const __m128i x3 = _mm_add_epi16(q7, r1);
-      // Interleave to do the multiply by constants which gets us into 32bits
-      const __m128i t0 = _mm_unpacklo_epi16(x0, x3);
-      const __m128i t1 = _mm_unpackhi_epi16(x0, x3);
-      const __m128i t2 = _mm_unpacklo_epi16(x1, x2);
-      const __m128i t3 = _mm_unpackhi_epi16(x1, x2);
-      const __m128i u0 = _mm_madd_epi16(t0, k__cospi_p28_p04);
-      const __m128i u1 = _mm_madd_epi16(t1, k__cospi_p28_p04);
-      const __m128i u2 = _mm_madd_epi16(t0, k__cospi_m04_p28);
-      const __m128i u3 = _mm_madd_epi16(t1, k__cospi_m04_p28);
-      const __m128i u4 = _mm_madd_epi16(t2, k__cospi_p12_p20);
-      const __m128i u5 = _mm_madd_epi16(t3, k__cospi_p12_p20);
-      const __m128i u6 = _mm_madd_epi16(t2, k__cospi_m20_p12);
-      const __m128i u7 = _mm_madd_epi16(t3, k__cospi_m20_p12);
-      // dct_const_round_shift
+
       const __m128i v0 = _mm_add_epi32(u0, k__DCT_CONST_ROUNDING);
       const __m128i v1 = _mm_add_epi32(u1, k__DCT_CONST_ROUNDING);
       const __m128i v2 = _mm_add_epi32(u2, k__DCT_CONST_ROUNDING);
       const __m128i v3 = _mm_add_epi32(u3, k__DCT_CONST_ROUNDING);
+
       const __m128i v4 = _mm_add_epi32(u4, k__DCT_CONST_ROUNDING);
       const __m128i v5 = _mm_add_epi32(u5, k__DCT_CONST_ROUNDING);
       const __m128i v6 = _mm_add_epi32(u6, k__DCT_CONST_ROUNDING);
       const __m128i v7 = _mm_add_epi32(u7, k__DCT_CONST_ROUNDING);
+
       const __m128i w0 = _mm_srai_epi32(v0, DCT_CONST_BITS);
       const __m128i w1 = _mm_srai_epi32(v1, DCT_CONST_BITS);
       const __m128i w2 = _mm_srai_epi32(v2, DCT_CONST_BITS);
       const __m128i w3 = _mm_srai_epi32(v3, DCT_CONST_BITS);
+
       const __m128i w4 = _mm_srai_epi32(v4, DCT_CONST_BITS);
       const __m128i w5 = _mm_srai_epi32(v5, DCT_CONST_BITS);
       const __m128i w6 = _mm_srai_epi32(v6, DCT_CONST_BITS);
       const __m128i w7 = _mm_srai_epi32(v7, DCT_CONST_BITS);
       // Combine
-      res1 = _mm_packs_epi32(w0, w1);
-      res7 = _mm_packs_epi32(w2, w3);
-      res5 = _mm_packs_epi32(w4, w5);
-      res3 = _mm_packs_epi32(w6, w7);
-    } else {
+
+      res0 = _mm_packs_epi32(w0, w1);
+      res4 = _mm_packs_epi32(w2, w3);
+      res2 = _mm_packs_epi32(w4, w5);
+      res6 = _mm_packs_epi32(w6, w7);
+    }
+    // Work on next four results
+    {
       // Interleave to do the multiply by constants which gets us into 32bits
       const __m128i d0 = _mm_sub_epi16(q6, q5);
       const __m128i d1 = _mm_add_epi16(q6, q5);
       const __m128i r0 = _mm_mulhrs_epi16(d0, k__dual_p16_p16);
       const __m128i r1 = _mm_mulhrs_epi16(d1, k__dual_p16_p16);
+
       // Add/subtract
       const __m128i x0 = _mm_add_epi16(q4, r0);
       const __m128i x1 = _mm_sub_epi16(q4, r0);
@@ -335,15 +290,16 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
 
   if (!skip_block) {
     __m128i eob;
-    __m128i round, quant, dequant;
+    __m128i round, quant, dequant, thr;
+    int16_t nzflag;
     {
       __m128i coeff0, coeff1;
 
       // Setup global values
       {
-        round = _mm_load_si128((const __m128i*)round_ptr);
-        quant = _mm_load_si128((const __m128i*)quant_ptr);
-        dequant = _mm_load_si128((const __m128i*)dequant_ptr);
+        round = _mm_load_si128((const __m128i *)round_ptr);
+        quant = _mm_load_si128((const __m128i *)quant_ptr);
+        dequant = _mm_load_si128((const __m128i *)dequant_ptr);
       }
 
       {
@@ -375,15 +331,15 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
         qcoeff0 = _mm_sub_epi16(qcoeff0, coeff0_sign);
         qcoeff1 = _mm_sub_epi16(qcoeff1, coeff1_sign);
 
-        _mm_store_si128((__m128i*)(qcoeff_ptr + n_coeffs), qcoeff0);
-        _mm_store_si128((__m128i*)(qcoeff_ptr + n_coeffs) + 1, qcoeff1);
+        store_tran_low(qcoeff0, qcoeff_ptr + n_coeffs);
+        store_tran_low(qcoeff1, qcoeff_ptr + n_coeffs + 8);
 
         coeff0 = _mm_mullo_epi16(qcoeff0, dequant);
         dequant = _mm_unpackhi_epi64(dequant, dequant);
         coeff1 = _mm_mullo_epi16(qcoeff1, dequant);
 
-        _mm_store_si128((__m128i*)(dqcoeff_ptr + n_coeffs), coeff0);
-        _mm_store_si128((__m128i*)(dqcoeff_ptr + n_coeffs) + 1, coeff1);
+        store_tran_low(coeff0, dqcoeff_ptr + n_coeffs);
+        store_tran_low(coeff1, dqcoeff_ptr + n_coeffs + 8);
       }
 
       {
@@ -396,8 +352,8 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
         zero_coeff1 = _mm_cmpeq_epi16(coeff1, zero);
         nzero_coeff0 = _mm_cmpeq_epi16(zero_coeff0, zero);
         nzero_coeff1 = _mm_cmpeq_epi16(zero_coeff1, zero);
-        iscan0 = _mm_load_si128((const __m128i*)(iscan_ptr + n_coeffs));
-        iscan1 = _mm_load_si128((const __m128i*)(iscan_ptr + n_coeffs) + 1);
+        iscan0 = _mm_load_si128((const __m128i *)(iscan_ptr + n_coeffs));
+        iscan1 = _mm_load_si128((const __m128i *)(iscan_ptr + n_coeffs) + 1);
         // Add one to convert from indices to counts
         iscan0 = _mm_sub_epi16(iscan0, nzero_coeff0);
         iscan1 = _mm_sub_epi16(iscan1, nzero_coeff1);
@@ -410,6 +366,7 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
 
     // AC only loop
     index = 2;
+    thr = _mm_srai_epi16(dequant, 1);
     while (n_coeffs < 0) {
       __m128i coeff0, coeff1;
       {
@@ -417,6 +374,7 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
         __m128i qcoeff0, qcoeff1;
         __m128i qtmp0, qtmp1;
 
+        assert(index < (int)(sizeof(in) / sizeof(in[0])) - 1);
         coeff0 = *in[index];
         coeff1 = *in[index + 1];
 
@@ -428,28 +386,40 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
         qcoeff0 = _mm_sub_epi16(qcoeff0, coeff0_sign);
         qcoeff1 = _mm_sub_epi16(qcoeff1, coeff1_sign);
 
-        qcoeff0 = _mm_adds_epi16(qcoeff0, round);
-        qcoeff1 = _mm_adds_epi16(qcoeff1, round);
-        qtmp0 = _mm_mulhi_epi16(qcoeff0, quant);
-        qtmp1 = _mm_mulhi_epi16(qcoeff1, quant);
+        nzflag = _mm_movemask_epi8(_mm_cmpgt_epi16(qcoeff0, thr)) |
+                 _mm_movemask_epi8(_mm_cmpgt_epi16(qcoeff1, thr));
 
-        // Reinsert signs
-        qcoeff0 = _mm_xor_si128(qtmp0, coeff0_sign);
-        qcoeff1 = _mm_xor_si128(qtmp1, coeff1_sign);
-        qcoeff0 = _mm_sub_epi16(qcoeff0, coeff0_sign);
-        qcoeff1 = _mm_sub_epi16(qcoeff1, coeff1_sign);
+        if (nzflag) {
+          qcoeff0 = _mm_adds_epi16(qcoeff0, round);
+          qcoeff1 = _mm_adds_epi16(qcoeff1, round);
+          qtmp0 = _mm_mulhi_epi16(qcoeff0, quant);
+          qtmp1 = _mm_mulhi_epi16(qcoeff1, quant);
 
-        _mm_store_si128((__m128i*)(qcoeff_ptr + n_coeffs), qcoeff0);
-        _mm_store_si128((__m128i*)(qcoeff_ptr + n_coeffs) + 1, qcoeff1);
+          // Reinsert signs
+          qcoeff0 = _mm_xor_si128(qtmp0, coeff0_sign);
+          qcoeff1 = _mm_xor_si128(qtmp1, coeff1_sign);
+          qcoeff0 = _mm_sub_epi16(qcoeff0, coeff0_sign);
+          qcoeff1 = _mm_sub_epi16(qcoeff1, coeff1_sign);
 
-        coeff0 = _mm_mullo_epi16(qcoeff0, dequant);
-        coeff1 = _mm_mullo_epi16(qcoeff1, dequant);
+          store_tran_low(qcoeff0, qcoeff_ptr + n_coeffs);
+          store_tran_low(qcoeff1, qcoeff_ptr + n_coeffs + 8);
 
-        _mm_store_si128((__m128i*)(dqcoeff_ptr + n_coeffs), coeff0);
-        _mm_store_si128((__m128i*)(dqcoeff_ptr + n_coeffs) + 1, coeff1);
+          coeff0 = _mm_mullo_epi16(qcoeff0, dequant);
+          coeff1 = _mm_mullo_epi16(qcoeff1, dequant);
+
+          store_tran_low(coeff0, dqcoeff_ptr + n_coeffs);
+          store_tran_low(coeff1, dqcoeff_ptr + n_coeffs + 8);
+        } else {
+          // Maybe a more efficient way to store 0?
+          store_zero_tran_low(qcoeff_ptr + n_coeffs);
+          store_zero_tran_low(qcoeff_ptr + n_coeffs + 8);
+
+          store_zero_tran_low(dqcoeff_ptr + n_coeffs);
+          store_zero_tran_low(dqcoeff_ptr + n_coeffs + 8);
+        }
       }
 
-      {
+      if (nzflag) {
         // Scan for eob
         __m128i zero_coeff0, zero_coeff1;
         __m128i nzero_coeff0, nzero_coeff1;
@@ -459,8 +429,8 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
         zero_coeff1 = _mm_cmpeq_epi16(coeff1, zero);
         nzero_coeff0 = _mm_cmpeq_epi16(zero_coeff0, zero);
         nzero_coeff1 = _mm_cmpeq_epi16(zero_coeff1, zero);
-        iscan0 = _mm_load_si128((const __m128i*)(iscan_ptr + n_coeffs));
-        iscan1 = _mm_load_si128((const __m128i*)(iscan_ptr + n_coeffs) + 1);
+        iscan0 = _mm_load_si128((const __m128i *)(iscan_ptr + n_coeffs));
+        iscan1 = _mm_load_si128((const __m128i *)(iscan_ptr + n_coeffs) + 1);
         // Add one to convert from indices to counts
         iscan0 = _mm_sub_epi16(iscan0, nzero_coeff0);
         iscan1 = _mm_sub_epi16(iscan1, nzero_coeff1);
@@ -486,10 +456,10 @@ void vp9_fdct8x8_quant_ssse3(const int16_t *input, int stride,
     }
   } else {
     do {
-      _mm_store_si128((__m128i*)(dqcoeff_ptr + n_coeffs), zero);
-      _mm_store_si128((__m128i*)(dqcoeff_ptr + n_coeffs) + 1, zero);
-      _mm_store_si128((__m128i*)(qcoeff_ptr + n_coeffs), zero);
-      _mm_store_si128((__m128i*)(qcoeff_ptr + n_coeffs) + 1, zero);
+      store_zero_tran_low(dqcoeff_ptr + n_coeffs);
+      store_zero_tran_low(dqcoeff_ptr + n_coeffs + 8);
+      store_zero_tran_low(qcoeff_ptr + n_coeffs);
+      store_zero_tran_low(qcoeff_ptr + n_coeffs + 8);
       n_coeffs += 8 * 2;
     } while (n_coeffs < 0);
     *eob_ptr = 0;

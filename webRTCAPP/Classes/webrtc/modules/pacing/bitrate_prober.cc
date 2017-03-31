@@ -10,113 +10,167 @@
 
 #include "webrtc/modules/pacing/bitrate_prober.h"
 
-#include <assert.h>
-#include <limits>
-#include <sstream>
+#include <algorithm>
 
-#include "webrtc/system_wrappers/interface/logging.h"
+#include "webrtc/base/checks.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/modules/pacing/paced_sender.h"
 
 namespace webrtc {
 
 namespace {
-int ComputeDeltaFromBitrate(size_t packet_size, int bitrate_bps) {
-  assert(bitrate_bps > 0);
-  // Compute the time delta needed to send packet_size bytes at bitrate_bps
-  // bps. Result is in milliseconds.
-  return static_cast<int>(1000ll * static_cast<int64_t>(packet_size) * 8ll /
-      bitrate_bps);
-}
+
+// A minimum interval between probes to allow scheduling to be feasible.
+constexpr int kMinProbeDeltaMs = 1;
+
+// The minimum number probing packets used.
+constexpr int kMinProbePacketsSent = 5;
+
+// The minimum probing duration in ms.
+constexpr int kMinProbeDurationMs = 15;
+
+// Maximum amount of time each probe can be delayed. Probe cluster is reset and
+// retried from the start when this limit is reached.
+constexpr int kMaxProbeDelayMs = 3;
+
+// Number of times probing is retried before the cluster is dropped.
+constexpr int kMaxRetryAttempts = 3;
+
 }  // namespace
 
 BitrateProber::BitrateProber()
-    : probing_state_(kDisabled),
-      packet_size_last_send_(0),
-      time_last_send_ms_(-1) {
+    : probing_state_(ProbingState::kDisabled),
+      next_probe_time_ms_(-1),
+      next_cluster_id_(0) {
+  SetEnabled(true);
 }
 
 void BitrateProber::SetEnabled(bool enable) {
   if (enable) {
-    if (probing_state_ == kDisabled) {
-      probing_state_ = kAllowedToProbe;
-      LOG(LS_INFO) << "Initial bandwidth probing enabled";
+    if (probing_state_ == ProbingState::kDisabled) {
+      probing_state_ = ProbingState::kInactive;
+      LOG(LS_INFO) << "Bandwidth probing enabled, set to inactive";
     }
   } else {
-    probing_state_ = kDisabled;
-    LOG(LS_INFO) << "Initial bandwidth probing disabled";
+    probing_state_ = ProbingState::kDisabled;
+    LOG(LS_INFO) << "Bandwidth probing disabled";
   }
 }
 
 bool BitrateProber::IsProbing() const {
-  return probing_state_ == kProbing;
+  return probing_state_ == ProbingState::kActive;
 }
 
-void BitrateProber::MaybeInitializeProbe(int bitrate_bps) {
-  if (probing_state_ != kAllowedToProbe)
-    return;
-  probe_bitrates_.clear();
-  // Max number of packets used for probing.
-  const int kMaxNumProbes = 2;
-  const int kPacketsPerProbe = 5;
-  const float kProbeBitrateMultipliers[kMaxNumProbes] = {3, 6};
-  int bitrates_bps[kMaxNumProbes];
-  std::stringstream bitrate_log;
-  bitrate_log << "Start probing for bandwidth, bitrates:";
-  for (int i = 0; i < kMaxNumProbes; ++i) {
-    bitrates_bps[i] = kProbeBitrateMultipliers[i] * bitrate_bps;
-    bitrate_log << " " << bitrates_bps[i];
-    // We need one extra to get 5 deltas for the first probe.
-    if (i == 0)
-      probe_bitrates_.push_back(bitrates_bps[i]);
-    for (int j = 0; j < kPacketsPerProbe; ++j)
-      probe_bitrates_.push_back(bitrates_bps[i]);
+void BitrateProber::OnIncomingPacket(size_t packet_size) {
+  // Don't initialize probing unless we have something large enough to start
+  // probing.
+  if (probing_state_ == ProbingState::kInactive &&
+      !clusters_.empty() &&
+      packet_size >= PacedSender::kMinProbePacketSize) {
+    // Send next probe right away.
+    next_probe_time_ms_ = -1;
+    probing_state_ = ProbingState::kActive;
   }
-  bitrate_log << ", num packets: " << probe_bitrates_.size();
-  LOG(LS_INFO) << bitrate_log.str().c_str();
-  probing_state_ = kProbing;
+}
+
+void BitrateProber::CreateProbeCluster(int bitrate_bps) {
+  RTC_DCHECK(probing_state_ != ProbingState::kDisabled);
+  ProbeCluster cluster;
+  cluster.min_probes = kMinProbePacketsSent;
+  cluster.min_bytes = bitrate_bps * kMinProbeDurationMs / 8000;
+  cluster.bitrate_bps = bitrate_bps;
+  cluster.id = next_cluster_id_++;
+  clusters_.push(cluster);
+
+  LOG(LS_INFO) << "Probe cluster (bitrate:min bytes:min packets): ("
+               << cluster.bitrate_bps << ":" << cluster.min_bytes << ":"
+               << cluster.min_probes << ")";
+  // If we are already probing, continue to do so. Otherwise set it to
+  // kInactive and wait for OnIncomingPacket to start the probing.
+  if (probing_state_ != ProbingState::kActive)
+    probing_state_ = ProbingState::kInactive;
+}
+
+void BitrateProber::ResetState() {
+  RTC_DCHECK(probing_state_ == ProbingState::kActive);
+
+  // Recreate all probing clusters.
+  std::queue<ProbeCluster> clusters;
+  clusters.swap(clusters_);
+  while (!clusters.empty()) {
+    if (clusters.front().retries < kMaxRetryAttempts) {
+      CreateProbeCluster(clusters.front().bitrate_bps);
+      clusters_.back().retries = clusters.front().retries + 1;
+    }
+    clusters.pop();
+  }
+
+  probing_state_ = ProbingState::kInactive;
 }
 
 int BitrateProber::TimeUntilNextProbe(int64_t now_ms) {
-  if (probing_state_ != kDisabled && probe_bitrates_.empty()) {
-    probing_state_ = kWait;
-  }
-  if (probe_bitrates_.empty()) {
-    // No probe started, or waiting for next probe.
-    return std::numeric_limits<int>::max();
-  }
-  int64_t elapsed_time_ms = now_ms - time_last_send_ms_;
-  // We will send the first probe packet immediately if no packet has been
-  // sent before.
+  // Probing is not active or probing is already complete.
+  if (probing_state_ != ProbingState::kActive || clusters_.empty())
+    return -1;
+
   int time_until_probe_ms = 0;
-  if (packet_size_last_send_ > 0 && probing_state_ == kProbing) {
-    int next_delta_ms = ComputeDeltaFromBitrate(packet_size_last_send_,
-                                                probe_bitrates_.front());
-    time_until_probe_ms = next_delta_ms - elapsed_time_ms;
-    // There is no point in trying to probe with less than 1 ms between packets
-    // as it essentially means trying to probe at infinite bandwidth.
-    const int kMinProbeDeltaMs = 1;
-    // If we have waited more than 3 ms for a new packet to probe with we will
-    // consider this probing session over.
-    const int kMaxProbeDelayMs = 3;
-    if (next_delta_ms < kMinProbeDeltaMs ||
-        time_until_probe_ms < -kMaxProbeDelayMs) {
-      // We currently disable probing after the first probe, as we only want
-      // to probe at the beginning of a connection. We should set this to
-      // kWait if we later want to probe periodically.
-      probing_state_ = kWait;
-      LOG(LS_INFO) << "Next delta too small, stop probing.";
-      time_until_probe_ms = 0;
+  if (next_probe_time_ms_ >= 0) {
+    time_until_probe_ms = next_probe_time_ms_ - now_ms;
+    if (time_until_probe_ms < -kMaxProbeDelayMs) {
+      ResetState();
+      return -1;
     }
   }
-  return time_until_probe_ms;
+
+  return std::max(time_until_probe_ms, 0);
 }
 
-void BitrateProber::PacketSent(int64_t now_ms, size_t packet_size) {
-  assert(packet_size > 0);
-  packet_size_last_send_ = packet_size;
-  time_last_send_ms_ = now_ms;
-  if (probing_state_ != kProbing)
-    return;
-  if (!probe_bitrates_.empty())
-    probe_bitrates_.pop_front();
+int BitrateProber::CurrentClusterId() const {
+  RTC_DCHECK(!clusters_.empty());
+  RTC_DCHECK(ProbingState::kActive == probing_state_);
+  return clusters_.front().id;
 }
+
+// Probe size is recommended based on the probe bitrate required. We choose
+// a minimum of twice |kMinProbeDeltaMs| interval to allow scheduling to be
+// feasible.
+size_t BitrateProber::RecommendedMinProbeSize() const {
+  RTC_DCHECK(!clusters_.empty());
+  return clusters_.front().bitrate_bps * 2 * kMinProbeDeltaMs / (8 * 1000);
+}
+
+void BitrateProber::ProbeSent(int64_t now_ms, size_t bytes) {
+  RTC_DCHECK(probing_state_ == ProbingState::kActive);
+  RTC_DCHECK_GT(bytes, 0);
+
+  if (!clusters_.empty()) {
+    ProbeCluster* cluster = &clusters_.front();
+    if (cluster->sent_probes == 0) {
+      RTC_DCHECK_EQ(cluster->time_started_ms, -1);
+      cluster->time_started_ms = now_ms;
+    }
+    cluster->sent_bytes += static_cast<int>(bytes);
+    cluster->sent_probes += 1;
+    next_probe_time_ms_ = GetNextProbeTime(clusters_.front());
+    if (cluster->sent_bytes >= cluster->min_bytes &&
+        cluster->sent_probes >= cluster->min_probes) {
+      clusters_.pop();
+    }
+    if (clusters_.empty())
+      probing_state_ = ProbingState::kSuspended;
+  }
+}
+
+int64_t BitrateProber::GetNextProbeTime(const ProbeCluster& cluster) {
+  RTC_CHECK_GT(cluster.bitrate_bps, 0);
+  RTC_CHECK_GE(cluster.time_started_ms, 0);
+
+  // Compute the time delta from the cluster start to ensure probe bitrate stays
+  // close to the target bitrate. Result is in milliseconds.
+  int64_t delta_ms = (8000ll * cluster.sent_bytes + cluster.bitrate_bps / 2) /
+                  cluster.bitrate_bps;
+  return cluster.time_started_ms + delta_ms;
+}
+
+
 }  // namespace webrtc

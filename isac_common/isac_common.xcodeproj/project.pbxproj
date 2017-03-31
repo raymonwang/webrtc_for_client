@@ -1,0 +1,268 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		434B05DB1D50C47700FDCA92 /* audio_decoder_isac_t_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05D41D50C47700FDCA92 /* audio_decoder_isac_t_impl.h */; };
+		434B05DC1D50C47700FDCA92 /* audio_decoder_isac_t.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05D51D50C47700FDCA92 /* audio_decoder_isac_t.h */; };
+		434B05DD1D50C47700FDCA92 /* audio_encoder_isac_t_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05D61D50C47700FDCA92 /* audio_encoder_isac_t_impl.h */; };
+		434B05DE1D50C47700FDCA92 /* audio_encoder_isac_t.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05D71D50C47700FDCA92 /* audio_encoder_isac_t.h */; };
+		434B05DF1D50C47700FDCA92 /* bandwidth_info.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05D81D50C47700FDCA92 /* bandwidth_info.h */; };
+		434B05E01D50C47700FDCA92 /* locked_bandwidth_info.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B05D91D50C47700FDCA92 /* locked_bandwidth_info.cc */; };
+		434B05E11D50C47700FDCA92 /* locked_bandwidth_info.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05DA1D50C47700FDCA92 /* locked_bandwidth_info.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		434B05C71D50C41F00FDCA92 /* libisac_common.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libisac_common.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		434B05D41D50C47700FDCA92 /* audio_decoder_isac_t_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_decoder_isac_t_impl.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/audio_decoder_isac_t_impl.h; sourceTree = "<group>"; };
+		434B05D51D50C47700FDCA92 /* audio_decoder_isac_t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_decoder_isac_t.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/audio_decoder_isac_t.h; sourceTree = "<group>"; };
+		434B05D61D50C47700FDCA92 /* audio_encoder_isac_t_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder_isac_t_impl.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/audio_encoder_isac_t_impl.h; sourceTree = "<group>"; };
+		434B05D71D50C47700FDCA92 /* audio_encoder_isac_t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder_isac_t.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/audio_encoder_isac_t.h; sourceTree = "<group>"; };
+		434B05D81D50C47700FDCA92 /* bandwidth_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bandwidth_info.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/bandwidth_info.h; sourceTree = "<group>"; };
+		434B05D91D50C47700FDCA92 /* locked_bandwidth_info.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = locked_bandwidth_info.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/locked_bandwidth_info.cc; sourceTree = "<group>"; };
+		434B05DA1D50C47700FDCA92 /* locked_bandwidth_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = locked_bandwidth_info.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/isac/locked_bandwidth_info.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		434B05C41D50C41F00FDCA92 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		434B05BE1D50C41F00FDCA92 = {
+			isa = PBXGroup;
+			children = (
+				434B05D41D50C47700FDCA92 /* audio_decoder_isac_t_impl.h */,
+				434B05D51D50C47700FDCA92 /* audio_decoder_isac_t.h */,
+				434B05D61D50C47700FDCA92 /* audio_encoder_isac_t_impl.h */,
+				434B05D71D50C47700FDCA92 /* audio_encoder_isac_t.h */,
+				434B05D81D50C47700FDCA92 /* bandwidth_info.h */,
+				434B05D91D50C47700FDCA92 /* locked_bandwidth_info.cc */,
+				434B05DA1D50C47700FDCA92 /* locked_bandwidth_info.h */,
+				434B05C81D50C41F00FDCA92 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		434B05C81D50C41F00FDCA92 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				434B05C71D50C41F00FDCA92 /* libisac_common.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		434B05C51D50C41F00FDCA92 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				434B05DB1D50C47700FDCA92 /* audio_decoder_isac_t_impl.h in Headers */,
+				434B05DD1D50C47700FDCA92 /* audio_encoder_isac_t_impl.h in Headers */,
+				434B05DC1D50C47700FDCA92 /* audio_decoder_isac_t.h in Headers */,
+				434B05DF1D50C47700FDCA92 /* bandwidth_info.h in Headers */,
+				434B05E11D50C47700FDCA92 /* locked_bandwidth_info.h in Headers */,
+				434B05DE1D50C47700FDCA92 /* audio_encoder_isac_t.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		434B05C61D50C41F00FDCA92 /* isac_common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 434B05CB1D50C41F00FDCA92 /* Build configuration list for PBXNativeTarget "isac_common" */;
+			buildPhases = (
+				434B05C31D50C41F00FDCA92 /* Sources */,
+				434B05C41D50C41F00FDCA92 /* Frameworks */,
+				434B05C51D50C41F00FDCA92 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = isac_common;
+			productName = isac_common;
+			productReference = 434B05C71D50C41F00FDCA92 /* libisac_common.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		434B05BF1D50C41F00FDCA92 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = wangxin;
+				TargetAttributes = {
+					434B05C61D50C41F00FDCA92 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 434B05C21D50C41F00FDCA92 /* Build configuration list for PBXProject "isac_common" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 434B05BE1D50C41F00FDCA92;
+			productRefGroup = 434B05C81D50C41F00FDCA92 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				434B05C61D50C41F00FDCA92 /* isac_common */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		434B05C31D50C41F00FDCA92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				434B05E01D50C47700FDCA92 /* locked_bandwidth_info.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		434B05C91D50C41F00FDCA92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		434B05CA1D50C41F00FDCA92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		434B05CC1D50C41F00FDCA92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		434B05CD1D50C41F00FDCA92 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		434B05C21D50C41F00FDCA92 /* Build configuration list for PBXProject "isac_common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				434B05C91D50C41F00FDCA92 /* Debug */,
+				434B05CA1D50C41F00FDCA92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		434B05CB1D50C41F00FDCA92 /* Build configuration list for PBXNativeTarget "isac_common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				434B05CC1D50C41F00FDCA92 /* Debug */,
+				434B05CD1D50C41F00FDCA92 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 434B05BF1D50C41F00FDCA92 /* Project object */;
+}
