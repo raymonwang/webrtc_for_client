@@ -575,11 +575,12 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					WEBRTC_ARCH_ARM,
+					"$(inherited)",
+					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
-					WEBRTC_POSIX,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_HAS_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,11 +601,12 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					WEBRTC_ARCH_ARM,
+					"$(inherited)",
+					WEBRTC_POSIX,
 					WEBRTC_IOS,
 					WEBRTC_MAC,
-					WEBRTC_POSIX,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_HAS_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

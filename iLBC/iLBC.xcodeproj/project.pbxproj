@@ -824,11 +824,11 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_NEON,
-					WEBRTC_IOS,
 					WEBRTC_POSIX,
+					WEBRTC_IOS,
 					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_HAS_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -855,11 +855,11 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					WEBRTC_ARCH_ARM,
-					WEBRTC_ARCH_ARM_NEON,
-					WEBRTC_IOS,
 					WEBRTC_POSIX,
+					WEBRTC_IOS,
 					WEBRTC_MAC,
+					WEBRTC_ARCH_ARM,
+					WEBRTC_HAS_NEON,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

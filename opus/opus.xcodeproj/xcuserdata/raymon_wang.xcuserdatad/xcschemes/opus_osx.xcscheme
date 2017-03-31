@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "432B2E8C19CA982B001267A7"
                BuildableName = "libopus_osx.a"
-               BlueprintName = "opus_opus"
+               BlueprintName = "opus_osx"
                ReferencedContainer = "container:opus.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "432B2E8C19CA982B001267A7"
             BuildableName = "libopus_osx.a"
-            BlueprintName = "opus_opus"
+            BlueprintName = "opus_osx"
             ReferencedContainer = "container:opus.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

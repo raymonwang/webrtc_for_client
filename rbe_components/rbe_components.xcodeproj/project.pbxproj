@@ -43,6 +43,8 @@
 		43C69BA01D2260D500427D35 /* overuse_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B971D2260D500427D35 /* overuse_estimator.cc */; };
 		43C69BA11D2260D500427D35 /* overuse_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69B981D2260D500427D35 /* overuse_estimator.h */; };
 		43C69BA21D2260D500427D35 /* remote_bitrate_estimator_abs_send_time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69B991D2260D500427D35 /* remote_bitrate_estimator_abs_send_time.cc */; };
+		43EFD19A1E56D9AB00E3DEAD /* bwe_defines.cc in Sources */ = {isa = PBXBuildFile; fileRef = 436C68901E51655F00C03555 /* bwe_defines.cc */; };
+		43EFD19B1E56D9AD00E3DEAD /* bwe_defines.cc in Sources */ = {isa = PBXBuildFile; fileRef = 436C68901E51655F00C03555 /* bwe_defines.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -267,6 +269,7 @@
 				434120571D4F31C5003D3A39 /* remote_estimator_proxy.cc in Sources */,
 				4381C0671D4716DA000656B1 /* aimd_rate_control.cc in Sources */,
 				4381C0681D4716DA000656B1 /* overuse_detector.cc in Sources */,
+				43EFD19B1E56D9AD00E3DEAD /* bwe_defines.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +285,7 @@
 				434120561D4F31C5003D3A39 /* remote_estimator_proxy.cc in Sources */,
 				43C69B9A1D2260D500427D35 /* aimd_rate_control.cc in Sources */,
 				4398350B198FAAFB0090EABA /* overuse_detector.cc in Sources */,
+				43EFD19A1E56D9AB00E3DEAD /* bwe_defines.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +408,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -423,6 +429,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

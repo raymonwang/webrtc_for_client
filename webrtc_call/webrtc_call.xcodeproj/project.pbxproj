@@ -10,8 +10,14 @@
 		43E040F31D503E94009FDAE6 /* bitrate_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040D41D503E94009FDAE6 /* bitrate_allocator.cc */; };
 		43E040F41D503E94009FDAE6 /* bitrate_allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040D51D503E94009FDAE6 /* bitrate_allocator.h */; };
 		43E040F71D503E94009FDAE6 /* call.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040D91D503E94009FDAE6 /* call.cc */; };
-		43E0410A1D503E94009FDAE6 /* transport_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040F01D503E94009FDAE6 /* transport_adapter.cc */; };
-		43E0410B1D503E94009FDAE6 /* transport_adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040F11D503E94009FDAE6 /* transport_adapter.h */; };
+		43EFD1A41E57069900E3DEAD /* audio_receive_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD19C1E57069900E3DEAD /* audio_receive_stream.h */; };
+		43EFD1A51E57069900E3DEAD /* audio_send_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD19D1E57069900E3DEAD /* audio_send_stream.cc */; };
+		43EFD1A61E57069900E3DEAD /* audio_send_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD19E1E57069900E3DEAD /* audio_send_stream.h */; };
+		43EFD1A71E57069900E3DEAD /* audio_state.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD19F1E57069900E3DEAD /* audio_state.h */; };
+		43EFD1A81E57069900E3DEAD /* call.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1A01E57069900E3DEAD /* call.h */; };
+		43EFD1A91E57069900E3DEAD /* flexfec_receive_stream_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD1A11E57069900E3DEAD /* flexfec_receive_stream_impl.cc */; };
+		43EFD1AA1E57069900E3DEAD /* flexfec_receive_stream_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1A21E57069900E3DEAD /* flexfec_receive_stream_impl.h */; };
+		43EFD1AB1E57069900E3DEAD /* flexfec_receive_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD1A31E57069900E3DEAD /* flexfec_receive_stream.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,9 +27,14 @@
 		43E040D91D503E94009FDAE6 /* call.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = call.cc; sourceTree = "<group>"; };
 		43E040DC1D503E94009FDAE6 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
 		43E040DF1D503E94009FDAE6 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
-		43E040F01D503E94009FDAE6 /* transport_adapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transport_adapter.cc; sourceTree = "<group>"; };
-		43E040F11D503E94009FDAE6 /* transport_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transport_adapter.h; sourceTree = "<group>"; };
-		43E040F21D503E94009FDAE6 /* webrtc_call.gypi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webrtc_call.gypi; sourceTree = "<group>"; };
+		43EFD19C1E57069900E3DEAD /* audio_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_receive_stream.h; sourceTree = "<group>"; };
+		43EFD19D1E57069900E3DEAD /* audio_send_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_send_stream.cc; sourceTree = "<group>"; };
+		43EFD19E1E57069900E3DEAD /* audio_send_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_send_stream.h; sourceTree = "<group>"; };
+		43EFD19F1E57069900E3DEAD /* audio_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_state.h; sourceTree = "<group>"; };
+		43EFD1A01E57069900E3DEAD /* call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = call.h; sourceTree = "<group>"; };
+		43EFD1A11E57069900E3DEAD /* flexfec_receive_stream_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flexfec_receive_stream_impl.cc; sourceTree = "<group>"; };
+		43EFD1A21E57069900E3DEAD /* flexfec_receive_stream_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flexfec_receive_stream_impl.h; sourceTree = "<group>"; };
+		43EFD1A31E57069900E3DEAD /* flexfec_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flexfec_receive_stream.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,11 +70,16 @@
 				43E040D41D503E94009FDAE6 /* bitrate_allocator.cc */,
 				43E040D51D503E94009FDAE6 /* bitrate_allocator.h */,
 				43E040D91D503E94009FDAE6 /* call.cc */,
+				43EFD1A01E57069900E3DEAD /* call.h */,
+				43EFD19C1E57069900E3DEAD /* audio_receive_stream.h */,
+				43EFD19D1E57069900E3DEAD /* audio_send_stream.cc */,
+				43EFD19E1E57069900E3DEAD /* audio_send_stream.h */,
+				43EFD19F1E57069900E3DEAD /* audio_state.h */,
+				43EFD1A11E57069900E3DEAD /* flexfec_receive_stream_impl.cc */,
+				43EFD1A21E57069900E3DEAD /* flexfec_receive_stream_impl.h */,
+				43EFD1A31E57069900E3DEAD /* flexfec_receive_stream.h */,
 				43E040DC1D503E94009FDAE6 /* DEPS */,
 				43E040DF1D503E94009FDAE6 /* OWNERS */,
-				43E040F01D503E94009FDAE6 /* transport_adapter.cc */,
-				43E040F11D503E94009FDAE6 /* transport_adapter.h */,
-				43E040F21D503E94009FDAE6 /* webrtc_call.gypi */,
 			);
 			name = call;
 			path = ../webRTCAPP/Classes/webrtc/call;
@@ -76,8 +92,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43E0410B1D503E94009FDAE6 /* transport_adapter.h in Headers */,
+				43EFD1A81E57069900E3DEAD /* call.h in Headers */,
 				43E040F41D503E94009FDAE6 /* bitrate_allocator.h in Headers */,
+				43EFD1AA1E57069900E3DEAD /* flexfec_receive_stream_impl.h in Headers */,
+				43EFD1A71E57069900E3DEAD /* audio_state.h in Headers */,
+				43EFD1AB1E57069900E3DEAD /* flexfec_receive_stream.h in Headers */,
+				43EFD1A61E57069900E3DEAD /* audio_send_stream.h in Headers */,
+				43EFD1A41E57069900E3DEAD /* audio_receive_stream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +159,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				43E040F31D503E94009FDAE6 /* bitrate_allocator.cc in Sources */,
-				43E0410A1D503E94009FDAE6 /* transport_adapter.cc in Sources */,
+				43EFD1A91E57069900E3DEAD /* flexfec_receive_stream_impl.cc in Sources */,
+				43EFD1A51E57069900E3DEAD /* audio_send_stream.cc in Sources */,
 				43E040F71D503E94009FDAE6 /* call.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,9 +256,12 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -249,6 +274,8 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_POSIX,
+					WEBRTC_MAC,
+					WEBRTC_IOS,
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -276,6 +303,7 @@
 				43E040CC1D503E74009FDAE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
