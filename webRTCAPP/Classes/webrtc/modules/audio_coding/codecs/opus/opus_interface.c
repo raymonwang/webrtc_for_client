@@ -55,7 +55,7 @@ int16_t WebRtcOpus_EncoderCreate(OpusEncInst** inst,
   RTC_DCHECK(state);
 
   int error;
-  state->encoder = opus_encoder_create(48000, (int)channels, opus_app,
+  state->encoder = opus_encoder_create(RTCHAT_OPUS_FREQ, (int)channels, opus_app,
                                        &error);
   if (error != OPUS_OK || !state->encoder) {
     WebRtcOpus_EncoderFree(state);
@@ -234,7 +234,7 @@ int16_t WebRtcOpus_DecoderCreate(OpusDecInst** inst, size_t channels) {
     }
 
     /* Create new memory, always at 48000 Hz. */
-    state->decoder = opus_decoder_create(48000, (int)channels, &error);
+    state->decoder = opus_decoder_create(RTCHAT_OPUS_FREQ, (int)channels, &error);
     if (error == OPUS_OK && state->decoder != NULL) {
       /* Creation of memory all ok. */
       state->channels = channels;
@@ -362,7 +362,7 @@ int WebRtcOpus_DecodeFec(OpusDecInst* inst, const uint8_t* encoded,
     return 0;
   }
 
-  fec_samples = opus_packet_get_samples_per_frame(encoded, 48000);
+  fec_samples = opus_packet_get_samples_per_frame(encoded, RTCHAT_OPUS_FREQ);
 
   decoded_samples = DecodeNative(inst, encoded, encoded_bytes,
                                  fec_samples, decoded, audio_type, 1);
@@ -388,7 +388,7 @@ int WebRtcOpus_DurationEst(OpusDecInst* inst,
     /* Invalid payload data. */
     return 0;
   }
-  samples = frames * opus_packet_get_samples_per_frame(payload, 48000);
+  samples = frames * opus_packet_get_samples_per_frame(payload, RTCHAT_OPUS_FREQ);
   if (samples < 120 || samples > 5760) {
     /* Invalid payload duration. */
     return 0;
@@ -412,7 +412,7 @@ int WebRtcOpus_FecDurationEst(const uint8_t* payload,
     return 0;
   }
 
-  samples = opus_packet_get_samples_per_frame(payload, 48000);
+  samples = opus_packet_get_samples_per_frame(payload, RTCHAT_OPUS_FREQ);
   if (samples < 480 || samples > 5760) {
     /* Invalid payload duration. */
     return 0;
@@ -434,7 +434,7 @@ int WebRtcOpus_PacketHasFec(const uint8_t* payload,
   if (payload[0] & 0x80)
     return 0;
 
-  payload_length_ms = opus_packet_get_samples_per_frame(payload, 48000) / 48;
+  payload_length_ms = opus_packet_get_samples_per_frame(payload, RTCHAT_OPUS_FREQ) / (RTCHAT_OPUS_FREQ / 1000);
   if (10 > payload_length_ms)
     payload_length_ms = 10;
 
