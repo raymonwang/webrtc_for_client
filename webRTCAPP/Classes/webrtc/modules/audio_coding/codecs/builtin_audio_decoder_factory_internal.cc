@@ -159,7 +159,7 @@ NamedDecoderConstructor decoder_constructors[] = {
          }
          return rtc::Optional<int>(1);  // Default to mono.
        }();
-       if (format.clockrate_hz == 48000 && format.num_channels == 2 &&
+       if (format.clockrate_hz == RTCHAT_OPUS_FREQ && format.num_channels == 2 &&
            num_channels) {
          if (out) {
            out->reset(new AudioDecoderOpusImpl(*num_channels));

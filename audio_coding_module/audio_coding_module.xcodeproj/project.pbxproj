@@ -418,6 +418,7 @@
 					WEBRTC_CODEC_ISACFX,
 					WEBRTC_CODEC_ILBC,
 					WEBRTC_CODEC_G722,
+					"RTCHAT_OPUS_FREQ=16000",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -457,6 +458,7 @@
 					WEBRTC_CODEC_ISACFX,
 					WEBRTC_CODEC_ILBC,
 					WEBRTC_CODEC_G722,
+					"RTCHAT_OPUS_FREQ=16000",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
