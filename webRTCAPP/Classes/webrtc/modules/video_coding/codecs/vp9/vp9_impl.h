@@ -17,8 +17,9 @@
 
 #include "webrtc/modules/video_coding/codecs/vp9/include/vp9.h"
 #include "webrtc/modules/video_coding/codecs/vp9/vp9_frame_buffer_pool.h"
-
-#include "vpx/vp8cx.h"
+#if defined(WEBRTC_VPX)
+#include "vpx/svc_context.h"
+#endif
 #include "vpx/vpx_decoder.h"
 #include "vpx/vpx_encoder.h"
 
@@ -85,8 +86,10 @@ class VP9EncoderImpl : public VP9Encoder {
   //
   // Has to be called for every frame (keyframes included) to update the
   // state used to calculate references.
+#if defined(WEBRTC_VPX)
   vpx_svc_ref_frame_config GenerateRefsAndFlags(
       const SuperFrameRefSettings& settings);
+#endif
 
   virtual int GetEncodedLayerFrame(const vpx_codec_cx_pkt* pkt);
 
@@ -107,15 +110,19 @@ class VP9EncoderImpl : public VP9Encoder {
   VideoCodec codec_;
   bool inited_;
   int64_t timestamp_;
+  uint16_t picture_id_;
   int cpu_speed_;
   uint32_t rc_max_intra_target_;
   vpx_codec_ctx_t* encoder_;
   vpx_codec_enc_cfg_t* config_;
   vpx_image_t* raw_;
-  vpx_svc_extra_cfg_t svc_params_;
+#if defined(WEBRTC_VPX)
+  SvcInternal_t svc_internal_;
+#endif
   const VideoFrame* input_image_;
   GofInfoVP9 gof_;       // Contains each frame's temporal information for
                          // non-flexible mode.
+  uint8_t tl0_pic_idx_;  // Only used in non-flexible mode.
   size_t frames_since_kf_;
   uint8_t num_temporal_layers_;
   uint8_t num_spatial_layers_;
@@ -127,10 +134,6 @@ class VP9EncoderImpl : public VP9Encoder {
   uint8_t num_ref_pics_[kMaxVp9NumberOfSpatialLayers];
   uint8_t p_diff_[kMaxVp9NumberOfSpatialLayers][kMaxVp9RefPics];
   std::unique_ptr<ScreenshareLayersVP9> spatial_layer_;
-
-  // RTP state.
-  uint16_t picture_id_;
-  uint8_t tl0_pic_idx_;  // Only used in non-flexible mode.
 };
 
 class VP9DecoderImpl : public VP9Decoder {
@@ -156,8 +159,7 @@ class VP9DecoderImpl : public VP9Decoder {
  private:
   int ReturnFrame(const vpx_image_t* img,
                   uint32_t timestamp,
-                  int64_t ntp_time_ms,
-                  int qp);
+                  int64_t ntp_time_ms);
 
   // Memory pool used to share buffers between libvpx and webrtc.
   Vp9FrameBufferPool frame_buffer_pool_;

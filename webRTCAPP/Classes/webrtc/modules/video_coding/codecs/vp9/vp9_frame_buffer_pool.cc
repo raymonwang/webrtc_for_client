@@ -34,6 +34,7 @@ void Vp9FrameBufferPool::Vp9FrameBuffer::SetSize(size_t size) {
 
 bool Vp9FrameBufferPool::InitializeVpxUsePool(
     vpx_codec_ctx* vpx_codec_context) {
+#if defined(WEBRTC_VPX)
   RTC_DCHECK(vpx_codec_context);
   // Tell libvpx to use this pool.
   if (vpx_codec_set_frame_buffer_functions(
@@ -48,6 +49,7 @@ bool Vp9FrameBufferPool::InitializeVpxUsePool(
     // Failed to configure libvpx to use Vp9FrameBufferPool.
     return false;
   }
+#endif
   return true;
 }
 
