@@ -22,7 +22,9 @@
 #include "webrtc/modules/video_coding/codecs/vp8/include/vp8_common_types.h"
 
 #include "vpx/vpx_encoder.h"
+#if defined(WEBRTC_VPX)
 #include "vpx/vp8cx.h"
+#endif
 
 namespace webrtc {
 
@@ -207,6 +209,7 @@ int DefaultTemporalLayers::EncodeFlags(uint32_t timestamp) {
   assert(kMaxTemporalPattern >= temporal_pattern_length_);
   assert(0 < temporal_pattern_length_);
   int flags = 0;
+#if defined(WEBRTC_VPX)
   int patternIdx = ++pattern_idx_ % temporal_pattern_length_;
   assert(kMaxTemporalPattern >= patternIdx);
   switch (temporal_pattern_[patternIdx]) {
@@ -274,6 +277,7 @@ int DefaultTemporalLayers::EncodeFlags(uint32_t timestamp) {
       flags |= VP8_EFLAG_NO_UPD_GF;
       break;
   }
+#endif
   return flags;
 }
 

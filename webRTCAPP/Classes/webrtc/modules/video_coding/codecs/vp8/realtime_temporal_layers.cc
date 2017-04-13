@@ -11,7 +11,9 @@
 #include <algorithm>
 
 #include "vpx/vpx_encoder.h"
+#if defined(WEBRTC_VPX)
 #include "vpx/vp8cx.h"
+#endif
 #include "webrtc/base/checks.h"
 #include "webrtc/base/optional.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
@@ -23,6 +25,7 @@
 // a below acceptable framerate.
 namespace webrtc {
 namespace {
+#if defined(WEBRTC_VPX)
 enum {
   kTemporalUpdateLast = VP8_EFLAG_NO_UPD_GF | VP8_EFLAG_NO_UPD_ARF |
                         VP8_EFLAG_NO_REF_GF |
@@ -63,6 +66,7 @@ enum {
 
   kTemporalUpdateLastRefAll = VP8_EFLAG_NO_UPD_ARF | VP8_EFLAG_NO_UPD_GF,
 };
+#endif
 
 int CalculateNumberOfTemporalLayers(int current_temporal_layers,
                                     int input_fps) {
@@ -106,12 +110,13 @@ class RealTimeTemporalLayers : public TemporalLayers {
   std::vector<uint32_t> OnRatesUpdated(int bitrate_kbps,
                                        int max_bitrate_kbps,
                                        int framerate) override {
+
     temporal_layers_ =
         CalculateNumberOfTemporalLayers(temporal_layers_, framerate);
     temporal_layers_ = std::min(temporal_layers_, max_temporal_layers_);
     RTC_CHECK_GE(temporal_layers_, 1);
     RTC_CHECK_LE(temporal_layers_, 3);
-
+#if defined(WEBRTC_VPX)
     switch (temporal_layers_) {
       case 1: {
         static const unsigned int layer_ids[] = {0u};
@@ -163,7 +168,7 @@ class RealTimeTemporalLayers : public TemporalLayers {
         RTC_NOTREACHED();
         return std::vector<uint32_t>();
     }
-
+#endif
     std::vector<uint32_t> bitrates;
     const int num_layers = std::max(1, temporal_layers_);
     for (int i = 0; i < num_layers; ++i) {
@@ -235,6 +240,7 @@ class RealTimeTemporalLayers : public TemporalLayers {
   void PopulateCodecSpecific(bool base_layer_sync,
                              CodecSpecificInfoVP8* vp8_info,
                              uint32_t timestamp) override {
+#if defined(WEBRTC_VPX)
     assert(temporal_layers_ > 0);
 
     if (temporal_layers_ == 1) {
@@ -273,6 +279,7 @@ class RealTimeTemporalLayers : public TemporalLayers {
       last_base_layer_sync_ = base_layer_sync;
       vp8_info->tl0PicIdx = tl0_pic_idx_;
     }
+#endif
   }
 
   void FrameEncoded(unsigned int size, uint32_t timestamp, int qp) override {}

@@ -140,6 +140,10 @@ VCMEncodedFrame* VCMReceiver::FrameForDecoding(uint16_t max_wait_time_ms,
   VCMEncodedFrame* found_frame =
       jitter_buffer_.NextCompleteFrame(max_wait_time_ms);
 
+      if(found_frame == nullptr && jitter_buffer_.num_packets() < 30){
+        return nullptr;
+      }
+
   if (found_frame) {
     frame_timestamp = found_frame->TimeStamp();
     min_playout_delay_ms = found_frame->EncodedImage().playout_delay_.min_ms;
