@@ -15,16 +15,19 @@
 #include <memory>
 
 #include "webrtc/modules/video_coding/codecs/h264/include/h264.h"
-
+#if defined(USEFFMPEG264)
 extern "C" {
 #include "third_party/ffmpeg/libavcodec/avcodec.h"
 }  // extern "C"
+#else
+#include "third_party/openh264/src/codec/api/svc/codec_api.h"
+#endif
 
 #include "webrtc/common_video/h264/h264_bitstream_parser.h"
 #include "webrtc/common_video/include/i420_buffer_pool.h"
 
 namespace webrtc {
-
+#if defined(USEFFMPEG264)
 struct AVCodecContextDeleter {
   void operator()(AVCodecContext* ptr) const { avcodec_free_context(&ptr); }
 };
@@ -32,6 +35,10 @@ struct AVFrameDeleter {
   void operator()(AVFrame* ptr) const { av_frame_free(&ptr); }
 };
 
+struct AVCodecParserContextDeleter {
+  void operator()(AVCodecParserContext* ptr) const { av_parser_close(ptr); }
+};
+#endif
 class H264DecoderImpl : public H264Decoder {
  public:
   H264DecoderImpl();
@@ -56,6 +63,7 @@ class H264DecoderImpl : public H264Decoder {
   const char* ImplementationName() const override;
 
  private:
+#if defined(USEFFMPEG264)
   // Called by FFmpeg when it needs a frame buffer to store decoded frames in.
   // The |VideoFrame| returned by FFmpeg at |Decode| originate from here. Their
   // buffers are reference counted and freed by FFmpeg using |AVFreeBuffer2|.
@@ -63,7 +71,7 @@ class H264DecoderImpl : public H264Decoder {
       AVCodecContext* context, AVFrame* av_frame, int flags);
   // Called by FFmpeg when it is done with a video frame, see |AVGetBuffer2|.
   static void AVFreeBuffer2(void* opaque, uint8_t* data);
-
+#endif
   bool IsInitialized() const;
 
   // Reports statistics with histograms.
@@ -71,9 +79,15 @@ class H264DecoderImpl : public H264Decoder {
   void ReportError();
 
   I420BufferPool pool_;
+#if defined(USEFFMPEG264)
   std::unique_ptr<AVCodecContext, AVCodecContextDeleter> av_context_;
   std::unique_ptr<AVFrame, AVFrameDeleter> av_frame_;
-
+  std::unique_ptr<AVCodecParserContext, AVCodecParserContextDeleter> av_parser_;
+  
+#else
+  ISVCDecoder* decoder_;
+  bool inited_;
+#endif
   DecodedImageCallback* decoded_image_callback_;
 
   bool has_reported_init_;

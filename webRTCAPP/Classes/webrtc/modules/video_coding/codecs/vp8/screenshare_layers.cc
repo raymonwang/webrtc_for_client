@@ -15,7 +15,9 @@
 
 #include "webrtc/base/checks.h"
 #include "vpx/vpx_encoder.h"
+#if defined(WEBRTC_VPX)
 #include "vpx/vp8cx.h"
+#endif
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
 #include "webrtc/system_wrappers/include/clock.h"
 #include "webrtc/system_wrappers/include/metrics.h"
@@ -26,29 +28,48 @@ static const int kOneSecond90Khz = 90000;
 static const int kMinTimeBetweenSyncs = kOneSecond90Khz * 5;
 static const int kMaxTimeBetweenSyncs = kOneSecond90Khz * 10;
 static const int kQpDeltaThresholdForSync = 8;
-static const int kMinBitrateKbpsForQpBoost = 500;
 
 const double ScreenshareLayers::kMaxTL0FpsReduction = 2.5;
 const double ScreenshareLayers::kAcceptableTargetOvershoot = 2.0;
 
-constexpr int ScreenshareLayers::kMaxNumTemporalLayers;
+// Since this is TL0 we only allow updating and predicting from the LAST
+// reference frame.
+#if defined(WEBRTC_VPX)
+const int ScreenshareLayers::kTl0Flags =
+    VP8_EFLAG_NO_UPD_GF | VP8_EFLAG_NO_UPD_ARF | VP8_EFLAG_NO_REF_GF |
+    VP8_EFLAG_NO_REF_ARF;
 
+// Allow predicting from both TL0 and TL1.
+const int ScreenshareLayers::kTl1Flags =
+    VP8_EFLAG_NO_REF_ARF | VP8_EFLAG_NO_UPD_ARF | VP8_EFLAG_NO_UPD_LAST;
+
+// Allow predicting from only TL0 to allow participants to switch to the high
+// bitrate stream. This means predicting only from the LAST reference frame, but
+// only updating GF to not corrupt TL0.
+const int ScreenshareLayers::kTl1SyncFlags =
+    VP8_EFLAG_NO_REF_ARF | VP8_EFLAG_NO_REF_GF | VP8_EFLAG_NO_UPD_ARF |
+    VP8_EFLAG_NO_UPD_LAST;
+#else
+const int ScreenshareLayers::kTl0Flags = 0;
+
+// Allow predicting from both TL0 and TL1.
+const int ScreenshareLayers::kTl1Flags = 0;
+
+// Allow predicting from only TL0 to allow participants to switch to the high
+// bitrate stream. This means predicting only from the LAST reference frame, but
+// only updating GF to not corrupt TL0.
+const int ScreenshareLayers::kTl1SyncFlags = 0;
+#endif
 // Always emit a frame with certain interval, even if bitrate targets have
-// been exceeded. This prevents needless keyframe requests.
-const int ScreenshareLayers::kMaxFrameIntervalMs = 2750;
+// been exceeded.
+const int ScreenshareLayers::kMaxFrameIntervalMs = 2000;
 
 webrtc::TemporalLayers* ScreenshareTemporalLayersFactory::Create(
     int simulcast_id,
     int num_temporal_layers,
     uint8_t initial_tl0_pic_idx) const {
-  webrtc::TemporalLayers* tl;
-  if (simulcast_id == 0) {
-    tl = new webrtc::ScreenshareLayers(num_temporal_layers, rand(),
-                                       webrtc::Clock::GetRealTimeClock());
-  } else {
-    TemporalLayersFactory rt_tl_factory;
-    tl = rt_tl_factory.Create(simulcast_id, num_temporal_layers, rand());
-  }
+  webrtc::TemporalLayers* tl = new webrtc::ScreenshareLayers(
+      num_temporal_layers, rand(), webrtc::Clock::GetRealTimeClock());
   if (listener_)
     listener_->OnTemporalLayersCreated(simulcast_id, tl);
   return tl;
@@ -58,8 +79,7 @@ ScreenshareLayers::ScreenshareLayers(int num_temporal_layers,
                                      uint8_t initial_tl0_pic_idx,
                                      Clock* clock)
     : clock_(clock),
-      number_of_temporal_layers_(
-          std::min(kMaxNumTemporalLayers, num_temporal_layers)),
+      number_of_temporal_layers_(num_temporal_layers),
       last_base_layer_sync_(false),
       tl0_pic_idx_(initial_tl0_pic_idx),
       active_layer_(-1),
@@ -71,59 +91,37 @@ ScreenshareLayers::ScreenshareLayers(int num_temporal_layers,
       max_debt_bytes_(0),
       encode_framerate_(1000.0f, 1000.0f),  // 1 second window, second scale.
       bitrate_updated_(false) {
-  RTC_CHECK_GT(number_of_temporal_layers_, 0);
-  RTC_CHECK_LE(number_of_temporal_layers_, kMaxNumTemporalLayers);
+  RTC_CHECK_GT(num_temporal_layers, 0);
+  RTC_CHECK_LE(num_temporal_layers, 2);
 }
 
 ScreenshareLayers::~ScreenshareLayers() {
   UpdateHistograms();
 }
 
-int ScreenshareLayers::GetTemporalLayerId(
-    const TemporalLayers::FrameConfig& tl_config) const {
+int ScreenshareLayers::CurrentLayerId() const {
   // Codec does not use temporal layers for screenshare.
   return 0;
 }
 
-uint8_t ScreenshareLayers::Tl0PicIdx() const {
-  return tl0_pic_idx_;
-}
-
-TemporalLayers::FrameConfig ScreenshareLayers::UpdateLayerConfig(
-    uint32_t timestamp) {
+int ScreenshareLayers::EncodeFlags(uint32_t timestamp) {
   if (number_of_temporal_layers_ <= 1) {
     // No flags needed for 1 layer screenshare.
-    // TODO(pbos): Consider updating only last, and not all buffers.
-    TemporalLayers::FrameConfig tl_config(
-        kReferenceAndUpdate, kReferenceAndUpdate, kReferenceAndUpdate);
-    tl_config.pattern_idx = static_cast<int>(TemporalLayerState::kTl1);
-    return tl_config;
+    return 0;
   }
 
   const int64_t now_ms = clock_->TimeInMilliseconds();
   if (target_framerate_.value_or(0) > 0 &&
       encode_framerate_.Rate(now_ms).value_or(0) > *target_framerate_) {
     // Max framerate exceeded, drop frame.
-    return TemporalLayers::FrameConfig(kNone, kNone, kNone);
+    return -1;
   }
 
   if (stats_.first_frame_time_ms_ == -1)
     stats_.first_frame_time_ms_ = now_ms;
 
   int64_t unwrapped_timestamp = time_wrap_handler_.Unwrap(timestamp);
-  int64_t ts_diff;
-  if (last_timestamp_ == -1) {
-    ts_diff = kOneSecond90Khz / capture_framerate_.value_or(*target_framerate_);
-  } else {
-    ts_diff = unwrapped_timestamp - last_timestamp_;
-  }
-  // Make sure both frame droppers leak out bits.
-  layers_[0].UpdateDebt(ts_diff / 90);
-  layers_[1].UpdateDebt(ts_diff / 90);
-  last_timestamp_ = timestamp;
-
-  TemporalLayerState layer_state = TemporalLayerState::kDrop;
-
+  int flags = 0;
   if (active_layer_ == -1 ||
       layers_[active_layer_].state != TemporalLayer::State::kDropped) {
     if (last_emitted_tl0_timestamp_ != -1 &&
@@ -148,52 +146,37 @@ TemporalLayers::FrameConfig ScreenshareLayers::UpdateLayerConfig(
 
   switch (active_layer_) {
     case 0:
-      layer_state = TemporalLayerState::kTl0;
+      flags = kTl0Flags;
       last_emitted_tl0_timestamp_ = unwrapped_timestamp;
       break;
     case 1:
       if (TimeToSync(unwrapped_timestamp)) {
         last_sync_timestamp_ = unwrapped_timestamp;
-        layer_state = TemporalLayerState::kTl1Sync;
+        flags = kTl1SyncFlags;
       } else {
-        layer_state = TemporalLayerState::kTl1;
+        flags = kTl1Flags;
       }
       break;
     case -1:
-      layer_state = TemporalLayerState::kDrop;
+      flags = -1;
       ++stats_.num_dropped_frames_;
       break;
     default:
+      flags = -1;
       RTC_NOTREACHED();
   }
 
-  TemporalLayers::FrameConfig tl_config;
-  // TODO(pbos): Consider referencing but not updating the 'alt' buffer for all
-  // layers.
-  switch (layer_state) {
-    case TemporalLayerState::kDrop:
-      tl_config = TemporalLayers::FrameConfig(kNone, kNone, kNone);
-      break;
-    case TemporalLayerState::kTl0:
-      // TL0 only references and updates 'last'.
-      tl_config =
-          TemporalLayers::FrameConfig(kReferenceAndUpdate, kNone, kNone);
-      break;
-    case TemporalLayerState::kTl1:
-      // TL1 references both 'last' and 'golden' but only updates 'golden'.
-      tl_config =
-          TemporalLayers::FrameConfig(kReference, kReferenceAndUpdate, kNone);
-      break;
-    case TemporalLayerState::kTl1Sync:
-      // Predict from only TL0 to allow participants to switch to the high
-      // bitrate stream. Updates 'golden' so that TL1 can continue to refer to
-      // and update 'golden' from this point on.
-      tl_config = TemporalLayers::FrameConfig(kReference, kUpdate, kNone);
-      break;
+  int64_t ts_diff;
+  if (last_timestamp_ == -1) {
+    ts_diff = kOneSecond90Khz / capture_framerate_.value_or(*target_framerate_);
+  } else {
+    ts_diff = unwrapped_timestamp - last_timestamp_;
   }
-
-  tl_config.pattern_idx = static_cast<int>(layer_state);
-  return tl_config;
+  // Make sure both frame droppers leak out bits.
+  layers_[0].UpdateDebt(ts_diff / 90);
+  layers_[1].UpdateDebt(ts_diff / 90);
+  last_timestamp_ = timestamp;
+  return flags;
 }
 
 std::vector<uint32_t> ScreenshareLayers::OnRatesUpdated(int bitrate_kbps,
@@ -229,7 +212,9 @@ std::vector<uint32_t> ScreenshareLayers::OnRatesUpdated(int bitrate_kbps,
   return allocation;
 }
 
-void ScreenshareLayers::FrameEncoded(unsigned int size, int qp) {
+void ScreenshareLayers::FrameEncoded(unsigned int size,
+                                     uint32_t timestamp,
+                                     int qp) {
   if (size > 0)
     encode_framerate_.Update(1, clock_->TimeInMilliseconds());
 
@@ -264,32 +249,18 @@ void ScreenshareLayers::FrameEncoded(unsigned int size, int qp) {
   }
 }
 
-void ScreenshareLayers::PopulateCodecSpecific(
-    bool frame_is_keyframe,
-    const TemporalLayers::FrameConfig& tl_config,
-    CodecSpecificInfoVP8* vp8_info,
-    uint32_t timestamp) {
+void ScreenshareLayers::PopulateCodecSpecific(bool base_layer_sync,
+                                              CodecSpecificInfoVP8* vp8_info,
+                                              uint32_t timestamp) {
   int64_t unwrapped_timestamp = time_wrap_handler_.Unwrap(timestamp);
   if (number_of_temporal_layers_ == 1) {
     vp8_info->temporalIdx = kNoTemporalIdx;
     vp8_info->layerSync = false;
     vp8_info->tl0PicIdx = kNoTl0PicIdx;
   } else {
-    TemporalLayerState layer_state =
-        static_cast<TemporalLayerState>(tl_config.pattern_idx);
-    switch (layer_state) {
-      case TemporalLayerState::kDrop:
-        RTC_NOTREACHED();
-        break;
-      case TemporalLayerState::kTl0:
-        vp8_info->temporalIdx = 0;
-        break;
-      case TemporalLayerState::kTl1:
-      case TemporalLayerState::kTl1Sync:
-        vp8_info->temporalIdx = 1;
-        break;
-    }
-    if (frame_is_keyframe) {
+    RTC_DCHECK_NE(-1, active_layer_);
+    vp8_info->temporalIdx = active_layer_;
+    if (base_layer_sync) {
       vp8_info->temporalIdx = 0;
       last_sync_timestamp_ = unwrapped_timestamp;
     } else if (last_base_layer_sync_ && vp8_info->temporalIdx != 0) {
@@ -302,7 +273,7 @@ void ScreenshareLayers::PopulateCodecSpecific(
     if (vp8_info->temporalIdx == 0) {
       tl0_pic_idx_++;
     }
-    last_base_layer_sync_ = frame_is_keyframe;
+    last_base_layer_sync_ = base_layer_sync;
     vp8_info->tl0PicIdx = tl0_pic_idx_;
   }
 }
@@ -361,30 +332,17 @@ bool ScreenshareLayers::UpdateConfiguration(vpx_codec_enc_cfg_t* cfg) {
       max_qp_ = cfg->rc_max_quantizer;
       // After a dropped frame, a frame with max qp will be encoded and the
       // quality will then ramp up from there. To boost the speed of recovery,
-      // encode the next frame with lower max qp, if there is sufficient
-      // bandwidth to do so without causing excessive delay.
-      // TL0 is the most important to improve since the errors in this layer
-      // will propagate to TL1.
+      // encode the next frame with lower max qp. TL0 is the most important to
+      // improve since the errors in this layer will propagate to TL1.
       // Currently, reduce max qp by 20% for TL0 and 15% for TL1.
-      if (layers_[1].target_rate_kbps_ >= kMinBitrateKbpsForQpBoost) {
-        layers_[0].enhanced_max_qp =
-            min_qp_ + (((max_qp_ - min_qp_) * 80) / 100);
-        layers_[1].enhanced_max_qp =
-            min_qp_ + (((max_qp_ - min_qp_) * 85) / 100);
-      } else {
-        layers_[0].enhanced_max_qp = -1;
-        layers_[1].enhanced_max_qp = -1;
-      }
+      layers_[0].enhanced_max_qp = min_qp_ + (((max_qp_ - min_qp_) * 80) / 100);
+      layers_[1].enhanced_max_qp = min_qp_ + (((max_qp_ - min_qp_) * 85) / 100);
     }
 
     if (capture_framerate_) {
       int avg_frame_size =
           (target_bitrate_kbps * 1000) / (8 * *capture_framerate_);
-      // Allow max debt to be the size of a single optimal frame.
-      // TODO(sprang): Determine if this needs to be adjusted by some factor.
-      // (Lower values may cause more frame drops, higher may lead to queuing
-      // delays.)
-      max_debt_bytes_ = avg_frame_size;
+      max_debt_bytes_ = 4 * avg_frame_size;
     }
 
     bitrate_updated_ = false;
@@ -407,6 +365,8 @@ bool ScreenshareLayers::UpdateConfiguration(vpx_codec_enc_cfg_t* cfg) {
     adjusted_max_qp = layers_[active_layer_].enhanced_max_qp;
     layers_[active_layer_].state = TemporalLayer::State::kNormal;
   } else {
+    if (max_qp_ == -1)
+      return cfg_updated;
     adjusted_max_qp = max_qp_;  // Set the normal max qp.
   }
 
