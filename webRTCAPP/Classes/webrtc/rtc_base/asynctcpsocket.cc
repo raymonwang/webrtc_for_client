@@ -266,8 +266,13 @@ AsyncTCPSocket* AsyncTCPSocket::Create(
     AsyncSocket* socket,
     const SocketAddress& bind_address,
     const SocketAddress& remote_address) {
-  return new AsyncTCPSocket(AsyncTCPSocketBase::ConnectSocket(
-      socket, bind_address, remote_address), false);
+    AsyncSocket* client_sock = AsyncTCPSocketBase::ConnectSocket(socket, bind_address, remote_address);
+    if (client_sock) {
+        return new AsyncTCPSocket(client_sock, false);
+    }
+    else {
+        return nullptr;
+    }
 }
 
 AsyncTCPSocket::AsyncTCPSocket(AsyncSocket* socket, bool listen)
