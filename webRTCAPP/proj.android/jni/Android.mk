@@ -111,17 +111,6 @@ MY_SRC_FILES := $(call not-containing,opensles_recorder.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,audio_processing_impl.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,voe_audio_processing_impl.cc,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,jvm_android.cc,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,rtp_format.cc,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,receiver.cc,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,h264_decoder_impl,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,h264_encoder_impl,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,default_temporal_layers,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,realtime_temporal_layers,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,reference_picture_selection,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,screenshare_layers,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,vp8_impl,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,vp9_frame_buffer_pool,$(MY_SRC_FILES))
-MY_SRC_FILES := $(call not-containing,vp9_impl,$(MY_SRC_FILES))
 
 #add change files
 MY_SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_OVERRIDES_PATH)/,$(MY_FILES_SUFFIX))
@@ -145,13 +134,8 @@ LOCAL_SRC_FILES += $(MY_SRC_FILES:$(LOCAL_PATH)/%=%) \
 				   $(WEBRTC_SOURCE_PATH)/webrtc/common_audio/window_generator.cc \
 				   $(WEBRTC_SOURCE_PATH)/webrtc/system_wrappers/source/atomic32_non_darwin_unix.cc \
 				   $(WEBRTC_SOURCE_PATH)/webrtc/common_audio/signal_processing/get_hanning_window.c \
-				   $(WEBRTC_SOURCE_PATH)/webrtc/modules/audio_coding/codecs/ilbc/window32_w32.c \
-				   $(WEBRTC_SOURCE_PATH)/webrtc/modules/video_coding/video_receiver.cc \
-                   $(WEBRTC_SOURCE_PATH)/webrtc/modules/rtp_rtcp/source/flexfec_receiver.cc \
-                   $(WEBRTC_SOURCE_PATH)/webrtc/modules/rtp_rtcp/source/rtcp_receiver.cc \
-                   $(WEBRTC_SOURCE_PATH)/webrtc/modules/audio_coding/acm2/acm_receiver.cc \
-                   $(WEBRTC_SOURCE_PATH)/webrtc/video/rtp_stream_receiver.cc
-
+				   $(WEBRTC_SOURCE_PATH)/webrtc/modules/audio_coding/codecs/ilbc/window32_w32.c
+				   
 LOCAL_C_INCLUDES := $(WEBRTC_OVERRIDES_SOURCE_PATH) \
                     $(WEBRTC_SOURCE_PATH) \
 					$(WEBRTC_SOURCE_PATH)/third_party/boringssl/src/include \
@@ -209,8 +193,6 @@ endif
 
 ifeq ($(USE_FFMPEG_DECODER_BUILD),true)
 LOCAL_CFLAGS += -DUSEFFMPEG264
-else
-LOCAL_CFLAGS += -DUSEOPENH264
 endif
 
 LOCAL_CFLAGS += -DUSE_LIBJPEG_TURBO=1 -DHAVE_WEBRTC_VIDEO -DWEBRTC_USE_H264

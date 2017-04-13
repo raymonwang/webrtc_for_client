@@ -49,7 +49,7 @@ enum denoiserState {
   // to kDenoiserOnYUVAggressive based on a computed noise metric.
   kDenoiserOnAdaptive
 };
-
+#if defined(WEBRTC_VPX)
 // Greatest common divisior
 int GCD(int a, int b) {
   int c = a % b;
@@ -101,6 +101,7 @@ int NumStreamsDisabled(const std::vector<bool>& streams) {
   }
   return num_disabled;
 }
+#endif
 }  // namespace
 
 VP8Encoder* VP8Encoder::Create() {
@@ -120,7 +121,11 @@ VP8EncoderImpl::VP8EncoderImpl()
       cpu_speed_default_(-6),
       number_of_cores_(0),
       rc_max_intra_target_(0),
+#if defined(WEBRTC_VPX)
       token_partitions_(VP8_ONE_TOKENPARTITION),
+#else
+     token_partitions_(0),
+#endif
       down_scale_requested_(false),
       down_scale_bitrate_(0),
       key_frame_request_(kMaxSimulcastStreams, false) {
@@ -145,7 +150,7 @@ VP8EncoderImpl::~VP8EncoderImpl() {
 
 int VP8EncoderImpl::Release() {
   int ret_val = WEBRTC_VIDEO_CODEC_OK;
-
+#if defined(WEBRTC_VPX)
   while (!encoded_images_.empty()) {
     EncodedImage& image = encoded_images_.back();
     delete[] image._buffer;
@@ -170,11 +175,13 @@ int VP8EncoderImpl::Release() {
     temporal_layers_.pop_back();
   }
   inited_ = false;
+#endif
   return ret_val;
 }
 
 int VP8EncoderImpl::SetRateAllocation(const BitrateAllocation& bitrate,
                                       uint32_t new_framerate) {
+#if defined(WEBRTC_VPX)
   if (!inited_)
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
 
@@ -252,6 +259,7 @@ int VP8EncoderImpl::SetRateAllocation(const BitrateAllocation& bitrate,
       return WEBRTC_VIDEO_CODEC_ERROR;
     }
   }
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -289,6 +297,7 @@ void VP8EncoderImpl::SetupTemporalLayers(int num_streams,
 int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
                                int number_of_cores,
                                size_t /*maxPayloadSize */) {
+#if defined(WEBRTC_VPX)
   if (inst == NULL) {
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
@@ -524,6 +533,9 @@ int VP8EncoderImpl::InitEncode(const VideoCodec* inst,
 
   rps_.Init();
   return InitAndSetControlSettings();
+#else
+  return WEBRTC_VIDEO_CODEC_OK;
+#endif
 }
 
 int VP8EncoderImpl::SetCpuSpeed(int width, int height) {
@@ -582,6 +594,7 @@ int VP8EncoderImpl::NumberOfThreads(int width, int height, int cpus) {
 }
 
 int VP8EncoderImpl::InitAndSetControlSettings() {
+#if defined(WEBRTC_VPX)
   vpx_codec_flags_t flags = 0;
   flags |= VPX_CODEC_USE_OUTPUT_PARTITION;
 
@@ -633,6 +646,7 @@ int VP8EncoderImpl::InitAndSetControlSettings() {
                       codec_.mode == kScreensharing ? 2 : 0);
   }
   inited_ = true;
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -655,6 +669,7 @@ uint32_t VP8EncoderImpl::MaxIntraTarget(uint32_t optimalBuffersize) {
 int VP8EncoderImpl::Encode(const VideoFrame& frame,
                            const CodecSpecificInfo* codec_specific_info,
                            const std::vector<FrameType>* frame_types) {
+#if defined(WEBRTC_VPX)
   RTC_DCHECK_EQ(frame.width(), codec_.width);
   RTC_DCHECK_EQ(frame.height(), codec_.height);
 
@@ -854,6 +869,7 @@ int VP8EncoderImpl::UpdateCodecFrameSize(int width, int height) {
   if (vpx_codec_enc_config_set(&encoders_[0], &configurations_[0])) {
     return WEBRTC_VIDEO_CODEC_ERROR;
   }
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -885,11 +901,13 @@ void VP8EncoderImpl::PopulateCodecSpecific(
 
 int VP8EncoderImpl::GetEncodedPartitions(const VideoFrame& input_image,
                                          bool only_predicting_from_key_frame) {
+#if defined(WEBRTC_VPX)
   int bw_resolutions_disabled =
       (encoders_.size() > 1) ? NumStreamsDisabled(send_stream_) : -1;
 
   int stream_idx = static_cast<int>(encoders_.size()) - 1;
   int result = WEBRTC_VIDEO_CODEC_OK;
+
   for (size_t encoder_idx = 0; encoder_idx < encoders_.size();
        ++encoder_idx, --stream_idx) {
     vpx_codec_iter_t iter = NULL;
@@ -975,6 +993,9 @@ int VP8EncoderImpl::GetEncodedPartitions(const VideoFrame& input_image,
     }
   }
   return result;
+#else
+  return WEBRTC_VIDEO_CODEC_OK;
+#endif
 }
 
 VideoEncoder::ScalingSettings VP8EncoderImpl::GetScalingSettings() const {
@@ -1002,7 +1023,9 @@ VP8DecoderImpl::VP8DecoderImpl()
       feedback_mode_(false),
       decoder_(NULL),
       image_format_(VPX_IMG_FMT_NONE),
+#if defined(WEBRTC_VPX)
       ref_frame_(NULL),
+#endif
       propagation_cnt_(-1),
       last_frame_width_(0),
       last_frame_height_(0),
@@ -1014,6 +1037,7 @@ VP8DecoderImpl::~VP8DecoderImpl() {
 }
 
 int VP8DecoderImpl::InitDecode(const VideoCodec* inst, int number_of_cores) {
+#if defined(WEBRTC_VPX)
   int ret_val = Release();
   if (ret_val < 0) {
     return ret_val;
@@ -1051,6 +1075,7 @@ int VP8DecoderImpl::InitDecode(const VideoCodec* inst, int number_of_cores) {
 
   // Always start with a complete key frame.
   key_frame_required_ = true;
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -1059,6 +1084,7 @@ int VP8DecoderImpl::Decode(const EncodedImage& input_image,
                            const RTPFragmentationHeader* fragmentation,
                            const CodecSpecificInfo* codec_specific_info,
                            int64_t /*render_time_ms*/) {
+#if defined(WEBRTC_VPX)
   if (!inited_) {
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
@@ -1200,6 +1226,7 @@ int VP8DecoderImpl::Decode(const EncodedImage& input_image,
     propagation_cnt_ = 0;
     return WEBRTC_VIDEO_CODEC_ERROR;
   }
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -1248,6 +1275,7 @@ int VP8DecoderImpl::RegisterDecodeCompleteCallback(
 }
 
 int VP8DecoderImpl::Release() {
+#if defined(WEBRTC_VPX)
   if (decoder_ != NULL) {
     if (vpx_codec_destroy(decoder_)) {
       return WEBRTC_VIDEO_CODEC_MEMORY;
@@ -1262,6 +1290,7 @@ int VP8DecoderImpl::Release() {
   }
   buffer_pool_.Release();
   inited_ = false;
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -1272,6 +1301,7 @@ const char* VP8DecoderImpl::ImplementationName() const {
 int VP8DecoderImpl::CopyReference(VP8DecoderImpl* copy) {
   // The type of frame to copy should be set in ref_frame_->frame_type
   // before the call to this function.
+#if defined(WEBRTC_VPX)
   if (vpx_codec_control(decoder_, VP8_COPY_REFERENCE, ref_frame_) !=
       VPX_CODEC_OK) {
     return -1;
@@ -1280,6 +1310,7 @@ int VP8DecoderImpl::CopyReference(VP8DecoderImpl* copy) {
       VPX_CODEC_OK) {
     return -1;
   }
+#endif
   return 0;
 }
 

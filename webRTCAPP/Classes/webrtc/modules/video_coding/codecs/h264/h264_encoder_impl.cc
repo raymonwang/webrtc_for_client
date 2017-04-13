@@ -159,7 +159,7 @@ H264EncoderImpl::H264EncoderImpl(const cricket::VideoCodec& codec)
       max_frame_rate_(0.0f),
       target_bps_(0),
       max_bps_(0),
-      mode_(kRealtimeVideo),
+      mode_(kScreensharing),
       frame_dropping_on_(false),
       key_frame_interval_(0),
       packetization_mode_(H264PacketizationMode::SingleNalUnit),
@@ -227,7 +227,7 @@ int32_t H264EncoderImpl::InitEncode(const VideoCodec* codec_settings,
   width_ = codec_settings->width;
   height_ = codec_settings->height;
   max_frame_rate_ = static_cast<float>(codec_settings->maxFramerate);
-  mode_ = codec_settings->mode;
+  //mode_ = codec_settings->mode;
   frame_dropping_on_ = codec_settings->H264().frameDroppingOn;
   key_frame_interval_ = codec_settings->H264().keyFrameInterval;
   max_payload_size_ = max_payload_size;

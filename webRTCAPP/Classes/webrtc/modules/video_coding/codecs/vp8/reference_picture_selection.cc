@@ -11,7 +11,9 @@
 #include "webrtc/modules/video_coding/codecs/vp8/reference_picture_selection.h"
 
 #include "vpx/vpx_encoder.h"
+#if defined(WEBRTC_VPX)
 #include "vpx/vp8cx.h"
+#endif
 #include "webrtc/typedefs.h"
 
 namespace webrtc {
@@ -65,6 +67,7 @@ int ReferencePictureSelection::EncodeFlags(int picture_id,
                                            bool send_refresh,
                                            uint32_t now_ts) {
   int flags = 0;
+#if defined(WEBRTC_VPX)
   // We can't refresh the decoder until we have established the key frame.
   if (send_refresh && received_ack_) {
     flags |= VP8_EFLAG_NO_REF_LAST;  // Don't reference the last frame
@@ -107,6 +110,7 @@ int ReferencePictureSelection::EncodeFlags(int picture_id,
     flags |= VP8_EFLAG_NO_UPD_GF;    // Don't update the golden frame.
     flags |= VP8_EFLAG_NO_UPD_ARF;   // Don't update the alt-ref frame.
   }
+#endif
   return flags;
 }
 

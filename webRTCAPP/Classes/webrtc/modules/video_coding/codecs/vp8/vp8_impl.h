@@ -20,9 +20,10 @@
 //       it breaks the style guide.
 #include "vpx/vpx_encoder.h"
 #include "vpx/vpx_decoder.h"
+#if defined(WEBRTC_VPX)
 #include "vpx/vp8cx.h"
 #include "vpx/vp8dx.h"
-
+#endif
 #include "webrtc/api/video/video_frame.h"
 #include "webrtc/common_video/include/i420_buffer_pool.h"
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
@@ -158,7 +159,9 @@ class VP8DecoderImpl : public VP8Decoder {
   vpx_codec_ctx_t* decoder_;
   VideoCodec codec_;
   int image_format_;
+#if defined(WEBRTC_VPX)
   vpx_ref_frame_t* ref_frame_;
+#endif
   int propagation_cnt_;
   int last_frame_width_;
   int last_frame_height_;
