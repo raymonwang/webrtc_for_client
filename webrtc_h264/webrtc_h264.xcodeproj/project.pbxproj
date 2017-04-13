@@ -253,6 +253,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/ffmpeg",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/ffmpeg/chromium/config/ChromeOS/linux/arm64",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
@@ -277,6 +278,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/ffmpeg",
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/ffmpeg/chromium/config/ChromeOS/linux/arm64",
+					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
