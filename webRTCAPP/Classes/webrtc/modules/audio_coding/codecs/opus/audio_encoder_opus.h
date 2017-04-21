@@ -72,7 +72,7 @@ class AudioEncoderOpus final : public AudioEncoder {
 #if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS) || defined(WEBRTC_ARCH_ARM)
     // If we are on Android, iOS and/or ARM, use a lower complexity setting as
     // default, to save encoder complexity.
-    static const int kDefaultComplexity = 5;
+    static const int kDefaultComplexity = 0;
 #else
     static const int kDefaultComplexity = 9;
 #endif
