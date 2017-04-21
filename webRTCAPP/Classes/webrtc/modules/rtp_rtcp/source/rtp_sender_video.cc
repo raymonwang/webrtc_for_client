@@ -275,6 +275,8 @@ void RTPSenderVideo::SetFecParameters(const FecProtectionParams& delta_params,
   rtc::CritScope cs(&crit_);
   delta_fec_params_ = delta_params;
   key_fec_params_ = key_params;
+    key_fec_params_.fec_rate = 60;
+    delta_fec_params_.fec_rate = 30;
 }
 
 rtc::Optional<uint32_t> RTPSenderVideo::FlexfecSsrc() const {
