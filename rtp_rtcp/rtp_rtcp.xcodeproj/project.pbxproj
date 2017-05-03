@@ -1153,6 +1153,7 @@
 					WEBRTC_IOS,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_HAS_NEON,
+					HAVE_WEBRTC_VIDEO,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1177,6 +1178,7 @@
 					WEBRTC_IOS,
 					WEBRTC_ARCH_ARM,
 					WEBRTC_HAS_NEON,
+					HAVE_WEBRTC_VIDEO,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

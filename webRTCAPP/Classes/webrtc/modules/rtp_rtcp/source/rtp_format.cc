@@ -22,6 +22,7 @@ RtpPacketizer* RtpPacketizer::Create(RtpVideoCodecTypes type,
                                      size_t max_payload_len,
                                      const RTPVideoTypeHeader* rtp_type_header,
                                      FrameType frame_type) {
+#if defined(HAVE_WEBRTC_VIDEO)
   switch (type) {
     case kRtpVideoH264:
       RTC_CHECK(rtp_type_header);
@@ -38,10 +39,12 @@ RtpPacketizer* RtpPacketizer::Create(RtpVideoCodecTypes type,
     case kRtpVideoNone:
       RTC_NOTREACHED();
   }
+#endif
   return NULL;
 }
 
 RtpDepacketizer* RtpDepacketizer::Create(RtpVideoCodecTypes type) {
+#if defined(HAVE_WEBRTC_VIDEO)
   switch (type) {
     case kRtpVideoH264:
       return new RtpDepacketizerH264();
@@ -54,6 +57,7 @@ RtpDepacketizer* RtpDepacketizer::Create(RtpVideoCodecTypes type) {
     case kRtpVideoNone:
       assert(false);
   }
+#endif
   return NULL;
 }
 }  // namespace webrtc

@@ -100,7 +100,7 @@ int AudioDecoderOpus::DecodeInternal(const uint8_t* encoded,
                                      int sample_rate_hz,
                                      int16_t* decoded,
                                      SpeechType* speech_type) {
-  RTC_DCHECK_EQ(sample_rate_hz, 48000);
+  RTC_DCHECK_EQ(sample_rate_hz, RTCHAT_OPUS_FREQ);
   int16_t temp_type = 1;  // Default is speech.
   int ret =
       WebRtcOpus_Decode(dec_state_, encoded, encoded_len, decoded, &temp_type);
@@ -121,7 +121,7 @@ int AudioDecoderOpus::DecodeRedundantInternal(const uint8_t* encoded,
                           speech_type);
   }
 
-  RTC_DCHECK_EQ(sample_rate_hz, 48000);
+  RTC_DCHECK_EQ(sample_rate_hz, RTCHAT_OPUS_FREQ);
   int16_t temp_type = 1;  // Default is speech.
   int ret = WebRtcOpus_DecodeFec(dec_state_, encoded, encoded_len, decoded,
                                  &temp_type);
@@ -158,7 +158,7 @@ bool AudioDecoderOpus::PacketHasFec(const uint8_t* encoded,
 }
 
 int AudioDecoderOpus::SampleRateHz() const {
-  return 48000;
+  return RTCHAT_OPUS_FREQ;
 }
 
 size_t AudioDecoderOpus::Channels() const {

@@ -15,7 +15,9 @@
 
 #include "webrtc/base/checks.h"
 #include "vpx/vpx_encoder.h"
+#if defined(WEBRTC_VPX)
 #include "vpx/vp8cx.h"
+#endif
 #include "webrtc/modules/video_coding/include/video_codec_interface.h"
 #include "webrtc/system_wrappers/include/clock.h"
 #include "webrtc/system_wrappers/include/metrics.h"
@@ -32,6 +34,7 @@ const double ScreenshareLayers::kAcceptableTargetOvershoot = 2.0;
 
 // Since this is TL0 we only allow updating and predicting from the LAST
 // reference frame.
+#if defined(WEBRTC_VPX)
 const int ScreenshareLayers::kTl0Flags =
     VP8_EFLAG_NO_UPD_GF | VP8_EFLAG_NO_UPD_ARF | VP8_EFLAG_NO_REF_GF |
     VP8_EFLAG_NO_REF_ARF;
@@ -46,7 +49,17 @@ const int ScreenshareLayers::kTl1Flags =
 const int ScreenshareLayers::kTl1SyncFlags =
     VP8_EFLAG_NO_REF_ARF | VP8_EFLAG_NO_REF_GF | VP8_EFLAG_NO_UPD_ARF |
     VP8_EFLAG_NO_UPD_LAST;
+#else
+const int ScreenshareLayers::kTl0Flags = 0;
 
+// Allow predicting from both TL0 and TL1.
+const int ScreenshareLayers::kTl1Flags = 0;
+
+// Allow predicting from only TL0 to allow participants to switch to the high
+// bitrate stream. This means predicting only from the LAST reference frame, but
+// only updating GF to not corrupt TL0.
+const int ScreenshareLayers::kTl1SyncFlags = 0;
+#endif
 // Always emit a frame with certain interval, even if bitrate targets have
 // been exceeded.
 const int ScreenshareLayers::kMaxFrameIntervalMs = 2000;

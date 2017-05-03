@@ -28,7 +28,7 @@ namespace webrtc {
 
 namespace {
 
-constexpr int kSampleRateHz = 48000;
+constexpr int kSampleRateHz = RTCHAT_OPUS_FREQ;
 constexpr int kMinBitrateBps = 500;
 constexpr int kMaxBitrateBps = 512000;
 constexpr int kSupportedFrameLengths[] = {20, 60};
@@ -39,7 +39,7 @@ constexpr float kAlphaForPacketLossFractionSmoother = 0.9999f;
 
 AudioEncoderOpus::Config CreateConfig(const CodecInst& codec_inst) {
   AudioEncoderOpus::Config config;
-  config.frame_size_ms = rtc::CheckedDivExact(codec_inst.pacsize, 48);
+  config.frame_size_ms = rtc::CheckedDivExact(codec_inst.pacsize, rtc::CheckedDivExact(RTCHAT_OPUS_FREQ, 1000));
   config.num_channels = codec_inst.channels;
   config.bitrate_bps = rtc::Optional<int>(codec_inst.rate);
   config.payload_type = codec_inst.pltype;

@@ -158,7 +158,7 @@ NamedDecoderConstructor decoder_constructors[] = {
          }
          return rtc::Optional<int>(1);  // Default to mono.
        }();
-       if (format.clockrate_hz == 48000 && format.num_channels == 2 &&
+       if (format.clockrate_hz == RTCHAT_OPUS_FREQ && format.num_channels == 2 &&
            num_channels) {
          if (out) {
            out->reset(new AudioDecoderOpus(*num_channels));
@@ -176,7 +176,7 @@ class BuiltinAudioDecoderFactory : public AudioDecoderFactory {
   std::vector<AudioCodecSpec> GetSupportedDecoders() override {
     static std::vector<AudioCodecSpec> specs = {
 #ifdef WEBRTC_CODEC_OPUS
-      { { "opus", 48000, 2, {
+      { { "opus", RTCHAT_OPUS_FREQ, 2, {
             {"minptime", "10" },
             {"useinbandfec", "1" }
           }
