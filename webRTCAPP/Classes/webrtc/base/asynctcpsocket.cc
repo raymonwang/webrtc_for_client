@@ -282,7 +282,7 @@ AsyncTCPSocket::AsyncTCPSocket(AsyncSocket* socket, bool listen)
 
 int AsyncTCPSocket::Send(const void *pv, size_t cb,
                          const rtc::PacketOptions& options) {
-  if (cb > kBufSize) {
+  if (cb > kBufSize || cb <= 2) {
     SetError(EMSGSIZE);
     return -1;
   }
@@ -291,8 +291,9 @@ int AsyncTCPSocket::Send(const void *pv, size_t cb,
   if (!IsOutBufferEmpty())
     return static_cast<int>(cb);
 
-  PacketLength pkt_len = HostToNetwork16(static_cast<PacketLength>(cb));
-  AppendToOutBuffer(&pkt_len, kPacketLenSize);
+  PacketLength pkt_len = HostToNetwork16(static_cast<PacketLength>(cb - 2));
+  uint16_t* temp_ptr = (uint16_t*)pv;
+  temp_ptr[0] = pkt_len;
   AppendToOutBuffer(pv, cb);
 
   int res = FlushOutBuffer();
@@ -320,7 +321,7 @@ void AsyncTCPSocket::ProcessInput(char * data, size_t* len) {
     if (*len < kPacketLenSize + pkt_len)
       return;
 
-    SignalReadPacket(this, data + kPacketLenSize, pkt_len, remote_addr,
+    SignalReadPacket(this, data, pkt_len + kPacketLenSize, remote_addr,
                      CreatePacketTime(0));
 
     *len -= kPacketLenSize + pkt_len;
