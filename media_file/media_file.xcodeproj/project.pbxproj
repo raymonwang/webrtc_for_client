@@ -267,6 +267,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_CODEC_ISAC,
+					WEBRTC_CODEC_ILBC,
+					WEBRTC_CODEC_G722,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -283,7 +289,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_CODEC_ISAC,
+					WEBRTC_CODEC_ILBC,
+					WEBRTC_CODEC_G722,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

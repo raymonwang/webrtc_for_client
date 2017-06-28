@@ -46,11 +46,11 @@ SdpAudioFormat CodecInstToSdp(const CodecInst& ci) {
     RTC_CHECK(ci.channels == 1 || ci.channels == 2);
     return {"g722", 8000, ci.channels};
   } else if (STR_CASE_CMP(ci.plname, "opus") == 0) {
-    RTC_CHECK_EQ(RTCHAT_OPUS_FREQ, ci.plfreq);
+//    RTC_CHECK_EQ(RTCHAT_OPUS_FREQ, ci.plfreq);
     RTC_CHECK(ci.channels == 1 || ci.channels == 2);
     return ci.channels == 1
-               ? SdpAudioFormat("opus", RTCHAT_OPUS_FREQ, 2)
-               : SdpAudioFormat("opus", RTCHAT_OPUS_FREQ, 2, {{"stereo", "1"}});
+               ? SdpAudioFormat("opus", ci.plfreq, 2)
+               : SdpAudioFormat("opus", ci.plfreq, 2, {{"stereo", "1"}});
   } else {
     return {ci.plname, ci.plfreq, ci.channels};
   }

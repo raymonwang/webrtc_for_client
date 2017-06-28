@@ -94,7 +94,8 @@ const CodecInst ACMCodecDB::database_[] = {
 #ifdef WEBRTC_CODEC_OPUS
   // Opus internally supports 48, 24, 16, 12, 8 kHz.
   // Mono and stereo.
-  {120, "opus", RTCHAT_OPUS_FREQ, 320, 2, 64000},
+  {120, "opus", 16000, 320, 2, 64000},
+  {121, "opus", 48000, 960, 2, 64000},
 #endif
   // Comfort noise for four different sampling frequencies.
   {13, "CN", 8000, 240, 1, 0},
@@ -157,6 +158,7 @@ const ACMCodecDB::CodecSettings ACMCodecDB::codec_settings_[] = {
     {5, {480, 960, 1920, 2880, 5760}, 0, 2},
 #else
     {4, {160, 320, 640, 960}, 0, 2},
+    {4, {480, 960, 1920, 2880}, 0, 2},
 #endif
 #endif
     // Comfort noise for three different sampling frequencies.
