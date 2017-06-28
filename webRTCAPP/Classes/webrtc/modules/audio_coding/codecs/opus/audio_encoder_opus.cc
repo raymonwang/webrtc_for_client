@@ -28,7 +28,7 @@ namespace webrtc {
 
 namespace {
 
-constexpr int kSampleRateHz = RTCHAT_OPUS_FREQ;
+//constexpr int kSampleRateHz = RTCHAT_OPUS_FREQ;
 constexpr int kMinBitrateBps = 500;
 constexpr int kMaxBitrateBps = 512000;
 constexpr int kSupportedFrameLengths[] = {20, 60};
@@ -39,7 +39,8 @@ constexpr float kAlphaForPacketLossFractionSmoother = 0.9999f;
 
 AudioEncoderOpus::Config CreateConfig(const CodecInst& codec_inst) {
   AudioEncoderOpus::Config config;
-  config.frame_size_ms = rtc::CheckedDivExact(codec_inst.pacsize, rtc::CheckedDivExact(RTCHAT_OPUS_FREQ, 1000));
+  config.samplek_rate_hz = codec_inst.plfreq;
+  config.frame_size_ms = rtc::CheckedDivExact(codec_inst.pacsize, rtc::CheckedDivExact(codec_inst.plfreq, 1000));
   config.num_channels = codec_inst.channels;
   config.bitrate_bps = rtc::Optional<int>(codec_inst.rate);
   config.payload_type = codec_inst.pltype;
@@ -202,7 +203,7 @@ AudioEncoderOpus::~AudioEncoderOpus() {
 }
 
 int AudioEncoderOpus::SampleRateHz() const {
-  return kSampleRateHz;
+  return config_.samplek_rate_hz;
 }
 
 size_t AudioEncoderOpus::NumChannels() const {
@@ -419,7 +420,7 @@ size_t AudioEncoderOpus::Num10msFramesPerPacket() const {
 }
 
 size_t AudioEncoderOpus::SamplesPer10msFrame() const {
-  return rtc::CheckedDivExact(kSampleRateHz, 100) * config_.num_channels;
+  return rtc::CheckedDivExact(config_.samplek_rate_hz, 100) * config_.num_channels;
 }
 
 size_t AudioEncoderOpus::SufficientOutputBufferSize() const {
@@ -440,10 +441,12 @@ bool AudioEncoderOpus::RecreateEncoderInstance(const Config& config) {
     return false;
   if (inst_)
     RTC_CHECK_EQ(0, WebRtcOpus_EncoderFree(inst_));
+    
+  config_ = config;
   input_buffer_.clear();
   input_buffer_.reserve(Num10msFramesPerPacket() * SamplesPer10msFrame());
   RTC_CHECK_EQ(0, WebRtcOpus_EncoderCreate(&inst_, config.num_channels,
-                                           config.application));
+                                           config.application, config.samplek_rate_hz));
   RTC_CHECK_EQ(0, WebRtcOpus_SetBitRate(inst_, config.GetBitrateBps()));
   if (config.fec_enabled) {
     RTC_CHECK_EQ(0, WebRtcOpus_EnableFec(inst_));
@@ -464,7 +467,7 @@ bool AudioEncoderOpus::RecreateEncoderInstance(const Config& config) {
   RTC_CHECK_EQ(0,
                WebRtcOpus_SetPacketLossRate(
                    inst_, static_cast<int32_t>(packet_loss_rate_ * 100 + .5)));
-  config_ = config;
+//  config_ = config;
 
   num_channels_to_encode_ = NumChannels();
   next_frame_length_ms_ = config_.frame_size_ms;

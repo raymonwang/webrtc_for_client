@@ -40,7 +40,7 @@ enum {
 
 int16_t WebRtcOpus_EncoderCreate(OpusEncInst** inst,
                                  size_t channels,
-                                 int32_t application) {
+                                 int32_t application, int32_t sample_rate_hz) {
   int opus_app;
   if (!inst)
     return -1;
@@ -60,7 +60,7 @@ int16_t WebRtcOpus_EncoderCreate(OpusEncInst** inst,
   RTC_DCHECK(state);
 
   int error;
-  state->encoder = opus_encoder_create(RTCHAT_OPUS_FREQ, (int)channels, opus_app,
+  state->encoder = opus_encoder_create(sample_rate_hz, (int)channels, opus_app,
                                        &error);
   if (error != OPUS_OK || !state->encoder) {
     WebRtcOpus_EncoderFree(state);
@@ -243,7 +243,7 @@ int16_t WebRtcOpus_SetForceChannels(OpusEncInst* inst, size_t num_channels) {
   }
 }
 
-int16_t WebRtcOpus_DecoderCreate(OpusDecInst** inst, size_t channels) {
+int16_t WebRtcOpus_DecoderCreate(OpusDecInst** inst, size_t channels, int32_t sample_rate_hz) {
   int error;
   OpusDecInst* state;
 
@@ -255,7 +255,7 @@ int16_t WebRtcOpus_DecoderCreate(OpusDecInst** inst, size_t channels) {
     }
 
     /* Create new memory, always at 48000 Hz. */
-    state->decoder = opus_decoder_create(RTCHAT_OPUS_FREQ, (int)channels, &error);
+    state->decoder = opus_decoder_create(sample_rate_hz, (int)channels, &error);
     if (error == OPUS_OK && state->decoder != NULL) {
       /* Creation of memory all ok. */
       state->channels = channels;
@@ -379,15 +379,15 @@ int WebRtcOpus_DecodePlc(OpusDecInst* inst, int16_t* decoded,
 
 int WebRtcOpus_DecodeFec(OpusDecInst* inst, const uint8_t* encoded,
                          size_t encoded_bytes, int16_t* decoded,
-                         int16_t* audio_type) {
+                         int16_t* audio_type, int32_t sample_rate_hz) {
   int decoded_samples;
   int fec_samples;
 
-  if (WebRtcOpus_PacketHasFec(encoded, encoded_bytes) != 1) {
+  if (WebRtcOpus_PacketHasFec(encoded, encoded_bytes, sample_rate_hz) != 1) {
     return 0;
   }
 
-  fec_samples = opus_packet_get_samples_per_frame(encoded, RTCHAT_OPUS_FREQ);
+  fec_samples = opus_packet_get_samples_per_frame(encoded, sample_rate_hz);
 
   decoded_samples = DecodeNative(inst, encoded, encoded_bytes,
                                  fec_samples, decoded, audio_type, 1);
@@ -400,7 +400,7 @@ int WebRtcOpus_DecodeFec(OpusDecInst* inst, const uint8_t* encoded,
 
 int WebRtcOpus_DurationEst(OpusDecInst* inst,
                            const uint8_t* payload,
-                           size_t payload_length_bytes) {
+                           size_t payload_length_bytes, int32_t sample_rate_hz) {
   if (payload_length_bytes == 0) {
     // WebRtcOpus_Decode calls PLC when payload length is zero. So we return
     // PLC duration correspondingly.
@@ -413,7 +413,7 @@ int WebRtcOpus_DurationEst(OpusDecInst* inst,
     /* Invalid payload data. */
     return 0;
   }
-  samples = frames * opus_packet_get_samples_per_frame(payload, RTCHAT_OPUS_FREQ);
+  samples = frames * opus_packet_get_samples_per_frame(payload, sample_rate_hz);
   if (samples < 120 || samples > 5760) {
     /* Invalid payload duration. */
     return 0;
@@ -431,13 +431,13 @@ int WebRtcOpus_PlcDuration(OpusDecInst* inst) {
 }
 
 int WebRtcOpus_FecDurationEst(const uint8_t* payload,
-                              size_t payload_length_bytes) {
+                              size_t payload_length_bytes, int32_t sample_rate_hz) {
   int samples;
-  if (WebRtcOpus_PacketHasFec(payload, payload_length_bytes) != 1) {
+  if (WebRtcOpus_PacketHasFec(payload, payload_length_bytes, sample_rate_hz) != 1) {
     return 0;
   }
 
-  samples = opus_packet_get_samples_per_frame(payload, RTCHAT_OPUS_FREQ);
+  samples = opus_packet_get_samples_per_frame(payload, sample_rate_hz);
   if (samples < 480 || samples > 5760) {
     /* Invalid payload duration. */
     return 0;
@@ -446,7 +446,7 @@ int WebRtcOpus_FecDurationEst(const uint8_t* payload,
 }
 
 int WebRtcOpus_PacketHasFec(const uint8_t* payload,
-                            size_t payload_length_bytes) {
+                            size_t payload_length_bytes, int32_t sample_rate_hz) {
   int frames, channels, payload_length_ms;
   int n;
   opus_int16 frame_sizes[48];
@@ -459,7 +459,7 @@ int WebRtcOpus_PacketHasFec(const uint8_t* payload,
   if (payload[0] & 0x80)
     return 0;
 
-  payload_length_ms = opus_packet_get_samples_per_frame(payload, RTCHAT_OPUS_FREQ) / (RTCHAT_OPUS_FREQ / 1000);
+  payload_length_ms = opus_packet_get_samples_per_frame(payload, sample_rate_hz) / (sample_rate_hz / 1000);
   if (10 > payload_length_ms)
     payload_length_ms = 10;
 

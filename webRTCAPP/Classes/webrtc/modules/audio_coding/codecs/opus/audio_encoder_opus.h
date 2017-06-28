@@ -67,6 +67,7 @@ class AudioEncoderOpus final : public AudioEncoder {
     std::vector<int> supported_frame_lengths_ms;
     const Clock* clock = Clock::GetRealTimeClock();
     int uplink_bandwidth_update_interval_ms = 200;
+    int samplek_rate_hz = 16000;
 
    private:
 #if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS) || defined(WEBRTC_ARCH_ARM)

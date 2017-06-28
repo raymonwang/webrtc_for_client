@@ -290,7 +290,6 @@
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
-					"RTCHAT_OPUS_FREQ=16000",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -326,7 +325,6 @@
 					WEBRTC_ARCH_ARM,
 					WEBRTC_ARCH_ARM_V7,
 					WEBRTC_ARCH_ARM_NEON,
-					"RTCHAT_OPUS_FREQ=16000",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
