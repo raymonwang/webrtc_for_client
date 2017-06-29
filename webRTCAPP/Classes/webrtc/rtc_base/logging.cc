@@ -203,9 +203,9 @@ LogMessage::~LogMessage() {
   print_stream_ << std::endl;
 
   const std::string& str = print_stream_.str();
-  if (severity_ >= dbg_sev_) {
+//  if (severity_ >= dbg_sev_) {
     OutputToDebug(str, severity_, tag_);
-  }
+//  }
 
   CritScope cs(&g_log_crit);
   for (auto& kv : streams_) {
