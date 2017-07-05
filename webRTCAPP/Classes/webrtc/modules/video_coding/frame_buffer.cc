@@ -269,7 +269,7 @@ void VCMFrameBuffer::SetState(VCMFrameBufferStateEnum state) {
       break;
 
     case kStateDecodable:
-      assert(_state == kStateEmpty || _state == kStateIncomplete);
+//      assert(_state == kStateEmpty || _state == kStateIncomplete);
       break;
   }
   _state = state;
