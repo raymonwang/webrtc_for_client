@@ -37,7 +37,7 @@ const int kPayloadType = 123;
 const int kRtxPayloadType = 98;
 const int64_t kMaxRttMs = 1000;
 
-class VerifyingRtxReceiver : public NullRtpData {
+class VerifyingRtxReceiver : public RtpData {
  public:
   VerifyingRtxReceiver() {}
 
@@ -58,7 +58,7 @@ class TestRtpFeedback : public NullRtpFeedback {
   explicit TestRtpFeedback(RtpRtcp* rtp_rtcp) : rtp_rtcp_(rtp_rtcp) {}
   virtual ~TestRtpFeedback() {}
 
-  void OnIncomingSSRCChanged(const uint32_t ssrc) override {
+  void OnIncomingSSRCChanged(uint32_t ssrc) override {
     rtp_rtcp_->SetRemoteSSRC(ssrc);
   }
 

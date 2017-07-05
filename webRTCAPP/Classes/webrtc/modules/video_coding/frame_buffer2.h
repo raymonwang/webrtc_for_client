@@ -28,6 +28,7 @@
 namespace webrtc {
 
 class Clock;
+class VCMReceiveStatisticsCallback;
 class VCMJitterEstimator;
 class VCMTiming;
 
@@ -39,7 +40,8 @@ class FrameBuffer {
 
   FrameBuffer(Clock* clock,
               VCMJitterEstimator* jitter_estimator,
-              VCMTiming* timing);
+              VCMTiming* timing,
+              VCMReceiveStatisticsCallback* stats_proxy);
 
   virtual ~FrameBuffer();
 
@@ -95,6 +97,8 @@ class FrameBuffer {
 
     // Which other frames that have direct unfulfilled dependencies
     // on this frame.
+    // TODO(philipel): Add simple modify/access functions to prevent adding too
+    // many |dependent_frames|.
     FrameKey dependent_frames[kMaxNumDependentFrames];
     size_t num_dependent_frames = 0;
 
@@ -117,6 +121,14 @@ class FrameBuffer {
   };
 
   using FrameMap = std::map<FrameKey, FrameInfo>;
+
+  // Check that the references of |frame| are valid.
+  bool ValidReferences(const FrameObject& frame) const;
+
+  // Updates the minimal and maximal playout delays
+  // depending on the frame.
+  void UpdatePlayoutDelays(const FrameObject& frame)
+      EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
   // Update all directly dependent and indirectly dependent frames and mark
   // them as continuous if all their references has been fulfilled.
@@ -141,35 +153,30 @@ class FrameBuffer {
 
   void UpdateJitterDelay() EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
-  void UpdateHistograms() const;
-
   void ClearFramesAndHistory() EXCLUSIVE_LOCKS_REQUIRED(crit_);
+
+  bool HasBadRenderTiming(const FrameObject& frame, int64_t now_ms)
+      EXCLUSIVE_LOCKS_REQUIRED(crit_);
 
   FrameMap frames_ GUARDED_BY(crit_);
 
   rtc::CriticalSection crit_;
   Clock* const clock_;
-  rtc::Event new_countinuous_frame_event_;
+  rtc::Event new_continuous_frame_event_;
   VCMJitterEstimator* const jitter_estimator_ GUARDED_BY(crit_);
   VCMTiming* const timing_ GUARDED_BY(crit_);
   VCMInterFrameDelay inter_frame_delay_ GUARDED_BY(crit_);
   uint32_t last_decoded_frame_timestamp_ GUARDED_BY(crit_);
   FrameMap::iterator last_decoded_frame_it_ GUARDED_BY(crit_);
   FrameMap::iterator last_continuous_frame_it_ GUARDED_BY(crit_);
+  FrameMap::iterator next_frame_it_ GUARDED_BY(crit_);
   int num_frames_history_ GUARDED_BY(crit_);
   int num_frames_buffered_ GUARDED_BY(crit_);
   bool stopped_ GUARDED_BY(crit_);
   VCMVideoProtection protection_mode_ GUARDED_BY(crit_);
+  VCMReceiveStatisticsCallback* const stats_callback_;
 
   RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(FrameBuffer);
-
-  // For WebRTC.Video.JitterBufferDelayInMs metric.
-  int64_t accumulated_delay_ = 0;
-  int64_t accumulated_delay_samples_ = 0;
-
-  // For WebRTC.Video.KeyFramesReceivedInPermille metric.
-  int64_t num_total_frames_ = 0;
-  int64_t num_key_frames_ = 0;
 };
 
 }  // namespace video_coding

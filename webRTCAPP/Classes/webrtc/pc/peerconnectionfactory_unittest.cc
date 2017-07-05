@@ -63,29 +63,21 @@ static const char kTurnIceServerWithIPv6Address[] =
 
 class NullPeerConnectionObserver : public PeerConnectionObserver {
  public:
-  // We need these using declarations because there are two versions of each of
-  // the below methods and we only override one of them.
-  // TODO(deadbeef): Remove once there's only one version of the methods.
-  using PeerConnectionObserver::OnAddStream;
-  using PeerConnectionObserver::OnRemoveStream;
-  using PeerConnectionObserver::OnDataChannel;
-
   virtual ~NullPeerConnectionObserver() = default;
-  virtual void OnMessage(const std::string& msg) {}
-  virtual void OnSignalingMessage(const std::string& msg) {}
-  virtual void OnSignalingChange(
-      PeerConnectionInterface::SignalingState new_state) {}
-  virtual void OnAddStream(rtc::scoped_refptr<MediaStreamInterface> stream) {}
-  virtual void OnRemoveStream(rtc::scoped_refptr<MediaStreamInterface> stream) {
-  }
-  virtual void OnDataChannel(
-      rtc::scoped_refptr<DataChannelInterface> data_channel) {}
-  virtual void OnRenegotiationNeeded() {}
-  virtual void OnIceConnectionChange(
-      PeerConnectionInterface::IceConnectionState new_state) {}
-  virtual void OnIceGatheringChange(
-      PeerConnectionInterface::IceGatheringState new_state) {}
-  virtual void OnIceCandidate(const webrtc::IceCandidateInterface* candidate) {}
+  void OnSignalingChange(
+      PeerConnectionInterface::SignalingState new_state) override {}
+  void OnAddStream(rtc::scoped_refptr<MediaStreamInterface> stream) override {}
+  void OnRemoveStream(
+      rtc::scoped_refptr<MediaStreamInterface> stream) override {}
+  void OnDataChannel(
+      rtc::scoped_refptr<DataChannelInterface> data_channel) override {}
+  void OnRenegotiationNeeded() override {}
+  void OnIceConnectionChange(
+      PeerConnectionInterface::IceConnectionState new_state) override {}
+  void OnIceGatheringChange(
+      PeerConnectionInterface::IceGatheringState new_state) override {}
+  void OnIceCandidate(
+      const webrtc::IceCandidateInterface* candidate) override {}
 };
 
 }  // namespace
@@ -337,9 +329,11 @@ TEST_F(PeerConnectionFactoryTest, CreatePCUsingIPLiteralAddress) {
 // local video track.
 TEST_F(PeerConnectionFactoryTest, LocalRendering) {
   cricket::FakeVideoCapturer* capturer = new cricket::FakeVideoCapturer();
-  // The source take ownership of |capturer|.
+  // The source takes ownership of |capturer|, but we keep a raw pointer to
+  // inject fake frames.
   rtc::scoped_refptr<VideoTrackSourceInterface> source(
-      factory_->CreateVideoSource(capturer, NULL));
+      factory_->CreateVideoSource(
+          std::unique_ptr<cricket::VideoCapturer>(capturer), NULL));
   ASSERT_TRUE(source.get() != NULL);
   rtc::scoped_refptr<VideoTrackInterface> track(
       factory_->CreateVideoTrack("testlabel", source));

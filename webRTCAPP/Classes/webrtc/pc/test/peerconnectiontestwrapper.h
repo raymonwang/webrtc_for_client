@@ -24,13 +24,6 @@ class PeerConnectionTestWrapper
       public webrtc::CreateSessionDescriptionObserver,
       public sigslot::has_slots<> {
  public:
-  // We need these using declarations because there are two versions of each of
-  // the below methods and we only override one of them.
-  // TODO(deadbeef): Remove once there's only one version of the methods.
-  using PeerConnectionObserver::OnAddStream;
-  using PeerConnectionObserver::OnRemoveStream;
-  using PeerConnectionObserver::OnDataChannel;
-
   static void Connect(PeerConnectionTestWrapper* caller,
                       PeerConnectionTestWrapper* callee);
 
@@ -41,7 +34,9 @@ class PeerConnectionTestWrapper
 
   bool CreatePc(
       const webrtc::MediaConstraintsInterface* constraints,
-      const webrtc::PeerConnectionInterface::RTCConfiguration& config);
+      const webrtc::PeerConnectionInterface::RTCConfiguration& config,
+      rtc::scoped_refptr<webrtc::AudioEncoderFactory> audio_encoder_factory,
+      rtc::scoped_refptr<webrtc::AudioDecoderFactory> audio_decoder_factory);
 
   webrtc::PeerConnectionInterface* pc() { return peer_connection_.get(); }
 
@@ -50,27 +45,24 @@ class PeerConnectionTestWrapper
       const webrtc::DataChannelInit& init);
 
   // Implements PeerConnectionObserver.
-  virtual void OnSignalingChange(
-     webrtc::PeerConnectionInterface::SignalingState new_state) {}
-  virtual void OnStateChange(
-      webrtc::PeerConnectionObserver::StateType state_changed) {}
-  virtual void OnAddStream(
-      rtc::scoped_refptr<webrtc::MediaStreamInterface> stream);
-  virtual void OnRemoveStream(
-      rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) {}
-  virtual void OnDataChannel(
-      rtc::scoped_refptr<webrtc::DataChannelInterface> data_channel);
-  virtual void OnRenegotiationNeeded() {}
-  virtual void OnIceConnectionChange(
-      webrtc::PeerConnectionInterface::IceConnectionState new_state) {}
-  virtual void OnIceGatheringChange(
-      webrtc::PeerConnectionInterface::IceGatheringState new_state) {}
-  virtual void OnIceCandidate(const webrtc::IceCandidateInterface* candidate);
-  virtual void OnIceComplete() {}
+  void OnSignalingChange(
+     webrtc::PeerConnectionInterface::SignalingState new_state) override {}
+  void OnAddStream(
+      rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) override;
+  void OnRemoveStream(
+      rtc::scoped_refptr<webrtc::MediaStreamInterface> stream) override {}
+  void OnDataChannel(
+      rtc::scoped_refptr<webrtc::DataChannelInterface> data_channel) override ;
+  void OnRenegotiationNeeded() override {}
+  void OnIceConnectionChange(
+      webrtc::PeerConnectionInterface::IceConnectionState new_state) override {}
+  void OnIceGatheringChange(
+      webrtc::PeerConnectionInterface::IceGatheringState new_state) override {}
+  void OnIceCandidate(const webrtc::IceCandidateInterface* candidate) override;
 
   // Implements CreateSessionDescriptionObserver.
-  virtual void OnSuccess(webrtc::SessionDescriptionInterface* desc);
-  virtual void OnFailure(const std::string& error) {}
+  void OnSuccess(webrtc::SessionDescriptionInterface* desc) override;
+  void OnFailure(const std::string& error) override {}
 
   void CreateOffer(const webrtc::MediaConstraintsInterface* constraints);
   void CreateAnswer(const webrtc::MediaConstraintsInterface* constraints);

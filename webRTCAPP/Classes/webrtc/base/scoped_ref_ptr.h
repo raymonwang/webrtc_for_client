@@ -30,7 +30,7 @@
 //   void some_other_function() {
 //     scoped_refptr<MyFoo> foo = new MyFoo();
 //     ...
-//     foo = NULL;  // explicitly releases |foo|
+//     foo = nullptr;  // explicitly releases |foo|
 //     ...
 //     if (foo)
 //       foo->Method(param);
@@ -45,7 +45,7 @@
 //     scoped_refptr<MyFoo> b;
 //
 //     b.swap(a);
-//     // now, |b| references the MyFoo object, and |a| references NULL.
+//     // now, |b| references the MyFoo object, and |a| references null.
 //   }
 //
 // To make both |a| and |b| in the above example reference the same MyFoo
@@ -63,102 +63,9 @@
 #ifndef WEBRTC_BASE_SCOPED_REF_PTR_H_
 #define WEBRTC_BASE_SCOPED_REF_PTR_H_
 
-#include <memory>
 
-namespace rtc {
-
-template <class T>
-class scoped_refptr {
- public:
-  scoped_refptr() : ptr_(NULL) {
-  }
-
-  scoped_refptr(T* p) : ptr_(p) {
-    if (ptr_)
-      ptr_->AddRef();
-  }
-
-  scoped_refptr(const scoped_refptr<T>& r) : ptr_(r.ptr_) {
-    if (ptr_)
-      ptr_->AddRef();
-  }
-
-  template <typename U>
-  scoped_refptr(const scoped_refptr<U>& r) : ptr_(r.get()) {
-    if (ptr_)
-      ptr_->AddRef();
-  }
-
-  // Move constructors.
-  scoped_refptr(scoped_refptr<T>&& r) : ptr_(r.release()) {}
-
-  template <typename U>
-  scoped_refptr(scoped_refptr<U>&& r) : ptr_(r.release()) {}
-
-  ~scoped_refptr() {
-    if (ptr_)
-      ptr_->Release();
-  }
-
-  T* get() const { return ptr_; }
-  operator T*() const { return ptr_; }
-  T* operator->() const { return ptr_; }
-
-  // Release a pointer.
-  // The return value is the current pointer held by this object.
-  // If this object holds a NULL pointer, the return value is NULL.
-  // After this operation, this object will hold a NULL pointer,
-  // and will not own the object any more.
-  T* release() {
-    T* retVal = ptr_;
-    ptr_ = NULL;
-    return retVal;
-  }
-
-  scoped_refptr<T>& operator=(T* p) {
-    // AddRef first so that self assignment should work
-    if (p)
-      p->AddRef();
-    if (ptr_ )
-      ptr_ ->Release();
-    ptr_ = p;
-    return *this;
-  }
-
-  scoped_refptr<T>& operator=(const scoped_refptr<T>& r) {
-    return *this = r.ptr_;
-  }
-
-  template <typename U>
-  scoped_refptr<T>& operator=(const scoped_refptr<U>& r) {
-    return *this = r.get();
-  }
-
-  scoped_refptr<T>& operator=(scoped_refptr<T>&& r) {
-    scoped_refptr<T>(std::move(r)).swap(*this);
-    return *this;
-  }
-
-  template <typename U>
-  scoped_refptr<T>& operator=(scoped_refptr<U>&& r) {
-    scoped_refptr<T>(std::move(r)).swap(*this);
-    return *this;
-  }
-
-  void swap(T** pp) {
-    T* p = ptr_;
-    ptr_ = *pp;
-    *pp = p;
-  }
-
-  void swap(scoped_refptr<T>& r) {
-    swap(&r.ptr_);
-  }
-
- protected:
-  T* ptr_;
-};
-
-}  // namespace rtc
+// This header is deprecated and is just left here temporarily during
+// refactoring. See https://bugs.webrtc.org/7634 for more details.
+#include "webrtc/rtc_base/scoped_ref_ptr.h"
 
 #endif  // WEBRTC_BASE_SCOPED_REF_PTR_H_

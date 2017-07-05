@@ -64,10 +64,10 @@
   }
 }
 
-- (void)audioSessionMediaServicesWereLost:(RTCAudioSession *)session {
+- (void)audioSessionMediaServerTerminated:(RTCAudioSession *)session {
 }
 
-- (void)audioSessionMediaServicesWereReset:(RTCAudioSession *)session {
+- (void)audioSessionMediaServerReset:(RTCAudioSession *)session {
 }
 
 - (void)audioSession:(RTCAudioSession *)session
@@ -79,6 +79,11 @@
 }
 
 - (void)audioSessionDidStopPlayOrRecord:(RTCAudioSession *)session {
+}
+
+- (void)audioSession:(RTCAudioSession *)audioSession
+    didChangeOutputVolume:(float)outputVolume {
+  _observer->OnChangedOutputVolume();
 }
 
 @end

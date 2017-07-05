@@ -15,6 +15,7 @@
 
 #include "webrtc/base/criticalsection.h"
 #include "webrtc/call/flexfec_receive_stream.h"
+#include "webrtc/call/rtp_packet_sink_interface.h"
 
 namespace webrtc {
 
@@ -25,18 +26,24 @@ class RecoveredPacketReceiver;
 class RtcpRttStats;
 class RtpPacketReceived;
 class RtpRtcp;
+class RtpStreamReceiverControllerInterface;
+class RtpStreamReceiverInterface;
 
-class FlexfecReceiveStreamImpl : public FlexfecReceiveStream {
+class FlexfecReceiveStreamImpl : public FlexfecReceiveStream,
+                                 public RtpPacketSinkInterface {
  public:
-  FlexfecReceiveStreamImpl(const Config& config,
-                           RecoveredPacketReceiver* recovered_packet_receiver,
-                           RtcpRttStats* rtt_stats,
-                           ProcessThread* process_thread);
+  FlexfecReceiveStreamImpl(
+      RtpStreamReceiverControllerInterface* receiver_controller,
+      const Config& config,
+      RecoveredPacketReceiver* recovered_packet_receiver,
+      RtcpRttStats* rtt_stats,
+      ProcessThread* process_thread);
   ~FlexfecReceiveStreamImpl() override;
 
   const Config& GetConfig() const { return config_; }
 
-  bool AddAndProcessReceivedPacket(const RtpPacketReceived& packet);
+  // RtpPacketSinkInterface.
+  void OnRtpPacket(const RtpPacketReceived& packet) override;
 
   // Implements FlexfecReceiveStream.
   void Start() override;
@@ -56,6 +63,8 @@ class FlexfecReceiveStreamImpl : public FlexfecReceiveStream {
   const std::unique_ptr<ReceiveStatistics> rtp_receive_statistics_;
   const std::unique_ptr<RtpRtcp> rtp_rtcp_;
   ProcessThread* process_thread_;
+
+  std::unique_ptr<RtpStreamReceiverInterface> rtp_stream_receiver_;
 };
 
 }  // namespace webrtc

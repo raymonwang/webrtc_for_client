@@ -63,7 +63,9 @@ class Aec3RenderQueueItemVerifier {
 class EchoCanceller3 {
  public:
   // Normal c-tor to use.
-  EchoCanceller3(int sample_rate_hz, bool use_highpass_filter);
+  EchoCanceller3(const AudioProcessing::Config::EchoCanceller3& config,
+                 int sample_rate_hz,
+                 bool use_highpass_filter);
   // Testing c-tor that is used only for testing purposes.
   EchoCanceller3(int sample_rate_hz,
                  bool use_highpass_filter,
@@ -71,20 +73,20 @@ class EchoCanceller3 {
   ~EchoCanceller3();
   // Analyzes and stores an internal copy of the split-band domain render
   // signal.
-  bool AnalyzeRender(AudioBuffer* farend);
+  void AnalyzeRender(AudioBuffer* farend);
   // Analyzes the full-band domain capture signal to detect signal saturation.
   void AnalyzeCapture(AudioBuffer* capture);
   // Processes the split-band domain capture signal in order to remove any echo
   // present in the signal.
-  void ProcessCapture(AudioBuffer* capture, bool known_echo_path_change);
+  void ProcessCapture(AudioBuffer* capture, bool level_change);
 
   // Signals whether an external detector has detected echo leakage from the
   // echo canceller.
   // Note that in the case echo leakage has been flagged, it should be unflagged
   // once it is no longer occurring.
-  void ReportEchoLeakage(bool leakage_detected) {
+  void UpdateEchoLeakageStatus(bool leakage_detected) {
     RTC_DCHECK_RUNS_SERIALIZED(&capture_race_checker_);
-    block_processor_->ReportEchoLeakage(leakage_detected);
+    block_processor_->UpdateEchoLeakageStatus(leakage_detected);
   }
 
   // Validates a config.
@@ -96,7 +98,8 @@ class EchoCanceller3 {
  private:
   class RenderWriter;
 
-  bool EmptyRenderQueue();
+  // Empties the render SwapQueue.
+  void EmptyRenderQueue();
 
   rtc::RaceChecker capture_race_checker_;
   rtc::RaceChecker render_race_checker_;

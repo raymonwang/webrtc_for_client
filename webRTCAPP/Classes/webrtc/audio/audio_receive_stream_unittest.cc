@@ -8,19 +8,21 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <map>
 #include <string>
 #include <vector>
 
 #include "webrtc/api/test/mock_audio_mixer.h"
 #include "webrtc/audio/audio_receive_stream.h"
 #include "webrtc/audio/conversion.h"
+#include "webrtc/call/rtp_stream_receiver_controller.h"
 #include "webrtc/logging/rtc_event_log/mock/mock_rtc_event_log.h"
-#include "webrtc/modules/audio_coding/codecs/mock/mock_audio_decoder_factory.h"
+#include "webrtc/modules/audio_processing/include/mock_audio_processing.h"
 #include "webrtc/modules/bitrate_controller/include/mock/mock_bitrate_controller.h"
 #include "webrtc/modules/pacing/packet_router.h"
-#include "webrtc/modules/remote_bitrate_estimator/include/mock/mock_remote_bitrate_estimator.h"
 #include "webrtc/modules/rtp_rtcp/source/byte_io.h"
 #include "webrtc/test/gtest.h"
+#include "webrtc/test/mock_audio_decoder_factory.h"
 #include "webrtc/test/mock_voe_channel_proxy.h"
 #include "webrtc/test/mock_voice_engine.h"
 
@@ -73,13 +75,13 @@ struct ConfigHelper {
         RegisterVoiceEngineObserver(_)).WillOnce(Return(0));
     EXPECT_CALL(voice_engine_,
         DeRegisterVoiceEngineObserver()).WillOnce(Return(0));
-    EXPECT_CALL(voice_engine_, audio_processing());
     EXPECT_CALL(voice_engine_, audio_device_module());
     EXPECT_CALL(voice_engine_, audio_transport());
 
     AudioState::Config config;
     config.voice_engine = &voice_engine_;
     config.audio_mixer = audio_mixer_;
+    config.audio_processing = new rtc::RefCountedObject<MockAudioProcessing>();
     audio_state_ = AudioState::Create(config);
 
     EXPECT_CALL(voice_engine_, ChannelProxyFactory(kChannelId))
@@ -97,7 +99,7 @@ struct ConfigHelper {
           EXPECT_CALL(*channel_proxy_,
               RegisterReceiverCongestionControlObjects(&packet_router_))
                   .Times(1);
-          EXPECT_CALL(*channel_proxy_, ResetCongestionControlObjects())
+          EXPECT_CALL(*channel_proxy_, ResetReceiverCongestionControlObjects())
               .Times(1);
           EXPECT_CALL(*channel_proxy_, RegisterExternalTransport(nullptr))
               .Times(1);
@@ -112,6 +114,11 @@ struct ConfigHelper {
               .Times(1)
               .After(expect_set);
           EXPECT_CALL(*channel_proxy_, DisassociateSendChannel()).Times(1);
+          EXPECT_CALL(*channel_proxy_, SetReceiveCodecs(_))
+              .WillRepeatedly(
+                  Invoke([](const std::map<int, SdpAudioFormat>& codecs) {
+                    EXPECT_THAT(codecs, testing::IsEmpty());
+                  }));
           return channel_proxy_;
         }));
     stream_config_.voe_channel_id = kChannelId;
@@ -126,24 +133,19 @@ struct ConfigHelper {
   }
 
   PacketRouter* packet_router() { return &packet_router_; }
-  MockRemoteBitrateEstimator* remote_bitrate_estimator() {
-    return &remote_bitrate_estimator_;
-  }
   MockRtcEventLog* event_log() { return &event_log_; }
   AudioReceiveStream::Config& config() { return stream_config_; }
   rtc::scoped_refptr<AudioState> audio_state() { return audio_state_; }
   rtc::scoped_refptr<MockAudioMixer> audio_mixer() { return audio_mixer_; }
   MockVoiceEngine& voice_engine() { return voice_engine_; }
   MockVoEChannelProxy* channel_proxy() { return channel_proxy_; }
-
-  void SetupMockForBweFeedback(bool send_side_bwe) {
-    EXPECT_CALL(remote_bitrate_estimator_,
-                RemoveStream(stream_config_.rtp.remote_ssrc));
+  RtpStreamReceiverControllerInterface* rtp_stream_receiver_controller() {
+    return &rtp_stream_receiver_controller_;
   }
 
   void SetupMockForGetStats() {
     using testing::DoAll;
-    using testing::SetArgReferee;
+    using testing::SetArgPointee;
 
     ASSERT_TRUE(channel_proxy_);
     EXPECT_CALL(*channel_proxy_, GetRTCPStatistics())
@@ -156,21 +158,20 @@ struct ConfigHelper {
         .WillOnce(Return(kNetworkStats));
     EXPECT_CALL(*channel_proxy_, GetDecodingCallStatistics())
         .WillOnce(Return(kAudioDecodeStats));
-
-    EXPECT_CALL(voice_engine_, GetRecCodec(kChannelId, _))
-        .WillOnce(DoAll(SetArgReferee<1>(kCodecInst), Return(0)));
+    EXPECT_CALL(*channel_proxy_, GetRecCodec(_))
+        .WillOnce(DoAll(SetArgPointee<0>(kCodecInst), Return(true)));
   }
 
  private:
   PacketRouter packet_router_;
   rtc::scoped_refptr<AudioDecoderFactory> decoder_factory_;
-  MockRemoteBitrateEstimator remote_bitrate_estimator_;
   MockRtcEventLog event_log_;
   testing::StrictMock<MockVoiceEngine> voice_engine_;
   rtc::scoped_refptr<AudioState> audio_state_;
   rtc::scoped_refptr<MockAudioMixer> audio_mixer_;
   AudioReceiveStream::Config stream_config_;
   testing::StrictMock<MockVoEChannelProxy>* channel_proxy_ = nullptr;
+  RtpStreamReceiverController rtp_stream_receiver_controller_;
 };
 
 void BuildOneByteExtension(std::vector<uint8_t>::iterator it,
@@ -236,62 +237,46 @@ TEST(AudioReceiveStreamTest, ConfigToString) {
       "{rtp: {remote_ssrc: 1234, local_ssrc: 5678, transport_cc: off, nack: "
       "{rtp_history_ms: 0}, extensions: [{uri: "
       "urn:ietf:params:rtp-hdrext:ssrc-audio-level, id: 3}]}, "
-      "rtcp_send_transport: nullptr, voe_channel_id: 2}",
+      "rtcp_send_transport: null, voe_channel_id: 2}",
       config.ToString());
 }
 
 TEST(AudioReceiveStreamTest, ConstructDestruct) {
   ConfigHelper helper;
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
-}
-
-MATCHER_P(VerifyHeaderExtension, expected_extension, "") {
-  return arg.extension.hasTransportSequenceNumber ==
-             expected_extension.hasTransportSequenceNumber &&
-         arg.extension.transportSequenceNumber ==
-             expected_extension.transportSequenceNumber;
 }
 
 TEST(AudioReceiveStreamTest, ReceiveRtpPacket) {
   ConfigHelper helper;
   helper.config().rtp.transport_cc = true;
-  helper.SetupMockForBweFeedback(true);
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
   const int kTransportSequenceNumberValue = 1234;
   std::vector<uint8_t> rtp_packet = CreateRtpHeaderWithOneByteExtension(
       kTransportSequenceNumberId, kTransportSequenceNumberValue, 2);
   PacketTime packet_time(5678000, 0);
-  const size_t kExpectedHeaderLength = 20;
-  RTPHeaderExtension expected_extension;
-  expected_extension.hasTransportSequenceNumber = true;
-  expected_extension.transportSequenceNumber = kTransportSequenceNumberValue;
-  EXPECT_CALL(*helper.remote_bitrate_estimator(),
-              IncomingPacket(packet_time.timestamp / 1000,
-                             rtp_packet.size() - kExpectedHeaderLength,
-                             VerifyHeaderExtension(expected_extension)))
-      .Times(1);
+
+  RtpPacketReceived parsed_packet;
+  ASSERT_TRUE(parsed_packet.Parse(&rtp_packet[0], rtp_packet.size()));
+  parsed_packet.set_arrival_time_ms((packet_time.timestamp + 500) / 1000);
+
   EXPECT_CALL(*helper.channel_proxy(),
-              ReceivedRTPPacket(&rtp_packet[0],
-                                rtp_packet.size(),
-                                _))
-      .WillOnce(Return(true));
-  EXPECT_TRUE(
-      recv_stream.DeliverRtp(&rtp_packet[0], rtp_packet.size(), packet_time));
+              OnRtpPacket(testing::Ref(parsed_packet)));
+
+  recv_stream.OnRtpPacket(parsed_packet);
 }
 
 TEST(AudioReceiveStreamTest, ReceiveRtcpPacket) {
   ConfigHelper helper;
   helper.config().rtp.transport_cc = true;
-  helper.SetupMockForBweFeedback(true);
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
 
   std::vector<uint8_t> rtcp_packet = CreateRtcpSenderReport();
@@ -304,8 +289,8 @@ TEST(AudioReceiveStreamTest, ReceiveRtcpPacket) {
 TEST(AudioReceiveStreamTest, GetStats) {
   ConfigHelper helper;
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
   helper.SetupMockForGetStats();
   AudioReceiveStream::Stats stats = recv_stream.GetStats();
@@ -350,8 +335,8 @@ TEST(AudioReceiveStreamTest, GetStats) {
 TEST(AudioReceiveStreamTest, SetGain) {
   ConfigHelper helper;
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
   EXPECT_CALL(*helper.channel_proxy(),
       SetChannelOutputVolumeScaling(FloatEq(0.765f)));
@@ -361,8 +346,8 @@ TEST(AudioReceiveStreamTest, SetGain) {
 TEST(AudioReceiveStreamTest, StreamShouldNotBeAddedToMixerWhenVoEReturnsError) {
   ConfigHelper helper;
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
 
   EXPECT_CALL(helper.voice_engine(), StartPlayout(_)).WillOnce(Return(-1));
@@ -374,8 +359,8 @@ TEST(AudioReceiveStreamTest, StreamShouldNotBeAddedToMixerWhenVoEReturnsError) {
 TEST(AudioReceiveStreamTest, StreamShouldBeAddedToMixerOnStart) {
   ConfigHelper helper;
   internal::AudioReceiveStream recv_stream(
+      helper.rtp_stream_receiver_controller(),
       helper.packet_router(),
-      helper.remote_bitrate_estimator(),
       helper.config(), helper.audio_state(), helper.event_log());
 
   EXPECT_CALL(helper.voice_engine(), StartPlayout(_)).WillOnce(Return(0));

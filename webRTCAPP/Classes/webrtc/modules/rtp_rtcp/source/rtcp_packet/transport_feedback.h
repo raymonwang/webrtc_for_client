@@ -14,7 +14,6 @@
 #include <memory>
 #include <vector>
 
-#include "webrtc/base/constructormagic.h"
 #include "webrtc/modules/rtp_rtcp/source/rtcp_packet/rtpfb.h"
 
 namespace webrtc {
@@ -55,21 +54,13 @@ class TransportFeedback : public Rtpfb {
   bool AddReceivedPacket(uint16_t sequence_number, int64_t timestamp_us);
   const std::vector<ReceivedPacket>& GetReceivedPackets() const;
 
-  enum class StatusSymbol {
-    kNotReceived,
-    kReceivedSmallDelta,
-    kReceivedLargeDelta,
-  };
-
   uint16_t GetBaseSequence() const;
-  std::vector<TransportFeedback::StatusSymbol> GetStatusVector() const;
-  std::vector<int16_t> GetReceiveDeltas() const;
+
+  // Returns number of packets (including missing) this feedback describes.
+  size_t GetPacketStatusCount() const { return num_seq_no_; }
 
   // Get the reference time in microseconds, including any precision loss.
   int64_t GetBaseTimeUs() const;
-  // Convenience method for getting all deltas as microseconds. The first delta
-  // is relative the base time.
-  std::vector<int64_t> GetReceiveDeltasUs() const;
 
   bool Parse(const CommonHeader& packet);
   static std::unique_ptr<TransportFeedback> ParseFrom(const uint8_t* buffer,
@@ -78,13 +69,12 @@ class TransportFeedback : public Rtpfb {
   // This function is for tests.
   bool IsConsistent() const;
 
- protected:
+  size_t BlockLength() const override;
+
   bool Create(uint8_t* packet,
               size_t* position,
               size_t max_length,
               PacketReadyCallback* callback) const override;
-
-  size_t BlockLength() const override;
 
  private:
   // Size in bytes of a delta time in rtcp packet.
@@ -109,8 +99,6 @@ class TransportFeedback : public Rtpfb {
   std::vector<uint16_t> encoded_chunks_;
   const std::unique_ptr<LastChunk> last_chunk_;
   size_t size_bytes_;
-
-  RTC_DISALLOW_COPY_AND_ASSIGN(TransportFeedback);
 };
 
 }  // namespace rtcp

@@ -16,7 +16,6 @@
 #include "webrtc/base/atomicops.h"
 #include "webrtc/base/checks.h"
 #include "webrtc/common_types.h"
-#include "webrtc/system_wrappers/include/logging.h"
 
 // Macros for allowing WebRTC clients (e.g. Chrome) to gather and aggregate
 // statistics.
@@ -44,7 +43,7 @@
 //       Histogram* histogram_pointer, const std::string& name, int sample);
 //
 // - or link with the default implementations (i.e.
-//   system_wrappers/system_wrappers.gyp:metrics_default).
+//   system_wrappers:metrics_default).
 //
 //
 // Example usage:
@@ -242,4 +241,3 @@ void HistogramAdd(Histogram* histogram_pointer, int sample);
 }  // namespace webrtc
 
 #endif  // WEBRTC_SYSTEM_WRAPPERS_INCLUDE_METRICS_H_
-

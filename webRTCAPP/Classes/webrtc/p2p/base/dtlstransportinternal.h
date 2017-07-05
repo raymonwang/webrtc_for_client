@@ -16,9 +16,10 @@
 #include <vector>
 
 #include "webrtc/base/sslstreamadapter.h"
+#include "webrtc/base/stringencode.h"
 #include "webrtc/p2p/base/icetransportinternal.h"
 #include "webrtc/p2p/base/jseptransport.h"
-#include "webrtc/p2p/base/packettransportinterface.h"
+#include "webrtc/p2p/base/packettransportinternal.h"
 
 namespace cricket {
 
@@ -28,13 +29,17 @@ enum PacketFlags {
                           // crypto provided by the transport (e.g. DTLS)
 };
 
-// DtlsTransportInternal is an internal interface that does DTLS.
+// DtlsTransportInternal is an internal interface that does DTLS, also
+// negotiating SRTP crypto suites so that it may be used for DTLS-SRTP.
+//
 // Once the public interface is supported,
 // (https://www.w3.org/TR/webrtc/#rtcdtlstransport-interface)
 // the DtlsTransportInterface will be split from this class.
-class DtlsTransportInternal : public rtc::PacketTransportInterface {
+class DtlsTransportInternal : public rtc::PacketTransportInternal {
  public:
   virtual ~DtlsTransportInternal() {}
+
+  virtual const rtc::CryptoOptions& crypto_options() const = 0;
 
   virtual DtlsTransportState dtls_state() const = 0;
 
@@ -47,13 +52,6 @@ class DtlsTransportInternal : public rtc::PacketTransportInterface {
   virtual bool GetSslRole(rtc::SSLRole* role) const = 0;
 
   virtual bool SetSslRole(rtc::SSLRole role) = 0;
-
-  // Sets up the ciphers to use for DTLS-SRTP.
-  virtual bool SetSrtpCryptoSuites(const std::vector<int>& ciphers) = 0;
-
-  // Keep the original one for backward compatibility until all dependencies
-  // move away. TODO(zhihuang): Remove this function.
-  virtual bool SetSrtpCiphers(const std::vector<std::string>& ciphers) = 0;
 
   // Finds out which DTLS-SRTP cipher was negotiated.
   // TODO(zhihuang): Remove this once all dependencies implement this.
@@ -97,7 +95,7 @@ class DtlsTransportInternal : public rtc::PacketTransportInterface {
 
   // Debugging description of this transport.
   std::string debug_name() const override {
-    return transport_name() + " " + std::to_string(component());
+    return transport_name() + " " + rtc::ToString(component());
   }
 
  protected:

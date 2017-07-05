@@ -10,8 +10,6 @@
 
 package org.webrtc.voiceengine;
 
-import org.webrtc.Logging;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -20,9 +18,10 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.os.Build;
-
 import java.util.Timer;
 import java.util.TimerTask;
+import org.webrtc.ContextUtils;
+import org.webrtc.Logging;
 
 // WebRtcAudioManager handles tasks that uses android.media.AudioManager.
 // At construction, storeAudioParameters() is called and it retrieves
@@ -85,11 +84,11 @@ public class WebRtcAudioManager {
 
   // Private utility class that periodically checks and logs the volume level
   // of the audio stream that is currently controlled by the volume control.
-  // A timer triggers logs once every 10 seconds and the timer's associated
+  // A timer triggers logs once every 30 seconds and the timer's associated
   // thread is named "WebRtcVolumeLevelLoggerThread".
   private static class VolumeLogger {
     private static final String THREAD_NAME = "WebRtcVolumeLevelLoggerThread";
-    private static final int TIMER_PERIOD_IN_SECONDS = 10;
+    private static final int TIMER_PERIOD_IN_SECONDS = 30;
 
     private final AudioManager audioManager;
     private Timer timer;
@@ -137,7 +136,6 @@ public class WebRtcAudioManager {
   }
 
   private final long nativeAudioManager;
-  private final Context context;
   private final AudioManager audioManager;
 
   private boolean initialized = false;
@@ -158,11 +156,11 @@ public class WebRtcAudioManager {
 
   private final VolumeLogger volumeLogger;
 
-  WebRtcAudioManager(Context context, long nativeAudioManager) {
+  WebRtcAudioManager(long nativeAudioManager) {
     Logging.d(TAG, "ctor" + WebRtcAudioUtils.getThreadInfo());
-    this.context = context;
     this.nativeAudioManager = nativeAudioManager;
-    audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+    audioManager =
+        (AudioManager) ContextUtils.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     if (DEBUG) {
       WebRtcAudioUtils.logDeviceInfo(TAG);
     }
@@ -226,13 +224,14 @@ public class WebRtcAudioManager {
 
   // Gets the current earpiece state.
   private boolean hasEarpiece() {
-    return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+    return ContextUtils.getApplicationContext().getPackageManager().hasSystemFeature(
+        PackageManager.FEATURE_TELEPHONY);
   }
 
   // Returns true if low-latency audio output is supported.
   private boolean isLowLatencyOutputSupported() {
-    return isOpenSLESSupported()
-        && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUDIO_LOW_LATENCY);
+    return ContextUtils.getApplicationContext().getPackageManager().hasSystemFeature(
+        PackageManager.FEATURE_AUDIO_LOW_LATENCY);
   }
 
   // Returns true if low-latency audio input is supported.
@@ -248,9 +247,11 @@ public class WebRtcAudioManager {
 
   // Returns true if the device has professional audio level of functionality
   // and therefore supports the lowest possible round-trip latency.
+  @TargetApi(23)
   private boolean isProAudioSupported() {
     return WebRtcAudioUtils.runningOnMarshmallowOrHigher()
-        && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUDIO_PRO);
+        && ContextUtils.getApplicationContext().getPackageManager().hasSystemFeature(
+               PackageManager.FEATURE_AUDIO_PRO);
   }
 
   // Returns the native output sample rate for this device's output stream.
@@ -340,12 +341,6 @@ public class WebRtcAudioManager {
     return AudioRecord.getMinBufferSize(
                sampleRateInHz, channelConfig, AudioFormat.ENCODING_PCM_16BIT)
         / bytesPerFrame;
-  }
-
-  // Returns true if OpenSL ES audio is supported.
-  private static boolean isOpenSLESSupported() {
-    // Check for API level 9 or higher, to confirm use of OpenSL ES.
-    return WebRtcAudioUtils.runningOnGingerBreadOrHigher();
   }
 
   // Helper method which throws an exception  when an assertion has failed.

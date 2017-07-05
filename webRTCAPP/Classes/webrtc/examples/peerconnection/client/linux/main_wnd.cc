@@ -18,7 +18,6 @@
 #include "webrtc/api/video/i420_buffer.h"
 #include "webrtc/examples/peerconnection/client/defaults.h"
 #include "webrtc/base/checks.h"
-#include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/stringutils.h"
 
@@ -524,8 +523,8 @@ void GtkMainWnd::VideoRenderer::OnFrame(
     const webrtc::VideoFrame& video_frame) {
   gdk_threads_enter();
 
-  rtc::scoped_refptr<webrtc::VideoFrameBuffer> buffer(
-      video_frame.video_frame_buffer());
+  rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
+      video_frame.video_frame_buffer()->ToI420());
   if (video_frame.rotation() != webrtc::kVideoRotation_0) {
     buffer = webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation());
   }

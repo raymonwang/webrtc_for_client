@@ -12,11 +12,12 @@
 
 #include "webrtc/base/basictypes.h"
 #include "webrtc/base/logging.h"
-#include "webrtc/common_video/include/video_bitrate_allocator.h"
 #include "webrtc/common_types.h"
+#include "webrtc/common_video/include/video_bitrate_allocator.h"
 #include "webrtc/modules/video_coding/codecs/vp8/screenshare_layers.h"
+#include "webrtc/modules/video_coding/codecs/vp8/simulcast_rate_allocator.h"
 #include "webrtc/modules/video_coding/codecs/vp8/temporal_layers.h"
-#include "webrtc/modules/video_coding/utility/simulcast_rate_allocator.h"
+#include "webrtc/modules/video_coding/include/video_coding_defines.h"
 #include "webrtc/modules/video_coding/utility/default_video_bitrate_allocator.h"
 #include "webrtc/system_wrappers/include/clock.h"
 
@@ -38,8 +39,9 @@ bool VideoCodecInitializer::SetupCodec(
     case kVideoCodecVP8: {
       if (!codec->VP8()->tl_factory) {
         if (codec->mode == kScreensharing &&
-            codec->numberOfSimulcastStreams == 1 &&
-            codec->VP8()->numberOfTemporalLayers == 2) {
+            (codec->numberOfSimulcastStreams > 1 ||
+             (codec->numberOfSimulcastStreams == 1 &&
+              codec->VP8()->numberOfTemporalLayers == 2))) {
           // Conference mode temporal layering for screen content.
           tl_factory.reset(new ScreenshareTemporalLayersFactory());
         } else {
@@ -102,7 +104,7 @@ VideoCodec VideoCodecInitializer::VideoEncoderConfigToVideoCodec(
       break;
     case VideoEncoderConfig::ContentType::kScreen:
       video_codec.mode = kScreensharing;
-      if (streams.size() == 1 &&
+      if (!streams.empty() &&
           streams[0].temporal_layer_thresholds_bps.size() == 1) {
         video_codec.targetBitrate =
             streams[0].temporal_layer_thresholds_bps[0] / 1000;
@@ -164,6 +166,8 @@ VideoCodec VideoCodecInitializer::VideoEncoderConfigToVideoCodec(
   video_codec.minBitrate = streams[0].min_bitrate_bps / 1000;
   if (video_codec.minBitrate < kEncoderMinBitrateKbps)
     video_codec.minBitrate = kEncoderMinBitrateKbps;
+  video_codec.timing_frame_thresholds = {kDefaultTimingFramesDelayMs,
+                                         kDefaultOutlierFrameSizePercent};
   RTC_DCHECK_LE(streams.size(), kMaxSimulcastStreams);
   if (video_codec.codecType == kVideoCodecVP9) {
     // If the vector is empty, bitrates will be configured automatically.
@@ -180,8 +184,12 @@ VideoCodec VideoCodecInitializer::VideoEncoderConfigToVideoCodec(
     RTC_DCHECK_GT(streams[i].width, 0);
     RTC_DCHECK_GT(streams[i].height, 0);
     RTC_DCHECK_GT(streams[i].max_framerate, 0);
-    // Different framerates not supported per stream at the moment.
-    RTC_DCHECK_EQ(streams[i].max_framerate, streams[0].max_framerate);
+    // Different framerates not supported per stream at the moment, unless it's
+    // screenshare where there is an exception and a simulcast encoder adapter,
+    // which supports different framerates, is used instead.
+    if (config.content_type != VideoEncoderConfig::ContentType::kScreen) {
+      RTC_DCHECK_EQ(streams[i].max_framerate, streams[0].max_framerate);
+    }
     RTC_DCHECK_GE(streams[i].min_bitrate_bps, 0);
     RTC_DCHECK_GE(streams[i].target_bitrate_bps, streams[i].min_bitrate_bps);
     RTC_DCHECK_GE(streams[i].max_bitrate_bps, streams[i].target_bitrate_bps);

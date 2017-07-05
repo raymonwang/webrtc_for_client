@@ -37,7 +37,6 @@ enum PreservedErrno {
 #include "webrtc/base/trace_event.h"
 #include "webrtc/media/base/codec.h"
 #include "webrtc/media/base/mediaconstants.h"
-#include "webrtc/media/base/rtputils.h"  // For IsRtpPacket
 #include "webrtc/media/base/streamparams.h"
 #include "webrtc/p2p/base/dtlstransportinternal.h"  // For PF_NORMAL
 
@@ -385,7 +384,7 @@ class SctpTransport::UsrSctpWrapper {
 };
 
 SctpTransport::SctpTransport(rtc::Thread* network_thread,
-                             rtc::PacketTransportInterface* channel)
+                             rtc::PacketTransportInternal* channel)
     : network_thread_(network_thread),
       transport_channel_(channel),
       was_ever_writable_(channel->writable()) {
@@ -400,8 +399,7 @@ SctpTransport::~SctpTransport() {
   CloseSctpSocket();
 }
 
-void SctpTransport::SetTransportChannel(
-    rtc::PacketTransportInterface* channel) {
+void SctpTransport::SetTransportChannel(rtc::PacketTransportInternal* channel) {
   RTC_DCHECK_RUN_ON(network_thread_);
   RTC_DCHECK(channel);
   DisconnectTransportChannelSignals();
@@ -808,7 +806,7 @@ void SctpTransport::SetReadyToSendData() {
   }
 }
 
-void SctpTransport::OnWritableState(rtc::PacketTransportInterface* transport) {
+void SctpTransport::OnWritableState(rtc::PacketTransportInternal* transport) {
   RTC_DCHECK_RUN_ON(network_thread_);
   RTC_DCHECK_EQ(transport_channel_, transport);
   if (!was_ever_writable_ && transport->writable()) {
@@ -820,7 +818,7 @@ void SctpTransport::OnWritableState(rtc::PacketTransportInterface* transport) {
 }
 
 // Called by network interface when a packet has been received.
-void SctpTransport::OnPacketRead(rtc::PacketTransportInterface* transport,
+void SctpTransport::OnPacketRead(rtc::PacketTransportInternal* transport,
                                  const char* data,
                                  size_t len,
                                  const rtc::PacketTime& packet_time,
@@ -829,9 +827,8 @@ void SctpTransport::OnPacketRead(rtc::PacketTransportInterface* transport,
   RTC_DCHECK_EQ(transport_channel_, transport);
   TRACE_EVENT0("webrtc", "SctpTransport::OnPacketRead");
 
-  // TODO(pthatcher): Do this in a more robust way by checking for
-  // SCTP or DTLS.
-  if (IsRtpPacket(data, len)) {
+  if (flags & PF_SRTP_BYPASS) {
+    // We are only interested in SCTP packets.
     return;
   }
 

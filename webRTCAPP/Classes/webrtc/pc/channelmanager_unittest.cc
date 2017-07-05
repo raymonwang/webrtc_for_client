@@ -8,6 +8,8 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 
+#include <memory>
+
 #include "webrtc/base/gunit.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/thread.h"
@@ -18,10 +20,8 @@
 #include "webrtc/media/engine/fakewebrtccall.h"
 #include "webrtc/p2p/base/faketransportcontroller.h"
 #include "webrtc/pc/channelmanager.h"
-#include "webrtc/pc/fakemediacontroller.h"
 
-namespace cricket {
-const bool kDefaultRtcpMuxRequired = true;
+namespace {
 const bool kDefaultSrtpRequired = true;
 }
 
@@ -40,34 +40,26 @@ class ChannelManagerTest : public testing::Test {
   ChannelManagerTest()
       : fme_(new cricket::FakeMediaEngine()),
         fdme_(new cricket::FakeDataEngine()),
-        cm_(new cricket::ChannelManager(fme_, fdme_, rtc::Thread::Current())),
+        cm_(new cricket::ChannelManager(
+            std::unique_ptr<MediaEngineInterface>(fme_),
+            std::unique_ptr<DataEngineInterface>(fdme_),
+            rtc::Thread::Current())),
         fake_call_(webrtc::Call::Config(&event_log_)),
-        fake_mc_(cm_, &fake_call_),
         transport_controller_(
-            new cricket::FakeTransportController(ICEROLE_CONTROLLING)) {}
-
-  virtual void SetUp() {
+            new cricket::FakeTransportController(ICEROLE_CONTROLLING)) {
     fme_->SetAudioCodecs(MAKE_VECTOR(kAudioCodecs));
     fme_->SetVideoCodecs(MAKE_VECTOR(kVideoCodecs));
-  }
-
-  virtual void TearDown() {
-    delete transport_controller_;
-    delete cm_;
-    cm_ = NULL;
-    fdme_ = NULL;
-    fme_ = NULL;
   }
 
   webrtc::RtcEventLogNullImpl event_log_;
   rtc::Thread network_;
   rtc::Thread worker_;
+  // |fme_| and |fdme_| are actually owned by |cm_|.
   cricket::FakeMediaEngine* fme_;
   cricket::FakeDataEngine* fdme_;
-  cricket::ChannelManager* cm_;
+  std::unique_ptr<cricket::ChannelManager> cm_;
   cricket::FakeCall fake_call_;
-  cricket::FakeMediaController fake_mc_;
-  cricket::FakeTransportController* transport_controller_;
+  std::unique_ptr<cricket::FakeTransportController> transport_controller_;
 };
 
 // Test that we startup/shutdown properly.
@@ -106,19 +98,20 @@ TEST_F(ChannelManagerTest, CreateDestroyChannels) {
       transport_controller_->CreateDtlsTransport(
           cricket::CN_AUDIO, cricket::ICE_CANDIDATE_COMPONENT_RTP);
   cricket::VoiceChannel* voice_channel = cm_->CreateVoiceChannel(
-      &fake_mc_, rtp_transport, nullptr /*rtcp_transport*/,
-      rtc::Thread::Current(), cricket::CN_AUDIO, nullptr,
-      kDefaultRtcpMuxRequired, kDefaultSrtpRequired, AudioOptions());
+      &fake_call_, cricket::MediaConfig(),
+      rtp_transport, nullptr /*rtcp_transport*/,
+      rtc::Thread::Current(), cricket::CN_AUDIO, kDefaultSrtpRequired,
+      AudioOptions());
   EXPECT_TRUE(voice_channel != nullptr);
   cricket::VideoChannel* video_channel = cm_->CreateVideoChannel(
-      &fake_mc_, rtp_transport, nullptr /*rtcp_transport*/,
-      rtc::Thread::Current(), cricket::CN_VIDEO, nullptr,
-      kDefaultRtcpMuxRequired, kDefaultSrtpRequired, VideoOptions());
+      &fake_call_, cricket::MediaConfig(),
+      rtp_transport, nullptr /*rtcp_transport*/,
+      rtc::Thread::Current(), cricket::CN_VIDEO, kDefaultSrtpRequired,
+      VideoOptions());
   EXPECT_TRUE(video_channel != nullptr);
   cricket::RtpDataChannel* rtp_data_channel = cm_->CreateRtpDataChannel(
-      &fake_mc_, rtp_transport, nullptr /*rtcp_transport*/,
-      rtc::Thread::Current(), cricket::CN_DATA, nullptr,
-      kDefaultRtcpMuxRequired, kDefaultSrtpRequired);
+      cricket::MediaConfig(), rtp_transport, nullptr /*rtcp_transport*/,
+      rtc::Thread::Current(), cricket::CN_DATA, kDefaultSrtpRequired);
   EXPECT_TRUE(rtp_data_channel != nullptr);
   cm_->DestroyVideoChannel(video_channel);
   cm_->DestroyVoiceChannel(voice_channel);
@@ -133,26 +126,26 @@ TEST_F(ChannelManagerTest, CreateDestroyChannelsOnThread) {
   EXPECT_TRUE(cm_->set_worker_thread(&worker_));
   EXPECT_TRUE(cm_->set_network_thread(&network_));
   EXPECT_TRUE(cm_->Init());
-  delete transport_controller_;
-  transport_controller_ =
-      new cricket::FakeTransportController(&network_, ICEROLE_CONTROLLING);
+  transport_controller_.reset(
+      new cricket::FakeTransportController(&network_, ICEROLE_CONTROLLING));
   cricket::DtlsTransportInternal* rtp_transport =
       transport_controller_->CreateDtlsTransport(
           cricket::CN_AUDIO, cricket::ICE_CANDIDATE_COMPONENT_RTP);
   cricket::VoiceChannel* voice_channel = cm_->CreateVoiceChannel(
-      &fake_mc_, rtp_transport, nullptr /*rtcp_transport*/,
-      rtc::Thread::Current(), cricket::CN_AUDIO, nullptr,
-      kDefaultRtcpMuxRequired, kDefaultSrtpRequired, AudioOptions());
+      &fake_call_, cricket::MediaConfig(),
+      rtp_transport, nullptr /*rtcp_transport*/,
+      rtc::Thread::Current(), cricket::CN_AUDIO, kDefaultSrtpRequired,
+      AudioOptions());
   EXPECT_TRUE(voice_channel != nullptr);
   cricket::VideoChannel* video_channel = cm_->CreateVideoChannel(
-      &fake_mc_, rtp_transport, nullptr /*rtcp_transport*/,
-      rtc::Thread::Current(), cricket::CN_VIDEO, nullptr,
-      kDefaultRtcpMuxRequired, kDefaultSrtpRequired, VideoOptions());
+      &fake_call_, cricket::MediaConfig(),
+      rtp_transport, nullptr /*rtcp_transport*/,
+      rtc::Thread::Current(), cricket::CN_VIDEO, kDefaultSrtpRequired,
+      VideoOptions());
   EXPECT_TRUE(video_channel != nullptr);
   cricket::RtpDataChannel* rtp_data_channel = cm_->CreateRtpDataChannel(
-      &fake_mc_, rtp_transport, nullptr /*rtcp_transport*/,
-      rtc::Thread::Current(), cricket::CN_DATA, nullptr,
-      kDefaultRtcpMuxRequired, kDefaultSrtpRequired);
+      cricket::MediaConfig(), rtp_transport, nullptr /*rtcp_transport*/,
+      rtc::Thread::Current(), cricket::CN_DATA, kDefaultSrtpRequired);
   EXPECT_TRUE(rtp_data_channel != nullptr);
   cm_->DestroyVideoChannel(video_channel);
   cm_->DestroyVoiceChannel(voice_channel);

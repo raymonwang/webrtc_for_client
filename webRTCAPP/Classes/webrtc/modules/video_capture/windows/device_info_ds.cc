@@ -11,7 +11,6 @@
 #include "webrtc/modules/video_capture/windows/device_info_ds.h"
 
 #include "webrtc/modules/video_capture/video_capture_config.h"
-#include "webrtc/modules/video_capture/video_capture_delay.h"
 #include "webrtc/modules/video_capture/windows/help_functions_ds.h"
 #include "webrtc/system_wrappers/include/trace.h"
 
@@ -22,24 +21,6 @@ namespace webrtc
 {
 namespace videocapturemodule
 {
-const int32_t NoWindowsCaptureDelays = 1;
-const DelayValues WindowsCaptureDelays[NoWindowsCaptureDelays] = {
-  "Microsoft LifeCam Cinema",
-  "usb#vid_045e&pid_075d",
-  {
-    {640,480,125},
-    {640,360,117},
-    {424,240,111},
-    {352,288,111},
-    {320,240,116},
-    {176,144,101},
-    {160,120,109},
-    {1280,720,166},
-    {960,544,126},
-    {800,448,120},
-    {800,600,127}
-  },
-};
 
 // static
 DeviceInfoDS* DeviceInfoDS::Create()
@@ -608,44 +589,45 @@ int32_t DeviceInfoDS::CreateCapabilityMap(
             // can't switch MEDIATYPE :~(
             if (pmt->subtype == MEDIASUBTYPE_I420)
             {
-                capability.rawType = kVideoI420;
+              capability.videoType = VideoType::kI420;
             }
             else if (pmt->subtype == MEDIASUBTYPE_IYUV)
             {
-                capability.rawType = kVideoIYUV;
+              capability.videoType = VideoType::kIYUV;
             }
             else if (pmt->subtype == MEDIASUBTYPE_RGB24)
             {
-                capability.rawType = kVideoRGB24;
+              capability.videoType = VideoType::kRGB24;
             }
             else if (pmt->subtype == MEDIASUBTYPE_YUY2)
             {
-                capability.rawType = kVideoYUY2;
+              capability.videoType = VideoType::kYUY2;
             }
             else if (pmt->subtype == MEDIASUBTYPE_RGB565)
             {
-                capability.rawType = kVideoRGB565;
+              capability.videoType = VideoType::kRGB565;
             }
             else if (pmt->subtype == MEDIASUBTYPE_MJPG)
             {
-                capability.rawType = kVideoMJPEG;
+              capability.videoType = VideoType::kMJPEG;
             }
             else if (pmt->subtype == MEDIASUBTYPE_dvsl
                     || pmt->subtype == MEDIASUBTYPE_dvsd
                     || pmt->subtype == MEDIASUBTYPE_dvhd) // If this is an external DV camera
             {
-                capability.rawType = kVideoYUY2;// MS DV filter seems to create this type
+              capability.videoType =
+                  VideoType::kYUY2;  // MS DV filter seems to create this type
             }
             else if (pmt->subtype == MEDIASUBTYPE_UYVY) // Seen used by Declink capture cards
             {
-                capability.rawType = kVideoUYVY;
+              capability.videoType = VideoType::kUYVY;
             }
             else if (pmt->subtype == MEDIASUBTYPE_HDYC) // Seen used by Declink capture cards. Uses BT. 709 color. Not entiry correct to use UYVY. http://en.wikipedia.org/wiki/YCbCr
             {
                 WEBRTC_TRACE(webrtc::kTraceWarning,
                              webrtc::kTraceVideoCapture, 0,
                              "Device support HDYC.");
-                capability.rawType = kVideoUYVY;
+                capability.videoType = VideoType::kUYVY;
             }
             else
             {
@@ -658,19 +640,13 @@ int32_t DeviceInfoDS::CreateCapabilityMap(
                 continue;
             }
 
-            // Get the expected capture delay from the static list
-            capability.expectedCaptureDelay
-                            = GetExpectedCaptureDelay(WindowsCaptureDelays,
-                                                      NoWindowsCaptureDelays,
-                                                      productId,
-                                                      capability.width,
-                                                      capability.height);
             _captureCapabilities.push_back(capability);
             _captureCapabilitiesWindows.push_back(capability);
-            WEBRTC_TRACE( webrtc::kTraceInfo, webrtc::kTraceVideoCapture, 0,
+            WEBRTC_TRACE(webrtc::kTraceInfo, webrtc::kTraceVideoCapture, 0,
                          "Camera capability, width:%d height:%d type:%d fps:%d",
                          capability.width, capability.height,
-                         capability.rawType, capability.maxFPS);
+                         static_cast<int>(capability.videoType),
+                         capability.maxFPS);
         }
         DeleteMediaType(pmt);
         pmt = NULL;

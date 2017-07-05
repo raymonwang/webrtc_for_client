@@ -15,8 +15,8 @@
 #include <string>
 #include <vector>
 
+#include "webrtc/api/video_codecs/video_encoder.h"
 #include "webrtc/media/base/codec.h"
-#include "webrtc/video_encoder.h"
 
 namespace webrtc {
 
@@ -44,6 +44,7 @@ class VideoEncoderSoftwareFallbackWrapper : public VideoEncoder {
                             uint32_t framerate) override;
   bool SupportsNativeHandle() const override;
   ScalingSettings GetScalingSettings() const override;
+  const char *ImplementationName() const override;
 
  private:
   bool InitFallbackEncoder();
