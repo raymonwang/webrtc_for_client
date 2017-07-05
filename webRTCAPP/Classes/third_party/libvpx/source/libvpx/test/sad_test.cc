@@ -920,4 +920,43 @@ const SadMxNx4Param x4d_msa_tests[] = {
 INSTANTIATE_TEST_CASE_P(MSA, SADx4Test, ::testing::ValuesIn(x4d_msa_tests));
 #endif  // HAVE_MSA
 
+//------------------------------------------------------------------------------
+// VSX functions
+#if HAVE_VSX
+const SadMxNParam vsx_tests[] = {
+  SadMxNParam(64, 64, &vpx_sad64x64_vsx),
+  SadMxNParam(64, 32, &vpx_sad64x32_vsx),
+  SadMxNParam(32, 64, &vpx_sad32x64_vsx),
+  SadMxNParam(32, 32, &vpx_sad32x32_vsx),
+  SadMxNParam(32, 16, &vpx_sad32x16_vsx),
+  SadMxNParam(16, 32, &vpx_sad16x32_vsx),
+  SadMxNParam(16, 16, &vpx_sad16x16_vsx),
+  SadMxNParam(16, 8, &vpx_sad16x8_vsx),
+};
+INSTANTIATE_TEST_CASE_P(VSX, SADTest, ::testing::ValuesIn(vsx_tests));
+
+const SadMxNAvgParam avg_vsx_tests[] = {
+  SadMxNAvgParam(64, 64, &vpx_sad64x64_avg_vsx),
+  SadMxNAvgParam(64, 32, &vpx_sad64x32_avg_vsx),
+  SadMxNAvgParam(32, 64, &vpx_sad32x64_avg_vsx),
+  SadMxNAvgParam(32, 32, &vpx_sad32x32_avg_vsx),
+  SadMxNAvgParam(32, 16, &vpx_sad32x16_avg_vsx),
+  SadMxNAvgParam(16, 32, &vpx_sad16x32_avg_vsx),
+  SadMxNAvgParam(16, 16, &vpx_sad16x16_avg_vsx),
+  SadMxNAvgParam(16, 8, &vpx_sad16x8_avg_vsx),
+};
+INSTANTIATE_TEST_CASE_P(VSX, SADavgTest, ::testing::ValuesIn(avg_vsx_tests));
+
+const SadMxNx4Param x4d_vsx_tests[] = {
+  SadMxNx4Param(64, 64, &vpx_sad64x64x4d_vsx),
+  SadMxNx4Param(64, 32, &vpx_sad64x32x4d_vsx),
+  SadMxNx4Param(32, 64, &vpx_sad32x64x4d_vsx),
+  SadMxNx4Param(32, 32, &vpx_sad32x32x4d_vsx),
+  SadMxNx4Param(32, 16, &vpx_sad32x16x4d_vsx),
+  SadMxNx4Param(16, 32, &vpx_sad16x32x4d_vsx),
+  SadMxNx4Param(16, 16, &vpx_sad16x16x4d_vsx),
+  SadMxNx4Param(16, 8, &vpx_sad16x8x4d_vsx),
+};
+INSTANTIATE_TEST_CASE_P(VSX, SADx4Test, ::testing::ValuesIn(x4d_vsx_tests));
+#endif  // HAVE_VSX
 }  // namespace

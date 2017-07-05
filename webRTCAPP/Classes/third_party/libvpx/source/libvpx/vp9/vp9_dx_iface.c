@@ -47,12 +47,9 @@ static vpx_codec_err_t decoder_init(vpx_codec_ctx_t *ctx,
     ctx->priv->init_flags = ctx->init_flags;
     priv->si.sz = sizeof(priv->si);
     priv->flushed = 0;
-    // Only do frame parallel decode when threads > 1.
-    priv->frame_parallel_decode =
-        (ctx->config.dec && (ctx->config.dec->threads > 1) &&
-         (ctx->init_flags & VPX_CODEC_USE_FRAME_THREADING))
-            ? 1
-            : 0;
+    // TODO(jzern): remnants of frame-level parallel decoding should be
+    // removed. cf., https://bugs.chromium.org/p/webm/issues/detail?id=1395
+    priv->frame_parallel_decode = 0;
     if (ctx->config.dec) {
       priv->cfg = *ctx->config.dec;
       ctx->config.dec = &priv->cfg;
@@ -832,6 +829,15 @@ static vpx_codec_err_t ctrl_set_postproc(vpx_codec_alg_priv_t *ctx,
 #endif
 }
 
+static vpx_codec_err_t ctrl_get_quantizer(vpx_codec_alg_priv_t *ctx,
+                                          va_list args) {
+  int *const arg = va_arg(args, int *);
+  if (arg == NULL) return VPX_CODEC_INVALID_PARAM;
+  *arg =
+      ((FrameWorkerData *)ctx->frame_workers[0].data1)->pbi->common.base_qindex;
+  return VPX_CODEC_OK;
+}
+
 static vpx_codec_err_t ctrl_get_last_ref_updates(vpx_codec_alg_priv_t *ctx,
                                                  va_list args) {
   int *const update_info = va_arg(args, int *);
@@ -1027,6 +1033,7 @@ static vpx_codec_ctrl_fn_map_t decoder_ctrl_maps[] = {
   { VP9_DECODE_SVC_SPATIAL_LAYER, ctrl_set_spatial_layer_svc },
 
   // Getters
+  { VPXD_GET_LAST_QUANTIZER, ctrl_get_quantizer },
   { VP8D_GET_LAST_REF_UPDATES, ctrl_get_last_ref_updates },
   { VP8D_GET_FRAME_CORRUPTED, ctrl_get_frame_corrupted },
   { VP9_GET_REFERENCE, ctrl_get_reference },
@@ -1043,7 +1050,10 @@ static vpx_codec_ctrl_fn_map_t decoder_ctrl_maps[] = {
 CODEC_INTERFACE(vpx_codec_vp9_dx) = {
   "WebM Project VP9 Decoder" VERSION_STRING,
   VPX_CODEC_INTERNAL_ABI_VERSION,
-  VPX_CODEC_CAP_DECODER | VP9_CAP_POSTPROC |
+#if CONFIG_VP9_HIGHBITDEPTH
+  VPX_CODEC_CAP_HIGHBITDEPTH |
+#endif
+      VPX_CODEC_CAP_DECODER | VP9_CAP_POSTPROC |
       VPX_CODEC_CAP_EXTERNAL_FRAME_BUFFER,  // vpx_codec_caps_t
   decoder_init,                             // vpx_codec_init_fn_t
   decoder_destroy,                          // vpx_codec_destroy_fn_t

@@ -51,6 +51,8 @@ struct vp9_extracfg {
   vpx_color_range_t color_range;
   int render_width;
   int render_height;
+  unsigned int row_mt;
+  unsigned int motion_vector_unit_test;
 };
 
 static struct vp9_extracfg default_extra_cfg = {
@@ -82,6 +84,8 @@ static struct vp9_extracfg default_extra_cfg = {
   0,                     // color range
   0,                     // render width
   0,                     // render height
+  0,                     // row_mt
+  0,                     // motion_vector_unit_test
 };
 
 struct vpx_codec_alg_priv {
@@ -245,6 +249,8 @@ static vpx_codec_err_t validate_config(vpx_codec_alg_priv_t *ctx,
         "kf_min_dist not supported in auto mode, use 0 "
         "or kf_max_dist instead.");
 
+  RANGE_CHECK(extra_cfg, row_mt, 0, 1);
+  RANGE_CHECK(extra_cfg, motion_vector_unit_test, 0, 2);
   RANGE_CHECK(extra_cfg, enable_auto_alt_ref, 0, 2);
   RANGE_CHECK(extra_cfg, cpu_used, -8, 8);
   RANGE_CHECK_HI(extra_cfg, noise_sensitivity, 6);
@@ -419,10 +425,20 @@ static void config_target_level(VP9EncoderConfig *oxcf) {
   oxcf->worst_allowed_q = vp9_quantizer_to_qindex(63);
 
   // Adjust minimum art-ref distance.
-  if (oxcf->min_gf_interval <
-      (int)vp9_level_defs[target_level_index].min_altref_distance)
+  // min_gf_interval should be no less than min_altref_distance + 1,
+  // as the encoder may produce bitstream with alt-ref distance being
+  // min_gf_interval - 1.
+  if (oxcf->min_gf_interval <=
+      (int)vp9_level_defs[target_level_index].min_altref_distance) {
     oxcf->min_gf_interval =
-        (int)vp9_level_defs[target_level_index].min_altref_distance;
+        (int)vp9_level_defs[target_level_index].min_altref_distance + 1;
+    // If oxcf->max_gf_interval == 0, it will be assigned with a default value
+    // in vp9_rc_set_gf_interval_range().
+    if (oxcf->max_gf_interval != 0) {
+      oxcf->max_gf_interval =
+          VPXMAX(oxcf->max_gf_interval, oxcf->min_gf_interval);
+    }
+  }
 
   // Adjust maximum column tiles.
   if (vp9_level_defs[target_level_index].max_col_tiles <
@@ -553,6 +569,9 @@ static vpx_codec_err_t set_encoder_config(
       (enum vp9e_temporal_layering_mode)cfg->temporal_layering_mode;
 
   oxcf->target_level = extra_cfg->target_level;
+
+  oxcf->row_mt = extra_cfg->row_mt;
+  oxcf->motion_vector_unit_test = extra_cfg->motion_vector_unit_test;
 
   for (sl = 0; sl < oxcf->ss_number_layers; ++sl) {
 #if CONFIG_SPATIAL_SVC
@@ -842,6 +861,21 @@ static vpx_codec_err_t ctrl_set_target_level(vpx_codec_alg_priv_t *ctx,
   return update_extra_cfg(ctx, &extra_cfg);
 }
 
+static vpx_codec_err_t ctrl_set_row_mt(vpx_codec_alg_priv_t *ctx,
+                                       va_list args) {
+  struct vp9_extracfg extra_cfg = ctx->extra_cfg;
+  extra_cfg.row_mt = CAST(VP9E_SET_ROW_MT, args);
+  return update_extra_cfg(ctx, &extra_cfg);
+}
+
+static vpx_codec_err_t ctrl_enable_motion_vector_unit_test(
+    vpx_codec_alg_priv_t *ctx, va_list args) {
+  struct vp9_extracfg extra_cfg = ctx->extra_cfg;
+  extra_cfg.motion_vector_unit_test =
+      CAST(VP9E_ENABLE_MOTION_VECTOR_UNIT_TEST, args);
+  return update_extra_cfg(ctx, &extra_cfg);
+}
+
 static vpx_codec_err_t ctrl_get_level(vpx_codec_alg_priv_t *ctx, va_list args) {
   int *const arg = va_arg(args, int *);
   if (arg == NULL) return VPX_CODEC_INVALID_PARAM;
@@ -1108,7 +1142,7 @@ static vpx_codec_err_t encoder_encode(vpx_codec_alg_priv_t *ctx,
   }
   cpi->common.error.setjmp = 1;
 
-  vp9_apply_encoding_flags(cpi, flags);
+  if (res == VPX_CODEC_OK) vp9_apply_encoding_flags(cpi, flags);
 
   // Handle fixed keyframe intervals
   if (ctx->cfg.kf_mode == VPX_KF_AUTO &&
@@ -1436,6 +1470,9 @@ static vpx_codec_err_t ctrl_set_svc(vpx_codec_alg_priv_t *ctx, va_list args) {
       cfg->ss_number_layers > 1 && cfg->ts_number_layers > 1) {
     return VPX_CODEC_INVALID_PARAM;
   }
+
+  vp9_set_row_mt(ctx->cpi);
+
   return VPX_CODEC_OK;
 }
 
@@ -1594,6 +1631,8 @@ static vpx_codec_ctrl_fn_map_t encoder_ctrl_maps[] = {
   { VP9E_SET_SVC_REF_FRAME_CONFIG, ctrl_set_svc_ref_frame_config },
   { VP9E_SET_RENDER_SIZE, ctrl_set_render_size },
   { VP9E_SET_TARGET_LEVEL, ctrl_set_target_level },
+  { VP9E_SET_ROW_MT, ctrl_set_row_mt },
+  { VP9E_ENABLE_MOTION_VECTOR_UNIT_TEST, ctrl_enable_motion_vector_unit_test },
 
   // Getters
   { VP8E_GET_LAST_QUANTIZER, ctrl_get_quantizer },

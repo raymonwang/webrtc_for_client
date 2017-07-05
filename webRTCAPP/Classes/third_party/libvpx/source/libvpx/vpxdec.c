@@ -75,7 +75,7 @@ static const arg_def_t outputfile =
 static const arg_def_t threadsarg =
     ARG_DEF("t", "threads", 1, "Max threads to use");
 static const arg_def_t frameparallelarg =
-    ARG_DEF(NULL, "frame-parallel", 0, "Frame parallel decode");
+    ARG_DEF(NULL, "frame-parallel", 0, "Frame parallel decode (ignored)");
 static const arg_def_t verbosearg =
     ARG_DEF("v", "verbose", 0, "Show version string");
 static const arg_def_t error_concealment =
@@ -94,16 +94,21 @@ static const arg_def_t outbitdeptharg =
 #endif
 static const arg_def_t svcdecodingarg = ARG_DEF(
     NULL, "svc-decode-layer", 1, "Decode SVC stream up to given spatial layer");
+static const arg_def_t framestatsarg =
+    ARG_DEF(NULL, "framestats", 1, "Output per-frame stats (.csv format)");
 
 static const arg_def_t *all_args[] = {
-  &codecarg,       &use_yv12,    &use_i420,   &flipuvarg,         &rawvideo,
-  &noblitarg,      &progressarg, &limitarg,   &skiparg,           &postprocarg,
-  &summaryarg,     &outputfile,  &threadsarg, &frameparallelarg,  &verbosearg,
-  &scalearg,       &fb_arg,      &md5arg,     &error_concealment, &continuearg,
+  &codecarg,          &use_yv12,         &use_i420,
+  &flipuvarg,         &rawvideo,         &noblitarg,
+  &progressarg,       &limitarg,         &skiparg,
+  &postprocarg,       &summaryarg,       &outputfile,
+  &threadsarg,        &frameparallelarg, &verbosearg,
+  &scalearg,          &fb_arg,           &md5arg,
+  &error_concealment, &continuearg,
 #if CONFIG_VP9_HIGHBITDEPTH
   &outbitdeptharg,
 #endif
-  &svcdecodingarg, NULL
+  &svcdecodingarg,    &framestatsarg,    NULL
 };
 
 #if CONFIG_VP8_DECODER
@@ -488,7 +493,7 @@ static int main_loop(int argc, const char **argv_) {
   size_t bytes_in_buffer = 0, buffer_size = 0;
   FILE *infile;
   int frame_in = 0, frame_out = 0, flipuv = 0, noblit = 0;
-  int do_md5 = 0, progress = 0, frame_parallel = 0;
+  int do_md5 = 0, progress = 0;
   int stop_after = 0, postproc = 0, summary = 0, quiet = 1;
   int arg_skip = 0;
   int ec_enabled = 0;
@@ -526,6 +531,8 @@ static int main_loop(int argc, const char **argv_) {
   const char *outfile_pattern = NULL;
   char outfile_name[PATH_MAX] = { 0 };
   FILE *outfile = NULL;
+
+  FILE *framestats_file = NULL;
 
   MD5Context md5_ctx;
   unsigned char md5_digest[16];
@@ -584,8 +591,9 @@ static int main_loop(int argc, const char **argv_) {
     else if (arg_match(&arg, &threadsarg, argi))
       cfg.threads = arg_parse_uint(&arg);
 #if CONFIG_VP9_DECODER
-    else if (arg_match(&arg, &frameparallelarg, argi))
-      frame_parallel = 1;
+    else if (arg_match(&arg, &frameparallelarg, argi)) {
+      /* ignored for compatibility */
+    }
 #endif
     else if (arg_match(&arg, &verbosearg, argi))
       quiet = 0;
@@ -603,6 +611,12 @@ static int main_loop(int argc, const char **argv_) {
     else if (arg_match(&arg, &svcdecodingarg, argi)) {
       svc_decoding = 1;
       svc_spatial_layer = arg_parse_uint(&arg);
+    } else if (arg_match(&arg, &framestatsarg, argi)) {
+      framestats_file = fopen(arg.val, "w");
+      if (!framestats_file) {
+        die("Error: Could not open --framestats file (%s) for writing.\n",
+            arg.val);
+      }
     }
 #if CONFIG_VP8_DECODER
     else if (arg_match(&arg, &addnoise_level, argi)) {
@@ -712,8 +726,7 @@ static int main_loop(int argc, const char **argv_) {
   if (!interface) interface = get_vpx_decoder_by_index(0);
 
   dec_flags = (postproc ? VPX_CODEC_USE_POSTPROC : 0) |
-              (ec_enabled ? VPX_CODEC_USE_ERROR_CONCEALMENT : 0) |
-              (frame_parallel ? VPX_CODEC_USE_FRAME_THREADING : 0);
+              (ec_enabled ? VPX_CODEC_USE_ERROR_CONCEALMENT : 0);
   if (vpx_codec_dec_init(&decoder, interface->codec_interface(), &cfg,
                          dec_flags)) {
     fprintf(stderr, "Failed to initialize decoder: %s\n",
@@ -761,6 +774,8 @@ static int main_loop(int argc, const char **argv_) {
   frame_avail = 1;
   got_data = 0;
 
+  if (framestats_file) fprintf(framestats_file, "bytes,qp\n");
+
   /* Decode file */
   while (frame_avail || got_data) {
     vpx_codec_iter_t iter = NULL;
@@ -784,6 +799,16 @@ static int main_loop(int argc, const char **argv_) {
           if (detail) warn("Additional information: %s", detail);
           corrupted = 1;
           if (!keep_going) goto fail;
+        }
+
+        if (framestats_file) {
+          int qp;
+          if (vpx_codec_control(&decoder, VPXD_GET_LAST_QUANTIZER, &qp)) {
+            warn("Failed VPXD_GET_LAST_QUANTIZER: %s",
+                 vpx_codec_error(&decoder));
+            if (!keep_going) goto fail;
+          }
+          fprintf(framestats_file, "%d,%d\n", (int)bytes_in_buffer, qp);
         }
 
         vpx_usec_timer_mark(&timer);
@@ -815,7 +840,7 @@ static int main_loop(int argc, const char **argv_) {
     vpx_usec_timer_mark(&timer);
     dx_time += (unsigned int)vpx_usec_timer_elapsed(&timer);
 
-    if (!frame_parallel && !corrupted &&
+    if (!corrupted &&
         vpx_codec_control(&decoder, VP8D_GET_FRAME_CORRUPTED, &corrupted)) {
       warn("Failed VP8_GET_FRAME_CORRUPTED: %s", vpx_codec_error(&decoder));
       if (!keep_going) goto fail;
@@ -952,7 +977,7 @@ static int main_loop(int argc, const char **argv_) {
         if (do_md5) {
           update_image_md5(img, planes, &md5_ctx);
         } else {
-          write_image_file(img, planes, outfile);
+          if (!corrupted) write_image_file(img, planes, outfile);
         }
       } else {
         generate_filename(outfile_pattern, outfile_name, PATH_MAX, img->d_w,
@@ -1018,6 +1043,8 @@ fail2:
   free(ext_fb_list.ext_fb);
 
   fclose(infile);
+  if (framestats_file) fclose(framestats_file);
+
   free(argv);
 
   return ret;
