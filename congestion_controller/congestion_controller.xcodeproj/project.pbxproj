@@ -12,14 +12,16 @@
 		43E040B71D503C2C009FDAE6 /* delay_based_bwe.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */; };
 		43E040BB1D503C2C009FDAE6 /* congestion_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040B01D503C2C009FDAE6 /* congestion_controller.h */; };
 		43E040BC1D503C2C009FDAE6 /* mock_congestion_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040B21D503C2C009FDAE6 /* mock_congestion_controller.h */; };
+		43E1B1771F0CE28E00B73FCB /* acknowledge_bitrate_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B1731F0CE28E00B73FCB /* acknowledge_bitrate_estimator.cc */; };
+		43E1B1781F0CE28E00B73FCB /* acknowledge_bitrate_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B1741F0CE28E00B73FCB /* acknowledge_bitrate_estimator.h */; };
+		43E1B1791F0CE28E00B73FCB /* receive_side_congestion_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B1751F0CE28E00B73FCB /* receive_side_congestion_controller.cc */; };
+		43E1B17A1F0CE28E00B73FCB /* send_side_congestion_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B1761F0CE28E00B73FCB /* send_side_congestion_controller.cc */; };
 		43EFD2361E5AE72600E3DEAD /* median_slope_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD22A1E5AE72600E3DEAD /* median_slope_estimator.cc */; };
 		43EFD2371E5AE72600E3DEAD /* median_slope_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD22B1E5AE72600E3DEAD /* median_slope_estimator.h */; };
 		43EFD2381E5AE72600E3DEAD /* probe_bitrate_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD22C1E5AE72600E3DEAD /* probe_bitrate_estimator.cc */; };
 		43EFD2391E5AE72600E3DEAD /* probe_bitrate_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD22D1E5AE72600E3DEAD /* probe_bitrate_estimator.h */; };
 		43EFD23A1E5AE72600E3DEAD /* probe_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD22E1E5AE72600E3DEAD /* probe_controller.cc */; };
 		43EFD23B1E5AE72600E3DEAD /* probe_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD22F1E5AE72600E3DEAD /* probe_controller.h */; };
-		43EFD23C1E5AE72600E3DEAD /* probing_interval_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2301E5AE72600E3DEAD /* probing_interval_estimator.cc */; };
-		43EFD23D1E5AE72600E3DEAD /* probing_interval_estimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2311E5AE72600E3DEAD /* probing_interval_estimator.h */; };
 		43EFD23E1E5AE72600E3DEAD /* transport_feedback_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2321E5AE72600E3DEAD /* transport_feedback_adapter.cc */; };
 		43EFD23F1E5AE72600E3DEAD /* transport_feedback_adapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2331E5AE72600E3DEAD /* transport_feedback_adapter.h */; };
 		43EFD2401E5AE72600E3DEAD /* trendline_estimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2341E5AE72600E3DEAD /* trendline_estimator.cc */; };
@@ -36,14 +38,16 @@
 		43E040B01D503C2C009FDAE6 /* congestion_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = congestion_controller.h; sourceTree = "<group>"; };
 		43E040B21D503C2C009FDAE6 /* mock_congestion_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_congestion_controller.h; sourceTree = "<group>"; };
 		43E040B31D503C2C009FDAE6 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43E1B1731F0CE28E00B73FCB /* acknowledge_bitrate_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acknowledge_bitrate_estimator.cc; sourceTree = "<group>"; };
+		43E1B1741F0CE28E00B73FCB /* acknowledge_bitrate_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acknowledge_bitrate_estimator.h; sourceTree = "<group>"; };
+		43E1B1751F0CE28E00B73FCB /* receive_side_congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = receive_side_congestion_controller.cc; sourceTree = "<group>"; };
+		43E1B1761F0CE28E00B73FCB /* send_side_congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = send_side_congestion_controller.cc; sourceTree = "<group>"; };
 		43EFD22A1E5AE72600E3DEAD /* median_slope_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = median_slope_estimator.cc; sourceTree = "<group>"; };
 		43EFD22B1E5AE72600E3DEAD /* median_slope_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = median_slope_estimator.h; sourceTree = "<group>"; };
 		43EFD22C1E5AE72600E3DEAD /* probe_bitrate_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = probe_bitrate_estimator.cc; sourceTree = "<group>"; };
 		43EFD22D1E5AE72600E3DEAD /* probe_bitrate_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = probe_bitrate_estimator.h; sourceTree = "<group>"; };
 		43EFD22E1E5AE72600E3DEAD /* probe_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = probe_controller.cc; sourceTree = "<group>"; };
 		43EFD22F1E5AE72600E3DEAD /* probe_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = probe_controller.h; sourceTree = "<group>"; };
-		43EFD2301E5AE72600E3DEAD /* probing_interval_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = probing_interval_estimator.cc; sourceTree = "<group>"; };
-		43EFD2311E5AE72600E3DEAD /* probing_interval_estimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = probing_interval_estimator.h; sourceTree = "<group>"; };
 		43EFD2321E5AE72600E3DEAD /* transport_feedback_adapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transport_feedback_adapter.cc; sourceTree = "<group>"; };
 		43EFD2331E5AE72600E3DEAD /* transport_feedback_adapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transport_feedback_adapter.h; sourceTree = "<group>"; };
 		43EFD2341E5AE72600E3DEAD /* trendline_estimator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trendline_estimator.cc; sourceTree = "<group>"; };
@@ -88,14 +92,16 @@
 				43EFD22D1E5AE72600E3DEAD /* probe_bitrate_estimator.h */,
 				43EFD22E1E5AE72600E3DEAD /* probe_controller.cc */,
 				43EFD22F1E5AE72600E3DEAD /* probe_controller.h */,
-				43EFD2301E5AE72600E3DEAD /* probing_interval_estimator.cc */,
-				43EFD2311E5AE72600E3DEAD /* probing_interval_estimator.h */,
 				43EFD2321E5AE72600E3DEAD /* transport_feedback_adapter.cc */,
 				43EFD2331E5AE72600E3DEAD /* transport_feedback_adapter.h */,
 				43EFD2341E5AE72600E3DEAD /* trendline_estimator.cc */,
 				43EFD2351E5AE72600E3DEAD /* trendline_estimator.h */,
 				43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */,
 				43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */,
+				43E1B1731F0CE28E00B73FCB /* acknowledge_bitrate_estimator.cc */,
+				43E1B1741F0CE28E00B73FCB /* acknowledge_bitrate_estimator.h */,
+				43E1B1751F0CE28E00B73FCB /* receive_side_congestion_controller.cc */,
+				43E1B1761F0CE28E00B73FCB /* send_side_congestion_controller.cc */,
 				43E040AE1D503C2C009FDAE6 /* DEPS */,
 				43E040AF1D503C2C009FDAE6 /* include */,
 				43E040B31D503C2C009FDAE6 /* OWNERS */,
@@ -128,13 +134,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43EFD23D1E5AE72600E3DEAD /* probing_interval_estimator.h in Headers */,
 				43E040BB1D503C2C009FDAE6 /* congestion_controller.h in Headers */,
 				43EFD2371E5AE72600E3DEAD /* median_slope_estimator.h in Headers */,
 				43EFD23F1E5AE72600E3DEAD /* transport_feedback_adapter.h in Headers */,
 				43EFD2391E5AE72600E3DEAD /* probe_bitrate_estimator.h in Headers */,
 				43EFD2411E5AE72600E3DEAD /* trendline_estimator.h in Headers */,
 				43E040B71D503C2C009FDAE6 /* delay_based_bwe.h in Headers */,
+				43E1B1781F0CE28E00B73FCB /* acknowledge_bitrate_estimator.h in Headers */,
 				43E040BC1D503C2C009FDAE6 /* mock_congestion_controller.h in Headers */,
 				43EFD23B1E5AE72600E3DEAD /* probe_controller.h in Headers */,
 			);
@@ -198,10 +204,12 @@
 			files = (
 				43EFD2361E5AE72600E3DEAD /* median_slope_estimator.cc in Sources */,
 				43E040B61D503C2C009FDAE6 /* delay_based_bwe.cc in Sources */,
+				43E1B1771F0CE28E00B73FCB /* acknowledge_bitrate_estimator.cc in Sources */,
 				43EFD23E1E5AE72600E3DEAD /* transport_feedback_adapter.cc in Sources */,
 				43EFD23A1E5AE72600E3DEAD /* probe_controller.cc in Sources */,
-				43EFD23C1E5AE72600E3DEAD /* probing_interval_estimator.cc in Sources */,
+				43E1B17A1F0CE28E00B73FCB /* send_side_congestion_controller.cc in Sources */,
 				43E040B41D503C2C009FDAE6 /* congestion_controller.cc in Sources */,
+				43E1B1791F0CE28E00B73FCB /* receive_side_congestion_controller.cc in Sources */,
 				43EFD2401E5AE72600E3DEAD /* trendline_estimator.cc in Sources */,
 				43EFD2381E5AE72600E3DEAD /* probe_bitrate_estimator.cc in Sources */,
 			);

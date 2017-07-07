@@ -77,28 +77,6 @@
 		430D8FF8198624BE009E763A /* time_stretch.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FA9198624BE009E763A /* time_stretch.h */; };
 		430D8FF9198624BE009E763A /* timestamp_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D8FAA198624BE009E763A /* timestamp_scaler.cc */; };
 		430D8FFA198624BE009E763A /* timestamp_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8FAB198624BE009E763A /* timestamp_scaler.h */; };
-		434B05A11D50BA1000FDCA92 /* audio_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696E61D222CD500427D35 /* audio_decoder.cc */; };
-		434B05A21D50BA1000FDCA92 /* audio_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C696E71D222CD500427D35 /* audio_decoder.h */; };
-		434B05A31D50BA1000FDCA92 /* audio_decoder_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387747F1D4F3D6A00E6F9E9 /* audio_decoder_factory.h */; };
-		434B05A41D50BA1000FDCA92 /* audio_format.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438774801D4F3D6A00E6F9E9 /* audio_format.cc */; };
-		434B05A51D50BA1000FDCA92 /* audio_format.h in Headers */ = {isa = PBXBuildFile; fileRef = 438774811D4F3D6A00E6F9E9 /* audio_format.h */; };
-		434B05A61D50BA1000FDCA92 /* audio_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696E81D222CD500427D35 /* audio_encoder.cc */; };
-		434B05A71D50BA1000FDCA92 /* audio_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C696E91D222CD500427D35 /* audio_encoder.h */; };
-		434B05AA1D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B05A81D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc */; };
-		434B05AB1D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 434B05A81D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc */; };
-		434B05AC1D50BA5200FDCA92 /* builtin_audio_decoder_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05A91D50BA5200FDCA92 /* builtin_audio_decoder_factory.h */; };
-		434B05AD1D50BA5200FDCA92 /* builtin_audio_decoder_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 434B05A91D50BA5200FDCA92 /* builtin_audio_decoder_factory.h */; };
-		438774821D4F3D6A00E6F9E9 /* audio_decoder_factory.h in Headers */ = {isa = PBXBuildFile; fileRef = 4387747F1D4F3D6A00E6F9E9 /* audio_decoder_factory.h */; };
-		438774841D4F3D6A00E6F9E9 /* audio_format.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438774801D4F3D6A00E6F9E9 /* audio_format.cc */; };
-		438774861D4F3D6A00E6F9E9 /* audio_format.h in Headers */ = {isa = PBXBuildFile; fileRef = 438774811D4F3D6A00E6F9E9 /* audio_format.h */; };
-		43AC79EA1E4844770092C54E /* audio_format_conversion.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC79E61E4844770092C54E /* audio_format_conversion.cc */; };
-		43AC79EB1E4844770092C54E /* audio_format_conversion.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC79E61E4844770092C54E /* audio_format_conversion.cc */; };
-		43AC79EC1E4844770092C54E /* audio_format_conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC79E71E4844770092C54E /* audio_format_conversion.h */; };
-		43AC79ED1E4844770092C54E /* audio_format_conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC79E71E4844770092C54E /* audio_format_conversion.h */; };
-		43AC79EE1E4844770092C54E /* legacy_encoded_audio_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC79E81E4844770092C54E /* legacy_encoded_audio_frame.cc */; };
-		43AC79EF1E4844770092C54E /* legacy_encoded_audio_frame.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC79E81E4844770092C54E /* legacy_encoded_audio_frame.cc */; };
-		43AC79F01E4844770092C54E /* legacy_encoded_audio_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC79E91E4844770092C54E /* legacy_encoded_audio_frame.h */; };
-		43AC79F11E4844770092C54E /* legacy_encoded_audio_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC79E91E4844770092C54E /* legacy_encoded_audio_frame.h */; };
 		43AC8AF81E484C0D0092C54E /* red_payload_splitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8AF61E484C0D0092C54E /* red_payload_splitter.cc */; };
 		43AC8AF91E484C0D0092C54E /* red_payload_splitter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43AC8AF61E484C0D0092C54E /* red_payload_splitter.cc */; };
 		43AC8AFA1E484C0D0092C54E /* red_payload_splitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43AC8AF71E484C0D0092C54E /* red_payload_splitter.h */; };
@@ -189,10 +167,8 @@
 		43C42A3119CA82AD00E9DCFA /* background_noise.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F65198624BD009E763A /* background_noise.h */; };
 		43C42A3219CA82AD00E9DCFA /* dtmf_tone_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F7C198624BD009E763A /* dtmf_tone_generator.h */; };
 		43C42A3419CA82AD00E9DCFA /* expand.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D8F7E198624BD009E763A /* expand.h */; };
-		43C696EA1D222CD500427D35 /* audio_decoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696E61D222CD500427D35 /* audio_decoder.cc */; };
-		43C696EB1D222CD500427D35 /* audio_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C696E71D222CD500427D35 /* audio_decoder.h */; };
-		43C696EC1D222CD500427D35 /* audio_encoder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C696E81D222CD500427D35 /* audio_encoder.cc */; };
-		43C696ED1D222CD500427D35 /* audio_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C696E91D222CD500427D35 /* audio_encoder.h */; };
+		43E1B2C61F0D19C500B73FCB /* neteq_decoder_enum.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B2C41F0D19C500B73FCB /* neteq_decoder_enum.cc */; };
+		43E1B2C71F0D19C500B73FCB /* neteq_decoder_enum.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B2C51F0D19C500B73FCB /* neteq_decoder_enum.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -267,15 +243,6 @@
 		430D8FA9198624BE009E763A /* time_stretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_stretch.h; sourceTree = "<group>"; };
 		430D8FAA198624BE009E763A /* timestamp_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timestamp_scaler.cc; sourceTree = "<group>"; };
 		430D8FAB198624BE009E763A /* timestamp_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timestamp_scaler.h; sourceTree = "<group>"; };
-		434B05A81D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = builtin_audio_decoder_factory.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/builtin_audio_decoder_factory.cc; sourceTree = "<group>"; };
-		434B05A91D50BA5200FDCA92 /* builtin_audio_decoder_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = builtin_audio_decoder_factory.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/builtin_audio_decoder_factory.h; sourceTree = "<group>"; };
-		4387747F1D4F3D6A00E6F9E9 /* audio_decoder_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_decoder_factory.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_decoder_factory.h; sourceTree = "<group>"; };
-		438774801D4F3D6A00E6F9E9 /* audio_format.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_format.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_format.cc; sourceTree = "<group>"; };
-		438774811D4F3D6A00E6F9E9 /* audio_format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_format.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_format.h; sourceTree = "<group>"; };
-		43AC79E61E4844770092C54E /* audio_format_conversion.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_format_conversion.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_format_conversion.cc; sourceTree = "<group>"; };
-		43AC79E71E4844770092C54E /* audio_format_conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_format_conversion.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_format_conversion.h; sourceTree = "<group>"; };
-		43AC79E81E4844770092C54E /* legacy_encoded_audio_frame.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = legacy_encoded_audio_frame.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/legacy_encoded_audio_frame.cc; sourceTree = "<group>"; };
-		43AC79E91E4844770092C54E /* legacy_encoded_audio_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = legacy_encoded_audio_frame.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/legacy_encoded_audio_frame.h; sourceTree = "<group>"; };
 		43AC8AF61E484C0D0092C54E /* red_payload_splitter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = red_payload_splitter.cc; sourceTree = "<group>"; };
 		43AC8AF71E484C0D0092C54E /* red_payload_splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = red_payload_splitter.h; sourceTree = "<group>"; };
 		43C0C6B31D4F0E100058AC82 /* cross_correlation.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cross_correlation.cc; sourceTree = "<group>"; };
@@ -287,10 +254,8 @@
 		43C0C6BA1D4F0E100058AC82 /* tick_timer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tick_timer.cc; sourceTree = "<group>"; };
 		43C0C6BB1D4F0E100058AC82 /* tick_timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tick_timer.h; sourceTree = "<group>"; };
 		43C42A3819CA82AD00E9DCFA /* libneteq_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libneteq_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43C696E61D222CD500427D35 /* audio_decoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_decoder.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_decoder.cc; sourceTree = "<group>"; };
-		43C696E71D222CD500427D35 /* audio_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_decoder.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_decoder.h; sourceTree = "<group>"; };
-		43C696E81D222CD500427D35 /* audio_encoder.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_encoder.cc; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_encoder.cc; sourceTree = "<group>"; };
-		43C696E91D222CD500427D35 /* audio_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = audio_encoder.h; path = ../webRTCAPP/Classes/webrtc/modules/audio_coding/codecs/audio_encoder.h; sourceTree = "<group>"; };
+		43E1B2C41F0D19C500B73FCB /* neteq_decoder_enum.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = neteq_decoder_enum.cc; sourceTree = "<group>"; };
+		43E1B2C51F0D19C500B73FCB /* neteq_decoder_enum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neteq_decoder_enum.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,19 +279,6 @@
 		430D8F4219862490009E763A = {
 			isa = PBXGroup;
 			children = (
-				434B05A81D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc */,
-				434B05A91D50BA5200FDCA92 /* builtin_audio_decoder_factory.h */,
-				43AC79E61E4844770092C54E /* audio_format_conversion.cc */,
-				43AC79E71E4844770092C54E /* audio_format_conversion.h */,
-				43AC79E81E4844770092C54E /* legacy_encoded_audio_frame.cc */,
-				43AC79E91E4844770092C54E /* legacy_encoded_audio_frame.h */,
-				43C696E61D222CD500427D35 /* audio_decoder.cc */,
-				43C696E71D222CD500427D35 /* audio_decoder.h */,
-				4387747F1D4F3D6A00E6F9E9 /* audio_decoder_factory.h */,
-				438774801D4F3D6A00E6F9E9 /* audio_format.cc */,
-				438774811D4F3D6A00E6F9E9 /* audio_format.h */,
-				43C696E81D222CD500427D35 /* audio_encoder.cc */,
-				43C696E91D222CD500427D35 /* audio_encoder.h */,
 				430D8F58198624BD009E763A /* neteq */,
 				430D8F4C19862490009E763A /* Products */,
 			);
@@ -344,6 +296,8 @@
 		430D8F58198624BD009E763A /* neteq */ = {
 			isa = PBXGroup;
 			children = (
+				43E1B2C41F0D19C500B73FCB /* neteq_decoder_enum.cc */,
+				43E1B2C51F0D19C500B73FCB /* neteq_decoder_enum.h */,
 				43C0C6B31D4F0E100058AC82 /* cross_correlation.cc */,
 				43C0C6B41D4F0E100058AC82 /* cross_correlation.h */,
 				43AC8AF61E484C0D0092C54E /* red_payload_splitter.cc */,
@@ -454,16 +408,13 @@
 			files = (
 				430D8FD9198624BE009E763A /* mock_decoder_database.h in Headers */,
 				430D8FB4198624BE009E763A /* audio_multi_vector.h in Headers */,
-				43C696ED1D222CD500427D35 /* audio_encoder.h in Headers */,
 				430D8FDF198624BE009E763A /* mock_packet_buffer.h in Headers */,
 				43C0C6CA1D4F0E100058AC82 /* tick_timer.h in Headers */,
 				430D8FC0198624BE009E763A /* decision_logic_fax.h in Headers */,
+				43E1B2C71F0D19C500B73FCB /* neteq_decoder_enum.h in Headers */,
 				430D8FE8198624BE009E763A /* packet_buffer.h in Headers */,
-				43AC79F01E4844770092C54E /* legacy_encoded_audio_frame.h in Headers */,
 				430D8FF6198624BE009E763A /* sync_buffer.h in Headers */,
 				430D8FEE198624BE009E763A /* preemptive_expand.h in Headers */,
-				434B05AC1D50BA5200FDCA92 /* builtin_audio_decoder_factory.h in Headers */,
-				43C696EB1D222CD500427D35 /* audio_decoder.h in Headers */,
 				430D8FDA198624BE009E763A /* mock_delay_manager.h in Headers */,
 				430D8FB2198624BE009E763A /* audio_decoder_impl.h in Headers */,
 				430D8FF4198624BE009E763A /* statistics_calculator.h in Headers */,
@@ -477,7 +428,6 @@
 				430D8FCB198624BE009E763A /* dsp_helper.h in Headers */,
 				430D8FBE198624BE009E763A /* decision_logic.h in Headers */,
 				430D8FDC198624BE009E763A /* mock_dtmf_buffer.h in Headers */,
-				43AC79EC1E4844770092C54E /* audio_format_conversion.h in Headers */,
 				430D8FF0198624BE009E763A /* random_vector.h in Headers */,
 				430D8FDD198624BE009E763A /* mock_dtmf_tone_generator.h in Headers */,
 				430D8FE6198624BE009E763A /* packet.h in Headers */,
@@ -488,7 +438,6 @@
 				430D8FC2198624BE009E763A /* decision_logic_normal.h in Headers */,
 				43AC8AFA1E484C0D0092C54E /* red_payload_splitter.h in Headers */,
 				430D8FD5198624BE009E763A /* merge.h in Headers */,
-				438774821D4F3D6A00E6F9E9 /* audio_decoder_factory.h in Headers */,
 				430D8FBA198624BE009E763A /* buffer_level_filter.h in Headers */,
 				430D8FD8198624BE009E763A /* mock_buffer_level_filter.h in Headers */,
 				430D8FC5198624BE009E763A /* defines.h in Headers */,
@@ -502,7 +451,6 @@
 				430D8FC7198624BE009E763A /* delay_manager.h in Headers */,
 				430D8FB8198624BE009E763A /* background_noise.h in Headers */,
 				430D8FCF198624BE009E763A /* dtmf_tone_generator.h in Headers */,
-				438774861D4F3D6A00E6F9E9 /* audio_format.h in Headers */,
 				430D8FD1198624BE009E763A /* expand.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -518,9 +466,7 @@
 				43C42A0E19CA82AD00E9DCFA /* packet_buffer.h in Headers */,
 				43C42A1019CA82AD00E9DCFA /* sync_buffer.h in Headers */,
 				43C42A1119CA82AD00E9DCFA /* preemptive_expand.h in Headers */,
-				43AC79F11E4844770092C54E /* legacy_encoded_audio_frame.h in Headers */,
 				43C42A1319CA82AD00E9DCFA /* mock_delay_manager.h in Headers */,
-				434B05AD1D50BA5200FDCA92 /* builtin_audio_decoder_factory.h in Headers */,
 				43C42A1419CA82AD00E9DCFA /* audio_decoder_impl.h in Headers */,
 				43C42A1519CA82AD00E9DCFA /* statistics_calculator.h in Headers */,
 				43C0C6CB1D4F0E100058AC82 /* tick_timer.h in Headers */,
@@ -528,7 +474,6 @@
 				43C42A1619CA82AD00E9DCFA /* accelerate.h in Headers */,
 				43C0C6C51D4F0E100058AC82 /* nack_tracker.h in Headers */,
 				43C42A1719CA82AD00E9DCFA /* comfort_noise.h in Headers */,
-				434B05A71D50BA1000FDCA92 /* audio_encoder.h in Headers */,
 				43C42A1819CA82AD00E9DCFA /* delay_peak_detector.h in Headers */,
 				43C42A1919CA82AD00E9DCFA /* decoder_database.h in Headers */,
 				43C42A1A19CA82AD00E9DCFA /* rtcp.h in Headers */,
@@ -536,7 +481,6 @@
 				43C42A1C19CA82AD00E9DCFA /* dsp_helper.h in Headers */,
 				43C42A1D19CA82AD00E9DCFA /* decision_logic.h in Headers */,
 				43C42A1E19CA82AD00E9DCFA /* mock_dtmf_buffer.h in Headers */,
-				43AC79ED1E4844770092C54E /* audio_format_conversion.h in Headers */,
 				43C42A1F19CA82AD00E9DCFA /* random_vector.h in Headers */,
 				43C42A2019CA82AD00E9DCFA /* mock_dtmf_tone_generator.h in Headers */,
 				43C42A2119CA82AD00E9DCFA /* packet.h in Headers */,
@@ -555,14 +499,11 @@
 				43C42A2D19CA82AD00E9DCFA /* neteq_impl.h in Headers */,
 				43C0C6C11D4F0E100058AC82 /* neteq.h in Headers */,
 				43C42A2E19CA82AD00E9DCFA /* mock_delay_peak_detector.h in Headers */,
-				434B05A51D50BA1000FDCA92 /* audio_format.h in Headers */,
 				43C42A2F19CA82AD00E9DCFA /* mock_audio_decoder.h in Headers */,
 				43C42A3019CA82AD00E9DCFA /* delay_manager.h in Headers */,
 				43C42A3119CA82AD00E9DCFA /* background_noise.h in Headers */,
-				434B05A21D50BA1000FDCA92 /* audio_decoder.h in Headers */,
 				43C42A3219CA82AD00E9DCFA /* dtmf_tone_generator.h in Headers */,
 				43C42A3419CA82AD00E9DCFA /* expand.h in Headers */,
-				434B05A31D50BA1000FDCA92 /* audio_decoder_factory.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,11 +591,6 @@
 				43C0C6BC1D4F0E100058AC82 /* cross_correlation.cc in Sources */,
 				43C0C6C81D4F0E100058AC82 /* tick_timer.cc in Sources */,
 				430D8FAC198624BE009E763A /* accelerate.cc in Sources */,
-				438774841D4F3D6A00E6F9E9 /* audio_format.cc in Sources */,
-				43C696EC1D222CD500427D35 /* audio_encoder.cc in Sources */,
-				434B05AA1D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc in Sources */,
-				43C696EA1D222CD500427D35 /* audio_decoder.cc in Sources */,
-				43AC79EA1E4844770092C54E /* audio_format_conversion.cc in Sources */,
 				430D8FBF198624BE009E763A /* decision_logic_fax.cc in Sources */,
 				43C0C6C21D4F0E100058AC82 /* nack_tracker.cc in Sources */,
 				430D8FED198624BE009E763A /* preemptive_expand.cc in Sources */,
@@ -664,13 +600,13 @@
 				430D8FB1198624BE009E763A /* audio_decoder_impl.cc in Sources */,
 				430D8FBB198624BE009E763A /* comfort_noise.cc in Sources */,
 				430D8FE2198624BE009E763A /* neteq_impl.cc in Sources */,
+				43E1B2C61F0D19C500B73FCB /* neteq_decoder_enum.cc in Sources */,
 				430D8FB3198624BE009E763A /* audio_multi_vector.cc in Sources */,
 				430D8FC1198624BE009E763A /* decision_logic_normal.cc in Sources */,
 				430D8FBD198624BE009E763A /* decision_logic.cc in Sources */,
 				430D8FEF198624BE009E763A /* random_vector.cc in Sources */,
 				430D8FD4198624BE009E763A /* merge.cc in Sources */,
 				430D8FE1198624BE009E763A /* neteq.cc in Sources */,
-				43AC79EE1E4844770092C54E /* legacy_encoded_audio_frame.cc in Sources */,
 				430D8FF1198624BE009E763A /* rtcp.cc in Sources */,
 				430D8FB5198624BE009E763A /* audio_vector.cc in Sources */,
 				430D8FF9198624BE009E763A /* timestamp_scaler.cc in Sources */,
@@ -697,14 +633,9 @@
 				43C429ED19CA82AD00E9DCFA /* delay_manager.cc in Sources */,
 				43C429EE19CA82AD00E9DCFA /* accelerate.cc in Sources */,
 				43C429EF19CA82AD00E9DCFA /* decision_logic_fax.cc in Sources */,
-				434B05A61D50BA1000FDCA92 /* audio_encoder.cc in Sources */,
 				43C0C6BD1D4F0E100058AC82 /* cross_correlation.cc in Sources */,
 				43C429F019CA82AD00E9DCFA /* preemptive_expand.cc in Sources */,
-				434B05AB1D50BA5200FDCA92 /* builtin_audio_decoder_factory.cc in Sources */,
-				434B05A41D50BA1000FDCA92 /* audio_format.cc in Sources */,
-				43AC79EB1E4844770092C54E /* audio_format_conversion.cc in Sources */,
 				43C429F119CA82AD00E9DCFA /* dsp_helper.cc in Sources */,
-				434B05A11D50BA1000FDCA92 /* audio_decoder.cc in Sources */,
 				43C429F219CA82AD00E9DCFA /* time_stretch.cc in Sources */,
 				43C429F319CA82AD00E9DCFA /* post_decode_vad.cc in Sources */,
 				43C429F419CA82AD00E9DCFA /* audio_decoder_impl.cc in Sources */,
@@ -718,7 +649,6 @@
 				43C429FB19CA82AD00E9DCFA /* merge.cc in Sources */,
 				43C429FC19CA82AD00E9DCFA /* neteq.cc in Sources */,
 				43C429FD19CA82AD00E9DCFA /* rtcp.cc in Sources */,
-				43AC79EF1E4844770092C54E /* legacy_encoded_audio_frame.cc in Sources */,
 				43C429FF19CA82AD00E9DCFA /* audio_vector.cc in Sources */,
 				43C42A0119CA82AD00E9DCFA /* timestamp_scaler.cc in Sources */,
 				43C0C6C31D4F0E100058AC82 /* nack_tracker.cc in Sources */,
@@ -816,7 +746,6 @@
 					WEBRTC_CODEC_ISAC,
 					WEBRTC_CODEC_ILBC,
 					WEBRTC_CODEC_G722,
-					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 					OPUS_FIXED_POINT,
 				);
 				HEADER_SEARCH_PATHS = (
@@ -852,7 +781,6 @@
 					WEBRTC_CODEC_ISAC,
 					WEBRTC_CODEC_ILBC,
 					WEBRTC_CODEC_G722,
-					WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE,
 					OPUS_FIXED_POINT,
 				);
 				HEADER_SEARCH_PATHS = (

@@ -44,7 +44,7 @@ typedef struct WebRtcOpusDecInst OpusDecInst;
  */
 int16_t WebRtcOpus_EncoderCreate(OpusEncInst** inst,
                                  size_t channels,
-                                 int32_t application, int32_t sample_rate_hz);
+                                 int32_t application);
 
 int16_t WebRtcOpus_EncoderFree(OpusEncInst* inst);
 
@@ -243,7 +243,7 @@ int16_t WebRtcOpus_SetComplexity(OpusEncInst* inst, int32_t complexity);
  */
 int16_t WebRtcOpus_SetForceChannels(OpusEncInst* inst, size_t num_channels);
 
-int16_t WebRtcOpus_DecoderCreate(OpusDecInst** inst, size_t channels, int32_t sample_rate_hz);
+int16_t WebRtcOpus_DecoderCreate(OpusDecInst** inst, size_t channels);
 int16_t WebRtcOpus_DecoderFree(OpusDecInst* inst);
 
 /****************************************************************************
@@ -324,7 +324,7 @@ int WebRtcOpus_DecodePlc(OpusDecInst* inst, int16_t* decoded,
  */
 int WebRtcOpus_DecodeFec(OpusDecInst* inst, const uint8_t* encoded,
                          size_t encoded_bytes, int16_t* decoded,
-                         int16_t* audio_type, int32_t sample_rate_hz);
+                         int16_t* audio_type);
 
 /****************************************************************************
  * WebRtcOpus_DurationEst(...)
@@ -340,7 +340,7 @@ int WebRtcOpus_DecodeFec(OpusDecInst* inst, const uint8_t* encoded,
  */
 int WebRtcOpus_DurationEst(OpusDecInst* inst,
                            const uint8_t* payload,
-                           size_t payload_length_bytes, int32_t sample_rate_hz);
+                           size_t payload_length_bytes);
 
 /****************************************************************************
  * WebRtcOpus_PlcDuration(...)
@@ -374,7 +374,7 @@ int WebRtcOpus_PlcDuration(OpusDecInst* inst);
  *                                  0 - No FEC data in the packet.
  */
 int WebRtcOpus_FecDurationEst(const uint8_t* payload,
-                              size_t payload_length_bytes, int32_t sample_rate_hz);
+                              size_t payload_length_bytes);
 
 /****************************************************************************
  * WebRtcOpus_PacketHasFec(...)
@@ -388,7 +388,7 @@ int WebRtcOpus_FecDurationEst(const uint8_t* payload,
  *                                 1 - the packet contains FEC.
  */
 int WebRtcOpus_PacketHasFec(const uint8_t* payload,
-                            size_t payload_length_bytes, int32_t sample_rate_hz);
+                            size_t payload_length_bytes);
 
 #ifdef __cplusplus
 }  // extern "C"

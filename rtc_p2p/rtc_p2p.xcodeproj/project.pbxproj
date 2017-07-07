@@ -23,7 +23,6 @@
 		43C69AF81D225AE800427D35 /* dtlstransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A921D225AE800427D35 /* dtlstransport.h */; };
 		43C69AF91D225AE800427D35 /* dtlstransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A931D225AE800427D35 /* dtlstransportchannel.cc */; };
 		43C69AFA1D225AE800427D35 /* dtlstransportchannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A941D225AE800427D35 /* dtlstransportchannel.h */; };
-		43C69AFD1D225AE800427D35 /* p2ptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A971D225AE800427D35 /* p2ptransport.cc */; };
 		43C69AFE1D225AE800427D35 /* p2ptransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A981D225AE800427D35 /* p2ptransport.h */; };
 		43C69AFF1D225AE800427D35 /* p2ptransportchannel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A991D225AE800427D35 /* p2ptransportchannel.cc */; };
 		43C69B001D225AE800427D35 /* p2ptransportchannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A9A1D225AE800427D35 /* p2ptransportchannel.h */; };
@@ -98,7 +97,6 @@
 		43C69A921D225AE800427D35 /* dtlstransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtlstransport.h; sourceTree = "<group>"; };
 		43C69A931D225AE800427D35 /* dtlstransportchannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dtlstransportchannel.cc; sourceTree = "<group>"; };
 		43C69A941D225AE800427D35 /* dtlstransportchannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtlstransportchannel.h; sourceTree = "<group>"; };
-		43C69A971D225AE800427D35 /* p2ptransport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = p2ptransport.cc; sourceTree = "<group>"; };
 		43C69A981D225AE800427D35 /* p2ptransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = p2ptransport.h; sourceTree = "<group>"; };
 		43C69A991D225AE800427D35 /* p2ptransportchannel.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = p2ptransportchannel.cc; sourceTree = "<group>"; };
 		43C69A9A1D225AE800427D35 /* p2ptransportchannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = p2ptransportchannel.h; sourceTree = "<group>"; };
@@ -215,7 +213,6 @@
 				43C69A921D225AE800427D35 /* dtlstransport.h */,
 				43C69A931D225AE800427D35 /* dtlstransportchannel.cc */,
 				43C69A941D225AE800427D35 /* dtlstransportchannel.h */,
-				43C69A971D225AE800427D35 /* p2ptransport.cc */,
 				43C69A981D225AE800427D35 /* p2ptransport.h */,
 				43C69A991D225AE800427D35 /* p2ptransportchannel.cc */,
 				43C69A9A1D225AE800427D35 /* p2ptransportchannel.h */,
@@ -396,7 +393,6 @@
 				43172F4B1D5090AA003B5883 /* p2pconstants.cc in Sources */,
 				43C69B201D225AE800427D35 /* stun.cc in Sources */,
 				43C69B1D1D225AE800427D35 /* sessiondescription.cc in Sources */,
-				43C69AFD1D225AE800427D35 /* p2ptransport.cc in Sources */,
 				43C69B391D225AE800427D35 /* transportdescription.cc in Sources */,
 				43C69B3B1D225AE800427D35 /* transportdescriptionfactory.cc in Sources */,
 				43C69B031D225AE800427D35 /* port.cc in Sources */,
