@@ -272,6 +272,7 @@
 					WEBRTC_CODEC_ISAC,
 					WEBRTC_CODEC_ILBC,
 					WEBRTC_CODEC_G722,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -294,6 +295,7 @@
 					WEBRTC_CODEC_ISAC,
 					WEBRTC_CODEC_ILBC,
 					WEBRTC_CODEC_G722,
+					WEBRTC_POSIX,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

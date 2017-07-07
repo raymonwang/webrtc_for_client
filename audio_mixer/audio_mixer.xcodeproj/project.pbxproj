@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43E1B33B1F0D1B3C00B73FCB /* frame_combiner.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B3351F0D1B3C00B73FCB /* frame_combiner.cc */; };
+		43E1B33C1F0D1B3C00B73FCB /* frame_combiner.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B3361F0D1B3C00B73FCB /* frame_combiner.h */; };
+		43E1B33D1F0D1B3C00B73FCB /* gain_change_calculator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B3371F0D1B3C00B73FCB /* gain_change_calculator.cc */; };
+		43E1B33E1F0D1B3C00B73FCB /* gain_change_calculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B3381F0D1B3C00B73FCB /* gain_change_calculator.h */; };
+		43E1B33F1F0D1B3C00B73FCB /* sine_wave_generator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B3391F0D1B3C00B73FCB /* sine_wave_generator.cc */; };
+		43E1B3401F0D1B3C00B73FCB /* sine_wave_generator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B33A1F0D1B3C00B73FCB /* sine_wave_generator.h */; };
 		43EFD2661E5AE90600E3DEAD /* audio_frame_manipulator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD25A1E5AE90600E3DEAD /* audio_frame_manipulator.cc */; };
 		43EFD2671E5AE90600E3DEAD /* audio_frame_manipulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD25B1E5AE90600E3DEAD /* audio_frame_manipulator.h */; };
 		43EFD2691E5AE90600E3DEAD /* audio_mixer_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD25D1E5AE90600E3DEAD /* audio_mixer_impl.cc */; };
@@ -17,6 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43E1B3351F0D1B3C00B73FCB /* frame_combiner.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frame_combiner.cc; sourceTree = "<group>"; };
+		43E1B3361F0D1B3C00B73FCB /* frame_combiner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_combiner.h; sourceTree = "<group>"; };
+		43E1B3371F0D1B3C00B73FCB /* gain_change_calculator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gain_change_calculator.cc; sourceTree = "<group>"; };
+		43E1B3381F0D1B3C00B73FCB /* gain_change_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gain_change_calculator.h; sourceTree = "<group>"; };
+		43E1B3391F0D1B3C00B73FCB /* sine_wave_generator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sine_wave_generator.cc; sourceTree = "<group>"; };
+		43E1B33A1F0D1B3C00B73FCB /* sine_wave_generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sine_wave_generator.h; sourceTree = "<group>"; };
 		43EFD24C1E5AE8D900E3DEAD /* libaudio_mixer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libaudio_mixer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43EFD25A1E5AE90600E3DEAD /* audio_frame_manipulator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audio_frame_manipulator.cc; sourceTree = "<group>"; };
 		43EFD25B1E5AE90600E3DEAD /* audio_frame_manipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_frame_manipulator.h; sourceTree = "<group>"; };
@@ -60,6 +72,12 @@
 		43EFD2591E5AE90600E3DEAD /* audio_mixer */ = {
 			isa = PBXGroup;
 			children = (
+				43E1B3351F0D1B3C00B73FCB /* frame_combiner.cc */,
+				43E1B3361F0D1B3C00B73FCB /* frame_combiner.h */,
+				43E1B3371F0D1B3C00B73FCB /* gain_change_calculator.cc */,
+				43E1B3381F0D1B3C00B73FCB /* gain_change_calculator.h */,
+				43E1B3391F0D1B3C00B73FCB /* sine_wave_generator.cc */,
+				43E1B33A1F0D1B3C00B73FCB /* sine_wave_generator.h */,
 				43EFD25A1E5AE90600E3DEAD /* audio_frame_manipulator.cc */,
 				43EFD25B1E5AE90600E3DEAD /* audio_frame_manipulator.h */,
 				43EFD25D1E5AE90600E3DEAD /* audio_mixer_impl.cc */,
@@ -84,8 +102,11 @@
 			files = (
 				43EFD2671E5AE90600E3DEAD /* audio_frame_manipulator.h in Headers */,
 				43EFD26A1E5AE90600E3DEAD /* audio_mixer_impl.h in Headers */,
+				43E1B3401F0D1B3C00B73FCB /* sine_wave_generator.h in Headers */,
+				43E1B33C1F0D1B3C00B73FCB /* frame_combiner.h in Headers */,
 				43EFD26D1E5AE90600E3DEAD /* default_output_rate_calculator.h in Headers */,
 				43EFD26E1E5AE90600E3DEAD /* output_rate_calculator.h in Headers */,
+				43E1B33E1F0D1B3C00B73FCB /* gain_change_calculator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +169,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				43EFD26C1E5AE90600E3DEAD /* default_output_rate_calculator.cc in Sources */,
+				43E1B33F1F0D1B3C00B73FCB /* sine_wave_generator.cc in Sources */,
 				43EFD2661E5AE90600E3DEAD /* audio_frame_manipulator.cc in Sources */,
+				43E1B33B1F0D1B3C00B73FCB /* frame_combiner.cc in Sources */,
+				43E1B33D1F0D1B3C00B73FCB /* gain_change_calculator.cc in Sources */,
 				43EFD2691E5AE90600E3DEAD /* audio_mixer_impl.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

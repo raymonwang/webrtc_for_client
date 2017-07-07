@@ -19,7 +19,7 @@ namespace webrtc {
 namespace {
 class OpusFrame : public AudioDecoder::EncodedAudioFrame {
  public:
-  OpusFrame(AudioDecoderOpus* decoder,
+  OpusFrame(AudioDecoderOpusImpl* decoder,
             rtc::Buffer&& payload,
             bool is_primary_payload)
       : decoder_(decoder),
@@ -57,25 +57,25 @@ class OpusFrame : public AudioDecoder::EncodedAudioFrame {
   }
 
  private:
-  AudioDecoderOpus* const decoder_;
+  AudioDecoderOpusImpl* const decoder_;
   const rtc::Buffer payload_;
   const bool is_primary_payload_;
 };
 
 }  // namespace
 
-AudioDecoderOpus::AudioDecoderOpus(size_t num_channels, int32_t sample_rate_hz)
-    : channels_(num_channels), sample_rate_hz_(sample_rate_hz) {
+AudioDecoderOpusImpl::AudioDecoderOpusImpl(size_t num_channels)
+    : channels_(num_channels) {
   RTC_DCHECK(num_channels == 1 || num_channels == 2);
-  WebRtcOpus_DecoderCreate(&dec_state_, channels_, sample_rate_hz);
+  WebRtcOpus_DecoderCreate(&dec_state_, channels_);
   WebRtcOpus_DecoderInit(dec_state_);
 }
 
-AudioDecoderOpus::~AudioDecoderOpus() {
+AudioDecoderOpusImpl::~AudioDecoderOpusImpl() {
   WebRtcOpus_DecoderFree(dec_state_);
 }
 
-std::vector<AudioDecoder::ParseResult> AudioDecoderOpus::ParsePayload(
+std::vector<AudioDecoder::ParseResult> AudioDecoderOpusImpl::ParsePayload(
     rtc::Buffer&& payload,
     uint32_t timestamp) {
   std::vector<ParseResult> results;
@@ -95,12 +95,12 @@ std::vector<AudioDecoder::ParseResult> AudioDecoderOpus::ParsePayload(
   return results;
 }
 
-int AudioDecoderOpus::DecodeInternal(const uint8_t* encoded,
-                                     size_t encoded_len,
-                                     int sample_rate_hz,
-                                     int16_t* decoded,
-                                     SpeechType* speech_type) {
-//  RTC_DCHECK_EQ(sample_rate_hz, RTCHAT_OPUS_FREQ);
+int AudioDecoderOpusImpl::DecodeInternal(const uint8_t* encoded,
+                                         size_t encoded_len,
+                                         int sample_rate_hz,
+                                         int16_t* decoded,
+                                         SpeechType* speech_type) {
+  RTC_DCHECK_EQ(sample_rate_hz, 48000);
   int16_t temp_type = 1;  // Default is speech.
   int ret =
       WebRtcOpus_Decode(dec_state_, encoded, encoded_len, decoded, &temp_type);
@@ -110,58 +110,58 @@ int AudioDecoderOpus::DecodeInternal(const uint8_t* encoded,
   return ret;
 }
 
-int AudioDecoderOpus::DecodeRedundantInternal(const uint8_t* encoded,
-                                              size_t encoded_len,
-                                              int sample_rate_hz,
-                                              int16_t* decoded,
-                                              SpeechType* speech_type) {
+int AudioDecoderOpusImpl::DecodeRedundantInternal(const uint8_t* encoded,
+                                                  size_t encoded_len,
+                                                  int sample_rate_hz,
+                                                  int16_t* decoded,
+                                                  SpeechType* speech_type) {
   if (!PacketHasFec(encoded, encoded_len)) {
     // This packet is a RED packet.
     return DecodeInternal(encoded, encoded_len, sample_rate_hz, decoded,
                           speech_type);
   }
 
-//  RTC_DCHECK_EQ(sample_rate_hz, RTCHAT_OPUS_FREQ);
+  RTC_DCHECK_EQ(sample_rate_hz, 48000);
   int16_t temp_type = 1;  // Default is speech.
   int ret = WebRtcOpus_DecodeFec(dec_state_, encoded, encoded_len, decoded,
-                                 &temp_type, sample_rate_hz);
+                                 &temp_type);
   if (ret > 0)
     ret *= static_cast<int>(channels_);  // Return total number of samples.
   *speech_type = ConvertSpeechType(temp_type);
   return ret;
 }
 
-void AudioDecoderOpus::Reset() {
+void AudioDecoderOpusImpl::Reset() {
   WebRtcOpus_DecoderInit(dec_state_);
 }
 
-int AudioDecoderOpus::PacketDuration(const uint8_t* encoded,
-                                     size_t encoded_len) const {
-  return WebRtcOpus_DurationEst(dec_state_, encoded, encoded_len, sample_rate_hz_);
+int AudioDecoderOpusImpl::PacketDuration(const uint8_t* encoded,
+                                         size_t encoded_len) const {
+  return WebRtcOpus_DurationEst(dec_state_, encoded, encoded_len);
 }
 
-int AudioDecoderOpus::PacketDurationRedundant(const uint8_t* encoded,
-                                              size_t encoded_len) const {
+int AudioDecoderOpusImpl::PacketDurationRedundant(const uint8_t* encoded,
+                                                  size_t encoded_len) const {
   if (!PacketHasFec(encoded, encoded_len)) {
     // This packet is a RED packet.
     return PacketDuration(encoded, encoded_len);
   }
 
-  return WebRtcOpus_FecDurationEst(encoded, encoded_len, sample_rate_hz_);
+  return WebRtcOpus_FecDurationEst(encoded, encoded_len);
 }
 
-bool AudioDecoderOpus::PacketHasFec(const uint8_t* encoded,
-                                    size_t encoded_len) const {
+bool AudioDecoderOpusImpl::PacketHasFec(const uint8_t* encoded,
+                                        size_t encoded_len) const {
   int fec;
-  fec = WebRtcOpus_PacketHasFec(encoded, encoded_len, sample_rate_hz_);
+  fec = WebRtcOpus_PacketHasFec(encoded, encoded_len);
   return (fec == 1);
 }
 
-int AudioDecoderOpus::SampleRateHz() const {
-  return sample_rate_hz_;
+int AudioDecoderOpusImpl::SampleRateHz() const {
+  return 48000;
 }
 
-size_t AudioDecoderOpus::Channels() const {
+size_t AudioDecoderOpusImpl::Channels() const {
   return channels_;
 }
 

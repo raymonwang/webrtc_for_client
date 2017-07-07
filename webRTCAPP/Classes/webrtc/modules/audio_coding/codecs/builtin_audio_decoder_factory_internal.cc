@@ -161,8 +161,8 @@ NamedDecoderConstructor decoder_constructors[] = {
        }();
        if (format.clockrate_hz >= 8000 && format.num_channels == 2 &&
            num_channels) {
-         if (out) {builtin_audio_decoder_factory_internal.cc
-           out->reset(new AudioDecoderOpusImpl(*num_channels, format.clockrate_hz));
+         if (out) {
+           out->reset(new AudioDecoderOpusImpl(*num_channels));
          }
          return true;
        } else {
