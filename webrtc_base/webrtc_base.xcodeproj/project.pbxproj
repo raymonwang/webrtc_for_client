@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4303DAF61E4826F500CD116B /* Logging.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA751E4826F400CD116B /* Logging.java */; };
-		4303DAF71E4826F500CD116B /* Logging.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA751E4826F400CD116B /* Logging.java */; };
-		4303DAF81E4826F500CD116B /* Size.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA771E4826F400CD116B /* Size.java */; };
-		4303DAF91E4826F500CD116B /* Size.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA771E4826F400CD116B /* Size.java */; };
-		4303DAFA1E4826F500CD116B /* ThreadUtils.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA781E4826F400CD116B /* ThreadUtils.java */; };
-		4303DAFB1E4826F500CD116B /* ThreadUtils.java in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA781E4826F400CD116B /* ThreadUtils.java */; };
 		4303DB101E4826F500CD116B /* exp_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA841E4826F400CD116B /* exp_filter.cc */; };
 		4303DB111E4826F500CD116B /* exp_filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DA841E4826F400CD116B /* exp_filter.cc */; };
 		4303DB701E4826F500CD116B /* weak_ptr.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4303DAB91E4826F500CD116B /* weak_ptr.cc */; };
@@ -1103,7 +1097,6 @@
 				43A0328B1D4EF0C300BB9828 /* flags.cc in Sources */,
 				43A033D51D4EF0C400BB9828 /* transformadapter.cc in Sources */,
 				43A032B31D4EF0C300BB9828 /* json.cc in Sources */,
-				4303DAF61E4826F500CD116B /* Logging.java in Sources */,
 				43A032F11D4EF0C300BB9828 /* messagehandler.cc in Sources */,
 				43A032CB1D4EF0C300BB9828 /* logsinks.cc in Sources */,
 				43A2943E1E376BBD00B6BE98 /* applefilesystem.mm in Sources */,
@@ -1130,14 +1123,12 @@
 				43A033831D4EF0C400BB9828 /* socketaddress.cc in Sources */,
 				43C037011D51BECC0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A032691D4EF0C300BB9828 /* cryptstring.cc in Sources */,
-				4303DAF81E4826F500CD116B /* Size.java in Sources */,
 				43A0331F1D4EF0C300BB9828 /* optionsfile.cc in Sources */,
 				43A294B01E376BBD00B6BE98 /* optional.cc in Sources */,
 				43A0327F1D4EF0C300BB9828 /* fakeclock.cc in Sources */,
 				43A032711D4EF0C300BB9828 /* diskcache.cc in Sources */,
 				43A032D51D4EF0C300BB9828 /* macconversion.cc in Sources */,
 				43A032231D4EF0C300BB9828 /* asyncinvoker.cc in Sources */,
-				4303DAFA1E4826F500CD116B /* ThreadUtils.java in Sources */,
 				43A032271D4EF0C300BB9828 /* asyncresolverinterface.cc in Sources */,
 				43A0333B1D4EF0C400BB9828 /* proxyinfo.cc in Sources */,
 				43A0336D1D4EF0C400BB9828 /* sha1digest.cc in Sources */,
@@ -1210,7 +1201,6 @@
 				43A033861D4EF0C400BB9828 /* socketaddresspair.cc in Sources */,
 				43A033DA1D4EF0C400BB9828 /* unixfilesystem.cc in Sources */,
 				43A033A61D4EF0C400BB9828 /* stringutils.cc in Sources */,
-				4303DAF71E4826F500CD116B /* Logging.java in Sources */,
 				43A032D81D4EF0C300BB9828 /* macifaddrs_converter.cc in Sources */,
 				43A0329A1D4EF0C300BB9828 /* httpcommon.cc in Sources */,
 				43A0325A1D4EF0C300BB9828 /* checks.cc in Sources */,
@@ -1223,9 +1213,7 @@
 				43C037021D51BECD0022DED1 /* task_queue_gcd.cc in Sources */,
 				43A033D61D4EF0C400BB9828 /* transformadapter.cc in Sources */,
 				43A032B41D4EF0C300BB9828 /* json.cc in Sources */,
-				4303DAF91E4826F500CD116B /* Size.java in Sources */,
 				43A032F21D4EF0C300BB9828 /* messagehandler.cc in Sources */,
-				4303DAFB1E4826F500CD116B /* ThreadUtils.java in Sources */,
 				43A032CC1D4EF0C300BB9828 /* logsinks.cc in Sources */,
 				43A033141D4EF0C300BB9828 /* openssladapter.cc in Sources */,
 				43A033481D4EF0C400BB9828 /* rate_limiter.cc in Sources */,

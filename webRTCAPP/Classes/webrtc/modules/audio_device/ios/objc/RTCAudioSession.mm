@@ -327,9 +327,13 @@ NSInteger const kRTCAudioSessionErrorConfiguration = -2;
     // option.
     AVAudioSessionSetActiveOptions options =
         active ? 0 : AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation;
-    success = [session setActive:active
-                     withOptions:options
-                           error:&error];
+      if (active) {
+          success = [session setActive:active
+                           withOptions:options
+                                 error:&error];
+      }
+      else
+          success = true;
     if (outError) {
       *outError = error;
     }

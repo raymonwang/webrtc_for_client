@@ -757,7 +757,7 @@ int32_t RTCPSender::SendCompoundRTCP(
   {
     rtc::CritScope lock(&critical_section_rtcp_sender_);
     if (method_ == RtcpMode::kOff) {
-      LOG(LS_WARNING) << "Can't send rtcp if it is disabled.";
+      LOG(LS_INFO) << "Can't send rtcp if it is disabled.";
       return -1;
     }
     // Add all flags as volatile. Non volatile entries will not be overwritten.
