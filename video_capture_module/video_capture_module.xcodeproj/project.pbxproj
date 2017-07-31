@@ -18,14 +18,12 @@
 		43288EF31D38E9320044E4F5 /* device_info_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EAC1D38E9320044E4F5 /* device_info_impl.cc */; };
 		43288EF41D38E9320044E4F5 /* device_info_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EAD1D38E9320044E4F5 /* device_info_impl.h */; };
 		43288F151D38E9320044E4F5 /* video_capture_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288ED81D38E9320044E4F5 /* video_capture_config.h */; };
-		43288F161D38E9320044E4F5 /* video_capture_delay.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288ED91D38E9320044E4F5 /* video_capture_delay.h */; };
 		43288F171D38E9320044E4F5 /* video_capture_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */; };
 		43288F181D38E9320044E4F5 /* video_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */; };
 		43288F191D38E9320044E4F5 /* video_capture_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EDC1D38E9320044E4F5 /* video_capture_impl.h */; };
 		43288F2B1D38EB680044E4F5 /* video_capture_factory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */; };
 		43288F2D1D38EB680044E4F5 /* video_capture_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */; };
 		43288F331D38EB680044E4F5 /* device_info_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288EAC1D38E9320044E4F5 /* device_info_impl.cc */; };
-		43288F391D38EB680044E4F5 /* video_capture_delay.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288ED91D38E9320044E4F5 /* video_capture_delay.h */; };
 		43288F3A1D38EB680044E4F5 /* device_info_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EAD1D38E9320044E4F5 /* device_info_impl.h */; };
 		43288F3C1D38EB680044E4F5 /* video_capture_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288EDC1D38E9320044E4F5 /* video_capture_impl.h */; };
 		43288F411D38EB680044E4F5 /* video_capture_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288ED81D38E9320044E4F5 /* video_capture_config.h */; };
@@ -53,7 +51,6 @@
 		43288EB21D38E9320044E4F5 /* video_capture_external.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_external.cc; sourceTree = "<group>"; };
 		43288ED31D38E9320044E4F5 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 		43288ED81D38E9320044E4F5 /* video_capture_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_config.h; sourceTree = "<group>"; };
-		43288ED91D38E9320044E4F5 /* video_capture_delay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_delay.h; sourceTree = "<group>"; };
 		43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_factory.cc; sourceTree = "<group>"; };
 		43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_capture_impl.cc; sourceTree = "<group>"; };
 		43288EDC1D38E9320044E4F5 /* video_capture_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_capture_impl.h; sourceTree = "<group>"; };
@@ -127,7 +124,6 @@
 				43288EB01D38E9320044E4F5 /* external */,
 				43288ED31D38E9320044E4F5 /* OWNERS */,
 				43288ED81D38E9320044E4F5 /* video_capture_config.h */,
-				43288ED91D38E9320044E4F5 /* video_capture_delay.h */,
 				43288EDA1D38E9320044E4F5 /* video_capture_factory.cc */,
 				43288EDB1D38E9320044E4F5 /* video_capture_impl.cc */,
 				43288EDC1D38E9320044E4F5 /* video_capture_impl.h */,
@@ -155,7 +151,6 @@
 				4387763D1D4F486D00E6F9E9 /* video_capture_defines.h in Headers */,
 				4315A1F61E545B13002D031C /* video_capture.h in Headers */,
 				4315A1F41E545B13002D031C /* rtc_video_capture_objc.h in Headers */,
-				43288F161D38E9320044E4F5 /* video_capture_delay.h in Headers */,
 				4315A1F21E545B13002D031C /* device_info_objc.h in Headers */,
 				438776411D4F486D00E6F9E9 /* video_capture.h in Headers */,
 				43288EF41D38E9320044E4F5 /* device_info_impl.h in Headers */,
@@ -170,7 +165,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43288F391D38EB680044E4F5 /* video_capture_delay.h in Headers */,
 				438776421D4F486D00E6F9E9 /* video_capture.h in Headers */,
 				43288F3A1D38EB680044E4F5 /* device_info_impl.h in Headers */,
 				438776401D4F486D00E6F9E9 /* video_capture_factory.h in Headers */,
