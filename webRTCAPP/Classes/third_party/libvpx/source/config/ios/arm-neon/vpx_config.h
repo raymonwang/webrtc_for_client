@@ -16,7 +16,7 @@
 #define ARCH_X86_64 0
 #define ARCH_PPC 0
 #define HAVE_NEON 1
-#define HAVE_NEON_ASM 1
+#define HAVE_NEON_ASM 0
 #define HAVE_MIPS32 0
 #define HAVE_DSPR2 0
 #define HAVE_MSA 0
