@@ -67,7 +67,7 @@ PayloadTypeMapper::PayloadTypeMapper()
           {{kCnCodecName,     32000, 1}, 106},
           {{kGoogleSctpDataCodecName, 0, 0}, kGoogleSctpDataCodecPlType},
           {{kOpusCodecName,   48000, 2,
-              {{"minptime", "10"}, {"useinbandfec", "1"}}}, 111},
+              {{"minptime", "10"}, {"useinbandfec", "1"}}}, 121},
           // TODO(solenberg): Remove the hard coded 16k,32k,48k DTMF once we
           // assign payload types dynamically for send side as well.
           {{kDtmfCodecName,   48000, 1}, 110},
