@@ -102,6 +102,7 @@
 		43E1B9C71F0E24B800B73FCB /* RTCDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E1AF741F0CCB8E00B73FCB /* RTCDispatcher.m */; };
 		43E1B9C81F0E31D600B73FCB /* RTCAudioSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8AC1F0E023900B73FCB /* RTCAudioSource.mm */; };
 		43E1BA371F0E39E700B73FCB /* RTCMediaSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8C31F0E023900B73FCB /* RTCMediaSource.mm */; };
+		43E23CA01F3088250065A4B8 /* RTCVideoFrame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8E01F0E023900B73FCB /* RTCVideoFrame.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -704,6 +705,7 @@
 				43E1B1621F0CDAFC00B73FCB /* videocodecfactory.mm in Sources */,
 				43E1B2ED1F0D1A2500B73FCB /* RTCCVPixelBuffer.mm in Sources */,
 				43E1AF861F0CCB8E00B73FCB /* UIDevice+RTCDevice.mm in Sources */,
+				43E23CA01F3088250065A4B8 /* RTCVideoFrame.mm in Sources */,
 				43E1AF7E1F0CCB8E00B73FCB /* NSString+StdString.mm in Sources */,
 				43E1B89A1F0DE55300B73FCB /* RTCAudioSession+Configuration.mm in Sources */,
 				43E1B2F81F0D1A2500B73FCB /* RTCShader.mm in Sources */,
