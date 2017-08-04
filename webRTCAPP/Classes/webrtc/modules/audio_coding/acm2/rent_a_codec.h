@@ -63,7 +63,6 @@ class RentACodec {
     kG722_2ch,  // Stereo
 #endif
 #ifdef WEBRTC_CODEC_OPUS
-    kOpus16K,
     kOpus,  // Mono and stereo
 #endif
     kCNNB,
