@@ -23,12 +23,6 @@
 		431730331D509760003B5883 /* libwebrtc_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 430D835D1985E422009E763A /* libwebrtc_base.a */; };
 		4317303A1D509E0C003B5883 /* librtp_rtcp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43998A7319862D95003C5793 /* librtp_rtcp.a */; };
 		4318D576197E725500D5CADB /* APPRTCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4318D575197E725500D5CADB /* APPRTCViewController.xib */; };
-		432331F11E66DD5800D3D99B /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EB1E66DD5800D3D99B /* libavcodec.a */; };
-		432331F21E66DD5800D3D99B /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EC1E66DD5800D3D99B /* libavdevice.a */; };
-		432331F31E66DD5800D3D99B /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331ED1E66DD5800D3D99B /* libavformat.a */; };
-		432331F41E66DD5800D3D99B /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EE1E66DD5800D3D99B /* libavutil.a */; };
-		432331F51E66DD5800D3D99B /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EF1E66DD5800D3D99B /* libswresample.a */; };
-		432331F61E66DD5800D3D99B /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331F01E66DD5800D3D99B /* libswscale.a */; };
 		434B05911D50B66100FDCA92 /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43288A971D38DACC0044E4F5 /* libcommon_video.a */; };
 		434B05921D50B73100FDCA92 /* librtc_p2p.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6978B1D22568300427D35 /* librtc_p2p.a */; };
 		434B05931D50B76600FDCA92 /* libwebrtc_common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040571D50374B009FDAE6 /* libwebrtc_common.a */; };
@@ -119,9 +113,14 @@
 		43C036DA1D51ACE80022DED1 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040A31D503BEE009FDAE6 /* libcongestion_controller.a */; };
 		43C036F61D51ADD30022DED1 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E040851D503AB0009FDAE6 /* librtc_event_log.a */; };
 		43C67D771D211CF300427D35 /* libwebrtc_base_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67D761D211CEC00427D35 /* libwebrtc_base_osx.a */; };
-		43C67D7B1D211E7100427D35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67D7A1D211E7100427D35 /* Foundation.framework */; };
 		43C6A17F1D22A57E00427D35 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6A17E1D22A57E00427D35 /* libsqlite3.tbd */; };
 		43CCF0951E56A4CF00EBE4CB /* libvpx_assembly_arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43CCF0941E56A4CF00EBE4CB /* libvpx_assembly_arm.a */; };
+		43CCF8CF1F39DBF400AAF9D0 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EB1E66DD5800D3D99B /* libavcodec.a */; };
+		43CCF8D01F39DBF400AAF9D0 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EC1E66DD5800D3D99B /* libavdevice.a */; };
+		43CCF8D11F39DBF400AAF9D0 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331ED1E66DD5800D3D99B /* libavformat.a */; };
+		43CCF8D21F39DBF400AAF9D0 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EE1E66DD5800D3D99B /* libavutil.a */; };
+		43CCF8D31F39DBF400AAF9D0 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EF1E66DD5800D3D99B /* libswresample.a */; };
+		43CCF8D41F39DBF400AAF9D0 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331F01E66DD5800D3D99B /* libswscale.a */; };
 		43E03A011D22AA6200B39549 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6A1801D22A64B00427D35 /* libc++.tbd */; };
 		43E03A031D22AAA300B39549 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6A1151D22A22700427D35 /* Security.framework */; };
 		43E03A6C1D23717C00B39549 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E03A6B1D23717C00B39549 /* AVFoundation.framework */; };
@@ -969,9 +968,6 @@
 		43C67C501D20CF2500427D35 /* webrtc_opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_opus.xcodeproj; path = webrtc_opus/webrtc_opus.xcodeproj; sourceTree = "<group>"; };
 		43C67C881D2112C100427D35 /* peerconnection_server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = peerconnection_server; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C67CCB1D2113E600427D35 /* peerconnection_client */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = peerconnection_client; sourceTree = BUILT_PRODUCTS_DIR; };
-		43C67D7A1D211E7100427D35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		43C67D7C1D21218600427D35 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
-		43C67D7E1D21219300427D35 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		43C697861D22568300427D35 /* rtc_p2p.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_p2p.xcodeproj; path = rtc_p2p/rtc_p2p.xcodeproj; sourceTree = "<group>"; };
 		43C69BCC1D227F4300427D35 /* webrtc_vp9.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_vp9.xcodeproj; path = webrtc_vp9/webrtc_vp9.xcodeproj; sourceTree = "<group>"; };
 		43C69BEC1D22811B00427D35 /* webrtc_vp8.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_vp8.xcodeproj; path = webrtc_vp8/webrtc_vp8.xcodeproj; sourceTree = "<group>"; };
@@ -984,7 +980,6 @@
 		43E03A6D1D23721400B39549 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		43E03A701D2372A900B39549 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		43E03A721D2372DD00B39549 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		43E03A741D237A2A00B39549 /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
 		43E040061D50374A009FDAE6 /* webrtc_common.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_common.xcodeproj; path = webrtc_common/webrtc_common.xcodeproj; sourceTree = "<group>"; };
 		43E040801D503AAF009FDAE6 /* rtc_event_log.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = rtc_event_log.xcodeproj; path = rtc_event_log/rtc_event_log.xcodeproj; sourceTree = "<group>"; };
 		43E0409E1D503BED009FDAE6 /* congestion_controller.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = congestion_controller.xcodeproj; path = congestion_controller/congestion_controller.xcodeproj; sourceTree = "<group>"; };
@@ -1016,6 +1011,7 @@
 				4303DCB01E4830D000CD116B /* libcommon_audio_arm64.a in Frameworks */,
 				43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */,
 				43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */,
+				43CCF8CF1F39DBF400AAF9D0 /* libavcodec.a in Frameworks */,
 				43AC8B341E484F4F0092C54E /* librtc_media.a in Frameworks */,
 				43AC797B1E4840B80092C54E /* libjsoncpp.a in Frameworks */,
 				4303DCC21E48340900CD116B /* libwebrtc_common.a in Frameworks */,
@@ -1023,7 +1019,12 @@
 				4303DCAE1E48303600CD116B /* libcommon_video.a in Frameworks */,
 				4303DCAF1E48306100CD116B /* libsystem_wrappers.a in Frameworks */,
 				4303DCAD1E48301500CD116B /* libwebrtc_base.a in Frameworks */,
+				43CCF8D41F39DBF400AAF9D0 /* libswscale.a in Frameworks */,
+				43CCF8D11F39DBF400AAF9D0 /* libavformat.a in Frameworks */,
+				43CCF8D31F39DBF400AAF9D0 /* libswresample.a in Frameworks */,
+				43CCF8D21F39DBF400AAF9D0 /* libavutil.a in Frameworks */,
 				43AC8AE61E4848700092C54E /* libboringssl.a in Frameworks */,
+				43CCF8D01F39DBF400AAF9D0 /* libavdevice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1133,7 +1134,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43C67D7B1D211E7100427D35 /* Foundation.framework in Frameworks */,
 				43C67D771D211CF300427D35 /* libwebrtc_base_osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1152,13 +1152,10 @@
 				43C036F61D51ADD30022DED1 /* librtc_event_log.a in Frameworks */,
 				43CCF0951E56A4CF00EBE4CB /* libvpx_assembly_arm.a in Frameworks */,
 				43C036DA1D51ACE80022DED1 /* libcongestion_controller.a in Frameworks */,
-				432331F31E66DD5800D3D99B /* libavformat.a in Frameworks */,
-				432331F61E66DD5800D3D99B /* libswscale.a in Frameworks */,
 				43C036D91D51ACBE0022DED1 /* libwebrtc_call.a in Frameworks */,
 				434B059A1D50B8B900FDCA92 /* librtc_voice.a in Frameworks */,
 				434B061C1D50CEF600FDCA92 /* librtc_video.a in Frameworks */,
 				434B059D1D50B97100FDCA92 /* libwebrtc_audio.a in Frameworks */,
-				432331F11E66DD5800D3D99B /* libavcodec.a in Frameworks */,
 				434B05E31D50C4E100FDCA92 /* libwebrtc_video.a in Frameworks */,
 				434B05951D50B7BA00FDCA92 /* libyuv.a in Frameworks */,
 				434B05931D50B76600FDCA92 /* libwebrtc_common.a in Frameworks */,
@@ -1170,13 +1167,10 @@
 				431730331D509760003B5883 /* libwebrtc_base.a in Frameworks */,
 				4317303A1D509E0C003B5883 /* librtp_rtcp.a in Frameworks */,
 				431730321D509733003B5883 /* librtc_media.a in Frameworks */,
-				432331F21E66DD5800D3D99B /* libavdevice.a in Frameworks */,
 				43172F641D5094D2003B5883 /* libsystem_wrappers.a in Frameworks */,
 				43172F631D5094A2003B5883 /* librtc_sdk_common_objc.a in Frameworks */,
-				432331F41E66DD5800D3D99B /* libavutil.a in Frameworks */,
 				43E03A731D2372DD00B39549 /* CoreMedia.framework in Frameworks */,
 				43E03A711D2372A900B39549 /* AudioToolbox.framework in Frameworks */,
-				432331F51E66DD5800D3D99B /* libswresample.a in Frameworks */,
 				43E03A6C1D23717C00B39549 /* AVFoundation.framework in Frameworks */,
 				43E03A031D22AAA300B39549 /* Security.framework in Frameworks */,
 				43E03A011D22AA6200B39549 /* libc++.tbd in Frameworks */,
@@ -1820,24 +1814,6 @@
 		43ECEE91197CA80B00E9267B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				432331FD1E66DDA900D3D99B /* libiconv.tbd */,
-				43AC8AE51E4848700092C54E /* libboringssl.a */,
-				432331EA1E66DD5800D3D99B /* ffmpeg */,
-				43C036F81D51AE400022DED1 /* libicucore.A.tbd */,
-				434B059B1D50B93800FDCA92 /* libicucore.tbd */,
-				43E03A741D237A2A00B39549 /* libicucore.A.dylib */,
-				43E03A721D2372DD00B39549 /* CoreMedia.framework */,
-				43E03A701D2372A900B39549 /* AudioToolbox.framework */,
-				43E03A6D1D23721400B39549 /* AudioUnit.framework */,
-				43E03A6B1D23717C00B39549 /* AVFoundation.framework */,
-				43C6A1801D22A64B00427D35 /* libc++.tbd */,
-				43C6A17E1D22A57E00427D35 /* libsqlite3.tbd */,
-				43C6A1151D22A22700427D35 /* Security.framework */,
-				43C6A1131D22A21F00427D35 /* CFNetwork.framework */,
-				43C67D7E1D21219300427D35 /* AppKit.framework */,
-				43C67D7C1D21218600427D35 /* AVKit.framework */,
-				43C67D7A1D211E7100427D35 /* Foundation.framework */,
-				430B298D197F68AA0076767F /* GLKit.framework */,
 				4318D56B197E668F00D5CADB /* libyuv.a */,
 				4318D567197E65EA00D5CADB /* libvpx_asm_offsets_vpx_scale.a */,
 				4318D568197E65EA00D5CADB /* libvpx.a */,
@@ -1851,6 +1827,20 @@
 				4318D0E2197E3B4900D5CADB /* libusrsctplib.a */,
 				4318D0E3197E3B4900D5CADB /* libvpx_asm_offsets_vp8.a */,
 				4318D0E4197E3B4900D5CADB /* libyuv_neon.a */,
+				43AC8AE51E4848700092C54E /* libboringssl.a */,
+				432331EA1E66DD5800D3D99B /* ffmpeg */,
+				43E03A721D2372DD00B39549 /* CoreMedia.framework */,
+				43E03A701D2372A900B39549 /* AudioToolbox.framework */,
+				43E03A6D1D23721400B39549 /* AudioUnit.framework */,
+				43E03A6B1D23717C00B39549 /* AVFoundation.framework */,
+				43C6A1801D22A64B00427D35 /* libc++.tbd */,
+				43C036F81D51AE400022DED1 /* libicucore.A.tbd */,
+				432331FD1E66DDA900D3D99B /* libiconv.tbd */,
+				434B059B1D50B93800FDCA92 /* libicucore.tbd */,
+				43C6A17E1D22A57E00427D35 /* libsqlite3.tbd */,
+				43C6A1151D22A22700427D35 /* Security.framework */,
+				43C6A1131D22A21F00427D35 /* CFNetwork.framework */,
+				430B298D197F68AA0076767F /* GLKit.framework */,
 				43ECEE92197CA80B00E9267B /* Foundation.framework */,
 				43ECEE94197CA80B00E9267B /* CoreGraphics.framework */,
 				43ECEE96197CA80B00E9267B /* UIKit.framework */,
