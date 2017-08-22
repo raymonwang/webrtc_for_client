@@ -247,8 +247,6 @@ struct GlobalState {
     assert(pkey != nullptr);
     SSL_CTX_set1_tls_channel_id(ctx, pkey);
     EVP_PKEY_free(pkey);
-
-    SSL_CTX_set_short_header_enabled(ctx, 1);
   }
 
   ~GlobalState() {
@@ -272,14 +270,14 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *buf, size_t len) {
   SSL_set_bio(client, in, out);
   SSL_set_connect_state(client);
   SSL_set_renegotiate_mode(client, ssl_renegotiate_freely);
-  SSL_set_max_version(client, TLS1_3_VERSION);
+  SSL_set_max_proto_version(client, TLS1_3_VERSION);
   SSL_enable_ocsp_stapling(client);
   SSL_enable_signed_cert_timestamps(client);
   SSL_set_tlsext_host_name(client, "hostname");
   SSL_set_alpn_protos(client, kALPNProtocols, sizeof(kALPNProtocols));
 
   // Enable ciphers that are off by default.
-  SSL_set_cipher_list(client, "ALL:NULL-SHA");
+  SSL_set_strict_cipher_list(client, "ALL:NULL-SHA");
 
   BIO_write(in, buf, len);
   if (SSL_do_handshake(client) == 1) {

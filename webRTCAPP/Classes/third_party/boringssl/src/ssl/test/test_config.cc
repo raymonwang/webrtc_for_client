@@ -101,10 +101,8 @@ const Flag<bool> kBoolFlags[] = {
   { "-renegotiate-ignore", &TestConfig::renegotiate_ignore },
   { "-p384-only", &TestConfig::p384_only },
   { "-enable-all-curves", &TestConfig::enable_all_curves },
-  { "-use-sparse-dh-prime", &TestConfig::use_sparse_dh_prime },
   { "-use-old-client-cert-callback",
     &TestConfig::use_old_client_cert_callback },
-  { "-use-null-client-ca-list", &TestConfig::use_null_client_ca_list },
   { "-send-alert", &TestConfig::send_alert },
   { "-peek-then-read", &TestConfig::peek_then_read },
   { "-enable-grease", &TestConfig::enable_grease },
@@ -117,12 +115,19 @@ const Flag<bool> kBoolFlags[] = {
     &TestConfig::expect_sha256_client_cert_initial },
   { "-expect-sha256-client-cert-resume",
     &TestConfig::expect_sha256_client_cert_resume },
-  { "-enable-short-header", &TestConfig::enable_short_header },
   { "-read-with-unfinished-write", &TestConfig::read_with_unfinished_write },
   { "-expect-secure-renegotiation",
     &TestConfig::expect_secure_renegotiation },
   { "-expect-no-secure-renegotiation",
     &TestConfig::expect_no_secure_renegotiation },
+  { "-expect-session-id", &TestConfig::expect_session_id },
+  { "-expect-no-session-id", &TestConfig::expect_no_session_id },
+  { "-expect-accept-early-data", &TestConfig::expect_accept_early_data },
+  { "-expect-reject-early-data", &TestConfig::expect_reject_early_data },
+  { "-no-op-extra-handshake", &TestConfig::no_op_extra_handshake },
+  { "-handshake-twice", &TestConfig::handshake_twice },
+  { "-allow-unknown-alpn-protos", &TestConfig::allow_unknown_alpn_protos },
+  { "-enable-ed25519", &TestConfig::enable_ed25519 },
 };
 
 const Flag<std::string> kStringFlags[] = {
@@ -137,6 +142,7 @@ const Flag<std::string> kStringFlags[] = {
   { "-host-name", &TestConfig::host_name },
   { "-advertise-alpn", &TestConfig::advertise_alpn },
   { "-expect-alpn", &TestConfig::expected_alpn },
+  { "-expect-late-alpn", &TestConfig::expected_late_alpn },
   { "-expect-advertised-alpn", &TestConfig::expected_advertised_alpn },
   { "-select-alpn", &TestConfig::select_alpn },
   { "-psk", &TestConfig::psk },
@@ -146,6 +152,8 @@ const Flag<std::string> kStringFlags[] = {
   { "-export-label", &TestConfig::export_label },
   { "-export-context", &TestConfig::export_context },
   { "-expect-peer-cert-file", &TestConfig::expect_peer_cert_file },
+  { "-use-client-ca-list", &TestConfig::use_client_ca_list },
+  { "-expect-client-ca-list", &TestConfig::expected_client_ca_list },
 };
 
 const Flag<std::string> kBase64Flags[] = {
@@ -170,7 +178,6 @@ const Flag<int> kIntFlags[] = {
   { "-expect-peer-signature-algorithm",
     &TestConfig::expect_peer_signature_algorithm },
   { "-expect-curve-id", &TestConfig::expect_curve_id },
-  { "-expect-resume-curve-id", &TestConfig::expect_resume_curve_id },
   { "-initial-timeout-duration-ms", &TestConfig::initial_timeout_duration_ms },
   { "-max-cert-list", &TestConfig::max_cert_list },
   { "-expect-cipher-aes", &TestConfig::expect_cipher_aes },
@@ -178,83 +185,131 @@ const Flag<int> kIntFlags[] = {
   { "-resumption-delay", &TestConfig::resumption_delay },
   { "-max-send-fragment", &TestConfig::max_send_fragment },
   { "-read-size", &TestConfig::read_size },
+  { "-expect-ticket-age-skew", &TestConfig::expect_ticket_age_skew },
 };
 
 const Flag<std::vector<int>> kIntVectorFlags[] = {
   { "-signing-prefs", &TestConfig::signing_prefs },
+  { "-verify-prefs", &TestConfig::verify_prefs },
 };
+
+bool ParseFlag(char *flag, int argc, char **argv, int *i,
+               bool skip, TestConfig *out_config) {
+  bool *bool_field = FindField(out_config, kBoolFlags, flag);
+  if (bool_field != NULL) {
+    if (!skip) {
+      *bool_field = true;
+    }
+    return true;
+  }
+
+  std::string *string_field = FindField(out_config, kStringFlags, flag);
+  if (string_field != NULL) {
+    *i = *i + 1;
+    if (*i >= argc) {
+      fprintf(stderr, "Missing parameter\n");
+      return false;
+    }
+    if (!skip) {
+      string_field->assign(argv[*i]);
+    }
+    return true;
+  }
+
+  std::string *base64_field = FindField(out_config, kBase64Flags, flag);
+  if (base64_field != NULL) {
+    *i = *i + 1;
+    if (*i >= argc) {
+      fprintf(stderr, "Missing parameter\n");
+      return false;
+    }
+    size_t len;
+    if (!EVP_DecodedLength(&len, strlen(argv[*i]))) {
+      fprintf(stderr, "Invalid base64: %s\n", argv[*i]);
+      return false;
+    }
+    std::unique_ptr<uint8_t[]> decoded(new uint8_t[len]);
+    if (!EVP_DecodeBase64(decoded.get(), &len, len,
+                          reinterpret_cast<const uint8_t *>(argv[*i]),
+                          strlen(argv[*i]))) {
+      fprintf(stderr, "Invalid base64: %s\n", argv[*i]);
+      return false;
+    }
+    if (!skip) {
+      base64_field->assign(reinterpret_cast<const char *>(decoded.get()),
+                           len);
+    }
+    return true;
+  }
+
+  int *int_field = FindField(out_config, kIntFlags, flag);
+  if (int_field) {
+    *i = *i + 1;
+    if (*i >= argc) {
+      fprintf(stderr, "Missing parameter\n");
+      return false;
+    }
+    if (!skip) {
+      *int_field = atoi(argv[*i]);
+    }
+    return true;
+  }
+
+  std::vector<int> *int_vector_field =
+      FindField(out_config, kIntVectorFlags, flag);
+  if (int_vector_field) {
+    *i = *i + 1;
+    if (*i >= argc) {
+      fprintf(stderr, "Missing parameter\n");
+      return false;
+    }
+
+    // Each instance of the flag adds to the list.
+    if (!skip) {
+      int_vector_field->push_back(atoi(argv[*i]));
+    }
+    return true;
+  }
+
+  fprintf(stderr, "Unknown argument: %s\n", flag);
+  return false;
+}
+
+const char kInit[] = "-on-initial";
+const char kResume[] = "-on-resume";
+const char kRetry[] = "-on-retry";
 
 }  // namespace
 
-bool ParseConfig(int argc, char **argv, TestConfig *out_config) {
+bool ParseConfig(int argc, char **argv,
+                 TestConfig *out_initial,
+                 TestConfig *out_resume,
+                 TestConfig *out_retry) {
   for (int i = 0; i < argc; i++) {
-    bool *bool_field = FindField(out_config, kBoolFlags, argv[i]);
-    if (bool_field != NULL) {
-      *bool_field = true;
-      continue;
+    bool skip = false;
+    char *flag = argv[i];
+    if (strncmp(flag, kInit, strlen(kInit)) == 0) {
+      if (!ParseFlag(flag + strlen(kInit), argc, argv, &i, skip, out_initial)) {
+        return false;
+      }
+    } else if (strncmp(flag, kResume, strlen(kResume)) == 0) {
+      if (!ParseFlag(flag + strlen(kResume), argc, argv, &i, skip,
+                     out_resume)) {
+        return false;
+      }
+    } else if (strncmp(flag, kRetry, strlen(kRetry)) == 0) {
+      if (!ParseFlag(flag + strlen(kRetry), argc, argv, &i, skip, out_retry)) {
+        return false;
+      }
+    } else {
+      int i_init = i;
+      int i_resume = i;
+      if (!ParseFlag(flag, argc, argv, &i_init, skip, out_initial) ||
+          !ParseFlag(flag, argc, argv, &i_resume, skip, out_resume) ||
+          !ParseFlag(flag, argc, argv, &i, skip, out_retry)) {
+        return false;
+      }
     }
-
-    std::string *string_field = FindField(out_config, kStringFlags, argv[i]);
-    if (string_field != NULL) {
-      i++;
-      if (i >= argc) {
-        fprintf(stderr, "Missing parameter\n");
-        return false;
-      }
-      string_field->assign(argv[i]);
-      continue;
-    }
-
-    std::string *base64_field = FindField(out_config, kBase64Flags, argv[i]);
-    if (base64_field != NULL) {
-      i++;
-      if (i >= argc) {
-        fprintf(stderr, "Missing parameter\n");
-        return false;
-      }
-      size_t len;
-      if (!EVP_DecodedLength(&len, strlen(argv[i]))) {
-        fprintf(stderr, "Invalid base64: %s\n", argv[i]);
-        return false;
-      }
-      std::unique_ptr<uint8_t[]> decoded(new uint8_t[len]);
-      if (!EVP_DecodeBase64(decoded.get(), &len, len,
-                            reinterpret_cast<const uint8_t *>(argv[i]),
-                            strlen(argv[i]))) {
-        fprintf(stderr, "Invalid base64: %s\n", argv[i]);
-        return false;
-      }
-      base64_field->assign(reinterpret_cast<const char *>(decoded.get()), len);
-      continue;
-    }
-
-    int *int_field = FindField(out_config, kIntFlags, argv[i]);
-    if (int_field) {
-      i++;
-      if (i >= argc) {
-        fprintf(stderr, "Missing parameter\n");
-        return false;
-      }
-      *int_field = atoi(argv[i]);
-      continue;
-    }
-
-    std::vector<int> *int_vector_field =
-        FindField(out_config, kIntVectorFlags, argv[i]);
-    if (int_vector_field) {
-      i++;
-      if (i >= argc) {
-        fprintf(stderr, "Missing parameter\n");
-        return false;
-      }
-
-      // Each instance of the flag adds to the list.
-      int_vector_field->push_back(atoi(argv[i]));
-      continue;
-    }
-
-    fprintf(stderr, "Unknown argument: %s\n", argv[i]);
-    return false;
   }
 
   return true;

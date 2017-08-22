@@ -103,13 +103,13 @@ static void md5_update(EVP_MD_CTX *ctx, const void *data, size_t count) {
   CHECK(MD5_Update(ctx->md_data, data, count));
 }
 
-static void md5_final(EVP_MD_CTX *ctx, uint8_t *out) {
+static void webrtc_md5_final(EVP_MD_CTX *ctx, uint8_t *out) {
   CHECK(MD5_Final(out, ctx->md_data));
 }
 
 static const EVP_MD md5_md = {
     NID_md5,    MD5_DIGEST_LENGTH, 0 /* flags */,       md5_init,
-    md5_update, md5_final,         64 /* block size */, sizeof(MD5_CTX),
+    md5_update, webrtc_md5_final,         64 /* block size */, sizeof(MD5_CTX),
 };
 
 const EVP_MD *EVP_md5(void) { return &md5_md; }
@@ -329,6 +329,11 @@ static const struct {
 };
 
 const EVP_MD *EVP_get_digestbyobj(const ASN1_OBJECT *obj) {
+  /* Handle objects with no corresponding OID. */
+  if (obj->nid != NID_undef) {
+    return EVP_get_digestbynid(obj->nid);
+  }
+
   for (size_t i = 0; i < OPENSSL_ARRAY_SIZE(kMDOIDs); i++) {
     if (obj->length == kMDOIDs[i].oid_len &&
         memcmp(obj->data, kMDOIDs[i].oid, obj->length) == 0) {

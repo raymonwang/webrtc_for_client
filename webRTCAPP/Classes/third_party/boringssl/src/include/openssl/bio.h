@@ -77,6 +77,8 @@ extern "C" {
 
 /* Allocation and freeing. */
 
+DEFINE_STACK_OF(BIO)
+
 /* BIO_new creates a new BIO with the given type and a reference count of one.
  * It returns the fresh |BIO|, or NULL on error. */
 OPENSSL_EXPORT BIO *BIO_new(const BIO_METHOD *type);
@@ -493,23 +495,6 @@ OPENSSL_EXPORT int BIO_append_filename(BIO *bio, const char *filename);
 OPENSSL_EXPORT int BIO_rw_filename(BIO *bio, const char *filename);
 
 
-/* Buffer BIOs.
- *
- * Buffer BIOs are a filter-type BIO, i.e. they are designed to be used in a
- * chain of BIOs. They provide buffering to reduce the number of operations on
- * the underlying BIOs. */
-
-OPENSSL_EXPORT const BIO_METHOD *BIO_f_buffer(void);
-
-/* BIO_set_read_buffer_size sets the size, in bytes, of the read buffer and
- * clears it. It returns one on success and zero on failure. */
-OPENSSL_EXPORT int BIO_set_read_buffer_size(BIO *bio, int buffer_size);
-
-/* BIO_set_write_buffer_size sets the size, in bytes, of the write buffer and
- * clears it. It returns one on success and zero on failure. */
-OPENSSL_EXPORT int BIO_set_write_buffer_size(BIO *bio, int buffer_size);
-
-
 /* Socket BIOs.
  *
  * Socket BIOs behave like file descriptor BIOs but, on Windows systems, wrap
@@ -582,12 +567,8 @@ OPENSSL_EXPORT int BIO_do_connect(BIO *bio);
 #define BIO_CTRL_DGRAM_MTU_EXCEEDED 43 /* check whether the MTU was exceed in
                                           the previous write operation. */
 
-/* BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT sets a read deadline to drive
- * retransmits. The |parg| argument to |BIO_ctrl| will be a pointer to a
- * |timeval| struct. If the structure is all zeros, it clears the read
- * deadline. Otherwise, |BIO_read| must fail with a temporary error
- * (e.g. |EAGAIN|) after the deadline. */
-#define BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT 45
+/* BIO_CTRL_DGRAM_SET_NEXT_TIMEOUT is unsupported as it is unused by consumers
+ * and depends on |timeval|, which is not 2038-clean on all platforms. */
 
 #define BIO_CTRL_DGRAM_GET_PEER           46
 
@@ -671,6 +652,9 @@ OPENSSL_EXPORT int BIO_shutdown_wr(BIO *bio);
 OPENSSL_EXPORT const BIO_METHOD *BIO_f_base64(void);
 
 OPENSSL_EXPORT void BIO_set_retry_special(BIO *bio);
+
+/* BIO_set_write_buffer_size returns zero. */
+OPENSSL_EXPORT int BIO_set_write_buffer_size(BIO *bio, int buffer_size);
 
 
 /* Private functions */

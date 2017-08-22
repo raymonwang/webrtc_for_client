@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/raymon_wang/Documents/Develop/webrtc-source/src/third_party/boringssl/src/crypto/bn/rsaz-avx2.S
+
+/Users/raymon_wang/Documents/Develop/webrtc-source/src/third_party/boringssl/src/crypto/bn/x86_64-mont.S
+
+/Users/raymon_wang/Documents/Develop/webrtc-source/src/third_party/boringssl/src/crypto/bn/x86_64-mont5.S
+
