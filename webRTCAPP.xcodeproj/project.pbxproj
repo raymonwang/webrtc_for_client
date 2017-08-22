@@ -116,12 +116,12 @@
 		43C67D771D211CF300427D35 /* libwebrtc_base_osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C67D761D211CEC00427D35 /* libwebrtc_base_osx.a */; };
 		43C6A17F1D22A57E00427D35 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6A17E1D22A57E00427D35 /* libsqlite3.tbd */; };
 		43CCF0951E56A4CF00EBE4CB /* libvpx_assembly_arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43CCF0941E56A4CF00EBE4CB /* libvpx_assembly_arm.a */; };
-		43CCF8CF1F39DBF400AAF9D0 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EB1E66DD5800D3D99B /* libavcodec.a */; };
-		43CCF8D01F39DBF400AAF9D0 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EC1E66DD5800D3D99B /* libavdevice.a */; };
-		43CCF8D11F39DBF400AAF9D0 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331ED1E66DD5800D3D99B /* libavformat.a */; };
-		43CCF8D21F39DBF400AAF9D0 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EE1E66DD5800D3D99B /* libavutil.a */; };
-		43CCF8D31F39DBF400AAF9D0 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EF1E66DD5800D3D99B /* libswresample.a */; };
-		43CCF8D41F39DBF400AAF9D0 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331F01E66DD5800D3D99B /* libswscale.a */; };
+		43CCF8CF1F39DBF400AAF9D0 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EB1E66DD5800D3D99B /* libavcodec.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		43CCF8D01F39DBF400AAF9D0 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EC1E66DD5800D3D99B /* libavdevice.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		43CCF8D11F39DBF400AAF9D0 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331ED1E66DD5800D3D99B /* libavformat.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		43CCF8D21F39DBF400AAF9D0 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EE1E66DD5800D3D99B /* libavutil.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		43CCF8D31F39DBF400AAF9D0 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331EF1E66DD5800D3D99B /* libswresample.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		43CCF8D41F39DBF400AAF9D0 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 432331F01E66DD5800D3D99B /* libswscale.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		43E03A011D22AA6200B39549 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6A1801D22A64B00427D35 /* libc++.tbd */; };
 		43E03A031D22AAA300B39549 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C6A1151D22A22700427D35 /* Security.framework */; };
 		43E03A6C1D23717C00B39549 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43E03A6B1D23717C00B39549 /* AVFoundation.framework */; };
@@ -1013,7 +1013,6 @@
 				4303DCB01E4830D000CD116B /* libcommon_audio_arm64.a in Frameworks */,
 				43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */,
 				43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */,
-				43CCF8CF1F39DBF400AAF9D0 /* libavcodec.a in Frameworks */,
 				43AC8B341E484F4F0092C54E /* librtc_media.a in Frameworks */,
 				43AC797B1E4840B80092C54E /* libjsoncpp.a in Frameworks */,
 				4303DCC21E48340900CD116B /* libwebrtc_common.a in Frameworks */,
@@ -1021,13 +1020,14 @@
 				4303DCAE1E48303600CD116B /* libcommon_video.a in Frameworks */,
 				4303DCAF1E48306100CD116B /* libsystem_wrappers.a in Frameworks */,
 				4303DCAD1E48301500CD116B /* libwebrtc_base.a in Frameworks */,
+				43AC8AE61E4848700092C54E /* libboringssl.a in Frameworks */,
 				43B4D2151F4C17CB00395E7A /* libboringssl_asm.a in Frameworks */,
 				43CCF8D41F39DBF400AAF9D0 /* libswscale.a in Frameworks */,
 				43CCF8D11F39DBF400AAF9D0 /* libavformat.a in Frameworks */,
 				43CCF8D31F39DBF400AAF9D0 /* libswresample.a in Frameworks */,
 				43CCF8D21F39DBF400AAF9D0 /* libavutil.a in Frameworks */,
-				43AC8AE61E4848700092C54E /* libboringssl.a in Frameworks */,
 				43CCF8D01F39DBF400AAF9D0 /* libavdevice.a in Frameworks */,
+				43CCF8CF1F39DBF400AAF9D0 /* libavcodec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
