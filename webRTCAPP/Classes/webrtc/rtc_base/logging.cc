@@ -257,7 +257,7 @@ int LogMessage::GetLogToStream(LogSink* stream) {
 void LogMessage::AddLogToStream(LogSink* stream, LoggingSeverity min_sev) {
   CritScope cs(&g_log_crit);
   streams_.push_back(std::make_pair(stream, min_sev));
-  UpdateMinLogSeverity();
+//  UpdateMinLogSeverity();
 }
 
 void LogMessage::RemoveLogToStream(LogSink* stream) {
