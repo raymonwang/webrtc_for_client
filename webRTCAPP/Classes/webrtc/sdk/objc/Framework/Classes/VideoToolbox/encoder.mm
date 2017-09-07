@@ -350,6 +350,7 @@ H264VideoToolboxEncoder::H264VideoToolboxEncoder(const cricket::VideoCodec& code
       profile_(internal::ExtractProfile(codec)) {
   LOG(LS_INFO) << "Using profile " << internal::CFStringToString(profile_);
   RTC_CHECK(cricket::CodecNamesEq(codec.name, cricket::kH264CodecName));
+          encode_count_ = 1;
 }
 
 H264VideoToolboxEncoder::~H264VideoToolboxEncoder() {
@@ -477,6 +478,10 @@ int H264VideoToolboxEncoder::Encode(
       }
     }
   }
+    
+    if (encode_count_++ % 60 == 0) {
+        is_keyframe_required = true;
+    }
 
   CMTime presentation_time_stamp =
       CMTimeMake(frame.render_time_ms(), 1000);

@@ -90,6 +90,7 @@ class H264VideoToolboxEncoder : public H264Encoder {
 
   H264BitstreamParser h264_bitstream_parser_;
   std::vector<uint8_t> nv12_scale_buffer_;
+    int32_t encode_count_;
 };  // H264VideoToolboxEncoder
 
 }  // namespace webrtc
