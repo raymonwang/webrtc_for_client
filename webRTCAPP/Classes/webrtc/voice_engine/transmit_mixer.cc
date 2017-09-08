@@ -978,7 +978,7 @@ void TransmitMixer::ProcessAudio(int delay_ms, int clock_drift,
 
   audioproc_->set_stream_key_pressed(key_pressed);
 
-  int err = audioproc_->ProcessStream(&_audioFrame);
+  int err = audioproc_->ProcessStream(&_audioFrame, true);
   if (err != 0) {
     LOG(LS_ERROR) << "ProcessStream() error: " << err;
     assert(false);

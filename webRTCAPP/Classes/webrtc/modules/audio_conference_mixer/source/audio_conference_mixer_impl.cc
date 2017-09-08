@@ -880,7 +880,7 @@ bool AudioConferenceMixerImpl::LimitMixedAudio(AudioFrame* mixedAudio) const {
     }
 
     // Smoothly limit the mixed frame.
-    const int error = _limiter->ProcessStream(mixedAudio);
+    const int error = _limiter->ProcessStream(mixedAudio, true);
 
     // And now we can safely restore the level. This procedure results in
     // some loss of resolution, deemed acceptable.

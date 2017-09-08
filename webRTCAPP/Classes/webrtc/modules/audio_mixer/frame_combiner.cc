@@ -40,7 +40,7 @@ void CombineZeroFrames(bool use_limiter,
     // The limiter smoothly increases frames with half gain to full
     // volume.  Here there's no need to apply half gain, since the frame
     // is zero anyway.
-    limiter->ProcessStream(audio_frame_for_mixing);
+    limiter->ProcessStream(audio_frame_for_mixing, true);
   }
 }
 
@@ -58,7 +58,7 @@ void CombineOneFrame(const AudioFrame* input_frame,
   if (use_limiter) {
     AudioFrameOperations::ApplyHalfGain(audio_frame_for_mixing);
     RTC_DCHECK(limiter);
-    limiter->ProcessStream(audio_frame_for_mixing);
+    limiter->ProcessStream(audio_frame_for_mixing, true);
     AudioFrameOperations::Add(*audio_frame_for_mixing, audio_frame_for_mixing);
   }
 }
@@ -110,7 +110,7 @@ void CombineMultipleFrames(
 
     // Smoothly limit the audio.
     RTC_DCHECK(limiter);
-    const int error = limiter->ProcessStream(audio_frame_for_mixing);
+    const int error = limiter->ProcessStream(audio_frame_for_mixing, true);
     if (error != limiter->kNoError) {
       LOG_F(LS_ERROR) << "Error from AudioProcessing: " << error;
       RTC_NOTREACHED();

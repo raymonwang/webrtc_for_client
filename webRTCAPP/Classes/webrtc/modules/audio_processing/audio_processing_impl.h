@@ -76,7 +76,7 @@ class AudioProcessingImpl : public AudioProcessing {
 
   // Capture-side exclusive methods possibly running APM in a
   // multi-threaded manner. Acquire the capture lock.
-  int ProcessStream(AudioFrame* frame) override;
+  int ProcessStream(AudioFrame* frame, bool isAEC) override;
   int ProcessStream(const float* const* src,
                     size_t samples_per_channel,
                     int input_sample_rate_hz,
@@ -270,7 +270,7 @@ class AudioProcessingImpl : public AudioProcessing {
 
   // Capture-side exclusive methods possibly running APM in a multi-threaded
   // manner that are called with the render lock already acquired.
-  int ProcessCaptureStreamLocked() EXCLUSIVE_LOCKS_REQUIRED(crit_capture_);
+  int ProcessCaptureStreamLocked(bool isAEC) EXCLUSIVE_LOCKS_REQUIRED(crit_capture_);
   void MaybeUpdateHistograms() EXCLUSIVE_LOCKS_REQUIRED(crit_capture_);
 
   // Render-side exclusive methods possibly running APM in a multi-threaded

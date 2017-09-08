@@ -896,7 +896,7 @@ int AudioProcessingImpl::ProcessStream(const float* const* src,
   }
 
   capture_.capture_audio->CopyFrom(src, formats_.api_format.input_stream());
-  RETURN_ON_ERR(ProcessCaptureStreamLocked());
+  RETURN_ON_ERR(ProcessCaptureStreamLocked(true));
   capture_.capture_audio->CopyTo(formats_.api_format.output_stream(), dest);
 
 #ifdef WEBRTC_AUDIOPROC_DEBUG_DUMP
@@ -1099,7 +1099,7 @@ void AudioProcessingImpl::EmptyQueuedRenderAudio() {
   }
 }
 
-int AudioProcessingImpl::ProcessStream(AudioFrame* frame) {
+int AudioProcessingImpl::ProcessStream(AudioFrame* frame, bool isAEC) {
   TRACE_EVENT0("webrtc", "AudioProcessing::ProcessStream_AudioFrame");
   {
     // Acquire the capture lock in order to safely call the function
@@ -1170,7 +1170,7 @@ int AudioProcessingImpl::ProcessStream(AudioFrame* frame) {
 #endif
 
   capture_.capture_audio->DeinterleaveFrom(frame);
-  RETURN_ON_ERR(ProcessCaptureStreamLocked());
+  RETURN_ON_ERR(ProcessCaptureStreamLocked(isAEC));
   capture_.capture_audio->InterleaveTo(
       frame, submodule_states_.CaptureMultiBandProcessingActive() ||
                  submodule_states_.CaptureFullBandProcessingActive());
@@ -1193,7 +1193,7 @@ int AudioProcessingImpl::ProcessStream(AudioFrame* frame) {
   return kNoError;
 }
 
-int AudioProcessingImpl::ProcessCaptureStreamLocked() {
+int AudioProcessingImpl::ProcessCaptureStreamLocked(bool isAEC) {
   // Ensure that not both the AEC and AECM are active at the same time.
   // TODO(peah): Simplify once the public API Enable functions for these
   // are moved to APM.
@@ -1278,14 +1278,15 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
       !was_stream_delay_set()) {
     return AudioProcessing::kStreamParameterNotSetError;
   }
-
-  if (private_submodules_->echo_canceller3) {
-    private_submodules_->echo_canceller3->ProcessCapture(
-        capture_buffer, capture_.echo_path_gain_change);
-  } else {
-    RETURN_ON_ERR(public_submodules_->echo_cancellation->ProcessCaptureAudio(
-        capture_buffer, stream_delay_ms()));
-  }
+    if(isAEC) {
+        if (private_submodules_->echo_canceller3) {
+            private_submodules_->echo_canceller3->ProcessCapture(
+                    capture_buffer, capture_.echo_path_gain_change);
+        } else {
+            RETURN_ON_ERR(public_submodules_->echo_cancellation->ProcessCaptureAudio(
+                    capture_buffer, stream_delay_ms()));
+        }
+    }
 
   if (public_submodules_->echo_control_mobile->is_enabled() &&
       public_submodules_->noise_suppression->is_enabled()) {
@@ -1313,12 +1314,13 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
       !was_stream_delay_set()) {
     return AudioProcessing::kStreamParameterNotSetError;
   }
-
-  if (!(private_submodules_->echo_canceller3 ||
-        public_submodules_->echo_cancellation->is_enabled())) {
-    RETURN_ON_ERR(public_submodules_->echo_control_mobile->ProcessCaptureAudio(
-        capture_buffer, stream_delay_ms()));
-  }
+    if(isAEC) {
+        if (!(private_submodules_->echo_canceller3 ||
+              public_submodules_->echo_cancellation->is_enabled())) {
+            RETURN_ON_ERR(public_submodules_->echo_control_mobile->ProcessCaptureAudio(
+                    capture_buffer, stream_delay_ms()));
+        }
+    }
 
   if (capture_nonlocked_.beamformer_enabled) {
     private_submodules_->beamformer->PostFilter(capture_buffer->split_data_f());

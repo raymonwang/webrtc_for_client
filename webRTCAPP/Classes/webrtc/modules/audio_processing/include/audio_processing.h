@@ -368,7 +368,7 @@ class AudioProcessing : public rtc::RefCountInterface {
   // The |sample_rate_hz_|, |num_channels_|, and |samples_per_channel_|
   // members of |frame| must be valid. If changed from the previous call to this
   // method, it will trigger an initialization.
-  virtual int ProcessStream(AudioFrame* frame) = 0;
+  virtual int ProcessStream(AudioFrame* frame, bool isAEC) = 0;
 
   // Accepts deinterleaved float audio with the range [-1, 1]. Each element
   // of |src| points to a channel buffer, arranged according to
