@@ -159,9 +159,11 @@ int32_t VCMGenericEncoder::RequestFrame(
   // VideoSendStreamTest.VideoSendStreamStopSetEncoderRateToZero, set
   // internal_source to true and use FakeEncoder. And the latter will
   // happily encode this 1x1 frame and pass it on down the pipeline.
+#if defined(HAVE_WEBRTC_VIDEO)
   return encoder_->Encode(VideoFrame(I420Buffer::Create(1, 1),
                                      kVideoRotation_0, 0),
                           NULL, &frame_types);
+#endif
   return 0;
 }
 

@@ -111,6 +111,7 @@ void VideoBroadcaster::UpdateWants() {
 
 const rtc::scoped_refptr<webrtc::VideoFrameBuffer>&
 VideoBroadcaster::GetBlackFrameBuffer(int width, int height) {
+#if defined(HAVE_WEBRTC_VIDEO)
   if (!black_frame_buffer_ || black_frame_buffer_->width() != width ||
       black_frame_buffer_->height() != height) {
     rtc::scoped_refptr<webrtc::I420Buffer> buffer =
@@ -118,7 +119,7 @@ VideoBroadcaster::GetBlackFrameBuffer(int width, int height) {
     webrtc::I420Buffer::SetBlack(buffer.get());
     black_frame_buffer_ = buffer;
   }
-
+#endif
   return black_frame_buffer_;
 }
 

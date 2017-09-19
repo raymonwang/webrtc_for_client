@@ -35,14 +35,12 @@ MY_FILES_WEBRTC_MODULES_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/modules
 MY_FILES_WEBRTC_AUDIO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/audio
 MY_FILES_WEBRTC_COMMON_AUDIO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_audio
 MY_FILES_WEBRTC_OVERRIDES_PATH  :=  $(WEBRTC_OVERRIDES_SOURCE_PATH)/webrtc
-
-ifeq ($(VIDEO_BUILD),true)
-MY_FILES_WEBRTC_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/video
-MY_FILES_WEBRTC_COMMON_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_video
 MY_FILES_WEBRTC_MEDIA_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/media
 MY_FILES_WEBRTC_CALL_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/call
 MY_FILES_WEBRTC_API_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/api
-endif
+MY_FILES_WEBRTC_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/video
+MY_FILES_WEBRTC_COMMON_VIDEO_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/common_video
+
 
 MY_FILES_SUFFIX := %.cpp %.c %.cc
 
@@ -56,15 +54,12 @@ SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_SYSTEM_WRAPPER_PATH)/,$(MY_FILE
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_MODULES_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_AUDIO_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_COMMON_AUDIO_PATH)/,$(MY_FILES_SUFFIX))
-#$(warning "$(SRC_FILES)")
-
-ifeq ($(VIDEO_BUILD),true)
-SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_VIDEO_PATH)/,$(MY_FILES_SUFFIX))
-SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_COMMON_VIDEO_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_MEDIA_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_CALL_PATH)/,$(MY_FILES_SUFFIX))
 SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_API_PATH)/,$(MY_FILES_SUFFIX))
-endif
+SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_VIDEO_PATH)/,$(MY_FILES_SUFFIX))
+SRC_FILES += $(call rwildcard, $(MY_FILES_WEBRTC_COMMON_VIDEO_PATH)/,$(MY_FILES_SUFFIX))
+
 
 not-containing = $(foreach v,$2,$(if $(findstring $1,$v),,$v))
 MY_SRC_FILES := $(call not-containing,win,$(SRC_FILES))
@@ -99,6 +94,11 @@ ifeq ($(VIDEO_BUILD),false)
 MY_SRC_FILES := $(call not-containing,h264,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,vp8,$(MY_SRC_FILES))
 MY_SRC_FILES := $(call not-containing,vp9,$(MY_SRC_FILES))
+MY_SRC_FILES := $(call not-containing,i420,$(MY_SRC_FILES))
+endif
+
+ifeq ($(VPX_BUILD),false)
+MY_SRC_FILES := $(call not-containing,vp8_impl.cc,$(MY_SRC_FILES))
 endif
 
 #remove default files

@@ -23,6 +23,7 @@ namespace cricket {
 
 static bool IsSameH264Profile(const CodecParameterMap& params1,
                               const CodecParameterMap& params2) {
+#if defined(HAVE_WEBRTC_VIDEO)
   const rtc::Optional<webrtc::H264::ProfileLevelId> profile_level_id =
       webrtc::H264::ParseSdpProfileLevelId(params1);
   const rtc::Optional<webrtc::H264::ProfileLevelId> other_profile_level_id =
@@ -30,6 +31,10 @@ static bool IsSameH264Profile(const CodecParameterMap& params1,
   // Compare H264 profiles, but not levels.
   return profile_level_id && other_profile_level_id &&
          profile_level_id->profile == other_profile_level_id->profile;
+#else
+	return false;
+#endif
+
 }
 
 bool FeedbackParam::operator==(const FeedbackParam& other) const {

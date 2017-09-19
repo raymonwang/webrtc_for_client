@@ -795,6 +795,7 @@ void ViEEncoder::EncodeVideoFrame(const VideoFrame& video_frame,
 
   VideoFrame out_frame(video_frame);
   // Crop frame if needed.
+#if defined(HAVE_WEBRTC_VIDEO)
   if (crop_width_ > 0 || crop_height_ > 0) {
     int cropped_width = video_frame.width() - crop_width_;
     int cropped_height = video_frame.height() - crop_height_;
@@ -815,7 +816,7 @@ void ViEEncoder::EncodeVideoFrame(const VideoFrame& video_frame,
                    video_frame.render_time_ms(), video_frame.rotation());
     out_frame.set_ntp_time_ms(video_frame.ntp_time_ms());
   }
-
+#endif
   TRACE_EVENT_ASYNC_STEP0("webrtc", "Video", video_frame.render_time_ms(),
                           "Encode");
 

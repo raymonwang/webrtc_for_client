@@ -33,7 +33,7 @@ bool VideoCodecInitializer::SetupCodec(
   *codec =
       VideoEncoderConfigToVideoCodec(config, streams, settings.payload_name,
                                      settings.payload_type, nack_enabled);
-
+#if defined(HAVE_WEBRTC_VIDEO)
   std::unique_ptr<TemporalLayersFactory> tl_factory;
   switch (codec->codecType) {
     case kVideoCodecVP8: {
@@ -59,7 +59,7 @@ bool VideoCodecInitializer::SetupCodec(
     }
   }
   *bitrate_allocator = CreateBitrateAllocator(*codec, std::move(tl_factory));
-
+#endif
   return true;
 }
 
@@ -70,11 +70,13 @@ VideoCodecInitializer::CreateBitrateAllocator(
   std::unique_ptr<VideoBitrateAllocator> rate_allocator;
 
   switch (codec.codecType) {
+#if defined(HAVE_WEBRTC_VIDEO)
     case kVideoCodecVP8: {
       // Set up default VP8 temporal layer factory, if not provided.
       rate_allocator.reset(
           new SimulcastRateAllocator(codec, std::move(tl_factory)));
     } break;
+#endif
     default:
       rate_allocator.reset(new DefaultVideoBitrateAllocator(codec));
   }

@@ -141,7 +141,7 @@ namespace {
 VideoCodec CreateDecoderVideoCodec(const VideoReceiveStream::Decoder& decoder) {
   VideoCodec codec;
   memset(&codec, 0, sizeof(codec));
-
+#if defined(HAVE_WEBRTC_VIDEO)
   codec.plType = decoder.payload_type;
   strncpy(codec.plName, decoder.payload_name.c_str(), sizeof(codec.plName));
   codec.codecType =
@@ -162,7 +162,7 @@ VideoCodec CreateDecoderVideoCodec(const VideoReceiveStream::Decoder& decoder) {
   const int kDefaultStartBitrate = 300;
   codec.startBitrate = codec.minBitrate = codec.maxBitrate =
       kDefaultStartBitrate;
-
+#endif
   return codec;
 }
 }  // namespace

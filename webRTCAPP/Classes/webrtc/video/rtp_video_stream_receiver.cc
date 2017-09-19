@@ -249,7 +249,7 @@ int32_t RtpVideoStreamReceiver::OnReceivedPayloadData(
     packet_buffer_->PaddingReceived(packet.seqNum);
     return 0;
   }
-
+#if defined(HAVE_WEBRTC_VIDEO)
   if (packet.codec == kVideoCodecH264) {
     // Only when we start to receive packets will we know what payload type
     // that will be used. When we know the payload type insert the correct
@@ -274,7 +274,7 @@ int32_t RtpVideoStreamReceiver::OnReceivedPayloadData(
     memcpy(data, packet.dataPtr, packet.sizeBytes);
     packet.dataPtr = data;
   }
-
+#endif
   packet_buffer_->InsertPacket(&packet);
   return 0;
 }
@@ -668,7 +668,7 @@ void RtpVideoStreamReceiver::InsertSpsPpsIntoTracker(uint8_t payload_type) {
   auto codec_params_it = pt_codec_params_.find(payload_type);
   if (codec_params_it == pt_codec_params_.end())
     return;
-
+#if defined(HAVE_WEBRTC_VIDEO)
   LOG(LS_INFO) << "Found out of band supplied codec parameters for"
                << " payload type: " << static_cast<int>(payload_type);
 
@@ -684,6 +684,7 @@ void RtpVideoStreamReceiver::InsertSpsPpsIntoTracker(uint8_t payload_type) {
 
   tracker_.InsertSpsPpsNalus(sprop_decoder.sps_nalu(),
                              sprop_decoder.pps_nalu());
+#endif
 }
 
 }  // namespace webrtc

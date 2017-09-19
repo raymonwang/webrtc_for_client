@@ -71,11 +71,13 @@ webrtc::VideoDecoder* InternalDecoderFactory::CreateVideoDecoder(
       LOG(LS_ERROR) << "Unable to create an H.264 decoder fallback. "
                     << "Decoding of this stream will be broken.";
       return new NullVideoDecoder();
+#if defined(WEBRTC_VPX)
     case webrtc::kVideoCodecVP8:
       return webrtc::VP8Decoder::Create();
     case webrtc::kVideoCodecVP9:
       RTC_DCHECK(webrtc::VP9Decoder::IsSupported());
       return webrtc::VP9Decoder::Create();
+#endif
     default:
       LOG(LS_ERROR) << "Creating NullVideoDecoder for unsupported codec.";
       return new NullVideoDecoder();

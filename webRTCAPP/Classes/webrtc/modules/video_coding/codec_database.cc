@@ -562,11 +562,14 @@ void VCMCodecDataBase::DeleteEncoder() {
 }
 
 VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
+#if defined(HAVE_WEBRTC_VIDEO)
   switch (type) {
+#if defined(WEBRTC_VPX)
     case kVideoCodecVP8:
       return new VCMGenericDecoder(VP8Decoder::Create());
     case kVideoCodecVP9:
       return new VCMGenericDecoder(VP9Decoder::Create());
+#endif
     case kVideoCodecI420:
       return new VCMGenericDecoder(new I420Decoder());
     case kVideoCodecH264:
@@ -577,6 +580,7 @@ VCMGenericDecoder* VCMCodecDataBase::CreateDecoder(VideoCodecType type) const {
     default:
       break;
   }
+#endif
   LOG(LS_WARNING) << "No internal decoder of this type exists.";
   return nullptr;
 }

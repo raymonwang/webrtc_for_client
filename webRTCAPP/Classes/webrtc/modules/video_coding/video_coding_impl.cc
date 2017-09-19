@@ -110,6 +110,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
   int32_t RegisterSendCodec(const VideoCodec* sendCodec,
                             uint32_t numberOfCores,
                             uint32_t maxPayloadSize) override {
+#if defined(HAVE_WEBRTC_VIDEO)
     if (sendCodec != nullptr && sendCodec->codecType == kVideoCodecVP8) {
       // Set up a rate allocator and temporal layers factory for this vp8
       // instance. The codec impl will have a raw pointer to the TL factory,
@@ -125,6 +126,7 @@ class VideoCodingModuleImpl : public VideoCodingModule {
       return sender_.RegisterSendCodec(&vp8_codec, numberOfCores,
                                        maxPayloadSize);
     }
+#endif
     return sender_.RegisterSendCodec(sendCodec, numberOfCores, maxPayloadSize);
   }
 
