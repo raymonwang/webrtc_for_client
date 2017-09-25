@@ -34,7 +34,7 @@ class AsyncResolverInterface {
   // Otherwise returns address set in SetAddress.
   SocketAddress address() const {
     SocketAddress addr;
-    GetResolvedAddress(AF_INET, &addr);
+    GetResolvedAddress(AF_UNSPEC, &addr);
     return addr;
   }
 

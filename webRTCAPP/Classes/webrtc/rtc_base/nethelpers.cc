@@ -141,7 +141,11 @@ bool AsyncResolver::GetResolvedAddress(int family, SocketAddress* addr) const {
 
   *addr = addr_;
   for (size_t i = 0; i < addresses_.size(); ++i) {
-    if (family == addresses_[i].family()) {
+      if (family == AF_UNSPEC) {
+          addr->SetResolvedIP(addresses_[i]);
+          return true;
+      }
+    else if (family == addresses_[i].family()) {
       addr->SetResolvedIP(addresses_[i]);
       return true;
     }
