@@ -130,6 +130,9 @@ int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate) {
 }
 
 int16_t WebRtcOpus_SetPacketLossRate(OpusEncInst* inst, int32_t loss_rate) {
+    if (loss_rate == 0) {
+        loss_rate = 5;
+    }
   if (inst) {
     return opus_encoder_ctl(inst->encoder,
                             OPUS_SET_PACKET_LOSS_PERC(loss_rate));
