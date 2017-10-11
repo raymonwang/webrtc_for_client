@@ -286,6 +286,8 @@ void WebRtcVoiceEngine::Init() {
   }
 
   channel_config_.enable_voice_pacing = true;
+    channel_config_.acm_config.neteq_config.playout_mode = webrtc::kPlayoutStreaming;
+    channel_config_.acm_config.neteq_config.enable_post_decode_vad = true;
 
   // Temporarily turn logging level up for the Init() call.
   webrtc::Trace::SetTraceCallback(this);
