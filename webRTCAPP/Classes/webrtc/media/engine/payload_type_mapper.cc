@@ -66,6 +66,8 @@ PayloadTypeMapper::PayloadTypeMapper()
           {{kCnCodecName,     16000, 1}, 105},
           {{kCnCodecName,     32000, 1}, 106},
           {{kGoogleSctpDataCodecName, 0, 0}, kGoogleSctpDataCodecPlType},
+          {{kOpusCodecName,   16000, 2,
+                   {{"minptime", "10"}, {"useinbandfec", "1"}}}, 120},
           {{kOpusCodecName,   48000, 2,
               {{"minptime", "10"}, {"useinbandfec", "1"}}}, 121},
           // TODO(solenberg): Remove the hard coded 16k,32k,48k DTMF once we

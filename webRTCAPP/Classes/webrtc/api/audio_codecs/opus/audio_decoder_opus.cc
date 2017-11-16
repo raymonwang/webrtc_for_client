@@ -56,7 +56,7 @@ void AudioDecoderOpus::AppendSupportedDecoders(
 
 std::unique_ptr<AudioDecoder> AudioDecoderOpus::MakeAudioDecoder(
     Config config) {
-  return rtc::MakeUnique<AudioDecoderOpusImpl>(config.num_channels);
+  return rtc::MakeUnique<AudioDecoderOpusImpl>(config.num_channels, config.sample_rate_hz);
 }
 
 }  // namespace webrtc

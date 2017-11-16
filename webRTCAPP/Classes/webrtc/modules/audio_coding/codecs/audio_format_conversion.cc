@@ -46,11 +46,11 @@ SdpAudioFormat CodecInstToSdp(const CodecInst& ci) {
     RTC_CHECK(ci.channels == 1 || ci.channels == 2);
     return {"g722", 8000, ci.channels};
   } else if (STR_CASE_CMP(ci.plname, "opus") == 0) {
-    RTC_CHECK_EQ(48000, ci.plfreq);
+    //RTC_CHECK_EQ(48000, ci.plfreq);
     RTC_CHECK(ci.channels == 1 || ci.channels == 2);
     return ci.channels == 1
-               ? SdpAudioFormat("opus", 48000, 2)
-               : SdpAudioFormat("opus", 48000, 2, {{"stereo", "1"}});
+               ? SdpAudioFormat("opus", ci.plfreq, 2)
+               : SdpAudioFormat("opus", ci.plfreq, 2, {{"stereo", "1"}});
   } else {
     return {ci.plname, ci.plfreq, ci.channels};
   }
@@ -63,7 +63,7 @@ CodecInst SdpToCodecInst(int payload_type, const SdpAudioFormat& audio_format) {
     return MakeCodecInst(payload_type, "g722", 16000,
                          audio_format.num_channels);
   } else if (STR_CASE_CMP(audio_format.name.c_str(), "opus") == 0) {
-    RTC_CHECK_EQ(48000, audio_format.clockrate_hz);
+    //RTC_CHECK_EQ(48000, audio_format.clockrate_hz);
     RTC_CHECK_EQ(2, audio_format.num_channels);
     const int num_channels = [&] {
       auto stereo = audio_format.parameters.find("stereo");
@@ -78,7 +78,7 @@ CodecInst SdpToCodecInst(int payload_type, const SdpAudioFormat& audio_format) {
       }
       return 1;  // Default to mono.
     }();
-    return MakeCodecInst(payload_type, "opus", 48000, num_channels);
+    return MakeCodecInst(payload_type, "opus", audio_format.clockrate_hz, num_channels);
   } else {
     return MakeCodecInst(payload_type, audio_format.name.c_str(),
                          audio_format.clockrate_hz, audio_format.num_channels);
