@@ -293,7 +293,9 @@ rtc::Optional<AudioEncoderOpusConfig> AudioEncoderOpus::SdpToConfig(
   AudioEncoderOpusConfig config;
   config.num_channels = GetChannelCount(format);
   config.frame_size_ms = GetFrameSizeMs(format);
-  config.max_playback_rate_hz = GetMaxPlaybackRate(format);
+//  config.max_playback_rate_hz = GetMaxPlaybackRate(format);
+    config.sample_rate_hz_ = format.clockrate_hz;
+    config.max_playback_rate_hz = format.clockrate_hz;
   config.fec_enabled = (GetFormatParameter(format, "useinbandfec") == "1");
   config.dtx_enabled = (GetFormatParameter(format, "usedtx") == "1");
   config.cbr_enabled = (GetFormatParameter(format, "cbr") == "1");

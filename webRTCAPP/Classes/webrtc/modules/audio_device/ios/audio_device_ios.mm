@@ -410,6 +410,20 @@ void AudioDeviceIOS::OnChangedOutputVolume() {
   RTC_DCHECK(thread_);
   thread_->Post(RTC_FROM_HERE, this, kMessageOutputVolumeChange);
 }
+    
+    int32_t AudioDeviceIOS::SetRecordingSampleRate(const uint32_t samplesPerSec)
+    {
+        RTCAudioSessionConfiguration* config = [RTCAudioSessionConfiguration webRTCConfiguration];
+        config.sampleRate = samplesPerSec;
+        return 0;
+    }
+    
+    int32_t AudioDeviceIOS::SetPlayoutSampleRate(const uint32_t samplesPerSec)
+    {
+        RTCAudioSessionConfiguration* config = [RTCAudioSessionConfiguration webRTCConfiguration];
+        config.sampleRate = samplesPerSec;
+        return 0;
+    }
 
 OSStatus AudioDeviceIOS::OnDeliverRecordedData(AudioUnitRenderActionFlags* flags,
                                                const AudioTimeStamp* time_stamp,
