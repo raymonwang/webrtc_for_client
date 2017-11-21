@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4317590D1FC3DFD8001CF02B /* send_side_congestion_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 4317590B1FC3DFD8001CF02B /* send_side_congestion_controller.h */; };
+		4317590E1FC3DFD8001CF02B /* receive_side_congestion_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 4317590C1FC3DFD8001CF02B /* receive_side_congestion_controller.h */; };
 		43E040B41D503C2C009FDAE6 /* congestion_controller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040A61D503C2C009FDAE6 /* congestion_controller.cc */; };
 		43E040B61D503C2C009FDAE6 /* delay_based_bwe.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040A91D503C2C009FDAE6 /* delay_based_bwe.cc */; };
 		43E040B71D503C2C009FDAE6 /* delay_based_bwe.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E040AA1D503C2C009FDAE6 /* delay_based_bwe.h */; };
@@ -29,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4317590B1FC3DFD8001CF02B /* send_side_congestion_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = send_side_congestion_controller.h; sourceTree = "<group>"; };
+		4317590C1FC3DFD8001CF02B /* receive_side_congestion_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = receive_side_congestion_controller.h; sourceTree = "<group>"; };
 		43E040971D503BED009FDAE6 /* libcongestion_controller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcongestion_controller.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43E040A51D503C2C009FDAE6 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
 		43E040A61D503C2C009FDAE6 /* congestion_controller.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = congestion_controller.cc; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 		43E040AF1D503C2C009FDAE6 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				4317590B1FC3DFD8001CF02B /* send_side_congestion_controller.h */,
+				4317590C1FC3DFD8001CF02B /* receive_side_congestion_controller.h */,
 				43E040B01D503C2C009FDAE6 /* congestion_controller.h */,
 				43E040B11D503C2C009FDAE6 /* mock */,
 			);
@@ -137,9 +143,11 @@
 				43E040BB1D503C2C009FDAE6 /* congestion_controller.h in Headers */,
 				43EFD2371E5AE72600E3DEAD /* median_slope_estimator.h in Headers */,
 				43EFD23F1E5AE72600E3DEAD /* transport_feedback_adapter.h in Headers */,
+				4317590E1FC3DFD8001CF02B /* receive_side_congestion_controller.h in Headers */,
 				43EFD2391E5AE72600E3DEAD /* probe_bitrate_estimator.h in Headers */,
 				43EFD2411E5AE72600E3DEAD /* trendline_estimator.h in Headers */,
 				43E040B71D503C2C009FDAE6 /* delay_based_bwe.h in Headers */,
+				4317590D1FC3DFD8001CF02B /* send_side_congestion_controller.h in Headers */,
 				43E1B1781F0CE28E00B73FCB /* acknowledge_bitrate_estimator.h in Headers */,
 				43E040BC1D503C2C009FDAE6 /* mock_congestion_controller.h in Headers */,
 				43EFD23B1E5AE72600E3DEAD /* probe_controller.h in Headers */,
