@@ -46,7 +46,7 @@
                                     selector:@selector(displayLinkDidFire:)];
     _displayLink.paused = YES;
     // Set to half of screen refresh, which should be 30fps.
-    [_displayLink setFrameInterval:2];
+    [_displayLink setFrameInterval:3];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop]
                        forMode:NSRunLoopCommonModes];
   }
