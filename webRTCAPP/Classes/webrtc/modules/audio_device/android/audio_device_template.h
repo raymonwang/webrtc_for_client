@@ -468,7 +468,7 @@ class AudioDeviceTemplate : public AudioDeviceGeneric {
 
   // TODO(henrika): remove
   int32_t SetPlayoutSampleRate(const uint32_t samplesPerSec) override {
-    FATAL() << "Should never be called";
+    //FATAL() << "Should never be called";
     return -1;
   }
 
