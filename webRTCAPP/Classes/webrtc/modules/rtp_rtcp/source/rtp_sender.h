@@ -34,6 +34,8 @@
 #include "webrtc/modules/rtp_rtcp/source/rtp_rtcp_config.h"
 #include "webrtc/modules/rtp_rtcp/source/rtp_utility.h"
 
+#include "webrtc/modules/rtp_rtcp/source/rtc_fec.h"
+
 namespace webrtc {
 
 class OverheadObserver;
@@ -43,7 +45,7 @@ class RtpPacketToSend;
 class RTPSenderAudio;
 class RTPSenderVideo;
 
-class RTPSender {
+class RTPSender : RtcFecEncoderCallback{
  public:
   RTPSender(bool audio,
             Clock* clock,
@@ -65,6 +67,9 @@ class RTPSender {
   ~RTPSender();
 
   void ProcessBitrate();
+
+    int SendPacket(const uint8_t *data, const uint32_t size) ;
+
 
   uint16_t ActualSendBitrateKbit() const;
 
@@ -326,6 +331,8 @@ class RTPSender {
   OverheadObserver* overhead_observer_;
 
   const bool send_side_bwe_with_overhead_;
+
+    std::unique_ptr<RtcFecEncoder>  rtcFecEncoder_;
 
   RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(RTPSender);
 };
