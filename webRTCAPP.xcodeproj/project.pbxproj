@@ -104,6 +104,7 @@
 		43AC8AE61E4848700092C54E /* libboringssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43AC8AE51E4848700092C54E /* libboringssl.a */; };
 		43AC8B7C1E48507E0092C54E /* libpaced_sender.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4398353C198FACD40090EABA /* libpaced_sender.a */; };
 		43AC8C881E4853330092C54E /* librtc_sdk_common_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439FC1041D50710700939424 /* librtc_sdk_common_objc.a */; };
+		43B4756F1FDEAFE400E1C920 /* libopenfec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B474E81FDEAEE000E1C920 /* libopenfec.a */; };
 		43B4D2151F4C17CB00395E7A /* libboringssl_asm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B4D2141F4C17CB00395E7A /* libboringssl_asm.a */; };
 		43B993C11E7AC17D00215E9C /* libopus_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B993C01E7AC17D00215E9C /* libopus_arm64.a */; };
 		43B99A4F1E80E5B500215E9C /* libiSACFix_arm64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B99A161E80E59300215E9C /* libiSACFix_arm64.a */; };
@@ -583,6 +584,13 @@
 			remoteGlobalIDString = 43AD79BC19907B96006EAB38;
 			remoteInfo = sqlite_regexp;
 		};
+		43B474E71FDEAEE000E1C920 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 43B474C31FDEAEDF00E1C920 /* openfec.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43B474BC1FDEAEDF00E1C920;
+			remoteInfo = openfec;
+		};
 		43B993BF1E7AC17D00215E9C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 43C67C461D20CDE000427D35 /* opus.xcodeproj */;
@@ -920,6 +928,7 @@
 		43AC8AE51E4848700092C54E /* libboringssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboringssl.a; path = webRTCAPP/libs/libboringssl.a; sourceTree = "<group>"; };
 		43AD795219907938006EAB38 /* expat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = expat.xcodeproj; path = expat/expat.xcodeproj; sourceTree = "<group>"; };
 		43AD79C319907B96006EAB38 /* sqlite_regexp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite_regexp.xcodeproj; path = sqlite_regexp/sqlite_regexp.xcodeproj; sourceTree = "<group>"; };
+		43B474C31FDEAEDF00E1C920 /* openfec.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openfec.xcodeproj; path = openfec/openfec.xcodeproj; sourceTree = "<group>"; };
 		43B4D2141F4C17CB00395E7A /* libboringssl_asm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboringssl_asm.a; path = webRTCAPP/libs/libboringssl_asm.a; sourceTree = "<group>"; };
 		43C0363D1D51A0430022DED1 /* vpx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = vpx.xcodeproj; path = vpx/vpx.xcodeproj; sourceTree = "<group>"; };
 		43C67C461D20CDE000427D35 /* opus.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = opus.xcodeproj; path = opus/opus.xcodeproj; sourceTree = "<group>"; };
@@ -949,6 +958,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43B4756F1FDEAFE400E1C920 /* libopenfec.a in Frameworks */,
 				43E1B9CB1F0E37BF00B73FCB /* librtc_pc.a in Frameworks */,
 				43EFD13F1E56D82800E3DEAD /* librtc_event_log.a in Frameworks */,
 				43884B201E55BFDA00E63E88 /* libwebrtc_api.a in Frameworks */,
@@ -1421,6 +1431,7 @@
 		43819DA11D4621C2000656B1 /* thirdpart */ = {
 			isa = PBXGroup;
 			children = (
+				43B474C31FDEAEDF00E1C920 /* openfec.xcodeproj */,
 				43C0363D1D51A0430022DED1 /* vpx.xcodeproj */,
 				4398355C198FAE110090EABA /* jsoncpp.xcodeproj */,
 				43AD795219907938006EAB38 /* expat.xcodeproj */,
@@ -1572,6 +1583,14 @@
 			isa = PBXGroup;
 			children = (
 				43AD79C819907B97006EAB38 /* libsqlite_regexp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43B474C41FDEAEDF00E1C920 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43B474E81FDEAEE000E1C920 /* libopenfec.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2066,6 +2085,10 @@
 				{
 					ProductGroup = 430D8F5319862490009E763A /* Products */;
 					ProjectRef = 430D8F5219862490009E763A /* neteq.xcodeproj */;
+				},
+				{
+					ProductGroup = 43B474C41FDEAEDF00E1C920 /* Products */;
+					ProjectRef = 43B474C31FDEAEDF00E1C920 /* openfec.xcodeproj */;
 				},
 				{
 					ProductGroup = 43C67C471D20CDE000427D35 /* Products */;
@@ -2667,6 +2690,13 @@
 			fileType = archive.ar;
 			path = libsqlite_regexp.a;
 			remoteRef = 43AD79C719907B97006EAB38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43B474E81FDEAEE000E1C920 /* libopenfec.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libopenfec.a;
+			remoteRef = 43B474E71FDEAEE000E1C920 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		43B993C01E7AC17D00215E9C /* libopus_arm64.a */ = {
