@@ -74,7 +74,7 @@ static RTCAudioSessionConfiguration *gWebRTCConfiguration = nil;
     _categoryOptions = AVAudioSessionCategoryOptionAllowBluetooth|AVAudioSessionCategoryOptionMixWithOthers|AVAudioSessionCategoryOptionDefaultToSpeaker;
 
     // Specify mode for two-way voice communication (e.g. VoIP).
-      _mode = AVAudioSessionModeVoiceChat;
+      _mode = AVAudioSessionModeVideoChat;
       /*
       RTCDeviceType device_type = [UIDevice deviceType];
       if ([UIDevice isIOS11OrLater] && (device_type == RTCDeviceTypeIPhone8 || device_type == RTCDeviceTypeIPhone8Plus)) {
