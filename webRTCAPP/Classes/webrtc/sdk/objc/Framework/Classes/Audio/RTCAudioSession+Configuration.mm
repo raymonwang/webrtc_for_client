@@ -130,7 +130,7 @@
 
   if (self.isActive &&
       // TODO(tkchin): Figure out which category/mode numChannels is valid for.
-      [self.mode isEqualToString:AVAudioSessionModeVoiceChat]) {
+      ([self.mode isEqualToString:AVAudioSessionModeVoiceChat] || [self.mode isEqualToString:AVAudioSessionModeVideoChat])) {
     // Try to set the preferred number of hardware audio channels. These calls
     // must be done after setting the audio session’s category and mode and
     // activating the session.
