@@ -16,6 +16,10 @@
 #include "webrtc/base/basictypes.h"
 #include "webrtc/base/byteorder.h"
 #include <webrtc/base/logging.h>
+#include "webrtc/base/criticalsection.h"
+#include "webrtc/base/platform_thread.h"
+#include "webrtc/system_wrappers/include/sleep.h"
+#include "webrtc/system_wrappers/include/event_wrapper.h"
 
 extern "C" {
 #include "third_party/openfec/src/lib_common/of_openfec_api.h"
@@ -23,6 +27,7 @@ extern "C" {
 
 using namespace std;
 using namespace rtc;
+using namespace webrtc;
 
 const uint32_t kFecSourceNum = 10;
 const uint32_t kFecRepairNum = 5;
@@ -51,6 +56,7 @@ class RtcFecEncoder
 	RtcFecEncoder(RtcFecEncoderCallback *callback)
 		: received_num(0),
 		current_seq(0),
+		last_encoded_timestamp(0),
 		session(nullptr),
 		packet_pointer(nullptr),
 		callback_(callback) { }
@@ -73,7 +79,7 @@ class RtcFecEncoder
 						  const uint32_t repair_num, 
 			 			  const uint32_t max_length);
 	void InitFecHeader(uint8_t *buffer, const uint16_t seq_num,
-							 const uint32_t ssrc);
+							 const uint32_t ssrc, const uint32_t timestamp);
 	inline uint32_t MaxSize() { 
 		return param.encoding_symbol_length + sizeof(FecHeader); 
 	}
@@ -82,6 +88,7 @@ class RtcFecEncoder
 
 	uint16_t received_num;
 	uint16_t current_seq;
+	uint32_t last_encoded_timestamp;
   	of_session_t *session;
 	of_rs_2_m_parameters_t param;
 	
@@ -103,13 +110,31 @@ class RtcFecDecoderCallback
 class RtcFecDecoder
 {
   public:
+	struct FecPacket {
+		FecPacket() 
+			: status(0),
+			timestamp(0),
+			frame_begin(false),
+			frame_end(false),
+			size(0) {}
+
+		uint32_t 	status;
+		uint32_t	timestamp;
+		bool		frame_begin;
+		bool		frame_end;
+		uint8_t		data[1500];  // should be larger than MaxSize()
+		uint32_t	size;
+	};
+	
 	RtcFecDecoder(RtcFecDecoderCallback *callback)
-		: start_seq(0),
-		received_num(0),
+		: last_decoded_timestamp(0),
 		fec_pointer(nullptr),
 		raw_pointer(nullptr),
 		session(nullptr),
-		callback_(callback) { }
+		callback_(callback),
+		event_(EventWrapper::Create()),
+		worker(new PlatformThread(Runnable, this, "FecDecoder")),
+		lock(new CriticalSection()){ }
 	
 	~RtcFecDecoder();
 
@@ -120,26 +145,33 @@ class RtcFecDecoder
 	
 	int Init(const uint32_t source_num, const uint32_t repair_num, 
 			 const uint32_t max_length);
-	
-	bool InsertFecData(const uint8_t *data, const uint32_t size);
-//	int GetRawPacket(const uint32_t index, uint8_t **data, uint32_t& size);
+
+	static bool Runnable(void *obj);
+	int InsertFecData(const uint8_t *data, const uint32_t size);
 
   private:
-  	int Decoded();
-	int DecodedSection();
-	int CreateFecInstance(const uint32_t source_num, 
-						  const uint32_t repair_num, 
-			 			  const uint32_t max_length);
-	void WriteFecData(const uint16_t seq, const uint8_t *data, const uint32_t size);
+  	void Process();
+	int DecodedFec();
+	uint32_t FindEarliestPacket();
+	int ResetDecoder(const uint32_t index);
+	int ResetFecPacket(const uint32_t index);
+	int Decoded(const uint32_t index);
+	int CreateFecInstance();
+	void DeliverPacket();
+	std::vector<FecPacket*> GetPacketsInFrame(const uint32_t index,
+											  const uint32_t timestamp);
 
   	inline uint32_t MaxSize() { 
 		return param.encoding_symbol_length + sizeof(FecHeader); 
 	}
+	inline uint32_t MinSize() { return sizeof(FecHeader) + sizeof(uint32_t); }
 	inline uint32_t Rows() { return (param.nb_source_symbols + param.nb_repair_symbols); }
 	inline uint32_t Columns() { return param.nb_source_symbols; }
+	inline bool Source(const uint32_t index) { return (index % Rows()) < Columns(); }
 	
-	uint16_t start_seq;
-	uint32_t received_num;
+	enum { kInserted = 0x1, kDecoded = 0x10, kDelivered = 0x100, kReleased = 0x111 };
+	
+	uint32_t last_decoded_timestamp;
 	
 	uint8_t** fec_pointer;
 	uint8_t** raw_pointer;
@@ -147,7 +179,10 @@ class RtcFecDecoder
 	of_rs_2_m_parameters_t param;
 
 	RtcFecDecoderCallback *callback_;
-	std::vector<std::pair<bool, std::unique_ptr<uint8_t>>> packet_list;   	
+	std::unique_ptr<EventWrapper> event_;
+	std::unique_ptr<PlatformThread> worker;
+	std::unique_ptr<CriticalSection> lock;
+	std::vector<std::unique_ptr<FecPacket>> packet_list;
 };
 
 #endif

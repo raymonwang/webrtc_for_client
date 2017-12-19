@@ -62,12 +62,16 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 	uint8_t *buffer = packet_list[index].get();
 
 	uint32_t ssrc = rtc::GetBE32(data + 8);
-	InitFecHeader(buffer, current_seq, ssrc);
+	uint32_t timestamp = rtc::GetBE32(data + 4);
+	InitFecHeader(buffer, current_seq, ssrc, timestamp);
 	uint32_t len = sizeof(FecHeader);
 	
 	// set payload length
-	rtc::SetBE32(buffer + len, size);
-	len += sizeof(uint32_t);
+	buffer[len++] = last_encoded_timestamp != timestamp;
+	buffer[len++] = data[1] & 0x80 ? 1 : 0;
+	last_encoded_timestamp = timestamp;
+	rtc::SetBE16(buffer + len, (uint16_t)size);
+	len += sizeof(uint16_t);
 
 	// set payload value
 	memcpy(buffer + len, data, size);
@@ -86,7 +90,7 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 		packet_pointer[i] = packet_list[i].get() + sizeof(FecHeader);
 
 		if (Columns() <= i) {
-			InitFecHeader(packet_list[i].get(), current_seq, ssrc);
+			InitFecHeader(packet_list[i].get(), current_seq, ssrc, timestamp - 100);
 			current_seq++;
 
 			of_build_repair_symbol(session, (void**)packet_pointer, i);
@@ -99,7 +103,7 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 }
 
 void RtcFecEncoder::InitFecHeader(uint8_t *buffer, const uint16_t seq_num,
-								  const uint32_t ssrc)
+								  const uint32_t ssrc, const uint32_t timestamp)
 {
 	// fec header is like rtp header, so when received fec packet, remote can see
 	// who send this packet by ssrc
@@ -109,23 +113,9 @@ void RtcFecEncoder::InitFecHeader(uint8_t *buffer, const uint16_t seq_num,
 	rtc::SetBE16(&header->seq_num, seq_num);
 
 	// reserved for fec encoder info: source num, repair num, max length
-	rtc::SetBE32(&header->info, 0);
+	rtc::SetBE32(&header->info, timestamp);
 	rtc::SetBE32(&header->ssrc, ssrc);
 }
-
-/*
-int RtcFecEncoder::GetFecPacket(const uint32_t index, uint8_t** data, uint32_t& size)
-{
-	if (index >= Rows())
-		return -1;
-
-	*data = packet_list[index].get();
-	size = sizeof(FecHeader) + sizeof(uint32_t);
-	size += (index >= Columns()) ? MaxSize()
-								 : ntohl(((uint32_t*)(*data + sizeof(FecHeader)))[0]);
-	return 0;
-}
-*/
 
 int RtcFecEncoder::CreateFecInstance(const uint32_t source_num,
 									 const uint32_t repair_num,
@@ -146,6 +136,9 @@ int RtcFecEncoder::CreateFecInstance(const uint32_t source_num,
 
 RtcFecDecoder::~RtcFecDecoder()
 {
+	if (worker)
+		worker->Stop();
+	
 	if (session) {
 		of_release_codec_instance(session);
 		session = nullptr;
@@ -183,101 +176,174 @@ int RtcFecDecoder::Init(const uint32_t source_num, const uint32_t repair_num,
 {
 	LOG(LS_WARNING) << "Init fec decoder: source " << source_num
 					<< " repair " << repair_num << " max length " << max_length;
-	if (0 != CreateFecInstance(source_num, repair_num, max_length))
-		return -1;
+	param.nb_source_symbols = source_num;
+	param.nb_repair_symbols = repair_num;
+	param.encoding_symbol_length = max_length + sizeof(int);
+	param.m = 8;
 	
 	fec_pointer = (uint8_t**)(new uint8_t[Rows() * sizeof(uint8_t*)]);
 	raw_pointer = (uint8_t**)(new uint8_t[Rows() * sizeof(uint8_t*)]);
-	if (!fec_pointer || !raw_pointer)
+	if (!fec_pointer || !raw_pointer) {
+		LOG(LS_ERROR) << "malloc pointer for fec decoder failed";
 		return -1;
-
-	uint32_t size = max_length + sizeof(FecHeader) + sizeof(uint32_t);
-	for (uint32_t i = 0; i < Rows(); i++) {
-		fec_pointer[i] = raw_pointer[i] = nullptr;
-		
-		std::unique_ptr<uint8_t> packet(new uint8_t[size]);
-		packet_list.emplace_back(false, std::move(packet));
 	}
+
+	for (uint32_t i = 0; i < Rows(); i++)
+		fec_pointer[i] = raw_pointer[i] = nullptr;
+
+	if (!worker || !lock) {
+		LOG(LS_ERROR) << "fec decoder worker or lock didn't startup";
+		return -1;
+	}
+
+	worker->Start();
+	
+//	uint32_t size = max_length + sizeof(FecHeader) + sizeof(uint32_t);
+	for (uint32_t i = 0; i < Rows() * 5; i++) 		
+		packet_list.emplace_back(new FecPacket());
 		
 	return 0;
 }
 
-bool RtcFecDecoder::InsertFecData(const uint8_t *data, const uint32_t size)
-{	
-	uint16_t seq_num = rtc::GetBE16(data + sizeof(uint16_t));
-	if (0 == start_seq)
-		start_seq = Rows() * (seq_num / Rows());
-
-//	LOG(LS_WARNING) << "Insert fec data: seq " << seq_num << ", start seq " << start_seq;
-	// have received all source packet OR loss source packet have reconstructed
-	// drop remnant repair packet
-	if (start_seq > seq_num)
-		return false;
-
-	// next array is coming, but this array have not reconstructed
-	if (seq_num >= (start_seq + Rows())) {
-		LOG(LS_WARNING) << "Next array of fec packet is coming";
-		DecodedSection();
-		WriteFecData(seq_num, data, size);
-		return true;
-	}
-
-	WriteFecData(seq_num, data, size);
-	if (Columns() > received_num)
-		return false;
-
-	Decoded();
-	return true;
-
-/*
-	if (of_decode_with_new_symbol(session, buffer + sizeof(FecHeader), index) != OF_STATUS_ERROR)
-		received++;
-
-	if (received < Columns() || !of_is_decoding_complete(session))
-		return false;
-
-	of_finish_decoding(session);
-	if (of_get_source_symbols_tab(session, (void**)raw_pointer) != OF_STATUS_OK) {
-		printf("get source symbols failed \n");
-	}
-
-	of_release_codec_instance(session);
-	session = nullptr;
-	// refresh start sequence number
-	start_seq += Rows();
-	received = 0;
-*/
-}
-
-void RtcFecDecoder::WriteFecData(const uint16_t seq, const uint8_t *data,
-								 const uint32_t size)
+int RtcFecDecoder::InsertFecData(const uint8_t *data, const uint32_t size)
 {
-	if (MaxSize() < size) {
-		LOG(LS_ERROR) << "fec data size " << size << " is too larger";
-		return;
+	if (MaxSize() < size || MinSize() >= size) {
+		LOG(LS_WARNING) << "Insert fec data, size " << size << " is invalid";
+		return -1;
 	}
 	
-	uint16_t index = seq % Rows();	
-	uint8_t *buffer = packet_list[index].second.get();
-	memcpy(buffer, data, size);
-	if (MaxSize() > size)
-		memset(buffer + size, 0x0, MaxSize() - size);
+	uint16_t recv_seq = rtc::GetBE16(data + 2);
+	uint32_t recv_timestamp = rtc::GetBE32(data + 4);
 
-	packet_list[index].first = true;
-	fec_pointer[index] = buffer + sizeof(FecHeader);
-//	LOG(LS_WARNING) << "Write fec data: seq " << seq << ", index " << index
-//					<< ", size is " << size;
-	received_num++;	
+	CritScope cs(lock.get());
+	// this sequence fec packet have reconstructed, drop remain fec packet
+	if (recv_timestamp < last_decoded_timestamp)
+		return 0;
+
+	size_t index = recv_seq % packet_list.size();
+	FecPacket *packet = packet_list[index].get();
+	if (packet->status) {
+		LOG(LS_WARNING) << "new packet " << recv_seq << " is coming, flush old buffer"
+						<< " index " << index << " status is " << packet->status;
+
+		ResetFecPacket(index);
+	}
+	
+	memcpy(packet->data, data, size);
+	if (MaxSize() > size)
+		memset(packet->data + size, 0x0, MaxSize() - size);
+	packet->size = size;
+	
+	packet->status |= kInserted;
+	bool source = Source(index);
+	packet->frame_begin = source ? data[sizeof(FecHeader)] : true;
+	packet->frame_end = source ? data[sizeof(FecHeader) + 1] : true;
+	packet->timestamp = source ? rtc::GetBE32(data + MinSize() + 4) : 0;
+
+	// received the k source packet OR received repair packet
+	// OR received frame_end packet, SET event
+	if (packet->frame_end || param.nb_source_symbols == (index % Rows()))	
+		event_->Set();
+	
+	LOG(LS_WARNING) << "insert " << (source ? "SS" : "RR")
+					<< ", index " << index << " fec seq " << recv_seq
+					<< " rtp seq " << rtc::GetBE16(data + MinSize() + 2)
+					<< " timestamp " << packet->timestamp
+					<< " frame [" << packet->frame_begin
+					<< " " << packet->frame_end << "]";
+	return 0;
 }
 
-int RtcFecDecoder::Decoded()
+bool RtcFecDecoder::Runnable(void *obj)
 {
-	//for (size_t i = 0; i < packet_list.size(); i++) {
-	//	fec_pointer[i] = packet_list[i].first ? (packet_list[i].second.get() + sizeof(FecHeader))
-	//										  : nullptr;
-	//	if (!fec_pointer[i])
-	//		LOG(LS_WARNING) << "index " << i << " is null pointer";
-	//}
+	static_cast<RtcFecDecoder*>(obj)->Process();
+	return true;
+}
+
+void RtcFecDecoder::Process()
+{
+//	SleepMs(20);
+	EventTypeWrapper ev_type = event_->Wait(40);
+	if (kEventSignaled == ev_type || kEventTimeout == ev_type) {
+		CritScope cs(lock.get());
+		DecodedFec();
+		DeliverPacket();
+	}
+}
+
+int RtcFecDecoder::DecodedFec()
+{
+	uint32_t loop = 0;
+	while (packet_list.size() > loop) {
+		uint32_t start_idx = loop;
+		loop += Rows();
+
+		uint32_t received_num = 0;
+		bool all_source_received = true;
+		for (size_t i = 0; i < Rows(); i++) {
+			FecPacket *packet = packet_list[start_idx + i].get();
+			if (packet->status & kDecoded) {
+				received_num = 0;
+				break;
+			}
+
+			received_num += (packet->status & kInserted);
+			if (0 == packet->status && i < Columns())
+				all_source_received = false;
+		}
+
+		if (Columns() <= received_num) {
+			all_source_received ? 0 : Decoded(start_idx);
+			ResetDecoder(start_idx);
+			
+			LOG(LS_WARNING) << "Decoded fec: start index " << start_idx;
+		}
+	}
+
+/*
+	uint32_t start_idx = FindEarliestPacket();
+	if (packet_list.size() <= start_idx)
+		return -1;
+
+	uint32_t loop = 0;
+	while (packet_list.size() > loop) {
+		uint32_t received_packet = 0;
+		bool source_all_received = true;
+		for (size_t i = 0; i < Rows(); i++) {
+			FecPacket *packet = packet_list[start_idx + i].get();
+			received_packet += packet->used && !(packet->status & kHaveDecoded);
+			source_all_received = (i < Columns() && !packet->used) ? false
+																  : source_all_received;
+		}
+
+		// this fec sequence have received k packets
+		if (Columns() <= received_packet) {
+			source_all_received ? 0 : Decoded(start_idx);
+			ResetDecoder(start_idx);
+		}
+					
+		start_idx += Rows();
+		start_idx = packet_list.size() <= start_idx ? 0 : start_idx;
+		loop += Rows();
+	}
+*/
+	return 0;
+}
+
+int RtcFecDecoder::Decoded(const uint32_t index)
+{
+	uint32_t start_idx = index - index % Rows();
+
+	for (size_t i = 0; i < Rows(); i++) {
+		FecPacket *packet = packet_list[start_idx + i].get();
+		fec_pointer[i] = (packet->status & kInserted) ? (packet->data + sizeof(FecHeader))
+													  : nullptr;
+	}
+
+	if (0 != CreateFecInstance()) {
+		LOG(LS_ERROR) << "create fec instance failed";
+		return -1;
+	}
 
 	if (0 != of_set_available_symbols(session, (void**)fec_pointer)) {
 		LOG(LS_ERROR) << "fec set available symbols failed";
@@ -294,88 +360,161 @@ int RtcFecDecoder::Decoded()
 		return -1;
 	}
 
-	for (size_t i = 0; i < Columns() && callback_; i++) {
-		if (raw_pointer[i]) {
-			uint32_t size = rtc::GetBE32(raw_pointer[i]);
-//			LOG(LS_WARNING) << "send to vie: index " << i << " pointer " << raw_pointer[i]
-//							<< " size " << size;
-			callback_->ReceivePacket(raw_pointer[i] + sizeof(uint32_t), size);
+	for (size_t i = 0; i < Columns(); i++) {
+		if (raw_pointer[i] && !fec_pointer[i]) {
+			FecPacket *packet = packet_list[start_idx + i].get();
+			packet->status |= kInserted;
+			packet->frame_begin = raw_pointer[i][0];
+			packet->frame_end   = raw_pointer[i][1];
+			packet->timestamp   = rtc::GetBE32(raw_pointer[i] + 8);
+			
+			uint32_t size = rtc::GetBE16(raw_pointer[i] + 2);
+			memcpy(packet->data + sizeof(FecHeader), raw_pointer[i], size + sizeof(uint32_t));
+			packet->size = MinSize() + size;
+			free(raw_pointer[i]);
+		}
+	}
+	
+	return 0;
+}
 
-			// memory malloc by openfec
-			if (!fec_pointer[i])
-				free(raw_pointer[i]);
+int RtcFecDecoder::ResetDecoder(const uint32_t index)
+{
+	if (session) {
+		of_release_codec_instance(session);
+		session = nullptr;
+	}
+
+	uint32_t start_idx = index - index % Rows();
+	for (size_t i = 0; i < Rows(); i++) {
+		fec_pointer[i] = nullptr;
+		raw_pointer[i] = nullptr;
+
+		FecPacket *packet = packet_list[start_idx +i].get();
+		if (Columns() <= i)
+			packet->status = 0;
+		else {
+			packet->status |= kDecoded;
+			if (kReleased == packet->status)
+				packet->status = 0;			
 		}
 	}
 
-	of_release_codec_instance(session);
-	session = nullptr;
-
-	CreateFecInstance(kFecSourceNum, kFecRepairNum, kFecMaxLength);
-	// set packet list free
-	for (size_t i = 0; i < Rows(); i++)
-		packet_list[i].first = false;
-	
-	// refresh start sequence number
-	start_seq += Rows();
-	received_num = 0;	
+	size_t last_source_idx = start_idx + Columns() - 1;
+	uint32_t timestamp = packet_list[last_source_idx]->timestamp;
+	last_decoded_timestamp = std::max(timestamp, last_decoded_timestamp);
 	return 0;
 }
 
-int RtcFecDecoder::DecodedSection()
+int RtcFecDecoder::ResetFecPacket(const uint32_t index)
 {
-	for (uint32_t i = 0; i < Columns() && callback_; i++) {
-		if (!packet_list[i].first)
+	uint32_t start_idx = index - index % Rows();
+	for (size_t i = 0; i < Rows(); i++) {
+		fec_pointer[i] = nullptr;
+		raw_pointer[i] = nullptr;
+
+		FecPacket *packet = packet_list[start_idx +i].get();
+		if (i < Columns() && (packet->status & kInserted) &&
+			!(packet->status & kDelivered)) {
+			LOG(LS_WARNING) << "reset fec packet, deliver index " << (start_idx + i);
+			callback_->ReceivePacket(packet->data + MinSize(),
+									 packet->size - MinSize());
+		}
+
+		packet->status = 0;
+	}
+
+	return 0;
+}
+
+void RtcFecDecoder::DeliverPacket()
+{
+	for (size_t i = 0; i < packet_list.size(); i++) {
+		FecPacket *packet = packet_list[i].get();
+		if (!Source(i) || !packet->frame_begin)
 			continue;
 
-		uint8_t *buffer = packet_list[i].second.get() + sizeof(FecHeader);
-		uint32_t size = rtc::GetBE32(buffer);
-		callback_->ReceivePacket(buffer + sizeof(uint32_t), size);
-	}
+		if (!(packet->status & kInserted) || packet->status & kDelivered)
+			continue;
 
-	
-	of_finish_decoding(session);
-	of_release_codec_instance(session);
-	session = nullptr;
-	
-	// set packet list free
-	for (size_t i = 0; i < Rows(); i++)
-		packet_list[i].first = false;
-	
-	// refresh start sequence number
-	start_seq += Rows();
-	received_num = 0;	
-	return 0;
+		std::vector<FecPacket*> frame = GetPacketsInFrame(i, packet->timestamp);
+		for (size_t k = 0; k < frame.size() && callback_; k++) {
+			uint8_t *data = frame[k]->data + MinSize();
+			uint32_t size = frame[k]->size - MinSize();
+			callback_->ReceivePacket(data, size);
+
+			frame[k]->status |= kDelivered;
+			if (kReleased == frame[k]->status)
+				frame[k]->status = 0;
+		}
+	}
 }
 
+std::vector<RtcFecDecoder::FecPacket*> RtcFecDecoder::GetPacketsInFrame(
+								const uint32_t index, const uint32_t timestamp)
+{
+	bool find_end = false;
+	uint32_t loop = 0;
+	uint32_t end_idx = index;
+	std::vector<FecPacket*> frame;
+
+	while (packet_list.size() > loop) {
+		++loop;
+
+		FecPacket *packet = packet_list[end_idx].get();
+		// skip repair packet
+		if (!Source(end_idx)) {
+			end_idx = (++end_idx >= packet_list.size()) ? 0 : end_idx;
+			continue;
+		}
+			
+		// have loss packet OR have no frame end packet
+		if (!(packet->status & kInserted) || timestamp != packet->timestamp) {
+			frame.clear();
+			break;
+		}
+
+		frame.push_back(packet);
+		// seek to frame end packet
+		if (packet->frame_end) {
+			find_end = true;
+			break;
+		}
+
+		end_idx = (++end_idx >= packet_list.size()) ? 0 : end_idx;
+	}
+
+	if (!find_end)
+		frame.clear();
+
+	if (!frame.empty())
+		LOG(LS_WARNING) << "get frame: index " << index << ", size " << frame.size();
+	return frame;
+}
+
+uint32_t RtcFecDecoder::FindEarliestPacket()
+{
 /*
-int RtcFecDecoder::GetRawPacket(const uint32_t index, uint8_t **data, uint32_t& size)
-{
-	if (index >= Columns())
-		return -1;
-
-	if (!packet_list[index].first)
-		return -1;
-	
-	*data = packet_list[index].second.get() + sizeof(FecHeader);;
-	if (*data) {
-		size = ntohl(((uint32_t*)(*data))[0]);
-		*data += sizeof(uint32_t);
+	uint32_t start_idx = packet_list.size();
+	uint32_t earliest_timestamp = 0xffffffff;
+	for (size_t i = 0; i < packet_list.size(); i += Rows()) {
+		FecPacket *packet = packet_list[i].get();
+		if (packet->used && packet->source && !(packet->status & kHaveDecoded) &&
+            packet->timestamp < earliest_timestamp) {
+			earliest_timestamp = packet->timestamp;
+			start_idx = i;
+		}
 	}
 
-	packet_list[index].first = false;
-	return 0;
-}
+	if (packet_list.size() > start_idx)
+		start_idx -= (start_idx % Rows());
+	return start_idx;
 */
+	return packet_list.size();
+}
 
-int RtcFecDecoder::CreateFecInstance(const uint32_t source_num,
-									 const uint32_t repair_num,
-									 const uint32_t max_length)
-{
-	param.nb_source_symbols = source_num;
-	param.nb_repair_symbols = repair_num;
-	param.encoding_symbol_length = max_length + sizeof(int);
-	param.m = 8;
-	
+int RtcFecDecoder::CreateFecInstance()
+{	
 	const of_codec_id_t codec_id = OF_CODEC_REED_SOLOMON_GF_2_M_STABLE;
 	if (0 == of_create_codec_instance(&session, codec_id, OF_DECODER, 2)
 		&& 0 == of_set_fec_parameters(session, (of_parameters_t*)&param))
