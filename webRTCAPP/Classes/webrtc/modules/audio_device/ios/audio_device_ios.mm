@@ -582,6 +582,15 @@ void AudioDeviceIOS::HandleInterruptionBegin() {
     RTCLog(@"Stopping the audio unit due to interruption begin.");
     if (!audio_unit_->Stop()) {
       RTCLogError(@"Failed to stop the audio unit for interruption begin.");
+    } else {
+      // The audio unit has been stopped but will be restarted when the
+      // interruption ends in HandleInterruptionEnd(). It will result in audio
+      // callbacks from a new native I/O thread which means that we must detach
+      // thread checkers here to be prepared for an upcoming new audio stream.
+      io_thread_checker_.DetachFromThread();
+      // The audio device buffer must also be informed about the interrupted
+      // state so it can detach its thread checkers as well.
+      audio_device_buffer_->NativeAudioInterrupted();
     }
   }
   is_interrupted_ = true;
@@ -648,6 +657,12 @@ void AudioDeviceIOS::HandleSampleRateChange(float sample_rate) {
   if (std::abs(current_sample_rate - session_sample_rate) <= DBL_EPSILON &&
       current_frames_per_buffer == session_frames_per_buffer) {
     RTCLog(@"Ignoring sample rate change since audio parameters are intact.");
+    return;
+  }
+
+  // Extra sanity check to ensure that the new sample rate is valid.
+  if (session_sample_rate <= 0.0) {
+    RTCLogError(@"Sample rate is invalid: %f", session_sample_rate);
     return;
   }
 
