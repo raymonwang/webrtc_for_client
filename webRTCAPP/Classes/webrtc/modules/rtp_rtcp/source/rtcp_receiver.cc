@@ -127,6 +127,9 @@ RTCPReceiver::RTCPReceiver(
       stats_callback_(nullptr),
       packet_type_counter_observer_(packet_type_counter_observer),
       num_skipped_packets_(0),
+      last_cumulative_lost_(0),
+      last_highest_seq_num_(0),
+      received_newrr_report_(false),
       last_skipped_packets_warning_ms_(clock->TimeInMilliseconds()) {
   RTC_DCHECK(owner);
   memset(&remote_sender_info_, 0, sizeof(remote_sender_info_));
@@ -453,7 +456,14 @@ void RTCPReceiver::HandleReceiverReport(const CommonHeader& rtcp_block,
   packet_information->packet_type_flags |= kRtcpRr;
 
   for (const ReportBlock& report_block : receiver_report.report_blocks())
+  {
     HandleReportBlock(report_block, packet_information, remote_ssrc);
+      if (report_block.extended_high_seq_num() > 0) {
+          received_newrr_report_ = true;
+          last_cumulative_lost_ = report_block.cumulative_lost();
+          last_highest_seq_num_ = report_block.extended_high_seq_num();
+      }
+  }
 }
 
 void RTCPReceiver::HandleReportBlock(const ReportBlock& report_block,

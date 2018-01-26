@@ -198,6 +198,8 @@ class RTPSender : RtcFecEncoderCallback{
 
   bool SetFecParameters(const FecProtectionParams& delta_params,
                         const FecProtectionParams& key_params);
+    
+    void SetRTChatFecParameters(const uint32_t cumulative_lost, const uint16_t highest_seq_num);
 
   // Called on update of RTP statistics.
   void RegisterRtpStatisticsCallback(StreamDataCountersCallback* callback);

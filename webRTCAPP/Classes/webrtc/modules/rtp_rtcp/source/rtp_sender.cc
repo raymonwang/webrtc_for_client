@@ -1186,6 +1186,14 @@ bool RTPSender::SetFecParameters(const FecProtectionParams& delta_params,
   video_->SetFecParameters(delta_params, key_params);
   return true;
 }
+    
+    void RTPSender::SetRTChatFecParameters(const uint32_t cumulative_lost, const uint16_t highest_seq_num)
+    {
+        if (rtcFecEncoder_) {
+            LOG(LS_WARNING) << "on new fec param:" << cumulative_lost << "---" << highest_seq_num;
+            rtcFecEncoder_->OnReceiveReport(cumulative_lost, highest_seq_num);
+        }
+    }
 
 std::unique_ptr<RtpPacketToSend> RTPSender::BuildRtxPacket(
     const RtpPacketToSend& packet) {
