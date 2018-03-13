@@ -1190,8 +1190,8 @@ bool RTPSender::SetFecParameters(const FecProtectionParams& delta_params,
     void RTPSender::SetRTChatFecParameters(const uint32_t cumulative_lost, const uint16_t highest_seq_num)
     {
         if (rtcFecEncoder_) {
-            LOG(LS_WARNING) << "on new fec param:" << cumulative_lost << "---" << highest_seq_num;
-            rtcFecEncoder_->OnReceiveReport(cumulative_lost, highest_seq_num);
+            LOG(LS_INFO) << "on new fec param:" << cumulative_lost << "---" << highest_seq_num;
+            rtcFecEncoder_->OnReceiveReport(SSRC(), cumulative_lost, highest_seq_num);
         }
     }
 

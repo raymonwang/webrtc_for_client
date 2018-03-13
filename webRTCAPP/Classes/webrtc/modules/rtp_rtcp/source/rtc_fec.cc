@@ -55,16 +55,26 @@ int RtcFecEncoder::Init(const uint32_t source_num, const uint32_t repair_num,
 	return 0;
 }
 
-bool RtcFecEncoder::OnReceiveReport(const uint32_t cumulative_lost, 
+bool RtcFecEncoder::OnReceiveReport(const uint32_t ssrc, const uint32_t cumulative_lost, 
 									const uint16_t highest_seq_num)
 {
-	highest_seq_num_ = highest_seq_num;
-	repair_need = std::max((cumulative_lost - cumulative_lost_), repair_need);
-	cumulative_lost_ = cumulative_lost;
-	if (repair_need) 
-		last_zero_repair_time = rtc::TimeMillis();
+	LossStatics *loss = nullptr;
+	auto it = recv_reports.find(ssrc);
+	if (it == recv_reports.end()) {
+		std::unique_ptr<LossStatics> loss_statics(new LossStatics());
+		loss = loss_statics.get();
+		recv_reports[ssrc] = std::move(loss_statics);
+	} else {
+		loss = it->second.get();
+	}
 
-	return 0 < repair_need;
+	loss->highest_seq_ = highest_seq_num;	
+	loss->repair_need = std::max((cumulative_lost - loss->cumulative_lost_), repair_need);
+	loss->cumulative_lost_ = cumulative_lost;
+	if (loss->repair_need)
+		loss->last_zero_loss_time = rtc::TimeMillis();
+	
+	return 0 < loss->repair_need;
 }
 
 bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
@@ -86,6 +96,7 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 	start_seq = current_seq;
 	RecyclePacket();
 
+/*
 	{
 		uint32_t old_repair_symbols = param.nb_repair_symbols;
 		param.nb_repair_symbols += repair_need;
@@ -106,7 +117,8 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 			CreateFecInstance();
 		}
 	}
-	
+*/
+	UpdateFecRepair();
 	return true;
 }
 

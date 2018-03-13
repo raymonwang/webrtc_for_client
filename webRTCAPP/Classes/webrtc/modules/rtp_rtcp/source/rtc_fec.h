@@ -87,7 +87,8 @@ class RtcFecEncoder
 			 const uint32_t max_length);
 	
 	bool InsertPacket(const uint8_t *data, const uint32_t size);
-  	bool OnReceiveReport(const uint32_t cumulative_lost, const uint16_t highest_seq_num);
+  	bool OnReceiveReport(const uint32_t ssrc, const uint32_t cumulative_lost,
+						 const uint16_t highest_seq_num);
 
   private:
   	Buffer* GetPacket();
