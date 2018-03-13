@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <memory>
+#include <map>
 #include <string.h>
 #include "webrtc/base/basictypes.h"
 #include "webrtc/base/byteorder.h"
@@ -43,6 +44,13 @@ struct FecHeader {
 	uint8_t		sources;
 	uint8_t		repairs;
 	uint16_t	start_seq;
+};
+
+struct LossStatics {
+	uint32_t	highest_seq_;
+	uint32_t	cumulative_lost_;
+	uint32_t	repair_need;
+	int64_t		last_zero_loss_time;
 };
 
 class RtcFecEncoderCallback
@@ -88,6 +96,7 @@ class RtcFecEncoder
 	void RecyclePacket();
 	int CreateFecInstance();
 	void InitFecHeader(uint8_t *buffer, const uint32_t ssrc, const uint32_t timestamp);
+	void UpdateFecRepair();
 	inline uint32_t MaxSize() { return param.encoding_symbol_length + sizeof(FecHeader); }
 //	inline uint32_t Columns() { return param.nb_source_symbols; }
 //	inline uint32_t Rows() { return param.nb_source_symbols + param.nb_repair_symbols; }
@@ -106,6 +115,8 @@ class RtcFecEncoder
 	RtcFecEncoderCallback *callback_;
 	std::list<Buffer*> free_list;
 	std::vector<Buffer*> packet_list; 
+
+	std::map<uint32_t, std::unique_ptr<LossStatics>> recv_reports;
 };
 
 

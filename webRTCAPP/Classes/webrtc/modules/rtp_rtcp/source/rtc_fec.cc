@@ -110,6 +110,38 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 	return true;
 }
 
+void RtcFecEncoder::UpdateFecRepair()
+{
+	uint32_t old_repair_symbols = param.nb_repair_symbols;
+	uint32_t repair_add = 0;
+	int64_t  last_zero_loss_time = 0;
+	for (const auto& it : recv_reports) {
+		repair_add = std::max(it.second->repair_need, repair_add);
+		it.second->repair_need = 0;
+	
+		last_zero_loss_time = std::max(it.second->last_zero_loss_time, last_zero_loss_time);	
+	}
+
+	param.nb_repair_symbols += repair_add;
+	param.nb_repair_symbols = std::min(param.nb_source_symbols, param.nb_repair_symbols);
+
+	int64_t now = rtc::TimeMillis();
+	if (!repair_add && ((last_zero_loss_time + 30000) < now)) {
+		param.nb_repair_symbols -= 1 < param.nb_repair_symbols ? 1 : 0;
+		
+		for (const auto& it : recv_reports)
+			it.second->last_zero_loss_time = now;		
+	}
+
+	if (old_repair_symbols != param.nb_repair_symbols) {
+		LOG(LS_WARNING) << "modify fec param to [" << param.nb_source_symbols << ", "
+						<< param.nb_repair_symbols << "]";
+		if (session)
+			of_release_codec_instance(session);
+		CreateFecInstance();
+	}	
+}
+
 Buffer* RtcFecEncoder::GetPacket()
 {
 	if (!free_list.empty()) {
@@ -380,7 +412,7 @@ void RtcFecDecoder::WriteFecData(const uint32_t index, const uint8_t *data, cons
 		memset(packet->data + size, 0x0, MaxSize() - size);
 	packet->size = size;
 	
-	packet->status |= kInserted;
+	packet->status = kInserted;
 	packet->start_seq = rtc::GetBE16(&header->start_seq);
 	packet->source_num = header->sources;
 	packet->repair_num = header->repairs;
@@ -542,7 +574,7 @@ int RtcFecDecoder::Decoded(const uint32_t index, const uint32_t rows, const uint
 		if (raw_pointer[i] && !fec_pointer[i]) {
 			uint32_t start_idx = (index + i) & (packet_list.size() - 1);
 			FecPacket *packet = packet_list[start_idx].get();
-			packet->status |= kInserted;
+			packet->status = kInserted;
 			packet->source = true;
 			packet->frame_begin = raw_pointer[i][0];
 			packet->frame_end   = raw_pointer[i][1];
