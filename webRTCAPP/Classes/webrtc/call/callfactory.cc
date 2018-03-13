@@ -15,7 +15,7 @@
 namespace webrtc {
 
 Call* CallFactory::CreateCall(const Call::Config& config) {
-  return Call::Create(config);
+  return Call::Create(config, nullptr);
 }
 
 std::unique_ptr<CallFactoryInterface> CreateCallFactory() {

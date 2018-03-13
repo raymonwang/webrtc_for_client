@@ -70,6 +70,15 @@ class PacketReceiver {
   virtual ~PacketReceiver() {}
 };
 
+    class voiceVolumeCallback
+    {
+    public:
+        virtual void onVoiceVolumePacket(const uint32_t *data, int size) = 0;
+
+    protected:
+        virtual ~voiceVolumeCallback() { }
+    };
+
 // A Call instance can contain several send and/or receive streams. All streams
 // are assumed to have the same remote endpoint and will share bitrate estimates
 // etc.
@@ -124,7 +133,7 @@ class Call {
     int64_t rtt_ms = -1;
   };
 
-  static Call* Create(const Call::Config& config);
+  static Call* Create(const Call::Config& config, voiceVolumeCallback* callback);
 
   // Allows mocking |transport_send| for testing.
   static Call* Create(
