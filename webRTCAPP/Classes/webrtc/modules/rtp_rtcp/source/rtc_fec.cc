@@ -11,7 +11,7 @@
 
 
 static const uint8_t kSecPT = 0x4d;
-static const uint32_t kMaxFecPacketNum = 128;   // must be 2^n
+static const uint32_t kMaxFecPacketNum = 512;   // must be 2^n
 
 RtcFecEncoder::~RtcFecEncoder()
 {
