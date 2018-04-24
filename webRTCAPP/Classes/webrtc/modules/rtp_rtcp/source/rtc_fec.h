@@ -14,6 +14,7 @@
 #include <memory>
 #include <map>
 #include <string.h>
+#include "webrtc/base/timeutils.h"
 #include "webrtc/base/basictypes.h"
 #include "webrtc/base/byteorder.h"
 #include <webrtc/base/logging.h>
@@ -47,6 +48,10 @@ struct FecHeader {
 };
 
 struct LossStatics {
+	LossStatics()
+		: highest_seq_(0), cumulative_lost_(0), repair_need(0), 
+		last_zero_loss_time(rtc::TimeMillis()) { }
+		
 	uint32_t	highest_seq_;
 	uint32_t	cumulative_lost_;
 	uint32_t	repair_need;
@@ -69,10 +74,6 @@ class RtcFecEncoder
 		: start_seq(0),
 		current_seq(0),
 		last_encoded_timestamp(0),
-		highest_seq_num_(0),
-		cumulative_lost_(0),
-		repair_need(0),
-		last_zero_repair_time(0),
 		session(nullptr),
 		callback_(callback) { }
 	
@@ -105,11 +106,6 @@ class RtcFecEncoder
 	uint16_t start_seq;
 	uint16_t current_seq;
 	uint32_t last_encoded_timestamp;
-
-	uint32_t highest_seq_num_;
-	uint32_t cumulative_lost_;
-	uint32_t repair_need;
-	int64_t  last_zero_repair_time;
 	
   	of_session_t *session;
 	of_rs_2_m_parameters_t param;
@@ -159,8 +155,8 @@ class RtcFecDecoder
 	
 	RtcFecDecoder(RtcFecDecoderCallback *callback)
 		: last_decoded_timestamp(0), 
-//		last_insert_timestamp(0),
-		last_decoded_idx(0),
+		last_start_seq_(0x10000),
+		next_decoded_idx_(0),
 		last_frame_idx(0),
 		fec_pointer(nullptr),
 		raw_pointer(nullptr),
@@ -211,8 +207,8 @@ class RtcFecDecoder
 	enum { kInserted = 0x1, kDecoded = 0x10, kDelivered = 0x100, kReleased = 0x111 };
 
 	uint32_t  last_decoded_timestamp;
-//	uint32_t  last_insert_timestamp;
-	uint32_t  last_decoded_idx;
+	uint32_t  last_start_seq_;
+	uint32_t  next_decoded_idx_;
 	uint32_t  last_frame_idx;	
 	uint8_t** fec_pointer;
 	uint8_t** raw_pointer;

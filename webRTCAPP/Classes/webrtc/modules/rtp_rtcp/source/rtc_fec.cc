@@ -8,7 +8,6 @@
 */
 
 #include "rtc_fec.h"
-#include "webrtc/base/timeutils.h"
 
 
 static const uint8_t kSecPT = 0x4d;
@@ -51,7 +50,6 @@ int RtcFecEncoder::Init(const uint32_t source_num, const uint32_t repair_num,
 	
 	// start sequence number must be a multiple of Rows()
 	start_seq = current_seq = kMaxFecPacketNum * 77;
-	last_zero_repair_time = rtc::TimeMillis();
 	return 0;
 }
 
@@ -69,7 +67,7 @@ bool RtcFecEncoder::OnReceiveReport(const uint32_t ssrc, const uint32_t cumulati
 	}
 
 	loss->highest_seq_ = highest_seq_num;	
-	loss->repair_need = std::max((cumulative_lost - loss->cumulative_lost_), repair_need);
+	loss->repair_need = std::max((cumulative_lost - loss->cumulative_lost_), loss->repair_need);
 	loss->cumulative_lost_ = cumulative_lost;
 	if (loss->repair_need)
 		loss->last_zero_loss_time = rtc::TimeMillis();
@@ -96,28 +94,6 @@ bool RtcFecEncoder::InsertPacket(const uint8_t *data, const uint32_t size)
 	start_seq = current_seq;
 	RecyclePacket();
 
-/*
-	{
-		uint32_t old_repair_symbols = param.nb_repair_symbols;
-		param.nb_repair_symbols += repair_need;
-		param.nb_repair_symbols = std::min(param.nb_source_symbols, param.nb_repair_symbols);
-		
-		int64_t diff = rtc::TimeMillis() - last_zero_repair_time;
-		if (30000 <= diff && 2 <= param.nb_repair_symbols) {
-			param.nb_repair_symbols--;
-			last_zero_repair_time = rtc::TimeMillis();
-		}
-
-		repair_need = 0;
-		if (old_repair_symbols != param.nb_repair_symbols) {
-			LOG(LS_WARNING) << "modify fec param to [" << param.nb_source_symbols << ", "
-							<< param.nb_repair_symbols << "]";
-			if (session)
-				of_release_codec_instance(session);
-			CreateFecInstance();
-		}
-	}
-*/
 	UpdateFecRepair();
 	return true;
 }
@@ -138,9 +114,9 @@ void RtcFecEncoder::UpdateFecRepair()
 	param.nb_repair_symbols = std::min(param.nb_source_symbols, param.nb_repair_symbols);
 
 	int64_t now = rtc::TimeMillis();
-	if (!repair_add && ((last_zero_loss_time + 30000) < now)) {
+	if (!repair_add && last_zero_loss_time && ((last_zero_loss_time + 30000) < now)) {
 		param.nb_repair_symbols -= 1 < param.nb_repair_symbols ? 1 : 0;
-		
+
 		for (const auto& it : recv_reports)
 			it.second->last_zero_loss_time = now;		
 	}
@@ -334,11 +310,16 @@ int RtcFecDecoder::InsertFecData(const uint8_t *data, const uint32_t size)
 	}
 
 	uint16_t seq = rtc::GetBE16(data + 2);
+	uint16_t start_seq = rtc::GetBE16(data + 14);
 	uint32_t index = seq % packet_list.size();
 	uint32_t timestamp = rtc::GetBE32(data + 4);
-	
+
 	CritScope cs(lock.get());
-	if (timestamp < last_decoded_timestamp)
+	LOG(LS_INFO) << "insert packet: seq " << seq << " start seq " << start_seq
+				 << " timestamp " << timestamp << " last timestamp " << last_decoded_timestamp
+				 << " last start seq " << last_start_seq_;
+	
+	if (timestamp < last_decoded_timestamp && start_seq == last_start_seq_)
 		return 0;
 	
 	FecPacket *packet = packet_list[index].get();
@@ -363,15 +344,16 @@ int RtcFecDecoder::InsertFecData(const uint8_t *data, const uint32_t size)
 
 void RtcFecDecoder::FreeFecSequence(const FecHeader *header)
 {
-	uint32_t start_idx = rtc::GetBE16(&header->start_seq) % packet_list.size();
+	uint16_t start_seq = rtc::GetBE16(&header->start_seq);
+	uint32_t start_idx = start_seq % packet_list.size();
 	uint32_t rows = header->sources + header->repairs;
 	for (uint32_t i = 0; i < rows; i++) {
 		uint32_t index = (start_idx + i) & (packet_list.size() - 1);
 		FecPacket *packet = packet_list[index].get();
-		if (packet->status & kInserted && packet->start_seq != header->start_seq) {
+		if (packet->status & kInserted && packet->start_seq != start_seq) {
 			LOG(LS_WARNING) << "modify index " << index << " status " << packet->status
-							<< " for start seq " << packet->start_seq << "is not equal with"
-							<< header->start_seq;
+							<< " for start seq " << packet->start_seq << " is not equal with "
+							<< start_seq;
 			packet->status = 0;
 		}			
 	}
@@ -457,7 +439,7 @@ void RtcFecDecoder::Process()
 
 int RtcFecDecoder::DecodedFec()
 {
-	uint32_t start_idx = last_decoded_idx;
+	uint32_t start_idx = next_decoded_idx_;
 	uint32_t loop = 0;
 	while (packet_list.size() > loop) {
 		uint32_t rows = FindNextSequence(start_idx);
@@ -545,9 +527,10 @@ bool RtcFecDecoder::DecodedPacket(const uint32_t index, const uint32_t rows)
 	if (received_num && columns <= received_num) {
 		all_source_received ? 0 : Decoded(index, rows, columns);
 		ResetDecoder(index, rows, columns);
-	
+		last_start_seq_ = start_seq;
 		LOG(LS_INFO) << "Decoded fec: start index " << index << " received " << received_num 
-					 << " last decoded index " << last_decoded_idx;
+					 << " start seq " << last_start_seq_ 
+					 << " next decoded index " << next_decoded_idx_;
 		return true;
 	}
 
@@ -629,8 +612,7 @@ int RtcFecDecoder::ResetDecoder(const uint32_t index, const uint32_t rows, const
 	}
 
 	last_decoded_timestamp = std::max(last_decoded_timestamp, timestamp);
-	last_decoded_idx = (index + rows) & (packet_list.size() - 1);
-//	last_decoded_idx -= packet_list.size() <= last_decoded_idx ? packet_list.size() : 0;
+	next_decoded_idx_ = (index + rows) & (packet_list.size() - 1);
 	return 0;
 }
 
