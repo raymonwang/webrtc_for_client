@@ -120,6 +120,9 @@ void RtcFecEncoder::UpdateFecRepair()
 		for (const auto& it : recv_reports)
 			it.second->last_zero_loss_time = now;		
 	}
+    
+    //强制按最小10%发送冗余包
+    param.nb_repair_symbols = std::max(param.nb_repair_symbols, kFecRepairNum);
 
 	if (old_repair_symbols != param.nb_repair_symbols) {
 		LOG(LS_WARNING) << "modify fec param to [" << param.nb_source_symbols << ", "
