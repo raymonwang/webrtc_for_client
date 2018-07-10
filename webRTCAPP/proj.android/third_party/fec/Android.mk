@@ -19,7 +19,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := openfec
 LOCAL_MODULE_FILENAME := libopenfec
 
-MY_FILES_OPENFEC_PATH  :=  $(LOCAL_PATH)/
+MY_FILES_OPENFEC_PATH  :=  $(LOCAL_PATH)/../../../Classes/third_party/openfec
 
 MY_FILES_SUFFIX := %.cpp %.c %.cc
 
