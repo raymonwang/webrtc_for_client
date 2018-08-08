@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43805D1A211451BA00D1A557 /* rtptransportcontrolleradapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43805D01211451BA00D1A557 /* rtptransportcontrolleradapter.cc */; };
+		43805D1B211451BA00D1A557 /* ortcrtpreceiveradapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43805D03211451BA00D1A557 /* ortcrtpreceiveradapter.cc */; };
+		43805D1C211451BA00D1A557 /* rtpparametersconversion.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43805D04211451BA00D1A557 /* rtpparametersconversion.cc */; };
+		43805D1E211451BA00D1A557 /* ortcfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43805D06211451BA00D1A557 /* ortcfactory.cc */; };
+		43805D1F211451BA00D1A557 /* ortcrtpsenderadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43805D07211451BA00D1A557 /* ortcrtpsenderadapter.cc */; };
+		43805D21211451BA00D1A557 /* rtptransportadapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43805D09211451BA00D1A557 /* rtptransportadapter.h */; };
+		43805D23211451BA00D1A557 /* rtptransportcontrolleradapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43805D0B211451BA00D1A557 /* rtptransportcontrolleradapter.h */; };
+		43805D24211451BA00D1A557 /* rtpparametersconversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 43805D0C211451BA00D1A557 /* rtpparametersconversion.h */; };
+		43805D26211451BA00D1A557 /* rtptransportadapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43805D0E211451BA00D1A557 /* rtptransportadapter.cc */; };
+		43805D28211451BA00D1A557 /* ortcrtpsenderadapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43805D12211451BA00D1A557 /* ortcrtpsenderadapter.h */; };
+		43805D2B211451BA00D1A557 /* ortcfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 43805D15211451BA00D1A557 /* ortcfactory.h */; };
+		43805D2C211451BA00D1A557 /* ortcrtpreceiveradapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43805D16211451BA00D1A557 /* ortcrtpreceiveradapter.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43805C9E2114518500D1A557 /* librtc_ortc_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_ortc_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		43805D01211451BA00D1A557 /* rtptransportcontrolleradapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtptransportcontrolleradapter.cc; sourceTree = "<group>"; };
+		43805D02211451BA00D1A557 /* BUILD.gn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BUILD.gn; sourceTree = "<group>"; };
+		43805D03211451BA00D1A557 /* ortcrtpreceiveradapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ortcrtpreceiveradapter.cc; sourceTree = "<group>"; };
+		43805D04211451BA00D1A557 /* rtpparametersconversion.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtpparametersconversion.cc; sourceTree = "<group>"; };
+		43805D06211451BA00D1A557 /* ortcfactory.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ortcfactory.cc; sourceTree = "<group>"; };
+		43805D07211451BA00D1A557 /* ortcrtpsenderadapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ortcrtpsenderadapter.cc; sourceTree = "<group>"; };
+		43805D09211451BA00D1A557 /* rtptransportadapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtptransportadapter.h; sourceTree = "<group>"; };
+		43805D0B211451BA00D1A557 /* rtptransportcontrolleradapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtptransportcontrolleradapter.h; sourceTree = "<group>"; };
+		43805D0C211451BA00D1A557 /* rtpparametersconversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtpparametersconversion.h; sourceTree = "<group>"; };
+		43805D0E211451BA00D1A557 /* rtptransportadapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtptransportadapter.cc; sourceTree = "<group>"; };
+		43805D0F211451BA00D1A557 /* OWNERS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
+		43805D10211451BA00D1A557 /* DEPS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
+		43805D12211451BA00D1A557 /* ortcrtpsenderadapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ortcrtpsenderadapter.h; sourceTree = "<group>"; };
+		43805D15211451BA00D1A557 /* ortcfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ortcfactory.h; sourceTree = "<group>"; };
+		43805D16211451BA00D1A557 /* ortcrtpreceiveradapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ortcrtpreceiveradapter.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43805C9B2114518500D1A557 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43805C952114518500D1A557 = {
+			isa = PBXGroup;
+			children = (
+				43805CFE211451BA00D1A557 /* ortc */,
+				43805C9F2114518500D1A557 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43805C9F2114518500D1A557 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43805C9E2114518500D1A557 /* librtc_ortc_ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43805CFE211451BA00D1A557 /* ortc */ = {
+			isa = PBXGroup;
+			children = (
+				43805D01211451BA00D1A557 /* rtptransportcontrolleradapter.cc */,
+				43805D02211451BA00D1A557 /* BUILD.gn */,
+				43805D03211451BA00D1A557 /* ortcrtpreceiveradapter.cc */,
+				43805D04211451BA00D1A557 /* rtpparametersconversion.cc */,
+				43805D06211451BA00D1A557 /* ortcfactory.cc */,
+				43805D07211451BA00D1A557 /* ortcrtpsenderadapter.cc */,
+				43805D09211451BA00D1A557 /* rtptransportadapter.h */,
+				43805D0B211451BA00D1A557 /* rtptransportcontrolleradapter.h */,
+				43805D0C211451BA00D1A557 /* rtpparametersconversion.h */,
+				43805D0E211451BA00D1A557 /* rtptransportadapter.cc */,
+				43805D0F211451BA00D1A557 /* OWNERS */,
+				43805D10211451BA00D1A557 /* DEPS */,
+				43805D12211451BA00D1A557 /* ortcrtpsenderadapter.h */,
+				43805D15211451BA00D1A557 /* ortcfactory.h */,
+				43805D16211451BA00D1A557 /* ortcrtpreceiveradapter.h */,
+			);
+			name = ortc;
+			path = ../webRTCAPP/Classes/webrtc/ortc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		43805C9C2114518500D1A557 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43805D2C211451BA00D1A557 /* ortcrtpreceiveradapter.h in Headers */,
+				43805D2B211451BA00D1A557 /* ortcfactory.h in Headers */,
+				43805D21211451BA00D1A557 /* rtptransportadapter.h in Headers */,
+				43805D23211451BA00D1A557 /* rtptransportcontrolleradapter.h in Headers */,
+				43805D28211451BA00D1A557 /* ortcrtpsenderadapter.h in Headers */,
+				43805D24211451BA00D1A557 /* rtpparametersconversion.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		43805C9D2114518500D1A557 /* rtc_ortc_ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43805CA22114518500D1A557 /* Build configuration list for PBXNativeTarget "rtc_ortc_ios" */;
+			buildPhases = (
+				43805C9A2114518500D1A557 /* Sources */,
+				43805C9B2114518500D1A557 /* Frameworks */,
+				43805C9C2114518500D1A557 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rtc_ortc_ios;
+			productName = rtc_ortc;
+			productReference = 43805C9E2114518500D1A557 /* librtc_ortc_ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43805C962114518500D1A557 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = ztgame;
+				TargetAttributes = {
+					43805C9D2114518500D1A557 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 5T4SKG3CUR;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 43805C992114518500D1A557 /* Build configuration list for PBXProject "rtc_ortc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 43805C952114518500D1A557;
+			productRefGroup = 43805C9F2114518500D1A557 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43805C9D2114518500D1A557 /* rtc_ortc_ios */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43805C9A2114518500D1A557 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43805D1C211451BA00D1A557 /* rtpparametersconversion.cc in Sources */,
+				43805D1E211451BA00D1A557 /* ortcfactory.cc in Sources */,
+				43805D1B211451BA00D1A557 /* ortcrtpreceiveradapter.cc in Sources */,
+				43805D1A211451BA00D1A557 /* rtptransportcontrolleradapter.cc in Sources */,
+				43805D1F211451BA00D1A557 /* ortcrtpsenderadapter.cc in Sources */,
+				43805D26211451BA00D1A557 /* rtptransportadapter.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		43805CA02114518500D1A557 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43805CA12114518500D1A557 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43805CA32114518500D1A557 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5T4SKG3CUR;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_POSIX,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		43805CA42114518500D1A557 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5T4SKG3CUR;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_IOS,
+					WEBRTC_POSIX,
+					WEBRTC_MAC,
+				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43805C992114518500D1A557 /* Build configuration list for PBXProject "rtc_ortc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43805CA02114518500D1A557 /* Debug */,
+				43805CA12114518500D1A557 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43805CA22114518500D1A557 /* Build configuration list for PBXNativeTarget "rtc_ortc_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43805CA32114518500D1A557 /* Debug */,
+				43805CA42114518500D1A557 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43805C962114518500D1A557 /* Project object */;
+}

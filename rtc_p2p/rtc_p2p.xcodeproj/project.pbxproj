@@ -14,6 +14,9 @@
 		43172F4C1D5090AA003B5883 /* p2pconstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F341D5090A9003B5883 /* p2pconstants.h */; };
 		43172F5A1D5090AA003B5883 /* transportcontroller.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43172F421D5090AA003B5883 /* transportcontroller.cc */; };
 		43172F5B1D5090AA003B5883 /* transportcontroller.h in Headers */ = {isa = PBXBuildFile; fileRef = 43172F431D5090AA003B5883 /* transportcontroller.h */; };
+		43805EA02119A79300D1A557 /* udptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439CCE732032A20C00261BE1 /* udptransport.cc */; };
+		438060DC211AD27C00D1A557 /* jseptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439CCE792032A20C00261BE1 /* jseptransport.cc */; };
+		4380610B211AD7C900D1A557 /* packetlossestimator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439CCE772032A20C00261BE1 /* packetlossestimator.cc */; };
 		43C69AEF1D225AE800427D35 /* asyncstuntcpsocket.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A891D225AE800427D35 /* asyncstuntcpsocket.cc */; };
 		43C69AF01D225AE800427D35 /* asyncstuntcpsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69A8A1D225AE800427D35 /* asyncstuntcpsocket.h */; };
 		43C69AF21D225AE800427D35 /* basicpacketsocketfactory.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69A8C1D225AE800427D35 /* basicpacketsocketfactory.cc */; };
@@ -414,6 +417,7 @@
 			files = (
 				43C69B291D225AE800427D35 /* stunserver.cc in Sources */,
 				43C69B4F1D225AE800427D35 /* socketmonitor.cc in Sources */,
+				43805EA02119A79300D1A557 /* udptransport.cc in Sources */,
 				43172F4B1D5090AA003B5883 /* p2pconstants.cc in Sources */,
 				43C69B201D225AE800427D35 /* stun.cc in Sources */,
 				43C69B1D1D225AE800427D35 /* sessiondescription.cc in Sources */,
@@ -433,7 +437,9 @@
 				43172F5A1D5090AA003B5883 /* transportcontroller.cc in Sources */,
 				43C69AF91D225AE800427D35 /* dtlstransportchannel.cc in Sources */,
 				43C69B461D225AE800427D35 /* basicportallocator.cc in Sources */,
+				4380610B211AD7C900D1A557 /* packetlossestimator.cc in Sources */,
 				43C69AF21D225AE800427D35 /* basicpacketsocketfactory.cc in Sources */,
+				438060DC211AD27C00D1A557 /* jseptransport.cc in Sources */,
 				43C69B151D225AE800427D35 /* relayport.cc in Sources */,
 				43C69B421D225AE800427D35 /* turnserver.cc in Sources */,
 			);

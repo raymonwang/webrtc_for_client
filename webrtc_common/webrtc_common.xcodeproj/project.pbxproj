@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43884B6F1E55DD0500E63E88 /* call.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B691E55DD0500E63E88 /* call.h */; };
-		43884B701E55DD0500E63E88 /* video_decoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B6A1E55DD0500E63E88 /* video_decoder.h */; };
-		43884B711E55DD0500E63E88 /* video_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B6B1E55DD0500E63E88 /* video_encoder.h */; };
-		43884B721E55DD0500E63E88 /* video_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B6C1E55DD0500E63E88 /* video_frame.h */; };
 		43884B731E55DD0500E63E88 /* video_receive_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B6D1E55DD0500E63E88 /* video_receive_stream.h */; };
 		43884B741E55DD0500E63E88 /* video_send_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B6E1E55DD0500E63E88 /* video_send_stream.h */; };
 		43E0406A1D50380A009FDAE6 /* common_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E040641D50380A009FDAE6 /* common_types.cc */; };
@@ -21,10 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		43884B691E55DD0500E63E88 /* call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = call.h; path = ../webRTCAPP/Classes/webrtc/call.h; sourceTree = "<group>"; };
-		43884B6A1E55DD0500E63E88 /* video_decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_decoder.h; path = ../webRTCAPP/Classes/webrtc/video_decoder.h; sourceTree = "<group>"; };
-		43884B6B1E55DD0500E63E88 /* video_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_encoder.h; path = ../webRTCAPP/Classes/webrtc/video_encoder.h; sourceTree = "<group>"; };
-		43884B6C1E55DD0500E63E88 /* video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_frame.h; path = ../webRTCAPP/Classes/webrtc/video_frame.h; sourceTree = "<group>"; };
 		43884B6D1E55DD0500E63E88 /* video_receive_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_receive_stream.h; path = ../webRTCAPP/Classes/webrtc/video_receive_stream.h; sourceTree = "<group>"; };
 		43884B6E1E55DD0500E63E88 /* video_send_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = video_send_stream.h; path = ../webRTCAPP/Classes/webrtc/video_send_stream.h; sourceTree = "<group>"; };
 		43E03FFF1D50374A009FDAE6 /* libwebrtc_common.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebrtc_common.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,10 +43,6 @@
 			children = (
 				43E040641D50380A009FDAE6 /* common_types.cc */,
 				43E040651D50380A009FDAE6 /* common_types.h */,
-				43884B691E55DD0500E63E88 /* call.h */,
-				43884B6A1E55DD0500E63E88 /* video_decoder.h */,
-				43884B6B1E55DD0500E63E88 /* video_encoder.h */,
-				43884B6C1E55DD0500E63E88 /* video_frame.h */,
 				43884B6D1E55DD0500E63E88 /* video_receive_stream.h */,
 				43884B6E1E55DD0500E63E88 /* video_send_stream.h */,
 				43E040661D50380A009FDAE6 /* config.cc */,
@@ -80,12 +68,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				43884B731E55DD0500E63E88 /* video_receive_stream.h in Headers */,
-				43884B6F1E55DD0500E63E88 /* call.h in Headers */,
-				43884B721E55DD0500E63E88 /* video_frame.h in Headers */,
-				43884B701E55DD0500E63E88 /* video_decoder.h in Headers */,
 				43884B741E55DD0500E63E88 /* video_send_stream.h in Headers */,
 				43E0406F1D50380A009FDAE6 /* typedefs.h in Headers */,
-				43884B711E55DD0500E63E88 /* video_encoder.h in Headers */,
 				43E0406D1D50380A009FDAE6 /* config.h in Headers */,
 				43E0406B1D50380A009FDAE6 /* common_types.h in Headers */,
 			);

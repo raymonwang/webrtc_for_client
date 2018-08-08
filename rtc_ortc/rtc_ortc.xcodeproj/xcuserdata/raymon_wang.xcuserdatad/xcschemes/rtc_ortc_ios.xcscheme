@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0820"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43C67CCA1D2113E600427D35"
-               BuildableName = "peerconnection_client"
-               BlueprintName = "peerconnection_client"
-               ReferencedContainer = "container:webRTCAPP.xcodeproj">
+               BlueprintIdentifier = "43805C9D2114518500D1A557"
+               BuildableName = "librtc_ortc_ios.a"
+               BlueprintName = "rtc_ortc_ios"
+               ReferencedContainer = "container:rtc_ortc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43C67CCA1D2113E600427D35"
-            BuildableName = "peerconnection_client"
-            BlueprintName = "peerconnection_client"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43C67CCA1D2113E600427D35"
-            BuildableName = "peerconnection_client"
-            BlueprintName = "peerconnection_client"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            BlueprintIdentifier = "43805C9D2114518500D1A557"
+            BuildableName = "librtc_ortc_ios.a"
+            BlueprintName = "rtc_ortc_ios"
+            ReferencedContainer = "container:rtc_ortc.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "43C67CCA1D2113E600427D35"
-            BuildableName = "peerconnection_client"
-            BlueprintName = "peerconnection_client"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            BlueprintIdentifier = "43805C9D2114518500D1A557"
+            BuildableName = "librtc_ortc_ios.a"
+            BlueprintName = "rtc_ortc_ios"
+            ReferencedContainer = "container:rtc_ortc.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4380603A211ACA9A00D1A557 /* adaptedvideotracksource.h in Headers */ = {isa = PBXBuildFile; fileRef = 43806038211ACA9A00D1A557 /* adaptedvideotracksource.h */; };
+		4380603B211ACA9A00D1A557 /* adaptedvideotracksource.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43806039211ACA9A00D1A557 /* adaptedvideotracksource.cc */; };
 		439E923F20A1AF49004C8229 /* sctptransportinternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 439E923B20A1AF49004C8229 /* sctptransportinternal.h */; };
 		439E924020A1AF49004C8229 /* sctptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439E923C20A1AF49004C8229 /* sctptransport.cc */; };
 		439E924220A1AF49004C8229 /* sctptransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 439E923E20A1AF49004C8229 /* sctptransport.h */; };
@@ -83,9 +85,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43806038211ACA9A00D1A557 /* adaptedvideotracksource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = adaptedvideotracksource.h; sourceTree = "<group>"; };
+		43806039211ACA9A00D1A557 /* adaptedvideotracksource.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = adaptedvideotracksource.cc; sourceTree = "<group>"; };
 		439E923B20A1AF49004C8229 /* sctptransportinternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctptransportinternal.h; sourceTree = "<group>"; };
 		439E923C20A1AF49004C8229 /* sctptransport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sctptransport.cc; sourceTree = "<group>"; };
-		439E923D20A1AF49004C8229 /* sctptransport_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sctptransport_unittest.cc; sourceTree = "<group>"; };
 		439E923E20A1AF49004C8229 /* sctptransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctptransport.h; sourceTree = "<group>"; };
 		439FC4341D508CF000939424 /* librtc_media.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_media.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		439FC4431D508D2000939424 /* audiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiosource.h; sourceTree = "<group>"; };
@@ -179,7 +182,6 @@
 			children = (
 				439E923B20A1AF49004C8229 /* sctptransportinternal.h */,
 				439E923C20A1AF49004C8229 /* sctptransport.cc */,
-				439E923D20A1AF49004C8229 /* sctptransport_unittest.cc */,
 				439E923E20A1AF49004C8229 /* sctptransport.h */,
 			);
 			path = sctp;
@@ -251,6 +253,8 @@
 				439FC4811D508D2000939424 /* videosourceinterface.h */,
 				43E1B8071F0DD69500B73FCB /* h264_profile_level_id.cc */,
 				43E1B8081F0DD69500B73FCB /* h264_profile_level_id.h */,
+				43806038211ACA9A00D1A557 /* adaptedvideotracksource.h */,
+				43806039211ACA9A00D1A557 /* adaptedvideotracksource.cc */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -332,6 +336,7 @@
 				439FC4C91D508D2000939424 /* cryptoparams.h in Headers */,
 				43EFD21B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h in Headers */,
 				43EFD2111E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h in Headers */,
+				4380603A211ACA9A00D1A557 /* adaptedvideotracksource.h in Headers */,
 				439E924220A1AF49004C8229 /* sctptransport.h in Headers */,
 				439FC4CA1D508D2000939424 /* device.h in Headers */,
 				439FC4C21D508D2000939424 /* audiosource.h in Headers */,
@@ -421,6 +426,7 @@
 				43EFD21A1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.cc in Sources */,
 				43E1B2901F0D17AA00B73FCB /* adm_helpers.cc in Sources */,
 				43EFD2181E5AE26600E3DEAD /* videodecodersoftwarefallbackwrapper.cc in Sources */,
+				4380603B211ACA9A00D1A557 /* adaptedvideotracksource.cc in Sources */,
 				439FC4F41D508D2000939424 /* videocommon.cc in Sources */,
 				439FC5151D508D2000939424 /* simulcast.cc in Sources */,
 				439FC4F01D508D2000939424 /* videocapturer.cc in Sources */,
