@@ -374,9 +374,9 @@ of_status_t	of_rs_2_m_finish_decoding (of_rs_2_m_cb_t*	ofcb)
 {
 	UINT32 		k;
 	UINT32 		n;
-	char		*tmp_buf[ofcb->nb_source_symbols];/* keep available source/repair symbol buffers here... */
-	int		tmp_esi[ofcb->nb_source_symbols]; /* ...and their esi here. In fact we only need k entries
-							   * in these tables, but in order to avoid using malloc (time
+	//char		*tmp_buf[ofcb->nb_source_symbols];/* keep available source/repair symbol buffers here... */
+	//int		tmp_esi[ofcb->nb_source_symbols]; // ...and their esi here. In fact we only need k entries
+							   /* in these tables, but in order to avoid using malloc (time
 							   * consumming), we use an automatic table of maximum size for
 							   * both tmp_buf[] and tmp_esi[]. */
 	INT32		tmp_idx;		/* index in tmp_buf[] and tmp_esi[] tabs */
@@ -386,6 +386,10 @@ of_status_t	of_rs_2_m_finish_decoding (of_rs_2_m_cb_t*	ofcb)
 	UINT32		ass_esi;		/* corresponding available source symbol ESI */
 	void		**ars_buf;		/* tmp pointer to the current available repair symbol entry in available_symbols_tab[] */
 	UINT32		ars_esi;		/* corresponding available repair symbol ESI */
+
+
+	int *tmp_esi = (int*)malloc(ofcb->nb_source_symbols * sizeof(int));
+	char ** tmp_buf = (char**)malloc(ofcb->nb_source_symbols * sizeof(char*));
 
 	OF_ENTER_FUNCTION
 		if (ofcb->decoding_finished)

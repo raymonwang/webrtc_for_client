@@ -65,7 +65,7 @@
 #ifndef UINT64
 #ifdef WIN32
 #define		INT64		__int64
-#define		UINT64		__uint64
+#define		UINT64		unsigned long long
 #else  /* UNIX */
 #define		INT64		long long
 #define		UINT64		unsigned long long
