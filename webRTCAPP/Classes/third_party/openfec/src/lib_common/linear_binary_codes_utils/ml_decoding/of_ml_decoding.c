@@ -32,7 +32,7 @@
  */
 
 #include "../of_linear_binary_code.h"
-#include <time.h>
+#include <sys/time.h>
 
 
 #ifdef OF_USE_DECODER
