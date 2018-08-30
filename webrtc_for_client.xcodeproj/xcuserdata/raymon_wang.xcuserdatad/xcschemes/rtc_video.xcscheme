@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4381BEC11D4709B5000656B1"
-               BuildableName = "librtc_voice_osx.a"
-               BlueprintName = "rtc_voice_osx"
-               ReferencedContainer = "container:webRTCAPP.xcodeproj">
+               BlueprintIdentifier = "4381BEFA1D470B07000656B1"
+               BuildableName = "librtc_video.a"
+               BlueprintName = "rtc_video"
+               ReferencedContainer = "container:webrtc_for_client.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,7 +33,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4381BEC11D4709B5000656B1"
-            BuildableName = "librtc_voice_osx.a"
-            BlueprintName = "rtc_voice_osx"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            BlueprintIdentifier = "4381BEFA1D470B07000656B1"
+            BuildableName = "librtc_video.a"
+            BlueprintName = "rtc_video"
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4381BEC11D4709B5000656B1"
-            BuildableName = "librtc_voice_osx.a"
-            BlueprintName = "rtc_voice_osx"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            BlueprintIdentifier = "4381BEFA1D470B07000656B1"
+            BuildableName = "librtc_video.a"
+            BlueprintName = "rtc_video"
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

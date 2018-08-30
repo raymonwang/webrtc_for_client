@@ -17,7 +17,7 @@
                BlueprintIdentifier = "4381BC6B1D47017C000656B1"
                BuildableName = "librtc_voice.a"
                BlueprintName = "rtc_voice"
-               ReferencedContainer = "container:webRTCAPP.xcodeproj">
+               ReferencedContainer = "container:webrtc_for_client.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "4381BC6B1D47017C000656B1"
             BuildableName = "librtc_voice.a"
             BlueprintName = "rtc_voice"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "4381BC6B1D47017C000656B1"
             BuildableName = "librtc_voice.a"
             BlueprintName = "rtc_voice"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

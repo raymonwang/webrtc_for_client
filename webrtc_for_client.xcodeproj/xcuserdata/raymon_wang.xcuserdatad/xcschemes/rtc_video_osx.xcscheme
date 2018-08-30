@@ -17,7 +17,7 @@
                BlueprintIdentifier = "4381BF071D470C13000656B1"
                BuildableName = "librtc_video_osx.a"
                BlueprintName = "rtc_video_osx"
-               ReferencedContainer = "container:webRTCAPP.xcodeproj">
+               ReferencedContainer = "container:webrtc_for_client.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "4381BF071D470C13000656B1"
             BuildableName = "librtc_video_osx.a"
             BlueprintName = "rtc_video_osx"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "4381BF071D470C13000656B1"
             BuildableName = "librtc_video_osx.a"
             BlueprintName = "rtc_video_osx"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

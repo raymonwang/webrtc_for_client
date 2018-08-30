@@ -17,7 +17,7 @@
                BlueprintIdentifier = "4303DC2D1E482FE300CD116B"
                BuildableName = "librtc_common.a"
                BlueprintName = "rtc_common"
-               ReferencedContainer = "container:webRTCAPP.xcodeproj">
+               ReferencedContainer = "container:webrtc_for_client.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "4303DC2D1E482FE300CD116B"
             BuildableName = "librtc_common.a"
             BlueprintName = "rtc_common"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "4303DC2D1E482FE300CD116B"
             BuildableName = "librtc_common.a"
             BlueprintName = "rtc_common"
-            ReferencedContainer = "container:webRTCAPP.xcodeproj">
+            ReferencedContainer = "container:webrtc_for_client.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -1099,10 +1099,10 @@
 		43E0411C1D503FCC009FDAE6 /* webrtc_video.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_video.xcodeproj; path = webrtc_video/webrtc_video.xcodeproj; sourceTree = "<group>"; };
 		43E041AE1D50410B009FDAE6 /* webrtc_audio.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_audio.xcodeproj; path = webrtc_audio/webrtc_audio.xcodeproj; sourceTree = "<group>"; };
 		43E1B0C61F0CD76900B73FCB /* audio_codecs_api.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_codecs_api.xcodeproj; path = audio_codecs_api/audio_codecs_api.xcodeproj; sourceTree = "<group>"; };
-		43ECEE8F197CA80B00E9267B /* webRTCAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webRTCAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		43ECEE9A197CA80B00E9267B /* webRTCAPP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "webRTCAPP-Info.plist"; sourceTree = "<group>"; };
+		43ECEE8F197CA80B00E9267B /* webrtc_for_client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webrtc_for_client.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43ECEE9A197CA80B00E9267B /* webrtc_for_client-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "webrtc_for_client-Info.plist"; sourceTree = "<group>"; };
 		43ECEE9C197CA80B00E9267B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		43ECEEA0197CA80B00E9267B /* webRTCAPP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "webRTCAPP-Prefix.pch"; sourceTree = "<group>"; };
+		43ECEEA0197CA80B00E9267B /* webrtc_for_client-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "webrtc_for_client-Prefix.pch"; sourceTree = "<group>"; };
 		43ECEEAA197CA80B00E9267B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		43EFD2531E5AE8D900E3DEAD /* audio_mixer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = audio_mixer.xcodeproj; path = audio_mixer/audio_mixer.xcodeproj; sourceTree = "<group>"; };
 		43F1EE811D477D5D00AEAEC2 /* webrtc_i420.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = webrtc_i420.xcodeproj; path = webrtc_i420/webrtc_i420.xcodeproj; sourceTree = "<group>"; };
@@ -2043,7 +2043,7 @@
 		43ECEE90197CA80B00E9267B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43ECEE8F197CA80B00E9267B /* webRTCAPP.app */,
+				43ECEE8F197CA80B00E9267B /* webrtc_for_client.app */,
 				4381BC6C1D47017C000656B1 /* librtc_voice.a */,
 				4381BEE01D4709B5000656B1 /* librtc_voice_osx.a */,
 				4381BEFB1D470B07000656B1 /* librtc_video.a */,
@@ -2098,9 +2098,9 @@
 		43ECEE99197CA80B00E9267B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				43ECEE9A197CA80B00E9267B /* webRTCAPP-Info.plist */,
+				43ECEE9A197CA80B00E9267B /* webrtc_for_client-Info.plist */,
 				43ECEE9B197CA80B00E9267B /* InfoPlist.strings */,
-				43ECEEA0197CA80B00E9267B /* webRTCAPP-Prefix.pch */,
+				43ECEEA0197CA80B00E9267B /* webrtc_for_client-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2269,9 +2269,9 @@
 			productReference = 4381BF161D470C13000656B1 /* librtc_video_osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		43ECEE8E197CA80B00E9267B /* webRTCAPP */ = {
+		43ECEE8E197CA80B00E9267B /* webrtc_for_client */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43ECEEC1197CA80B00E9267B /* Build configuration list for PBXNativeTarget "webRTCAPP" */;
+			buildConfigurationList = 43ECEEC1197CA80B00E9267B /* Build configuration list for PBXNativeTarget "webrtc_for_client" */;
 			buildPhases = (
 				43ECEE8B197CA80B00E9267B /* Sources */,
 				43ECEE8C197CA80B00E9267B /* Frameworks */,
@@ -2281,9 +2281,9 @@
 			);
 			dependencies = (
 			);
-			name = webRTCAPP;
+			name = webrtc_for_client;
 			productName = webRTCAPP;
-			productReference = 43ECEE8F197CA80B00E9267B /* webRTCAPP.app */;
+			productReference = 43ECEE8F197CA80B00E9267B /* webrtc_for_client.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2307,7 +2307,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 43ECEE8A197CA80B00E9267B /* Build configuration list for PBXProject "webRTCAPP" */;
+			buildConfigurationList = 43ECEE8A197CA80B00E9267B /* Build configuration list for PBXProject "webrtc_for_client" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2554,7 +2554,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				43ECEE8E197CA80B00E9267B /* webRTCAPP */,
+				43ECEE8E197CA80B00E9267B /* webrtc_for_client */,
 				4381BC6B1D47017C000656B1 /* rtc_voice */,
 				4381BEC11D4709B5000656B1 /* rtc_voice_osx */,
 				4381BEFA1D470B07000656B1 /* rtc_video */,
@@ -3697,7 +3697,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "webRTCAPP/webRTCAPP-Prefix.pch";
+				GCC_PREFIX_HEADER = "webRTCAPP/webrtc_for_client-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_IOS,
@@ -3757,7 +3757,7 @@
 					"$(PROJECT_DIR)/webRTCAPP/Classes/third_party/icu/source/common",
 					"$(PROJECT_DIR)/webRTCAPP/Classes/third_party/jsoncpp/source/include",
 				);
-				INFOPLIST_FILE = "webRTCAPP/webRTCAPP-Info.plist";
+				INFOPLIST_FILE = "webRTCAPP/webrtc_for_client-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3793,7 +3793,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "webRTCAPP/webRTCAPP-Prefix.pch";
+				GCC_PREFIX_HEADER = "webRTCAPP/webrtc_for_client-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					WEBRTC_IOS,
@@ -3853,7 +3853,7 @@
 					"$(PROJECT_DIR)/webRTCAPP/Classes/third_party/icu/source/common",
 					"$(PROJECT_DIR)/webRTCAPP/Classes/third_party/jsoncpp/source/include",
 				);
-				INFOPLIST_FILE = "webRTCAPP/webRTCAPP-Info.plist";
+				INFOPLIST_FILE = "webRTCAPP/webrtc_for_client-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3922,7 +3922,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43ECEE8A197CA80B00E9267B /* Build configuration list for PBXProject "webRTCAPP" */ = {
+		43ECEE8A197CA80B00E9267B /* Build configuration list for PBXProject "webrtc_for_client" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43ECEEBF197CA80B00E9267B /* Debug */,
@@ -3931,7 +3931,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43ECEEC1197CA80B00E9267B /* Build configuration list for PBXNativeTarget "webRTCAPP" */ = {
+		43ECEEC1197CA80B00E9267B /* Build configuration list for PBXNativeTarget "webrtc_for_client" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43ECEEC2197CA80B00E9267B /* Debug */,
