@@ -1,0 +1,9 @@
+create libffmpeg_media.a
+addlib libavcodec.a
+addlib libavdevice.a
+addlib libavfilter.a
+addlib libavformat.a
+addlib libavutil.a
+addlib libswresample.a
+save
+end

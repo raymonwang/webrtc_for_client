@@ -1,0 +1,2 @@
+1、run build_ffmpeg_android.sh to build original libs
+2、run "ar -M < libffmpeg_media.mri" to combine multiple libs to one 
