@@ -1,2 +1,3 @@
+注意：编译时x86_64平台必须要加上--disable-asm，否则在reechat链接时会出错
 1、run build_ffmpeg_android.sh to build original libs
 2、run "ar -M < libffmpeg_media.mri" to combine multiple libs to one 

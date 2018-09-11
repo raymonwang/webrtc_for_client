@@ -73,6 +73,7 @@ cd android-build
 --enable-demuxer=mp3 \
 --enable-demuxer=hls \
 --enable-demuxer=mpegts \
+--disable-asm \
 --disable-yasm \
 --disable-shared \
 --enable-static \
