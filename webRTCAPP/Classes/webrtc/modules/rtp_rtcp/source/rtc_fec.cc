@@ -1,7 +1,7 @@
 /*
 *
 *
-*  Copyright by ztgame@2017
+*  Copyright by reechat studio
 *  Written by lfz 
 *
 *
