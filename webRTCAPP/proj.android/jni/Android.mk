@@ -25,7 +25,7 @@ LOCAL_MODULE_FILENAME := libwebrtc
 
 WEBRTC_SOURCE_PATH := $(LOCAL_PATH)/../../Classes
 
-WEBRTC_OVERRIDES_SOURCE_PATH := $(LOCAL_PATH)/../../../../RTChatSdk/Client/ios/src/Classes/webrtc_overrides
+WEBRTC_OVERRIDES_SOURCE_PATH := $(LOCAL_PATH)/../../../../reechat_client/Client/ios/src/Classes/webrtc_overrides
 
 MY_FILES_WEBRTC_BASE_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/base
 MY_FILES_WEBRTC_RTC_BASE_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/rtc_base
