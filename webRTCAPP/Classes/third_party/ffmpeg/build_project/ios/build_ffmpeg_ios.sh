@@ -13,8 +13,25 @@ THIN=`pwd`/"thin"
 
 #FDK_AAC=`pwd`/../fdk-aac-build-script-for-iOS/fdk-aac-ios
 
-CONFIGURE_FLAGS="--enable-cross-compile --disable-debug --disable-programs \
-                 --disable-doc --disable-everything --enable-pic --enable-hwaccel=h264_videotoolbox --enable-decoder=h264 --enable-decoder=aac --enable-decoder=mp3 --enable-protocol=file --enable-protocol=http --enable-protocol=hls --enable-demuxer=mov --enable-demuxer=matroska --enable-demuxer=mp3 --enable-demuxer=hls --enable-demuxer=mpegts"
+CONFIGURE_FLAGS="--enable-cross-compile \
+				 --disable-debug \
+				 --disable-programs \
+                 --disable-doc \
+                 --disable-everything \
+                 --enable-pic \
+                 --enable-hwaccel=h264_videotoolbox \
+                 --enable-decoder=h264 \
+                 --enable-decoder=aac \
+                 --enable-decoder=mp3 \
+                 --enable-protocol=file \
+                 --enable-protocol=http \
+                 --enable-protocol=hls \
+                 --enable-demuxer=mov \
+                 --enable-demuxer=matroska \
+                 --enable-demuxer=mp3 \
+                 --enable-demuxer=hls \
+                 --enable-demuxer=flv \
+                 --enable-demuxer=mpegts"
 
 if [ "$X264" ]
 then
