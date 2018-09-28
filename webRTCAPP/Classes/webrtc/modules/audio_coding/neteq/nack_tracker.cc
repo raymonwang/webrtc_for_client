@@ -164,7 +164,7 @@ void NackTracker::UpdateLastDecodedPacket(uint16_t sequence_number,
          ++it)
       it->second.time_to_play_ms = TimeToPlay(it->second.estimated_timestamp);
   } else {
-    assert(sequence_number == sequence_num_last_decoded_rtp_);
+//    assert(sequence_number == sequence_num_last_decoded_rtp_);
 
     // Same sequence number as before. 10 ms is elapsed, update estimations for
     // time-to-play.
