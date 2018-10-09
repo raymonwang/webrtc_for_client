@@ -21,8 +21,9 @@
 #include "webrtc/media/base/fakertp.h"
 #include "webrtc/media/base/mediachannel.h"
 #include "webrtc/media/base/testutils.h"
-#include "webrtc/p2p/base/dtlstransportinternal.h"
-#include "webrtc/p2p/base/faketransportcontroller.h"
+#include "webrtc/p2p/base/fakecandidatepair.h"
+#include "webrtc/p2p/base/fakedtlstransport.h"
+#include "webrtc/p2p/base/fakepackettransport.h"
 #include "webrtc/pc/channel.h"
 
 using cricket::CA_OFFER;
@@ -96,7 +97,11 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     SECURE = 0x4,
     SSRC_MUX = 0x8,
     DTLS = 0x10,
-    GCM_CIPHER = 0x20
+    // Use BaseChannel with PacketTransportInternal rather than
+    // DtlsTransportInternal.
+    RAW_PACKET_TRANSPORT = 0x20,
+    GCM_CIPHER = 0x40,
+    ENCRYPTED_HEADERS = 0x80,
   };
 
   ChannelTest(bool verify_playout,
@@ -104,24 +109,15 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
               rtc::ArrayView<const uint8_t> rtcp_data,
               NetworkIsWorker network_is_worker)
       : verify_playout_(verify_playout),
-        media_channel1_(NULL),
-        media_channel2_(NULL),
         rtp_packet_(rtp_data.data(), rtp_data.size()),
-        rtcp_packet_(rtcp_data.data(), rtcp_data.size()),
-        media_info_callbacks1_(),
-        media_info_callbacks2_() {
+        rtcp_packet_(rtcp_data.data(), rtcp_data.size()) {
     if (network_is_worker == NetworkIsWorker::Yes) {
       network_thread_ = rtc::Thread::Current();
     } else {
       network_thread_keeper_ = rtc::Thread::Create();
       network_thread_keeper_->SetName("Network", nullptr);
-      network_thread_keeper_->Start();
       network_thread_ = network_thread_keeper_.get();
     }
-    transport_controller1_.reset(new cricket::FakeTransportController(
-        network_thread_, cricket::ICEROLE_CONTROLLING));
-    transport_controller2_.reset(new cricket::FakeTransportController(
-        network_thread_, cricket::ICEROLE_CONTROLLED));
   }
 
   void CreateChannels(int flags1, int flags2) {
@@ -133,28 +129,133 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
                       typename T::MediaChannel* ch2,
                       int flags1,
                       int flags2) {
+    // Network thread is started in CreateChannels, to allow the test to
+    // configure a fake clock before any threads are spawned and attempt to
+    // access the time.
+    if (network_thread_keeper_) {
+      network_thread_keeper_->Start();
+    }
     // Make sure RTCP_MUX_REQUIRED isn't set without RTCP_MUX.
-    ASSERT_NE(RTCP_MUX_REQUIRED, flags1 & (RTCP_MUX | RTCP_MUX_REQUIRED));
-    ASSERT_NE(RTCP_MUX_REQUIRED, flags2 & (RTCP_MUX | RTCP_MUX_REQUIRED));
+    RTC_DCHECK_NE(RTCP_MUX_REQUIRED, flags1 & (RTCP_MUX | RTCP_MUX_REQUIRED));
+    RTC_DCHECK_NE(RTCP_MUX_REQUIRED, flags2 & (RTCP_MUX | RTCP_MUX_REQUIRED));
+    // Make sure if using raw packet transports, they're used for both
+    // channels.
+    RTC_DCHECK_EQ(flags1 & RAW_PACKET_TRANSPORT, flags2 & RAW_PACKET_TRANSPORT);
     rtc::Thread* worker_thread = rtc::Thread::Current();
     media_channel1_ = ch1;
     media_channel2_ = ch2;
+    rtc::PacketTransportInternal* rtp1 = nullptr;
+    rtc::PacketTransportInternal* rtcp1 = nullptr;
+    rtc::PacketTransportInternal* rtp2 = nullptr;
+    rtc::PacketTransportInternal* rtcp2 = nullptr;
+    // Based on flags, create fake DTLS or raw packet transports.
+    if (flags1 & RAW_PACKET_TRANSPORT) {
+      fake_rtp_packet_transport1_.reset(
+          new rtc::FakePacketTransport("channel1_rtp"));
+      rtp1 = fake_rtp_packet_transport1_.get();
+      if (!(flags1 & RTCP_MUX_REQUIRED)) {
+        fake_rtcp_packet_transport1_.reset(
+            new rtc::FakePacketTransport("channel1_rtcp"));
+        rtcp1 = fake_rtcp_packet_transport1_.get();
+      }
+    } else {
+      // Confirmed to work with KT_RSA and KT_ECDSA.
+      fake_rtp_dtls_transport1_.reset(new cricket::FakeDtlsTransport(
+          "channel1", cricket::ICE_CANDIDATE_COMPONENT_RTP));
+      rtp1 = fake_rtp_dtls_transport1_.get();
+      if (!(flags1 & RTCP_MUX_REQUIRED)) {
+        fake_rtcp_dtls_transport1_.reset(new cricket::FakeDtlsTransport(
+            "channel1", cricket::ICE_CANDIDATE_COMPONENT_RTCP));
+        rtcp1 = fake_rtcp_dtls_transport1_.get();
+      }
+      if (flags1 & DTLS) {
+        auto cert1 =
+            rtc::RTCCertificate::Create(std::unique_ptr<rtc::SSLIdentity>(
+                rtc::SSLIdentity::Generate("session1", rtc::KT_DEFAULT)));
+        fake_rtp_dtls_transport1_->SetLocalCertificate(cert1);
+        if (fake_rtcp_dtls_transport1_) {
+          fake_rtcp_dtls_transport1_->SetLocalCertificate(cert1);
+        }
+      }
+      if (flags1 & ENCRYPTED_HEADERS) {
+        rtc::CryptoOptions crypto_options;
+        crypto_options.enable_encrypted_rtp_header_extensions = true;
+        fake_rtp_dtls_transport1_->SetCryptoOptions(crypto_options);
+        if (fake_rtcp_dtls_transport1_) {
+          fake_rtcp_dtls_transport1_->SetCryptoOptions(crypto_options);
+        }
+      }
+      if (flags1 & GCM_CIPHER) {
+        fake_rtp_dtls_transport1_->SetSrtpCryptoSuite(
+            rtc::SRTP_AEAD_AES_256_GCM);
+        if (fake_rtcp_dtls_transport1_) {
+          fake_rtcp_dtls_transport1_->SetSrtpCryptoSuite(
+              rtc::SRTP_AEAD_AES_256_GCM);
+        }
+      }
+    }
+    // Based on flags, create fake DTLS or raw packet transports.
+    if (flags2 & RAW_PACKET_TRANSPORT) {
+      fake_rtp_packet_transport2_.reset(
+          new rtc::FakePacketTransport("channel2_rtp"));
+      rtp2 = fake_rtp_packet_transport2_.get();
+      if (!(flags2 & RTCP_MUX_REQUIRED)) {
+        fake_rtcp_packet_transport2_.reset(
+            new rtc::FakePacketTransport("channel2_rtcp"));
+        rtcp2 = fake_rtcp_packet_transport2_.get();
+      }
+    } else {
+      // Confirmed to work with KT_RSA and KT_ECDSA.
+      fake_rtp_dtls_transport2_.reset(new cricket::FakeDtlsTransport(
+          "channel2", cricket::ICE_CANDIDATE_COMPONENT_RTP));
+      rtp2 = fake_rtp_dtls_transport2_.get();
+      if (!(flags2 & RTCP_MUX_REQUIRED)) {
+        fake_rtcp_dtls_transport2_.reset(new cricket::FakeDtlsTransport(
+            "channel2", cricket::ICE_CANDIDATE_COMPONENT_RTCP));
+        rtcp2 = fake_rtcp_dtls_transport2_.get();
+      }
+      if (flags2 & DTLS) {
+        auto cert2 =
+            rtc::RTCCertificate::Create(std::unique_ptr<rtc::SSLIdentity>(
+                rtc::SSLIdentity::Generate("session2", rtc::KT_DEFAULT)));
+        fake_rtp_dtls_transport2_->SetLocalCertificate(cert2);
+        if (fake_rtcp_dtls_transport2_) {
+          fake_rtcp_dtls_transport2_->SetLocalCertificate(cert2);
+        }
+      }
+      if (flags2 & ENCRYPTED_HEADERS) {
+        rtc::CryptoOptions crypto_options;
+        crypto_options.enable_encrypted_rtp_header_extensions = true;
+        fake_rtp_dtls_transport2_->SetCryptoOptions(crypto_options);
+        if (fake_rtcp_dtls_transport2_) {
+          fake_rtcp_dtls_transport2_->SetCryptoOptions(crypto_options);
+        }
+      }
+      if (flags2 & GCM_CIPHER) {
+        fake_rtp_dtls_transport2_->SetSrtpCryptoSuite(
+            rtc::SRTP_AEAD_AES_256_GCM);
+        if (fake_rtcp_dtls_transport2_) {
+          fake_rtcp_dtls_transport2_->SetSrtpCryptoSuite(
+              rtc::SRTP_AEAD_AES_256_GCM);
+        }
+      }
+    }
     channel1_.reset(
         CreateChannel(worker_thread, network_thread_, &media_engine_, ch1,
-                      transport_controller1_.get(), flags1));
+                      fake_rtp_dtls_transport1_.get(),
+                      fake_rtcp_dtls_transport1_.get(), rtp1, rtcp1, flags1));
     channel2_.reset(
         CreateChannel(worker_thread, network_thread_, &media_engine_, ch2,
-                      transport_controller2_.get(), flags2));
+                      fake_rtp_dtls_transport2_.get(),
+                      fake_rtcp_dtls_transport2_.get(), rtp2, rtcp2, flags2));
     channel1_->SignalMediaMonitor.connect(this,
                                           &ChannelTest<T>::OnMediaMonitor1);
     channel2_->SignalMediaMonitor.connect(this,
                                           &ChannelTest<T>::OnMediaMonitor2);
     channel1_->SignalRtcpMuxFullyActive.connect(
-        transport_controller1_.get(),
-        &cricket::FakeTransportController::DestroyRtcpTransport);
+        this, &ChannelTest<T>::OnRtcpMuxFullyActive1);
     channel2_->SignalRtcpMuxFullyActive.connect(
-        transport_controller2_.get(),
-        &cricket::FakeTransportController::DestroyRtcpTransport);
+        this, &ChannelTest<T>::OnRtcpMuxFullyActive2);
     if ((flags1 & DTLS) && (flags2 & DTLS)) {
       flags1 = (flags1 & ~SECURE);
       flags2 = (flags2 & ~SECURE);
@@ -165,19 +266,6 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
                   &local_media_content2_);
     CopyContent(local_media_content1_, &remote_media_content1_);
     CopyContent(local_media_content2_, &remote_media_content2_);
-
-    if (flags1 & DTLS) {
-      // Confirmed to work with KT_RSA and KT_ECDSA.
-      transport_controller1_->SetLocalCertificate(
-          rtc::RTCCertificate::Create(std::unique_ptr<rtc::SSLIdentity>(
-              rtc::SSLIdentity::Generate("session1", rtc::KT_DEFAULT))));
-    }
-    if (flags2 & DTLS) {
-      // Confirmed to work with KT_RSA and KT_ECDSA.
-      transport_controller2_->SetLocalCertificate(
-          rtc::RTCCertificate::Create(std::unique_ptr<rtc::SSLIdentity>(
-              rtc::SSLIdentity::Generate("session2", rtc::KT_DEFAULT))));
-    }
 
     // Add stream information (SSRC) to the local content but not to the remote
     // content. This means that we per default know the SSRC of what we send but
@@ -198,31 +286,49 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
       rtc::Thread* network_thread,
       cricket::MediaEngineInterface* engine,
       typename T::MediaChannel* ch,
-      cricket::TransportController* transport_controller,
+      cricket::DtlsTransportInternal* fake_rtp_dtls_transport,
+      cricket::DtlsTransportInternal* fake_rtcp_dtls_transport,
+      rtc::PacketTransportInternal* fake_rtp_packet_transport,
+      rtc::PacketTransportInternal* fake_rtcp_packet_transport,
       int flags) {
-    rtc::Thread* signaling_thread =
-        transport_controller ? transport_controller->signaling_thread()
-                             : nullptr;
+    rtc::Thread* signaling_thread = rtc::Thread::Current();
     typename T::Channel* channel = new typename T::Channel(
         worker_thread, network_thread, signaling_thread, engine, ch,
         cricket::CN_AUDIO, (flags & RTCP_MUX_REQUIRED) != 0,
         (flags & SECURE) != 0);
-    rtc::CryptoOptions crypto_options;
-    crypto_options.enable_gcm_crypto_suites = (flags & GCM_CIPHER) != 0;
-    channel->SetCryptoOptions(crypto_options);
-    cricket::DtlsTransportInternal* rtp_dtls_transport =
-        transport_controller->CreateDtlsTransport(
-            channel->content_name(), cricket::ICE_CANDIDATE_COMPONENT_RTP);
-    cricket::DtlsTransportInternal* rtcp_dtls_transport = nullptr;
-    if (channel->NeedsRtcpTransport()) {
-      rtcp_dtls_transport = transport_controller->CreateDtlsTransport(
-          channel->content_name(), cricket::ICE_CANDIDATE_COMPONENT_RTCP);
+    if (!channel->NeedsRtcpTransport()) {
+      fake_rtcp_dtls_transport = nullptr;
     }
-    if (!channel->Init_w(rtp_dtls_transport, rtcp_dtls_transport)) {
+    if (!channel->Init_w(fake_rtp_dtls_transport, fake_rtcp_dtls_transport,
+                         fake_rtp_packet_transport,
+                         fake_rtcp_packet_transport)) {
       delete channel;
       channel = NULL;
     }
     return channel;
+  }
+
+  void ConnectFakeTransports() {
+    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+      bool asymmetric = false;
+      // Depending on test flags, could be using DTLS or raw packet transport.
+      if (fake_rtp_dtls_transport1_ && fake_rtp_dtls_transport2_) {
+        fake_rtp_dtls_transport1_->SetDestination(
+            fake_rtp_dtls_transport2_.get(), asymmetric);
+      }
+      if (fake_rtcp_dtls_transport1_ && fake_rtcp_dtls_transport2_) {
+        fake_rtcp_dtls_transport1_->SetDestination(
+            fake_rtcp_dtls_transport2_.get(), asymmetric);
+      }
+      if (fake_rtp_packet_transport1_ && fake_rtp_packet_transport2_) {
+        fake_rtp_packet_transport1_->SetDestination(
+            fake_rtp_packet_transport2_.get(), asymmetric);
+      }
+      if (fake_rtcp_packet_transport1_ && fake_rtcp_packet_transport2_) {
+        fake_rtcp_packet_transport1_->SetDestination(
+            fake_rtcp_packet_transport2_.get(), asymmetric);
+      }
+    });
   }
 
   bool SendInitiate() {
@@ -233,8 +339,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
       result = channel2_->SetRemoteContent(&remote_media_content1_,
                                            CA_OFFER, NULL);
       if (result) {
-        transport_controller1_->Connect(transport_controller2_.get());
-
+        ConnectFakeTransports();
         result = channel2_->SetLocalContent(&local_media_content2_,
                                             CA_ANSWER, NULL);
       }
@@ -266,7 +371,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
       channel2_->Enable(true);
       result = channel1_->SetRemoteContent(&remote_media_content2_,
                                            CA_PRANSWER, NULL);
-      transport_controller1_->Connect(transport_controller2_.get());
+      ConnectFakeTransports();
     }
     return result;
   }
@@ -280,9 +385,20 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     return result;
   }
 
-  bool SendTerminate() {
+  bool Terminate() {
     channel1_.reset();
     channel2_.reset();
+    fake_rtp_dtls_transport1_.reset();
+    fake_rtcp_dtls_transport1_.reset();
+    fake_rtp_dtls_transport2_.reset();
+    fake_rtcp_dtls_transport2_.reset();
+    fake_rtp_packet_transport1_.reset();
+    fake_rtcp_packet_transport1_.reset();
+    fake_rtp_packet_transport2_.reset();
+    fake_rtcp_packet_transport2_.reset();
+    if (network_thread_keeper_) {
+      network_thread_keeper_.reset();
+    }
     return true;
   }
 
@@ -291,24 +407,6 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   }
   bool RemoveStream1(int id) {
     return channel1_->RemoveRecvStream(id);
-  }
-
-  std::vector<cricket::DtlsTransportInternal*> GetChannels1() {
-    return transport_controller1_->channels_for_testing();
-  }
-
-  std::vector<cricket::DtlsTransportInternal*> GetChannels2() {
-    return transport_controller2_->channels_for_testing();
-  }
-
-  cricket::FakeDtlsTransport* GetFakeChannel1(int component) {
-    return transport_controller1_->GetFakeDtlsTransport_n(
-        channel1_->content_name(), component);
-  }
-
-  cricket::FakeDtlsTransport* GetFakeChannel2(int component) {
-    return transport_controller2_->GetFakeDtlsTransport_n(
-        channel2_->content_name(), component);
   }
 
   void SendRtp1() {
@@ -401,21 +499,6 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   bool CheckNoRtcp2() {
     return media_channel2_->CheckNoRtcp();
   }
-  // Checks that the channel is using GCM iff GCM_CIPHER is set in flags.
-  // Returns true if so.
-  bool CheckGcmCipher(typename T::Channel* channel, int flags) {
-    int suite;
-    if (!channel->rtp_dtls_transport()->GetSrtpCryptoSuite(&suite)) {
-      return false;
-    }
-
-    if (flags & GCM_CIPHER) {
-      return rtc::IsGcmCryptoSuite(suite);
-    } else {
-      return (suite != rtc::SRTP_INVALID_CRYPTO_SUITE &&
-          !rtc::IsGcmCryptoSuite(suite));
-    }
-  }
 
   void CreateContent(int flags,
                      const cricket::AudioCodec& audio_codec,
@@ -476,6 +559,12 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     RTC_DCHECK_EQ(channel, channel2_.get());
     media_info_callbacks2_++;
   }
+  void OnRtcpMuxFullyActive1(const std::string&) {
+    rtcp_mux_activated_callbacks1_++;
+  }
+  void OnRtcpMuxFullyActive2(const std::string&) {
+    rtcp_mux_activated_callbacks2_++;
+  }
 
   cricket::CandidatePairInterface* last_selected_candidate_pair() {
     return last_selected_candidate_pair_;
@@ -535,43 +624,37 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   // mux.
   void TestSetContentsRtcpMux() {
     CreateChannels(0, 0);
-    EXPECT_TRUE(channel1_->rtcp_dtls_transport() != NULL);
-    EXPECT_TRUE(channel2_->rtcp_dtls_transport() != NULL);
     typename T::Content content;
     CreateContent(0, kPcmuCodec, kH264Codec, &content);
     // Both sides agree on mux. Should no longer be a separate RTCP channel.
     content.set_rtcp_mux(true);
     EXPECT_TRUE(channel1_->SetLocalContent(&content, CA_OFFER, NULL));
     EXPECT_TRUE(channel1_->SetRemoteContent(&content, CA_ANSWER, NULL));
-    EXPECT_TRUE(channel1_->rtcp_dtls_transport() == NULL);
     // Only initiator supports mux. Should still have a separate RTCP channel.
     EXPECT_TRUE(channel2_->SetLocalContent(&content, CA_OFFER, NULL));
     content.set_rtcp_mux(false);
     EXPECT_TRUE(channel2_->SetRemoteContent(&content, CA_ANSWER, NULL));
-    EXPECT_TRUE(channel2_->rtcp_dtls_transport() != NULL);
   }
 
   // Test that SetLocalContent and SetRemoteContent properly set RTCP
   // mux when a provisional answer is received.
   void TestSetContentsRtcpMuxWithPrAnswer() {
     CreateChannels(0, 0);
-    EXPECT_TRUE(channel1_->rtcp_dtls_transport() != NULL);
-    EXPECT_TRUE(channel2_->rtcp_dtls_transport() != NULL);
     typename T::Content content;
     CreateContent(0, kPcmuCodec, kH264Codec, &content);
     content.set_rtcp_mux(true);
     EXPECT_TRUE(channel1_->SetLocalContent(&content, CA_OFFER, NULL));
     EXPECT_TRUE(channel1_->SetRemoteContent(&content, CA_PRANSWER, NULL));
-    EXPECT_TRUE(channel1_->rtcp_dtls_transport() != NULL);
+    // Both sides agree on mux. Should signal RTCP mux as fully activated.
+    EXPECT_EQ(0, rtcp_mux_activated_callbacks1_);
     EXPECT_TRUE(channel1_->SetRemoteContent(&content, CA_ANSWER, NULL));
-    // Both sides agree on mux. Should no longer be a separate RTCP channel.
-    EXPECT_TRUE(channel1_->rtcp_dtls_transport() == NULL);
+    EXPECT_EQ(1, rtcp_mux_activated_callbacks1_);
     // Only initiator supports mux. Should still have a separate RTCP channel.
     EXPECT_TRUE(channel2_->SetLocalContent(&content, CA_OFFER, NULL));
     content.set_rtcp_mux(false);
     EXPECT_TRUE(channel2_->SetRemoteContent(&content, CA_PRANSWER, NULL));
     EXPECT_TRUE(channel2_->SetRemoteContent(&content, CA_ANSWER, NULL));
-    EXPECT_TRUE(channel2_->rtcp_dtls_transport() != NULL);
+    EXPECT_EQ(0, rtcp_mux_activated_callbacks2_);
   }
 
   // Test that SetRemoteContent properly deals with a content update.
@@ -777,7 +860,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
 
     EXPECT_TRUE(channel2_->SetRemoteContent(&content1, CA_OFFER, NULL));
     EXPECT_EQ(1u, media_channel2_->recv_streams().size());
-    transport_controller1_->Connect(transport_controller2_.get());
+    ConnectFakeTransports();
 
     // Channel 2 do not send anything.
     typename T::Content content2;
@@ -820,6 +903,183 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(CheckCustomRtp1(kSsrc2, 0));
   }
 
+  enum EncryptedHeaderTestScenario {
+    // Offer/Answer are processed before DTLS completes.
+    DEFAULT,
+    // DTLS completes before any Offer/Answer have been sent.
+    DTLS_BEFORE_OFFER_ANSWER,
+    // DTLS completes after channel 2 has processed (remote) Offer and (local)
+    // Answer.
+    DTLS_AFTER_CHANNEL2_READY,
+  };
+
+  // Test that encrypted header extensions are working and can be changed when
+  // sending a new OFFER/ANSWER.
+  void TestChangeEncryptedHeaderExtensions(int flags,
+      EncryptedHeaderTestScenario scenario = DEFAULT) {
+    RTC_CHECK(scenario == 0 || (flags & DTLS));
+    struct PacketListener : public sigslot::has_slots<> {
+      PacketListener() {}
+      void OnReadPacket(rtc::PacketTransportInternal* transport,
+          const char* data, size_t size, const rtc::PacketTime& time,
+          int flags) {
+        CompareHeaderExtensions(
+            reinterpret_cast<const char*>(kPcmuFrameWithExtensions),
+            sizeof(kPcmuFrameWithExtensions), data, size, encrypted_headers,
+            false);
+      }
+      std::vector<int> encrypted_headers;
+    } packet_listener1, packet_listener2;
+
+    cricket::StreamParams stream1;
+    stream1.groupid = "group1";
+    stream1.id = "stream1";
+    stream1.ssrcs.push_back(kSsrc1);
+    stream1.cname = "stream1_cname";
+
+    cricket::StreamParams stream2;
+    stream2.groupid = "group1";
+    stream2.id = "stream2";
+    stream2.ssrcs.push_back(kSsrc2);
+    stream2.cname = "stream2_cname";
+
+    // Use SRTP when testing encrypted extensions.
+    int channel_flags = flags | SECURE | ENCRYPTED_HEADERS;
+    // Enable SDES if channel is not using DTLS.
+    int content_flags = (channel_flags & DTLS) == 0 ? SECURE : 0;
+
+    // kPcmuFrameWithExtensions contains RTP extension headers with ids 1-4.
+    // Make sure to use URIs that are supported for encryption.
+    cricket::RtpHeaderExtensions extensions1;
+    extensions1.push_back(
+        RtpExtension(RtpExtension::kAudioLevelUri, 10));
+    extensions1.push_back(
+        RtpExtension(RtpExtension::kAudioLevelUri, 1, true));
+
+    cricket::RtpHeaderExtensions extensions2;
+    extensions2.push_back(
+        RtpExtension(RtpExtension::kAudioLevelUri, 10));
+    extensions2.push_back(
+        RtpExtension(RtpExtension::kAudioLevelUri, 2, true));
+    extensions2.push_back(
+        RtpExtension(RtpExtension::kVideoRotationUri, 3));
+    extensions2.push_back(
+        RtpExtension(RtpExtension::kTimestampOffsetUri, 4, true));
+
+    // Setup a call where channel 1 send |stream1| to channel 2.
+    CreateChannels(channel_flags, channel_flags);
+    fake_rtp_dtls_transport1_->fake_ice_transport()->SignalReadPacket.connect(
+        &packet_listener1, &PacketListener::OnReadPacket);
+    fake_rtp_dtls_transport2_->fake_ice_transport()->SignalReadPacket.connect(
+        &packet_listener2, &PacketListener::OnReadPacket);
+
+    if (scenario == DTLS_BEFORE_OFFER_ANSWER) {
+      ConnectFakeTransports();
+      WaitForThreads();
+    }
+
+    typename T::Content content1;
+    CreateContent(content_flags, kPcmuCodec, kH264Codec, &content1);
+    content1.AddStream(stream1);
+    content1.set_rtp_header_extensions(extensions1);
+    EXPECT_TRUE(channel1_->SetLocalContent(&content1, CA_OFFER, NULL));
+    EXPECT_TRUE(channel1_->Enable(true));
+    EXPECT_EQ(1u, media_channel1_->send_streams().size());
+    packet_listener1.encrypted_headers.push_back(1);
+
+    EXPECT_TRUE(channel2_->SetRemoteContent(&content1, CA_OFFER, NULL));
+    EXPECT_EQ(1u, media_channel2_->recv_streams().size());
+
+    // Channel 2 sends back |stream2|.
+    typename T::Content content2;
+    CreateContent(content_flags, kPcmuCodec, kH264Codec, &content2);
+    content2.AddStream(stream2);
+    content2.set_rtp_header_extensions(extensions1);
+    EXPECT_TRUE(channel2_->SetLocalContent(&content2, CA_ANSWER, NULL));
+    EXPECT_TRUE(channel2_->Enable(true));
+    EXPECT_EQ(1u, media_channel2_->send_streams().size());
+    packet_listener2.encrypted_headers.push_back(1);
+
+    if (scenario == DTLS_AFTER_CHANNEL2_READY) {
+      ConnectFakeTransports();
+      WaitForThreads();
+    }
+
+    if (scenario == DTLS_BEFORE_OFFER_ANSWER ||
+        scenario == DTLS_AFTER_CHANNEL2_READY) {
+      // In both scenarios with partially completed Offer/Answer, sending
+      // packets from Channel 2 to Channel 1 should work.
+      SendCustomRtp2(kSsrc2, 0);
+      WaitForThreads();
+      EXPECT_TRUE(CheckCustomRtp1(kSsrc2, 0));
+    }
+
+    EXPECT_TRUE(channel1_->SetRemoteContent(&content2, CA_ANSWER, NULL));
+    EXPECT_EQ(1u, media_channel1_->recv_streams().size());
+
+    if (scenario == DEFAULT) {
+      ConnectFakeTransports();
+      WaitForThreads();
+    }
+
+    SendCustomRtp1(kSsrc1, 0);
+    SendCustomRtp2(kSsrc2, 0);
+    WaitForThreads();
+    EXPECT_TRUE(CheckCustomRtp2(kSsrc1, 0));
+    EXPECT_TRUE(CheckCustomRtp1(kSsrc2, 0));
+
+    // Let channel 2 update the encrypted header extensions.
+    typename T::Content content3;
+    CreateContent(content_flags, kPcmuCodec, kH264Codec, &content3);
+    content3.AddStream(stream2);
+    content3.set_rtp_header_extensions(extensions2);
+    EXPECT_TRUE(channel2_->SetLocalContent(&content3, CA_OFFER, NULL));
+    ASSERT_EQ(1u, media_channel2_->send_streams().size());
+    EXPECT_EQ(stream2, media_channel2_->send_streams()[0]);
+    packet_listener2.encrypted_headers.clear();
+    packet_listener2.encrypted_headers.push_back(2);
+    packet_listener2.encrypted_headers.push_back(4);
+
+    EXPECT_TRUE(channel1_->SetRemoteContent(&content3, CA_OFFER, NULL));
+    ASSERT_EQ(1u, media_channel1_->recv_streams().size());
+    EXPECT_EQ(stream2, media_channel1_->recv_streams()[0]);
+
+    // Channel 1 is already sending the new encrypted extensions. These
+    // can be decrypted by channel 2. Channel 2 is still sending the old
+    // encrypted extensions (which can be decrypted by channel 1).
+
+    if (flags & DTLS) {
+      // DTLS supports updating the encrypted extensions with only the OFFER
+      // being processed. For SDES both the OFFER and ANSWER must have been
+      // processed to update encrypted extensions, so we can't check this case.
+      SendCustomRtp1(kSsrc1, 0);
+      SendCustomRtp2(kSsrc2, 0);
+      WaitForThreads();
+      EXPECT_TRUE(CheckCustomRtp2(kSsrc1, 0));
+      EXPECT_TRUE(CheckCustomRtp1(kSsrc2, 0));
+    }
+
+    // Channel 1 replies with the same extensions.
+    typename T::Content content4;
+    CreateContent(content_flags, kPcmuCodec, kH264Codec, &content4);
+    content4.AddStream(stream1);
+    content4.set_rtp_header_extensions(extensions2);
+    EXPECT_TRUE(channel1_->SetLocalContent(&content4, CA_ANSWER, NULL));
+    EXPECT_EQ(1u, media_channel1_->send_streams().size());
+    packet_listener1.encrypted_headers.clear();
+    packet_listener1.encrypted_headers.push_back(2);
+    packet_listener1.encrypted_headers.push_back(4);
+
+    EXPECT_TRUE(channel2_->SetRemoteContent(&content4, CA_ANSWER, NULL));
+    EXPECT_EQ(1u, media_channel2_->recv_streams().size());
+
+    SendCustomRtp1(kSsrc1, 0);
+    SendCustomRtp2(kSsrc2, 0);
+    WaitForThreads();
+    EXPECT_TRUE(CheckCustomRtp2(kSsrc1, 0));
+    EXPECT_TRUE(CheckCustomRtp1(kSsrc2, 0));
+  }
+
   // Test that we only start playout and sending at the right times.
   void TestPlayoutAndSendingStates() {
     CreateChannels(0, 0);
@@ -854,7 +1114,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
       EXPECT_FALSE(media_channel2_->playout());
     }
     EXPECT_FALSE(media_channel2_->sending());
-    transport_controller1_->Connect(transport_controller2_.get());
+    ConnectFakeTransports();
     if (verify_playout_) {
       EXPECT_TRUE(media_channel1_->playout());
     }
@@ -902,7 +1162,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(channel2_->SetRemoteContent(&content1, CA_OFFER, NULL));
     EXPECT_TRUE(channel2_->SetLocalContent(&content2, CA_PRANSWER, NULL));
     EXPECT_TRUE(channel1_->SetRemoteContent(&content2, CA_PRANSWER, NULL));
-    transport_controller1_->Connect(transport_controller2_.get());
+    ConnectFakeTransports();
 
     if (verify_playout_) {
       EXPECT_TRUE(media_channel1_->playout());
@@ -951,36 +1211,34 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
 
     CreateChannels(0, 0);
 
-    cricket::DtlsTransportInternal* transport_channel1 =
-        channel1_->rtp_dtls_transport();
-    ASSERT_TRUE(transport_channel1);
     typename T::MediaChannel* media_channel1 =
         static_cast<typename T::MediaChannel*>(channel1_->media_channel());
     ASSERT_TRUE(media_channel1);
 
     media_channel1->set_num_network_route_changes(0);
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [transport_channel1] {
+    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
       // The transport channel becomes disconnected.
-      transport_channel1->ice_transport()->SignalSelectedCandidatePairChanged(
-          transport_channel1->ice_transport(), nullptr, -1, false);
+      fake_rtp_dtls_transport1_->ice_transport()
+          ->SignalSelectedCandidatePairChanged(
+              fake_rtp_dtls_transport1_->ice_transport(), nullptr, -1, false);
     });
     WaitForThreads();
     EXPECT_EQ(1, media_channel1->num_network_route_changes());
     EXPECT_FALSE(media_channel1->last_network_route().connected);
     media_channel1->set_num_network_route_changes(0);
 
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this, transport_channel1,
-                                                  media_channel1, kLocalNetId,
-                                                  kRemoteNetId, kLastPacketId] {
+    network_thread_->Invoke<void>(RTC_FROM_HERE, [this, media_channel1,
+                                                  kLocalNetId, kRemoteNetId,
+                                                  kLastPacketId] {
       // The transport channel becomes connected.
       rtc::SocketAddress local_address("192.168.1.1", 1000 /* port number */);
       rtc::SocketAddress remote_address("192.168.1.2", 2000 /* port number */);
-      std::unique_ptr<cricket::CandidatePairInterface> candidate_pair(
-          transport_controller1_->CreateFakeCandidatePair(
-              local_address, kLocalNetId, remote_address, kRemoteNetId));
-      transport_channel1->ice_transport()->SignalSelectedCandidatePairChanged(
-          transport_channel1->ice_transport(), candidate_pair.get(),
-          kLastPacketId, true);
+      auto candidate_pair = cricket::FakeCandidatePair::Create(
+          local_address, kLocalNetId, remote_address, kRemoteNetId);
+      fake_rtp_dtls_transport1_->ice_transport()
+          ->SignalSelectedCandidatePairChanged(
+              fake_rtp_dtls_transport1_->ice_transport(), candidate_pair.get(),
+              kLastPacketId, true);
     });
     WaitForThreads();
     EXPECT_EQ(1, media_channel1->num_network_route_changes());
@@ -1032,7 +1290,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
                    RTCP_MUX, RTCP_MUX);
     EXPECT_TRUE(SendInitiate());
     EXPECT_TRUE(SendAccept());
-    EXPECT_TRUE(SendTerminate());
+    EXPECT_TRUE(Terminate());
   }
 
   // Send voice RTP data to the other side and ensure it gets there.
@@ -1040,8 +1298,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     CreateChannels(RTCP_MUX | RTCP_MUX_REQUIRED, RTCP_MUX | RTCP_MUX_REQUIRED);
     EXPECT_TRUE(SendInitiate());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(1U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
     SendRtp1();
     SendRtp2();
     WaitForThreads();
@@ -1069,8 +1327,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     CreateChannels(0, 0);
     EXPECT_TRUE(SendInitiate());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(2U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_TRUE(channel2_->NeedsRtcpTransport());
     SendRtcp1();
     SendRtcp2();
     WaitForThreads();
@@ -1085,8 +1343,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     CreateChannels(RTCP_MUX, 0);
     EXPECT_TRUE(SendInitiate());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(2U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_TRUE(channel2_->NeedsRtcpTransport());
     SendRtcp1();
     SendRtcp2();
     WaitForThreads();
@@ -1100,10 +1358,12 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendRtcpMuxToRtcpMux() {
     CreateChannels(RTCP_MUX, RTCP_MUX);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
+    EXPECT_EQ(0, rtcp_mux_activated_callbacks1_);
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(1U, GetChannels1().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_EQ(1, rtcp_mux_activated_callbacks1_);
     SendRtp1();
     SendRtp2();
     SendRtcp1();
@@ -1124,8 +1384,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendRequireRtcpMuxToRtcpMux() {
     CreateChannels(RTCP_MUX | RTCP_MUX_REQUIRED, RTCP_MUX);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(1U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
     EXPECT_TRUE(SendAccept());
     SendRtp1();
     SendRtp2();
@@ -1147,10 +1407,12 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendRtcpMuxToRequireRtcpMux() {
     CreateChannels(RTCP_MUX, RTCP_MUX | RTCP_MUX_REQUIRED);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
+    EXPECT_EQ(0, rtcp_mux_activated_callbacks1_);
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(1U, GetChannels1().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_EQ(1, rtcp_mux_activated_callbacks1_);
     SendRtp1();
     SendRtp2();
     SendRtcp1();
@@ -1171,10 +1433,10 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendRequireRtcpMuxToRequireRtcpMux() {
     CreateChannels(RTCP_MUX | RTCP_MUX_REQUIRED, RTCP_MUX | RTCP_MUX_REQUIRED);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(1U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(1U, GetChannels1().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
     SendRtp1();
     SendRtp2();
     SendRtcp1();
@@ -1195,8 +1457,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendRequireRtcpMuxToNoRtcpMux() {
     CreateChannels(RTCP_MUX | RTCP_MUX_REQUIRED, 0);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(1U, GetChannels1().size());
-    EXPECT_EQ(2U, GetChannels2().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_TRUE(channel2_->NeedsRtcpTransport());
     EXPECT_FALSE(SendAccept());
   }
 
@@ -1204,8 +1466,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendEarlyRtcpMuxToRtcp() {
     CreateChannels(RTCP_MUX, 0);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(2U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_TRUE(channel2_->NeedsRtcpTransport());
 
     // RTCP can be sent before the call is accepted, if the transport is ready.
     // It should not be muxed though, as the remote side doesn't support mux.
@@ -1222,7 +1484,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
 
     // Complete call setup and ensure everything is still OK.
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(2U, GetChannels1().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
     SendRtcp1();
     SendRtcp2();
     WaitForThreads();
@@ -1237,8 +1499,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   void SendEarlyRtcpMuxToRtcpMux() {
     CreateChannels(RTCP_MUX, RTCP_MUX);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
 
     // RTCP can't be sent yet, since the RTCP transport isn't writable, and
     // we haven't yet received the accept that says we should mux.
@@ -1253,8 +1515,10 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(CheckRtcp1());
 
     // Complete call setup and ensure everything is still OK.
+    EXPECT_EQ(0, rtcp_mux_activated_callbacks1_);
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(1U, GetChannels1().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_EQ(1, rtcp_mux_activated_callbacks1_);
     SendRtcp1();
     SendRtcp2();
     WaitForThreads();
@@ -1263,10 +1527,10 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   }
 
   // Test that we properly send SRTP with RTCP in both directions.
-  // You can pass in DTLS and/or RTCP_MUX as flags.
+  // You can pass in DTLS, RTCP_MUX, and RAW_PACKET_TRANSPORT as flags.
   void SendSrtpToSrtp(int flags1_in = 0, int flags2_in = 0) {
-    RTC_CHECK((flags1_in & ~(RTCP_MUX | DTLS | GCM_CIPHER)) == 0);
-    RTC_CHECK((flags2_in & ~(RTCP_MUX | DTLS | GCM_CIPHER)) == 0);
+    RTC_CHECK((flags1_in & ~(RTCP_MUX | DTLS | RAW_PACKET_TRANSPORT)) == 0);
+    RTC_CHECK((flags2_in & ~(RTCP_MUX | DTLS | RAW_PACKET_TRANSPORT)) == 0);
 
     int flags1 = SECURE | flags1_in;
     int flags2 = SECURE | flags2_in;
@@ -1284,14 +1548,6 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(channel2_->secure());
     EXPECT_EQ(dtls1 && dtls2, channel1_->secure_dtls());
     EXPECT_EQ(dtls1 && dtls2, channel2_->secure_dtls());
-    // We can only query the negotiated cipher suite for DTLS-SRTP transport
-    // channels.
-    if (dtls1 && dtls2) {
-      // A GCM cipher is only used if both channels support GCM ciphers.
-      int common_gcm_flags = flags1 & flags2 & GCM_CIPHER;
-      EXPECT_TRUE(CheckGcmCipher(channel1_.get(), common_gcm_flags));
-      EXPECT_TRUE(CheckGcmCipher(channel2_.get(), common_gcm_flags));
-    }
     SendRtp1();
     SendRtp2();
     SendRtcp1();
@@ -1342,8 +1598,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
       EXPECT_TRUE(SendProvisionalAnswer());
       EXPECT_TRUE(channel1_->secure());
       EXPECT_TRUE(channel2_->secure());
-      EXPECT_EQ(2U, GetChannels1().size());
-      EXPECT_EQ(2U, GetChannels2().size());
+      EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+      EXPECT_TRUE(channel2_->NeedsRtcpTransport());
       WaitForThreads();  // Wait for 'sending' flag go through network thread.
       SendCustomRtcp1(kSsrc1);
       SendCustomRtp1(kSsrc1, ++sequence_number1_1);
@@ -1359,9 +1615,13 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
       EXPECT_TRUE(CheckCustomRtp1(kSsrc2, sequence_number2_2));
 
       // Complete call setup and ensure everything is still OK.
+      EXPECT_EQ(0, rtcp_mux_activated_callbacks1_);
+      EXPECT_EQ(0, rtcp_mux_activated_callbacks2_);
       EXPECT_TRUE(SendFinalAnswer());
-      EXPECT_EQ(1U, GetChannels1().size());
-      EXPECT_EQ(1U, GetChannels2().size());
+      EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+      EXPECT_FALSE(channel2_->NeedsRtcpTransport());
+      EXPECT_EQ(1, rtcp_mux_activated_callbacks1_);
+      EXPECT_EQ(1, rtcp_mux_activated_callbacks2_);
       EXPECT_TRUE(channel1_->secure());
       EXPECT_TRUE(channel2_->secure());
       SendCustomRtcp1(kSsrc1);
@@ -1427,8 +1687,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     CreateChannels(RTCP_MUX | RTCP_MUX_REQUIRED, RTCP_MUX | RTCP_MUX_REQUIRED);
     EXPECT_TRUE(SendInitiate());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(1U, GetChannels1().size());
-    EXPECT_EQ(1U, GetChannels2().size());
+    EXPECT_FALSE(channel1_->NeedsRtcpTransport());
+    EXPECT_FALSE(channel2_->NeedsRtcpTransport());
     SendRtp1();
     SendRtp2();
     WaitForThreads();
@@ -1438,8 +1698,9 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(CheckNoRtp2());
 
     // Lose writability, which should fail.
-    network_thread_->Invoke<void>(
-        RTC_FROM_HERE, [this] { GetFakeChannel1(1)->SetWritable(false); });
+    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+      fake_rtp_dtls_transport1_->SetWritable(false);
+    });
     SendRtp1();
     SendRtp2();
     WaitForThreads();
@@ -1447,8 +1708,9 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(CheckNoRtp2());
 
     // Regain writability
-    network_thread_->Invoke<void>(
-        RTC_FROM_HERE, [this] { GetFakeChannel1(1)->SetWritable(true); });
+    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+      fake_rtp_dtls_transport1_->SetWritable(true);
+    });
     EXPECT_TRUE(media_channel1_->sending());
     SendRtp1();
     SendRtp2();
@@ -1459,8 +1721,10 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(CheckNoRtp2());
 
     // Lose writability completely
-    network_thread_->Invoke<void>(
-        RTC_FROM_HERE, [this] { GetFakeChannel1(1)->SetDestination(nullptr); });
+    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+      bool asymmetric = true;
+      fake_rtp_dtls_transport1_->SetDestination(nullptr, asymmetric);
+    });
     EXPECT_TRUE(media_channel1_->sending());
 
     // Should fail also.
@@ -1473,7 +1737,9 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
 
     // Gain writability back
     network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      GetFakeChannel1(1)->SetDestination(GetFakeChannel2(1));
+      bool asymmetric = true;
+      fake_rtp_dtls_transport1_->SetDestination(fake_rtp_dtls_transport2_.get(),
+                                                asymmetric);
     });
     EXPECT_TRUE(media_channel1_->sending());
     SendRtp1();
@@ -1495,22 +1761,20 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     int pl_type2 = pl_types[1];
     int flags = SSRC_MUX;
     if (secure) flags |= SECURE;
-    uint32_t expected_channels = 2U;
     if (rtcp_mux) {
       flags |= RTCP_MUX;
-      expected_channels = 1U;
     }
     CreateChannels(flags, flags);
     EXPECT_TRUE(SendInitiate());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(expected_channels, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_EQ(rtcp_mux, !channel2_->NeedsRtcpTransport());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(expected_channels, GetChannels1().size());
-    EXPECT_EQ(expected_channels, GetChannels2().size());
-    EXPECT_TRUE(channel1_->bundle_filter()->FindPayloadType(pl_type1));
-    EXPECT_TRUE(channel2_->bundle_filter()->FindPayloadType(pl_type1));
-    EXPECT_FALSE(channel1_->bundle_filter()->FindPayloadType(pl_type2));
-    EXPECT_FALSE(channel2_->bundle_filter()->FindPayloadType(pl_type2));
+    EXPECT_EQ(rtcp_mux, !channel1_->NeedsRtcpTransport());
+    EXPECT_EQ(rtcp_mux, !channel2_->NeedsRtcpTransport());
+    EXPECT_TRUE(channel1_->HandlesPayloadType(pl_type1));
+    EXPECT_TRUE(channel2_->HandlesPayloadType(pl_type1));
+    EXPECT_FALSE(channel1_->HandlesPayloadType(pl_type2));
+    EXPECT_FALSE(channel2_->HandlesPayloadType(pl_type2));
 
     // Both channels can receive pl_type1 only.
     SendCustomRtp1(kSsrc1, ++sequence_number1_1, pl_type1);
@@ -1686,8 +1950,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     CreateChannels(0, 0);
     EXPECT_TRUE(SendInitiate());
     EXPECT_TRUE(SendAccept());
-    EXPECT_EQ(2U, GetChannels1().size());
-    EXPECT_EQ(2U, GetChannels2().size());
+    EXPECT_TRUE(channel1_->NeedsRtcpTransport());
+    EXPECT_TRUE(channel2_->NeedsRtcpTransport());
 
     // Send RTCP1 from a different thread.
     ScopedCallThread send_rtcp([this] { SendRtcp1(); });
@@ -1703,149 +1967,30 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(CheckRtcp2());
   }
 
-  void TestSrtpError(int pl_type) {
-    struct SrtpErrorHandler : public sigslot::has_slots<> {
-      SrtpErrorHandler() :
-          mode_(cricket::SrtpFilter::UNPROTECT),
-          error_(cricket::SrtpFilter::ERROR_NONE) {}
-      void OnSrtpError(uint32 ssrc, cricket::SrtpFilter::Mode mode,
-                       cricket::SrtpFilter::Error error) {
-        mode_ = mode;
-        error_ = error;
-      }
-      cricket::SrtpFilter::Mode mode_;
-      cricket::SrtpFilter::Error error_;
-    } error_handler;
-
-    // For Audio, only pl_type 0 is added to the bundle filter.
-    // For Video, only pl_type 97 is added to the bundle filter.
-    // So we need to pass in pl_type so that the packet can pass through
-    // the bundle filter before it can be processed by the srtp filter.
-    // The packet is not a valid srtp packet because it is too short.
-    static unsigned const char kBadPacket[] = {
-        0x84, static_cast<unsigned char>(pl_type),
-        0x00, 0x01,
-        0x00, 0x00,
-        0x00, 0x00,
-        0x00, 0x00,
-        0x00, 0x01};
-
-    // Using fake clock because this tests that SRTP errors are signaled at
-    // specific times based on set_signal_silent_time.
-    rtc::ScopedFakeClock fake_clock;
-    // Some code uses a time of 0 as a special value, so we must start with
-    // a non-zero time.
-    // TODO(deadbeef): Fix this.
-    fake_clock.AdvanceTime(rtc::TimeDelta::FromSeconds(1));
-
-    CreateChannels(SECURE, SECURE);
-    EXPECT_FALSE(channel1_->secure());
-    EXPECT_FALSE(channel2_->secure());
-    EXPECT_TRUE(SendInitiate());
-    EXPECT_TRUE(SendAccept());
-    EXPECT_TRUE(channel1_->secure());
-    EXPECT_TRUE(channel2_->secure());
-    channel2_->srtp_filter()->set_signal_silent_time(250);
-    channel2_->srtp_filter()->SignalSrtpError.connect(
-        &error_handler, &SrtpErrorHandler::OnSrtpError);
-
-    // Testing failures in sending packets.
-    media_channel2_->SendRtp(kBadPacket, sizeof(kBadPacket),
-                             rtc::PacketOptions());
-    WaitForThreads();
-    // The first failure will trigger an error.
-    EXPECT_EQ(cricket::SrtpFilter::ERROR_FAIL, error_handler.error_);
-    EXPECT_EQ(cricket::SrtpFilter::PROTECT, error_handler.mode_);
-    error_handler.error_ = cricket::SrtpFilter::ERROR_NONE;
-    error_handler.mode_ = cricket::SrtpFilter::UNPROTECT;
-    // The next 250 ms failures will not trigger an error.
-    media_channel2_->SendRtp(kBadPacket, sizeof(kBadPacket),
-                             rtc::PacketOptions());
-    // Wait for a while to ensure no message comes in.
-    WaitForThreads();
-    fake_clock.AdvanceTime(rtc::TimeDelta::FromMilliseconds(200));
-    EXPECT_EQ(cricket::SrtpFilter::ERROR_NONE, error_handler.error_);
-    EXPECT_EQ(cricket::SrtpFilter::UNPROTECT, error_handler.mode_);
-    // Wait for a little more - the error will be triggered again.
-    fake_clock.AdvanceTime(rtc::TimeDelta::FromMilliseconds(200));
-    media_channel2_->SendRtp(kBadPacket, sizeof(kBadPacket),
-                             rtc::PacketOptions());
-    WaitForThreads();
-    EXPECT_EQ(cricket::SrtpFilter::ERROR_FAIL, error_handler.error_);
-    EXPECT_EQ(cricket::SrtpFilter::PROTECT, error_handler.mode_);
-
-    // Testing failures in receiving packets.
-    error_handler.error_ = cricket::SrtpFilter::ERROR_NONE;
-    error_handler.mode_ = cricket::SrtpFilter::UNPROTECT;
-
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      cricket::DtlsTransportInternal* transport_channel =
-          channel2_->rtp_dtls_transport();
-      transport_channel->SignalReadPacket(
-          transport_channel, reinterpret_cast<const char*>(kBadPacket),
-          sizeof(kBadPacket), rtc::PacketTime(), 0);
-    });
-    EXPECT_EQ(cricket::SrtpFilter::ERROR_FAIL, error_handler.error_);
-    EXPECT_EQ(cricket::SrtpFilter::UNPROTECT, error_handler.mode_);
-    // Terminate channels before the fake clock is destroyed.
-    EXPECT_TRUE(SendTerminate());
-  }
-
-  void TestOnReadyToSend() {
+  void TestOnTransportReadyToSend() {
     CreateChannels(0, 0);
-    DtlsTransportInternal* rtp = channel1_->rtp_dtls_transport();
-    DtlsTransportInternal* rtcp = channel1_->rtcp_dtls_transport();
     EXPECT_FALSE(media_channel1_->ready_to_send());
 
-    network_thread_->Invoke<void>(RTC_FROM_HERE,
-                                  [rtp] { rtp->SignalReadyToSend(rtp); });
-    WaitForThreads();
-    EXPECT_FALSE(media_channel1_->ready_to_send());
-
-    network_thread_->Invoke<void>(RTC_FROM_HERE,
-                                  [rtcp] { rtcp->SignalReadyToSend(rtcp); });
-    WaitForThreads();
-    // MediaChannel::OnReadyToSend only be called when both rtp and rtcp
-    // channel are ready to send.
-    EXPECT_TRUE(media_channel1_->ready_to_send());
-
-    // rtp channel becomes not ready to send will be propagated to mediachannel
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      channel1_->SetTransportChannelReadyToSend(false, false);
-    });
-    WaitForThreads();
-    EXPECT_FALSE(media_channel1_->ready_to_send());
-
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      channel1_->SetTransportChannelReadyToSend(false, true);
-    });
+    channel1_->OnTransportReadyToSend(true);
     WaitForThreads();
     EXPECT_TRUE(media_channel1_->ready_to_send());
 
-    // rtcp channel becomes not ready to send will be propagated to mediachannel
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      channel1_->SetTransportChannelReadyToSend(true, false);
-    });
+    channel1_->OnTransportReadyToSend(false);
     WaitForThreads();
     EXPECT_FALSE(media_channel1_->ready_to_send());
-
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      channel1_->SetTransportChannelReadyToSend(true, true);
-    });
-    WaitForThreads();
-    EXPECT_TRUE(media_channel1_->ready_to_send());
   }
 
-  void TestOnReadyToSendWithRtcpMux() {
+  void TestOnTransportReadyToSendWithRtcpMux() {
     CreateChannels(0, 0);
     typename T::Content content;
     CreateContent(0, kPcmuCodec, kH264Codec, &content);
-    // Both sides agree on mux. Should no longer be a separate RTCP channel.
+    // Both sides agree on mux. Should signal that RTCP mux is fully active.
     content.set_rtcp_mux(true);
     EXPECT_TRUE(channel1_->SetLocalContent(&content, CA_OFFER, NULL));
+    EXPECT_EQ(0, rtcp_mux_activated_callbacks1_);
     EXPECT_TRUE(channel1_->SetRemoteContent(&content, CA_ANSWER, NULL));
-    EXPECT_TRUE(channel1_->rtcp_dtls_transport() == NULL);
-    DtlsTransportInternal* rtp = channel1_->rtp_dtls_transport();
+    EXPECT_EQ(1, rtcp_mux_activated_callbacks1_);
+    cricket::FakeDtlsTransport* rtp = fake_rtp_dtls_transport1_.get();
     EXPECT_FALSE(media_channel1_->ready_to_send());
     // In the case of rtcp mux, the SignalReadyToSend() from rtp channel
     // should trigger the MediaChannel's OnReadyToSend.
@@ -1854,9 +1999,10 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     WaitForThreads();
     EXPECT_TRUE(media_channel1_->ready_to_send());
 
-    network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-      channel1_->SetTransportChannelReadyToSend(false, false);
-    });
+    // TODO(zstein): Find a way to test this without making
+    // OnTransportReadyToSend public.
+    network_thread_->Invoke<void>(
+        RTC_FROM_HERE, [this] { channel1_->OnTransportReadyToSend(false); });
     WaitForThreads();
     EXPECT_FALSE(media_channel1_->ready_to_send());
   }
@@ -1868,7 +2014,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     return channel1_->SetRemoteContent(&content, CA_OFFER, NULL);
   }
 
-  webrtc::RtpParameters BitrateLimitedParameters(int limit) {
+  webrtc::RtpParameters BitrateLimitedParameters(rtc::Optional<int> limit) {
     webrtc::RtpParameters parameters;
     webrtc::RtpEncodingParameters encoding;
     encoding.max_bitrate_bps = limit;
@@ -1877,7 +2023,7 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   }
 
   void VerifyMaxBitrate(const webrtc::RtpParameters& parameters,
-                        int expected_bitrate) {
+                        rtc::Optional<int> expected_bitrate) {
     EXPECT_EQ(1UL, parameters.encodings.size());
     EXPECT_EQ(expected_bitrate, parameters.encodings[0].max_bitrate_bps);
   }
@@ -1887,7 +2033,8 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
     EXPECT_TRUE(
         channel1_->SetLocalContent(&local_media_content1_, CA_OFFER, NULL));
     EXPECT_EQ(media_channel1_->max_bps(), -1);
-    VerifyMaxBitrate(media_channel1_->GetRtpSendParameters(kSsrc1), -1);
+    VerifyMaxBitrate(media_channel1_->GetRtpSendParameters(kSsrc1),
+                     rtc::Optional<int>());
   }
 
   void CanChangeMaxBitrate() {
@@ -1896,15 +2043,19 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
         channel1_->SetLocalContent(&local_media_content1_, CA_OFFER, NULL));
 
     EXPECT_TRUE(channel1_->SetRtpSendParameters(
-        kSsrc1, BitrateLimitedParameters(1000)));
-    VerifyMaxBitrate(channel1_->GetRtpSendParameters(kSsrc1), 1000);
-    VerifyMaxBitrate(media_channel1_->GetRtpSendParameters(kSsrc1), 1000);
+        kSsrc1, BitrateLimitedParameters(rtc::Optional<int>(1000))));
+    VerifyMaxBitrate(channel1_->GetRtpSendParameters(kSsrc1),
+                     rtc::Optional<int>(1000));
+    VerifyMaxBitrate(media_channel1_->GetRtpSendParameters(kSsrc1),
+                     rtc::Optional<int>(1000));
     EXPECT_EQ(-1, media_channel1_->max_bps());
 
-    EXPECT_TRUE(
-        channel1_->SetRtpSendParameters(kSsrc1, BitrateLimitedParameters(-1)));
-    VerifyMaxBitrate(channel1_->GetRtpSendParameters(kSsrc1), -1);
-    VerifyMaxBitrate(media_channel1_->GetRtpSendParameters(kSsrc1), -1);
+    EXPECT_TRUE(channel1_->SetRtpSendParameters(
+        kSsrc1, BitrateLimitedParameters(rtc::Optional<int>())));
+    VerifyMaxBitrate(channel1_->GetRtpSendParameters(kSsrc1),
+                     rtc::Optional<int>());
+    VerifyMaxBitrate(media_channel1_->GetRtpSendParameters(kSsrc1),
+                     rtc::Optional<int>());
     EXPECT_EQ(-1, media_channel1_->max_bps());
   }
 
@@ -1936,12 +2087,18 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   const bool verify_playout_;
   std::unique_ptr<rtc::Thread> network_thread_keeper_;
   rtc::Thread* network_thread_;
-  std::unique_ptr<cricket::FakeTransportController> transport_controller1_;
-  std::unique_ptr<cricket::FakeTransportController> transport_controller2_;
+  std::unique_ptr<cricket::FakeDtlsTransport> fake_rtp_dtls_transport1_;
+  std::unique_ptr<cricket::FakeDtlsTransport> fake_rtcp_dtls_transport1_;
+  std::unique_ptr<cricket::FakeDtlsTransport> fake_rtp_dtls_transport2_;
+  std::unique_ptr<cricket::FakeDtlsTransport> fake_rtcp_dtls_transport2_;
+  std::unique_ptr<rtc::FakePacketTransport> fake_rtp_packet_transport1_;
+  std::unique_ptr<rtc::FakePacketTransport> fake_rtcp_packet_transport1_;
+  std::unique_ptr<rtc::FakePacketTransport> fake_rtp_packet_transport2_;
+  std::unique_ptr<rtc::FakePacketTransport> fake_rtcp_packet_transport2_;
   cricket::FakeMediaEngine media_engine_;
   // The media channels are owned by the voice channel objects below.
-  typename T::MediaChannel* media_channel1_;
-  typename T::MediaChannel* media_channel2_;
+  typename T::MediaChannel* media_channel1_ = nullptr;
+  typename T::MediaChannel* media_channel2_ = nullptr;
   std::unique_ptr<typename T::Channel> channel1_;
   std::unique_ptr<typename T::Channel> channel2_;
   typename T::Content local_media_content1_;
@@ -1951,8 +2108,10 @@ class ChannelTest : public testing::Test, public sigslot::has_slots<> {
   // The RTP and RTCP packets to send in the tests.
   rtc::Buffer rtp_packet_;
   rtc::Buffer rtcp_packet_;
-  int media_info_callbacks1_;
-  int media_info_callbacks2_;
+  int media_info_callbacks1_ = 0;
+  int media_info_callbacks2_ = 0;
+  int rtcp_mux_activated_callbacks1_ = 0;
+  int rtcp_mux_activated_callbacks2_ = 0;
   cricket::CandidatePairInterface* last_selected_candidate_pair_;
 };
 
@@ -2007,6 +2166,24 @@ class VoiceChannelDoubleThreadTest : public ChannelTest<VoiceTraits> {
       : Base(true, kPcmuFrame, kRtcpReport, NetworkIsWorker::No) {}
 };
 
+class VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest
+  : public ChannelTest<VoiceTraits> {
+ public:
+  typedef ChannelTest<VoiceTraits> Base;
+  VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest()
+      : Base(true, kPcmuFrameWithExtensions, kRtcpReport,
+            NetworkIsWorker::Yes) {}
+};
+
+class VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest
+  : public ChannelTest<VoiceTraits> {
+ public:
+  typedef ChannelTest<VoiceTraits> Base;
+  VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest()
+      : Base(true, kPcmuFrameWithExtensions, kRtcpReport,
+            NetworkIsWorker::No) {}
+};
+
 // override to add NULL parameter
 template <>
 cricket::VideoChannel* ChannelTest<VideoTraits>::CreateChannel(
@@ -2014,25 +2191,20 @@ cricket::VideoChannel* ChannelTest<VideoTraits>::CreateChannel(
     rtc::Thread* network_thread,
     cricket::MediaEngineInterface* engine,
     cricket::FakeVideoMediaChannel* ch,
-    cricket::TransportController* transport_controller,
+    cricket::DtlsTransportInternal* fake_rtp_dtls_transport,
+    cricket::DtlsTransportInternal* fake_rtcp_dtls_transport,
+    rtc::PacketTransportInternal* fake_rtp_packet_transport,
+    rtc::PacketTransportInternal* fake_rtcp_packet_transport,
     int flags) {
-  rtc::Thread* signaling_thread =
-      transport_controller ? transport_controller->signaling_thread() : nullptr;
+  rtc::Thread* signaling_thread = rtc::Thread::Current();
   cricket::VideoChannel* channel = new cricket::VideoChannel(
       worker_thread, network_thread, signaling_thread, ch, cricket::CN_VIDEO,
       (flags & RTCP_MUX_REQUIRED) != 0, (flags & SECURE) != 0);
-  rtc::CryptoOptions crypto_options;
-  crypto_options.enable_gcm_crypto_suites = (flags & GCM_CIPHER) != 0;
-  channel->SetCryptoOptions(crypto_options);
-  cricket::DtlsTransportInternal* rtp_dtls_transport =
-      transport_controller->CreateDtlsTransport(
-          channel->content_name(), cricket::ICE_CANDIDATE_COMPONENT_RTP);
-  cricket::DtlsTransportInternal* rtcp_dtls_transport = nullptr;
-  if (channel->NeedsRtcpTransport()) {
-    rtcp_dtls_transport = transport_controller->CreateDtlsTransport(
-        channel->content_name(), cricket::ICE_CANDIDATE_COMPONENT_RTCP);
+  if (!channel->NeedsRtcpTransport()) {
+    fake_rtcp_dtls_transport = nullptr;
   }
-  if (!channel->Init_w(rtp_dtls_transport, rtcp_dtls_transport)) {
+  if (!channel->Init_w(fake_rtp_dtls_transport, fake_rtcp_dtls_transport,
+                       fake_rtp_packet_transport, fake_rtcp_packet_transport)) {
     delete channel;
     channel = NULL;
   }
@@ -2096,7 +2268,13 @@ class VideoChannelDoubleThreadTest : public ChannelTest<VideoTraits> {
 };
 
 // VoiceChannelSingleThreadTest
-TEST_F(VoiceChannelSingleThreadTest, TestInit) {
+// Flaky on iOS Simualtor: bugs.webrtc.org/7247
+#if defined(WEBRTC_IOS)
+#define MAYBE_TestInit DISABLED_TestInit
+#else
+#define MAYBE_TestInit TestInit
+#endif
+TEST_F(VoiceChannelSingleThreadTest, MAYBE_TestInit) {
   Base::TestInit();
   EXPECT_FALSE(media_channel1_->IsStreamMuted(0));
   EXPECT_TRUE(media_channel1_->dtmf_info_queue().empty());
@@ -2140,6 +2318,48 @@ TEST_F(VoiceChannelSingleThreadTest, TestUpdateRemoteStreamsInContent) {
 
 TEST_F(VoiceChannelSingleThreadTest, TestChangeStreamParamsInContent) {
   Base::TestChangeStreamParamsInContent();
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtls) {
+  int flags = DTLS;
+  Base::TestChangeEncryptedHeaderExtensions(flags);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsScenario1) {
+  int flags = DTLS;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_BEFORE_OFFER_ANSWER);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsScenario2) {
+  int flags = DTLS;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_AFTER_CHANNEL2_READY);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsGcm) {
+  int flags = DTLS | GCM_CIPHER;
+  Base::TestChangeEncryptedHeaderExtensions(flags);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsGcmScenario1) {
+  int flags = DTLS | GCM_CIPHER;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_BEFORE_OFFER_ANSWER);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsGcmScenario2) {
+  int flags = DTLS | GCM_CIPHER;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_AFTER_CHANNEL2_READY);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsSingleThreadTest,
+    TestChangeEncryptedHeaderExtensionsSDES) {
+  int flags = 0;
+  Base::TestChangeEncryptedHeaderExtensions(flags);
 }
 
 TEST_F(VoiceChannelSingleThreadTest, TestPlayoutAndSendingStates) {
@@ -2244,20 +2464,14 @@ TEST_F(VoiceChannelSingleThreadTest, SendDtlsSrtpToDtlsSrtp) {
   Base::SendSrtpToSrtp(DTLS, DTLS);
 }
 
-TEST_F(VoiceChannelSingleThreadTest, SendDtlsSrtpToDtlsSrtpGcmBoth) {
-  Base::SendSrtpToSrtp(DTLS | GCM_CIPHER, DTLS | GCM_CIPHER);
-}
-
-TEST_F(VoiceChannelSingleThreadTest, SendDtlsSrtpToDtlsSrtpGcmOne) {
-  Base::SendSrtpToSrtp(DTLS | GCM_CIPHER, DTLS);
-}
-
-TEST_F(VoiceChannelSingleThreadTest, SendDtlsSrtpToDtlsSrtpGcmTwo) {
-  Base::SendSrtpToSrtp(DTLS, DTLS | GCM_CIPHER);
-}
-
 TEST_F(VoiceChannelSingleThreadTest, SendDtlsSrtpToDtlsSrtpRtcpMux) {
   Base::SendSrtpToSrtp(DTLS | RTCP_MUX, DTLS | RTCP_MUX);
+}
+
+// Test using the channel with a raw packet interface, as opposed to a DTLS
+// transport interface.
+TEST_F(VoiceChannelSingleThreadTest, SendSrtpToSrtpWithRawPacketTransport) {
+  Base::SendSrtpToSrtp(RAW_PACKET_TRANSPORT, RAW_PACKET_TRANSPORT);
 }
 
 TEST_F(VoiceChannelSingleThreadTest, SendEarlyMediaUsingRtcpMuxSrtp) {
@@ -2324,16 +2538,12 @@ TEST_F(VoiceChannelSingleThreadTest, TestFlushRtcp) {
   Base::TestFlushRtcp();
 }
 
-TEST_F(VoiceChannelSingleThreadTest, TestSrtpError) {
-  Base::TestSrtpError(kAudioPts[0]);
+TEST_F(VoiceChannelSingleThreadTest, TestOnTransportReadyToSend) {
+  Base::TestOnTransportReadyToSend();
 }
 
-TEST_F(VoiceChannelSingleThreadTest, TestOnReadyToSend) {
-  Base::TestOnReadyToSend();
-}
-
-TEST_F(VoiceChannelSingleThreadTest, TestOnReadyToSendWithRtcpMux) {
-  Base::TestOnReadyToSendWithRtcpMux();
+TEST_F(VoiceChannelSingleThreadTest, TestOnTransportReadyToSendWithRtcpMux) {
+  Base::TestOnTransportReadyToSendWithRtcpMux();
 }
 
 // Test that we can scale the output volume properly for 1:1 calls.
@@ -2469,6 +2679,48 @@ TEST_F(VoiceChannelDoubleThreadTest, TestChangeStreamParamsInContent) {
   Base::TestChangeStreamParamsInContent();
 }
 
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtls) {
+  int flags = DTLS;
+  Base::TestChangeEncryptedHeaderExtensions(flags);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsScenario1) {
+  int flags = DTLS;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_BEFORE_OFFER_ANSWER);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsScenario2) {
+  int flags = DTLS;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_AFTER_CHANNEL2_READY);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsGcm) {
+  int flags = DTLS | GCM_CIPHER;
+  Base::TestChangeEncryptedHeaderExtensions(flags);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsGcmScenario1) {
+  int flags = DTLS | GCM_CIPHER;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_BEFORE_OFFER_ANSWER);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsDtlsGcmScenario2) {
+  int flags = DTLS | GCM_CIPHER;
+  Base::TestChangeEncryptedHeaderExtensions(flags, DTLS_AFTER_CHANNEL2_READY);
+}
+
+TEST_F(VoiceChannelWithEncryptedRtpHeaderExtensionsDoubleThreadTest,
+    TestChangeEncryptedHeaderExtensionsSDES) {
+  int flags = 0;
+  Base::TestChangeEncryptedHeaderExtensions(flags);
+}
+
 TEST_F(VoiceChannelDoubleThreadTest, TestPlayoutAndSendingStates) {
   Base::TestPlayoutAndSendingStates();
 }
@@ -2571,20 +2823,14 @@ TEST_F(VoiceChannelDoubleThreadTest, SendDtlsSrtpToDtlsSrtp) {
   Base::SendSrtpToSrtp(DTLS, DTLS);
 }
 
-TEST_F(VoiceChannelDoubleThreadTest, SendDtlsSrtpToDtlsSrtpGcmBoth) {
-  Base::SendSrtpToSrtp(DTLS | GCM_CIPHER, DTLS | GCM_CIPHER);
-}
-
-TEST_F(VoiceChannelDoubleThreadTest, SendDtlsSrtpToDtlsSrtpGcmOne) {
-  Base::SendSrtpToSrtp(DTLS | GCM_CIPHER, DTLS);
-}
-
-TEST_F(VoiceChannelDoubleThreadTest, SendDtlsSrtpToDtlsSrtpGcmTwo) {
-  Base::SendSrtpToSrtp(DTLS, DTLS | GCM_CIPHER);
-}
-
 TEST_F(VoiceChannelDoubleThreadTest, SendDtlsSrtpToDtlsSrtpRtcpMux) {
   Base::SendSrtpToSrtp(DTLS | RTCP_MUX, DTLS | RTCP_MUX);
+}
+
+// Test using the channel with a raw packet interface, as opposed to a DTLS
+// transport interface.
+TEST_F(VoiceChannelDoubleThreadTest, SendSrtpToSrtpWithRawPacketTransport) {
+  Base::SendSrtpToSrtp(RAW_PACKET_TRANSPORT, RAW_PACKET_TRANSPORT);
 }
 
 TEST_F(VoiceChannelDoubleThreadTest, SendEarlyMediaUsingRtcpMuxSrtp) {
@@ -2651,16 +2897,12 @@ TEST_F(VoiceChannelDoubleThreadTest, TestFlushRtcp) {
   Base::TestFlushRtcp();
 }
 
-TEST_F(VoiceChannelDoubleThreadTest, TestSrtpError) {
-  Base::TestSrtpError(kAudioPts[0]);
+TEST_F(VoiceChannelDoubleThreadTest, TestOnTransportReadyToSend) {
+  Base::TestOnTransportReadyToSend();
 }
 
-TEST_F(VoiceChannelDoubleThreadTest, TestOnReadyToSend) {
-  Base::TestOnReadyToSend();
-}
-
-TEST_F(VoiceChannelDoubleThreadTest, TestOnReadyToSendWithRtcpMux) {
-  Base::TestOnReadyToSendWithRtcpMux();
+TEST_F(VoiceChannelDoubleThreadTest, TestOnTransportReadyToSendWithRtcpMux) {
+  Base::TestOnTransportReadyToSendWithRtcpMux();
 }
 
 // Test that we can scale the output volume properly for 1:1 calls.
@@ -2894,6 +3136,12 @@ TEST_F(VideoChannelSingleThreadTest, SendDtlsSrtpToDtlsSrtpRtcpMux) {
   Base::SendSrtpToSrtp(DTLS | RTCP_MUX, DTLS | RTCP_MUX);
 }
 
+// Test using the channel with a raw packet interface, as opposed to a DTLS
+// transport interface.
+TEST_F(VideoChannelSingleThreadTest, SendSrtpToSrtpWithRawPacketTransport) {
+  Base::SendSrtpToSrtp(RAW_PACKET_TRANSPORT, RAW_PACKET_TRANSPORT);
+}
+
 TEST_F(VideoChannelSingleThreadTest, SendSrtcpMux) {
   Base::SendSrtpToSrtp(RTCP_MUX, RTCP_MUX);
 }
@@ -2958,16 +3206,12 @@ TEST_F(VideoChannelSingleThreadTest, SendBundleToBundleWithRtcpMuxSecure) {
   Base::SendBundleToBundle(kVideoPts, arraysize(kVideoPts), true, true);
 }
 
-TEST_F(VideoChannelSingleThreadTest, TestSrtpError) {
-  Base::TestSrtpError(kVideoPts[0]);
+TEST_F(VideoChannelSingleThreadTest, TestOnTransportReadyToSend) {
+  Base::TestOnTransportReadyToSend();
 }
 
-TEST_F(VideoChannelSingleThreadTest, TestOnReadyToSend) {
-  Base::TestOnReadyToSend();
-}
-
-TEST_F(VideoChannelSingleThreadTest, TestOnReadyToSendWithRtcpMux) {
-  Base::TestOnReadyToSendWithRtcpMux();
+TEST_F(VideoChannelSingleThreadTest, TestOnTransportReadyToSendWithRtcpMux) {
+  Base::TestOnTransportReadyToSendWithRtcpMux();
 }
 
 TEST_F(VideoChannelSingleThreadTest, DefaultMaxBitrateIsUnlimited) {
@@ -3123,6 +3367,12 @@ TEST_F(VideoChannelDoubleThreadTest, SendDtlsSrtpToDtlsSrtpRtcpMux) {
   Base::SendSrtpToSrtp(DTLS | RTCP_MUX, DTLS | RTCP_MUX);
 }
 
+// Test using the channel with a raw packet interface, as opposed to a DTLS
+// transport interface.
+TEST_F(VideoChannelDoubleThreadTest, SendSrtpToSrtpWithRawPacketTransport) {
+  Base::SendSrtpToSrtp(RAW_PACKET_TRANSPORT, RAW_PACKET_TRANSPORT);
+}
+
 TEST_F(VideoChannelDoubleThreadTest, SendSrtcpMux) {
   Base::SendSrtpToSrtp(RTCP_MUX, RTCP_MUX);
 }
@@ -3187,16 +3437,12 @@ TEST_F(VideoChannelDoubleThreadTest, SendBundleToBundleWithRtcpMuxSecure) {
   Base::SendBundleToBundle(kVideoPts, arraysize(kVideoPts), true, true);
 }
 
-TEST_F(VideoChannelDoubleThreadTest, TestSrtpError) {
-  Base::TestSrtpError(kVideoPts[0]);
+TEST_F(VideoChannelDoubleThreadTest, TestOnTransportReadyToSend) {
+  Base::TestOnTransportReadyToSend();
 }
 
-TEST_F(VideoChannelDoubleThreadTest, TestOnReadyToSend) {
-  Base::TestOnReadyToSend();
-}
-
-TEST_F(VideoChannelDoubleThreadTest, TestOnReadyToSendWithRtcpMux) {
-  Base::TestOnReadyToSendWithRtcpMux();
+TEST_F(VideoChannelDoubleThreadTest, TestOnTransportReadyToSendWithRtcpMux) {
+  Base::TestOnTransportReadyToSendWithRtcpMux();
 }
 
 TEST_F(VideoChannelDoubleThreadTest, DefaultMaxBitrateIsUnlimited) {
@@ -3230,25 +3476,20 @@ cricket::RtpDataChannel* ChannelTest<DataTraits>::CreateChannel(
     rtc::Thread* network_thread,
     cricket::MediaEngineInterface* engine,
     cricket::FakeDataMediaChannel* ch,
-    cricket::TransportController* transport_controller,
+    cricket::DtlsTransportInternal* fake_rtp_dtls_transport,
+    cricket::DtlsTransportInternal* fake_rtcp_dtls_transport,
+    rtc::PacketTransportInternal* fake_rtp_packet_transport,
+    rtc::PacketTransportInternal* fake_rtcp_packet_transport,
     int flags) {
-  rtc::Thread* signaling_thread =
-      transport_controller ? transport_controller->signaling_thread() : nullptr;
+  rtc::Thread* signaling_thread = rtc::Thread::Current();
   cricket::RtpDataChannel* channel = new cricket::RtpDataChannel(
       worker_thread, network_thread, signaling_thread, ch, cricket::CN_DATA,
       (flags & RTCP_MUX_REQUIRED) != 0, (flags & SECURE) != 0);
-  rtc::CryptoOptions crypto_options;
-  crypto_options.enable_gcm_crypto_suites = (flags & GCM_CIPHER) != 0;
-  channel->SetCryptoOptions(crypto_options);
-  cricket::DtlsTransportInternal* rtp_dtls_transport =
-      transport_controller->CreateDtlsTransport(
-          channel->content_name(), cricket::ICE_CANDIDATE_COMPONENT_RTP);
-  cricket::DtlsTransportInternal* rtcp_dtls_transport = nullptr;
-  if (channel->NeedsRtcpTransport()) {
-    rtcp_dtls_transport = transport_controller->CreateDtlsTransport(
-        channel->content_name(), cricket::ICE_CANDIDATE_COMPONENT_RTCP);
+  if (!channel->NeedsRtcpTransport()) {
+    fake_rtcp_dtls_transport = nullptr;
   }
-  if (!channel->Init_w(rtp_dtls_transport, rtcp_dtls_transport)) {
+  if (!channel->Init_w(fake_rtp_dtls_transport, fake_rtcp_dtls_transport,
+                       fake_rtp_packet_transport, fake_rtcp_packet_transport)) {
     delete channel;
     channel = NULL;
   }
@@ -3348,12 +3589,12 @@ TEST_F(RtpDataChannelSingleThreadTest, TestCallTeardownRtcpMux) {
   Base::TestCallTeardownRtcpMux();
 }
 
-TEST_F(RtpDataChannelSingleThreadTest, TestOnReadyToSend) {
-  Base::TestOnReadyToSend();
+TEST_F(RtpDataChannelSingleThreadTest, TestOnTransportReadyToSend) {
+  Base::TestOnTransportReadyToSend();
 }
 
-TEST_F(RtpDataChannelSingleThreadTest, TestOnReadyToSendWithRtcpMux) {
-  Base::TestOnReadyToSendWithRtcpMux();
+TEST_F(RtpDataChannelSingleThreadTest, TestOnTransportReadyToSendWithRtcpMux) {
+  Base::TestOnTransportReadyToSendWithRtcpMux();
 }
 
 TEST_F(RtpDataChannelSingleThreadTest, SendRtpToRtp) {
@@ -3480,12 +3721,12 @@ TEST_F(RtpDataChannelDoubleThreadTest, TestCallTeardownRtcpMux) {
   Base::TestCallTeardownRtcpMux();
 }
 
-TEST_F(RtpDataChannelDoubleThreadTest, TestOnReadyToSend) {
-  Base::TestOnReadyToSend();
+TEST_F(RtpDataChannelDoubleThreadTest, TestOnTransportReadyToSend) {
+  Base::TestOnTransportReadyToSend();
 }
 
-TEST_F(RtpDataChannelDoubleThreadTest, TestOnReadyToSendWithRtcpMux) {
-  Base::TestOnReadyToSendWithRtcpMux();
+TEST_F(RtpDataChannelDoubleThreadTest, TestOnTransportReadyToSendWithRtcpMux) {
+  Base::TestOnTransportReadyToSendWithRtcpMux();
 }
 
 TEST_F(RtpDataChannelDoubleThreadTest, SendRtpToRtp) {
@@ -3565,7 +3806,9 @@ TEST_F(RtpDataChannelDoubleThreadTest, TestSendData) {
 class BaseChannelDeathTest : public testing::Test {
  public:
   BaseChannelDeathTest()
-      :  // RTCP mux not required, SRTP required.
+      : fake_rtp_dtls_transport_("foo", cricket::ICE_CANDIDATE_COMPONENT_RTP),
+        fake_rtcp_dtls_transport_("foo", cricket::ICE_CANDIDATE_COMPONENT_RTCP),
+        // RTCP mux not required, SRTP required.
         voice_channel_(
             rtc::Thread::Current(),
             rtc::Thread::Current(),
@@ -3575,66 +3818,89 @@ class BaseChannelDeathTest : public testing::Test {
                                                cricket::AudioOptions()),
             cricket::CN_AUDIO,
             false,
-            true) {
-    rtp_transport_ = fake_transport_controller_.CreateDtlsTransport(
-        "foo", cricket::ICE_CANDIDATE_COMPONENT_RTP);
-    rtcp_transport_ = fake_transport_controller_.CreateDtlsTransport(
-        "foo", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
-    EXPECT_TRUE(voice_channel_.Init_w(rtp_transport_, rtcp_transport_));
-  }
+            true) {}
 
  protected:
-  cricket::FakeTransportController fake_transport_controller_;
   cricket::FakeMediaEngine fake_media_engine_;
+  cricket::FakeDtlsTransport fake_rtp_dtls_transport_;
+  cricket::FakeDtlsTransport fake_rtcp_dtls_transport_;
   cricket::VoiceChannel voice_channel_;
-  // Will be cleaned up by FakeTransportController, don't need to worry about
-  // deleting them in this test.
-  cricket::DtlsTransportInternal* rtp_transport_;
-  cricket::DtlsTransportInternal* rtcp_transport_;
 };
 
-TEST_F(BaseChannelDeathTest, SetTransportWithNullRtpTransport) {
-  cricket::DtlsTransportInternal* new_rtcp_transport =
-      fake_transport_controller_.CreateDtlsTransport(
-          "bar", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
-  EXPECT_DEATH(voice_channel_.SetTransports(nullptr, new_rtcp_transport), "");
+TEST_F(BaseChannelDeathTest, SetTransportsWithNullRtpTransport) {
+  ASSERT_TRUE(voice_channel_.Init_w(
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_,
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_));
+  cricket::FakeDtlsTransport new_rtcp_transport(
+      "bar", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
+  EXPECT_DEATH(voice_channel_.SetTransports(nullptr, &new_rtcp_transport), "");
 }
 
-TEST_F(BaseChannelDeathTest, SetTransportWithMissingRtcpTransport) {
-  cricket::DtlsTransportInternal* new_rtp_transport =
-      fake_transport_controller_.CreateDtlsTransport(
-          "bar", cricket::ICE_CANDIDATE_COMPONENT_RTP);
-  EXPECT_DEATH(voice_channel_.SetTransports(new_rtp_transport, nullptr), "");
+TEST_F(BaseChannelDeathTest, SetTransportsWithMissingRtcpTransport) {
+  ASSERT_TRUE(voice_channel_.Init_w(
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_,
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_));
+  cricket::FakeDtlsTransport new_rtp_transport(
+      "bar", cricket::ICE_CANDIDATE_COMPONENT_RTP);
+  EXPECT_DEATH(voice_channel_.SetTransports(&new_rtp_transport, nullptr), "");
 }
 
-TEST_F(BaseChannelDeathTest, SetTransportWithUnneededRtcpTransport) {
+TEST_F(BaseChannelDeathTest, SetTransportsWithUnneededRtcpTransport) {
+  ASSERT_TRUE(voice_channel_.Init_w(
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_,
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_));
   // Activate RTCP muxing, simulating offer/answer negotiation.
   cricket::AudioContentDescription content;
   content.set_rtcp_mux(true);
   ASSERT_TRUE(voice_channel_.SetLocalContent(&content, CA_OFFER, nullptr));
   ASSERT_TRUE(voice_channel_.SetRemoteContent(&content, CA_ANSWER, nullptr));
-  cricket::DtlsTransportInternal* new_rtp_transport =
-      fake_transport_controller_.CreateDtlsTransport(
-          "bar", cricket::ICE_CANDIDATE_COMPONENT_RTP);
-  cricket::DtlsTransportInternal* new_rtcp_transport =
-      fake_transport_controller_.CreateDtlsTransport(
-          "bar", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
+  cricket::FakeDtlsTransport new_rtp_transport(
+      "bar", cricket::ICE_CANDIDATE_COMPONENT_RTP);
+  cricket::FakeDtlsTransport new_rtcp_transport(
+      "bar", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
   // After muxing is enabled, no RTCP transport should be passed in here.
   EXPECT_DEATH(
-      voice_channel_.SetTransports(new_rtp_transport, new_rtcp_transport), "");
+      voice_channel_.SetTransports(&new_rtp_transport, &new_rtcp_transport),
+      "");
 }
 
 // This test will probably go away if/when we move the transport name out of
 // the transport classes and into their parent classes.
-TEST_F(BaseChannelDeathTest, SetTransportWithMismatchingTransportNames) {
-  cricket::DtlsTransportInternal* new_rtp_transport =
-      fake_transport_controller_.CreateDtlsTransport(
-          "bar", cricket::ICE_CANDIDATE_COMPONENT_RTP);
-  cricket::DtlsTransportInternal* new_rtcp_transport =
-      fake_transport_controller_.CreateDtlsTransport(
-          "baz", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
+TEST_F(BaseChannelDeathTest, SetTransportsWithMismatchingTransportNames) {
+  ASSERT_TRUE(voice_channel_.Init_w(
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_,
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_));
+  cricket::FakeDtlsTransport new_rtp_transport(
+      "bar", cricket::ICE_CANDIDATE_COMPONENT_RTP);
+  cricket::FakeDtlsTransport new_rtcp_transport(
+      "baz", cricket::ICE_CANDIDATE_COMPONENT_RTCP);
   EXPECT_DEATH(
-      voice_channel_.SetTransports(new_rtp_transport, new_rtcp_transport), "");
+      voice_channel_.SetTransports(&new_rtp_transport, &new_rtcp_transport),
+      "");
+}
+
+// Not expected to support going from DtlsTransportInternal to
+// PacketTransportInternal.
+TEST_F(BaseChannelDeathTest, SetTransportsDtlsToNonDtls) {
+  ASSERT_TRUE(voice_channel_.Init_w(
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_,
+      &fake_rtp_dtls_transport_, &fake_rtcp_dtls_transport_));
+  EXPECT_DEATH(
+      voice_channel_.SetTransports(
+          static_cast<rtc::PacketTransportInternal*>(&fake_rtp_dtls_transport_),
+          static_cast<rtc::PacketTransportInternal*>(
+              &fake_rtp_dtls_transport_)),
+      "");
+}
+
+// Not expected to support going from PacketTransportInternal to
+// DtlsTransportInternal.
+TEST_F(BaseChannelDeathTest, SetTransportsNonDtlsToDtls) {
+  ASSERT_TRUE(voice_channel_.Init_w(nullptr, nullptr, &fake_rtp_dtls_transport_,
+                                    &fake_rtcp_dtls_transport_));
+  EXPECT_DEATH(voice_channel_.SetTransports(&fake_rtp_dtls_transport_,
+                                            &fake_rtp_dtls_transport_),
+               "");
 }
 
 #endif  // RTC_DCHECK_IS_ON && GTEST_HAS_DEATH_TEST && !defined(WEBRTC_ANDROID)

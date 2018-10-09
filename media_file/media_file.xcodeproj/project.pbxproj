@@ -267,13 +267,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_CODEC_ISAC,
+					WEBRTC_CODEC_ILBC,
+					WEBRTC_CODEC_G722,
+					WEBRTC_POSIX,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../webRTCAPP/Classes",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -283,7 +290,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					WEBRTC_CODEC_ISAC,
+					WEBRTC_CODEC_ILBC,
+					WEBRTC_CODEC_G722,
+					WEBRTC_POSIX,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

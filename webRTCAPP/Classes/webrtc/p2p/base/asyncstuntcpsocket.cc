@@ -14,7 +14,6 @@
 
 #include "webrtc/p2p/base/stun.h"
 #include "webrtc/base/checks.h"
-#include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
 
 namespace cricket {
@@ -79,6 +78,9 @@ int AsyncStunTCPSocket::Send(const void *pv, size_t cb,
     ClearOutBuffer();
     return res;
   }
+
+  rtc::SentPacket sent_packet(options.packet_id, rtc::TimeMillis());
+  SignalSentPacket(this, sent_packet);
 
   // We claim to have sent the whole thing, even if we only sent partial
   return static_cast<int>(cb);

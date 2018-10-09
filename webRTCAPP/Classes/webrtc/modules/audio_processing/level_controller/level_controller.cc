@@ -17,6 +17,7 @@
 #include "webrtc/base/array_view.h"
 #include "webrtc/base/arraysize.h"
 #include "webrtc/base/checks.h"
+#include "webrtc/base/logging.h"
 #include "webrtc/modules/audio_processing/audio_buffer.h"
 #include "webrtc/modules/audio_processing/level_controller/gain_applier.h"
 #include "webrtc/modules/audio_processing/level_controller/gain_selector.h"
@@ -25,7 +26,6 @@
 #include "webrtc/modules/audio_processing/level_controller/saturating_gain_estimator.h"
 #include "webrtc/modules/audio_processing/level_controller/signal_classifier.h"
 #include "webrtc/modules/audio_processing/logging/apm_data_dumper.h"
-#include "webrtc/system_wrappers/include/logging.h"
 #include "webrtc/system_wrappers/include/metrics.h"
 
 namespace webrtc {
@@ -59,7 +59,7 @@ float FrameEnergy(const AudioBuffer& audio) {
 float PeakLevel(const AudioBuffer& audio) {
   float peak_level = 0.f;
   for (size_t k = 0; k < audio.num_channels(); ++k) {
-    auto channel_peak_level = std::max_element(
+    auto* channel_peak_level = std::max_element(
         audio.channels_const_f()[k],
         audio.channels_const_f()[k] + audio.num_frames(),
         [](float a, float b) { return std::abs(a) < std::abs(b); });

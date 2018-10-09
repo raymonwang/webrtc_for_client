@@ -10,6 +10,20 @@
 
 #include <memory>
 
+#include "webrtc/base/arraysize.h"
+#include "webrtc/base/buffer.h"
+#include "webrtc/base/crc32.h"
+#include "webrtc/base/gunit.h"
+#include "webrtc/base/helpers.h"
+#include "webrtc/base/logging.h"
+#include "webrtc/base/natserver.h"
+#include "webrtc/base/natsocketfactory.h"
+#include "webrtc/base/ptr_util.h"
+#include "webrtc/base/socketaddress.h"
+#include "webrtc/base/ssladapter.h"
+#include "webrtc/base/stringutils.h"
+#include "webrtc/base/thread.h"
+#include "webrtc/base/virtualsocketserver.h"
 #include "webrtc/p2p/base/basicpacketsocketfactory.h"
 #include "webrtc/p2p/base/jseptransport.h"
 #include "webrtc/p2p/base/relayport.h"
@@ -19,20 +33,6 @@
 #include "webrtc/p2p/base/teststunserver.h"
 #include "webrtc/p2p/base/testturnserver.h"
 #include "webrtc/p2p/base/turnport.h"
-#include "webrtc/base/arraysize.h"
-#include "webrtc/base/buffer.h"
-#include "webrtc/base/crc32.h"
-#include "webrtc/base/gunit.h"
-#include "webrtc/base/helpers.h"
-#include "webrtc/base/logging.h"
-#include "webrtc/base/natserver.h"
-#include "webrtc/base/natsocketfactory.h"
-#include "webrtc/base/physicalsocketserver.h"
-#include "webrtc/base/socketaddress.h"
-#include "webrtc/base/ssladapter.h"
-#include "webrtc/base/stringutils.h"
-#include "webrtc/base/thread.h"
-#include "webrtc/base/virtualsocketserver.h"
 
 using rtc::AsyncPacketSocket;
 using rtc::Buffer;
@@ -146,7 +146,7 @@ class TestPort : public Port {
   virtual void PrepareAddress() {
     rtc::SocketAddress addr(ip(), min_port());
     AddAddress(addr, addr, rtc::SocketAddress(), "udp", "", "", Type(),
-               ICE_TYPE_PREFERENCE_HOST, 0, true);
+               ICE_TYPE_PREFERENCE_HOST, 0, "", true);
   }
 
   virtual bool SupportsProtocol(const std::string& protocol) const {
@@ -158,7 +158,7 @@ class TestPort : public Port {
   // Exposed for testing candidate building.
   void AddCandidateAddress(const rtc::SocketAddress& addr) {
     AddAddress(addr, addr, rtc::SocketAddress(), "udp", "", "", Type(),
-               type_preference_, 0, false);
+               type_preference_, 0, "", false);
   }
   void AddCandidateAddress(const rtc::SocketAddress& addr,
                            const rtc::SocketAddress& base_address,
@@ -166,7 +166,7 @@ class TestPort : public Port {
                            int type_preference,
                            bool final) {
     AddAddress(addr, base_address, rtc::SocketAddress(), "udp", "", "", type,
-               type_preference, 0, final);
+               type_preference, 0, "", final);
   }
 
   virtual Connection* CreateConnection(const Candidate& remote_candidate,
@@ -221,6 +221,23 @@ class TestPort : public Port {
   std::unique_ptr<IceMessage> last_stun_msg_;
   int type_preference_ = 0;
 };
+
+static void SendPingAndReceiveResponse(
+    Connection* lconn, TestPort* lport, Connection* rconn, TestPort* rport,
+    rtc::ScopedFakeClock* clock, int64_t ms) {
+  lconn->Ping(rtc::TimeMillis());
+  ASSERT_TRUE_WAIT(lport->last_stun_msg(), kDefaultTimeout);
+  ASSERT_TRUE(lport->last_stun_buf());
+  rconn->OnReadPacket(lport->last_stun_buf()->data<char>(),
+                      lport->last_stun_buf()->size(),
+                      rtc::PacketTime());
+  clock->AdvanceTime(rtc::TimeDelta::FromMilliseconds(ms));
+  ASSERT_TRUE_WAIT(rport->last_stun_msg(), kDefaultTimeout);
+  ASSERT_TRUE(rport->last_stun_buf());
+  lconn->OnReadPacket(rport->last_stun_buf()->data<char>(),
+                      rport->last_stun_buf()->size(),
+                      rtc::PacketTime());
+}
 
 class TestChannel : public sigslot::has_slots<> {
  public:
@@ -363,19 +380,17 @@ class TestChannel : public sigslot::has_slots<> {
 class PortTest : public testing::Test, public sigslot::has_slots<> {
  public:
   PortTest()
-      : main_(rtc::Thread::Current()),
-        pss_(new rtc::PhysicalSocketServer),
-        ss_(new rtc::VirtualSocketServer(pss_.get())),
-        ss_scope_(ss_.get()),
+      : ss_(new rtc::VirtualSocketServer()),
+        main_(ss_.get()),
         network_("unittest", "unittest", rtc::IPAddress(INADDR_ANY), 32),
         socket_factory_(rtc::Thread::Current()),
         nat_factory1_(ss_.get(), kNatAddr1, SocketAddress()),
         nat_factory2_(ss_.get(), kNatAddr2, SocketAddress()),
         nat_socket_factory1_(&nat_factory1_),
         nat_socket_factory2_(&nat_factory2_),
-        stun_server_(TestStunServer::Create(main_, kStunAddr)),
-        turn_server_(main_, kTurnUdpIntAddr, kTurnUdpExtAddr),
-        relay_server_(main_,
+        stun_server_(TestStunServer::Create(&main_, kStunAddr)),
+        turn_server_(&main_, kTurnUdpIntAddr, kTurnUdpExtAddr),
+        relay_server_(&main_,
                       kRelayUdpIntAddr,
                       kRelayUdpExtAddr,
                       kRelayTcpIntAddr,
@@ -474,7 +489,7 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
   }
   UDPPort* CreateUdpPort(const SocketAddress& addr,
                          PacketSocketFactory* socket_factory) {
-    return UDPPort::Create(main_, socket_factory, &network_, addr.ipaddr(), 0,
+    return UDPPort::Create(&main_, socket_factory, &network_, addr.ipaddr(), 0,
                            0, username_, password_, std::string(), true);
   }
   TCPPort* CreateTcpPort(const SocketAddress& addr) {
@@ -482,7 +497,7 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
   }
   TCPPort* CreateTcpPort(const SocketAddress& addr,
                         PacketSocketFactory* socket_factory) {
-    return TCPPort::Create(main_, socket_factory, &network_,
+    return TCPPort::Create(&main_, socket_factory, &network_,
                            addr.ipaddr(), 0, 0, username_, password_,
                            true);
   }
@@ -490,7 +505,7 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
                            rtc::PacketSocketFactory* factory) {
     ServerAddresses stun_servers;
     stun_servers.insert(kStunAddr);
-    return StunPort::Create(main_, factory, &network_,
+    return StunPort::Create(&main_, factory, &network_,
                             addr.ipaddr(), 0, 0,
                             username_, password_, stun_servers,
                             std::string());
@@ -515,7 +530,7 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
                            PacketSocketFactory* socket_factory,
                            ProtocolType int_proto, ProtocolType ext_proto,
                            const rtc::SocketAddress& server_addr) {
-    return TurnPort::Create(main_, socket_factory, &network_, addr.ipaddr(), 0,
+    return TurnPort::Create(&main_, socket_factory, &network_, addr.ipaddr(), 0,
                             0, username_, password_,
                             ProtocolAddress(server_addr, int_proto),
                             kRelayCredentials, 0, std::string());
@@ -532,7 +547,7 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
     // TODO(pthatcher):  Remove GTURN.
     // Generate a username with length of 16 for Gturn only.
     std::string username = rtc::CreateRandomString(kGturnUserNameLength);
-    return RelayPort::Create(main_, &socket_factory_, &network_, addr.ipaddr(),
+    return RelayPort::Create(&main_, &socket_factory_, &network_, addr.ipaddr(),
                              0, 0, username, password_);
     // TODO: Add an external address for ext_proto, so that the
     // other side can connect to this port using a non-UDP protocol.
@@ -743,13 +758,13 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
                                             const std::string& username) {
     IceMessage* msg = CreateStunMessage(type);
     msg->AddAttribute(
-        new StunByteStringAttribute(STUN_ATTR_USERNAME, username));
+        rtc::MakeUnique<StunByteStringAttribute>(STUN_ATTR_USERNAME, username));
     return msg;
   }
   TestPort* CreateTestPort(const rtc::SocketAddress& addr,
                            const std::string& username,
                            const std::string& password) {
-    TestPort* port =  new TestPort(main_, "test", &socket_factory_, &network_,
+    TestPort* port =  new TestPort(&main_, "test", &socket_factory_, &network_,
                                    addr.ipaddr(), 0, 0, username, password);
     port->SignalRoleConflict.connect(this, &PortTest::OnRoleConflict);
     return port;
@@ -784,10 +799,8 @@ class PortTest : public testing::Test, public sigslot::has_slots<> {
   rtc::VirtualSocketServer* vss() { return ss_.get(); }
 
  private:
-  rtc::Thread* main_;
-  std::unique_ptr<rtc::PhysicalSocketServer> pss_;
   std::unique_ptr<rtc::VirtualSocketServer> ss_;
-  rtc::SocketServerScope ss_scope_;
+  rtc::AutoSocketServerThread main_;
   rtc::Network network_;
   rtc::BasicPacketSocketFactory socket_factory_;
   std::unique_ptr<rtc::NATServer> nat_server1_;
@@ -1386,11 +1399,11 @@ TEST_F(PortTest, TestLoopbackCall) {
       CreateStunMessage(STUN_BINDING_REQUEST));
   const StunByteStringAttribute* username_attr = msg->GetByteString(
       STUN_ATTR_USERNAME);
-  modified_req->AddAttribute(new StunByteStringAttribute(
+  modified_req->AddAttribute(rtc::MakeUnique<StunByteStringAttribute>(
       STUN_ATTR_USERNAME, username_attr->GetString()));
   // To make sure we receive error response, adding tiebreaker less than
   // what's present in request.
-  modified_req->AddAttribute(new StunUInt64Attribute(
+  modified_req->AddAttribute(rtc::MakeUnique<StunUInt64Attribute>(
       STUN_ATTR_ICE_CONTROLLING, kTiebreaker1 - 1));
   modified_req->AddMessageIntegrity("lpass");
   modified_req->AddFingerprint();
@@ -1788,6 +1801,105 @@ TEST_F(PortTest, TestSendStunMessage) {
   EXPECT_EQ(2U, retransmit_attr->value());
 }
 
+TEST_F(PortTest, TestNomination) {
+  std::unique_ptr<TestPort> lport(
+      CreateTestPort(kLocalAddr1, "lfrag", "lpass"));
+  std::unique_ptr<TestPort> rport(
+      CreateTestPort(kLocalAddr2, "rfrag", "rpass"));
+  lport->SetIceRole(cricket::ICEROLE_CONTROLLING);
+  lport->SetIceTiebreaker(kTiebreaker1);
+  rport->SetIceRole(cricket::ICEROLE_CONTROLLED);
+  rport->SetIceTiebreaker(kTiebreaker2);
+
+  lport->PrepareAddress();
+  rport->PrepareAddress();
+  ASSERT_FALSE(lport->Candidates().empty());
+  ASSERT_FALSE(rport->Candidates().empty());
+  Connection* lconn = lport->CreateConnection(rport->Candidates()[0],
+                                              Port::ORIGIN_MESSAGE);
+  Connection* rconn = rport->CreateConnection(lport->Candidates()[0],
+                                              Port::ORIGIN_MESSAGE);
+
+  // |lconn| is controlling, |rconn| is controlled.
+  uint32_t nomination = 1234;
+  lconn->set_nomination(nomination);
+
+  EXPECT_FALSE(lconn->nominated());
+  EXPECT_FALSE(rconn->nominated());
+  EXPECT_EQ(lconn->nominated(), lconn->stats().nominated);
+  EXPECT_EQ(rconn->nominated(), rconn->stats().nominated);
+
+  // Send ping (including the nomination value) from |lconn| to |rconn|. This
+  // should set the remote nomination of |rconn|.
+  lconn->Ping(0);
+  ASSERT_TRUE_WAIT(lport->last_stun_msg(), kDefaultTimeout);
+  ASSERT_TRUE(lport->last_stun_buf());
+  rconn->OnReadPacket(lport->last_stun_buf()->data<char>(),
+                      lport->last_stun_buf()->size(),
+                      rtc::PacketTime());
+  EXPECT_EQ(nomination, rconn->remote_nomination());
+  EXPECT_FALSE(lconn->nominated());
+  EXPECT_TRUE(rconn->nominated());
+  EXPECT_EQ(lconn->nominated(), lconn->stats().nominated);
+  EXPECT_EQ(rconn->nominated(), rconn->stats().nominated);
+
+  // This should result in an acknowledgment sent back from |rconn| to |lconn|,
+  // updating the acknowledged nomination of |lconn|.
+  ASSERT_TRUE_WAIT(rport->last_stun_msg(), kDefaultTimeout);
+  ASSERT_TRUE(rport->last_stun_buf());
+  lconn->OnReadPacket(rport->last_stun_buf()->data<char>(),
+                      rport->last_stun_buf()->size(),
+                      rtc::PacketTime());
+  EXPECT_EQ(nomination, lconn->acked_nomination());
+  EXPECT_TRUE(lconn->nominated());
+  EXPECT_TRUE(rconn->nominated());
+  EXPECT_EQ(lconn->nominated(), lconn->stats().nominated);
+  EXPECT_EQ(rconn->nominated(), rconn->stats().nominated);
+}
+
+TEST_F(PortTest, TestRoundTripTime) {
+  rtc::ScopedFakeClock clock;
+
+  std::unique_ptr<TestPort> lport(
+      CreateTestPort(kLocalAddr1, "lfrag", "lpass"));
+  std::unique_ptr<TestPort> rport(
+      CreateTestPort(kLocalAddr2, "rfrag", "rpass"));
+  lport->SetIceRole(cricket::ICEROLE_CONTROLLING);
+  lport->SetIceTiebreaker(kTiebreaker1);
+  rport->SetIceRole(cricket::ICEROLE_CONTROLLED);
+  rport->SetIceTiebreaker(kTiebreaker2);
+
+  lport->PrepareAddress();
+  rport->PrepareAddress();
+  ASSERT_FALSE(lport->Candidates().empty());
+  ASSERT_FALSE(rport->Candidates().empty());
+  Connection* lconn = lport->CreateConnection(rport->Candidates()[0],
+                                              Port::ORIGIN_MESSAGE);
+  Connection* rconn = rport->CreateConnection(lport->Candidates()[0],
+                                              Port::ORIGIN_MESSAGE);
+
+  EXPECT_EQ(0u, lconn->stats().total_round_trip_time_ms);
+  EXPECT_FALSE(lconn->stats().current_round_trip_time_ms);
+
+  SendPingAndReceiveResponse(
+      lconn, lport.get(), rconn, rport.get(), &clock, 10);
+  EXPECT_EQ(10u, lconn->stats().total_round_trip_time_ms);
+  ASSERT_TRUE(lconn->stats().current_round_trip_time_ms);
+  EXPECT_EQ(10u, *lconn->stats().current_round_trip_time_ms);
+
+  SendPingAndReceiveResponse(
+      lconn, lport.get(), rconn, rport.get(), &clock, 20);
+  EXPECT_EQ(30u, lconn->stats().total_round_trip_time_ms);
+  ASSERT_TRUE(lconn->stats().current_round_trip_time_ms);
+  EXPECT_EQ(20u, *lconn->stats().current_round_trip_time_ms);
+
+  SendPingAndReceiveResponse(
+      lconn, lport.get(), rconn, rport.get(), &clock, 30);
+  EXPECT_EQ(60u, lconn->stats().total_round_trip_time_ms);
+  ASSERT_TRUE(lconn->stats().current_round_trip_time_ms);
+  EXPECT_EQ(30u, *lconn->stats().current_round_trip_time_ms);
+}
+
 TEST_F(PortTest, TestUseCandidateAttribute) {
   std::unique_ptr<TestPort> lport(
       CreateTestPort(kLocalAddr1, "lfrag", "lpass"));
@@ -1944,8 +2056,8 @@ TEST_F(PortTest, TestHandleStunMessage) {
 
   // BINDING-RESPONSE without username, with MESSAGE-INTEGRITY and FINGERPRINT.
   in_msg.reset(CreateStunMessage(STUN_BINDING_RESPONSE));
-  in_msg->AddAttribute(
-      new StunXorAddressAttribute(STUN_ATTR_XOR_MAPPED_ADDRESS, kLocalAddr2));
+  in_msg->AddAttribute(rtc::MakeUnique<StunXorAddressAttribute>(
+      STUN_ATTR_XOR_MAPPED_ADDRESS, kLocalAddr2));
   in_msg->AddMessageIntegrity("rpass");
   in_msg->AddFingerprint();
   WriteStunMessage(in_msg.get(), buf.get());
@@ -1956,8 +2068,9 @@ TEST_F(PortTest, TestHandleStunMessage) {
 
   // BINDING-ERROR-RESPONSE without username, with error, M-I, and FINGERPRINT.
   in_msg.reset(CreateStunMessage(STUN_BINDING_ERROR_RESPONSE));
-  in_msg->AddAttribute(new StunErrorCodeAttribute(STUN_ATTR_ERROR_CODE,
-      STUN_ERROR_SERVER_ERROR, STUN_ERROR_REASON_SERVER_ERROR));
+  in_msg->AddAttribute(rtc::MakeUnique<StunErrorCodeAttribute>(
+      STUN_ATTR_ERROR_CODE, STUN_ERROR_SERVER_ERROR,
+      STUN_ERROR_REASON_SERVER_ERROR));
   in_msg->AddFingerprint();
   WriteStunMessage(in_msg.get(), buf.get());
   EXPECT_TRUE(port->GetStunMessage(buf->Data(), buf->Length(), addr, &out_msg,
@@ -2107,8 +2220,8 @@ TEST_F(PortTest, TestHandleStunMessageBadFingerprint) {
 
   // Valid BINDING-RESPONSE, except no FINGERPRINT.
   in_msg.reset(CreateStunMessage(STUN_BINDING_RESPONSE));
-  in_msg->AddAttribute(
-      new StunXorAddressAttribute(STUN_ATTR_XOR_MAPPED_ADDRESS, kLocalAddr2));
+  in_msg->AddAttribute(rtc::MakeUnique<StunXorAddressAttribute>(
+      STUN_ATTR_XOR_MAPPED_ADDRESS, kLocalAddr2));
   in_msg->AddMessageIntegrity("rpass");
   WriteStunMessage(in_msg.get(), buf.get());
   EXPECT_FALSE(port->GetStunMessage(buf->Data(), buf->Length(), addr, &out_msg,
@@ -2125,8 +2238,9 @@ TEST_F(PortTest, TestHandleStunMessageBadFingerprint) {
 
   // Valid BINDING-ERROR-RESPONSE, except no FINGERPRINT.
   in_msg.reset(CreateStunMessage(STUN_BINDING_ERROR_RESPONSE));
-  in_msg->AddAttribute(new StunErrorCodeAttribute(STUN_ATTR_ERROR_CODE,
-      STUN_ERROR_SERVER_ERROR, STUN_ERROR_REASON_SERVER_ERROR));
+  in_msg->AddAttribute(rtc::MakeUnique<StunErrorCodeAttribute>(
+      STUN_ATTR_ERROR_CODE, STUN_ERROR_SERVER_ERROR,
+      STUN_ERROR_REASON_SERVER_ERROR));
   in_msg->AddMessageIntegrity("rpass");
   WriteStunMessage(in_msg.get(), buf.get());
   EXPECT_FALSE(port->GetStunMessage(buf->Data(), buf->Length(), addr, &out_msg,

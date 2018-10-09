@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/raymon_wang/Documents/Develop/webrtc-source/src/third_party/boringssl/src/decrepit/rc4/rc4_decrepit.c
+openssl/rc4.h
+-
+
+decrepit/rc4/../../include/openssl/base.h
+stddef.h
+-
+stdint.h
+-
+sys/types.h
+-
+stdio.h
+-
+openssl/opensslconf.h
+-
+boringssl_prefix_symbols.h
+-
+memory
+-
+memory
+-
+
+decrepit/rc4/../../include/openssl/opensslconf.h
+
+decrepit/rc4/../../include/openssl/rc4.h
+openssl/base.h
+-
+

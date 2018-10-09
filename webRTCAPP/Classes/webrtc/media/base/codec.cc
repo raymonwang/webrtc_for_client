@@ -17,12 +17,13 @@
 #include "webrtc/base/logging.h"
 #include "webrtc/base/stringencode.h"
 #include "webrtc/base/stringutils.h"
-#include "webrtc/common_video/h264/profile_level_id.h"
+#include "webrtc/media/base/h264_profile_level_id.h"
 
 namespace cricket {
 
 static bool IsSameH264Profile(const CodecParameterMap& params1,
                               const CodecParameterMap& params2) {
+#if defined(HAVE_WEBRTC_VIDEO)
   const rtc::Optional<webrtc::H264::ProfileLevelId> profile_level_id =
       webrtc::H264::ParseSdpProfileLevelId(params1);
   const rtc::Optional<webrtc::H264::ProfileLevelId> other_profile_level_id =
@@ -30,6 +31,10 @@ static bool IsSameH264Profile(const CodecParameterMap& params1,
   // Compare H264 profiles, but not levels.
   return profile_level_id && other_profile_level_id &&
          profile_level_id->profile == other_profile_level_id->profile;
+#else
+	return false;
+#endif
+
 }
 
 bool FeedbackParam::operator==(const FeedbackParam& other) const {
@@ -149,8 +154,8 @@ void Codec::IntersectFeedbackParams(const Codec& other) {
 webrtc::RtpCodecParameters Codec::ToCodecParameters() const {
   webrtc::RtpCodecParameters codec_params;
   codec_params.payload_type = id;
-  codec_params.mime_type = name;
-  codec_params.clock_rate = clockrate;
+  codec_params.name = name;
+  codec_params.clock_rate = rtc::Optional<int>(clockrate);
   return codec_params;
 }
 
@@ -190,12 +195,6 @@ bool AudioCodec::Matches(const AudioCodec& codec) const {
       ((codec.channels < 2 && channels < 2) || channels == codec.channels);
 }
 
-webrtc::RtpCodecParameters AudioCodec::ToCodecParameters() const {
-  webrtc::RtpCodecParameters codec_params = Codec::ToCodecParameters();
-  codec_params.channels = static_cast<int>(channels);
-  return codec_params;
-}
-
 std::string AudioCodec::ToString() const {
   std::ostringstream os;
   os << "AudioCodec[" << id << ":" << name << ":" << clockrate << ":" << bitrate
@@ -203,10 +202,23 @@ std::string AudioCodec::ToString() const {
   return os.str();
 }
 
+webrtc::RtpCodecParameters AudioCodec::ToCodecParameters() const {
+  webrtc::RtpCodecParameters codec_params = Codec::ToCodecParameters();
+  codec_params.num_channels = rtc::Optional<int>(static_cast<int>(channels));
+  codec_params.kind = MEDIA_TYPE_AUDIO;
+  return codec_params;
+}
+
 std::string VideoCodec::ToString() const {
   std::ostringstream os;
   os << "VideoCodec[" << id << ":" << name << "]";
   return os.str();
+}
+
+webrtc::RtpCodecParameters VideoCodec::ToCodecParameters() const {
+  webrtc::RtpCodecParameters codec_params = Codec::ToCodecParameters();
+  codec_params.kind = MEDIA_TYPE_VIDEO;
+  return codec_params;
 }
 
 VideoCodec::VideoCodec(int id, const std::string& name)

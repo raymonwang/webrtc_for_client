@@ -23,6 +23,7 @@ extern "C" {
 #include "third_party/openh264/src/codec/api/svc/codec_api.h"
 #endif
 
+#include "webrtc/common_video/h264/h264_bitstream_parser.h"
 #include "webrtc/common_video/include/i420_buffer_pool.h"
 
 namespace webrtc {
@@ -91,6 +92,8 @@ class H264DecoderImpl : public H264Decoder {
 
   bool has_reported_init_;
   bool has_reported_error_;
+
+  webrtc::H264BitstreamParser h264_bitstream_parser_;
 };
 
 }  // namespace webrtc

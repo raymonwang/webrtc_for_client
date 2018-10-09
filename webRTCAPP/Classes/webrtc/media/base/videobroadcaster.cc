@@ -84,29 +84,34 @@ void VideoBroadcaster::UpdateWants() {
       wants.rotation_applied = true;
     }
     // wants.max_pixel_count == MIN(sink.wants.max_pixel_count)
-    if (sink.wants.max_pixel_count &&
-        (!wants.max_pixel_count ||
-         (*sink.wants.max_pixel_count < *wants.max_pixel_count))) {
+    if (sink.wants.max_pixel_count < wants.max_pixel_count) {
       wants.max_pixel_count = sink.wants.max_pixel_count;
     }
-    // wants.max_pixel_count_step_up == MIN(sink.wants.max_pixel_count_step_up)
-    if (sink.wants.max_pixel_count_step_up &&
-        (!wants.max_pixel_count_step_up ||
-         (*sink.wants.max_pixel_count_step_up <
-          *wants.max_pixel_count_step_up))) {
-      wants.max_pixel_count_step_up = sink.wants.max_pixel_count_step_up;
+    // Select the minimum requested target_pixel_count, if any, of all sinks so
+    // that we don't over utilize the resources for any one.
+    // TODO(sprang): Consider using the median instead, since the limit can be
+    // expressed by max_pixel_count.
+    if (sink.wants.target_pixel_count &&
+        (!wants.target_pixel_count ||
+         (*sink.wants.target_pixel_count < *wants.target_pixel_count))) {
+      wants.target_pixel_count = sink.wants.target_pixel_count;
+    }
+    // Select the minimum for the requested max framerates.
+    if (sink.wants.max_framerate_fps < wants.max_framerate_fps) {
+      wants.max_framerate_fps = sink.wants.max_framerate_fps;
     }
   }
 
-  if (wants.max_pixel_count && wants.max_pixel_count_step_up &&
-      *wants.max_pixel_count_step_up >= *wants.max_pixel_count) {
-    wants.max_pixel_count_step_up = Optional<int>();
+  if (wants.target_pixel_count &&
+      *wants.target_pixel_count >= wants.max_pixel_count) {
+    wants.target_pixel_count.emplace(wants.max_pixel_count);
   }
   current_wants_ = wants;
 }
 
 const rtc::scoped_refptr<webrtc::VideoFrameBuffer>&
 VideoBroadcaster::GetBlackFrameBuffer(int width, int height) {
+#if defined(HAVE_WEBRTC_VIDEO)
   if (!black_frame_buffer_ || black_frame_buffer_->width() != width ||
       black_frame_buffer_->height() != height) {
     rtc::scoped_refptr<webrtc::I420Buffer> buffer =
@@ -114,7 +119,7 @@ VideoBroadcaster::GetBlackFrameBuffer(int width, int height) {
     webrtc::I420Buffer::SetBlack(buffer.get());
     black_frame_buffer_ = buffer;
   }
-
+#endif
   return black_frame_buffer_;
 }
 

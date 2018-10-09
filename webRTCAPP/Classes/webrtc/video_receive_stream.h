@@ -70,6 +70,7 @@ class VideoReceiveStream {
     int min_playout_delay_ms = 0;
     int render_delay_ms = 10;
     uint32_t frames_decoded = 0;
+    rtc::Optional<uint64_t> qp_sum;
 
     int current_payload_type = -1;
 
@@ -117,6 +118,7 @@ class VideoReceiveStream {
 
       // Synchronization source (stream identifier) to be received.
       uint32_t remote_ssrc = 0;
+
       // Sender SSRC used for sending RTCP (such as receiver reports).
       uint32_t local_ssrc = 0;
 
@@ -130,6 +132,15 @@ class VideoReceiveStream {
         bool receiver_reference_time_report = false;
       } rtcp_xr;
 
+      // TODO(nisse): This remb setting is currently set but never
+      // applied. REMB logic is now the responsibility of
+      // PacketRouter, and it will generate REMB feedback if
+      // OnReceiveBitrateChanged is used, which depends on how the
+      // estimators belonging to the ReceiveSideCongestionController
+      // are configured. Decide if this setting should be deleted, and
+      // if it needs to be replaced by a setting in PacketRouter to
+      // disable REMB feedback.
+
       // See draft-alvestrand-rmcat-remb for information.
       bool remb = false;
 
@@ -142,19 +153,15 @@ class VideoReceiveStream {
       // See UlpfecConfig for description.
       UlpfecConfig ulpfec;
 
-      // RTX settings for incoming video payloads that may be received. RTX is
-      // disabled if there's no config present.
-      struct Rtx {
-        // SSRCs to use for the RTX streams.
-        uint32_t ssrc = 0;
+      // SSRC for retransmissions.
+      uint32_t rtx_ssrc = 0;
 
-        // Payload type to use for the RTX stream.
-        int payload_type = 0;
-      };
+      // Set if the stream is protected using FlexFEC.
+      bool protected_by_flexfec = false;
 
-      // Map from video RTP payload type -> RTX config.
-      typedef std::map<int, Rtx> RtxMap;
-      RtxMap rtx;
+      // Map from video payload type (apt) -> RTX payload type (pt).
+      // For RTX to be enabled, both an SSRC and this mapping are needed.
+      std::map<int, int> rtx_payload_types;
 
       // RTP header extensions used for the received stream.
       std::vector<RtpExtension> extensions;
@@ -184,14 +191,6 @@ class VideoReceiveStream {
     // when
     // saving the stream to a file. 'nullptr' disables the callback.
     EncodedFrameObserver* pre_decode_callback = nullptr;
-
-    // Called for each decoded frame. E.g. used when adding effects to the
-    // decoded
-    // stream. 'nullptr' disables the callback.
-    // TODO(tommi): This seems to be only used by a test or two.  Consider
-    // removing it (and use an appropriate alternative in the tests) as well
-    // as the associated code in VideoStreamDecoder.
-    I420FrameCallback* pre_render_callback = nullptr;
 
     // Target delay in milliseconds. A positive value indicates this stream is
     // used for streaming instead of a real-time call.

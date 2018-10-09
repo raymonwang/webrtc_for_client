@@ -163,20 +163,32 @@ static bool VerifyMediaDescriptions(
 }
 
 // Checks that each non-rejected content has SDES crypto keys or a DTLS
-// fingerprint. Mismatches, such as replying with a DTLS fingerprint to SDES
-// keys, will be caught in Transport negotiation, and backstopped by Channel's
-// |srtp_required| check.
+// fingerprint, unless it's in a BUNDLE group, in which case only the
+// BUNDLE-tag section (first media section/description in the BUNDLE group)
+// needs a ufrag and pwd. Mismatches, such as replying with a DTLS fingerprint
+// to SDES keys, will be caught in JsepTransport negotiation, and backstopped
+// by Channel's |srtp_required| check.
 static bool VerifyCrypto(const SessionDescription* desc,
                          bool dtls_enabled,
                          std::string* error) {
+  const cricket::ContentGroup* bundle =
+      desc->GetGroupByName(cricket::GROUP_TYPE_BUNDLE);
   const ContentInfos& contents = desc->contents();
   for (size_t index = 0; index < contents.size(); ++index) {
     const ContentInfo* cinfo = &contents[index];
     if (cinfo->rejected) {
       continue;
     }
+    if (bundle && bundle->HasContentName(cinfo->name) &&
+        cinfo->name != *(bundle->FirstContentName())) {
+      // This isn't the first media section in the BUNDLE group, so it's not
+      // required to have crypto attributes, since only the crypto attributes
+      // from the first section actually get used.
+      continue;
+    }
 
-    // If the content isn't rejected, crypto must be present.
+    // If the content isn't rejected or bundled into another m= section, crypto
+    // must be present.
     const MediaContentDescription* media =
         static_cast<const MediaContentDescription*>(cinfo->description);
     const TransportInfo* tinfo = desc->GetTransportInfoByName(cinfo->name);
@@ -206,16 +218,28 @@ static bool VerifyCrypto(const SessionDescription* desc,
   return true;
 }
 
-// Checks that each non-rejected content has ice-ufrag and ice-pwd set.
+// Checks that each non-rejected content has ice-ufrag and ice-pwd set, unless
+// it's in a BUNDLE group, in which case only the BUNDLE-tag section (first
+// media section/description in the BUNDLE group) needs a ufrag and pwd.
 static bool VerifyIceUfragPwdPresent(const SessionDescription* desc) {
+  const cricket::ContentGroup* bundle =
+      desc->GetGroupByName(cricket::GROUP_TYPE_BUNDLE);
   const ContentInfos& contents = desc->contents();
   for (size_t index = 0; index < contents.size(); ++index) {
     const ContentInfo* cinfo = &contents[index];
     if (cinfo->rejected) {
       continue;
     }
+    if (bundle && bundle->HasContentName(cinfo->name) &&
+        cinfo->name != *(bundle->FirstContentName())) {
+      // This isn't the first media section in the BUNDLE group, so it's not
+      // required to have ufrag/password, since only the ufrag/password from
+      // the first section actually get used.
+      continue;
+    }
 
-    // If the content isn't rejected, ice-ufrag and ice-pwd must be present.
+    // If the content isn't rejected or bundled into another m= section,
+    // ice-ufrag and ice-pwd must be present.
     const TransportInfo* tinfo = desc->GetTransportInfoByName(cinfo->name);
     if (!tinfo) {
       // Something is not right.
@@ -228,29 +252,6 @@ static bool VerifyIceUfragPwdPresent(const SessionDescription* desc) {
       return false;
     }
   }
-  return true;
-}
-
-static bool GetAudioSsrcByTrackId(const SessionDescription* session_description,
-                                  const std::string& track_id,
-                                  uint32_t* ssrc) {
-  const cricket::ContentInfo* audio_info =
-      cricket::GetFirstAudioContent(session_description);
-  if (!audio_info) {
-    LOG(LS_ERROR) << "Audio not used in this call";
-    return false;
-  }
-
-  const cricket::MediaContentDescription* audio_content =
-      static_cast<const cricket::MediaContentDescription*>(
-          audio_info->description);
-  const cricket::StreamParams* stream =
-      cricket::GetStreamByIds(audio_content->streams(), "", track_id);
-  if (!stream) {
-    return false;
-  }
-
-  *ssrc = stream->first_ssrc();
   return true;
 }
 
@@ -460,7 +461,10 @@ bool CheckForRemoteIceRestart(const SessionDescriptionInterface* old_desc,
 }
 
 WebRtcSession::WebRtcSession(
-    webrtc::MediaControllerInterface* media_controller,
+    Call* call,
+    cricket::ChannelManager* channel_manager,
+    const cricket::MediaConfig& media_config,
+    RtcEventLog* event_log,
     rtc::Thread* network_thread,
     rtc::Thread* worker_thread,
     rtc::Thread* signaling_thread,
@@ -476,8 +480,10 @@ WebRtcSession::WebRtcSession(
       sid_(rtc::ToString(rtc::CreateRandomId64() & LLONG_MAX)),
       transport_controller_(std::move(transport_controller)),
       sctp_factory_(std::move(sctp_factory)),
-      media_controller_(media_controller),
-      channel_manager_(media_controller_->channel_manager()),
+      media_config_(media_config),
+      event_log_(event_log),
+      call_(call),
+      channel_manager_(channel_manager),
       ice_observer_(NULL),
       ice_connection_state_(PeerConnectionInterface::kIceConnectionNew),
       ice_connection_receiving_(true),
@@ -523,7 +529,6 @@ WebRtcSession::~WebRtcSession() {
     quic_data_transport_.reset();
   }
 #endif
-  SignalDestroyed();
 
   LOG(LS_INFO) << "Session: " << id() << " is destroyed.";
 }
@@ -620,17 +625,20 @@ bool WebRtcSession::Initialize(
     webrtc_session_desc_factory_->SetSdesPolicy(cricket::SEC_DISABLED);
   }
 
+  webrtc_session_desc_factory_->set_enable_encrypted_rtp_header_extensions(
+      options.crypto_options.enable_encrypted_rtp_header_extensions);
+
   return true;
 }
 
 void WebRtcSession::Close() {
   SetState(STATE_CLOSED);
   RemoveUnusedChannels(nullptr);
+  call_ = nullptr;
   RTC_DCHECK(!voice_channel_);
   RTC_DCHECK(!video_channel_);
   RTC_DCHECK(!rtp_data_channel_);
   RTC_DCHECK(!sctp_transport_);
-  media_controller_->Close();
 }
 
 cricket::BaseChannel* WebRtcSession::GetChannel(
@@ -1213,6 +1221,7 @@ cricket::IceConfig WebRtcSession::ParseIceConfig(
   ice_config.continual_gathering_policy = gathering_policy;
   ice_config.presume_writable_when_fully_relayed =
       config.presume_writable_when_fully_relayed;
+  ice_config.ice_check_min_interval = config.ice_check_min_interval;
   return ice_config;
 }
 
@@ -1246,49 +1255,6 @@ std::string WebRtcSession::BadStateErrMsg(State state) {
   std::ostringstream desc;
   desc << "Called in wrong state: " << GetStateString(state);
   return desc.str();
-}
-
-bool WebRtcSession::CanInsertDtmf(const std::string& track_id) {
-  RTC_DCHECK(signaling_thread()->IsCurrent());
-  if (!voice_channel_) {
-    LOG(LS_ERROR) << "CanInsertDtmf: No audio channel exists.";
-    return false;
-  }
-  uint32_t send_ssrc = 0;
-  // The Dtmf is negotiated per channel not ssrc, so we only check if the ssrc
-  // exists.
-  if (!local_description() ||
-      !GetAudioSsrcByTrackId(local_description()->description(), track_id,
-                             &send_ssrc)) {
-    LOG(LS_ERROR) << "CanInsertDtmf: Track does not exist: " << track_id;
-    return false;
-  }
-  return voice_channel_->CanInsertDtmf();
-}
-
-bool WebRtcSession::InsertDtmf(const std::string& track_id,
-                               int code, int duration) {
-  RTC_DCHECK(signaling_thread()->IsCurrent());
-  if (!voice_channel_) {
-    LOG(LS_ERROR) << "InsertDtmf: No audio channel exists.";
-    return false;
-  }
-  uint32_t send_ssrc = 0;
-  if (!VERIFY(local_description() &&
-              GetAudioSsrcByTrackId(local_description()->description(),
-                                    track_id, &send_ssrc))) {
-    LOG(LS_ERROR) << "InsertDtmf: Track does not exist: " << track_id;
-    return false;
-  }
-  if (!voice_channel_->InsertDtmf(send_ssrc, code, duration)) {
-    LOG(LS_ERROR) << "Failed to insert DTMF to channel.";
-    return false;
-  }
-  return true;
-}
-
-sigslot::signal0<>* WebRtcSession::GetOnDestroyedSignal() {
-  return &SignalDestroyed;
 }
 
 bool WebRtcSession::SendData(const cricket::SendDataParams& params,
@@ -1467,7 +1433,7 @@ void WebRtcSession::SetIceConnectionState(
              PeerConnectionInterface::kIceConnectionClosed);
   ice_connection_state_ = state;
   if (ice_observer_) {
-    ice_observer_->OnIceConnectionChange(ice_connection_state_);
+    ice_observer_->OnIceConnectionStateChange(ice_connection_state_);
   }
 }
 
@@ -1544,12 +1510,13 @@ void WebRtcSession::OnTransportControllerCandidatesGathered(
   for (cricket::Candidates::const_iterator citer = candidates.begin();
        citer != candidates.end(); ++citer) {
     // Use transport_name as the candidate media id.
-    JsepIceCandidate candidate(transport_name, sdp_mline_index, *citer);
-    if (ice_observer_) {
-      ice_observer_->OnIceCandidate(&candidate);
-    }
+    std::unique_ptr<JsepIceCandidate> candidate(
+        new JsepIceCandidate(transport_name, sdp_mline_index, *citer));
     if (local_description()) {
-      mutable_local_description()->AddCandidate(&candidate);
+      mutable_local_description()->AddCandidate(candidate.get());
+    }
+    if (ice_observer_) {
+      ice_observer_->OnIceCandidate(std::move(candidate));
     }
   }
 }
@@ -1798,9 +1765,9 @@ bool WebRtcSession::CreateVoiceChannel(const cricket::ContentInfo* content,
   }
 
   voice_channel_.reset(channel_manager_->CreateVoiceChannel(
-      media_controller_, rtp_dtls_transport, rtcp_dtls_transport,
-      transport_controller_->signaling_thread(), content->name,
-      bundle_transport, require_rtcp_mux, SrtpRequired(), audio_options_));
+      call_, media_config_, rtp_dtls_transport, rtcp_dtls_transport,
+      transport_controller_->signaling_thread(), content->name, SrtpRequired(),
+      audio_options_));
   if (!voice_channel_) {
     transport_controller_->DestroyDtlsTransport(
         transport_name, cricket::ICE_CANDIDATE_COMPONENT_RTP);
@@ -1840,9 +1807,9 @@ bool WebRtcSession::CreateVideoChannel(const cricket::ContentInfo* content,
   }
 
   video_channel_.reset(channel_manager_->CreateVideoChannel(
-      media_controller_, rtp_dtls_transport, rtcp_dtls_transport,
-      transport_controller_->signaling_thread(), content->name,
-      bundle_transport, require_rtcp_mux, SrtpRequired(), video_options_));
+      call_, media_config_, rtp_dtls_transport, rtcp_dtls_transport,
+      transport_controller_->signaling_thread(), content->name, SrtpRequired(),
+      video_options_));
 
   if (!video_channel_) {
     transport_controller_->DestroyDtlsTransport(
@@ -1905,9 +1872,9 @@ bool WebRtcSession::CreateDataChannel(const cricket::ContentInfo* content,
     }
 
     rtp_data_channel_.reset(channel_manager_->CreateRtpDataChannel(
-        media_controller_, rtp_dtls_transport, rtcp_dtls_transport,
+        media_config_, rtp_dtls_transport, rtcp_dtls_transport,
         transport_controller_->signaling_thread(), content->name,
-        bundle_transport, require_rtcp_mux, SrtpRequired()));
+        SrtpRequired()));
 
     if (!rtp_data_channel_) {
       transport_controller_->DestroyDtlsTransport(
@@ -1930,6 +1897,16 @@ bool WebRtcSession::CreateDataChannel(const cricket::ContentInfo* content,
   SignalDataChannelCreated();
 
   return true;
+}
+
+Call::Stats WebRtcSession::GetCallStats() {
+  if (!worker_thread()->IsCurrent()) {
+    return worker_thread()->Invoke<Call::Stats>(
+        RTC_FROM_HERE, rtc::Bind(&WebRtcSession::GetCallStats, this));
+  }
+  if (!call_)
+    return Call::Stats();
+  return call_->GetStats();
 }
 
 std::unique_ptr<SessionStats> WebRtcSession::GetStats_n(
@@ -2354,7 +2331,8 @@ void WebRtcSession::ReportNegotiatedCiphers(
 
 void WebRtcSession::OnSentPacket_w(const rtc::SentPacket& sent_packet) {
   RTC_DCHECK(worker_thread()->IsCurrent());
-  media_controller_->call_w()->OnSentPacket(sent_packet);
+  RTC_DCHECK(call_);
+  call_->OnSentPacket(sent_packet);
 }
 
 const std::string WebRtcSession::GetTransportName(

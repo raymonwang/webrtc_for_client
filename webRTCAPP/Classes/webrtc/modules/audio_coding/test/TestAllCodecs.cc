@@ -14,12 +14,12 @@
 #include <limits>
 #include <string>
 
+#include "webrtc/base/logging.h"
 #include "webrtc/common_types.h"
 #include "webrtc/modules/audio_coding/codecs/audio_format_conversion.h"
 #include "webrtc/modules/audio_coding/include/audio_coding_module.h"
 #include "webrtc/modules/audio_coding/include/audio_coding_module_typedefs.h"
 #include "webrtc/modules/audio_coding/test/utility.h"
-#include "webrtc/system_wrappers/include/trace.h"
 #include "webrtc/test/gtest.h"
 #include "webrtc/test/testsupport/fileutils.h"
 #include "webrtc/typedefs.h"
@@ -127,8 +127,7 @@ void TestAllCodecs::Perform() {
   infile_a_.Open(file_name, 32000, "rb");
 
   if (test_mode_ == 0) {
-    WEBRTC_TRACE(kTraceStateInfo, kTraceAudioCoding, -1,
-                 "---------- TestAllCodecs ----------");
+    LOG(LS_INFO) << "---------- TestAllCodecs ----------";
   }
 
   acm_a_->InitializeReceiver();
@@ -457,7 +456,7 @@ void TestAllCodecs::Run(TestPack* channel) {
     ASSERT_FALSE(muted);
 
     // Write output speech to file.
-    outfile_b_.Write10MsData(audio_frame.data_,
+    outfile_b_.Write10MsData(audio_frame.data(),
                              audio_frame.samples_per_channel_);
 
     // Update loop counter

@@ -258,39 +258,39 @@ namespace webrtc {
 
 rtc::scoped_refptr<VideoTrackSourceInterface> VideoCapturerTrackSource::Create(
     rtc::Thread* worker_thread,
-    cricket::VideoCapturer* capturer,
+    std::unique_ptr<cricket::VideoCapturer> capturer,
     const webrtc::MediaConstraintsInterface* constraints,
     bool remote) {
   RTC_DCHECK(worker_thread != NULL);
-  RTC_DCHECK(capturer != NULL);
+  RTC_DCHECK(capturer != nullptr);
   rtc::scoped_refptr<VideoCapturerTrackSource> source(
-      new rtc::RefCountedObject<VideoCapturerTrackSource>(worker_thread,
-                                                          capturer, remote));
+      new rtc::RefCountedObject<VideoCapturerTrackSource>(
+          worker_thread, std::move(capturer), remote));
   source->Initialize(constraints);
   return source;
 }
 
 rtc::scoped_refptr<VideoTrackSourceInterface> VideoCapturerTrackSource::Create(
     rtc::Thread* worker_thread,
-    cricket::VideoCapturer* capturer,
+    std::unique_ptr<cricket::VideoCapturer> capturer,
     bool remote) {
   RTC_DCHECK(worker_thread != NULL);
-  RTC_DCHECK(capturer != NULL);
+  RTC_DCHECK(capturer != nullptr);
   rtc::scoped_refptr<VideoCapturerTrackSource> source(
-      new rtc::RefCountedObject<VideoCapturerTrackSource>(worker_thread,
-                                                          capturer, remote));
+      new rtc::RefCountedObject<VideoCapturerTrackSource>(
+          worker_thread, std::move(capturer), remote));
   source->Initialize(nullptr);
   return source;
 }
 
 VideoCapturerTrackSource::VideoCapturerTrackSource(
     rtc::Thread* worker_thread,
-    cricket::VideoCapturer* capturer,
+    std::unique_ptr<cricket::VideoCapturer> capturer,
     bool remote)
-    : VideoTrackSource(capturer, remote),
+    : VideoTrackSource(capturer.get(), remote),
       signaling_thread_(rtc::Thread::Current()),
       worker_thread_(worker_thread),
-      video_capturer_(capturer),
+      video_capturer_(std::move(capturer)),
       started_(false) {
   video_capturer_->SignalStateChange.connect(
       this, &VideoCapturerTrackSource::OnStateChange);
@@ -382,10 +382,14 @@ void VideoCapturerTrackSource::OnStateChange(
     cricket::VideoCapturer* capturer,
     cricket::CaptureState capture_state) {
   if (rtc::Thread::Current() != signaling_thread_) {
+    // Use rtc::Unretained, because we don't want this to capture a reference
+    // to ourselves. If our destructor is called while this task is executing,
+    // that's fine; our AsyncInvoker destructor will wait for it to finish if
+    // it isn't simply canceled.
     invoker_.AsyncInvoke<void>(
         RTC_FROM_HERE, signaling_thread_,
-        rtc::Bind(&VideoCapturerTrackSource::OnStateChange, this, capturer,
-                  capture_state));
+        rtc::Bind(&VideoCapturerTrackSource::OnStateChange,
+                  rtc::Unretained(this), capturer, capture_state));
     return;
   }
 

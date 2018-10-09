@@ -13,6 +13,9 @@
 		43884B1D1E55BF6A00E63E88 /* video_frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B171E55BF6A00E63E88 /* video_frame.h */; };
 		43884B1E1E55BF6A00E63E88 /* video_frame_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B181E55BF6A00E63E88 /* video_frame_buffer.h */; };
 		43884B1F1E55BF6A00E63E88 /* video_rotation.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884B191E55BF6A00E63E88 /* video_rotation.h */; };
+		43E1B17E1F0CE56200B73FCB /* video_content_type.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B17B1F0CE56200B73FCB /* video_content_type.h */; };
+		43E1B17F1F0CE56200B73FCB /* video_frame_buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B17C1F0CE56200B73FCB /* video_frame_buffer.cc */; };
+		43E1B1801F0CE56200B73FCB /* video_timing.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B17D1F0CE56200B73FCB /* video_timing.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		43884B171E55BF6A00E63E88 /* video_frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_frame.h; sourceTree = "<group>"; };
 		43884B181E55BF6A00E63E88 /* video_frame_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_frame_buffer.h; sourceTree = "<group>"; };
 		43884B191E55BF6A00E63E88 /* video_rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_rotation.h; sourceTree = "<group>"; };
+		43E1B17B1F0CE56200B73FCB /* video_content_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_content_type.h; sourceTree = "<group>"; };
+		43E1B17C1F0CE56200B73FCB /* video_frame_buffer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_frame_buffer.cc; sourceTree = "<group>"; };
+		43E1B17D1F0CE56200B73FCB /* video_timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_timing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +65,10 @@
 				43884B151E55BF6A00E63E88 /* i420_buffer.h */,
 				43884B161E55BF6A00E63E88 /* video_frame.cc */,
 				43884B171E55BF6A00E63E88 /* video_frame.h */,
+				43E1B17C1F0CE56200B73FCB /* video_frame_buffer.cc */,
 				43884B181E55BF6A00E63E88 /* video_frame_buffer.h */,
+				43E1B17B1F0CE56200B73FCB /* video_content_type.h */,
+				43E1B17D1F0CE56200B73FCB /* video_timing.h */,
 				43884B191E55BF6A00E63E88 /* video_rotation.h */,
 			);
 			name = video;
@@ -75,7 +84,9 @@
 			files = (
 				43884B1F1E55BF6A00E63E88 /* video_rotation.h in Headers */,
 				43884B1D1E55BF6A00E63E88 /* video_frame.h in Headers */,
+				43E1B17E1F0CE56200B73FCB /* video_content_type.h in Headers */,
 				43884B1E1E55BF6A00E63E88 /* video_frame_buffer.h in Headers */,
+				43E1B1801F0CE56200B73FCB /* video_timing.h in Headers */,
 				43884B1B1E55BF6A00E63E88 /* i420_buffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +151,7 @@
 			files = (
 				43884B1A1E55BF6A00E63E88 /* i420_buffer.cc in Sources */,
 				43884B1C1E55BF6A00E63E88 /* video_frame.cc in Sources */,
+				43E1B17F1F0CE56200B73FCB /* video_frame_buffer.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,7 +263,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};

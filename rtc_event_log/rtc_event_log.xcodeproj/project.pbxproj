@@ -18,7 +18,6 @@
 		43EFD12E1E56D6FA00E3DEAD /* DEPS */ = {isa = PBXFileReference; lastKnownFileType = text; path = DEPS; sourceTree = "<group>"; };
 		43EFD1301E56D6FA00E3DEAD /* mock_rtc_event_log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mock_rtc_event_log.h; sourceTree = "<group>"; };
 		43EFD1311E56D6FA00E3DEAD /* ringbuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ringbuffer.h; sourceTree = "<group>"; };
-		43EFD1321E56D6FA00E3DEAD /* ringbuffer_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ringbuffer_unittest.cc; sourceTree = "<group>"; };
 		43EFD1331E56D6FA00E3DEAD /* rtc_event_log.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rtc_event_log.cc; sourceTree = "<group>"; };
 		43EFD1341E56D6FA00E3DEAD /* rtc_event_log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rtc_event_log.h; sourceTree = "<group>"; };
 		43EFD1351E56D6FA00E3DEAD /* rtc_event_log.proto */ = {isa = PBXFileReference; lastKnownFileType = text; path = rtc_event_log.proto; sourceTree = "<group>"; };
@@ -76,7 +75,6 @@
 				43EFD12E1E56D6FA00E3DEAD /* DEPS */,
 				43EFD12F1E56D6FA00E3DEAD /* mock */,
 				43EFD1311E56D6FA00E3DEAD /* ringbuffer.h */,
-				43EFD1321E56D6FA00E3DEAD /* ringbuffer_unittest.cc */,
 				43EFD1331E56D6FA00E3DEAD /* rtc_event_log.cc */,
 				43EFD1341E56D6FA00E3DEAD /* rtc_event_log.h */,
 				43EFD1351E56D6FA00E3DEAD /* rtc_event_log.proto */,
@@ -270,7 +268,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};

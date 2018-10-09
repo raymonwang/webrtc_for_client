@@ -118,6 +118,11 @@ void ExtendedReports::SetTargetBitrate(const TargetBitrate& bitrate) {
   target_bitrate_ = rtc::Optional<TargetBitrate>(bitrate);
 }
 
+size_t ExtendedReports::BlockLength() const {
+  return kHeaderLength + kXrBaseLength + RrtrLength() + DlrrLength() +
+         VoipMetricLength() + TargetBitrateLength();
+}
+
 bool ExtendedReports::Create(uint8_t* packet,
                              size_t* index,
                              size_t max_length,
@@ -199,9 +204,8 @@ void ExtendedReports::ParseVoipMetricBlock(const uint8_t* block,
 
 void ExtendedReports::ParseTargetBitrateBlock(const uint8_t* block,
                                               uint16_t block_length) {
-  target_bitrate_ = rtc::Optional<TargetBitrate>(TargetBitrate());
-  if (!target_bitrate_->Parse(block, block_length))
-    target_bitrate_ = rtc::Optional<TargetBitrate>();
+  target_bitrate_.emplace();
+  target_bitrate_->Parse(block, block_length);
 }
 }  // namespace rtcp
 }  // namespace webrtc

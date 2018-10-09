@@ -16,12 +16,13 @@
 #include <memory>
 #include <vector>
 
+#include "webrtc/base/scoped_ref_ptr.h"
 #include "webrtc/modules/desktop_capture/desktop_capturer.h"
 #include "webrtc/modules/desktop_capture/desktop_capture_options.h"
 #include "webrtc/modules/desktop_capture/desktop_region.h"
 #include "webrtc/modules/desktop_capture/screen_capture_frame_queue.h"
-#include "webrtc/modules/desktop_capture/shared_desktop_frame.h"
 #include "webrtc/modules/desktop_capture/win/dxgi_duplicator_controller.h"
+#include "webrtc/modules/desktop_capture/win/dxgi_frame.h"
 
 namespace webrtc {
 
@@ -43,10 +44,11 @@ class ScreenCapturerWinDirectx : public DesktopCapturer {
   // consumers should not cache the result returned by this function.
   static bool RetrieveD3dInfo(D3dInfo* info);
 
-  explicit ScreenCapturerWinDirectx(const DesktopCaptureOptions& options);
+  explicit ScreenCapturerWinDirectx();
 
   ~ScreenCapturerWinDirectx() override;
 
+  // DesktopCapturer implementation.
   void Start(Callback* callback) override;
   void SetSharedMemoryFactory(
       std::unique_ptr<SharedMemoryFactory> shared_memory_factory) override;
@@ -55,15 +57,10 @@ class ScreenCapturerWinDirectx : public DesktopCapturer {
   bool SelectSource(SourceId id) override;
 
  private:
-  // Returns desktop size of selected screen.
-  DesktopSize SelectedDesktopSize() const;
-
-  ScreenCaptureFrameQueue<SharedDesktopFrame> frames_;
+  const rtc::scoped_refptr<DxgiDuplicatorController> controller_;
+  ScreenCaptureFrameQueue<DxgiFrame> frames_;
   std::unique_ptr<SharedMemoryFactory> shared_memory_factory_;
   Callback* callback_ = nullptr;
-
-  DxgiDuplicatorController::Context context_;
-
   SourceId current_screen_id_ = kFullDesktopScreenId;
 
   RTC_DISALLOW_COPY_AND_ASSIGN(ScreenCapturerWinDirectx);

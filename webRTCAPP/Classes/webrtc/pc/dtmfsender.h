@@ -16,7 +16,6 @@
 #include "webrtc/api/dtmfsenderinterface.h"
 #include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/api/proxy.h"
-#include "webrtc/base/common.h"
 #include "webrtc/base/constructormagic.h"
 #include "webrtc/base/messagehandler.h"
 #include "webrtc/base/refcount.h"
@@ -35,14 +34,13 @@ namespace webrtc {
 // to send DTMF.
 class DtmfProviderInterface {
  public:
-  // Returns true if the audio track with given id (|track_id|) is capable
-  // of sending DTMF. Otherwise returns false.
-  virtual bool CanInsertDtmf(const std::string& track_id) = 0;
-  // Sends DTMF |code| via the audio track with given id (|track_id|).
+  // Returns true if the audio sender is capable of sending DTMF. Otherwise
+  // returns false.
+  virtual bool CanInsertDtmf() = 0;
+  // Sends DTMF |code|.
   // The |duration| indicates the length of the DTMF tone in ms.
   // Returns true on success and false on failure.
-  virtual bool InsertDtmf(const std::string& track_id,
-                          int code, int duration) = 0;
+  virtual bool InsertDtmf(int code, int duration) = 0;
   // Returns a |sigslot::signal0<>| signal. The signal should fire before
   // the provider is destroyed.
   virtual sigslot::signal0<>* GetOnDestroyedSignal() = 0;
@@ -56,6 +54,8 @@ class DtmfSender
       public sigslot::has_slots<>,
       public rtc::MessageHandler {
  public:
+  // |track| is only there for backwards compatibility, since there's a track
+  // accessor method.
   static rtc::scoped_refptr<DtmfSender> Create(
       AudioTrackInterface* track,
       rtc::Thread* signaling_thread,

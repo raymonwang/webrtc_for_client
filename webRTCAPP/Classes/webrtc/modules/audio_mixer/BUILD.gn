@@ -6,7 +6,7 @@
 # in the file PATENTS.  All contributing project authors may
 # be found in the AUTHORS file in the root of the source tree.
 
-import("../../build/webrtc.gni")
+import("../../webrtc.gni")
 
 group("audio_mixer") {
   public_deps = [
@@ -21,11 +21,15 @@ rtc_static_library("audio_mixer_impl") {
     "audio_mixer_impl.h",
     "default_output_rate_calculator.cc",
     "default_output_rate_calculator.h",
+    "frame_combiner.cc",
+    "frame_combiner.h",
     "output_rate_calculator.h",
   ]
 
   public = [
     "audio_mixer_impl.h",
+    "default_output_rate_calculator.h",  # For creating a mixer with limiter disabled.
+    "frame_combiner.h",
   ]
 
   public_deps = [
@@ -34,6 +38,7 @@ rtc_static_library("audio_mixer_impl") {
 
   deps = [
     ":audio_frame_manipulator",
+    "..:module_api",
     "../..:webrtc_common",
     "../../audio/utility:audio_frame_operations",
     "../../base:rtc_base_approved",
@@ -54,6 +59,7 @@ rtc_static_library("audio_frame_manipulator") {
   ]
 
   deps = [
+    "..:module_api",
     "../../audio/utility",
     "../../base:rtc_base_approved",
   ]
@@ -61,30 +67,33 @@ rtc_static_library("audio_frame_manipulator") {
 
 if (rtc_include_tests) {
   rtc_source_set("audio_mixer_unittests") {
-    # When enabled, fails with error audio_mixer_impl_unittest.cc includes a
-    # private header. Fie default_output_rate_calculator.h is private to the
-    # target :audio_mixer_impl
-    check_includes = false
     testonly = true
+
+    # Skip restricting visibility on mobile platforms since the tests on those
+    # gets additional generated targets which would require many lines here to
+    # cover (which would be confusing to read and hard to maintain).
+    if (!is_android && !is_ios) {
+      visibility = [ "//webrtc/modules:modules_unittests" ]
+    }
     sources = [
       "audio_frame_manipulator_unittest.cc",
       "audio_mixer_impl_unittest.cc",
+      "frame_combiner_unittest.cc",
+      "gain_change_calculator.cc",
+      "gain_change_calculator.h",
+      "sine_wave_generator.cc",
+      "sine_wave_generator.h",
     ]
     deps = [
       ":audio_frame_manipulator",
       ":audio_mixer_impl",
+      "..:module_api",
       "../../api:audio_mixer_api",
+      "../../audio/utility:audio_frame_operations",
       "../../base:rtc_base",
       "../../base:rtc_base_approved",
       "../../test:test_support",
       "//testing/gmock",
     ]
-
-    # TODO(jschuh): bugs.webrtc.org/1348: fix this warning.
-    configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
-    if (!build_with_chromium && is_clang) {
-      # Suppress warnings from the Chromium Clang plugin (bugs.webrtc.org/163).
-      suppressed_configs += [ "//build/config/clang:find_bad_constructs" ]
-    }
   }
 }

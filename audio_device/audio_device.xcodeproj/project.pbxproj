@@ -31,12 +31,8 @@
 		43C037221D51C6BC0022DED1 /* voice_processing_audio_unit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6ED1D4F1A0F0058AC82 /* voice_processing_audio_unit.mm */; };
 		43C037231D51C6BC0022DED1 /* audio_device_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 430D9063198628A0009E763A /* audio_device_ios.h */; };
 		43C037241D51C6BC0022DED1 /* audio_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 430D9064198628A0009E763A /* audio_device_ios.mm */; };
-		43C037251D51C6CA0022DED1 /* RTCAudioSession+Configuration.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6E31D4F1A0F0058AC82 /* RTCAudioSession+Configuration.mm */; };
-		43C037261D51C6CA0022DED1 /* RTCAudioSession+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6E41D4F1A0F0058AC82 /* RTCAudioSession+Private.h */; };
 		43C037271D51C6CA0022DED1 /* RTCAudioSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6E51D4F1A0F0058AC82 /* RTCAudioSession.h */; };
-		43C037281D51C6CA0022DED1 /* RTCAudioSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6E61D4F1A0F0058AC82 /* RTCAudioSession.mm */; };
 		43C037291D51C6CA0022DED1 /* RTCAudioSessionConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6E71D4F1A0F0058AC82 /* RTCAudioSessionConfiguration.h */; };
-		43C0372A1D51C6CA0022DED1 /* RTCAudioSessionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6E81D4F1A0F0058AC82 /* RTCAudioSessionConfiguration.m */; };
 		43C0372B1D51C6CA0022DED1 /* RTCAudioSessionDelegateAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C0C6E91D4F1A0F0058AC82 /* RTCAudioSessionDelegateAdapter.h */; };
 		43C0372C1D51C6CA0022DED1 /* RTCAudioSessionDelegateAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43C0C6EA1D4F1A0F0058AC82 /* RTCAudioSessionDelegateAdapter.mm */; };
 		43C0372D1D51C7250022DED1 /* audio_device_dummy.cc in Sources */ = {isa = PBXBuildFile; fileRef = 430D9056198628A0009E763A /* audio_device_dummy.cc */; };
@@ -107,12 +103,8 @@
 		43C0C6D81D4F17DD0058AC82 /* mock_audio_device_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_audio_device_buffer.h; sourceTree = "<group>"; };
 		43C0C6DF1D4F1A0F0058AC82 /* audio_device_not_implemented_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = audio_device_not_implemented_ios.mm; sourceTree = "<group>"; };
 		43C0C6E11D4F1A0F0058AC82 /* audio_session_observer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audio_session_observer.h; sourceTree = "<group>"; };
-		43C0C6E31D4F1A0F0058AC82 /* RTCAudioSession+Configuration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "RTCAudioSession+Configuration.mm"; sourceTree = "<group>"; };
-		43C0C6E41D4F1A0F0058AC82 /* RTCAudioSession+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTCAudioSession+Private.h"; sourceTree = "<group>"; };
 		43C0C6E51D4F1A0F0058AC82 /* RTCAudioSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCAudioSession.h; sourceTree = "<group>"; };
-		43C0C6E61D4F1A0F0058AC82 /* RTCAudioSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCAudioSession.mm; sourceTree = "<group>"; };
 		43C0C6E71D4F1A0F0058AC82 /* RTCAudioSessionConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCAudioSessionConfiguration.h; sourceTree = "<group>"; };
-		43C0C6E81D4F1A0F0058AC82 /* RTCAudioSessionConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCAudioSessionConfiguration.m; sourceTree = "<group>"; };
 		43C0C6E91D4F1A0F0058AC82 /* RTCAudioSessionDelegateAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCAudioSessionDelegateAdapter.h; sourceTree = "<group>"; };
 		43C0C6EA1D4F1A0F0058AC82 /* RTCAudioSessionDelegateAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTCAudioSessionDelegateAdapter.mm; sourceTree = "<group>"; };
 		43C0C6EC1D4F1A0F0058AC82 /* voice_processing_audio_unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voice_processing_audio_unit.h; sourceTree = "<group>"; };
@@ -248,12 +240,8 @@
 		43C0C6E21D4F1A0F0058AC82 /* objc */ = {
 			isa = PBXGroup;
 			children = (
-				43C0C6E31D4F1A0F0058AC82 /* RTCAudioSession+Configuration.mm */,
-				43C0C6E41D4F1A0F0058AC82 /* RTCAudioSession+Private.h */,
 				43C0C6E51D4F1A0F0058AC82 /* RTCAudioSession.h */,
-				43C0C6E61D4F1A0F0058AC82 /* RTCAudioSession.mm */,
 				43C0C6E71D4F1A0F0058AC82 /* RTCAudioSessionConfiguration.h */,
-				43C0C6E81D4F1A0F0058AC82 /* RTCAudioSessionConfiguration.m */,
 				43C0C6E91D4F1A0F0058AC82 /* RTCAudioSessionDelegateAdapter.h */,
 				43C0C6EA1D4F1A0F0058AC82 /* RTCAudioSessionDelegateAdapter.mm */,
 			);
@@ -300,7 +288,6 @@
 				43C037271D51C6CA0022DED1 /* RTCAudioSession.h in Headers */,
 				43C037301D51C7250022DED1 /* file_audio_device.h in Headers */,
 				43C0C6DD1D4F17DD0058AC82 /* mock_audio_device_buffer.h in Headers */,
-				43C037261D51C6CA0022DED1 /* RTCAudioSession+Private.h in Headers */,
 				43C037231D51C6BC0022DED1 /* audio_device_ios.h in Headers */,
 				43C037291D51C6CA0022DED1 /* RTCAudioSessionConfiguration.h in Headers */,
 				430D9078198628A0009E763A /* audio_device.h in Headers */,
@@ -403,7 +390,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43C0372A1D51C6CA0022DED1 /* RTCAudioSessionConfiguration.m in Sources */,
 				43042CB31E4B469F00817496 /* audio_device_not_implemented_ios.mm in Sources */,
 				43C0372D1D51C7250022DED1 /* audio_device_dummy.cc in Sources */,
 				43C0372F1D51C7250022DED1 /* file_audio_device.cc in Sources */,
@@ -412,10 +398,8 @@
 				43C036FB1D51BDA20022DED1 /* audio_device_buffer.cc in Sources */,
 				43C0372C1D51C6CA0022DED1 /* RTCAudioSessionDelegateAdapter.mm in Sources */,
 				43C0370B1D51C64F0022DED1 /* audio_device_impl.cc in Sources */,
-				43C037251D51C6CA0022DED1 /* RTCAudioSession+Configuration.mm in Sources */,
 				43C0C70B1D4F201F0058AC82 /* fine_audio_buffer.cc in Sources */,
 				43C037221D51C6BC0022DED1 /* voice_processing_audio_unit.mm in Sources */,
-				43C037281D51C6CA0022DED1 /* RTCAudioSession.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,7 +512,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";

@@ -78,6 +78,9 @@ DEFINE_string(ed_graph, "", "Output filename for graph of echo likelihood");
 DEFINE_int32(agc,
              kParameterNotSpecifiedValue,
              "Activate (1) or deactivate(0) the AGC");
+DEFINE_int32(agc2,
+             kParameterNotSpecifiedValue,
+             "Activate (1) or deactivate(0) the AGC2");
 DEFINE_int32(hpf,
              kParameterNotSpecifiedValue,
              "Activate (1) or deactivate(0) the high-pass filter");
@@ -121,6 +124,9 @@ DEFINE_int32(aec3,
 DEFINE_int32(lc,
              kParameterNotSpecifiedValue,
              "Activate (1) or deactivate(0) the level control");
+DEFINE_int32(experimental_agc,
+             kParameterNotSpecifiedValue,
+             "Activate (1) or deactivate(0) the experimental AGC");
 DEFINE_int32(
     refined_adaptive_filter,
     kParameterNotSpecifiedValue,
@@ -227,6 +233,7 @@ SimulationSettings CreateSettings() {
   SetSettingIfFlagSet(FLAGS_ed, &settings.use_ed);
   SetSettingIfSpecified(FLAGS_ed_graph, &settings.ed_graph_output_filename);
   SetSettingIfFlagSet(FLAGS_agc, &settings.use_agc);
+  SetSettingIfFlagSet(FLAGS_agc2, &settings.use_agc2);
   SetSettingIfFlagSet(FLAGS_hpf, &settings.use_hpf);
   SetSettingIfFlagSet(FLAGS_ns, &settings.use_ns);
   SetSettingIfFlagSet(FLAGS_ts, &settings.use_ts);
@@ -245,6 +252,7 @@ SimulationSettings CreateSettings() {
 
   SetSettingIfFlagSet(FLAGS_aec3, &settings.use_aec3);
   SetSettingIfFlagSet(FLAGS_lc, &settings.use_lc);
+  SetSettingIfFlagSet(FLAGS_experimental_agc, &settings.use_experimental_agc);
   SetSettingIfSpecified(FLAGS_aecm_routing_mode, &settings.aecm_routing_mode);
   SetSettingIfFlagSet(FLAGS_aecm_comfort_noise,
                       &settings.use_aecm_comfort_noise);

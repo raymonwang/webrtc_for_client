@@ -7,6 +7,7 @@ print <<EOF
 #include "vpx/vpx_integer.h"
 #include "vp9/common/vp9_common.h"
 #include "vp9/common/vp9_enums.h"
+#include "vp9/common/vp9_filter.h"
 
 struct macroblockd;
 
@@ -101,11 +102,11 @@ if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
   #
   # Note as optimized versions of these functions are added we need to add a check to ensure
   # that when CONFIG_EMULATE_HARDWARE is on, it defaults to the C versions only.
-  add_proto qw/void vp9_highbd_iht4x4_16_add/, "const tran_low_t *input, uint8_t *dest, int stride, int tx_type, int bd";
+  add_proto qw/void vp9_highbd_iht4x4_16_add/, "const tran_low_t *input, uint16_t *dest, int stride, int tx_type, int bd";
 
-  add_proto qw/void vp9_highbd_iht8x8_64_add/, "const tran_low_t *input, uint8_t *dest, int stride, int tx_type, int bd";
+  add_proto qw/void vp9_highbd_iht8x8_64_add/, "const tran_low_t *input, uint16_t *dest, int stride, int tx_type, int bd";
 
-  add_proto qw/void vp9_highbd_iht16x16_256_add/, "const tran_low_t *input, uint8_t *output, int pitch, int tx_type, int bd";
+  add_proto qw/void vp9_highbd_iht16x16_256_add/, "const tran_low_t *input, uint16_t *output, int pitch, int tx_type, int bd";
 }
 
 #
@@ -120,24 +121,27 @@ if (vpx_config("CONFIG_VP9_ENCODER") eq "yes") {
 #
 if (vpx_config("CONFIG_VP9_TEMPORAL_DENOISING") eq "yes") {
   add_proto qw/int vp9_denoiser_filter/, "const uint8_t *sig, int sig_stride, const uint8_t *mc_avg, int mc_avg_stride, uint8_t *avg, int avg_stride, int increase_denoising, BLOCK_SIZE bs, int motion_magnitude";
-  specialize qw/vp9_denoiser_filter sse2/;
+  specialize qw/vp9_denoiser_filter neon sse2/;
 }
 
 if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
   add_proto qw/int64_t vp9_block_error/, "const tran_low_t *coeff, const tran_low_t *dqcoeff, intptr_t block_size, int64_t *ssz";
+  specialize qw/vp9_block_error avx2 sse2/;
 
   add_proto qw/int64_t vp9_highbd_block_error/, "const tran_low_t *coeff, const tran_low_t *dqcoeff, intptr_t block_size, int64_t *ssz, int bd";
   specialize qw/vp9_highbd_block_error sse2/;
 
-  add_proto qw/int64_t vp9_highbd_block_error_8bit/, "const tran_low_t *coeff, const tran_low_t *dqcoeff, intptr_t block_size, int64_t *ssz";
-  specialize qw/vp9_highbd_block_error_8bit sse2 avx/;
+  add_proto qw/int64_t vp9_block_error_fp/, "const tran_low_t *coeff, const tran_low_t *dqcoeff, int block_size";
+  specialize qw/vp9_block_error_fp sse2/;
 
-  add_proto qw/void vp9_quantize_fp/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_quantize_fp/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  specialize qw/vp9_quantize_fp neon sse2/, "$ssse3_x86_64";
 
-  add_proto qw/void vp9_quantize_fp_32x32/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_quantize_fp_32x32/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  specialize qw/vp9_quantize_fp_32x32/, "$ssse3_x86_64";
 
-  add_proto qw/void vp9_fdct8x8_quant/, "const int16_t *input, int stride, tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
-  specialize qw/vp9_fdct8x8_quant ssse3/;
+  add_proto qw/void vp9_fdct8x8_quant/, "const int16_t *input, int stride, tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  specialize qw/vp9_fdct8x8_quant neon ssse3/;
 } else {
   add_proto qw/int64_t vp9_block_error/, "const tran_low_t *coeff, const tran_low_t *dqcoeff, intptr_t block_size, int64_t *ssz";
   specialize qw/vp9_block_error avx2 msa sse2/;
@@ -145,13 +149,13 @@ if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
   add_proto qw/int64_t vp9_block_error_fp/, "const int16_t *coeff, const int16_t *dqcoeff, int block_size";
   specialize qw/vp9_block_error_fp neon sse2/;
 
-  add_proto qw/void vp9_quantize_fp/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_quantize_fp/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
   specialize qw/vp9_quantize_fp neon sse2/, "$ssse3_x86_64";
 
-  add_proto qw/void vp9_quantize_fp_32x32/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_quantize_fp_32x32/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
   specialize qw/vp9_quantize_fp_32x32/, "$ssse3_x86_64";
 
-  add_proto qw/void vp9_fdct8x8_quant/, "const int16_t *input, int stride, tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_fdct8x8_quant/, "const int16_t *input, int stride, tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
   specialize qw/vp9_fdct8x8_quant sse2 ssse3 neon/;
 }
 
@@ -194,16 +198,16 @@ $vp9_full_search_sad_sse4_1=vp9_full_search_sadx8;
 add_proto qw/int vp9_diamond_search_sad/, "const struct macroblock *x, const struct search_site_config *cfg,  struct mv *ref_mv, struct mv *best_mv, int search_param, int sad_per_bit, int *num00, const struct vp9_variance_vtable *fn_ptr, const struct mv *center_mv";
 specialize qw/vp9_diamond_search_sad avx/;
 
-add_proto qw/void vp9_temporal_filter_apply/, "uint8_t *frame1, unsigned int stride, uint8_t *frame2, unsigned int block_width, unsigned int block_height, int strength, int filter_weight, unsigned int *accumulator, uint16_t *count";
-specialize qw/vp9_temporal_filter_apply sse2 msa/;
+add_proto qw/void vp9_temporal_filter_apply/, "const uint8_t *frame1, unsigned int stride, const uint8_t *frame2, unsigned int block_width, unsigned int block_height, int strength, int filter_weight, uint32_t *accumulator, uint16_t *count";
+specialize qw/vp9_temporal_filter_apply sse4_1/;
 
 if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
 
   # ENCODEMB INVOKE
 
-  add_proto qw/void vp9_highbd_quantize_fp/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_highbd_quantize_fp/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
 
-  add_proto qw/void vp9_highbd_quantize_fp_32x32/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *zbin_ptr, const int16_t *round_ptr, const int16_t *quant_ptr, const int16_t *quant_shift_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan";
+  add_proto qw/void vp9_highbd_quantize_fp_32x32/, "const tran_low_t *coeff_ptr, intptr_t n_coeffs, int skip_block, const int16_t *round_ptr, const int16_t *quant_ptr, tran_low_t *qcoeff_ptr, tran_low_t *dqcoeff_ptr, const int16_t *dequant_ptr, uint16_t *eob_ptr, const int16_t *scan, const int16_t *iscan" ;
 
   # fdct functions
   add_proto qw/void vp9_highbd_fht4x4/, "const int16_t *input, tran_low_t *output, int stride, int tx_type";
@@ -214,7 +218,7 @@ if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
 
   add_proto qw/void vp9_highbd_fwht4x4/, "const int16_t *input, tran_low_t *output, int stride";
 
-  add_proto qw/void vp9_highbd_temporal_filter_apply/, "uint8_t *frame1, unsigned int stride, uint8_t *frame2, unsigned int block_width, unsigned int block_height, int strength, int filter_weight, unsigned int *accumulator, uint16_t *count";
+  add_proto qw/void vp9_highbd_temporal_filter_apply/, "const uint8_t *frame1, unsigned int stride, const uint8_t *frame2, unsigned int block_width, unsigned int block_height, int strength, int filter_weight, uint32_t *accumulator, uint16_t *count";
 
 }
 # End vp9_high encoder functions
@@ -222,11 +226,8 @@ if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
 #
 # frame based scale
 #
-if (vpx_config("CONFIG_VP9_HIGHBITDEPTH") eq "yes") {
-} else {
-  add_proto qw/void vp9_scale_and_extend_frame/, "const struct yv12_buffer_config *src, struct yv12_buffer_config *dst";
-  specialize qw/vp9_scale_and_extend_frame ssse3/;
-}
+add_proto qw/void vp9_scale_and_extend_frame/, "const struct yv12_buffer_config *src, struct yv12_buffer_config *dst, INTERP_FILTER filter_type, int phase_scaler";
+specialize qw/vp9_scale_and_extend_frame ssse3/;
 
 }
 # end encoder functions

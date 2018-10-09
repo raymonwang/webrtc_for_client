@@ -10,12 +10,12 @@
 
 #include "webrtc/examples/peerconnection/client/peer_connection_client.h"
 
-#include "webrtc/examples/peerconnection/client/defaults.h"
 #include "webrtc/base/checks.h"
-#include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
 #include "webrtc/base/nethelpers.h"
 #include "webrtc/base/stringutils.h"
+#include "webrtc/base/thread.h"
+#include "webrtc/examples/peerconnection/client/defaults.h"
 
 #ifdef WIN32
 #include "webrtc/base/win32socketserver.h"
@@ -239,7 +239,6 @@ void PeerConnectionClient::OnConnect(rtc::AsyncSocket* socket) {
   RTC_DCHECK(!onconnect_data_.empty());
   size_t sent = socket->Send(onconnect_data_.c_str(), onconnect_data_.length());
   RTC_DCHECK(sent == onconnect_data_.length());
-  RTC_UNUSED(sent);
   onconnect_data_.clear();
 }
 
@@ -250,7 +249,6 @@ void PeerConnectionClient::OnHangingGetConnect(rtc::AsyncSocket* socket) {
   int len = static_cast<int>(strlen(buffer));
   int sent = socket->Send(buffer, len);
   RTC_DCHECK(sent == len);
-  RTC_UNUSED2(sent, len);
 }
 
 void PeerConnectionClient::OnMessageFromPeer(int peer_id,

@@ -238,6 +238,8 @@ static const char *SignatureAlgorithmToString(uint16_t version, uint16_t sigalg)
       return "rsa_pss_sha384";
     case SSL_SIGN_RSA_PSS_SHA512:
       return "rsa_pss_sha512";
+    case SSL_SIGN_ED25519:
+      return "ed25519";
     default:
       return "(unknown)";
   }
@@ -249,7 +251,7 @@ void PrintConnectionInfo(const SSL *ssl) {
   fprintf(stderr, "  Version: %s\n", SSL_get_version(ssl));
   fprintf(stderr, "  Resumed session: %s\n",
           SSL_session_reused(ssl) ? "yes" : "no");
-  fprintf(stderr, "  Cipher: %s\n", SSL_CIPHER_get_name(cipher));
+  fprintf(stderr, "  Cipher: %s\n", SSL_CIPHER_standard_name(cipher));
   uint16_t curve = SSL_get_curve_id(ssl);
   if (curve != 0) {
     fprintf(stderr, "  ECDHE curve: %s\n", SSL_get_curve_name(curve));
@@ -285,7 +287,15 @@ void PrintConnectionInfo(const SSL *ssl) {
     size_t ocsp_staple_len;
     SSL_get0_ocsp_response(ssl, &ocsp_staple, &ocsp_staple_len);
     fprintf(stderr, "  OCSP staple: %s\n", ocsp_staple_len > 0 ? "yes" : "no");
+
+    const uint8_t *sct_list;
+    size_t sct_list_len;
+    SSL_get0_signed_cert_timestamp_list(ssl, &sct_list, &sct_list_len);
+    fprintf(stderr, "  SCT list: %s\n", sct_list_len > 0 ? "yes" : "no");
   }
+
+  fprintf(stderr, "  Early data: %s\n",
+          SSL_early_data_accepted(ssl) ? "yes" : "no");
 
   // Print the server cert subject and issuer names.
   bssl::UniquePtr<X509> peer(SSL_get_peer_certificate(ssl));

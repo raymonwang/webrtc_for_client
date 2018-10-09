@@ -14,7 +14,7 @@
 #include <memory>
 #include <string>
 
-#include "webrtc/video_decoder.h"
+#include "webrtc/api/video_codecs/video_decoder.h"
 
 namespace webrtc {
 
@@ -48,6 +48,7 @@ class VideoDecoderSoftwareFallbackWrapper : public webrtc::VideoDecoder {
 
   const VideoCodecType codec_type_;
   VideoDecoder* const decoder_;
+  bool decoder_initialized_;
 
   VideoCodec codec_settings_;
   int32_t number_of_cores_;

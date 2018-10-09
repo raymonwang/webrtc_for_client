@@ -9,27 +9,41 @@
  */
 
 #include "webrtc/api/mediatypes.h"
+
+#include "webrtc/api/mediastreaminterface.h"
 #include "webrtc/base/checks.h"
+
+namespace {
+static const char* kMediaTypeData = "data";
+}  // namespace
 
 namespace cricket {
 
 std::string MediaTypeToString(MediaType type) {
-  std::string type_str;
   switch (type) {
     case MEDIA_TYPE_AUDIO:
-      type_str = "audio";
-      break;
+      return webrtc::MediaStreamTrackInterface::kAudioKind;
     case MEDIA_TYPE_VIDEO:
-      type_str = "video";
-      break;
+      return webrtc::MediaStreamTrackInterface::kVideoKind;
     case MEDIA_TYPE_DATA:
-      type_str = "data";
-      break;
-    default:
-      RTC_NOTREACHED();
-      break;
+      return kMediaTypeData;
   }
-  return type_str;
+  FATAL();
+  // Not reachable; avoids compile warning.
+  return "";
+}
+
+MediaType MediaTypeFromString(const std::string& type_str) {
+  if (type_str == webrtc::MediaStreamTrackInterface::kAudioKind) {
+    return MEDIA_TYPE_AUDIO;
+  } else if (type_str == webrtc::MediaStreamTrackInterface::kVideoKind) {
+    return MEDIA_TYPE_VIDEO;
+  } else if (type_str == kMediaTypeData) {
+    return MEDIA_TYPE_DATA;
+  }
+  FATAL();
+  // Not reachable; avoids compile warning.
+  return static_cast<MediaType>(-1);
 }
 
 }  // namespace cricket

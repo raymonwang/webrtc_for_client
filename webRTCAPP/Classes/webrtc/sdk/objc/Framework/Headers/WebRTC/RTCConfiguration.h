@@ -104,7 +104,12 @@ RTC_EXPORT
  */
 @property(nonatomic, assign) BOOL shouldPresumeWritableWhenFullyRelayed;
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+/** If set to non-nil, controls the minimal interval between consecutive ICE
+ *  check packets.
+ */
+@property(nonatomic, copy, nullable) NSNumber *iceCheckMinInterval;
+
+- (instancetype)init;
 
 @end
 

@@ -27,13 +27,13 @@ TEST(BitrateProberTest, VerifyStatesAndTimeBetweenProbes) {
   const int kProbeSize = 1000;
   const int kMinProbeDurationMs = 15;
 
-  prober.CreateProbeCluster(kTestBitrate1);
-  prober.CreateProbeCluster(kTestBitrate2);
+  prober.CreateProbeCluster(kTestBitrate1, now_ms);
+  prober.CreateProbeCluster(kTestBitrate2, now_ms);
   EXPECT_FALSE(prober.IsProbing());
 
   prober.OnIncomingPacket(kProbeSize);
   EXPECT_TRUE(prober.IsProbing());
-  EXPECT_EQ(0, prober.CurrentClusterId());
+  EXPECT_EQ(0, prober.CurrentCluster().probe_cluster_id);
 
   // First packet should probe as soon as possible.
   EXPECT_EQ(0, prober.TimeUntilNextProbe(now_ms));
@@ -41,7 +41,7 @@ TEST(BitrateProberTest, VerifyStatesAndTimeBetweenProbes) {
   for (int i = 0; i < kClusterSize; ++i) {
     now_ms += prober.TimeUntilNextProbe(now_ms);
     EXPECT_EQ(0, prober.TimeUntilNextProbe(now_ms));
-    EXPECT_EQ(0, prober.CurrentClusterId());
+    EXPECT_EQ(0, prober.CurrentCluster().probe_cluster_id);
     prober.ProbeSent(now_ms, kProbeSize);
   }
 
@@ -57,7 +57,7 @@ TEST(BitrateProberTest, VerifyStatesAndTimeBetweenProbes) {
   for (int i = 0; i < kClusterSize; ++i) {
     now_ms += prober.TimeUntilNextProbe(now_ms);
     EXPECT_EQ(0, prober.TimeUntilNextProbe(now_ms));
-    EXPECT_EQ(1, prober.CurrentClusterId());
+    EXPECT_EQ(1, prober.CurrentCluster().probe_cluster_id);
     prober.ProbeSent(now_ms, kProbeSize);
   }
 
@@ -78,7 +78,7 @@ TEST(BitrateProberTest, DoesntProbeWithoutRecentPackets) {
   int64_t now_ms = 0;
   EXPECT_EQ(-1, prober.TimeUntilNextProbe(now_ms));
 
-  prober.CreateProbeCluster(900000);
+  prober.CreateProbeCluster(900000, now_ms);
   EXPECT_FALSE(prober.IsProbing());
 
   prober.OnIncomingPacket(1000);
@@ -87,10 +87,6 @@ TEST(BitrateProberTest, DoesntProbeWithoutRecentPackets) {
   prober.ProbeSent(now_ms, 1000);
   // Let time pass, no large enough packets put into prober.
   now_ms += 6000;
-  EXPECT_EQ(-1, prober.TimeUntilNextProbe(now_ms));
-  // Insert a small packet, not a candidate for probing.
-  prober.OnIncomingPacket(100);
-  EXPECT_FALSE(prober.IsProbing());
   EXPECT_EQ(-1, prober.TimeUntilNextProbe(now_ms));
   // Insert a large-enough packet after downtime while probing should reset to
   // perform a new probe since the requested one didn't finish.
@@ -115,7 +111,7 @@ TEST(BitrateProberTest, VerifyProbeSizeOnHighBitrate) {
   BitrateProber prober;
   constexpr unsigned kHighBitrateBps = 10000000;  // 10 Mbps
 
-  prober.CreateProbeCluster(kHighBitrateBps);
+  prober.CreateProbeCluster(kHighBitrateBps, 0);
   // Probe size should ensure a minimum of 1 ms interval.
   EXPECT_GT(prober.RecommendedMinProbeSize(), kHighBitrateBps / 8000);
 }
@@ -127,7 +123,7 @@ TEST(BitrateProberTest, MinumumNumberOfProbingPackets) {
   constexpr int kBitrateBps = 100000;  // 100 kbps
   constexpr int kPacketSizeBytes = 1000;
 
-  prober.CreateProbeCluster(kBitrateBps);
+  prober.CreateProbeCluster(kBitrateBps, 0);
   prober.OnIncomingPacket(kPacketSizeBytes);
   for (int i = 0; i < 5; ++i) {
     EXPECT_TRUE(prober.IsProbing());
@@ -143,11 +139,11 @@ TEST(BitrateProberTest, ScaleBytesUsedForProbing) {
   constexpr int kPacketSizeBytes = 1000;
   constexpr int kExpectedBytesSent = kBitrateBps * 15 / 8000;
 
-  prober.CreateProbeCluster(kBitrateBps);
+  prober.CreateProbeCluster(kBitrateBps, 0);
   prober.OnIncomingPacket(kPacketSizeBytes);
   int bytes_sent = 0;
   while (bytes_sent < kExpectedBytesSent) {
-    EXPECT_TRUE(prober.IsProbing());
+    ASSERT_TRUE(prober.IsProbing());
     prober.ProbeSent(0, kPacketSizeBytes);
     bytes_sent += kPacketSizeBytes;
   }
@@ -155,4 +151,33 @@ TEST(BitrateProberTest, ScaleBytesUsedForProbing) {
   EXPECT_FALSE(prober.IsProbing());
 }
 
+TEST(BitrateProberTest, ProbeClusterTimeout) {
+  BitrateProber prober;
+  constexpr int kBitrateBps = 300000;  // 300 kbps
+  constexpr int kSmallPacketSize = 20;
+  // Expecting two probe clusters of 5 packets each.
+  constexpr int kExpectedBytesSent = 20 * 2 * 5;
+  constexpr int64_t kTimeoutMs = 5000;
+
+  int64_t now_ms = 0;
+  prober.CreateProbeCluster(kBitrateBps, now_ms);
+  prober.OnIncomingPacket(kSmallPacketSize);
+  EXPECT_FALSE(prober.IsProbing());
+  now_ms += kTimeoutMs;
+  prober.CreateProbeCluster(kBitrateBps / 10, now_ms);
+  prober.OnIncomingPacket(kSmallPacketSize);
+  EXPECT_FALSE(prober.IsProbing());
+  now_ms += 1;
+  prober.CreateProbeCluster(kBitrateBps / 10, now_ms);
+  prober.OnIncomingPacket(kSmallPacketSize);
+  EXPECT_TRUE(prober.IsProbing());
+  int bytes_sent = 0;
+  while (bytes_sent < kExpectedBytesSent) {
+    ASSERT_TRUE(prober.IsProbing());
+    prober.ProbeSent(0, kSmallPacketSize);
+    bytes_sent += kSmallPacketSize;
+  }
+
+  EXPECT_FALSE(prober.IsProbing());
+}
 }  // namespace webrtc

@@ -24,7 +24,6 @@
 #include "webrtc/p2p/base/turnport.h"
 #include "webrtc/p2p/base/udpport.h"
 #include "webrtc/base/checks.h"
-#include "webrtc/base/common.h"
 #include "webrtc/base/helpers.h"
 #include "webrtc/base/logging.h"
 
@@ -48,7 +47,7 @@ const int PHASE_SSLTCP = 3;
 
 const int kNumPhases = 4;
 
-// Gets protocol priority: UDP > TCP > SSLTCP.
+// Gets protocol priority: UDP > TCP > SSLTCP == TLS.
 int GetProtocolPriority(cricket::ProtocolType protocol) {
   switch (protocol) {
     case cricket::PROTO_UDP:
@@ -56,6 +55,7 @@ int GetProtocolPriority(cricket::ProtocolType protocol) {
     case cricket::PROTO_TCP:
       return 1;
     case cricket::PROTO_SSLTCP:
+    case cricket::PROTO_TLS:
       return 0;
     default:
       RTC_NOTREACHED();
@@ -170,6 +170,9 @@ void BasicPortAllocator::OnIceRegathering(PortAllocatorSession* session,
 }
 
 BasicPortAllocator::~BasicPortAllocator() {
+  // Our created port allocator sessions depend on us, so destroy our remaining
+  // pooled sessions before anything else.
+  DiscardCandidatePool();
 }
 
 PortAllocatorSession* BasicPortAllocator::CreateSessionInternal(
@@ -553,8 +556,9 @@ std::vector<rtc::Network*> BasicPortAllocatorSession::GetNetworks() {
     network_manager->GetNetworks(&networks);
     // If network enumeration fails, use the ANY address as a fallback, so we
     // can at least try gathering candidates using the default route chosen by
-    // the OS.
-    if (networks.empty()) {
+    // the OS. Or, if the PORTALLOCATOR_ENABLE_ANY_ADDRESS_PORTS flag is
+    // set, we'll use ANY address candidates either way.
+    if (networks.empty() || flags() & PORTALLOCATOR_ENABLE_ANY_ADDRESS_PORTS) {
       network_manager->GetAnyAddressNetworks(&networks);
     }
   }
@@ -608,6 +612,13 @@ void BasicPortAllocatorSession::DoAllocate() {
       if (!(sequence_flags & PORTALLOCATOR_ENABLE_IPV6) &&
           networks[i]->GetBestIP().family() == AF_INET6) {
         // Skip IPv6 networks unless the flag's been set.
+        continue;
+      }
+
+      if (!(sequence_flags & PORTALLOCATOR_ENABLE_IPV6_ON_WIFI) &&
+          networks[i]->GetBestIP().family() == AF_INET6 &&
+          networks[i]->type() == rtc::ADAPTER_TYPE_WIFI) {
+        // Skip IPv6 Wi-Fi networks unless the flag's been set.
         continue;
       }
 

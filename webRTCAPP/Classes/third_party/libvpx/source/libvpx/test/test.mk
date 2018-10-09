@@ -1,4 +1,5 @@
 LIBVPX_TEST_SRCS-yes += acm_random.h
+LIBVPX_TEST_SRCS-yes += buffer.h
 LIBVPX_TEST_SRCS-yes += clear_system_state.h
 LIBVPX_TEST_SRCS-yes += codec_factory.h
 LIBVPX_TEST_SRCS-yes += md5_helper.h
@@ -47,6 +48,7 @@ LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += frame_size_tests.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_lossless_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_end_to_end_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_ethread_test.cc
+LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_motion_vector_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += level_test.cc
 
 LIBVPX_TEST_SRCS-yes                   += decode_test_driver.cc
@@ -149,14 +151,16 @@ LIBVPX_TEST_SRCS-yes                   += vp9_intrapred_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_DECODER) += vp9_decrypt_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_DECODER) += vp9_thread_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += avg_test.cc
+LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += comp_avg_pred_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += dct16x16_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += dct32x32_test.cc
-LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += fdct4x4_test.cc
+LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += dct_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += fdct8x8_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += hadamard_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += minmax_test.cc
+LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += temporal_filter_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += variance_test.cc
-LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_error_block_test.cc
+LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_block_error_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_quantize_test.cc
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_subtract_test.cc
 
@@ -167,7 +171,7 @@ LIBVPX_TEST_SRCS-$(CONFIG_INTERNAL_STATS) += consistency_test.cc
 endif
 
 ifeq ($(CONFIG_VP9_ENCODER)$(CONFIG_VP9_TEMPORAL_DENOISING),yesyes)
-LIBVPX_TEST_SRCS-$(HAVE_SSE2) += vp9_denoiser_sse2_test.cc
+LIBVPX_TEST_SRCS-yes += vp9_denoiser_test.cc
 endif
 LIBVPX_TEST_SRCS-$(CONFIG_VP9_ENCODER) += vp9_arf_freq_test.cc
 

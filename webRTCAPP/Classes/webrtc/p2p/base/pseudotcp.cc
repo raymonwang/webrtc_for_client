@@ -22,8 +22,8 @@
 #include "webrtc/base/bytebuffer.h"
 #include "webrtc/base/byteorder.h"
 #include "webrtc/base/checks.h"
-#include "webrtc/base/common.h"
 #include "webrtc/base/logging.h"
+#include "webrtc/base/safe_minmax.h"
 #include "webrtc/base/socket.h"
 #include "webrtc/base/stringutils.h"
 #include "webrtc/base/timeutils.h"
@@ -154,10 +154,6 @@ inline uint32_t bytes_to_long(const void* buf) {
 
 inline uint16_t bytes_to_short(const void* buf) {
   return rtc::NetworkToHost16(*static_cast<const uint16_t*>(buf));
-}
-
-uint32_t bound(uint32_t lower, uint32_t middle, uint32_t upper) {
-  return std::min(std::max(lower, middle), upper);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -539,7 +535,6 @@ IPseudoTcpNotify::WriteResult PseudoTcp::packet(uint32_t seq,
     size_t bytes_read = 0;
     rtc::StreamResult result = m_sbuf.ReadOffset(
         buffer.get() + HEADER_SIZE, len, offset, &bytes_read);
-    RTC_UNUSED(result);
     RTC_DCHECK(result == rtc::SR_SUCCESS);
     RTC_DCHECK(static_cast<uint32_t>(bytes_read) == len);
   }
@@ -727,9 +722,8 @@ bool PseudoTcp::process(Segment& seg) {
           m_rx_rttvar = (3 * m_rx_rttvar + abs_err) / 4;
           m_rx_srtt = (7 * m_rx_srtt + rtt) / 8;
         }
-        m_rx_rto =
-            bound(MIN_RTO, m_rx_srtt + std::max<uint32_t>(1, 4 * m_rx_rttvar),
-                  MAX_RTO);
+        m_rx_rto = rtc::SafeClamp(m_rx_srtt + rtc::SafeMax(1, 4 * m_rx_rttvar),
+                                  MIN_RTO, MAX_RTO);
 #if _DEBUGMSG >= _DBG_VERBOSE
         LOG(LS_INFO) << "rtt: " << rtt
                      << "  srtt: " << m_rx_srtt
@@ -1047,7 +1041,6 @@ void PseudoTcp::attemptSend(SendFlags sflags) {
 
 #if _DEBUGMSG
   bool bFirst = true;
-  RTC_UNUSED(bFirst);
 #endif // _DEBUGMSG
 
   while (true) {
@@ -1208,7 +1201,6 @@ void PseudoTcp::parseOptions(const char* data, uint32_t len) {
 
     // Length of this option.
     RTC_DCHECK(len != 0);
-    RTC_UNUSED(len);
     uint8_t opt_len = 0;
     buf.ReadUInt8(&opt_len);
 
@@ -1278,7 +1270,6 @@ void PseudoTcp::resizeReceiveBuffer(uint32_t new_size) {
   // before connection is established or when peers are exchanging connect
   // messages.
   RTC_DCHECK(result);
-  RTC_UNUSED(result);
   m_rbuf_len = new_size;
   m_rwnd_scale = scale_factor;
   m_ssthresh = new_size;

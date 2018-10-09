@@ -20,9 +20,6 @@
 #include "webrtc/media/base/mediaengine.h"
 #include "webrtc/pc/voicechannel.h"
 
-namespace webrtc {
-class MediaControllerInterface;
-}
 namespace cricket {
 
 class VoiceChannel;
@@ -38,13 +35,12 @@ class VoiceChannel;
 class ChannelManager {
  public:
   // For testing purposes. Allows the media engine and data media
-  // engine and dev manager to be mocks.  The ChannelManager takes
-  // ownership of these objects.
-  ChannelManager(MediaEngineInterface* me,
-                 DataEngineInterface* dme,
+  // engine and dev manager to be mocks.
+  ChannelManager(std::unique_ptr<MediaEngineInterface> me,
+                 std::unique_ptr<DataEngineInterface> dme,
                  rtc::Thread* worker_and_network);
   // Same as above, but gives an easier default DataEngine.
-  ChannelManager(MediaEngineInterface* me,
+  ChannelManager(std::unique_ptr<MediaEngineInterface> me,
                  rtc::Thread* worker,
                  rtc::Thread* network);
   ~ChannelManager();
@@ -89,13 +85,22 @@ class ChannelManager {
   // The operations below all occur on the worker thread.
   // Creates a voice channel, to be associated with the specified session.
   VoiceChannel* CreateVoiceChannel(
-      webrtc::MediaControllerInterface* media_controller,
+      webrtc::Call* call,
+      const cricket::MediaConfig& media_config,
       DtlsTransportInternal* rtp_transport,
       DtlsTransportInternal* rtcp_transport,
       rtc::Thread* signaling_thread,
       const std::string& content_name,
-      const std::string* bundle_transport_name,
-      bool rtcp_mux_required,
+      bool srtp_required,
+      const AudioOptions& options);
+  // Version of the above that takes PacketTransportInternal.
+  VoiceChannel* CreateVoiceChannel(
+      webrtc::Call* call,
+      const cricket::MediaConfig& media_config,
+      rtc::PacketTransportInternal* rtp_transport,
+      rtc::PacketTransportInternal* rtcp_transport,
+      rtc::Thread* signaling_thread,
+      const std::string& content_name,
       bool srtp_required,
       const AudioOptions& options);
   // Destroys a voice channel created with the Create API.
@@ -103,25 +108,32 @@ class ChannelManager {
   // Creates a video channel, synced with the specified voice channel, and
   // associated with the specified session.
   VideoChannel* CreateVideoChannel(
-      webrtc::MediaControllerInterface* media_controller,
+      webrtc::Call* call,
+      const cricket::MediaConfig& media_config,
       DtlsTransportInternal* rtp_transport,
       DtlsTransportInternal* rtcp_transport,
       rtc::Thread* signaling_thread,
       const std::string& content_name,
-      const std::string* bundle_transport_name,
-      bool rtcp_mux_required,
+      bool srtp_required,
+      const VideoOptions& options);
+  // Version of the above that takes PacketTransportInternal.
+  VideoChannel* CreateVideoChannel(
+      webrtc::Call* call,
+      const cricket::MediaConfig& media_config,
+      rtc::PacketTransportInternal* rtp_transport,
+      rtc::PacketTransportInternal* rtcp_transport,
+      rtc::Thread* signaling_thread,
+      const std::string& content_name,
       bool srtp_required,
       const VideoOptions& options);
   // Destroys a video channel created with the Create API.
   void DestroyVideoChannel(VideoChannel* video_channel);
   RtpDataChannel* CreateRtpDataChannel(
-      webrtc::MediaControllerInterface* media_controller,
+      const cricket::MediaConfig& media_config,
       DtlsTransportInternal* rtp_transport,
       DtlsTransportInternal* rtcp_transport,
       rtc::Thread* signaling_thread,
       const std::string& content_name,
-      const std::string* bundle_transport_name,
-      bool rtcp_mux_required,
       bool srtp_required);
   // Destroys a data channel created with the Create API.
   void DestroyRtpDataChannel(RtpDataChannel* data_channel);
@@ -134,10 +146,6 @@ class ChannelManager {
   // RTX will be enabled/disabled in engines that support it. The supporting
   // engines will start offering an RTX codec. Must be called before Init().
   bool SetVideoRtxEnabled(bool enable);
-
-  // Define crypto options to set on newly created channels. Doesn't change
-  // options on already created channels.
-  bool SetCryptoOptions(const rtc::CryptoOptions& crypto_options);
 
   // Starts/stops the local microphone and enables polling of the input level.
   bool capturing() const { return capturing_; }
@@ -157,44 +165,43 @@ class ChannelManager {
   typedef std::vector<VideoChannel*> VideoChannels;
   typedef std::vector<RtpDataChannel*> RtpDataChannels;
 
-  void Construct(MediaEngineInterface* me,
-                 DataEngineInterface* dme,
+  void Construct(std::unique_ptr<MediaEngineInterface> me,
+                 std::unique_ptr<DataEngineInterface> dme,
                  rtc::Thread* worker_thread,
                  rtc::Thread* network_thread);
   bool InitMediaEngine_w();
   void DestructorDeletes_w();
   void Terminate_w();
-  bool SetCryptoOptions_w(const rtc::CryptoOptions& crypto_options);
   VoiceChannel* CreateVoiceChannel_w(
-      webrtc::MediaControllerInterface* media_controller,
-      DtlsTransportInternal* rtp_transport,
-      DtlsTransportInternal* rtcp_transport,
+      webrtc::Call* call,
+      const cricket::MediaConfig& media_config,
+      DtlsTransportInternal* rtp_dtls_transport,
+      DtlsTransportInternal* rtcp_dtls_transport,
+      rtc::PacketTransportInternal* rtp_packet_transport,
+      rtc::PacketTransportInternal* rtcp_packet_transport,
       rtc::Thread* signaling_thread,
       const std::string& content_name,
-      const std::string* bundle_transport_name,
-      bool rtcp_mux_required,
       bool srtp_required,
       const AudioOptions& options);
   void DestroyVoiceChannel_w(VoiceChannel* voice_channel);
   VideoChannel* CreateVideoChannel_w(
-      webrtc::MediaControllerInterface* media_controller,
-      DtlsTransportInternal* rtp_transport,
-      DtlsTransportInternal* rtcp_transport,
+      webrtc::Call* call,
+      const cricket::MediaConfig& media_config,
+      DtlsTransportInternal* rtp_dtls_transport,
+      DtlsTransportInternal* rtcp_dtls_transport,
+      rtc::PacketTransportInternal* rtp_packet_transport,
+      rtc::PacketTransportInternal* rtcp_packet_transport,
       rtc::Thread* signaling_thread,
       const std::string& content_name,
-      const std::string* bundle_transport_name,
-      bool rtcp_mux_required,
       bool srtp_required,
       const VideoOptions& options);
   void DestroyVideoChannel_w(VideoChannel* video_channel);
   RtpDataChannel* CreateRtpDataChannel_w(
-      webrtc::MediaControllerInterface* media_controller,
+      const cricket::MediaConfig& media_config,
       DtlsTransportInternal* rtp_transport,
       DtlsTransportInternal* rtcp_transport,
       rtc::Thread* signaling_thread,
       const std::string& content_name,
-      const std::string* bundle_transport_name,
-      bool rtcp_mux_required,
       bool srtp_required);
   void DestroyRtpDataChannel_w(RtpDataChannel* data_channel);
 
@@ -210,8 +217,6 @@ class ChannelManager {
   RtpDataChannels data_channels_;
 
   bool enable_rtx_;
-  rtc::CryptoOptions crypto_options_;
-
   bool capturing_;
 };
 

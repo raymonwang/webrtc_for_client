@@ -56,6 +56,7 @@
  * [including the GNU Public Licence.] */
 
 #include <assert.h>
+#include <limits.h>
 #include <stdio.h>
 
 #include <openssl/asn1t.h>
@@ -151,6 +152,11 @@ IMPLEMENT_ASN1_FUNCTIONS(X509)
 IMPLEMENT_ASN1_DUP_FUNCTION(X509)
 
 X509 *X509_parse_from_buffer(CRYPTO_BUFFER *buf) {
+  if (CRYPTO_BUFFER_len(buf) > LONG_MAX) {
+    OPENSSL_PUT_ERROR(SSL, ERR_R_OVERFLOW);
+    return 0;
+  }
+
   X509 *x509 = X509_new();
   if (x509 == NULL) {
     return NULL;
@@ -182,11 +188,11 @@ int X509_up_ref(X509 *x)
 }
 
 int X509_get_ex_new_index(long argl, void *argp, CRYPTO_EX_unused * unused,
-                          CRYPTO_EX_dup *dup_func, CRYPTO_EX_free *free_func)
+                          CRYPTO_EX_dup *dup_unused, CRYPTO_EX_free *free_func)
 {
     int index;
     if (!CRYPTO_get_ex_new_index(&g_ex_data_class, &index, argl, argp,
-                                 dup_func, free_func)) {
+                                 free_func)) {
         return -1;
     }
     return index;

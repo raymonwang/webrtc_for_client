@@ -11,9 +11,6 @@
 		43C69C3D1D2281A600427D35 /* default_temporal_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C211D2281A600427D35 /* default_temporal_layers.h */; };
 		43C69C3F1D2281A600427D35 /* vp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C241D2281A600427D35 /* vp8.h */; };
 		43C69C401D2281A600427D35 /* vp8_common_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C251D2281A600427D35 /* vp8_common_types.h */; };
-		43C69C411D2281A600427D35 /* realtime_temporal_layers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */; };
-		43C69C421D2281A600427D35 /* reference_picture_selection.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C281D2281A600427D35 /* reference_picture_selection.cc */; };
-		43C69C431D2281A600427D35 /* reference_picture_selection.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C291D2281A600427D35 /* reference_picture_selection.h */; };
 		43C69C451D2281A600427D35 /* screenshare_layers.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C2B1D2281A600427D35 /* screenshare_layers.cc */; };
 		43C69C461D2281A600427D35 /* screenshare_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C2C1D2281A600427D35 /* screenshare_layers.h */; };
 		43C69C481D2281A600427D35 /* simulcast_encoder_adapter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */; };
@@ -21,6 +18,9 @@
 		43C69C4D1D2281A600427D35 /* temporal_layers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C331D2281A600427D35 /* temporal_layers.h */; };
 		43C69C511D2281A600427D35 /* vp8_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C391D2281A600427D35 /* vp8_impl.cc */; };
 		43C69C521D2281A600427D35 /* vp8_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C3A1D2281A600427D35 /* vp8_impl.h */; };
+		43E1B1871F0CEA6600B73FCB /* simulcast_rate_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B1851F0CEA6600B73FCB /* simulcast_rate_allocator.cc */; };
+		43E1B1881F0CEA6600B73FCB /* simulcast_rate_allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B1861F0CEA6600B73FCB /* simulcast_rate_allocator.h */; };
+		43E1B18A1F0CEA7500B73FCB /* vp8_globals.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B1891F0CEA7500B73FCB /* vp8_globals.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,9 +29,6 @@
 		43C69C211D2281A600427D35 /* default_temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_temporal_layers.h; sourceTree = "<group>"; };
 		43C69C241D2281A600427D35 /* vp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8.h; sourceTree = "<group>"; };
 		43C69C251D2281A600427D35 /* vp8_common_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_common_types.h; sourceTree = "<group>"; };
-		43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = realtime_temporal_layers.cc; sourceTree = "<group>"; };
-		43C69C281D2281A600427D35 /* reference_picture_selection.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = reference_picture_selection.cc; sourceTree = "<group>"; };
-		43C69C291D2281A600427D35 /* reference_picture_selection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reference_picture_selection.h; sourceTree = "<group>"; };
 		43C69C2B1D2281A600427D35 /* screenshare_layers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = screenshare_layers.cc; sourceTree = "<group>"; };
 		43C69C2C1D2281A600427D35 /* screenshare_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screenshare_layers.h; sourceTree = "<group>"; };
 		43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulcast_encoder_adapter.cc; sourceTree = "<group>"; };
@@ -39,6 +36,9 @@
 		43C69C331D2281A600427D35 /* temporal_layers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = temporal_layers.h; sourceTree = "<group>"; };
 		43C69C391D2281A600427D35 /* vp8_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_impl.cc; sourceTree = "<group>"; };
 		43C69C3A1D2281A600427D35 /* vp8_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_impl.h; sourceTree = "<group>"; };
+		43E1B1851F0CEA6600B73FCB /* simulcast_rate_allocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulcast_rate_allocator.cc; sourceTree = "<group>"; };
+		43E1B1861F0CEA6600B73FCB /* simulcast_rate_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulcast_rate_allocator.h; sourceTree = "<group>"; };
+		43E1B1891F0CEA7500B73FCB /* vp8_globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_globals.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,11 +72,10 @@
 			isa = PBXGroup;
 			children = (
 				43C69C231D2281A600427D35 /* include */,
+				43E1B1851F0CEA6600B73FCB /* simulcast_rate_allocator.cc */,
+				43E1B1861F0CEA6600B73FCB /* simulcast_rate_allocator.h */,
 				43C69C201D2281A600427D35 /* default_temporal_layers.cc */,
 				43C69C211D2281A600427D35 /* default_temporal_layers.h */,
-				43C69C271D2281A600427D35 /* realtime_temporal_layers.cc */,
-				43C69C281D2281A600427D35 /* reference_picture_selection.cc */,
-				43C69C291D2281A600427D35 /* reference_picture_selection.h */,
 				43C69C2B1D2281A600427D35 /* screenshare_layers.cc */,
 				43C69C2C1D2281A600427D35 /* screenshare_layers.h */,
 				43C69C2E1D2281A600427D35 /* simulcast_encoder_adapter.cc */,
@@ -93,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				43C69C241D2281A600427D35 /* vp8.h */,
+				43E1B1891F0CEA7500B73FCB /* vp8_globals.h */,
 				43C69C251D2281A600427D35 /* vp8_common_types.h */,
 			);
 			path = include;
@@ -105,12 +105,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43E1B1881F0CEA6600B73FCB /* simulcast_rate_allocator.h in Headers */,
 				43C69C401D2281A600427D35 /* vp8_common_types.h in Headers */,
 				43C69C521D2281A600427D35 /* vp8_impl.h in Headers */,
 				43C69C4D1D2281A600427D35 /* temporal_layers.h in Headers */,
 				43C69C3D1D2281A600427D35 /* default_temporal_layers.h in Headers */,
-				43C69C431D2281A600427D35 /* reference_picture_selection.h in Headers */,
 				43C69C491D2281A600427D35 /* simulcast_encoder_adapter.h in Headers */,
+				43E1B18A1F0CEA7500B73FCB /* vp8_globals.h in Headers */,
 				43C69C3F1D2281A600427D35 /* vp8.h in Headers */,
 				43C69C461D2281A600427D35 /* screenshare_layers.h in Headers */,
 			);
@@ -173,11 +174,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				43C69C511D2281A600427D35 /* vp8_impl.cc in Sources */,
+				43E1B1871F0CEA6600B73FCB /* simulcast_rate_allocator.cc in Sources */,
 				43C69C451D2281A600427D35 /* screenshare_layers.cc in Sources */,
 				43C69C3C1D2281A600427D35 /* default_temporal_layers.cc in Sources */,
-				43C69C421D2281A600427D35 /* reference_picture_selection.cc in Sources */,
 				43C69C481D2281A600427D35 /* simulcast_encoder_adapter.cc in Sources */,
-				43C69C411D2281A600427D35 /* realtime_temporal_layers.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +282,7 @@
 					"$(SRCROOT)/../webRTCAPP/Classes/third_party/libyuv/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};

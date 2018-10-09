@@ -18,8 +18,7 @@
 
 namespace webrtc {
 
-AudioRtpReceiver::AudioRtpReceiver(MediaStreamInterface* stream,
-                                   const std::string& track_id,
+AudioRtpReceiver::AudioRtpReceiver(const std::string& track_id,
                                    uint32_t ssrc,
                                    cricket::VoiceChannel* channel)
     : id_(track_id),
@@ -34,7 +33,6 @@ AudioRtpReceiver::AudioRtpReceiver(MediaStreamInterface* stream,
   track_->RegisterObserver(this);
   track_->GetSource()->RegisterAudioObserver(this);
   Reconfigure();
-  stream->AddTrack(track_);
   if (channel_) {
     channel_->SignalFirstPacketReceived.connect(
         this, &AudioRtpReceiver::OnFirstPacketReceived);
@@ -99,6 +97,10 @@ void AudioRtpReceiver::Stop() {
   stopped_ = true;
 }
 
+std::vector<RtpSource> AudioRtpReceiver::GetSources() const {
+  return channel_->GetSources(ssrc_);
+}
+
 void AudioRtpReceiver::Reconfigure() {
   RTC_DCHECK(!stopped_);
   if (!channel_) {
@@ -137,8 +139,7 @@ void AudioRtpReceiver::OnFirstPacketReceived(cricket::BaseChannel* channel) {
   received_first_packet_ = true;
 }
 
-VideoRtpReceiver::VideoRtpReceiver(MediaStreamInterface* stream,
-                                   const std::string& track_id,
+VideoRtpReceiver::VideoRtpReceiver(const std::string& track_id,
                                    rtc::Thread* worker_thread,
                                    uint32_t ssrc,
                                    cricket::VideoChannel* channel)
@@ -164,7 +165,6 @@ VideoRtpReceiver::VideoRtpReceiver(MediaStreamInterface* stream,
       RTC_NOTREACHED();
     }
   }
-  stream->AddTrack(track_);
   if (channel_) {
     channel_->SignalFirstPacketReceived.connect(
         this, &VideoRtpReceiver::OnFirstPacketReceived);

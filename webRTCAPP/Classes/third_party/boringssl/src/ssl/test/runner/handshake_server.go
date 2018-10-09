@@ -17,6 +17,8 @@ import (
 	"io"
 	"math/big"
 	"time"
+
+	"./ed25519"
 )
 
 // serverHandshakeState contains details of a server handshake in progress.
@@ -342,17 +344,21 @@ func (hs *serverHandshakeState) readClientHello() error {
 		}
 	}
 
-	if config.Bugs.IgnorePeerSignatureAlgorithmPreferences {
-		hs.clientHello.signatureAlgorithms = config.signSignatureAlgorithms()
-	}
-	if config.Bugs.IgnorePeerCurvePreferences {
-		hs.clientHello.supportedCurves = config.curvePreferences()
-	}
-	if config.Bugs.IgnorePeerCipherPreferences {
-		hs.clientHello.cipherSuites = config.cipherSuites()
-	}
+	applyBugsToClientHello(hs.clientHello, config)
 
 	return nil
+}
+
+func applyBugsToClientHello(clientHello *clientHelloMsg, config *Config) {
+	if config.Bugs.IgnorePeerSignatureAlgorithmPreferences {
+		clientHello.signatureAlgorithms = config.signSignatureAlgorithms()
+	}
+	if config.Bugs.IgnorePeerCurvePreferences {
+		clientHello.supportedCurves = config.curvePreferences()
+	}
+	if config.Bugs.IgnorePeerCipherPreferences {
+		clientHello.cipherSuites = config.cipherSuites()
+	}
 }
 
 func (hs *serverHandshakeState) doTLS13Handshake() error {
@@ -365,15 +371,6 @@ func (hs *serverHandshakeState) doTLS13Handshake() error {
 		versOverride:    config.Bugs.SendServerHelloVersion,
 		customExtension: config.Bugs.CustomUnencryptedExtension,
 		unencryptedALPN: config.Bugs.SendUnencryptedALPN,
-		shortHeader:     hs.clientHello.shortHeaderSupported && config.Bugs.EnableShortHeader,
-	}
-
-	if config.Bugs.AlwaysNegotiateShortHeader {
-		hs.hello.shortHeader = true
-	}
-
-	if hs.hello.shortHeader {
-		c.setShortHeader()
 	}
 
 	hs.hello.random = make([]byte, 32)
@@ -456,7 +453,7 @@ Curves:
 
 	var pskIndex int
 	foundKEMode := bytes.IndexByte(pskKEModes, pskDHEKEMode) >= 0
-	if foundKEMode {
+	if foundKEMode && !config.SessionTicketsDisabled {
 		for i, pskIdentity := range pskIdentities {
 			// TODO(svaldez): Check the obfuscatedTicketAge before accepting 0-RTT.
 			sessionState, ok := c.decryptTicket(pskIdentity.ticket)
@@ -584,6 +581,10 @@ ResendHelloRetryRequest:
 		c.writeRecord(recordTypeHandshake, helloRetryRequest.marshal())
 		c.flushHandshake()
 
+		if hs.clientHello.hasEarlyData {
+			c.skipEarlyData = true
+		}
+
 		// Read new ClientHello.
 		newMsg, err := c.readHandshake()
 		if err != nil {
@@ -595,6 +596,12 @@ ResendHelloRetryRequest:
 			return unexpectedMessageError(newClientHello, newMsg)
 		}
 		hs.writeClientHash(newClientHello.marshal())
+
+		if newClientHello.hasEarlyData {
+			return errors.New("tls: EarlyData sent in new ClientHello")
+		}
+
+		applyBugsToClientHello(newClientHello, config)
 
 		// Check that the new ClientHello matches the old ClientHello,
 		// except for relevant modifications.
@@ -631,6 +638,7 @@ ResendHelloRetryRequest:
 			newClientHelloCopy.pskIdentities[i].obfuscatedTicketAge = identity.obfuscatedTicketAge
 		}
 		newClientHelloCopy.pskBinders = oldClientHelloCopy.pskBinders
+		newClientHelloCopy.hasEarlyData = oldClientHelloCopy.hasEarlyData
 
 		if !oldClientHelloCopy.equal(&newClientHelloCopy) {
 			return errors.New("tls: new ClientHello does not match")
@@ -650,6 +658,36 @@ ResendHelloRetryRequest:
 				return err
 			}
 		}
+	}
+
+	// Decide whether or not to accept early data.
+	if !sendHelloRetryRequest && hs.clientHello.hasEarlyData {
+		if !config.Bugs.AlwaysRejectEarlyData && hs.sessionState != nil {
+			if c.clientProtocol == string(hs.sessionState.earlyALPN) || config.Bugs.AlwaysAcceptEarlyData {
+				encryptedExtensions.extensions.hasEarlyData = true
+			}
+		}
+		if encryptedExtensions.extensions.hasEarlyData {
+			earlyTrafficSecret := hs.finishedHash.deriveSecret(earlyTrafficLabel)
+			c.in.useTrafficSecret(c.vers, hs.suite, earlyTrafficSecret, clientWrite)
+
+			for _, expectedMsg := range config.Bugs.ExpectEarlyData {
+				if err := c.readRecord(recordTypeApplicationData); err != nil {
+					return err
+				}
+				if !bytes.Equal(c.input.data[c.input.off:], expectedMsg) {
+					return errors.New("ExpectEarlyData: did not get expected message")
+				}
+				c.in.freeBlock(c.input)
+				c.input = nil
+			}
+		} else {
+			c.skipEarlyData = true
+		}
+	}
+
+	if config.Bugs.SendEarlyDataExtension {
+		encryptedExtensions.extensions.hasEarlyData = true
 	}
 
 	// Resolve ECDHE and compute the handshake secret.
@@ -725,8 +763,8 @@ ResendHelloRetryRequest:
 	// Switch to handshake traffic keys.
 	serverHandshakeTrafficSecret := hs.finishedHash.deriveSecret(serverHandshakeTrafficLabel)
 	c.out.useTrafficSecret(c.vers, hs.suite, serverHandshakeTrafficSecret, serverWrite)
+	// Derive handshake traffic read key, but don't switch yet.
 	clientHandshakeTrafficSecret := hs.finishedHash.deriveSecret(clientHandshakeTrafficLabel)
-	c.in.useTrafficSecret(c.vers, hs.suite, clientHandshakeTrafficSecret, clientWrite)
 
 	// Send EncryptedExtensions.
 	hs.writeServerHash(encryptedExtensions.marshal())
@@ -841,6 +879,19 @@ ResendHelloRetryRequest:
 	}
 	c.flushHandshake()
 
+	if encryptedExtensions.extensions.hasEarlyData && !c.skipEarlyData {
+		for _, expectedMsg := range config.Bugs.ExpectLateEarlyData {
+			if err := c.readRecord(recordTypeApplicationData); err != nil {
+				return err
+			}
+			if !bytes.Equal(c.input.data[c.input.off:], expectedMsg) {
+				return errors.New("ExpectLateEarlyData: did not get expected message")
+			}
+			c.in.freeBlock(c.input)
+			c.input = nil
+		}
+	}
+
 	// The various secrets do not incorporate the client's final leg, so
 	// derive them now before updating the handshake context.
 	hs.finishedHash.addEntropy(hs.finishedHash.zeroSecret())
@@ -851,6 +902,26 @@ ResendHelloRetryRequest:
 	// Switch to application data keys on write. In particular, any alerts
 	// from the client certificate are sent over these keys.
 	c.out.useTrafficSecret(c.vers, hs.suite, serverTrafficSecret, serverWrite)
+
+	// Send 0.5-RTT messages.
+	for _, halfRTTMsg := range config.Bugs.SendHalfRTTData {
+		if _, err := c.writeRecord(recordTypeApplicationData, halfRTTMsg); err != nil {
+			return err
+		}
+	}
+
+	// Read end_of_early_data alert.
+	if encryptedExtensions.extensions.hasEarlyData {
+		if err := c.readRecord(recordTypeAlert); err != errEndOfEarlyDataAlert {
+			if err == nil {
+				panic("readRecord(recordTypeAlert) returned nil")
+			}
+			return err
+		}
+	}
+
+	// Switch input stream to handshake traffic keys.
+	c.in.useTrafficSecret(c.vers, hs.suite, clientHandshakeTrafficSecret, clientWrite)
 
 	// If we requested a client certificate, then the client must send a
 	// certificate message, even if it's empty.
@@ -981,7 +1052,6 @@ func (hs *serverHandshakeState) processClientHello() (isResume bool, err error) 
 		vers:              versionToWire(c.vers, c.isDTLS),
 		versOverride:      config.Bugs.SendServerHelloVersion,
 		compressionMethod: compressionNone,
-		shortHeader:       config.Bugs.AlwaysNegotiateShortHeader,
 	}
 
 	hs.hello.random = make([]byte, 32)
@@ -1039,6 +1109,9 @@ Curves:
 	hs.ellipticOk = supportedCurve && supportedPointFormat
 
 	_, hs.ecdsaOk = hs.cert.PrivateKey.(*ecdsa.PrivateKey)
+	// Ed25519 also uses ECDSA certificates.
+	_, ed25519Ok := hs.cert.PrivateKey.(ed25519.PrivateKey)
+	hs.ecdsaOk = hs.ecdsaOk || ed25519Ok
 
 	// For test purposes, check that the peer never offers a session when
 	// renegotiating.
@@ -1121,7 +1194,16 @@ func (hs *serverHandshakeState) processClientExtensions(serverExtensions *server
 		return errors.New("tls: unexpected server name")
 	}
 
+	if cert := config.Bugs.RenegotiationCertificate; c.cipherSuite != nil && cert != nil {
+		hs.cert = cert
+	}
+
 	if len(hs.clientHello.alpnProtocols) > 0 {
+		// We will never offer ALPN as a client on renegotiation
+		// handshakes.
+		if len(c.clientVerify) > 0 {
+			return errors.New("tls: offered ALPN on renegotiation")
+		}
 		if proto := c.config.Bugs.ALPNProtocol; proto != nil {
 			serverExtensions.alpnProtocol = *proto
 			serverExtensions.alpnProtocolEmpty = len(*proto) == 0
@@ -1199,6 +1281,8 @@ func (hs *serverHandshakeState) processClientExtensions(serverExtensions *server
 	if !hs.clientHello.hasGREASEExtension && config.Bugs.ExpectGREASE {
 		return errors.New("tls: no GREASE extension found")
 	}
+
+	serverExtensions.serverNameAck = c.config.Bugs.SendServerNameAck
 
 	return nil
 }
@@ -1668,6 +1752,9 @@ func (hs *serverHandshakeState) sendSessionTicket() error {
 	}
 
 	m := new(newSessionTicketMsg)
+	if c.config.Bugs.SendTicketLifetime != 0 {
+		m.ticketLifetime = uint32(c.config.Bugs.SendTicketLifetime / time.Second)
+	}
 
 	if !c.config.Bugs.SendEmptySessionTicket {
 		var err error
@@ -1789,13 +1876,13 @@ func (hs *serverHandshakeState) processCertsFromClient(certificates [][]byte) (c
 	}
 
 	if len(certs) > 0 {
-		var pub crypto.PublicKey
-		switch key := certs[0].PublicKey.(type) {
-		case *ecdsa.PublicKey, *rsa.PublicKey:
-			pub = key
+		pub := getCertificatePublicKey(certs[0])
+		switch pub.(type) {
+		case *ecdsa.PublicKey, *rsa.PublicKey, ed25519.PublicKey:
+			break
 		default:
 			c.sendAlert(alertUnsupportedCertificate)
-			return nil, fmt.Errorf("tls: client's certificate contains an unsupported public key of type %T", certs[0].PublicKey)
+			return nil, fmt.Errorf("tls: client's certificate contains an unsupported public key of type %T", pub)
 		}
 		c.peerCertificates = certs
 		return pub, nil

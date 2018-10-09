@@ -53,13 +53,15 @@ class AndroidNetworkMonitor : public rtc::NetworkMonitorBase,
  public:
   AndroidNetworkMonitor();
 
-  static void SetAndroidContext(JNIEnv* jni, jobject context);
+  // TODO(sakal): Remove once down stream dependencies have been updated.
+  static void SetAndroidContext(JNIEnv* jni, jobject context) {}
 
   void Start() override;
   void Stop() override;
 
-  int BindSocketToNetwork(int socket_fd,
-                          const rtc::IPAddress& address) override;
+  rtc::NetworkBindingResult BindSocketToNetwork(
+      int socket_fd,
+      const rtc::IPAddress& address) override;
   rtc::AdapterType GetAdapterType(const std::string& if_name) override;
   void OnNetworkConnected(const NetworkInformation& network_info);
   void OnNetworkDisconnected(NetworkHandle network_handle);

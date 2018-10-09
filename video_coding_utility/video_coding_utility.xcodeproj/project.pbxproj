@@ -8,27 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		43288DF61D38E2FC0044E4F5 /* frame_dropper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288DEC1D38E2FC0044E4F5 /* frame_dropper.cc */; };
-		43288DF71D38E2FC0044E4F5 /* frame_dropper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288DEE1D38E2FC0044E4F5 /* frame_dropper.h */; };
-		43288DF81D38E2FC0044E4F5 /* mock_frame_dropper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288DF01D38E2FC0044E4F5 /* mock_frame_dropper.h */; };
 		43288DF91D38E2FC0044E4F5 /* quality_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288DF21D38E2FC0044E4F5 /* quality_scaler.cc */; };
 		43288DFA1D38E2FC0044E4F5 /* quality_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288DF31D38E2FC0044E4F5 /* quality_scaler.h */; };
 		43288DFE1D38E3450044E4F5 /* frame_dropper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288DEC1D38E2FC0044E4F5 /* frame_dropper.cc */; };
 		43288DFF1D38E3450044E4F5 /* quality_scaler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43288DF21D38E2FC0044E4F5 /* quality_scaler.cc */; };
-		43288E021D38E3450044E4F5 /* frame_dropper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288DEE1D38E2FC0044E4F5 /* frame_dropper.h */; };
-		43288E031D38E3450044E4F5 /* mock_frame_dropper.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288DF01D38E2FC0044E4F5 /* mock_frame_dropper.h */; };
 		43288E041D38E3450044E4F5 /* quality_scaler.h in Headers */ = {isa = PBXBuildFile; fileRef = 43288DF31D38E2FC0044E4F5 /* quality_scaler.h */; };
-		43884AF21E55BAF100E63E88 /* simulcast_rate_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43884AF01E55BAF100E63E88 /* simulcast_rate_allocator.cc */; };
-		43884AF31E55BAF100E63E88 /* simulcast_rate_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43884AF01E55BAF100E63E88 /* simulcast_rate_allocator.cc */; };
-		43884AF41E55BAF100E63E88 /* simulcast_rate_allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884AF11E55BAF100E63E88 /* simulcast_rate_allocator.h */; };
-		43884AF51E55BAF100E63E88 /* simulcast_rate_allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884AF11E55BAF100E63E88 /* simulcast_rate_allocator.h */; };
 		43884AF81E55BB3200E63E88 /* default_video_bitrate_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43884AF61E55BB3200E63E88 /* default_video_bitrate_allocator.cc */; };
 		43884AF91E55BB3200E63E88 /* default_video_bitrate_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43884AF61E55BB3200E63E88 /* default_video_bitrate_allocator.cc */; };
 		43884AFA1E55BB3200E63E88 /* default_video_bitrate_allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884AF71E55BB3200E63E88 /* default_video_bitrate_allocator.h */; };
 		43884AFB1E55BB3200E63E88 /* default_video_bitrate_allocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 43884AF71E55BB3200E63E88 /* default_video_bitrate_allocator.h */; };
-		43C036DD1D51AD2C0022DED1 /* qp_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C036DB1D51AD2C0022DED1 /* qp_parser.cc */; };
-		43C036DE1D51AD2C0022DED1 /* qp_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C036DB1D51AD2C0022DED1 /* qp_parser.cc */; };
-		43C036DF1D51AD2C0022DED1 /* qp_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C036DC1D51AD2C0022DED1 /* qp_parser.h */; };
-		43C036E01D51AD2C0022DED1 /* qp_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C036DC1D51AD2C0022DED1 /* qp_parser.h */; };
 		43C036E31D51AD620022DED1 /* vp8_header_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C036E11D51AD620022DED1 /* vp8_header_parser.cc */; };
 		43C036E41D51AD620022DED1 /* vp8_header_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C036E11D51AD620022DED1 /* vp8_header_parser.cc */; };
 		43C036E51D51AD620022DED1 /* vp8_header_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C036E21D51AD620022DED1 /* vp8_header_parser.h */; };
@@ -39,6 +27,8 @@
 		43C036F31D51ADAA0022DED1 /* ivf_file_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C036EA1D51ADAA0022DED1 /* ivf_file_writer.cc */; };
 		43C036F41D51ADAA0022DED1 /* ivf_file_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C036EB1D51ADAA0022DED1 /* ivf_file_writer.h */; };
 		43C036F51D51ADAA0022DED1 /* ivf_file_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C036EB1D51ADAA0022DED1 /* ivf_file_writer.h */; };
+		43E1B1711F0CE01B00B73FCB /* vp9_uncompressed_header_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B16F1F0CE01B00B73FCB /* vp9_uncompressed_header_parser.cc */; };
+		43E1B1721F0CE01B00B73FCB /* vp9_uncompressed_header_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B1701F0CE01B00B73FCB /* vp9_uncompressed_header_parser.h */; };
 		43EFD2281E5AE6BB00E3DEAD /* moving_average.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43EFD2261E5AE6BB00E3DEAD /* moving_average.cc */; };
 		43EFD2291E5AE6BB00E3DEAD /* moving_average.h in Headers */ = {isa = PBXBuildFile; fileRef = 43EFD2271E5AE6BB00E3DEAD /* moving_average.h */; };
 /* End PBXBuildFile section */
@@ -46,22 +36,18 @@
 /* Begin PBXFileReference section */
 		43288DDE1D38E2D20044E4F5 /* libvideo_coding_utility.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_coding_utility.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43288DEC1D38E2FC0044E4F5 /* frame_dropper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = frame_dropper.cc; sourceTree = "<group>"; };
-		43288DEE1D38E2FC0044E4F5 /* frame_dropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_dropper.h; sourceTree = "<group>"; };
-		43288DF01D38E2FC0044E4F5 /* mock_frame_dropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mock_frame_dropper.h; sourceTree = "<group>"; };
 		43288DF21D38E2FC0044E4F5 /* quality_scaler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quality_scaler.cc; sourceTree = "<group>"; };
 		43288DF31D38E2FC0044E4F5 /* quality_scaler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quality_scaler.h; sourceTree = "<group>"; };
 		43288E081D38E3450044E4F5 /* libvideo_coding_utility_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvideo_coding_utility_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		43884AF01E55BAF100E63E88 /* simulcast_rate_allocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulcast_rate_allocator.cc; sourceTree = "<group>"; };
-		43884AF11E55BAF100E63E88 /* simulcast_rate_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulcast_rate_allocator.h; sourceTree = "<group>"; };
 		43884AF61E55BB3200E63E88 /* default_video_bitrate_allocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = default_video_bitrate_allocator.cc; sourceTree = "<group>"; };
 		43884AF71E55BB3200E63E88 /* default_video_bitrate_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_video_bitrate_allocator.h; sourceTree = "<group>"; };
-		43C036DB1D51AD2C0022DED1 /* qp_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = qp_parser.cc; sourceTree = "<group>"; };
-		43C036DC1D51AD2C0022DED1 /* qp_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qp_parser.h; sourceTree = "<group>"; };
 		43C036E11D51AD620022DED1 /* vp8_header_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp8_header_parser.cc; sourceTree = "<group>"; };
 		43C036E21D51AD620022DED1 /* vp8_header_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp8_header_parser.h; sourceTree = "<group>"; };
 		43C036E71D51ADAA0022DED1 /* frame_dropper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = frame_dropper.h; sourceTree = "<group>"; };
 		43C036EA1D51ADAA0022DED1 /* ivf_file_writer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ivf_file_writer.cc; sourceTree = "<group>"; };
 		43C036EB1D51ADAA0022DED1 /* ivf_file_writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivf_file_writer.h; sourceTree = "<group>"; };
+		43E1B16F1F0CE01B00B73FCB /* vp9_uncompressed_header_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vp9_uncompressed_header_parser.cc; sourceTree = "<group>"; };
+		43E1B1701F0CE01B00B73FCB /* vp9_uncompressed_header_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vp9_uncompressed_header_parser.h; sourceTree = "<group>"; };
 		43EFD2261E5AE6BB00E3DEAD /* moving_average.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moving_average.cc; sourceTree = "<group>"; };
 		43EFD2271E5AE6BB00E3DEAD /* moving_average.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moving_average.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +90,8 @@
 		43288DEB1D38E2FC0044E4F5 /* utility */ = {
 			isa = PBXGroup;
 			children = (
+				43E1B16F1F0CE01B00B73FCB /* vp9_uncompressed_header_parser.cc */,
+				43E1B1701F0CE01B00B73FCB /* vp9_uncompressed_header_parser.h */,
 				43C036E71D51ADAA0022DED1 /* frame_dropper.h */,
 				43C036EA1D51ADAA0022DED1 /* ivf_file_writer.cc */,
 				43C036EB1D51ADAA0022DED1 /* ivf_file_writer.h */,
@@ -111,36 +99,14 @@
 				43EFD2271E5AE6BB00E3DEAD /* moving_average.h */,
 				43C036E11D51AD620022DED1 /* vp8_header_parser.cc */,
 				43C036E21D51AD620022DED1 /* vp8_header_parser.h */,
-				43C036DB1D51AD2C0022DED1 /* qp_parser.cc */,
-				43C036DC1D51AD2C0022DED1 /* qp_parser.h */,
 				43288DEC1D38E2FC0044E4F5 /* frame_dropper.cc */,
-				43288DED1D38E2FC0044E4F5 /* include */,
 				43288DF21D38E2FC0044E4F5 /* quality_scaler.cc */,
 				43288DF31D38E2FC0044E4F5 /* quality_scaler.h */,
-				43884AF01E55BAF100E63E88 /* simulcast_rate_allocator.cc */,
-				43884AF11E55BAF100E63E88 /* simulcast_rate_allocator.h */,
 				43884AF61E55BB3200E63E88 /* default_video_bitrate_allocator.cc */,
 				43884AF71E55BB3200E63E88 /* default_video_bitrate_allocator.h */,
 			);
 			name = utility;
 			path = ../webRTCAPP/Classes/webrtc/modules/video_coding/utility;
-			sourceTree = "<group>";
-		};
-		43288DED1D38E2FC0044E4F5 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				43288DEE1D38E2FC0044E4F5 /* frame_dropper.h */,
-				43288DEF1D38E2FC0044E4F5 /* mock */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		43288DEF1D38E2FC0044E4F5 /* mock */ = {
-			isa = PBXGroup;
-			children = (
-				43288DF01D38E2FC0044E4F5 /* mock_frame_dropper.h */,
-			);
-			path = mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,13 +116,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43884AF41E55BAF100E63E88 /* simulcast_rate_allocator.h in Headers */,
-				43288DF71D38E2FC0044E4F5 /* frame_dropper.h in Headers */,
 				43C036EC1D51ADAA0022DED1 /* frame_dropper.h in Headers */,
-				43288DF81D38E2FC0044E4F5 /* mock_frame_dropper.h in Headers */,
 				43C036E51D51AD620022DED1 /* vp8_header_parser.h in Headers */,
 				43884AFA1E55BB3200E63E88 /* default_video_bitrate_allocator.h in Headers */,
-				43C036DF1D51AD2C0022DED1 /* qp_parser.h in Headers */,
+				43E1B1721F0CE01B00B73FCB /* vp9_uncompressed_header_parser.h in Headers */,
 				43288DFA1D38E2FC0044E4F5 /* quality_scaler.h in Headers */,
 				43EFD2291E5AE6BB00E3DEAD /* moving_average.h in Headers */,
 				43C036F41D51ADAA0022DED1 /* ivf_file_writer.h in Headers */,
@@ -167,13 +130,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43884AF51E55BAF100E63E88 /* simulcast_rate_allocator.h in Headers */,
-				43288E021D38E3450044E4F5 /* frame_dropper.h in Headers */,
 				43C036ED1D51ADAA0022DED1 /* frame_dropper.h in Headers */,
-				43288E031D38E3450044E4F5 /* mock_frame_dropper.h in Headers */,
 				43C036E61D51AD620022DED1 /* vp8_header_parser.h in Headers */,
 				43884AFB1E55BB3200E63E88 /* default_video_bitrate_allocator.h in Headers */,
-				43C036E01D51AD2C0022DED1 /* qp_parser.h in Headers */,
 				43288E041D38E3450044E4F5 /* quality_scaler.h in Headers */,
 				43C036F51D51ADAA0022DED1 /* ivf_file_writer.h in Headers */,
 			);
@@ -254,12 +213,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				43C036F21D51ADAA0022DED1 /* ivf_file_writer.cc in Sources */,
+				43E1B1711F0CE01B00B73FCB /* vp9_uncompressed_header_parser.cc in Sources */,
 				43884AF81E55BB3200E63E88 /* default_video_bitrate_allocator.cc in Sources */,
 				43288DF61D38E2FC0044E4F5 /* frame_dropper.cc in Sources */,
 				43288DF91D38E2FC0044E4F5 /* quality_scaler.cc in Sources */,
 				43C036E31D51AD620022DED1 /* vp8_header_parser.cc in Sources */,
-				43C036DD1D51AD2C0022DED1 /* qp_parser.cc in Sources */,
-				43884AF21E55BAF100E63E88 /* simulcast_rate_allocator.cc in Sources */,
 				43EFD2281E5AE6BB00E3DEAD /* moving_average.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,8 +231,6 @@
 				43288DFE1D38E3450044E4F5 /* frame_dropper.cc in Sources */,
 				43288DFF1D38E3450044E4F5 /* quality_scaler.cc in Sources */,
 				43C036E41D51AD620022DED1 /* vp8_header_parser.cc in Sources */,
-				43C036DE1D51AD2C0022DED1 /* qp_parser.cc in Sources */,
-				43884AF31E55BAF100E63E88 /* simulcast_rate_allocator.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,7 +331,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};

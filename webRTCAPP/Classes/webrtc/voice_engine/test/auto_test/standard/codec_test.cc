@@ -19,6 +19,8 @@ class CodecTest : public AfterStreamingFixture {
  protected:
   void SetUp() {
     memset(&codec_instance_, 0, sizeof(codec_instance_));
+    apm_ = webrtc::AudioProcessing::Create();
+    voe_base_->Init(nullptr, apm_.get(), nullptr);
   }
 
   void SetArbitrarySendCodec() {
@@ -27,11 +29,12 @@ class CodecTest : public AfterStreamingFixture {
     EXPECT_EQ(0, voe_codec_->SetSendCodec(channel_, codec_instance_));
   }
 
+  rtc::scoped_refptr<webrtc::AudioProcessing> apm_;
   webrtc::CodecInst codec_instance_;
 };
 
 static void SetRateIfILBC(webrtc::CodecInst* codec_instance, int packet_size) {
-  if (!_stricmp(codec_instance->plname, "ilbc")) {
+  if (!STR_CASE_CMP(codec_instance->plname, "ilbc")) {
     if (packet_size == 160 || packet_size == 320) {
       codec_instance->rate = 15200;
     } else {
@@ -41,9 +44,9 @@ static void SetRateIfILBC(webrtc::CodecInst* codec_instance, int packet_size) {
 }
 
 static bool IsNotViableSendCodec(const char* codec_name) {
-  return !_stricmp(codec_name, "CN") ||
-         !_stricmp(codec_name, "telephone-event") ||
-         !_stricmp(codec_name, "red");
+  return !STR_CASE_CMP(codec_name, "CN") ||
+         !STR_CASE_CMP(codec_name, "telephone-event") ||
+         !STR_CASE_CMP(codec_name, "red");
 }
 
 TEST_F(CodecTest, PcmuIsDefaultCodecAndHasTheRightValues) {
@@ -138,7 +141,7 @@ TEST_F(CodecTest, VoiceActivityDetectionCanBeTurnedOff) {
 TEST_F(CodecTest, OpusMaxPlaybackRateCanBeSet) {
   for (int i = 0; i < voe_codec_->NumOfCodecs(); ++i) {
     voe_codec_->GetCodec(i, codec_instance_);
-    if (_stricmp("opus", codec_instance_.plname)) {
+    if (STR_CASE_CMP("opus", codec_instance_.plname)) {
       continue;
     }
     voe_codec_->SetSendCodec(channel_, codec_instance_);
@@ -154,7 +157,7 @@ TEST_F(CodecTest, OpusMaxPlaybackRateCanBeSet) {
 TEST_F(CodecTest, OpusDtxCanBeSetForOpus) {
   for (int i = 0; i < voe_codec_->NumOfCodecs(); ++i) {
     voe_codec_->GetCodec(i, codec_instance_);
-    if (_stricmp("opus", codec_instance_.plname)) {
+    if (STR_CASE_CMP("opus", codec_instance_.plname)) {
       continue;
     }
     voe_codec_->SetSendCodec(channel_, codec_instance_);
@@ -166,7 +169,7 @@ TEST_F(CodecTest, OpusDtxCanBeSetForOpus) {
 TEST_F(CodecTest, OpusDtxCannotBeSetForNonOpus) {
   for (int i = 0; i < voe_codec_->NumOfCodecs(); ++i) {
     voe_codec_->GetCodec(i, codec_instance_);
-    if (!_stricmp("opus", codec_instance_.plname)) {
+    if (!STR_CASE_CMP("opus", codec_instance_.plname)) {
       continue;
     }
     voe_codec_->SetSendCodec(channel_, codec_instance_);

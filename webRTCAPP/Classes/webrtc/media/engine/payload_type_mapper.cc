@@ -10,9 +10,9 @@
 
 #include "webrtc/media/engine/payload_type_mapper.h"
 
+#include "webrtc/api/audio_codecs/audio_format.h"
 #include "webrtc/common_types.h"
 #include "webrtc/media/base/mediaconstants.h"
-#include "webrtc/modules/audio_coding/codecs/audio_format.h"
 
 namespace cricket {
 
@@ -59,8 +59,6 @@ PayloadTypeMapper::PayloadTypeMapper()
 
           // Payload type assignments currently used by WebRTC.
           // Includes data to reduce collisions (and thus reassignments)
-          // RTX codecs mapping to specific video payload types
-          // Other codecs
           {{kGoogleRtpDataCodecName, 0, 0}, kGoogleRtpDataCodecPlType},
           {{kIlbcCodecName,    8000, 1}, 102},
           {{kIsacCodecName,   16000, 1}, 103},
@@ -69,7 +67,7 @@ PayloadTypeMapper::PayloadTypeMapper()
           {{kCnCodecName,     32000, 1}, 106},
           {{kGoogleSctpDataCodecName, 0, 0}, kGoogleSctpDataCodecPlType},
           {{kOpusCodecName,   48000, 2,
-              {{"minptime", "10"}, {"useinbandfec", "1"}}}, 111},
+              {{"minptime", "10"}, {"useinbandfec", "1"}}}, 121},
           // TODO(solenberg): Remove the hard coded 16k,32k,48k DTMF once we
           // assign payload types dynamically for send side as well.
           {{kDtmfCodecName,   48000, 1}, 110},

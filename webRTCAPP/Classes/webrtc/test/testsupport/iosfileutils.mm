@@ -10,16 +10,12 @@
 
 #if defined(WEBRTC_IOS)
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 #import <Foundation/Foundation.h>
 #include <string.h>
 
 #include "webrtc/base/checks.h"
 #include "webrtc/typedefs.h"
-#include "webrtc/sdk/objc/Framework/Classes/helpers.h"
+#include "webrtc/sdk/objc/Framework/Classes/Common/helpers.h"
 
 namespace webrtc {
 namespace test {

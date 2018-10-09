@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/raymon_wang/Documents/Develop/webrtc-source/src/third_party/boringssl/src/crypto/modes/aesni-gcm-x86_64.S
+
+/Users/raymon_wang/Documents/Develop/webrtc-source/src/third_party/boringssl/src/crypto/modes/ghash-x86_64.S
+

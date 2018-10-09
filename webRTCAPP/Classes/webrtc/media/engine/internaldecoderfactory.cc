@@ -67,15 +67,17 @@ webrtc::VideoDecoder* InternalDecoderFactory::CreateVideoDecoder(
         return webrtc::H264Decoder::Create();
       // This could happen in a software-fallback for a codec type only
       // supported externally (e.g. H.264 on iOS or Android) or in current usage
-      // in WebRtcVideoEngine2 if the external decoder fails to be created.
+      // in WebRtcVideoEngine if the external decoder fails to be created.
       LOG(LS_ERROR) << "Unable to create an H.264 decoder fallback. "
                     << "Decoding of this stream will be broken.";
       return new NullVideoDecoder();
+#if defined(WEBRTC_VPX)
     case webrtc::kVideoCodecVP8:
       return webrtc::VP8Decoder::Create();
     case webrtc::kVideoCodecVP9:
       RTC_DCHECK(webrtc::VP9Decoder::IsSupported());
       return webrtc::VP9Decoder::Create();
+#endif
     default:
       LOG(LS_ERROR) << "Creating NullVideoDecoder for unsupported codec.";
       return new NullVideoDecoder();

@@ -563,7 +563,7 @@
 					CPU_CISC,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7 armv7s";
 			};

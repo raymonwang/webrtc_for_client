@@ -142,6 +142,8 @@
 		438778861D4F48F500E6F9E9 /* video_receiver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438777211D4F48F500E6F9E9 /* video_receiver.cc */; };
 		438778891D4F48F500E6F9E9 /* video_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438777231D4F48F500E6F9E9 /* video_sender.cc */; };
 		4387788A1D4F48F500E6F9E9 /* video_sender.cc in Sources */ = {isa = PBXBuildFile; fileRef = 438777231D4F48F500E6F9E9 /* video_sender.cc */; };
+		43E1B2C21F0D194400B73FCB /* qp_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B2C01F0D194400B73FCB /* qp_parser.cc */; };
+		43E1B2C31F0D194400B73FCB /* qp_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1B2C11F0D194400B73FCB /* qp_parser.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -220,6 +222,8 @@
 		4387771D1D4F48F500E6F9E9 /* video_coding_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_coding_impl.h; sourceTree = "<group>"; };
 		438777211D4F48F500E6F9E9 /* video_receiver.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_receiver.cc; sourceTree = "<group>"; };
 		438777231D4F48F500E6F9E9 /* video_sender.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video_sender.cc; sourceTree = "<group>"; };
+		43E1B2C01F0D194400B73FCB /* qp_parser.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = qp_parser.cc; sourceTree = "<group>"; };
+		43E1B2C11F0D194400B73FCB /* qp_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = qp_parser.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,8 @@
 		438776431D4F48F500E6F9E9 /* video_coding */ = {
 			isa = PBXGroup;
 			children = (
+				43E1B2C01F0D194400B73FCB /* qp_parser.cc */,
+				43E1B2C11F0D194400B73FCB /* qp_parser.h */,
 				437DB1791E55757500BF6546 /* BUILD.gn */,
 				438776451D4F48F500E6F9E9 /* codec_database.cc */,
 				438776461D4F48F500E6F9E9 /* codec_database.h */,
@@ -375,6 +381,7 @@
 				438778511D4F48F500E6F9E9 /* timestamp_map.h in Headers */,
 				438777271D4F48F500E6F9E9 /* codec_database.h in Headers */,
 				438777BB1D4F48F500E6F9E9 /* frame_buffer.h in Headers */,
+				43E1B2C31F0D194400B73FCB /* qp_parser.h in Headers */,
 				438777D51D4F48F500E6F9E9 /* mock_vcm_callbacks.h in Headers */,
 				438777E51D4F48F500E6F9E9 /* internal_defines.h in Headers */,
 				438777C91D4F48F500E6F9E9 /* generic_decoder.h in Headers */,
@@ -534,6 +541,7 @@
 				438777E71D4F48F500E6F9E9 /* jitter_buffer.cc in Sources */,
 				438777291D4F48F500E6F9E9 /* codec_timer.cc in Sources */,
 				438777CB1D4F48F500E6F9E9 /* generic_encoder.cc in Sources */,
+				43E1B2C21F0D194400B73FCB /* qp_parser.cc in Sources */,
 				438777BD1D4F48F500E6F9E9 /* frame_buffer2.cc in Sources */,
 				438777F51D4F48F500E6F9E9 /* media_opt_util.cc in Sources */,
 				438778851D4F48F500E6F9E9 /* video_receiver.cc in Sources */,
@@ -686,10 +694,11 @@
 					WEBRTC_IOS,
 					WEBRTC_USE_H264,
 					WEBRTC_INITIALIZE_FFMPEG,
+					HAVE_WEBRTC_VIDEO,
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -706,6 +715,7 @@
 					WEBRTC_IOS,
 					WEBRTC_USE_H264,
 					WEBRTC_INITIALIZE_FFMPEG,
+					HAVE_WEBRTC_VIDEO,
 				);
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../webRTCAPP/Classes";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
