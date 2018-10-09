@@ -382,6 +382,19 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
   options.echo_cancellation = rtc::Optional<bool>(false);
   options.extended_filter_aec = rtc::Optional<bool>(false);
   LOG(LS_INFO) << "Always disable AEC on iOS. Use built-in instead.";
+    if (options.ios_force_software_aec_HACK &&
+        *options.ios_force_software_aec_HACK) {
+        // EC may be forced on for a device known to have non-functioning platform
+        // AEC.
+        options.echo_cancellation = rtc::Optional<bool>(true);
+        options.extended_filter_aec = rtc::Optional<bool>(true);
+        LOG(LS_WARNING) << "Force software AEC on iOS. May conflict with platform AEC.";
+    } else {
+        // On iOS, VPIO provides built-in EC.
+        options.echo_cancellation = rtc::Optional<bool>(false);
+        options.extended_filter_aec = rtc::Optional<bool>(false);
+        LOG(LS_INFO) << "Always disable AEC on iOS. Use built-in instead.";
+    }
 #elif defined(ANDROID)
   ec_mode = webrtc::kEcAecm;
   options.extended_filter_aec = rtc::Optional<bool>(false);
