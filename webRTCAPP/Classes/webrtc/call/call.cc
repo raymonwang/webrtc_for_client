@@ -154,7 +154,7 @@ class Call : public webrtc::Call,
              public BitrateAllocator::LimitObserver {
  public:
   Call(const Call::Config& config,
-       std::unique_ptr<RtpTransportControllerSendInterface> transport_send);
+       std::unique_ptr<RtpTransportControllerSendInterface> transport_send, voiceVolumeCallback* callback);
   virtual ~Call();
 
   // Implements webrtc::Call.
@@ -252,6 +252,9 @@ class Call : public webrtc::Call,
   void UpdateCurrentBitrateConfig(const rtc::Optional<int>& new_start);
 
   Clock* const clock_;
+
+    std::unique_ptr <RTPHeader> rtpHeader_;
+    voiceVolumeCallback *callback_;
 
   const int num_cpu_cores_;
   const std::unique_ptr<ProcessThread> module_process_thread_;
@@ -374,27 +377,29 @@ std::string Call::Stats::ToString(int64_t time_ms) const {
   return ss.str();
 }
 
-Call* Call::Create(const Call::Config& config) {
+Call* Call::Create(const Call::Config& config, voiceVolumeCallback* callback) {
   return new internal::Call(config,
                             rtc::MakeUnique<RtpTransportControllerSend>(
-                                Clock::GetRealTimeClock(), config.event_log));
+                                Clock::GetRealTimeClock(), config.event_log), callback);
 }
 
 Call* Call::Create(
     const Call::Config& config,
     std::unique_ptr<RtpTransportControllerSendInterface> transport_send) {
-  return new internal::Call(config, std::move(transport_send));
+  return new internal::Call(config, std::move(transport_send), nullptr);
 }
 
 namespace internal {
 
 Call::Call(const Call::Config& config,
-           std::unique_ptr<RtpTransportControllerSendInterface> transport_send)
+           std::unique_ptr<RtpTransportControllerSendInterface> transport_send, voiceVolumeCallback* callback)
     : clock_(Clock::GetRealTimeClock()),
       num_cpu_cores_(CpuInfo::DetectNumberOfCores()),
       module_process_thread_(ProcessThread::Create("ModuleProcessThread")),
       pacer_thread_(ProcessThread::Create("PacerThread")),
       call_stats_(new CallStats(clock_)),
+      rtpHeader_(new RTPHeader() ),
+      callback_(callback),
       bitrate_allocator_(new BitrateAllocator(this)),
       config_(config),
       audio_network_state_(kNetworkDown),
@@ -1306,9 +1311,11 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
   // on parsed_packet to the receive streams.
   rtc::Optional<RtpPacketReceived> parsed_packet =
       ParseRtpPacket(packet, length, &packet_time);
-
   if (!parsed_packet)
     return DELIVERY_PACKET_ERROR;
+
+  parsed_packet->GetHeader(rtpHeader_.get());
+    callback_->onVoiceVolumePacket(rtpHeader_.get()->arrOfCSRCs, rtpHeader_.get()->numCSRCs);
 
   auto it = receive_rtp_config_.find(parsed_packet->Ssrc());
   if (it == receive_rtp_config_.end()) {
