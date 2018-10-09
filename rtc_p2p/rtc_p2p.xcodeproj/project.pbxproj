@@ -93,6 +93,16 @@
 		439CCE7D2032A20C00261BE1 /* fakedtlstransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fakedtlstransport.h; sourceTree = "<group>"; };
 		439CCE7E2032A20C00261BE1 /* fakecandidatepair.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fakecandidatepair.h; sourceTree = "<group>"; };
 		439CCE7F2032A20C00261BE1 /* dtlstransportinternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtlstransportinternal.h; sourceTree = "<group>"; };
+		439E925420A1B086004C8229 /* reliablequicstream.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = reliablequicstream.cc; sourceTree = "<group>"; };
+		439E925520A1B086004C8229 /* reliablequicstream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reliablequicstream.h; sourceTree = "<group>"; };
+		439E925620A1B086004C8229 /* quicconnectionhelper.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = quicconnectionhelper.cc; sourceTree = "<group>"; };
+		439E925820A1B086004C8229 /* quicsession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quicsession.h; sourceTree = "<group>"; };
+		439E925920A1B086004C8229 /* quictransport.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = quictransport.cc; sourceTree = "<group>"; };
+		439E925A20A1B086004C8229 /* quictransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quictransport.h; sourceTree = "<group>"; };
+		439E925B20A1B086004C8229 /* quictransportchannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quictransportchannel.h; sourceTree = "<group>"; };
+		439E925D20A1B087004C8229 /* quictransportchannel.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = quictransportchannel.cc; sourceTree = "<group>"; };
+		439E925F20A1B087004C8229 /* quicconnectionhelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quicconnectionhelper.h; sourceTree = "<group>"; };
+		439E926120A1B087004C8229 /* quicsession.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = quicsession.cc; sourceTree = "<group>"; };
 		43C6977F1D22567300427D35 /* librtc_p2p.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_p2p.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C69A891D225AE800427D35 /* asyncstuntcpsocket.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = asyncstuntcpsocket.cc; sourceTree = "<group>"; };
 		43C69A8A1D225AE800427D35 /* asyncstuntcpsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asyncstuntcpsocket.h; sourceTree = "<group>"; };
@@ -163,6 +173,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		439E924320A1B00E004C8229 /* quic */ = {
+			isa = PBXGroup;
+			children = (
+				439E925620A1B086004C8229 /* quicconnectionhelper.cc */,
+				439E925F20A1B087004C8229 /* quicconnectionhelper.h */,
+				439E926120A1B087004C8229 /* quicsession.cc */,
+				439E925820A1B086004C8229 /* quicsession.h */,
+				439E925920A1B086004C8229 /* quictransport.cc */,
+				439E925A20A1B086004C8229 /* quictransport.h */,
+				439E925D20A1B087004C8229 /* quictransportchannel.cc */,
+				439E925B20A1B086004C8229 /* quictransportchannel.h */,
+				439E925420A1B086004C8229 /* reliablequicstream.cc */,
+				439E925520A1B086004C8229 /* reliablequicstream.h */,
+			);
+			path = quic;
+			sourceTree = "<group>";
+		};
 		43C697761D22567300427D35 = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +209,7 @@
 		43C69A871D225AE800427D35 /* p2p */ = {
 			isa = PBXGroup;
 			children = (
+				439E924320A1B00E004C8229 /* quic */,
 				43C69A881D225AE800427D35 /* base */,
 				43C69ADF1D225AE800427D35 /* client */,
 				43C69AEC1D225AE800427D35 /* OWNERS */,

@@ -113,6 +113,11 @@ class RTCPReceiver {
 
   void RegisterRtcpStatisticsCallback(RtcpStatisticsCallback* callback);
   RtcpStatisticsCallback* GetRtcpStatisticsCallback();
+    
+    uint32_t get_last_cumulative_lost() {return last_cumulative_lost_;};
+    uint32_t get_last_highest_seq_num() {return last_highest_seq_num_;};
+    bool     get_received_newrr_report() {return received_newrr_report_;};
+    void     set_received_newrr_report(bool value) {received_newrr_report_ = value;};
 
  private:
   struct PacketInformation;
@@ -260,6 +265,9 @@ class RTCPReceiver {
 
   size_t num_skipped_packets_;
   int64_t last_skipped_packets_warning_ms_;
+    uint32_t last_cumulative_lost_;
+    uint32_t last_highest_seq_num_;
+    bool     received_newrr_report_;
 };
 }  // namespace webrtc
 #endif  // WEBRTC_MODULES_RTP_RTCP_SOURCE_RTCP_RECEIVER_H_

@@ -138,7 +138,8 @@ RTPSender::RTPSender(
       retransmission_rate_limiter_(retransmission_rate_limiter),
       overhead_observer_(overhead_observer),
       send_side_bwe_with_overhead_(
-          webrtc::field_trial::IsEnabled("WebRTC-SendSideBwe-WithOverhead")) {
+          webrtc::field_trial::IsEnabled("WebRTC-SendSideBwe-WithOverhead")),
+      rtcFecEncoder_(RtcFecEncoder::Create(kFecSourceNum, kFecRepairNum, kFecMaxLength, this)){
   // This random initialization is not intended to be cryptographic strong.
   timestamp_offset_ = random_.Rand<uint32_t>();
   // Random start, 16 bits. Can't be 0.
@@ -169,6 +170,7 @@ RTPSender::~RTPSender() {
     delete it->second;
     payload_type_map_.erase(it);
   }
+    rtcFecEncoder_.reset();
 }
 
 rtc::ArrayView<const RtpExtensionSize> RTPSender::FecExtensionSizes() {
@@ -622,15 +624,38 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
   return packet_size;
 }
 
+    int RTPSender::SendPacket(const uint8_t *data, const uint32_t size){
+        PacketOptions options;
+        int bytes_sent = -1;
+        if (transport_) {
+            bytes_sent = transport_->SendRtp(data, size, options)
+                         ? static_cast<int>(size)
+                         : -1;
+
+            if (event_log_ && bytes_sent > 0) {
+                event_log_->LogRtpHeader(kOutgoingPacket, data, size);
+            }
+        }
+        return 0;
+    }
+
 bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
                                     const PacketOptions& options,
                                     const PacedPacketInfo& pacing_info) {
   int bytes_sent = -1;
   if (transport_) {
     UpdateRtpOverhead(packet);
-    bytes_sent = transport_->SendRtp(packet.data(), packet.size(), options)
-                     ? static_cast<int>(packet.size())
-                     : -1;
+      if(audio_configured_){
+          bytes_sent = transport_->SendRtp(packet.data(), packet.size(), options)
+                       ? static_cast<int>(packet.size())
+                       : -1;
+      } else{
+          if(rtcFecEncoder_)
+            rtcFecEncoder_->InsertPacket(packet.data(), packet.size());
+          return true;
+      }
+
+
     if (event_log_ && bytes_sent > 0) {
       event_log_->LogRtpHeader(kOutgoingPacket, packet.data(), packet.size(),
                                pacing_info.probe_cluster_id);
@@ -1161,6 +1186,14 @@ bool RTPSender::SetFecParameters(const FecProtectionParams& delta_params,
   video_->SetFecParameters(delta_params, key_params);
   return true;
 }
+    
+    void RTPSender::SetRTChatFecParameters(const uint32_t cumulative_lost, const uint16_t highest_seq_num)
+    {
+        if (rtcFecEncoder_) {
+            LOG(LS_INFO) << "on new fec param:" << cumulative_lost << "---" << highest_seq_num;
+            rtcFecEncoder_->OnReceiveReport(SSRC(), cumulative_lost, highest_seq_num);
+        }
+    }
 
 std::unique_ptr<RtpPacketToSend> RTPSender::BuildRtxPacket(
     const RtpPacketToSend& packet) {

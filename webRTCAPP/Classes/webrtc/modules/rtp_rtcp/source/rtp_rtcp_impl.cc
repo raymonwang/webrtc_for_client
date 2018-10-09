@@ -243,7 +243,14 @@ rtc::Optional<uint32_t> ModuleRtpRtcpImpl::FlexfecSsrc() const {
 int32_t ModuleRtpRtcpImpl::IncomingRtcpPacket(
     const uint8_t* rtcp_packet,
     const size_t length) {
-  return rtcp_receiver_.IncomingPacket(rtcp_packet, length) ? 0 : -1;
+    bool res = rtcp_receiver_.IncomingPacket(rtcp_packet, length) ? 0 : -1;
+    if (rtcp_receiver_.get_received_newrr_report()) {
+        if (rtp_sender_) {
+            rtp_sender_->SetRTChatFecParameters(rtcp_receiver_.get_last_cumulative_lost(), rtcp_receiver_.get_last_highest_seq_num());
+        }
+        rtcp_receiver_.set_received_newrr_report(false);
+    }
+    return res;
 }
 
 int32_t ModuleRtpRtcpImpl::RegisterSendPayload(

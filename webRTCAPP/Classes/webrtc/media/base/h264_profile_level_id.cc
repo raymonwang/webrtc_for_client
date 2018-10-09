@@ -201,7 +201,7 @@ rtc::Optional<ProfileLevelId> ParseSdpProfileLevelId(
   // done in an interim period to allow external clients to update their code.
   // http://crbug/webrtc/6337.
   static const ProfileLevelId kDefaultProfileLevelId(
-      kProfileConstrainedBaseline, kLevel3_1);
+      kProfileConstrainedBaseline, kLevel1_3);
 
   const auto profile_level_id_it = params.find(kProfileLevelId);
   return (profile_level_id_it == params.end())

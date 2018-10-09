@@ -222,6 +222,10 @@
 		43998B0519863072003C5793 /* tmmbr_help.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43998ABD19863072003C5793 /* tmmbr_help.cc */; };
 		43998B0619863072003C5793 /* tmmbr_help.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998ABE19863072003C5793 /* tmmbr_help.h */; };
 		43998B0719863072003C5793 /* video_codec_information.h in Headers */ = {isa = PBXBuildFile; fileRef = 43998ABF19863072003C5793 /* video_codec_information.h */; };
+		43B475721FDEB07200E1C920 /* rtc_fec.h in Headers */ = {isa = PBXBuildFile; fileRef = 43B475701FDEB07200E1C920 /* rtc_fec.h */; };
+		43B475731FDEB07200E1C920 /* rtc_fec.h in Headers */ = {isa = PBXBuildFile; fileRef = 43B475701FDEB07200E1C920 /* rtc_fec.h */; };
+		43B475741FDEB07200E1C920 /* rtc_fec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43B475711FDEB07200E1C920 /* rtc_fec.cc */; };
+		43B475751FDEB07200E1C920 /* rtc_fec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43B475711FDEB07200E1C920 /* rtc_fec.cc */; };
 		43C69C9D1D2290E900427D35 /* rtp_format_h264.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C991D2290E900427D35 /* rtp_format_h264.h */; };
 		43C69C9E1D2290E900427D35 /* rtp_format.cc in Sources */ = {isa = PBXBuildFile; fileRef = 43C69C9A1D2290E900427D35 /* rtp_format.cc */; };
 		43C69C9F1D2290E900427D35 /* rtp_format.h in Headers */ = {isa = PBXBuildFile; fileRef = 43C69C9B1D2290E900427D35 /* rtp_format.h */; };
@@ -415,6 +419,8 @@
 		43998ABD19863072003C5793 /* tmmbr_help.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tmmbr_help.cc; sourceTree = "<group>"; };
 		43998ABE19863072003C5793 /* tmmbr_help.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmmbr_help.h; sourceTree = "<group>"; };
 		43998ABF19863072003C5793 /* video_codec_information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video_codec_information.h; sourceTree = "<group>"; };
+		43B475701FDEB07200E1C920 /* rtc_fec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtc_fec.h; sourceTree = "<group>"; };
+		43B475711FDEB07200E1C920 /* rtc_fec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtc_fec.cc; sourceTree = "<group>"; };
 		43C69C981D2290E900427D35 /* rtp_format_h264.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_format_h264.cc; sourceTree = "<group>"; };
 		43C69C991D2290E900427D35 /* rtp_format_h264.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtp_format_h264.h; sourceTree = "<group>"; };
 		43C69C9A1D2290E900427D35 /* rtp_format.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rtp_format.cc; sourceTree = "<group>"; };
@@ -548,6 +554,8 @@
 		43998A7E19863071003C5793 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				43B475701FDEB07200E1C920 /* rtc_fec.h */,
+				43B475711FDEB07200E1C920 /* rtc_fec.cc */,
 				434121881D4F33AE003D3A39 /* rtcp_packet */,
 				4341207C1D4F338A003D3A39 /* packet_loss_stats.cc */,
 				4303DA4A1E4825A900CD116B /* flexfec_sender.cc */,
@@ -656,6 +664,7 @@
 				434121FA1D4F33AE003D3A39 /* extended_reports.h in Headers */,
 				4303DA511E4826C500CD116B /* target_bitrate.h in Headers */,
 				434122501D4F33AE003D3A39 /* tmmb_item.h in Headers */,
+				43B475721FDEB07200E1C920 /* rtc_fec.h in Headers */,
 				43998AE719863072003C5793 /* rtp_format_video_generic.h in Headers */,
 				43E1B2821F0D166D00B73FCB /* rtcp_nack_stats.h in Headers */,
 				434122121D4F33AE003D3A39 /* psfb.h in Headers */,
@@ -791,6 +800,7 @@
 				434120771D4F3330003D3A39 /* rtp_receiver.h in Headers */,
 				43E04AB01D26215400B39549 /* rtcp_sender.h in Headers */,
 				434122671D4F33AE003D3A39 /* voip_metric.h in Headers */,
+				43B475731FDEB07200E1C920 /* rtc_fec.h in Headers */,
 				434120711D4F3330003D3A39 /* rtp_cvo.h in Headers */,
 				4341217B1D4F338A003D3A39 /* rtp_header_extensions.h in Headers */,
 				43E04AB31D26215400B39549 /* rtcp_receiver.h in Headers */,
@@ -912,6 +922,7 @@
 				434122101D4F33AE003D3A39 /* psfb.cc in Sources */,
 				434121F81D4F33AE003D3A39 /* extended_reports.cc in Sources */,
 				4341224E1D4F33AE003D3A39 /* tmmb_item.cc in Sources */,
+				43B475741FDEB07200E1C920 /* rtc_fec.cc in Sources */,
 				43998ADC19863072003C5793 /* remote_ntp_time_estimator.cc in Sources */,
 				43998B0119863072003C5793 /* rtp_utility.cc in Sources */,
 				43998AED19863072003C5793 /* rtp_packet_history.cc in Sources */,
@@ -996,6 +1007,7 @@
 				434121F31D4F33AE003D3A39 /* extended_jitter_report.cc in Sources */,
 				4341220B1D4F33AE003D3A39 /* pli.cc in Sources */,
 				43E04A7F1D26215400B39549 /* rtcp_sender.cc in Sources */,
+				43B475751FDEB07200E1C920 /* rtc_fec.cc in Sources */,
 				434122271D4F33AE003D3A39 /* report_block.cc in Sources */,
 				43E04A801D26215400B39549 /* rtp_receiver_audio.cc in Sources */,
 				434121E11D4F33AE003D3A39 /* common_header.cc in Sources */,

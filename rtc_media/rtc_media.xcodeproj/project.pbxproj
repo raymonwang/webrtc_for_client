@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		439E923F20A1AF49004C8229 /* sctptransportinternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 439E923B20A1AF49004C8229 /* sctptransportinternal.h */; };
+		439E924020A1AF49004C8229 /* sctptransport.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439E923C20A1AF49004C8229 /* sctptransport.cc */; };
+		439E924220A1AF49004C8229 /* sctptransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 439E923E20A1AF49004C8229 /* sctptransport.h */; };
 		439FC4C21D508D2000939424 /* audiosource.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC4431D508D2000939424 /* audiosource.h */; };
 		439FC4C31D508D2000939424 /* codec.cc in Sources */ = {isa = PBXBuildFile; fileRef = 439FC4441D508D2000939424 /* codec.cc */; };
 		439FC4C41D508D2000939424 /* codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC4451D508D2000939424 /* codec.h */; };
@@ -80,6 +83,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		439E923B20A1AF49004C8229 /* sctptransportinternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctptransportinternal.h; sourceTree = "<group>"; };
+		439E923C20A1AF49004C8229 /* sctptransport.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sctptransport.cc; sourceTree = "<group>"; };
+		439E923D20A1AF49004C8229 /* sctptransport_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sctptransport_unittest.cc; sourceTree = "<group>"; };
+		439E923E20A1AF49004C8229 /* sctptransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sctptransport.h; sourceTree = "<group>"; };
 		439FC4341D508CF000939424 /* librtc_media.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librtc_media.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		439FC4431D508D2000939424 /* audiosource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audiosource.h; sourceTree = "<group>"; };
 		439FC4441D508D2000939424 /* codec.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = codec.cc; sourceTree = "<group>"; };
@@ -167,6 +174,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		439E923A20A1AF49004C8229 /* sctp */ = {
+			isa = PBXGroup;
+			children = (
+				439E923B20A1AF49004C8229 /* sctptransportinternal.h */,
+				439E923C20A1AF49004C8229 /* sctptransport.cc */,
+				439E923D20A1AF49004C8229 /* sctptransport_unittest.cc */,
+				439E923E20A1AF49004C8229 /* sctptransport.h */,
+			);
+			path = sctp;
+			sourceTree = "<group>";
+		};
 		439FC42B1D508CF000939424 = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +204,7 @@
 		439FC4411D508D2000939424 /* media */ = {
 			isa = PBXGroup;
 			children = (
+				439E923A20A1AF49004C8229 /* sctp */,
 				439FC4421D508D2000939424 /* base */,
 				439FC4821D508D2000939424 /* BUILD.gn */,
 				439FC4831D508D2000939424 /* DEPS */,
@@ -292,6 +311,7 @@
 				43E1B2911F0D17AA00B73FCB /* adm_helpers.h in Headers */,
 				439FC52F1D508D2000939424 /* webrtcvoiceengine.h in Headers */,
 				439FC4D91D508D2000939424 /* rtpdataengine.h in Headers */,
+				439E923F20A1AF49004C8229 /* sctptransportinternal.h in Headers */,
 				439FC5001D508D2000939424 /* videosourceinterface.h in Headers */,
 				439FC4F51D508D2000939424 /* videocommon.h in Headers */,
 				439FC51A1D508D2000939424 /* webrtcmediaengine.h in Headers */,
@@ -312,6 +332,7 @@
 				439FC4C91D508D2000939424 /* cryptoparams.h in Headers */,
 				43EFD21B1E5AE26600E3DEAD /* videoencodersoftwarefallbackwrapper.h in Headers */,
 				43EFD2111E5AE26600E3DEAD /* fakewebrtcvideocapturemodule.h in Headers */,
+				439E924220A1AF49004C8229 /* sctptransport.h in Headers */,
 				439FC4CA1D508D2000939424 /* device.h in Headers */,
 				439FC4C21D508D2000939424 /* audiosource.h in Headers */,
 				439FC4FD1D508D2000939424 /* videosinkinterface.h in Headers */,
@@ -406,6 +427,7 @@
 				439FC4DE1D508D2000939424 /* rtputils.cc in Sources */,
 				439FC4E71D508D2000939424 /* turnutils.cc in Sources */,
 				439FC5131D508D2000939424 /* payload_type_mapper.cc in Sources */,
+				439E924020A1AF49004C8229 /* sctptransport.cc in Sources */,
 				43E1B1831F0CE74E00B73FCB /* webrtcvideoengine.cc in Sources */,
 				439FC4C31D508D2000939424 /* codec.cc in Sources */,
 				439FC5191D508D2000939424 /* webrtcmediaengine.cc in Sources */,
