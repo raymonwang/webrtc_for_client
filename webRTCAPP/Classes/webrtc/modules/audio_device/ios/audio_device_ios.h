@@ -165,7 +165,7 @@ class AudioDeviceIOS : public AudioDeviceGeneric,
   // AudioSessionObserver methods. May be called from any thread.
   void OnInterruptionBegin() override;
   void OnInterruptionEnd() override;
-  void OnValidRouteChange() override;
+  void OnValidRouteChange(int reason) override;
   void OnCanPlayOrRecordChange(bool can_play_or_record) override;
   void OnChangedOutputVolume() override;
 
@@ -193,6 +193,7 @@ class AudioDeviceIOS : public AudioDeviceGeneric,
   void HandleSampleRateChange(float sample_rate);
   void HandlePlayoutGlitchDetected();
   void HandleOutputVolumeChange();
+    void InputDeviceChanged(bool is_input);
 
   // Uses current |playout_parameters_| and |record_parameters_| to inform the
   // audio device buffer (ADB) about our internal audio parameters.

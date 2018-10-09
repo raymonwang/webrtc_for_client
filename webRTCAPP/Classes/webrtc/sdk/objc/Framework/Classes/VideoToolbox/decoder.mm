@@ -25,6 +25,7 @@
 
 #if defined(WEBRTC_IOS)
 #import "Common/RTCUIApplicationStatusObserver.h"
+#import "WebRTC/UIDevice+RTCDevice.h"
 #endif
 
 namespace webrtc {
@@ -250,6 +251,11 @@ void H264VideoToolboxDecoder::ConfigureDecompressionSession() {
 
 void H264VideoToolboxDecoder::DestroyDecompressionSession() {
   if (decompression_session_) {
+      #if defined(WEBRTC_IOS)
+      if ([UIDevice isIOS11OrLater]) {
+          VTDecompressionSessionWaitForAsynchronousFrames(decompression_session_);
+      }
+      #endif
     VTDecompressionSessionInvalidate(decompression_session_);
     CFRelease(decompression_session_);
     decompression_session_ = nullptr;

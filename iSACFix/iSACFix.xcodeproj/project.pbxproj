@@ -742,6 +742,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
@@ -767,6 +768,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
@@ -848,6 +850,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = arm64;
 			};
 			name = Debug;
@@ -873,6 +876,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = arm64;
 			};
 			name = Release;

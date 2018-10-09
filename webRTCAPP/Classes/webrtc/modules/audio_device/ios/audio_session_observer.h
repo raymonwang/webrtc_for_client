@@ -26,7 +26,7 @@ class AudioSessionObserver {
   virtual void OnInterruptionEnd() = 0;
 
   // Called when audio route changes.
-  virtual void OnValidRouteChange() = 0;
+  virtual void OnValidRouteChange(int reason) = 0;
 
   // Called when the ability to play or record changes.
   virtual void OnCanPlayOrRecordChange(bool can_play_or_record) = 0;

@@ -70,6 +70,8 @@ enum AudioDeviceMessageType : uint32_t {
   kMessageTypeCanPlayOrRecordChange,
   kMessageTypePlayoutGlitchDetected,
   kMessageOutputVolumeChange,
+    kMessageTypePluginMic,
+    kMessageTypePlugoutMic
 };
 
 using ios::CheckAndLogError;
@@ -385,9 +387,17 @@ void AudioDeviceIOS::OnInterruptionEnd() {
   thread_->Post(RTC_FROM_HERE, this, kMessageTypeInterruptionEnd);
 }
 
-void AudioDeviceIOS::OnValidRouteChange() {
+void AudioDeviceIOS::OnValidRouteChange(int reason) {
   RTC_DCHECK(thread_);
-  thread_->Post(RTC_FROM_HERE, this, kMessageTypeValidRouteChange);
+   AVAudioSessionRouteChangeReason change_reason = static_cast<AVAudioSessionRouteChangeReason>(reason);
+    if (change_reason == AVAudioSessionRouteChangeReasonNewDeviceAvailable) {
+        thread_->Post(RTC_FROM_HERE, this, kMessageTypePluginMic);
+    }
+    else if (change_reason == AVAudioSessionRouteChangeReasonOldDeviceUnavailable) {
+        thread_->Post(RTC_FROM_HERE, this, kMessageTypePlugoutMic);
+    }
+    else
+        thread_->Post(RTC_FROM_HERE, this, kMessageTypeValidRouteChange);
 }
 
 void AudioDeviceIOS::OnCanPlayOrRecordChange(bool can_play_or_record) {
@@ -540,6 +550,12 @@ void AudioDeviceIOS::OnMessage(rtc::Message *msg) {
     case kMessageOutputVolumeChange:
       HandleOutputVolumeChange();
       break;
+      case kMessageTypePluginMic:
+          InputDeviceChanged(true);
+          break;
+      case kMessageTypePlugoutMic:
+          InputDeviceChanged(false);
+          break;
   }
 }
 
@@ -687,6 +703,18 @@ void AudioDeviceIOS::HandleOutputVolumeChange() {
   // glitches too close in time to this event.
   last_output_volume_change_time_ = rtc::TimeMillis();
 }
+    
+    void AudioDeviceIOS::InputDeviceChanged(bool is_input)
+    {
+        RTC_DCHECK_RUN_ON(&thread_checker_);
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        if (is_input) {
+            [session setMode:AVAudioSessionModeDefault error:nil];
+        }
+        else {
+            [session setMode:AVAudioSessionModeVideoChat error:nil];
+        }
+    }
 
 void AudioDeviceIOS::UpdateAudioDeviceBuffer() {
   LOGI() << "UpdateAudioDevicebuffer";

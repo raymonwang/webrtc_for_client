@@ -52,7 +52,7 @@
     case AVAudioSessionRouteChangeReasonOverride:
     case AVAudioSessionRouteChangeReasonWakeFromSleep:
     case AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory:
-      _observer->OnValidRouteChange();
+      _observer->OnValidRouteChange(reason);
       break;
     case AVAudioSessionRouteChangeReasonRouteConfigurationChange:
       // The set of input and output ports has not changed, but their
