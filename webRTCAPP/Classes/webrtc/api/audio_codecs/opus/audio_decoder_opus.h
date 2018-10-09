@@ -27,6 +27,7 @@ namespace webrtc {
 struct AudioDecoderOpus {
   struct Config {
     int num_channels;
+      int sample_rate_hz;
   };
   static rtc::Optional<Config> SdpToConfig(const SdpAudioFormat& audio_format);
   static void AppendSupportedDecoders(std::vector<AudioCodecSpec>* specs);

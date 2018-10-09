@@ -66,6 +66,7 @@ struct AudioEncoderOpusConfig {
   // NOTE: This member isn't necessary, and will soon go away. See
   // https://bugs.chromium.org/p/webrtc/issues/detail?id=7847
   int payload_type;
+    int sample_rate_hz_;
 };
 
 }  // namespace webrtc

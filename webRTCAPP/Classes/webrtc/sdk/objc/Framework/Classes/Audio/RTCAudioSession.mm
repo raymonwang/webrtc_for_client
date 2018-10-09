@@ -734,7 +734,7 @@ NSString * const kRTCAudioSessionOutputVolumeSelector = @"outputVolume";
     RTCLogWarning(
         @"Current sample rate (%.2f) is not the preferred rate (%.2f)",
         sessionSampleRate, preferredSampleRate);
-    if (![self setPreferredSampleRate:sessionSampleRate
+    if (![self setPreferredSampleRate:preferredSampleRate
                                 error:&error]) {
       RTCLogError(@"Failed to set preferred sample rate: %@",
                   error.localizedDescription);

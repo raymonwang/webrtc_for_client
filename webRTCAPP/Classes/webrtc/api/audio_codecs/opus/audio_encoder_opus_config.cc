@@ -17,7 +17,7 @@ namespace {
 #if defined(WEBRTC_ANDROID) || defined(WEBRTC_IOS) || defined(WEBRTC_ARCH_ARM)
 // If we are on Android, iOS and/or ARM, use a lower complexity setting by
 // default, to save encoder complexity.
-constexpr int kDefaultComplexity = 5;
+constexpr int kDefaultComplexity = 2;
 #else
 constexpr int kDefaultComplexity = 9;
 #endif
@@ -45,7 +45,8 @@ AudioEncoderOpusConfig::AudioEncoderOpusConfig()
       complexity_threshold_window_bps(1500),
       dtx_enabled(false),
       uplink_bandwidth_update_interval_ms(200),
-      payload_type(-1) {}
+      payload_type(-1),
+      sample_rate_hz_(48000){}
 AudioEncoderOpusConfig::AudioEncoderOpusConfig(const AudioEncoderOpusConfig&) =
     default;
 AudioEncoderOpusConfig::~AudioEncoderOpusConfig() = default;

@@ -168,6 +168,9 @@ class AudioDeviceIOS : public AudioDeviceGeneric,
   void OnValidRouteChange(int reason) override;
   void OnCanPlayOrRecordChange(bool can_play_or_record) override;
   void OnChangedOutputVolume() override;
+                           
+  virtual int32_t SetRecordingSampleRate(const uint32_t samplesPerSec) override;
+  virtual int32_t SetPlayoutSampleRate(const uint32_t samplesPerSec) override;
 
   // VoiceProcessingAudioUnitObserver methods.
   OSStatus OnDeliverRecordedData(AudioUnitRenderActionFlags* flags,

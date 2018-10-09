@@ -74,7 +74,13 @@ static RTCAudioSessionConfiguration *gWebRTCConfiguration = nil;
     _categoryOptions = AVAudioSessionCategoryOptionAllowBluetooth|AVAudioSessionCategoryOptionMixWithOthers|AVAudioSessionCategoryOptionDefaultToSpeaker;
 
     // Specify mode for two-way voice communication (e.g. VoIP).
-    _mode = AVAudioSessionModeVoiceChat;
+      RTCDeviceType device_type = [UIDevice deviceType];
+      if ([UIDevice isIOS11OrLater] && (device_type == RTCDeviceTypeIPhone8 || device_type == RTCDeviceTypeIPhone8Plus)) {
+          _mode = AVAudioSessionModeVideoRecording;
+      }
+      else {
+          _mode = AVAudioSessionModeVideoChat;
+      }
 
     // Set the session's sample rate or the hardware sample rate.
     // It is essential that we use the same sample rate as stream format
