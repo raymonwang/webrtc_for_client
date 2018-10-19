@@ -7,6 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4380602A211AC6AB00D1A557 /* RTCIceCandidate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8BB1F0E023900B73FCB /* RTCIceCandidate.mm */; };
+		4380602D211AC87900D1A557 /* RTCMediaConstraints.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8C11F0E023900B73FCB /* RTCMediaConstraints.mm */; };
+		43806030211AC94E00D1A557 /* RTCTracing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8DE1F0E023900B73FCB /* RTCTracing.mm */; };
+		43806032211AC99800D1A557 /* RTCConfiguration.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8B31F0E023900B73FCB /* RTCConfiguration.mm */; };
+		43806035211AC9ED00D1A557 /* RTCPeerConnectionFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8D01F0E023900B73FCB /* RTCPeerConnectionFactory.mm */; };
+		4380603C211ACAB500D1A557 /* RTCCameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8E91F0E023900B73FCB /* RTCCameraPreviewView.m */; };
+		4380603D211ACAC900D1A557 /* RTCIceServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8BD1F0E023900B73FCB /* RTCIceServer.mm */; };
+		4380603E211ACAE100D1A557 /* RTCVideoTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8E71F0E023900B73FCB /* RTCVideoTrack.mm */; };
+		4380603F211ACAF400D1A557 /* RTCPeerConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8CE1F0E023900B73FCB /* RTCPeerConnection.mm */; };
+		43806040211ACB2100D1A557 /* RTCDataChannel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8B51F0E023900B73FCB /* RTCDataChannel.mm */; };
+		43806042211ACB7A00D1A557 /* RTCMediaStream.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8C51F0E023900B73FCB /* RTCMediaStream.mm */; };
+		43806043211ACBC400D1A557 /* RTCMediaStreamTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8C71F0E023900B73FCB /* RTCMediaStreamTrack.mm */; };
+		438060E0211AD2E700D1A557 /* RTCCameraVideoCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8B11F0E023900B73FCB /* RTCCameraVideoCapturer.m */; };
+		43806127211ADA5900D1A557 /* RTCSessionDescription.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8DC1F0E023900B73FCB /* RTCSessionDescription.mm */; };
+		43806128211ADA7A00D1A557 /* RTCVideoSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8E51F0E023900B73FCB /* RTCVideoSource.mm */; };
+		43806129211ADA8300D1A557 /* RTCAudioTrack.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8AE1F0E023900B73FCB /* RTCAudioTrack.mm */; };
+		4380612B211ADAB300D1A557 /* RTCRtpSender.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8DA1F0E023900B73FCB /* RTCRtpSender.mm */; };
+		4380612C211ADABC00D1A557 /* RTCRtpReceiver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8D81F0E023900B73FCB /* RTCRtpReceiver.mm */; };
+		4380612D211ADADE00D1A557 /* RTCVideoCapturer.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8DF1F0E023900B73FCB /* RTCVideoCapturer.m */; };
+		4380612E211ADB1A00D1A557 /* RTCVideoRendererAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8E31F0E023900B73FCB /* RTCVideoRendererAdapter.mm */; };
+		4380612F211ADB6400D1A557 /* RTCSSLAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8DD1F0E023900B73FCB /* RTCSSLAdapter.mm */; };
+		43806130211ADB7600D1A557 /* RTCAVFoundationVideoSource.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8B01F0E023900B73FCB /* RTCAVFoundationVideoSource.mm */; };
+		43806131211ADB8400D1A557 /* RTCRtpParameters.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8D61F0E023900B73FCB /* RTCRtpParameters.mm */; };
+		43806133211ADBD300D1A557 /* avfoundationformatmapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B2CA1F0D1A2500B73FCB /* avfoundationformatmapper.mm */; };
+		43806135211ADC0400D1A557 /* RTCRtpCodecParameters.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8D21F0E023900B73FCB /* RTCRtpCodecParameters.mm */; };
+		43806136211ADC1B00D1A557 /* RTCRtpEncodingParameters.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8D41F0E023900B73FCB /* RTCRtpEncodingParameters.mm */; };
+		4388B8F8211B1CED0096CF67 /* RTCMTLI420Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8A21F0E023900B73FCB /* RTCMTLI420Renderer.mm */; };
+		4388B8FA211B1CF80096CF67 /* RTCMTLNV12Renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8A51F0E023900B73FCB /* RTCMTLNV12Renderer.mm */; };
+		4388B8FB211B1CFC0096CF67 /* RTCMTLRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8A81F0E023900B73FCB /* RTCMTLRenderer.mm */; };
+		4388B8FC211B1D150096CF67 /* RTCMTLVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B8A91F0E023900B73FCB /* RTCMTLVideoView.m */; };
 		439FC1C61D5072FB00939424 /* RTCAudioTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1501D5072FB00939424 /* RTCAudioTrack.h */; };
 		439FC1C71D5072FB00939424 /* RTCAVFoundationVideoSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1511D5072FB00939424 /* RTCAVFoundationVideoSource.h */; };
 		439FC1C81D5072FB00939424 /* RTCCameraPreviewView.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1521D5072FB00939424 /* RTCCameraPreviewView.h */; };
@@ -42,6 +72,8 @@
 		439FC1E71D5072FB00939424 /* RTCVideoSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1711D5072FB00939424 /* RTCVideoSource.h */; };
 		439FC1E81D5072FB00939424 /* RTCVideoTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1721D5072FB00939424 /* RTCVideoTrack.h */; };
 		439FC1E91D5072FB00939424 /* WebRTC.h in Headers */ = {isa = PBXBuildFile; fileRef = 439FC1731D5072FB00939424 /* WebRTC.h */; };
+		43D50E73211D8B0400CC59BB /* avfoundationvideocapturer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B2CC1F0D1A2500B73FCB /* avfoundationvideocapturer.mm */; };
+		43D50E74211D8B0700CC59BB /* RTCAVFoundationVideoCapturerInternal.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1B2D41F0D1A2500B73FCB /* RTCAVFoundationVideoCapturerInternal.mm */; };
 		43E1AF7B1F0CCB8E00B73FCB /* helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1AF6F1F0CCB8E00B73FCB /* helpers.h */; };
 		43E1AF7C1F0CCB8E00B73FCB /* helpers.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43E1AF701F0CCB8E00B73FCB /* helpers.mm */; };
 		43E1AF7D1F0CCB8E00B73FCB /* NSString+StdString.h in Headers */ = {isa = PBXBuildFile; fileRef = 43E1AF711F0CCB8E00B73FCB /* NSString+StdString.h */; };
@@ -703,33 +735,65 @@
 			buildActionMask = 2147483647;
 			files = (
 				43E1B1621F0CDAFC00B73FCB /* videocodecfactory.mm in Sources */,
+				43806135211ADC0400D1A557 /* RTCRtpCodecParameters.mm in Sources */,
 				43E1B2ED1F0D1A2500B73FCB /* RTCCVPixelBuffer.mm in Sources */,
 				43E1AF861F0CCB8E00B73FCB /* UIDevice+RTCDevice.mm in Sources */,
 				43E23CA01F3088250065A4B8 /* RTCVideoFrame.mm in Sources */,
+				4380602A211AC6AB00D1A557 /* RTCIceCandidate.mm in Sources */,
+				43806130211ADB7600D1A557 /* RTCAVFoundationVideoSource.mm in Sources */,
 				43E1AF7E1F0CCB8E00B73FCB /* NSString+StdString.mm in Sources */,
 				43E1B89A1F0DE55300B73FCB /* RTCAudioSession+Configuration.mm in Sources */,
+				43806127211ADA5900D1A557 /* RTCSessionDescription.mm in Sources */,
 				43E1B2F81F0D1A2500B73FCB /* RTCShader.mm in Sources */,
+				43806043211ACBC400D1A557 /* RTCMediaStreamTrack.mm in Sources */,
+				43D50E74211D8B0700CC59BB /* RTCAVFoundationVideoCapturerInternal.mm in Sources */,
 				43E1B2EF1F0D1A2500B73FCB /* RTCDefaultShader.mm in Sources */,
+				4380603E211ACAE100D1A557 /* RTCVideoTrack.mm in Sources */,
 				43E1B9C81F0E31D600B73FCB /* RTCAudioSource.mm in Sources */,
+				43806040211ACB2100D1A557 /* RTCDataChannel.mm in Sources */,
 				43E1AF821F0CCB8E00B73FCB /* RTCFileLogger.mm in Sources */,
+				43806030211AC94E00D1A557 /* RTCTracing.mm in Sources */,
 				43E1B2F51F0D1A2500B73FCB /* RTCNV12TextureCache.m in Sources */,
+				4388B8FB211B1CFC0096CF67 /* RTCMTLRenderer.mm in Sources */,
+				43806131211ADB8400D1A557 /* RTCRtpParameters.mm in Sources */,
 				43E1B9C61F0E248F00B73FCB /* RTCEAGLVideoView.m in Sources */,
+				43D50E73211D8B0400CC59BB /* avfoundationvideocapturer.mm in Sources */,
 				43E1AF851F0CCB8E00B73FCB /* RTCUIApplicationStatusObserver.m in Sources */,
 				43E1B2F11F0D1A2500B73FCB /* RTCI420Buffer.mm in Sources */,
 				43E1B2F31F0D1A2500B73FCB /* RTCI420TextureCache.mm in Sources */,
 				43E1B2E51F0D1A2500B73FCB /* corevideo_frame_buffer.cc in Sources */,
 				43E1AF831F0CCB8E00B73FCB /* RTCLogging.mm in Sources */,
+				43806042211ACB7A00D1A557 /* RTCMediaStream.mm in Sources */,
 				43E1B89E1F0DE68100B73FCB /* RTCAudioSession.mm in Sources */,
 				43E1B89D1F0DE55300B73FCB /* RTCAudioSessionConfiguration.m in Sources */,
+				4380612E211ADB1A00D1A557 /* RTCVideoRendererAdapter.mm in Sources */,
+				4380603F211ACAF400D1A557 /* RTCPeerConnection.mm in Sources */,
 				43E1B15E1F0CDAFC00B73FCB /* nalu_rewriter.cc in Sources */,
 				43E1B9C71F0E24B800B73FCB /* RTCDispatcher.m in Sources */,
+				4380612B211ADAB300D1A557 /* RTCRtpSender.mm in Sources */,
 				43E1B2EA1F0D1A2500B73FCB /* objcvideotracksource.mm in Sources */,
+				43806133211ADBD300D1A557 /* avfoundationformatmapper.mm in Sources */,
 				43E1B15D1F0CDAFC00B73FCB /* encoder.mm in Sources */,
 				43E1B15B1F0CDAFC00B73FCB /* decoder.mm in Sources */,
+				43806128211ADA7A00D1A557 /* RTCVideoSource.mm in Sources */,
+				4380603D211ACAC900D1A557 /* RTCIceServer.mm in Sources */,
+				4380612D211ADADE00D1A557 /* RTCVideoCapturer.m in Sources */,
 				43E1B2E81F0D1A2500B73FCB /* objc_frame_buffer.mm in Sources */,
+				438060E0211AD2E700D1A557 /* RTCCameraVideoCapturer.m in Sources */,
 				43E1AF7C1F0CCB8E00B73FCB /* helpers.mm in Sources */,
+				4388B8FC211B1D150096CF67 /* RTCMTLVideoView.m in Sources */,
+				4380603C211ACAB500D1A557 /* RTCCameraPreviewView.m in Sources */,
+				43806032211AC99800D1A557 /* RTCConfiguration.mm in Sources */,
+				4380612F211ADB6400D1A557 /* RTCSSLAdapter.mm in Sources */,
+				4380602D211AC87900D1A557 /* RTCMediaConstraints.mm in Sources */,
+				43806136211ADC1B00D1A557 /* RTCRtpEncodingParameters.mm in Sources */,
+				43806129211ADA8300D1A557 /* RTCAudioTrack.mm in Sources */,
+				43806035211AC9ED00D1A557 /* RTCPeerConnectionFactory.mm in Sources */,
+				4380612C211ADABC00D1A557 /* RTCRtpReceiver.mm in Sources */,
 				43E1AF811F0CCB8E00B73FCB /* RTCFieldTrials.mm in Sources */,
+				4388B8FA211B1CF80096CF67 /* RTCMTLNV12Renderer.mm in Sources */,
 				43E1BA371F0E39E700B73FCB /* RTCMediaSource.mm in Sources */,
+				4388B8F8211B1CED0096CF67 /* RTCMTLI420Renderer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

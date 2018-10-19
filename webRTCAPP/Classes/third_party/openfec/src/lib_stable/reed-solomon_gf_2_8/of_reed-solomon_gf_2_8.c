@@ -884,7 +884,8 @@ of_rs_encode (struct fec_parms *code, gf *src[], gf *fec, int index, int sz)
 		sz /= 2 ;
 
 	if (index < k)
-		bcopy (src[index], fec, sz*sizeof (gf)) ;
+//		bcopy (src[index], fec, sz*sizeof (gf)) ;
+		memcpy(fec, src[index], sz*sizeof (gf));
 	else if (index < code->n)
 	{
 		p = & (code->enc_matrix[index*k]);
@@ -974,7 +975,8 @@ of_build_decode_matrix (struct fec_parms *code, gf *pkt[], int index[])
 		else
 #endif
 			if (index[i] < code->n)
-				bcopy (& (code->enc_matrix[index[i]*k]), p, k*sizeof (gf));
+//				bcopy (& (code->enc_matrix[index[i]*k]), p, k*sizeof (gf));
+				memcpy(p, & (code->enc_matrix[index[i]*k]), k*sizeof (gf));
 			else
 			{
 				OF_PRINT_ERROR ( ("decode: invalid index %d (max %d)\n",
@@ -1069,7 +1071,8 @@ of_rs_decode (struct fec_parms *code, gf *pkt[], int index[], int sz)
 	{
 		if (index[row] >= k)
 		{
-			bcopy (new_pkt[row], pkt[row], sz*sizeof (gf));
+//			bcopy (new_pkt[row], pkt[row], sz*sizeof (gf));
+			memcpy(pkt[row], new_pkt[row], sz*sizeof (gf));
 			free (new_pkt[row]);
 		}
 	}

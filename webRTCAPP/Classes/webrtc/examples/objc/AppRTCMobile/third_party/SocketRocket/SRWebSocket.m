@@ -1630,7 +1630,7 @@ static inline void SRFastLog(NSString *format, ...)  {
 }
 
 
-#ifdef HAS_ICU
+#ifndef HAS_ICU
 
 static inline int32_t validate_dispatch_data_partial_string(NSData *data) {
     if ([data length] > INT32_MAX) {

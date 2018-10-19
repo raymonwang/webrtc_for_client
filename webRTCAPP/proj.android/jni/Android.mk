@@ -25,7 +25,7 @@ LOCAL_MODULE_FILENAME := libwebrtc
 
 WEBRTC_SOURCE_PATH := $(LOCAL_PATH)/../../Classes
 
-WEBRTC_OVERRIDES_SOURCE_PATH := $(LOCAL_PATH)/../../../../RTChatSdk/Client/ios/RTChat/Classes/webrtc_overrides
+WEBRTC_OVERRIDES_SOURCE_PATH := $(LOCAL_PATH)/../../../../reechat_client/Client/ios/src/Classes/webrtc_overrides
 
 MY_FILES_WEBRTC_BASE_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/base
 MY_FILES_WEBRTC_RTC_BASE_PATH  :=  $(WEBRTC_SOURCE_PATH)/webrtc/rtc_base
@@ -179,11 +179,11 @@ LOCAL_CFLAGS += -DANDROID -DWEBRTC_POSIX -DWEBRTC_ANDROID -DWEBRTC_LINUX -DWEBRT
 LOCAL_CFLAGS += -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DWTF_USE_DYNAMIC_ANNOTATIONS=1 -D__GNU_SOURCE=1 -DWEBRTC_BUILD_LIBEVENT -DGOOGLE_PROTOBUF_NO_RTTI -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER   -DHAVE_WEBRTC_VOICE -DRTCHAT_OPUS_FREQ=16000
 LOCAL_CFLAGS += -Wno-narrowing
 
-LOCAL_CFLAGS += -fno-strict-aliasing --param=ssp-buffer-size=4 -funwind-tables -fPIC -pipe -ffunction-sections -fno-short-enums -finline-limit=64 -Wall -Wno-uninitialized -Wno-missing-field-initializers -Wno-unused-parameter -fvisibility=hidden -Wextra -Wno-missing-field-initializers -Wno-strict-overflow -Os -fno-ident -fdata-sections -g0 -fno-builtin-cos -fno-builtin-sin -fno-builtin-cosf -fno-builtin-sinf -Wno-unused-local-typedefs -Wno-unused-function
-LOCAL_CPPFLAGS += -fno-threadsafe-statics -fvisibility-inlines-hidden -std=gnu++11 -Wno-narrowing -fno-rtti -fno-exceptions -Woverloaded-virtual -fuse-ld=gold -Wno-reorder
+LOCAL_CFLAGS += -fno-strict-aliasing --param=ssp-buffer-size=4 -funwind-tables -fPIC -pipe -ffunction-sections -fno-short-enums -finline-limit=64 -Wno-uninitialized -Wno-missing-field-initializers -fvisibility=hidden -Wno-missing-field-initializers -Wno-strict-overflow -Os -fno-ident -fdata-sections -g0 -fno-builtin-cos -fno-builtin-sin -fno-builtin-cosf -fno-builtin-sinf -Wno-unused-local-typedefs -Wno-unused-function
+LOCAL_CPPFLAGS += -fno-threadsafe-statics -fvisibility-inlines-hidden -std=gnu++11 -Wno-narrowing -Woverloaded-virtual -fuse-ld=gold -Wno-reorder
 
 ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)				    
-LOCAL_CFLAGS += -fstack-protector -march=armv7-a -mfloat-abi=softfp -mtune=generic-armv7-a  -fno-caller-saves -mfpu=neon -Wno-psabi -fomit-frame-pointer
+LOCAL_CFLAGS += -fstack-protector -march=armv7-a -mfloat-abi=softfp -mtune=generic-armv7-a  -fno-caller-saves -mfpu=neon -fomit-frame-pointer
 else ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
 LOCAL_CFLAGS += -fstack-protector  -fno-omit-frame-pointer 
 else ifeq ($(TARGET_ARCH_ABI), x86)

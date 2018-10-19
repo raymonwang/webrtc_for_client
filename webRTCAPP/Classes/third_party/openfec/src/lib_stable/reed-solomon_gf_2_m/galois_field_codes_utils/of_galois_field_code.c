@@ -35,7 +35,7 @@
 
 
 #ifdef OF_USE_REED_SOLOMON_2_M_CODEC
-
+#define bcopy(s, d, siz)        memcpy((d), (s), (siz))
 
 gf of_modnn(of_galois_field_code_cb_t* ofcb,INT32 x)
 {
@@ -168,7 +168,8 @@ of_status_t of_rs_2m_build_encoding_matrix(of_galois_field_code_cb_t* ofcb)
 	/*
 	 * the upper matrix is I so do not bother with a slow multiply
 	 */
-	bzero (ofcb->enc_matrix, k*k*sizeof (gf));
+	//bzero (ofcb->enc_matrix, k*k*sizeof (gf));
+	memset(ofcb->enc_matrix, 0, k*k * sizeof(gf));
 	for (p = ofcb->enc_matrix, col = 0 ; col < k ; col++, p += k + 1)
 		*p = 1 ;
 
@@ -201,7 +202,8 @@ of_status_t of_rs_2m_build_decoding_matrix(of_galois_field_code_cb_t* ofcb, int 
 #if 1 /* this is simply an optimization, not very useful indeed */
 		if (index[i] < k)
 		{
-			bzero (p, k*sizeof (gf));
+			//bzero (p, k*sizeof (gf));
+			memset(p, 0, k * sizeof(gf));
 			p[i] = 1 ;
 		}
 		else
@@ -338,7 +340,8 @@ of_status_t	of_rs_2m_encode(of_galois_field_code_cb_t* ofcb,gf *_src[], gf *_fec
 	else if (index < (ofcb->nb_source_symbols + ofcb->nb_repair_symbols))
 	{
 		p = & (ofcb->enc_matrix[index*k]);
-		bzero (fec, sz * sizeof (gf));
+		//bzero (fec, sz * sizeof (gf));
+		memset(fec, 0, sz * sizeof(gf));
 		for (i = 0; i < k ; i++)
 		{
 			if (p[i] != 0 )

@@ -874,7 +874,6 @@
 		43E1B1981F0D135100B73FCB /* digital_gain_applier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digital_gain_applier.h; sourceTree = "<group>"; };
 		43E1B1991F0D135100B73FCB /* gain_controller2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gain_controller2.cc; sourceTree = "<group>"; };
 		43E1B19A1F0D135100B73FCB /* gain_controller2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gain_controller2.h; sourceTree = "<group>"; };
-		43E1B19B1F0D135100B73FCB /* gain_controller2_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gain_controller2_unittest.cc; sourceTree = "<group>"; };
 		43E1B1D01F0D158C00B73FCB /* adaptive_fir_filter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = adaptive_fir_filter.cc; sourceTree = "<group>"; };
 		43E1B1D11F0D158C00B73FCB /* adaptive_fir_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = adaptive_fir_filter.h; sourceTree = "<group>"; };
 		43E1B1D21F0D158C00B73FCB /* aec_state.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aec_state.cc; sourceTree = "<group>"; };
@@ -1379,7 +1378,6 @@
 				43E1B1981F0D135100B73FCB /* digital_gain_applier.h */,
 				43E1B1991F0D135100B73FCB /* gain_controller2.cc */,
 				43E1B19A1F0D135100B73FCB /* gain_controller2.h */,
-				43E1B19B1F0D135100B73FCB /* gain_controller2_unittest.cc */,
 			);
 			path = agc2;
 			sourceTree = "<group>";

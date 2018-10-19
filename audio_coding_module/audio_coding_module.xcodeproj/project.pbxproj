@@ -96,14 +96,11 @@
 		43E1B3461F0D1C2D00B73FCB /* builtin_audio_decoder_factory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = builtin_audio_decoder_factory.h; sourceTree = "<group>"; };
 		43E1B3471F0D1C2D00B73FCB /* builtin_audio_decoder_factory_internal.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = builtin_audio_decoder_factory_internal.cc; sourceTree = "<group>"; };
 		43E1B3481F0D1C2D00B73FCB /* builtin_audio_decoder_factory_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = builtin_audio_decoder_factory_internal.h; sourceTree = "<group>"; };
-		43E1B3491F0D1C2D00B73FCB /* builtin_audio_decoder_factory_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = builtin_audio_decoder_factory_unittest.cc; sourceTree = "<group>"; };
 		43E1B34A1F0D1C2D00B73FCB /* builtin_audio_encoder_factory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = builtin_audio_encoder_factory.h; sourceTree = "<group>"; };
 		43E1B34B1F0D1C2D00B73FCB /* builtin_audio_encoder_factory_internal.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = builtin_audio_encoder_factory_internal.cc; sourceTree = "<group>"; };
 		43E1B34C1F0D1C2D00B73FCB /* builtin_audio_encoder_factory_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = builtin_audio_encoder_factory_internal.h; sourceTree = "<group>"; };
-		43E1B34D1F0D1C2D00B73FCB /* builtin_audio_encoder_factory_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = builtin_audio_encoder_factory_unittest.cc; sourceTree = "<group>"; };
 		43E1B4AE1F0D1C2D00B73FCB /* legacy_encoded_audio_frame.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = legacy_encoded_audio_frame.cc; sourceTree = "<group>"; };
 		43E1B4AF1F0D1C2D00B73FCB /* legacy_encoded_audio_frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = legacy_encoded_audio_frame.h; sourceTree = "<group>"; };
-		43E1B4B01F0D1C2D00B73FCB /* legacy_encoded_audio_frame_unittest.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = legacy_encoded_audio_frame_unittest.cc; sourceTree = "<group>"; };
 		43E1B4BE1F0D1C2D00B73FCB /* OWNERS */ = {isa = PBXFileReference; lastKnownFileType = text; path = OWNERS; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,14 +218,11 @@
 				43E1B3461F0D1C2D00B73FCB /* builtin_audio_decoder_factory.h */,
 				43E1B3471F0D1C2D00B73FCB /* builtin_audio_decoder_factory_internal.cc */,
 				43E1B3481F0D1C2D00B73FCB /* builtin_audio_decoder_factory_internal.h */,
-				43E1B3491F0D1C2D00B73FCB /* builtin_audio_decoder_factory_unittest.cc */,
 				43E1B34A1F0D1C2D00B73FCB /* builtin_audio_encoder_factory.h */,
 				43E1B34B1F0D1C2D00B73FCB /* builtin_audio_encoder_factory_internal.cc */,
 				43E1B34C1F0D1C2D00B73FCB /* builtin_audio_encoder_factory_internal.h */,
-				43E1B34D1F0D1C2D00B73FCB /* builtin_audio_encoder_factory_unittest.cc */,
 				43E1B4AE1F0D1C2D00B73FCB /* legacy_encoded_audio_frame.cc */,
 				43E1B4AF1F0D1C2D00B73FCB /* legacy_encoded_audio_frame.h */,
-				43E1B4B01F0D1C2D00B73FCB /* legacy_encoded_audio_frame_unittest.cc */,
 				43E1B4BE1F0D1C2D00B73FCB /* OWNERS */,
 			);
 			name = codecs;

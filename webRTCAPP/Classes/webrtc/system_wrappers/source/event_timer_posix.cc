@@ -50,7 +50,7 @@ EventTimerPosix::EventTimerPosix()
 #if !(defined(WEBRTC_MAC) || defined(WEBRTC_IOS)) && \
     !(defined(WEBRTC_ANDROID) &&                     \
       defined(HAVE_PTHREAD_COND_TIMEDWAIT_MONOTONIC))
-  pthread_condattr_setclock(&cond_attr, CLOCK_MONOTONIC);
+//  pthread_condattr_setclock(&cond_attr, CLOCK_MONOTONIC);
 #endif
   pthread_cond_init(&cond_, &cond_attr);
   pthread_condattr_destroy(&cond_attr);

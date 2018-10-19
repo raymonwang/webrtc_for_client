@@ -626,7 +626,7 @@ void RtpTransportControllerAdapter::Init_w() {
   call_config.bitrate_config.start_bitrate_bps = kStartBandwidthBps;
   call_config.bitrate_config.max_bitrate_bps = kMaxBandwidthBps;
 
-  call_.reset(webrtc::Call::Create(call_config));
+  call_.reset(webrtc::Call::Create(call_config, nullptr));
 }
 
 void RtpTransportControllerAdapter::Close_w() {
